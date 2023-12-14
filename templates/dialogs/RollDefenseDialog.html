@@ -1,0 +1,9 @@
+{{ log this }}
+<form autocomplete="off">
+	<h1>Defending against {{weapon.name}}</h1>
+	Formula: Reaction({{ actor.system.attributes.reaction.pool }}) + Intuition({{ actor.system.attributes.intuition.pool }})
+	<div class="flex-container">
+		<label for="pool-modifier" title="Pool Modifier">Pool Modifier</label>
+		<input id="pool-modifier" value="0" type="number" style="width: 2em" />
+	<input id="do-roll" type="button" value="Roll"/>
+</form>

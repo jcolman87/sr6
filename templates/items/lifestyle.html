@@ -1,0 +1,31 @@
+{{ log this }}
+
+<form class="editable flexcol {{cssClass}}" autocomplete="off">
+	<header class="sheet-header">
+		<div>
+			<img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="120" width="120" /><br />
+			<br />
+		</div>
+		<div class="header-fields">
+			<h1>
+				<input direct-data type="text" value="{{item.name}}" />
+			</h1>
+		</div>
+		<br/>
+	</header>
+	<section class="sheet">
+		<div id="base" class="section">
+			<label for="system.size">Rating</label>
+			<select direct-data id="system.rating">
+				<option value="1" {{#if (eq item.system.rating 1) }}selected{{/if}}>{{localize "lifestyle.1"}}</option>
+				<option value="2" {{#if (eq item.system.rating 2) }}selected{{/if}}>{{localize "lifestyle.2"}}</option>
+				<option value="3" {{#if (eq item.system.rating 3) }}selected{{/if}}>{{localize "lifestyle.3"}}</option>
+				<option value="4" {{#if (eq item.system.rating 4) }}selected{{/if}}>{{localize "lifestyle.4"}}</option>
+				<option value="5" {{#if (eq item.system.rating 5) }}selected{{/if}}>{{localize "lifestyle.5"}}</option>
+				<option value="6" {{#if (eq item.system.rating 6) }}selected{{/if}}>{{localize "lifestyle.6"}}</option>
+			</select>
+			<br/><label for="system.description">Description</label><br/>
+			<textarea direct-data id="system.description" rows="10" cols="50">{{item.system.description}}</textarea>
+		</div>
+	</section>
+</form>

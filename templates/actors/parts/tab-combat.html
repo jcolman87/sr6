@@ -1,0 +1,18 @@
+<div class="section" style="display: inline-block; width: 50%; margin: 5px">
+	<table style="align-self: start; border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th colspan="2">Weapons</th>
+			</tr>
+		</thead>
+		{{#each actor.items as |item idx|}}
+		{{#if (itemHas item "Weapon")}}
+		<tr>
+			<td>{{item.name}}</td>
+			<td><a data-item-id="{{item.id}}" class="roll roll-weapon">&nbsp;</a></td>
+		</tr>
+		{{/if}}
+		{{/each}}
+	</table>
+
+</div>

@@ -1,0 +1,49 @@
+<div class="section" style="width: 50%; margin: 5px; display: flex">
+	<table style="align-self: start; border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th colspan="3">Legal</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each config.matrix_actions as |action action_id| }} 
+			{{#unless action.1.illegal }}
+			<tr>
+				<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_actions." (matrixActionAsString action_id) ) ".name")}}</td>
+				{{#if (undefined action.1.formula) }}
+				<td class="matrix-action"></td>
+				<td class="matrix-action"></td>
+				{{else}}
+				<td class="matrix-action">{{ solveActorFormula ../actor action.1.formula }} </td>
+				<td class="matrix-action"><a data-pool="{{action.1.formula}}" class="roll roll-formula">&nbsp;</a></td>
+				{{/if}}
+			</tr>
+			{{/unless}}
+			{{/each}}
+		</tbody>
+	</table>
+	<table style="align-self: start; border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th colspan="3">Illegal</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each config.matrix_actions as |action action_id| }} 
+
+			{{#if action.1.illegal }}
+			<tr>
+				<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_actions." (matrixActionAsString action_id) ) ".name")}}</td>
+				{{#if (undefined action.1.formula) }}
+				<td class="matrix-action"></td>
+				<td class="matrix-action"></td>
+				{{else}}
+				<td class="matrix-action">{{ solveActorFormula ../actor action.1.formula }} </td>
+				<td class="matrix-action"><a data-pool="{{action.1.formula}}" class="roll roll-formula">&nbsp;</a></td>
+				{{/if}}
+			</tr>
+			{{/if}}
+			{{/each}}
+		</tbody>
+	</table>
+</div>

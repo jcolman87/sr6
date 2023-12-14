@@ -1,0 +1,396 @@
+{
+    "lifestyle" : {
+        "1": "Street",
+        "2": "Squatter",
+        "3": "Low",
+        "4": "Middle",
+        "5": "High",
+        "6": "Luxury"
+    },
+    "sin_quality": {
+        "0": "Real SIN",
+        "1": "Anyone",
+        "2": "Rough Match",
+        "3": "Good Match",
+        "4": "Superficially Pluasible",
+        "5": "High Pluasible",
+        "6": "Second Life"
+    },
+    "size": {
+        "0": "Large",
+        "1": "Bulky",
+        "2": "Tuckable",
+        "3": "Pocket",
+        "4": "Palm",
+        "5": "Slim",
+        "6": "Palmable",
+        "7": "Small",
+        "8": "Mini",
+        "9": "Fine",
+        "10": "Microscopic"
+    },
+    "skills":
+    {
+        "astral":
+        {
+            "name": "astral",
+            "description": ""
+        },
+        "athletics":
+        {
+            "name": "athletics",
+            "description": ""
+        },
+        "biotech":
+        {
+            "name": "biotech",
+            "description": ""
+        },
+        "close_combat":
+        {
+            "name": "close_combat",
+            "description": ""
+        },
+        "con":
+        {
+            "name": "con",
+            "description": ""
+        },
+        "conjuring":
+        {
+            "name": "conjuring",
+            "description": ""
+        },
+        "cracking":
+        {
+            "name": "cracking",
+            "description": ""
+        },
+        "electronics":
+        {
+            "name": "electronics",
+            "description": ""
+        },
+        "enchanting":
+        {
+            "name": "enchanting",
+            "description": ""
+        },
+        "engineering":
+        {
+            "name": "engineering",
+            "description": ""
+        },
+        "exotic_weapons":
+        {
+            "name": "exotic_weapons",
+            "description": ""
+        },
+        "firearms":
+        {
+            "name": "firearms",
+            "description": ""
+        },
+        "influence":
+        {
+            "name": "influence",
+            "description": ""
+        },
+        "outdoors":
+        {
+            "name": "outdoors",
+            "description": ""
+        },
+        "perception":
+        {
+            "name": "perception",
+            "description": ""
+        },
+        "piloting":
+        {
+            "name": "piloting",
+            "description": ""
+        },
+        "sorcery":
+        {
+            "name": "sorcery",
+            "description": ""
+        },
+        "stealth":
+        {
+            "name": "stealth",
+            "description": ""
+        },
+        "tasking":
+        {
+            "name": "tasking",
+            "description": ""
+        }
+    },
+    "matrix_programs":
+    {
+        "browse":
+        {
+            "name": "Browse",
+            "description": ""
+        },
+        "baby_monitor":
+        {
+            "name": "Baby Monitor",
+            "description": ""
+        },
+        "configurator":
+        {
+            "name": "Configurator",
+            "description": ""
+        },
+        "edit":
+        {
+            "name": "Edit",
+            "description": ""
+        },
+        "encryption":
+        {
+            "name": "Encryption",
+            "description": ""
+        },
+        "signal_scrubber":
+        {
+            "name": "Signal Scrubber",
+            "description": ""
+        },
+        "toolbox":
+        {
+            "name": "Toolbox",
+            "description": ""
+        },
+        "virtual_machine":
+        {
+            "name": "Virtual Machine",
+            "description": ""
+        },
+        "armor":
+        {
+            "name": "Armor",
+            "description": ""
+        },
+        "biofeedback":
+        {
+            "name": "Biofeedback",
+            "description": ""
+        },
+        "biofeedback_filter":
+        {
+            "name": "Biofeedback Filter",
+            "description": ""
+        },
+        "blackout":
+        {
+            "name": "Blackout",
+            "description": ""
+        },
+        "decryption":
+        {
+            "name": "Decryption",
+            "description": ""
+        },
+        "defuse":
+        {
+            "name": "Defuse",
+            "description": ""
+        },
+        "exploit":
+        {
+            "name": "Exploit",
+            "description": ""
+        },
+        "fork":
+        {
+            "name": "Fork",
+            "description": ""
+        },
+        "lockdown":
+        {
+            "name": "Lockdown",
+            "description": ""
+        },
+        "overclock":
+        {
+            "name": "Overclock",
+            "description": ""
+        },
+        "stealth":
+        {
+            "name": "Stealth",
+            "description": ""
+        },
+        "trace":
+        {
+            "name": "Trace",
+            "description": ""
+        }
+    },
+    "matrix_actions":
+    {
+        "backdoor_entry":
+        {
+            "name": "Backdoor Entry",
+            "description": ""
+        },
+        "brute_force":
+        {
+            "name": "Brute Force",
+            "description": ""
+        },
+        "change_icon":
+        {
+            "name": "Change Icon",
+            "description": ""
+        },
+        "check_os":
+        {
+            "name": "Check OS",
+            "description": ""
+        },
+        "control_device":
+        {
+            "name": "Control Device",
+            "description": ""
+        },
+        "crack_file":
+        {
+            "name": "Crack File",
+            "description": ""
+        },
+        "crash_program":
+        {
+            "name": "Crash Program",
+            "description": ""
+        },
+        "data_spike":
+        {
+            "name": "Data Spike",
+            "description": ""
+        },
+        "disarm_data_bomb":
+        {
+            "name": "Disarm Databomb",
+            "description": ""
+        },
+        "edit_file":
+        {
+            "name": "Edit File",
+            "description": ""
+        },
+        "encrypt_file":
+        {
+            "name": "Encrypt File",
+            "description": ""
+        },
+        "enter_host":
+        {
+            "name": "Enter Host",
+            "description": ""
+        },
+        "erase_matrix_signature":
+        {
+            "name": "Erase Matrix Signature",
+            "description": ""
+        },
+        "format_device":
+        {
+            "name": "Format Device",
+            "description": ""
+        },
+        "full_matrix_defense":
+        {
+            "name": "Full Matrix Defense",
+            "description": ""
+        },
+        "hash_check":
+        {
+            "name": "Hash Check",
+            "description": ""
+        },
+        "hide":
+        {
+            "name": "Hide",
+            "description": ""
+        },
+        "jack_out":
+        {
+            "name": "Jack Out",
+            "description": ""
+        },
+        "jam_signals":
+        {
+            "name": "Jam Signals",
+            "description": ""
+        },
+        "jump_rigged":
+        {
+            "name": "Jump Rigged",
+            "description": ""
+        },
+        "matrix_perception":
+        {
+            "name": "Matrix Perception",
+            "description": ""
+        },
+        "matrix_search":
+        {
+            "name": "Matrix Search",
+            "description": ""
+        },
+        "probe":
+        {
+            "name": "Probe",
+            "description": ""
+        },
+        "reboot_device":
+        {
+            "name": "Reboot Device",
+            "description": ""
+        },
+        "reconfigure":
+        {
+            "name": "Reconfigure",
+            "description": ""
+        },
+        "send_message":
+        {
+            "name": "Send Message",
+            "description": ""
+        },
+        "set_data_bomb":
+        {
+            "name": "Set Databomb",
+            "description": ""
+        },
+        "snoop":
+        {
+            "name": "Snoop",
+            "description": ""
+        },
+        "spoof_command":
+        {
+            "name": "Spoof Command",
+            "description": ""
+        },
+        "switch_ifmode":
+        {
+            "name": "Switch IF Mode",
+            "description": ""
+        },
+        "tarpit":
+        {
+            "name": "Tarpit",
+            "description": ""
+        },
+        "trace_icon":
+        {
+            "name": "Trace Icon",
+            "description": ""
+        }
+    }
+}

@@ -1,0 +1,189 @@
+{{ log this }}
+
+<form class="editable flexcol {{cssClass}}" autocomplete="off">
+	<header class="sheet-header">
+		<div>
+			<img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="120" width="120" /><br />
+			<br />
+		</div>
+		<div class="header-fields">
+			<h1>
+				<input direct-data type="text" value="{{item.name}}" />
+			</h1>
+		</div>
+		<br/>
+	</header>
+	<section class="sheet">
+		<div id="controls" class="section" style="display: flex; flex-flow: nowrap;">
+			{{#unless (itemHas item "Cost") }}<a class="add-type" data-add-type="Cost" title="Add"><h5 class="fas fa-plus">Cost</h5></a>{{/unless}}
+			{{#unless (itemHas item "Matrix") }}<a class="add-type" data-add-type="Matrix" title="Add"><h5 class="fas fa-plus">Matrix</h5></a>{{/unless}}
+			{{#unless (itemHas item "Defense") }}<a class="add-type" data-add-type="Defense" title="Add"><h5 class="fas fa-plus">Defense</h5></a>{{/unless}}
+			{{#unless (itemHas item "Capacity") }}<a class="add-type" data-add-type="Capacity" title="Add"><h5 class="fas fa-plus">Capacity</h5></a>{{/unless}}
+			{{#unless (itemHas item "Explosive") }}<a class="add-type" data-add-type="Explosive" title="Add"><h5 class="fas fa-plus">Explosive</h5></a>{{/unless}}
+			{{#unless (itemHas item "Mountable") }}<a class="add-type" data-add-type="Mountable" title="Add"><h5 class="fas fa-plus">Mountable</h5></a>{{/unless}}
+			{{#unless (itemHas item "Weapon") }}<a class="add-type" data-add-type="Weapon" title="Add"><h5 class="fas fa-plus">Weapon</h5></a>{{/unless}}
+			{{#unless (itemHas item "Firearm") }}<a class="add-type" data-add-type="Firearm" title="Add"><h5 class="fas fa-plus">Firearm</h5></a>{{/unless}}
+		</div>
+		<div id="base" class="section">
+			<label for="system.rating">Rating</label>
+			<input direct-data id="system.rating" type="number" value="{{item.system.rating}}" style="width: 2em" />
+			<label for="system.size">Size</label>
+			<select direct-data id="system.size">
+				<option value="0" {{#if (eq item.system.size '0') }}selected{{/if}}>{{localize "size.0"}}</option>
+				<option value="1" {{#if (eq item.system.size '1') }}selected{{/if}}>{{localize "size.1"}}</option>
+				<option value="2" {{#if (eq item.system.size '2') }}selected{{/if}}>{{localize "size.2"}}</option>
+				<option value="3" {{#if (eq item.system.size '3') }}selected{{/if}}>{{localize "size.3"}}</option>
+				<option value="4" {{#if (eq item.system.size '4') }}selected{{/if}}>{{localize "size.4"}}</option>
+				<option value="5" {{#if (eq item.system.size '5') }}selected{{/if}}>{{localize "size.5"}}</option>
+				<option value="6" {{#if (eq item.system.size '6') }}selected{{/if}}>{{localize "size.6"}}</option>
+				<option value="7" {{#if (eq item.system.size '7') }}selected{{/if}}>{{localize "size.7"}}</option>
+				<option value="8" {{#if (eq item.system.size '8') }}selected{{/if}}>{{localize "size.8"}}</option>
+				<option value="9" {{#if (eq item.system.size '9') }}selected{{/if}}>{{localize "size.9"}}</option>
+				<option value="10" {{#if (eq item.system.size '10') }}selected{{/if}}>{{localize "size.10"}}</option>
+			</select>
+			<label for="system.description">Description</label>
+			<textarea direct-data id="system.description" rows="10" cols="50">{{item.system.description}}</textarea>
+		</div>
+		</div>
+		{{#if (itemHas item "Cost") }}
+			<div id="Cost" class="section">
+				<h3>Cost&nbsp;<a class="remove-type fas fa-minus" data-remove-type="Cost" title="Remove"></a></h3>
+				<label for="system.cost">Cost</label>
+				<input direct-data id="system.cost" type="text" value="{{item.system.cost}}"  style="width: 10em" />
+				{{ solveItemFormula item item.system.cost }}
+			</div>
+		{{/if}}
+
+		{{#if (itemHas item "Capacity") }}
+			<section style="border: 2px solid red; display: flex">
+				<h3>Capacity<a class="remove-type fas fa-minus" data-remove-type="Capacity" title="Remove"></a></h3>
+			</section>
+		{{/if}}
+		
+		{{#if (itemHas item "Matrix") }}
+			<section style="border: 2px solid red; display: flex">
+				<section>
+					<h3>Matrix<a class="remove-type fas fa-minus" data-remove-type="Matrix" title="Remove"></a></h3>
+					<label for="system.program_slots">Program Slots</label>
+					<input direct-data id="system.program_slots" type="text" value="{{item.system.program_slots}}" style="width: 2em" />
+					<table>
+						<thead>
+							<tr><td>A</td><td>S</td><td>D</td><td>F</td></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ solveItemFormula item item.system.matrix_attributes.a }}</td>
+								<td>{{ solveItemFormula item item.system.matrix_attributes.s }}</td>
+								<td>{{ solveItemFormula item item.system.matrix_attributes.d }}</td>
+								<td>{{ solveItemFormula item item.system.matrix_attributes.f }}</td>
+							</tr>
+							<tr>
+								<td><input direct-data id="system.matrix_attributes.a" type="text" value="{{item.system.matrix_attributes.a}}" style="width: 2em" /></td>
+								<td><input direct-data id="system.matrix_attributes.s" type="text" value="{{item.system.matrix_attributes.s}}" style="width: 2em" /></td>
+								<td><input direct-data id="system.matrix_attributes.d" type="text" value="{{item.system.matrix_attributes.d}}" style="width: 2em" /></td>
+								<td><input direct-data id="system.matrix_attributes.f" type="text" value="{{item.system.matrix_attributes.f}}" style="width: 2em" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section style="display: flex; flex-flow: nowrap; ">
+					<table style="align-self: start; border-collapse: collapse;">
+						<thead>
+							<tr>
+								<th colspan="2">Hacking</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each config.matrix_programs as |program program_id| }} 
+							{{#if program.1.illegal }}
+							<tr>
+								<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_programs." (matrixProgramAsString program_id) ) ".name")}}</td>
+								<td style="padding: 0; margin: 0"><input type="checkbox" class="switch" {{#if (in program_id item.system.programs) }} checked {{/if}}/></td>
+							</tr>
+							{{/if }}
+							{{/each}}
+						</tbody>
+					</table>
+				
+					<table style="align-self: start; border-collapse: collapse;">
+						<thead>
+							<tr>
+								<th colspan="2">Basic</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each config.matrix_programs as |program program_id| }} 
+							{{#unless program.1.illegal }}
+							<tr>
+								<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_programs." (matrixProgramAsString program_id) ) ".name")}}</td>
+								<td style="padding: 0; margin: 0"><input type="checkbox" class="switch" /></td>
+							</tr>
+							{{/unless}}
+							{{/each}}
+						</tbody>
+					</table>
+				</section>
+			</section>
+		{{/if}}
+
+		{{#if (itemHas item "Defense") }}
+			<section style="border: 2px solid red; display: flex">
+				<section>
+					<h3>Defense<a class="remove-type fas fa-minus" data-remove-type="Defense" title="Remove"></a></h3>
+				</section>
+			</section>
+		{{/if}}
+
+		{{#if (itemHas item "Weapon") }}
+			<section style="border: 2px solid red; display: flex">
+				<section>
+					<h3>Weapon<a class="remove-type fas fa-minus" data-remove-type="Weapon" title="Remove"></a></h3>
+					<label for="system.attack_formula">Attack Roll</label>
+					<input direct-data id="system.attack_formula" type="text" value="{{item.system.attack_formula}}" style="width: 10em" />
+					<table>
+						<tbody>
+							<tr>
+								<td>{{ solveItemFormula item item.system.attack_ratings.close }}</td>
+								<td>{{ solveItemFormula item item.system.attack_ratings.near }}</td>
+								<td>{{ solveItemFormula item item.system.attack_ratings.far }}</td>
+								<td>{{ solveItemFormula item item.system.attack_ratings.extreme }}</td>
+							</tr>
+							<tr>
+								<td><input direct-data id="system.attack_ratings.close" type="text" value="{{item.system.attack_ratings.close}}" style="width: 2em" /></td>
+								<td><input direct-data id="system.attack_ratings.near" type="text" value="{{item.system.attack_ratings.near}}" style="width: 2em" /></td>
+								<td><input direct-data id="system.attack_ratings.far" type="text" value="{{item.system.attack_ratings.far}}" style="width: 2em" /></td>
+								<td><input direct-data id="system.attack_ratings.extreme" type="text" value="{{item.system.attack_ratings.extreme}}" style="width: 2em" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+			</section>
+		{{/if}}
+
+		{{#if (itemHas item "Firearm") }}
+			<section style="border: 2px solid red; display: flex">
+				<section>
+					<h3>Firearm<a class="remove-type fas fa-minus" data-remove-type="Firearm" title="Remove"></a></h3>
+				</section>
+			</section>
+		{{/if}}
+
+		{{#if (itemHas item "Mountable") }}
+			<section style="border: 2px solid red; display: flex">
+				<section>
+					<h3>Mountable<a class="remove-type fas fa-minus" data-remove-type="Mountable" title="Remove"></a></h3>
+				</section>
+			</section>
+		{{/if}}
+
+		{{#if (itemHas item "Explosive") }}
+			<section style="border: 2px solid red; display: flex">
+				<section>
+					<h3>Explosive<a class="remove-type fas fa-minus" data-remove-type="Explosive" title="Remove"></a></h3>
+				</section>
+			</section>
+		{{/if}}
+
+		
+	</section>
+</form>

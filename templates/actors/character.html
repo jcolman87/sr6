@@ -1,0 +1,42 @@
+<form class="pc {{cssClass}}" autocomplete="off">
+	<header class="sheet-header">
+		<div>
+			<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="120" width="120" /><br />
+			<br />
+		</div>
+		<div class="header-fields">
+			<h1>
+				<input direct-data id="name" type="text" value="{{actor.name}}" />
+			</h1>
+		</div>
+	</header>
+	{{> "systems/sr6/templates/actors/parts/attributes.html" attributes=actor.system.attributes}}
+
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+		<a class="item" data-tab="basics">Basics</a>
+		<a class="item" data-tab="skills">Skills</a>
+		<a class="item" data-tab="combat">Combat</a>
+		<a class="item" data-tab="matrix">Matrix</a>
+		<a class="item" data-tab="gear">Gear</a>
+	</nav>
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		{{!-- Basics Tab --}}
+		<div class="tab basics" data-group="primary" data-tab="basics">
+			{{> "systems/sr6/templates/actors/parts/tab-basics.html" attributes=actor.system.attributes}}
+		</div>
+		<div class="tab skills" data-group="primary" data-tab="skills">
+			{{> "systems/sr6/templates/actors/parts/tab-skills.html"}}
+		</div>
+		<div class="tab weapons" data-group="primary" data-tab="combat">
+			{{> "systems/sr6/templates/actors/parts/tab-combat.html"}}
+		</div>
+		<div class="tab matrix" data-group="primary" data-tab="matrix">
+			{{> "systems/sr6/templates/actors/parts/tab-matrix.html"}}
+		</div>
+		<div class="tab gear" data-group="primary" data-tab="gear">
+			{{> "systems/sr6/templates/actors/parts/tab-gear.html"}}
+		</div>
+	</section>
+</form>

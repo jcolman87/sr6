@@ -1,0 +1,24 @@
+{
+	"private": true,
+	"name": "sr6",
+	"version": "0.0.1",
+	"description": "balls",
+	"author": "jaynus",
+	"sideEffects": [
+		"src/index.ts"
+	],
+	"devDependencies": {
+		"@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
+		"@typescript-eslint/parser": "^6.13.2",
+		"@types/jquery": "^3.5.29"
+	},
+	"dependencies": {
+		"common.js": "^1.1.1",
+		"typescript-formatter": "^7.2.2"
+	},
+	"scripts": {
+		"build": "tsc",
+		"watch": "tsc --watch",
+		"prettier": "prettier-eslint --eslint-config-path=$PWD/.eslintrc.json  --write \"{,src/**/*}.ts\""
+	}
+}

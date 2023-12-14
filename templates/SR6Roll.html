@@ -1,0 +1,55 @@
+<h3>
+	<img class="profile-img" src="{{data.actor.img}}" data-edit="img" title="{{actor.name}}" height="24" width="24" /> 
+	{{data.actor.name}}
+</h3>
+<header class="part-header flexrow chat-edge-post">
+	<div>{{formula}}</div>
+	<br/>
+	<div class="resulttext" style="flex:2"><i style="font-weight: bold;">{{hits}}</i> hits</div>
+	<br/>
+	{{#if critical_glitch}}
+	<span style="color: rgb(215, 14, 233); flex:2">Critical Glitch!</span><br/>
+	{{else glitch}}
+	<span style="color: rgb(194, 76, 29); flex:2">Glitch!</span><br/>
+	{{/if}}
+</header>
+{{#if (isRollType data.type "WeaponAttack") }}
+<div>
+	<input id="roll-defense" data-attacker-id="{{data.actor._id}}" data-weapon-id="{{data.weapon._id}}" data-hits="{{hits}}" type="button" value="Roll Defense"/>
+</div>
+{{/if}}
+
+{{#if (isRollType data.type "Defend") }}
+<div>
+	{{#if (gt hits data.threshold  )}}
+	Defended
+	{{else}}
+	{{ var "diff" (sub data.threshold hits) }}
+	{{ var "damage" (add diff data.weapon.system.damage) }}
+	DV({{data.weapon.system.damage}}) + Hits({{ diff }}) = {{ damage }}
+	<br/>
+	<input id="roll-soak" data-attacker-id="{{data.attacker._id}}" data-weapon-id="{{data.weapon._id}}" data-hits="{{hits}}" data-threshold="{{ data.threshold }}" type="button" value="Soak Damage"/>
+	{{/if}}
+</div>
+{{/if}}
+
+{{#if (isRollType data.type "SoakDamage") }}
+<div>
+	{{#if (gt hits data.threshold  )}}
+	No Damage taken
+	{{else}}
+	{{ var "damage" (sub data.threshold hits) }}
+	Took {{damage}} damage 
+	{{/if}}
+</div>
+{{/if}}
+
+<div class="dice-tooltip chat-edge-post-collapsible" style="display: none">
+	<section>
+		<div>
+			{{#each dice as |result id|}}
+			<i class="roll {{result.classes}}" style="width: 24px; height: 24px;">&nbsp; </i>
+			{{/each}}
+		</div>
+	</section>
+</div>

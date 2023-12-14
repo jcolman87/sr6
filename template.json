@@ -1,0 +1,379 @@
+{
+    "Actor":
+    {
+        "types":
+        [
+            "Player",
+            "NPC",
+            "Matrix",
+            "Astral"
+        ],
+        "templates":
+        {
+            "monitors":
+            {
+                "monitors":
+                {
+                    "physical":
+                    {
+                        "base": 9,
+                        "modifier": 0,
+                        "augment": 0,
+                        "formula": "8 + @actor.system.attributes.body.value / 2"
+                    },
+                    "stun":
+                    {
+                        "base": 9,
+                        "modifier": 0,
+                        "augment": 0,
+                        "formula": "8 + @actor.system.attributes.willpower.value / 2"
+                    },
+                    "overflow":
+                    {
+                        "base": 32,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "edge":
+                    {
+                        "base": 1,
+                        "modifier": 0,
+                        "augment": 0
+                    }
+                }
+            },
+            "attributes":
+            {
+                "attributes":
+                {
+                    "body":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "agility":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "reaction":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "strength":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "willpower":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "logic":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "intuition":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "charisma":
+                    {
+                        "base": 2,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "magic":
+                    {
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "resonance":
+                    {
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "essense":
+                    {
+                        "base": 6,
+                        "modifier": 0,
+                        "augment": 0
+                    }
+                }
+            },
+            "derived-attributes":
+            {
+                "derived_attributes":
+                {
+                    "composure":
+                    {
+                        "formula": "@actor.system.attributes.willpower.value + @actor.system.attributes.charisma.value",
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "judge_intentions":
+                    {
+                        "formula": "@actor.system.attributes.willpower.value + @actor.system.attributes.intuition.value",
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "memory":
+                    {
+                        "formula": "@actor.system.attributes.logic.value + @actor.system.attributes.intuition.value",
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "lift_carry":
+                    {
+                        "formula": "@actor.system.attributes.body.value + @actor.system.attributes.willpower.value",
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "movement":
+                    {
+                        "formula": "0",
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    },
+                    "matrix_perception":
+                    {
+                        "formula": "@actor.system.skills.electronics.value + @actor.system.attributes.intuition.value",
+                        "base": 0,
+                        "modifier": 0,
+                        "augment": 0
+                    }
+                }
+            },
+            "skills":
+            {
+                "skills":
+                {
+                    "astral":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "athletics":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "biotech":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "close_combat":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "con":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "conjuring":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "cracking":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "electronics":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "enchanting":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "engineering":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "exotic_weapons":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "firearms":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "influence":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "outdoors":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "perception":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "piloting":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "sorcery":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "stealth":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    },
+                    "tasking":
+                    {
+                        "points": 0,
+                        "pool": 0
+                    }
+                }
+            }
+        },
+        "Player":
+        {
+            "templates":
+            [
+                "monitors",
+                "attributes",
+                "derived-attributes",
+                "skills"
+            ]
+        },
+        "NPC":
+        {
+            "templates":
+            [
+                "attributes"
+            ]
+        },
+        "Matrix":
+        {},
+        "Astral":
+        {}
+    },
+    "Item":
+    {
+        "types":
+        [
+            "Gear",
+            "SIN",
+            "Lifestyle",
+            "Contact"
+        ],
+        "templates":
+        {
+            "base-gear":
+            {
+                "description": "",
+                "rating": 1,
+                "size": 3,
+                "types": 0
+            },
+            "has-cost":
+            {
+                "cost": "0",
+                "availability": "1",
+                "illegal": false
+            },
+            "has-matrix":
+            {
+                "matrix_attributes":
+                {
+                    "a": "0",
+                    "s": "0",
+                    "d": "0",
+                    "f": "0"
+                },
+                "program_slots": "0",
+                "loaded_programs": []
+            },
+            "has-defense":
+            {
+                "dr": "0"
+            },
+            "has-capacity":
+            {
+                "capacity": "0"
+            },
+            "has-explosive":
+            {
+                "dv_gz": "0",
+                "dv_close": "0",
+                "dv_near": "0",
+                "blast": ""
+            },
+            "has-weapon-mountable":
+            {
+                "locations": []
+            },
+            "weapon":
+            {
+                "attack_ratings":
+                {
+                    "close": "0",
+                    "near": "0",
+                    "far": "0",
+                    "extreme": "0"
+                },
+                "attack_formula": "0",
+                "damage": "0",
+                "damage_type": "physical",
+                "damage_form": "physical"
+            },
+            "firearm":
+            {
+                "firemodes":
+                [
+                    "SS"
+                ],
+                "mount_locations":
+                []
+            }
+        },
+        "SIN":
+        {
+        
+        },
+        "Lifestyle":
+        {
+        },
+        "Contact": 
+        {
+        }
+    }
+}
