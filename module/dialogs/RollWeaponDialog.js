@@ -1,10 +1,10 @@
+import { RollDialog } from "./RollDialog.js";
 import { Enums } from "../config.js";
-import { SR6Roll } from "../SR6Roll.js";
-class RollWeaponDialog extends FormApplication {
+class RollWeaponDialog extends RollDialog {
     actor;
     weapon;
     constructor(actor, weapon) {
-        super({}, {});
+        super();
         this.actor = actor;
         this.weapon = weapon;
     }
@@ -22,39 +22,20 @@ class RollWeaponDialog extends FormApplication {
             tabs: []
         });
     }
-    async _updateObject(event, formData) { }
-    _onComplete(html, event) {
-        const pool_modifier = parseInt(html.find("#pool-modifier").val());
+    getBasePool() {
+        return this.actor.calculateSkillPool(this.weapon.skill_use());
+    }
+    getRollData(html) {
         const distance = Enums.Distance[html.find("#distance").val()];
         const firemode = Enums.FireMode[html.find("#firemode").val()];
-        //console.log("RollWeaponDialog::_onComplete", pool_modifier, Enums.Distance[distance] as string, Enums.FireMode[firemode] as string);
-        const data = {
+        let data = {
             type: Enums.RollType.WeaponAttack,
             actor: this.actor,
             weapon: this.weapon,
             distance: distance,
-            firemode: firemode,
-            pool_modifier: pool_modifier
+            firemode: firemode
         };
-        let attack_formula = this.weapon.weapon().attack_formula;
-        const formula = `(${attack_formula} + ${pool_modifier})d6`;
-        let roll = new SR6Roll(formula, data);
-        roll.evaluate({ async: false });
-        roll.toMessage(roll, {});
-        this.close({});
-    }
-    activateListeners(html) {
-        super.activateListeners(html);
-        html.find("#do-roll").click(this._onComplete.bind(this, html));
-    }
-    getData(options) {
-        let data = super.getData(options);
-        data.actor = this.actor;
-        data.weapon = this.weapon;
         return data;
-    }
-    close(options) {
-        return super.close();
     }
 }
 export async function showRollWeaponDialog(actor, weapon) {

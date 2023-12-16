@@ -15,6 +15,13 @@ export var ItemTypes;
         capacity = "0";
     }
     ItemTypes.Capacity = Capacity;
+    class SkillUse {
+        skill_use = {
+            skill: Enums.Skill.firearms,
+            specialization: Enums.Specialization.holdouts,
+        };
+    }
+    ItemTypes.SkillUse = SkillUse;
     class Matrix {
         matrix_attributes = {
             a: "0",
@@ -40,10 +47,10 @@ export var ItemTypes;
         attack_ratings = {
             close: "0",
             near: "0",
+            medium: "0",
             far: "0",
             extreme: "0"
         };
-        attack_formula = "0";
         damage = "0";
         damage_type = Enums.DamageType.Physical;
         damage_form = Enums.DamageType.Physical;
@@ -69,6 +76,7 @@ export var ItemTypes;
         Types[Types["Weapon"] = 64] = "Weapon";
         Types[Types["Firearm"] = 128] = "Firearm";
         Types[Types["Mountable"] = 256] = "Mountable";
+        Types[Types["SkillUse"] = 512] = "SkillUse";
     })(Types = ItemTypes.Types || (ItemTypes.Types = {}));
 })(ItemTypes || (ItemTypes = {}));
 export class ItemData {
@@ -76,4 +84,8 @@ export class ItemData {
     rating = "1";
     size = "3";
     types = 0;
+    category = {
+        type: "",
+        subtype: ""
+    };
 }

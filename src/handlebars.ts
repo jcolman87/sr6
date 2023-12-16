@@ -1,7 +1,9 @@
 import { SR6Actor } from "./actors/SR6Actor.js";
+import { SR6CharacterActor } from "./actors/SR6CharacterActor.js";
 import { SR6Item } from "./items/SR6Item.js";
 import { ItemTypes } from "./items/Data.js";
-import { Enums } from "./config.js";
+import { SR6CONFIG, Enums } from "./config.js";
+
 
 export function defineHandlebarHelpers() {
 	Handlebars.registerHelper("itemHas", function (item: SR6Item, ty_str: string) {
@@ -20,6 +22,24 @@ export function defineHandlebarHelpers() {
 		return item.solveFormulaWithActor(actor, formula);
 	});
 
+	Handlebars.registerHelper("getSkill", function (actor: SR6CharacterActor, ty: Enums.Skill) {
+		return actor.getSkill(ty);
+	});
+
+	Handlebars.registerHelper("getWoundModifier", function (actor: SR6CharacterActor) {
+		return actor.getWoundModifier();
+	});
+
+	Handlebars.registerHelper("skillAsString", function (ty: Enums.Skill) {
+		return Enums.Skill[ty];
+	});
+	Handlebars.registerHelper("specializationAsString", function (ty: Enums.Specialization) {
+		console.log("ty", ty, Enums.Specialization[ty]);
+		return Enums.Specialization[ty];
+	});
+	Handlebars.registerHelper("distanceToString", function (ty: Enums.Distance) {
+		return Enums.Distance[ty];
+	});
 	Handlebars.registerHelper("matrixProgramAsString", function (ty: Enums.MatrixProgram) {
 		return Enums.MatrixProgram[ty];
 	});
@@ -27,9 +47,16 @@ export function defineHandlebarHelpers() {
 		return Enums.MatrixAction[ty];
 	});
 
+	Handlebars.registerHelper("specializationsOfSkill", function (ty: Enums.Skill) {
+		console.log("specializationsOfSkill", ty, SR6CONFIG.skills.get(ty)!.specializations);
+		return SR6CONFIG.skills.get(ty)!.specializations;
+	});
+
+
 	Handlebars.registerHelper("in", function (elem, list, options) {
 		if (Array.isArray(list)) {
-			return list.includes(elem);
+			let res = list.includes(elem);
+			return res;
 		} else if (list instanceof Map) {
 			return list.has(elem);
 		}

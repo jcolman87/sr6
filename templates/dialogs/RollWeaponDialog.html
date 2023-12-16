@@ -1,15 +1,22 @@
 {{ log this }}
+{{ var "skill" (getSkill data.actor data.weapon.system.skill_use.skill) }}
+
+
 <form autocomplete="off">
-	<h1>Attacking with {{weapon.name}}</h1>
-	Formula: {{weapon.system.attack_formula}}
+	<h1>Attacking with {{data.weapon.name}}</h1>
 	<div class="flex-container">
-		<label for="pool-modifier" title="Pool Modifier">Pool Modifier</label>
-		<input id="pool-modifier" value="0" type="number" style="width: 2em" />
+
+		Skill: {{ skillAsString data.weapon.system.skill_use.skill }} <br/>
+		Specialization: {{ specializationAsString data.weapon.system.skill_use.specialization}} <br/>
+		
+
+		{{> "systems/sr6/templates/dialogs/RollShared.html"}}
 		
 		<label for="distance" title="Distance">Distance</label>
 		<select id="distance">
 			<option value="Close">Close</option>
 			<option value="Near" selected>Near</option>
+			<option value="Medium" selected>Medium</option>
 			<option value="Far">Far</option>
 			<option value="Extreme">Extreme</option>
 		</select>
@@ -17,9 +24,9 @@
 		<label for="firemode" title="Fire Mode">Fire Mode</label>
 		<select id="firemode">
 			<option value="SS" >SS</option>
-			{{#if (in 'SA' weapon.firemodes) }}<option value="SA">SA</option>{{/if}}
-			{{#if (in 'BF' weapon.firemodes) }}<option value="BF">BF</option>{{/if}}
-			{{#if (in 'FA' weapon.firemodes) }}<option value="FA">FA</option>{{/if}}
+			{{#if (in 'SA' data.weapon.firemodes) }}<option value="SA">SA</option>{{/if}}
+			{{#if (in 'BF' data.weapon.firemodes) }}<option value="BF">BF</option>{{/if}}
+			{{#if (in 'FA' data.weapon.firemodes) }}<option value="FA">FA</option>{{/if}}
 		</select>
 	</div>
 	<input id="do-roll" type="button" value="Roll"/>

@@ -4,15 +4,15 @@ export class Formula extends String {}
 
 export class ItemFormula extends Formula {}
 
-export interface SkillUse {
-	skill: undefined | Enums.Skill;
-	specialization: undefined | Enums.Specialization;
-}
 
 export interface ItemBaseData {
 	description: string;
 	rating: ItemFormula;
 	size: ItemFormula;
+	category: {
+		type: string,
+		subtype: string,
+	},
 }
 
 export namespace ItemTypes {
@@ -25,6 +25,17 @@ export namespace ItemTypes {
 	export class Capacity {
 		capacity: ItemFormula = "0";
 	}
+
+	export class SkillUse {
+		skill_use: {
+			skill: Enums.Skill;
+			specialization: Enums.Specialization
+		} = {
+			skill: Enums.Skill.firearms,
+			specialization: Enums.Specialization.holdouts,
+		}
+	}
+
 
 	export class Matrix {
 		matrix_attributes: {
@@ -57,15 +68,16 @@ export namespace ItemTypes {
 		attack_ratings: {
 			close: ItemFormula;
 			near: ItemFormula;
+			medium: ItemFormula;
 			far: ItemFormula;
 			extreme: ItemFormula;
 		} = {
 			close: "0",
 			near: "0",
+			medium: "0",
 			far: "0",
 			extreme: "0"
 		};
-		attack_formula: ItemFormula = "0";
 		damage: ItemFormula = "0";
 		damage_type: Enums.DamageType = Enums.DamageType.Physical;
 		damage_form: Enums.DamageType = Enums.DamageType.Physical;
@@ -73,11 +85,11 @@ export namespace ItemTypes {
 
 	export class Firearm {
 		firemodes: Enums.FireMode[] = [Enums.FireMode.SS];
-		mount_locations: string[] = [];
+		mount_locations: Enums.WeaponAccessoryLocation[] = [];
 	}
 
 	export class Mountable {
-		locations: string[] = [];
+		locations: Enums.WeaponAccessoryLocation[] = [];
 	}
 
 	export enum Types {
@@ -89,7 +101,8 @@ export namespace ItemTypes {
 		Explosive = 1 << 5,
 		Weapon = 1 << 6,
 		Firearm = 1 << 7,
-		Mountable = 1 << 8
+		Mountable = 1 << 8,
+		SkillUse = 1 << 9,
 	}
 }
 
@@ -99,4 +112,12 @@ export class ItemData implements ItemBaseData {
 	size: ItemFormula = "3";
 
 	types: number = 0;
+
+	category: {
+		type: string,
+		subtype: string,
+	} = {
+		type: "",
+		subtype: ""
+	};
 }

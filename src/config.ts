@@ -1,4 +1,10 @@
 export namespace Enums {
+	export enum WeaponAccessoryLocation {
+		Under = "under",
+		Barrel = "barrel",
+		Top = "top"
+	}
+
 	export enum RollType {
 		Attribute,
 		Skill,
@@ -232,14 +238,14 @@ export namespace Enums {
 	}
 
 	export enum Activation {
-		Minor,
-		Major,
-		Passive
+		Passive = 0,
+		Minor = 1,
+		Major = 2, 
 	}
 
 	export enum ActivationLimit {
-		Initiative,
-		Anytime
+		Initiative = "initiative",
+		Anytime = "anytime"
 	}
 
 	export enum AccessLevel {
@@ -251,21 +257,23 @@ export namespace Enums {
 	export enum Distance {
 		Close,
 		Near,
+		Medium,
 		Far,
 		Extreme
 	}
 
 	export enum FireMode {
-		SS,
-		SA,
-		BF,
-		FA
+		SS = "SS",
+		SA = "SA", // -2 AR +1 DR
+		BF = "BF", // narrow -4 AR +2 DR, wide=split dice pool
+		FA = "FA" // -6 AR 
 	}
 
 	export enum DamageType {
-		Physical,
-		Stun,
-		Device
+		Physical = "Physical",
+		Stun = "Stun",
+		Matrix = "Matrix",
+		Astral = "Astral"
 	}
 
 	export enum Size {
@@ -283,12 +291,31 @@ export namespace Enums {
 	}
 
 	export enum Lifestyle {
-		street = 0,
-		squatter = 1,
-		low = 2,
-		middle = 3,
-		high = 4,
-		luxury = 5
+		Street = 0,
+		Squatter = 1,
+		Low = 2,
+		Middle = 3,
+		High = 4,
+		Luxury = 5
+	}
+
+	export enum SpellRangeType {
+		Touch = 0,
+		LineOfSight = 1,
+		Perceived = 2
+	}
+
+	export enum SpellDurationType {
+		Instantaneous = 0,
+		Sustained = 1,
+		Permanent = 2,
+		Limited = 3
+	}
+
+	export enum AugmentationQuality {
+		Standard = 0,
+		Alpha = 1,
+		Beta = 2,
 	}
 }
 
@@ -356,6 +383,32 @@ export class MatrixProgramDef {
 }
 
 export class SR6Config {
+	GEAR_TYPES = ["ACCESSORY", "ARMOR", "ARMOR_ADDITION", "BIOWARE", "CYBERWARE", "TOOLS", "ELECTRONICS", "NANOWARE", "GENETICS", "WEAPON_CLOSE_COMBAT", "WEAPON_RANGED", "WEAPON_FIREARMS", "WEAPON_SPECIAL", "AMMUNITION", "CHEMICALS", "SOFTWARE", "SURVIVAL", "BIOLOGY", "VEHICLES", "DRONES", "MAGICAL"];
+
+	GEAR_SUBTYPES = new Map([
+		["ACCESSORY", ["TOP_OR_UNDERBARREL", "TOP", "BARREL", "UNDERBARREL"]],
+		["ARMOR", ["ARMOR_BODY", "ARMOR_HELMET", "ARMOR_SHIELD"]],
+		["ARMOR_ADDITION", []],
+		["BIOWARE", ["BIOWARE_STANDARD", "BIOWARE_CULTURED", "BIOWARE_IMPLANT_WEAPON"]],
+		["CYBERWARE", ["CYBER_HEADWARE", "CYBERJACK", "CYBER_EYEWARE", "CYBER_BODYWARE", "CYBER_EARWARE", "CYBER_IMPLANT_WEAPON", "CYBER_LIMBS", "COMMLINK", "CYBERDECK"]],
+		["TOOLS", ["TOOLS"]],
+		["ELECTRONICS", ["COMMLINK", "CYBERDECK", "ELECTRONIC_ACCESSORIES", "RIGGER_CONSOLE", "RFID", "COMMUNICATION", "ID_CREDIT", "IMAGING", "OPTICAL", "AUDIO", "SENSOR_HOUSING", "SECURITY", "BREAKING", "TAC_NET"]],
+		["NANOWARE", []],
+		["GENETICS", []],
+		["SOFTWARE", ["AUTOSOFT", "SKILLSOFT"]],
+		["WEAPON_CLOSE_COMBAT", ["BLADES", "CLUBS", "WHIPS", "UNARMED", "OTHER_CLOSE"]],
+		["WEAPON_RANGED", ["BOWS", "CROSSBOWS", "THROWING"]],
+		["WEAPON_FIREARMS", ["TASERS", "HOLDOUTS", "PISTOLS_LIGHT", "MACHINE_PISTOLS", "PISTOLS_HEAVY", "SUBMACHINE_GUNS", "SHOTGUNS", "RIFLE_ASSAULT", "RIFLE_HUNTING", "RIFLE_SNIPER", "LMG", "MMG", "HMG", "ASSAULT_CANNON"]],
+		["WEAPON_SPECIAL", ["LAUNCHERS", "THROWERS", "OTHER_SPECIAL"]],
+		["AMMUNITION", ["AMMO_TASER", "AMMO_LIGHT", "AMMO_HEAVY", "AMMO_RIFLE", "AMMO_SHOTGUN", "AMMO_MG", "AMMO_ROCKETS", "AMMO_MISSILES", "AMMO_EXPLOSIVES", "AMMO_GRENADES"]],
+		["CHEMICALS", ["INDUSTRIAL_CHEMICALS", "TOXINS", "DRUGS", "BTL"]],
+		["SURVIVAL", ["SURVIVAL_GEAR", "GRAPPLE_GUN"]],
+		["BIOLOGY", ["BIOTECH", "SLAP_PATCHES"]],
+		["VEHICLES", ["BIKES", "CARS", "TRUCKS", "BOATS", "SUBMARINES", "FIXED_WING", "ROTORCRAFT", "VTOL", "WALKER"]],
+		["DRONES", ["MICRODRONES", "MINIDRONES", "SMALL_DRONES", "MEDIUM_DRONES", "LARGE_DRONES"]],
+		["MAGICAL", ["MAGIC_SUPPLIES"]]
+	]);
+
 	matrix_programs: Map<Enums.MatrixProgram, MatrixProgramDef> = new Map([
 		[Enums.MatrixProgram.browse, new MatrixProgramDef(false, "+1 Edge on Matrix Search")],
 		[Enums.MatrixProgram.baby_monitor, new MatrixProgramDef(false, "Overwatch Score without Action")],

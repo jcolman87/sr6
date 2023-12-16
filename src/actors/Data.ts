@@ -1,5 +1,7 @@
 import { Enums } from "../config.js";
 
+export class Formula extends String {}
+
 export namespace ActorTypes {
 	export class Attribute {
 		base: number = 0;
@@ -33,6 +35,20 @@ export namespace ActorTypes {
 		matrix_perception: Attribute = new Attribute();
 	}
 
+	export interface MatrixAttributes {
+		a: Formula;
+		s: Formula;
+		d: Formula;
+		f: Formula;
+	}
+
+	export interface Matrix {
+		current_device: undefined | string;
+		base_attributes: MatrixAttributes;
+		current_attributes: MatrixAttributes;
+		monitor: Attribute;
+	}
+
 	export class Attributes {
 		body: Attribute = new Attribute();
 		agility: Attribute = new Attribute();
@@ -42,6 +58,7 @@ export namespace ActorTypes {
 		logic: Attribute = new Attribute();
 		intuition: Attribute = new Attribute();
 		charisma: Attribute = new Attribute();
+		edge: Attribute = new Attribute();
 		magic: Attribute = new Attribute();
 		resonance: Attribute = new Attribute();
 		essense: Attribute = new Attribute();

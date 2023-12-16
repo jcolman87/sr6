@@ -1,8 +1,9 @@
 <form class="pc {{cssClass}}" autocomplete="off">
-	<header class="sheet-header">
-		<div>
-			<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="120" width="120" /><br />
-			<br />
+	<header class="sheet-header" style="display: flex; flex-flow: row">
+		<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="200"/>
+		<div style="align-self: start">
+			<div id="physical-bar" class="physical-bar" style="width: 300px"></div>
+			<div id="stun-bar" class="stun-bar" style="width: 300px"></div>
 		</div>
 		<div class="header-fields">
 			<h1>
@@ -19,10 +20,12 @@
 		<a class="item" data-tab="combat">Combat</a>
 		<a class="item" data-tab="matrix">Matrix</a>
 		<a class="item" data-tab="gear">Gear</a>
+		{{#if user.isGM }}
+		<a class="item" data-tab="effects">Effects</a>
+		{{/if}}
 	</nav>
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		{{!-- Basics Tab --}}
 		<div class="tab basics" data-group="primary" data-tab="basics">
 			{{> "systems/sr6/templates/actors/parts/tab-basics.html" attributes=actor.system.attributes}}
 		</div>
@@ -38,5 +41,10 @@
 		<div class="tab gear" data-group="primary" data-tab="gear">
 			{{> "systems/sr6/templates/actors/parts/tab-gear.html"}}
 		</div>
+		{{#if user.isGM }}
+		<div class="tab effects" data-group="primary" data-tab="effects">
+			{{> "systems/sr6/templates/actors/parts/tab-effects.html"}}
+		</div>
+		{{/if}}
 	</section>
 </form>

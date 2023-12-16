@@ -1,5 +1,11 @@
 export var Enums;
 (function (Enums) {
+    let WeaponAccessoryLocation;
+    (function (WeaponAccessoryLocation) {
+        WeaponAccessoryLocation["Under"] = "under";
+        WeaponAccessoryLocation["Barrel"] = "barrel";
+        WeaponAccessoryLocation["Top"] = "top";
+    })(WeaponAccessoryLocation = Enums.WeaponAccessoryLocation || (Enums.WeaponAccessoryLocation = {}));
     let RollType;
     (function (RollType) {
         RollType[RollType["Attribute"] = 0] = "Attribute";
@@ -234,14 +240,14 @@ export var Enums;
     })(MatrixProgram = Enums.MatrixProgram || (Enums.MatrixProgram = {}));
     let Activation;
     (function (Activation) {
-        Activation[Activation["Minor"] = 0] = "Minor";
-        Activation[Activation["Major"] = 1] = "Major";
-        Activation[Activation["Passive"] = 2] = "Passive";
+        Activation[Activation["Passive"] = 0] = "Passive";
+        Activation[Activation["Minor"] = 1] = "Minor";
+        Activation[Activation["Major"] = 2] = "Major";
     })(Activation = Enums.Activation || (Enums.Activation = {}));
     let ActivationLimit;
     (function (ActivationLimit) {
-        ActivationLimit[ActivationLimit["Initiative"] = 0] = "Initiative";
-        ActivationLimit[ActivationLimit["Anytime"] = 1] = "Anytime";
+        ActivationLimit["Initiative"] = "initiative";
+        ActivationLimit["Anytime"] = "anytime";
     })(ActivationLimit = Enums.ActivationLimit || (Enums.ActivationLimit = {}));
     let AccessLevel;
     (function (AccessLevel) {
@@ -253,21 +259,23 @@ export var Enums;
     (function (Distance) {
         Distance[Distance["Close"] = 0] = "Close";
         Distance[Distance["Near"] = 1] = "Near";
-        Distance[Distance["Far"] = 2] = "Far";
-        Distance[Distance["Extreme"] = 3] = "Extreme";
+        Distance[Distance["Medium"] = 2] = "Medium";
+        Distance[Distance["Far"] = 3] = "Far";
+        Distance[Distance["Extreme"] = 4] = "Extreme";
     })(Distance = Enums.Distance || (Enums.Distance = {}));
     let FireMode;
     (function (FireMode) {
-        FireMode[FireMode["SS"] = 0] = "SS";
-        FireMode[FireMode["SA"] = 1] = "SA";
-        FireMode[FireMode["BF"] = 2] = "BF";
-        FireMode[FireMode["FA"] = 3] = "FA";
+        FireMode["SS"] = "SS";
+        FireMode["SA"] = "SA";
+        FireMode["BF"] = "BF";
+        FireMode["FA"] = "FA"; // -6 AR 
     })(FireMode = Enums.FireMode || (Enums.FireMode = {}));
     let DamageType;
     (function (DamageType) {
-        DamageType[DamageType["Physical"] = 0] = "Physical";
-        DamageType[DamageType["Stun"] = 1] = "Stun";
-        DamageType[DamageType["Device"] = 2] = "Device";
+        DamageType["Physical"] = "Physical";
+        DamageType["Stun"] = "Stun";
+        DamageType["Matrix"] = "Matrix";
+        DamageType["Astral"] = "Astral";
     })(DamageType = Enums.DamageType || (Enums.DamageType = {}));
     let Size;
     (function (Size) {
@@ -285,13 +293,32 @@ export var Enums;
     })(Size = Enums.Size || (Enums.Size = {}));
     let Lifestyle;
     (function (Lifestyle) {
-        Lifestyle[Lifestyle["street"] = 0] = "street";
-        Lifestyle[Lifestyle["squatter"] = 1] = "squatter";
-        Lifestyle[Lifestyle["low"] = 2] = "low";
-        Lifestyle[Lifestyle["middle"] = 3] = "middle";
-        Lifestyle[Lifestyle["high"] = 4] = "high";
-        Lifestyle[Lifestyle["luxury"] = 5] = "luxury";
+        Lifestyle[Lifestyle["Street"] = 0] = "Street";
+        Lifestyle[Lifestyle["Squatter"] = 1] = "Squatter";
+        Lifestyle[Lifestyle["Low"] = 2] = "Low";
+        Lifestyle[Lifestyle["Middle"] = 3] = "Middle";
+        Lifestyle[Lifestyle["High"] = 4] = "High";
+        Lifestyle[Lifestyle["Luxury"] = 5] = "Luxury";
     })(Lifestyle = Enums.Lifestyle || (Enums.Lifestyle = {}));
+    let SpellRangeType;
+    (function (SpellRangeType) {
+        SpellRangeType[SpellRangeType["Touch"] = 0] = "Touch";
+        SpellRangeType[SpellRangeType["LineOfSight"] = 1] = "LineOfSight";
+        SpellRangeType[SpellRangeType["Perceived"] = 2] = "Perceived";
+    })(SpellRangeType = Enums.SpellRangeType || (Enums.SpellRangeType = {}));
+    let SpellDurationType;
+    (function (SpellDurationType) {
+        SpellDurationType[SpellDurationType["Instantaneous"] = 0] = "Instantaneous";
+        SpellDurationType[SpellDurationType["Sustained"] = 1] = "Sustained";
+        SpellDurationType[SpellDurationType["Permanent"] = 2] = "Permanent";
+        SpellDurationType[SpellDurationType["Limited"] = 3] = "Limited";
+    })(SpellDurationType = Enums.SpellDurationType || (Enums.SpellDurationType = {}));
+    let AugmentationQuality;
+    (function (AugmentationQuality) {
+        AugmentationQuality[AugmentationQuality["Standard"] = 0] = "Standard";
+        AugmentationQuality[AugmentationQuality["Alpha"] = 1] = "Alpha";
+        AugmentationQuality[AugmentationQuality["Beta"] = 2] = "Beta";
+    })(AugmentationQuality = Enums.AugmentationQuality || (Enums.AugmentationQuality = {}));
 })(Enums || (Enums = {}));
 export class SkillSpecializationDef {
     id;
@@ -344,6 +371,30 @@ export class MatrixProgramDef {
     }
 }
 export class SR6Config {
+    GEAR_TYPES = ["ACCESSORY", "ARMOR", "ARMOR_ADDITION", "BIOWARE", "CYBERWARE", "TOOLS", "ELECTRONICS", "NANOWARE", "GENETICS", "WEAPON_CLOSE_COMBAT", "WEAPON_RANGED", "WEAPON_FIREARMS", "WEAPON_SPECIAL", "AMMUNITION", "CHEMICALS", "SOFTWARE", "SURVIVAL", "BIOLOGY", "VEHICLES", "DRONES", "MAGICAL"];
+    GEAR_SUBTYPES = new Map([
+        ["ACCESSORY", ["TOP_OR_UNDERBARREL", "TOP", "BARREL", "UNDERBARREL"]],
+        ["ARMOR", ["ARMOR_BODY", "ARMOR_HELMET", "ARMOR_SHIELD"]],
+        ["ARMOR_ADDITION", []],
+        ["BIOWARE", ["BIOWARE_STANDARD", "BIOWARE_CULTURED", "BIOWARE_IMPLANT_WEAPON"]],
+        ["CYBERWARE", ["CYBER_HEADWARE", "CYBERJACK", "CYBER_EYEWARE", "CYBER_BODYWARE", "CYBER_EARWARE", "CYBER_IMPLANT_WEAPON", "CYBER_LIMBS", "COMMLINK", "CYBERDECK"]],
+        ["TOOLS", ["TOOLS"]],
+        ["ELECTRONICS", ["COMMLINK", "CYBERDECK", "ELECTRONIC_ACCESSORIES", "RIGGER_CONSOLE", "RFID", "COMMUNICATION", "ID_CREDIT", "IMAGING", "OPTICAL", "AUDIO", "SENSOR_HOUSING", "SECURITY", "BREAKING", "TAC_NET"]],
+        ["NANOWARE", []],
+        ["GENETICS", []],
+        ["SOFTWARE", ["AUTOSOFT", "SKILLSOFT"]],
+        ["WEAPON_CLOSE_COMBAT", ["BLADES", "CLUBS", "WHIPS", "UNARMED", "OTHER_CLOSE"]],
+        ["WEAPON_RANGED", ["BOWS", "CROSSBOWS", "THROWING"]],
+        ["WEAPON_FIREARMS", ["TASERS", "HOLDOUTS", "PISTOLS_LIGHT", "MACHINE_PISTOLS", "PISTOLS_HEAVY", "SUBMACHINE_GUNS", "SHOTGUNS", "RIFLE_ASSAULT", "RIFLE_HUNTING", "RIFLE_SNIPER", "LMG", "MMG", "HMG", "ASSAULT_CANNON"]],
+        ["WEAPON_SPECIAL", ["LAUNCHERS", "THROWERS", "OTHER_SPECIAL"]],
+        ["AMMUNITION", ["AMMO_TASER", "AMMO_LIGHT", "AMMO_HEAVY", "AMMO_RIFLE", "AMMO_SHOTGUN", "AMMO_MG", "AMMO_ROCKETS", "AMMO_MISSILES", "AMMO_EXPLOSIVES", "AMMO_GRENADES"]],
+        ["CHEMICALS", ["INDUSTRIAL_CHEMICALS", "TOXINS", "DRUGS", "BTL"]],
+        ["SURVIVAL", ["SURVIVAL_GEAR", "GRAPPLE_GUN"]],
+        ["BIOLOGY", ["BIOTECH", "SLAP_PATCHES"]],
+        ["VEHICLES", ["BIKES", "CARS", "TRUCKS", "BOATS", "SUBMARINES", "FIXED_WING", "ROTORCRAFT", "VTOL", "WALKER"]],
+        ["DRONES", ["MICRODRONES", "MINIDRONES", "SMALL_DRONES", "MEDIUM_DRONES", "LARGE_DRONES"]],
+        ["MAGICAL", ["MAGIC_SUPPLIES"]]
+    ]);
     matrix_programs = new Map([
         [Enums.MatrixProgram.browse, new MatrixProgramDef(false, "+1 Edge on Matrix Search")],
         [Enums.MatrixProgram.baby_monitor, new MatrixProgramDef(false, "Overwatch Score without Action")],

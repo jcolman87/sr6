@@ -16,7 +16,6 @@ export interface BaseRollData {
 export interface DefenseRollData extends BaseRollData {
 	attacker: SR6Actor;
 	weapon: SR6Item;
-	pool_modifier: number;
 	threshold: number;
 }
 
@@ -24,7 +23,6 @@ export interface WeaponRollData extends BaseRollData {
 	weapon: SR6Item;
 	distance: Enums.Distance;
 	firemode: Enums.FireMode;
-	pool_modifier: number;
 }
 
 export class SR6Roll extends Roll {
@@ -76,7 +74,7 @@ export class SR6Roll extends Roll {
 
 		let glitch = ones > Math.round(pool / 2);
 		let critical_glitch = glitch && hits == 0;
-
+		
 		return {
 			user: (game as Game).user,
 			formula: this.formula,

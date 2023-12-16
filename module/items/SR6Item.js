@@ -11,6 +11,9 @@ export class SR6Item extends Item {
         //console.log("solved", formula, roll);
         return roll.total;
     }
+    prepareData() {
+        // TODO: Validate the data types for various item types
+    }
     addType(ty) {
         let data = this.getData();
         data.types = data.types | ty;
@@ -39,6 +42,9 @@ export class SR6Item extends Item {
             case ItemTypes.Types.Mountable:
                 mergeObject(data, new ItemTypes.Mountable());
                 break;
+            case ItemTypes.Types.SkillUse:
+                mergeObject(data, new ItemTypes.SkillUse());
+                break;
             default:
                 throw "WTF";
         }
@@ -56,6 +62,11 @@ export class SR6Item extends Item {
     }
     cost() {
         if (!this.has(ItemTypes.Types.Cost))
+            return undefined;
+        return this.getData();
+    }
+    skill_use() {
+        if (!this.has(ItemTypes.Types.SkillUse))
             return undefined;
         return this.getData();
     }

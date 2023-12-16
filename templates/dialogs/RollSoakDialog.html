@@ -1,9 +1,7 @@
 {{ log this }}
 <form autocomplete="off">
-	<h1>Defending against {{weapon.name}}</h1>
-	Formula: Body({{ actor.system.attributes.body.pool }})
-	<div class="flex-container">
-		<label for="pool-modifier" title="Pool Modifier">Pool Modifier</label>
-		<input id="pool-modifier" value="0" type="number" style="width: 2em" />
+	<h1>Defending against {{data.weapon.name}}</h1>
+	Formula: Body({{ data.actor.system.attributes.body.pool }})<br/>
+	{{> "systems/sr6/templates/dialogs/RollShared.html"}}
 	<input id="do-roll" type="button" value="Roll"/>
 </form>

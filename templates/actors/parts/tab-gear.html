@@ -1,13 +1,20 @@
 <table style="align-self: start; border-collapse: collapse;">
-		<thead>
-			<tr>
-				<th colspan="2">Gear</th>
-			</tr>
-		</thead>
-		{{#each actor.items as |item idx|}}
+	<thead>
 		<tr>
-			<td>{{item.name}}</td>
-			<td></td>
+			<th colspan="2">Gear</th>
+			<th><a class="add-item" data-type="Gear" title="Add Item"><i class="fa fa-plus" aria-hidden="true"></i></a></th>
 		</tr>
-		{{/each}}
-	</table>
+	</thead>
+	{{#each actor.items as |item idx|}}
+	{{# if (eq item.type "Gear" )}}
+	<tr>
+		<td><input type="text" direct-item-data data-item-id="{{item.id}}" data-field="name" value="{{item.name}}" style="width: 10em"/></td>
+		<td></td>
+		<td>
+			<a class="edit-item" data-id="{{item.id}}" title="Edit Item"><i class="fa fa-edit" aria-hidden="true"></i></a>
+			<a class="remove-item" data-id="{{item.id}}" title="Remove Item"><i class="fa fa-minus" aria-hidden="true"></i></a>
+		</td>
+	</tr>
+	{{/if}}
+	{{/each}}
+</table>

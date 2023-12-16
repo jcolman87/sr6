@@ -1,0 +1,24 @@
+<h2>Effects</h2>
+<table style="align-self: start; border-collapse: collapse;">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>
+				<a class="add-effect" title="Add Effect"><i class="fa fa-plus" aria-hidden="true"></i></a>
+				<a class="transfer-effect" title="Transfer Affects"><i class="fas fa-exchange"></i></a>
+			</th>
+		</tr>
+	</thead>
+	{{#each actor.effects as |effect idx|}}
+	<tr>
+		<td><input type="text" direct-effect-data data-effect-id="{{effect.id}}" data-field="name" value="{{effect.name}}" style="width: 10em"/></td>
+		<td><input type="text" direct-effect-data data-effect-id="{{effect.id}}" data-field="system.description" value="{{effect.system.description}}" style="width: 10em"/></td>
+		<td>
+			<a class="edit-effect" data-effect-id="{{effect.id}}" title="Remove Effect"><i class="fa fa-edit" aria-hidden="true"></i></a>
+			<a class="remove-effect" data-effect-id="{{effect.id}}" title="Remove Effect"><i class="fa fa-minus" aria-hidden="true"></i></a>
+		</td>
+
+	</tr>
+	{{/each}}
+</table>

@@ -1,5 +1,5 @@
 import { ItemTypes } from "./items/Data.js";
-import { Enums } from "./config.js";
+import { SR6CONFIG, Enums } from "./config.js";
 export function defineHandlebarHelpers() {
     Handlebars.registerHelper("itemHas", function (item, ty_str) {
         return item.has(ItemTypes.Types[ty_str]);
@@ -13,15 +13,36 @@ export function defineHandlebarHelpers() {
     Handlebars.registerHelper("solveActorItemFormula", function (actor, item, formula) {
         return item.solveFormulaWithActor(actor, formula);
     });
+    Handlebars.registerHelper("getSkill", function (actor, ty) {
+        return actor.getSkill(ty);
+    });
+    Handlebars.registerHelper("getWoundModifier", function (actor) {
+        return actor.getWoundModifier();
+    });
+    Handlebars.registerHelper("skillAsString", function (ty) {
+        return Enums.Skill[ty];
+    });
+    Handlebars.registerHelper("specializationAsString", function (ty) {
+        console.log("ty", ty, Enums.Specialization[ty]);
+        return Enums.Specialization[ty];
+    });
+    Handlebars.registerHelper("distanceToString", function (ty) {
+        return Enums.Distance[ty];
+    });
     Handlebars.registerHelper("matrixProgramAsString", function (ty) {
         return Enums.MatrixProgram[ty];
     });
     Handlebars.registerHelper("matrixActionAsString", function (ty) {
         return Enums.MatrixAction[ty];
     });
+    Handlebars.registerHelper("specializationsOfSkill", function (ty) {
+        console.log("specializationsOfSkill", ty, SR6CONFIG.skills.get(ty).specializations);
+        return SR6CONFIG.skills.get(ty).specializations;
+    });
     Handlebars.registerHelper("in", function (elem, list, options) {
         if (Array.isArray(list)) {
-            return list.includes(elem);
+            let res = list.includes(elem);
+            return res;
         }
         else if (list instanceof Map) {
             return list.has(elem);

@@ -1,0 +1,63 @@
+<section style="border: 2px solid red; display: flex">
+		<section>
+			<h3>Matrix<a class="remove-type fas fa-minus" data-remove-type="Matrix" title="Remove"></a></h3>
+			<label for="system.program_slots">Program Slots</label>
+			<input direct-data id="system.program_slots" type="text" value="{{item.system.program_slots}}" style="width: 2em" />
+			<table>
+				<thead>
+					<tr><td>A</td><td>S</td><td>D</td><td>F</td></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ solveItemFormula item item.system.matrix_attributes.a }}</td>
+						<td>{{ solveItemFormula item item.system.matrix_attributes.s }}</td>
+						<td>{{ solveItemFormula item item.system.matrix_attributes.d }}</td>
+						<td>{{ solveItemFormula item item.system.matrix_attributes.f }}</td>
+					</tr>
+					<tr>
+						<td><input direct-data id="system.matrix_attributes.a" type="text" value="{{item.system.matrix_attributes.a}}" style="width: 2em" /></td>
+						<td><input direct-data id="system.matrix_attributes.s" type="text" value="{{item.system.matrix_attributes.s}}" style="width: 2em" /></td>
+						<td><input direct-data id="system.matrix_attributes.d" type="text" value="{{item.system.matrix_attributes.d}}" style="width: 2em" /></td>
+						<td><input direct-data id="system.matrix_attributes.f" type="text" value="{{item.system.matrix_attributes.f}}" style="width: 2em" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<section style="display: flex; flex-flow: nowrap; ">
+			<table style="align-self: start; border-collapse: collapse;">
+				<thead>
+					<tr>
+						<th colspan="2">Hacking</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each config.matrix_programs as |program program_id| }} 
+					{{#if program.1.illegal }}
+					<tr>
+						<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_programs." (matrixProgramAsString program_id) ) ".name")}}</td>
+						<td style="padding: 0; margin: 0"><input type="checkbox" class="switch" {{#if (in program_id item.system.programs) }} checked {{/if}}/></td>
+					</tr>
+					{{/if }}
+					{{/each}}
+				</tbody>
+			</table>
+		
+			<table style="align-self: start; border-collapse: collapse;">
+				<thead>
+					<tr>
+						<th colspan="2">Basic</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each config.matrix_programs as |program program_id| }} 
+					{{#unless program.1.illegal }}
+					<tr>
+						<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_programs." (matrixProgramAsString program_id) ) ".name")}}</td>
+						<td style="padding: 0; margin: 0"><input type="checkbox" class="switch" /></td>
+					</tr>
+					{{/unless}}
+					{{/each}}
+				</tbody>
+			</table>
+		</section>
+	</section>

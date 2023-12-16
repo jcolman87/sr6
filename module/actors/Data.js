@@ -1,3 +1,5 @@
+export class Formula extends String {
+}
 export var ActorTypes;
 (function (ActorTypes) {
     class Attribute {
@@ -40,6 +42,7 @@ export var ActorTypes;
         logic = new Attribute();
         intuition = new Attribute();
         charisma = new Attribute();
+        edge = new Attribute();
         magic = new Attribute();
         resonance = new Attribute();
         essense = new Attribute();

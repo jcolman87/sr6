@@ -1,35 +1,45 @@
+@import url(https://www.w3schools.com/w3css/4/w3.css);
+
 .attributes {
 	display: flex;
 	flex-flow: row nowrap;
 	background-color:#ccc;
 }
 
-.attributes.attribute {
+.attribute-container {
 	display: flex;
-	flex-flow: column nowrap;
-	margin: 1em;
+	flex-flow: column;
+	width: 200px;
 }
 
-.attributes.attribute.attribute-value {
-	font-weight: bold;
-	font-size: 24px;
+.attribute-label {
+	text-align: center;
+	display: block;
+	font-size: 16px;
 }
 
-.attributes.attribute.attribute-edit {
+.attribute-pool {
+	text-align: center;
+	display: block;
+	font-size: 32px;
+	margin: auto;
+}
+
+.attribute-edit-container {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.attribute-edit {
+	display: block;
 	width: 2em;
 }
-.attributes.attribute.attribute-edit input {
-	width: 2em;
-}
-.attributes.attribute.attribute-edit label {
-	font-size: 0.75rem;
-}
 
-.attributes.attribute.attribute-base {
+.attribute-base {
 
 }
 
-.attributes.attribute.attribute-mod {
+.attribute-mod {
 	
 }
 
@@ -38,6 +48,7 @@
 	padding: 0; 
 	margin: 0;
 	text-align: left;
+	font-size: 14px;
 }
 
 .matrix-action {
@@ -136,7 +147,30 @@
 	background-image: url(../icons/dice/Wild_6.svg);
 }
 
-/* The switch - the box around the slider */
-.switch {
+.nuyen-icon {
+	position: relative;
+	width: 32px;
+	line-height: 32px;
+	float: left;
+	margin-right: 1px;
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
+	font-size: 24px;
+	color: #000;
+	font-weight: bold;
+	background-image: url(../icons/yen.webp);
+}
 
+.edge-icon {
+	position: relative;
+	width: 32px;
+	line-height: 32px;
+	float: left;
+	margin-right: 1px;
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
+	font-size: 24px;
+	color: #000;
+	font-weight: bold;
+	background-image: url(../icons/edge.webp);
 }

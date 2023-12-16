@@ -48,10 +48,10 @@ export function SR6RenderChatMessage(app: ChatMessage, html: JQuery, data: any) 
 		rollers.forEach((actor) => showRollDefenseDialog(actor, attacker, item, hits));
 	});
 
-	html.on("click", ".chat-edge", (event) => {
+	html.on("click", ".chat-dice", (event) => {
 		event.preventDefault();
-		let roll = $(event.currentTarget);
-		let tip = roll.find(".chat-edge-collapsible");
+		let roll = $(event.currentTarget.parentElement);
+		let tip = roll.find(".chat-dice-collapsible");
 		if (!tip.is(":visible")) {
 			tip.slideDown(200);
 		} else {
@@ -59,10 +59,10 @@ export function SR6RenderChatMessage(app: ChatMessage, html: JQuery, data: any) 
 		}
 	});
 
-	html.on("click", ".chat-edge-post", (event) => {
+	html.on("click", ".chat-weapon", (event) => {
 		event.preventDefault();
 		let roll = $(event.currentTarget.parentElement);
-		let tip = roll.find(".chat-edge-post-collapsible");
+		let tip = roll.find(".chat-weapon-collapsible");
 		if (!tip.is(":visible")) {
 			tip.slideDown(200);
 		} else {
