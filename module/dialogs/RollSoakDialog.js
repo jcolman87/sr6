@@ -4,13 +4,13 @@ class RollSoakDialog extends RollDialog {
     actor;
     attacker;
     weapon;
-    threshold;
-    constructor(actor, attacker, weapon, threshold) {
+    damage;
+    constructor(actor, attacker, weapon, damage) {
         super();
         this.actor = actor;
         this.attacker = attacker;
         this.weapon = weapon;
-        this.threshold = threshold;
+        this.damage = damage;
     }
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -35,11 +35,11 @@ class RollSoakDialog extends RollDialog {
             actor: this.actor,
             attacker: this.attacker,
             weapon: this.weapon,
-            threshold: this.threshold
+            damage: this.damage
         };
         return data;
     }
 }
-export async function showRollSoakDialog(actor, attacker, weapon, threshold) {
-    let dialog = new RollSoakDialog(actor, attacker, weapon, threshold).render(true);
+export async function showRollSoakDialog(actor, attacker, weapon, damage) {
+    let dialog = new RollSoakDialog(actor, attacker, weapon, damage).render(true);
 }

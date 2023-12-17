@@ -85,11 +85,42 @@ export namespace ActorTypes {
 		stealth: Skill = new Skill();
 		tasking: Skill = new Skill();
 	}
+	export interface Initiatives {
+		physical_pool: number;
+		matrix_pool: number;
+		astral_pool: number;
+
+		physical_formula: undefined | string;
+		matrix_formula: undefined | string;
+		astral_formula: undefined | string;
+	}
+
+	export class EffectModifiers {
+		attack_pool: number = 0;
+		damage: number = 0;
+		defense: number = 0;
+		soak: number = 0;
+	};
 }
 
-export class CharacterActorData {
+export interface BaseActorData {
+	initiatives: ActorTypes.Initiatives;
+}
+
+export class CharacterActorData implements BaseActorData {
+	initiatives: ActorTypes.Initiatives = {
+		physical_pool: 0,
+		matrix_pool: 0,
+		astral_pool: 0,
+
+		physical_formula: undefined,
+		matrix_formula: undefined,
+		astral_formula: undefined
+	};
 	monitors: ActorTypes.Monitors = new ActorTypes.Monitors();
 	attributes: ActorTypes.Attributes = new ActorTypes.Attributes();
 	derived_attributes: ActorTypes.DerivedAttributes = new ActorTypes.DerivedAttributes();
 	skills: ActorTypes.Skills = new ActorTypes.Skills();
+
+	effect_modifiers: ActorTypes.EffectModifiers = new ActorTypes.EffectModifiers();
 }

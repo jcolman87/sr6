@@ -8,15 +8,15 @@ class RollDefenseDialog extends RollDialog {
 	actor: SR6Actor;
 	attacker: SR6Actor;
 	weapon: SR6Item;
-	threshold: number;
+	damage: number;
 
-	constructor(actor: SR6Actor, attacker: SR6Actor, weapon: SR6Item, threshold: number) {
+	constructor(actor: SR6Actor, attacker: SR6Actor, weapon: SR6Item, damage: number) {
 		super();
 
 		this.actor = actor;
 		this.attacker = attacker;
 		this.weapon = weapon;
-		this.threshold = threshold;
+		this.damage = damage;
 	}
 
 	static get defaultOptions() {
@@ -44,13 +44,13 @@ class RollDefenseDialog extends RollDialog {
 			actor: this.actor,
 			attacker: this.attacker,
 			weapon: this.weapon,
-			threshold: this.threshold
+			damage: this.damage
 		};
 
 		return data;
 	}
 }
 
-export async function showRollDefenseDialog(actor: SR6Actor, attacker: SR6Actor, weapon: SR6Item, threshold: number) {
-	let dialog = new RollDefenseDialog(actor, attacker, weapon, threshold).render(true);
+export async function showRollDefenseDialog(actor: SR6Actor, attacker: SR6Actor, weapon: SR6Item, damage: number) {
+	let dialog = new RollDefenseDialog(actor, attacker, weapon, damage).render(true);
 }

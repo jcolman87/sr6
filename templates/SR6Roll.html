@@ -1,3 +1,4 @@
+{{#unless (isRollType data.type "Initiative") }}
 <h3>
 	{{#unless (undefined data.actor)}}
 	<img class="profile-img" src="{{data.actor.img}}" data-edit="img" title="{{actor.name}}" height="24" width="24" /> 
@@ -37,7 +38,7 @@
 	{{else if (eq data.firemode "FA") }}Full Auto
 	{{/if}}</i>
 	with <a class="chat-weapon" style="font-style: italic">{{data.weapon.name}}</a><br/>
-	Damage: <i style="font-weight: bold">{{ data.weapon.system.damage}}</i> TODO: ADJUST THIS FOR FIREMODE<br/>
+	Damage: <i style="font-weight: bold">{{ data.damage }}</i><br/>
 			Attack Rating: <i style="font-weight: bold">
 			{{#if (eq data.distance 0 ) }} {{data.weapon.system.attack_ratings.close}}
 			{{else if (eq data.distance 1) }} {{data.weapon.system.attack_ratings.near}}
@@ -59,32 +60,30 @@
 		</div>
 	</section>
 </div>
-	<input class="chat-roll-button" id="roll-defense" data-attacker-id="{{data.actor._id}}" data-weapon-id="{{data.weapon._id}}" data-hits="{{hits}}" type="button" value="Roll Defense"/>
+	<input class="chat-roll-button" id="roll-defense" data-attacker-id="{{data.actor._id}}" data-damage="{{ data.damage }}" data-weapon-id="{{data.weapon._id}}" data-hits="{{hits}}" type="button" value="Roll Defense"/>
 </div>
 {{/if}}
 
 {{#if (isRollType data.type "Defend") }}
 <div>
-	{{#if (gt hits data.threshold  )}}
+	{{#if (gt hits data.damage  )}}
 	<i style="color: #006400">Defended Successfully</i>
 	{{else}}
-	{{ var "diff" (sub data.threshold hits) }}
-	{{ var "damage" (add diff data.weapon.system.damage) }}
-	<i style="font-style: italic; font-size: 10px">DV({{data.weapon.system.damage}}) + Hits({{ diff }}) = <i style="font-weight: bold; color: rgb(194, 76, 29);">{{ damage }}</i> damage</i>
+	<i style="font-style: italic; font-size: 10px"><i style="font-weight: bold; color: rgb(194, 76, 29);">{{ data.damage }}</i> damage</i>
 	<br/>
-	<input id="roll-soak" data-attacker-id="{{data.attacker._id}}" data-weapon-id="{{data.weapon._id}}" data-hits="{{hits}}" data-threshold="{{ data.threshold }}" type="button" value="Soak Damage"/>
+	<input id="roll-soak" data-attacker-id="{{data.attacker._id}}" data-weapon-id="{{data.weapon._id}}" data-hits="{{hits}}" data-damage="{{ data.damage }}" type="button" value="Soak Damage"/>
 	{{/if}}
 </div>
 {{/if}}
 
 {{#if (isRollType data.type "SoakDamage") }}
 <div>
-	{{#if (gt hits data.threshold  )}}
+	{{#if (gt hits data.damage  )}}
 	<i style="color: #006400">No Damage taken</i>
 	{{else}}
-	{{ var "damage" (sub data.threshold hits) }}
+	{{ var "damage" (sub data.damage hits) }}
 	Took <i style="font-size: 18px; color: rgb(194, 76, 29); font-weight: bold; ">{{damage}}</i> damage<br/>
-	<i style="font-style: italic; font-size: 10px">DV({{ data.threshold }}) - Hits({{ hits }}) = {{ damage }} damage</i>
+	<i style="font-style: italic; font-size: 10px">DV({{ data.damage }}) - Hits({{ hits }}) = {{ damage }} damage</i>
 	{{/if}}
 </div>
 {{/if}}
@@ -98,3 +97,7 @@
 		</div>
 	</section>
 </div>
+
+{{ else }}
+{{roll.total}}
+{{/unless}}

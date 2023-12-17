@@ -37,6 +37,6 @@
 	"initiative": "1d6",
 	"gridDistance": 1.5,
 	"gridUnits": "m",
-	"primaryTokenAttribute": "monitors.physical",
-	"secondaryTokenAttribute": "monitors.stun"
+	"primaryTokenAttribute": "monitors.physical.pool",
+	"secondaryTokenAttribute": "monitors.stun.pool"
 }

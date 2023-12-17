@@ -19,6 +19,9 @@ export function defineHandlebarHelpers() {
     Handlebars.registerHelper("getWoundModifier", function (actor) {
         return actor.getWoundModifier();
     });
+    Handlebars.registerHelper("getAttackRating", function (item, distance) {
+        return item.getAttackRating(distance);
+    });
     Handlebars.registerHelper("skillAsString", function (ty) {
         return Enums.Skill[ty];
     });

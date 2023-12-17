@@ -1,12 +1,13 @@
 import { ItemFormula, ItemData, ItemTypes } from "./Data.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
 import { SR6Roll } from "../SR6Roll.js";
+import { Enums } from "../config.js";
 
 export class SR6Item extends Item {
 	solveFormula(formula: ItemFormula): number {
-		return this.solveFormulaWithActor(this.actor! as SR6Actor, formula);
+		return this.solveFormulaWithActor(this.actor as SR6Actor, formula);
 	}
-	solveFormulaWithActor(actor: SR6Actor, formula: ItemFormula): number {
+	solveFormulaWithActor(actor: SR6Actor | undefined, formula: ItemFormula): number {
 		//console.log("SR6Item::solveFormulaWithActor", formula);
 
 		let roll = new SR6Roll(formula as string, { actor: actor, item: this });
@@ -17,6 +18,20 @@ export class SR6Item extends Item {
 
 	prepareData() {
 		// TODO: Validate the data types for various item types
+	}
+
+	getAttackRating(distance: Enums.Distance): number {
+		switch(distance) {
+			case Enums.Distance.Close: return this.solveFormula(this.weapon()!.attack_ratings.close);
+			case Enums.Distance.Near: return this.solveFormula(this.weapon()!.attack_ratings.near);
+			case Enums.Distance.Medium: return this.solveFormula(this.weapon()!.attack_ratings.medium);
+			case Enums.Distance.Far: return this.solveFormula(this.weapon()!.attack_ratings.far);
+			case Enums.Distance.Extreme: return this.solveFormula(this.weapon()!.attack_ratings.extreme);
+			default: return 0;
+		}
+	}
+	get damage(): number {
+		return this.solveFormula(this.weapon()!.damage);
 	}
 
 	addType(ty: ItemTypes.Types) {
@@ -105,11 +120,6 @@ export class SR6Item extends Item {
 	firearm(): undefined | ItemTypes.Firearm {
 		if (!this.has(ItemTypes.Types.Firearm)) return undefined;
 		return this.getData() as unknown as ItemTypes.Firearm;
-	}
-
-	get damage(): undefined | number {
-		let formula: string = this.weapon()!.damage as string;
-		return this.solveFormula(formula);
 	}
 
 	getData(): ItemData {

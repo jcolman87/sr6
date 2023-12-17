@@ -70,10 +70,27 @@ export var ActorTypes;
         tasking = new Skill();
     }
     ActorTypes.Skills = Skills;
+    class EffectModifiers {
+        attack_pool = 0;
+        damage = 0;
+        defense = 0;
+        soak = 0;
+    }
+    ActorTypes.EffectModifiers = EffectModifiers;
+    ;
 })(ActorTypes || (ActorTypes = {}));
 export class CharacterActorData {
+    initiatives = {
+        physical_pool: 0,
+        matrix_pool: 0,
+        astral_pool: 0,
+        physical_formula: undefined,
+        matrix_formula: undefined,
+        astral_formula: undefined
+    };
     monitors = new ActorTypes.Monitors();
     attributes = new ActorTypes.Attributes();
     derived_attributes = new ActorTypes.DerivedAttributes();
     skills = new ActorTypes.Skills();
+    effect_modifiers = new ActorTypes.EffectModifiers();
 }

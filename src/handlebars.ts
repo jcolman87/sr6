@@ -30,6 +30,11 @@ export function defineHandlebarHelpers() {
 		return actor.getWoundModifier();
 	});
 
+	Handlebars.registerHelper("getAttackRating", function (item: SR6Item, distance: Enums.Distance) {
+		return item.getAttackRating(distance);
+	});
+
+
 	Handlebars.registerHelper("skillAsString", function (ty: Enums.Skill) {
 		return Enums.Skill[ty];
 	});

@@ -11,7 +11,6 @@ const actorMappings = {
 export const SR6ActorProxy = new Proxy(function () {}, {
   //Will intercept calls to the "new" operator
   construct: function (target, args) {
-    console.log("SR6ActorProxy::construct");
     const [data] = args;
 
     //Handle missing mapping entries
@@ -24,7 +23,6 @@ export const SR6ActorProxy = new Proxy(function () {}, {
 
   //Property access on this weird, dirty proxy object
   get: function (target, prop, receiver) {
-    console.log("SR6ActorProxy::get");
     switch (prop) {
       case "create":
       case "createDocuments":

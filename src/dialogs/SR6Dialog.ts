@@ -1,3 +1,5 @@
+import { SR6CONFIG } from "../config.js";
+
 export class SR6Dialog extends FormApplication {
 	activateListeners(html: JQuery): void {
 		super.activateListeners(html);
@@ -22,6 +24,14 @@ export class SR6Dialog extends FormApplication {
  			
  			this.render(true);
  		});
+	}
+
+	getData(options: any) {
+		let data = super.getData(options);
+
+		(data as any).config = SR6CONFIG;
+
+		return data;
 	}
 
 	async _updateObject(event: Event, formData: any) {}

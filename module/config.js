@@ -1,5 +1,11 @@
 export var Enums;
 (function (Enums) {
+    let Initiative;
+    (function (Initiative) {
+        Initiative["Physical"] = "physical";
+        Initiative["Astral"] = "astral";
+        Initiative["Matrix"] = "matrix";
+    })(Initiative = Enums.Initiative || (Enums.Initiative = {}));
     let WeaponAccessoryLocation;
     (function (WeaponAccessoryLocation) {
         WeaponAccessoryLocation["Under"] = "under";
@@ -8,11 +14,12 @@ export var Enums;
     })(WeaponAccessoryLocation = Enums.WeaponAccessoryLocation || (Enums.WeaponAccessoryLocation = {}));
     let RollType;
     (function (RollType) {
-        RollType[RollType["Attribute"] = 0] = "Attribute";
-        RollType[RollType["Skill"] = 1] = "Skill";
-        RollType[RollType["WeaponAttack"] = 2] = "WeaponAttack";
-        RollType[RollType["Defend"] = 3] = "Defend";
-        RollType[RollType["SoakDamage"] = 4] = "SoakDamage";
+        RollType[RollType["Initiative"] = 0] = "Initiative";
+        RollType[RollType["Attribute"] = 1] = "Attribute";
+        RollType[RollType["Skill"] = 2] = "Skill";
+        RollType[RollType["WeaponAttack"] = 3] = "WeaponAttack";
+        RollType[RollType["Defend"] = 4] = "Defend";
+        RollType[RollType["SoakDamage"] = 5] = "SoakDamage";
     })(RollType = Enums.RollType || (Enums.RollType = {}));
     let Attribute;
     (function (Attribute) {
@@ -343,9 +350,12 @@ export class Activation {
 }
 export class CombatActionDef {
     activation;
-    //modifiers: Modifier[];
-    constructor(activation) {
+    changes;
+    duration;
+    constructor(activation, changes = [], duration = 1) {
         this.activation = activation;
+        this.changes = changes;
+        this.duration = duration;
     }
 }
 export class MatrixActionDef {
@@ -551,7 +561,18 @@ export class SR6Config {
         [Enums.CombatAction.change_focus, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.avoid_incoming, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.block, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.call_shot, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.call_shot, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative), [{
+                    key: "system.effect_modifiers.damage",
+                    value: "2",
+                    mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+                    priority: 1,
+                },
+                {
+                    key: "system.effect_modifiers.attack_pool",
+                    value: "-4",
+                    mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+                    priority: 1,
+                }])],
         [Enums.CombatAction.change_device_mode, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.command_drone, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.command_spirit, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],

@@ -1,4 +1,14 @@
+import type {
+  EffectChangeDataConstructorData
+} from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/effectChangeData';
+
 export namespace Enums {
+	export enum Initiative {
+		Physical = "physical",
+		Astral = "astral",
+		Matrix = "matrix"
+	}
+
 	export enum WeaponAccessoryLocation {
 		Under = "under",
 		Barrel = "barrel",
@@ -6,6 +16,7 @@ export namespace Enums {
 	}
 
 	export enum RollType {
+		Initiative,
 		Attribute,
 		Skill,
 		WeaponAttack,
@@ -347,10 +358,13 @@ export class Activation {
 
 export class CombatActionDef {
 	activation: Activation;
-	//modifiers: Modifier[];
+	changes: EffectChangeDataConstructorData[];
+	duration: number;
 
-	constructor(activation: Activation) {
+	constructor(activation: Activation, changes: EffectChangeDataConstructorData[] = [], duration: number = 1) {
 		this.activation = activation;
+		this.changes = changes;
+		this.duration = duration;
 	}
 }
 
@@ -760,7 +774,20 @@ export class SR6Config {
 		[Enums.CombatAction.change_focus, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
 		[Enums.CombatAction.avoid_incoming, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
 		[Enums.CombatAction.block, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-		[Enums.CombatAction.call_shot, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
+		[Enums.CombatAction.call_shot, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative), 
+			[{
+				key: "system.effect_modifiers.damage",
+				value: "2",
+				mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+				priority: 1,
+			},
+			{
+				key: "system.effect_modifiers.attack_pool",
+				value: "-4",
+				mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+				priority: 1,
+			}]
+		)],
 		[Enums.CombatAction.change_device_mode, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
 		[Enums.CombatAction.command_drone, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
 		[Enums.CombatAction.command_spirit, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],

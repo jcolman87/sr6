@@ -4,7 +4,7 @@ import { getSelfOrSelectedActors } from "./util.js";
 export class SR6ChatMessage extends ChatMessage {
     constructor(data, context) {
         super(data, context);
-        //console.log("SR6ChatMessage", this);
+        console.log("SR6ChatMessage", this);
     }
     getHTML() {
         return super.getHTML();
@@ -17,10 +17,9 @@ export function SR6RenderChatMessage(app, html, data) {
         let attacker_id = target.dataset["attackerId"];
         let item_id = target.dataset["weaponId"];
         let hits = parseInt(target.dataset["hits"]);
-        let threshold = parseInt(target.dataset["threshold"]);
+        let damage = parseInt(target.dataset["damage"]);
         let attacker = game.actors.get(attacker_id);
         let item = attacker.items.get(item_id);
-        let damage = item.damage + (threshold - hits);
         //console.log("roll-soak", hits, threshold, damage, attacker_id, item_id);
         let rollers = getSelfOrSelectedActors();
         rollers.forEach((actor) => showRollSoakDialog(actor, attacker, item, damage));
@@ -31,10 +30,11 @@ export function SR6RenderChatMessage(app, html, data) {
         let attacker_id = target.dataset["attackerId"];
         let item_id = target.dataset["weaponId"];
         let hits = parseInt(target.dataset["hits"]);
+        let damage = parseInt(target.dataset["damage"]) + hits;
         let attacker = game.actors.get(attacker_id);
         let item = attacker.items.get(item_id);
         let rollers = getSelfOrSelectedActors();
-        rollers.forEach((actor) => showRollDefenseDialog(actor, attacker, item, hits));
+        rollers.forEach((actor) => showRollDefenseDialog(actor, attacker, item, damage));
     });
     html.on("click", ".chat-dice", (event) => {
         event.preventDefault();

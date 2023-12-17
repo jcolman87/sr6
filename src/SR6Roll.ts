@@ -16,13 +16,16 @@ export interface BaseRollData {
 export interface DefenseRollData extends BaseRollData {
 	attacker: SR6Actor;
 	weapon: SR6Item;
-	threshold: number;
+	damage: number;
 }
 
 export interface WeaponRollData extends BaseRollData {
 	weapon: SR6Item;
 	distance: Enums.Distance;
 	firemode: Enums.FireMode;
+
+	damage: number;
+	attack_rating: number;
 }
 
 export class SR6Roll extends Roll {
@@ -57,28 +60,34 @@ export class SR6Roll extends Roll {
 		let pool: number = 0;
 		let dice: Die[] = [];
 
-		(this.terms[0] as any).results.forEach((roll: any) => {
-			if (roll.active) {
-				dice.push({
-					value: roll.result,
-					classes: "die_" + roll.result
-				});
-				pool += 1;
-				if (roll.result >= 5) {
-					hits += 1;
-				} else if (roll.result == 0) {
-					ones += 1;
-				}
-			}
-		});
+		let glitch: boolean = false;
+		let critical_glitch: boolean = false;
 
-		let glitch = ones > Math.round(pool / 2);
-		let critical_glitch = glitch && hits == 0;
-		
+		if(this.data.type != Enums.RollType.Initiative) {
+			(this.terms[0] as any).results.forEach((roll: any) => {
+				if (roll.active) {
+					dice.push({
+						value: roll.result,
+						classes: "die_" + roll.result
+					});
+					pool += 1;
+					if (roll.result >= 5) {
+						hits += 1;
+					} else if (roll.result == 0) {
+						ones += 1;
+					}
+				}
+			});
+
+			glitch = ones > Math.round(pool / 2);
+			critical_glitch = glitch && hits == 0;
+		}
+
 		return {
 			user: (game as Game).user,
 			formula: this.formula,
 			data: this.data,
+			roll: this,
 			hits: hits,
 			ones: ones,
 			pool: pool,

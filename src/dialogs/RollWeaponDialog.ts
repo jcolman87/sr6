@@ -8,11 +8,44 @@ class RollWeaponDialog extends RollDialog {
 	actor: SR6CharacterActor;
 	weapon: SR6Item;
 
+	distance: Enums.Distance;
+	firemode: Enums.FireMode;
+
+	modifiers: {
+		pool: number;
+		damage: number;
+		attack_rating: number;
+	};
+
+	get damage(): number {
+		return this.weapon.damage + this.modifiers.damage + this.actor.getData().effect_modifiers.damage;
+	}
+
+	get attack_rating(): number {
+		return this.weapon.getAttackRating(this.distance) + this.modifiers.attack_rating;
+	}
+	get base_attack_rating(): number {
+		return this.weapon.getAttackRating(this.distance);
+	}
+
+	getCurrentPool(): number  { 
+		return super.getCurrentPool() + this.actor.getData().effect_modifiers.attack_pool;
+	}
+	
 	constructor(actor: SR6CharacterActor, weapon: SR6Item) {
 		super();
 
 		this.actor = actor;
 		this.weapon = weapon;
+
+		this.distance = Enums.Distance.Near;
+		this.firemode = Enums.FireMode.SS;
+
+		this.modifiers = {
+			pool: 0,
+			damage: 0,
+			attack_rating: 0
+		};
 	}
 
 	static get defaultOptions() {
@@ -30,20 +63,62 @@ class RollWeaponDialog extends RollDialog {
 		});
 	}
 
+	activateListeners(html: JQuery): void {
+		super.activateListeners(html);
+
+		html.find("#firemode").change((event: JQuery.ChangeEvent) => {
+			console.log("firemode", event.currentTarget.value);
+			switch(event.currentTarget.value) {
+				case Enums.FireMode.SS: {
+					this.modifiers = {
+						pool: 0,
+						damage: 0,
+						attack_rating: 0
+					};
+					break;
+				}
+				case Enums.FireMode.SA: {
+					this.modifiers = {
+						pool: 0,
+						damage: 1,
+						attack_rating: -2
+					};
+					break;
+				}
+				case Enums.FireMode.BF: {
+					this.modifiers = {
+						pool: 0,
+						damage: 2,
+						attack_rating: -4
+					};
+					break;
+				}
+				case Enums.FireMode.FA: {
+					this.modifiers = {
+						pool: 0,
+						damage: 0,
+						attack_rating: -6
+					};
+					break;
+				}
+			}
+		});
+	}
+
 	getBasePool(): number {
 		return this.actor.calculateSkillPool(this.weapon.skill_use()!);
 	}
 
 	getRollData(html: JQuery) : any { 
-		const distance: Enums.Distance = Enums.Distance[html.find("#distance").val() as keyof typeof Enums.Distance];
-		const firemode: Enums.FireMode = Enums.FireMode[html.find("#firemode").val() as keyof typeof Enums.FireMode];
-
 		let data: WeaponRollData = {
 			type: Enums.RollType.WeaponAttack,
 			actor: this.actor,
 			weapon: this.weapon,
-			distance: distance,
-			firemode: firemode
+			distance: this.distance,
+			firemode: this.firemode,
+
+			damage: this.damage,
+			attack_rating: this.attack_rating,
 		};
 
 		return data;

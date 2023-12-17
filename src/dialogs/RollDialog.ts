@@ -28,6 +28,7 @@ export class RollDialog extends SR6Dialog {
 		this.base_pool = this.getBasePool();
 
 		(data as any).data = this;
+
 		return data;
 	}
 

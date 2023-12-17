@@ -4,6 +4,8 @@ import { SR6ChatMessage, SR6RenderChatMessage } from "./SR6ChatMessage.js";
 import { SR6ActorProxy } from "./actors/SR6ActorProxy.js";
 import { SR6Item } from "./items/SR6Item.js";
 import { SR6ActiveEffect } from "./SR6ActiveEffect.js";
+import { SR6Combat } from "./combat/SR6Combat.js";
+import { SR6Combatant } from "./combat/SR6Combatant.js";
 import { SR6CharacterSheet } from "./sheets/CharacterSheet.js";
 import * as ItemSheets from "./sheets/ItemSheets.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
@@ -46,6 +48,8 @@ Hooks.once("init", async function () {
     CONFIG.Item.dataModels.WeaponAccessory = ItemDataModels.WeaponAccessory;
     CONFIG.Item.dataModels.AdeptPower = ItemDataModels.AdeptPower;
     CONFIG.Item.dataModels.Credstick = ItemDataModels.Credstick;
+    CONFIG.Combat.documentClass = SR6Combat;
+    CONFIG.Combatant.documentClass = SR6Combatant;
     registerSheets();
     preloadHandlebarsTemplates();
     defineHandlebarHelpers();

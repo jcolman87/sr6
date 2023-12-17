@@ -1,5 +1,6 @@
 import { ItemTypes } from "./Data.js";
 import { SR6Roll } from "../SR6Roll.js";
+import { Enums } from "../config.js";
 export class SR6Item extends Item {
     solveFormula(formula) {
         return this.solveFormulaWithActor(this.actor, formula);
@@ -13,6 +14,19 @@ export class SR6Item extends Item {
     }
     prepareData() {
         // TODO: Validate the data types for various item types
+    }
+    getAttackRating(distance) {
+        switch (distance) {
+            case Enums.Distance.Close: return this.solveFormula(this.weapon().attack_ratings.close);
+            case Enums.Distance.Near: return this.solveFormula(this.weapon().attack_ratings.near);
+            case Enums.Distance.Medium: return this.solveFormula(this.weapon().attack_ratings.medium);
+            case Enums.Distance.Far: return this.solveFormula(this.weapon().attack_ratings.far);
+            case Enums.Distance.Extreme: return this.solveFormula(this.weapon().attack_ratings.extreme);
+            default: return 0;
+        }
+    }
+    get damage() {
+        return this.solveFormula(this.weapon().damage);
     }
     addType(ty) {
         let data = this.getData();
@@ -104,10 +118,6 @@ export class SR6Item extends Item {
         if (!this.has(ItemTypes.Types.Firearm))
             return undefined;
         return this.getData();
-    }
-    get damage() {
-        let formula = this.weapon().damage;
-        return this.solveFormula(formula);
     }
     getData() {
         let data = this.system;

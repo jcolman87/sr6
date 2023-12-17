@@ -1,3 +1,4 @@
+import { Enums } from "./config.js";
 export class SR6Roll extends Roll {
     static CHAT_TEMPLATE = "systems/sr6/templates/SR6Roll.html";
     static TOOLTIP_TEMPLATE = "systems/sr6/templates/SR6RollTooltip.html";
@@ -23,27 +24,32 @@ export class SR6Roll extends Roll {
         let ones = 0;
         let pool = 0;
         let dice = [];
-        this.terms[0].results.forEach((roll) => {
-            if (roll.active) {
-                dice.push({
-                    value: roll.result,
-                    classes: "die_" + roll.result
-                });
-                pool += 1;
-                if (roll.result >= 5) {
-                    hits += 1;
+        let glitch = false;
+        let critical_glitch = false;
+        if (this.data.type != Enums.RollType.Initiative) {
+            this.terms[0].results.forEach((roll) => {
+                if (roll.active) {
+                    dice.push({
+                        value: roll.result,
+                        classes: "die_" + roll.result
+                    });
+                    pool += 1;
+                    if (roll.result >= 5) {
+                        hits += 1;
+                    }
+                    else if (roll.result == 0) {
+                        ones += 1;
+                    }
                 }
-                else if (roll.result == 0) {
-                    ones += 1;
-                }
-            }
-        });
-        let glitch = ones > Math.round(pool / 2);
-        let critical_glitch = glitch && hits == 0;
+            });
+            glitch = ones > Math.round(pool / 2);
+            critical_glitch = glitch && hits == 0;
+        }
         return {
             user: game.user,
             formula: this.formula,
             data: this.data,
+            roll: this,
             hits: hits,
             ones: ones,
             pool: pool,

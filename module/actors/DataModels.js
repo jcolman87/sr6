@@ -60,6 +60,32 @@ export class Matrix extends foundry.abstract.DataModel {
         };
     }
 }
+export class EffectModifiers extends foundry.abstract.DataModel {
+    static _enableV10Validation = true;
+    static defineSchema() {
+        const fields = foundry.data.fields;
+        return {
+            attack_pool: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
+            damage: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
+            defense: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
+            soak: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
+        };
+    }
+}
+export class Initiatives extends foundry.abstract.DataModel {
+    static _enableV10Validation = true;
+    static defineSchema() {
+        const fields = foundry.data.fields;
+        return {
+            physical_pool: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
+            matrix_pool: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
+            astral_pool: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
+            physical_formula: new fields.StringField({ initial: "(@actor.system.attributes.reaction.pool + @actor.system.attributes.intuition.pool) + ((@actor.system.initiatives.physical_pool)d6)", required: true, nullable: false, blank: false }),
+            matrix_formula: new fields.StringField({ initial: "0", required: true, nullable: false, blank: false }),
+            astral_formula: new fields.StringField({ initial: "0", required: true, nullable: false, blank: false }),
+        };
+    }
+}
 export class BaseActor extends foundry.abstract.DataModel {
     static _enableV10Validation = true;
     static defineSchema() {
@@ -67,6 +93,8 @@ export class BaseActor extends foundry.abstract.DataModel {
         return {
             description: new fields.StringField({ initial: "This is a description", required: false, blank: false }),
             rating: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true, min: 0, max: 6 }),
+            effect_modifiers: new fields.EmbeddedDataField(EffectModifiers),
+            initiatives: new fields.EmbeddedDataField(Initiatives),
         };
     }
 }
@@ -150,7 +178,7 @@ export class MatrixIC extends BaseActor {
         return foundry.utils.mergeObject(super.defineSchema(), {
             host: new fields.DocumentIdField({ required: true, nullable: true }),
             matrix: new fields.EmbeddedDataField(Matrix),
-            initiative: new fields.StringField({ initial: "(@actor.system.matrix_attributes.d * 2) + 3d6", required: true, blank: false }),
+            //initiative: new fields.StringField({initial: "(@actor.system.matrix_attributes.d * 2) + 3d6", required: true, blank: false}),
             attack_pool: new fields.StringField({ initial: "@actor.system.matrix_attributes.a", required: true, blank: false }),
             defend_against_pool: new fields.StringField({ initial: "@actor.system.matrix_attributes.f + @actor.system.attributes.logic.pool", required: true, blank: false }),
             damage: new fields.StringField({ initial: "@actor.system.rating", required: true, blank: false })
