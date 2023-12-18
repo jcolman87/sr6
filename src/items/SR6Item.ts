@@ -1,18 +1,17 @@
 import { ItemFormula, ItemData, ItemTypes } from "./Data.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
-import { SR6Roll } from "../SR6Roll.js";
-import { Enums } from "../config.js";
+import * as Rolls from "../rolls/Rolls.js";
+import { Enums, SkillUse } from "../config.js";
 
 export class SR6Item extends Item {
 	solveFormula(formula: ItemFormula): number {
 		return this.solveFormulaWithActor(this.actor as SR6Actor, formula);
 	}
 	solveFormulaWithActor(actor: SR6Actor | undefined, formula: ItemFormula): number {
-		//console.log("SR6Item::solveFormulaWithActor", formula);
+		console.log("SR6Item::solveFormulaWithActor", formula);
 
-		let roll = new SR6Roll(formula as string, { actor: actor, item: this });
+		let roll = new Rolls.SR6Roll(formula as string, { actor: this.actor, item: this });
 		roll.evaluate({ async: false });
-		//console.log("solved", formula, roll);
 		return roll.total!;
 	}
 
@@ -22,16 +21,16 @@ export class SR6Item extends Item {
 
 	getAttackRating(distance: Enums.Distance): number {
 		switch(distance) {
-			case Enums.Distance.Close: return this.solveFormula(this.weapon()!.attack_ratings.close);
-			case Enums.Distance.Near: return this.solveFormula(this.weapon()!.attack_ratings.near);
-			case Enums.Distance.Medium: return this.solveFormula(this.weapon()!.attack_ratings.medium);
-			case Enums.Distance.Far: return this.solveFormula(this.weapon()!.attack_ratings.far);
-			case Enums.Distance.Extreme: return this.solveFormula(this.weapon()!.attack_ratings.extreme);
+			case Enums.Distance.Close: return this.solveFormula(this.weapon!.attack_ratings.close);
+			case Enums.Distance.Near: return this.solveFormula(this.weapon!.attack_ratings.near);
+			case Enums.Distance.Medium: return this.solveFormula(this.weapon!.attack_ratings.medium);
+			case Enums.Distance.Far: return this.solveFormula(this.weapon!.attack_ratings.far);
+			case Enums.Distance.Extreme: return this.solveFormula(this.weapon!.attack_ratings.extreme);
 			default: return 0;
 		}
 	}
 	get damage(): number {
-		return this.solveFormula(this.weapon()!.damage);
+		return this.solveFormula(this.weapon!.damage);
 	}
 
 	addType(ty: ItemTypes.Types) {
@@ -64,7 +63,7 @@ export class SR6Item extends Item {
 				mergeObject(data, new ItemTypes.Mountable());
 				break;
 			case ItemTypes.Types.SkillUse:
-				mergeObject(data, new ItemTypes.SkillUse());
+				mergeObject(data, new SkillUse());
 				break;
 			default:
 				throw "WTF";
@@ -85,39 +84,40 @@ export class SR6Item extends Item {
 		return (this.getData().types & ty) == ty;
 	}
 
-	cost(): undefined | ItemTypes.Cost {
+	get skill_use(): undefined | SkillUse {
+		if (!this.has(ItemTypes.Types.SkillUse)) return undefined;
+		return (this.getData() as any).skill_use as unknown as SkillUse;
+	}
+
+	get cost(): undefined | ItemTypes.Cost {
 		if (!this.has(ItemTypes.Types.Cost)) return undefined;
 		return this.getData() as unknown as ItemTypes.Cost;
 	}
-	skill_use(): undefined | ItemTypes.SkillUse {
-		if (!this.has(ItemTypes.Types.SkillUse)) return undefined;
-		return this.getData() as unknown as ItemTypes.SkillUse;
-	}
-	capacity(): undefined | ItemTypes.Capacity {
+	get capacity(): undefined | ItemTypes.Capacity {
 		if (!this.has(ItemTypes.Types.Capacity)) return undefined;
 		return this.getData() as unknown as ItemTypes.Capacity;
 	}
-	defense(): undefined | ItemTypes.Defense {
+	get defense(): undefined | ItemTypes.Defense {
 		if (!this.has(ItemTypes.Types.Cost)) return undefined;
 		return this.getData() as unknown as ItemTypes.Defense;
 	}
-	matrix(): undefined | ItemTypes.Matrix {
+	get matrix(): undefined | ItemTypes.Matrix {
 		if (!this.has(ItemTypes.Types.Matrix)) return undefined;
 		return this.getData() as unknown as ItemTypes.Matrix;
 	}
-	mountable(): undefined | ItemTypes.Mountable {
+	get mountable(): undefined | ItemTypes.Mountable {
 		if (!this.has(ItemTypes.Types.Mountable)) return undefined;
 		return this.getData() as unknown as ItemTypes.Mountable;
 	}
-	explosive(): undefined | ItemTypes.Explosive {
+	get explosive(): undefined | ItemTypes.Explosive {
 		if (!this.has(ItemTypes.Types.Explosive)) return undefined;
 		return this.getData() as unknown as ItemTypes.Explosive;
 	}
-	weapon(): undefined | ItemTypes.Weapon {
+	get weapon(): undefined | ItemTypes.Weapon {
 		if (!this.has(ItemTypes.Types.Weapon)) return undefined;
 		return this.getData() as unknown as ItemTypes.Weapon;
 	}
-	firearm(): undefined | ItemTypes.Firearm {
+	get firearm(): undefined | ItemTypes.Firearm {
 		if (!this.has(ItemTypes.Types.Firearm)) return undefined;
 		return this.getData() as unknown as ItemTypes.Firearm;
 	}

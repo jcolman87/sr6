@@ -5,13 +5,13 @@ export class SR6CharacterSheet extends ActorSheet {
     }
     _onRollAttribute(event) {
         let target = event.currentTarget;
-        let formula = target.dataset["pool"];
-        this.character.rollFormula(formula, Enums.RollType.Attribute);
+        let attribute = Enums.Attribute[target.dataset["attribute"]];
+        this.character.rollAttribute(attribute);
     }
     _onRollSkill(event) {
         let target = event.currentTarget;
-        let formula = target.dataset["pool"];
-        this.character.rollFormula(formula, Enums.RollType.Skill);
+        let skill = Enums.Skill[target.dataset["skill"]];
+        this.character.rollSkill(skill);
     }
     _onRollWeapon(event) {
         let target = event.currentTarget;
@@ -30,7 +30,7 @@ export class SR6CharacterSheet extends ActorSheet {
             let value;
             if (target.type == "number" || target.dataset["type"] == "number") {
                 value = parseInt(target.value);
-                if (value == undefined) {
+                if (isNaN(value)) {
                     value = 0;
                 }
             }
@@ -48,7 +48,7 @@ export class SR6CharacterSheet extends ActorSheet {
             let value;
             if (target.type == "number") {
                 value = parseInt(target.value);
-                if (value == undefined) {
+                if (isNaN(value)) {
                     value = 0;
                 }
             }

@@ -1,8 +1,0 @@
-{{ log this }}
-<form autocomplete="off">
-	<h1>Defending against {{data.weapon.name}}</h1>
-	Damage: {{ data.damage }}<br/>
-	Formula: Reaction({{ data.actor.system.attributes.reaction.pool }}) + Intuition({{ data.actor.system.attributes.intuition.pool }})<br/>
-	{{> "systems/sr6/templates/dialogs/RollShared.html"}}
-	<input id="do-roll" type="button" value="Roll" selected/>
-</form>

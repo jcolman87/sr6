@@ -12,15 +12,15 @@ export class SR6CharacterSheet extends ActorSheet {
 
 	_onRollAttribute(event: JQuery.ClickEvent) {
 		let target: HTMLInputElement = event.currentTarget;
-		let formula: string = target.dataset["pool"]!;
+		let attribute: Enums.Attribute = Enums.Attribute[target.dataset["attribute"]! as keyof typeof Enums.Attribute];
 
-		this.character.rollFormula(formula, Enums.RollType.Attribute);
+		this.character.rollAttribute(attribute);
 	}
 	_onRollSkill(event: JQuery.ClickEvent) {
 		let target: HTMLInputElement = event.currentTarget;
-		let formula: string = target.dataset["pool"]!;
-
-		this.character.rollFormula(formula, Enums.RollType.Skill);
+		let skill: Enums.Skill = Enums.Skill[target.dataset["skill"]! as keyof typeof Enums.Skill];
+		
+		this.character.rollSkill(skill);
 	}
 
 	_onRollWeapon(event: JQuery.ClickEvent) {
@@ -44,7 +44,7 @@ export class SR6CharacterSheet extends ActorSheet {
 			let value: string | number;
 			if (target.type == "number" || target.dataset["type"] == "number") {
 				value = parseInt(target.value);
-				if (value == undefined) {
+				if (isNaN(value)) {
 					value = 0;
 				}
 			} else {
@@ -64,7 +64,7 @@ export class SR6CharacterSheet extends ActorSheet {
 			let value: string | number;
 			if (target.type == "number") {
 				value = parseInt(target.value);
-				if (value == undefined) {
+				if (isNaN(value)) {
 					value = 0;
 				}
 			} else {

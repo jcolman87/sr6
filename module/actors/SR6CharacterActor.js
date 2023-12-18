@@ -1,6 +1,7 @@
 import { SR6Actor } from "./SR6Actor.js";
 import { SR6CONFIG, Enums } from "../config.js";
-import { showRollWeaponDialog } from "../dialogs/RollWeaponDialog.js";
+import * as Rolls from "../rolls/Rolls.js";
+import { SR6WeaponRollDialog } from "../dialogs/SR6WeaponRollDialog.js";
 export class SR6CharacterActor extends SR6Actor {
     get total_nuyen() {
         let total = 0;
@@ -28,23 +29,85 @@ export class SR6CharacterActor extends SR6Actor {
         //}
     }
     rollWeapon(weapon) {
-        showRollWeaponDialog(this, weapon);
+        new SR6WeaponRollDialog(this, weapon).render(true);
+    }
+    rollSkill(skill) {
+        let roll = Rolls.SR6SkillRoll.make(new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined }));
+        roll.evaluate({ async: false });
+        roll.toMessage();
+    }
+    rollSpecialization(special) {
+        let roll = Rolls.SR6SkillRoll.make(new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special }));
+        roll.evaluate({ async: false });
+        roll.toMessage();
+    }
+    rollAttribute(attribute) {
+        let roll = Rolls.SR6AttributeRoll.make(new Rolls.SR6AttributeRollData(this, attribute));
+        roll.evaluate({ async: false });
+        roll.toMessage();
     }
     getSkill(ty) {
+        return this.getData().skills[Enums.Skill[ty]];
+    }
+    getSpecializationSkill(ty) {
+        return this.getData().skills[SR6CONFIG.getSkillOfSpecialization(ty)];
+    }
+    getAttribute(ty) {
         let data = this.getData();
-        return data.skills[Enums.Skill[ty]];
+        return data.attributes[Enums.Attribute[ty]];
     }
-    calculateSkillPool(skill_use) {
-        let skill = this.getSkill(skill_use.skill_use.skill);
-        const skill_name = Enums.Skill[skill_use.skill_use.skill];
-        const wound_modifier = this.getWoundModifier();
-        const pool = this.solveFormula(`(@actor.system.skills.${skill_name}.pool + ${wound_modifier})`);
-        return pool;
-    }
-    getWoundModifier() {
+    get wound_modifier() {
         let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
         let stun_modifier = -Math.floor(this.getData().monitors.stun.pool / 3);
         return physical_modifier + stun_modifier;
+    }
+    ////
+    applyDamage(value, type) {
+        let monitors = this.getData().monitors;
+        switch (type) {
+            case Enums.DamageType.Physical: {
+                // If it overflows, dump it in overflow
+                monitors.physical.pool += value;
+                if (monitors.physical.pool > monitors.physical.base) { // Overflow damage
+                    monitors.overflow.pool += monitors.physical.pool - monitors.physical.base;
+                    monitors.physical.pool = monitors.physical.base;
+                }
+                this.update({ ["system.monitors"]: monitors });
+                break;
+            }
+            case Enums.DamageType.Stun: {
+                monitors.stun.pool += value;
+                if (monitors.stun.pool > monitors.stun.base) { // Overflow damage
+                    // Recursively apply physical damage if we are overflowing
+                    this.applyDamage(monitors.stun.pool - monitors.stun.base, Enums.DamageType.Physical);
+                    monitors.stun.pool = monitors.stun.base;
+                }
+                break;
+            }
+            case Enums.DamageType.Matrix: {
+                ui.notifications.error("Matrix damage unsupported");
+            }
+            case Enums.DamageType.Astral: {
+                ui.notifications.error("Astral damage unsupported");
+            }
+        }
+    }
+    healDamage(value, type) {
+        ui.notifications.error("Healing isnt implemented");
+    }
+    applyCombatAction(action_id) {
+        let action = SR6CONFIG.combat_actions.get(action_id);
+        const activeEffectData = {
+            name: Enums.CombatAction[action_id],
+            origin: this.id,
+            duration: {
+                rounds: 1
+            },
+            changes: action.changes
+        };
+        console.log("action", action);
+        console.log("Data", activeEffectData);
+        this.createEmbeddedDocuments("ActiveEffect", [activeEffectData]);
     }
     updateSkill(ty, points, specialization = undefined, expertise = undefined) {
         let data = this.getData();
@@ -53,6 +116,21 @@ export class SR6CharacterActor extends SR6Actor {
         skill.specialization = specialization;
         skill.expertise = expertise;
         this.update({ ["system.skills." + Enums.Skill[ty]]: skill });
+    }
+    //////
+    prepareAttribute(attr) {
+        let formulaSolution = 0;
+        if (attr.formula) {
+            formulaSolution = this.solveFormula(attr.formula);
+        }
+        attr.pool = attr.base + attr.modifier + attr.augment + formulaSolution;
+    }
+    prepareMonitor(attr) {
+        let formulaSolution = 0;
+        if (attr.formula) {
+            formulaSolution = Math.ceil(this.solveFormula(attr.formula));
+        }
+        attr.base = attr.modifier + attr.augment + formulaSolution;
     }
     prepareSkillPools() {
         let skills = this.getData().skills;
@@ -93,19 +171,5 @@ export class SR6CharacterActor extends SR6Actor {
         this.prepareAttribute(attributes.logic);
         this.prepareAttribute(attributes.intuition);
         this.prepareAttribute(attributes.charisma);
-    }
-    applyCombatAction(action_id) {
-        let action = SR6CONFIG.combat_actions.get(action_id);
-        const activeEffectData = {
-            name: Enums.CombatAction[action_id],
-            origin: this.id,
-            duration: {
-                rounds: 1
-            },
-            changes: action.changes
-        };
-        console.log("action", action);
-        console.log("Data", activeEffectData);
-        this.createEmbeddedDocuments("ActiveEffect", [activeEffectData]);
     }
 }

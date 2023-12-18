@@ -1,8 +1,23 @@
 import { SR6CONFIG } from "../config.js";
 export class SR6Dialog extends FormApplication {
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            closeOnSubmit: false,
+            submitOnClose: true,
+            submitOnChange: true,
+        });
+    }
+    prepareData() {
+    }
     activateListeners(html) {
         super.activateListeners(html);
-        html.find(":input[direct-data]").change((event) => {
+        html.find("[autofocus]")[0]?.focus();
+        html.on('keydown', (event) => {
+            if (event.key === "Enter") {
+                console.log("enter in dialog");
+            }
+        });
+        html.find("input[direct-data], textarea[direct-data], select[direct-data]").change((event) => {
             let target = event.currentTarget;
             let value;
             if (target.type == "number" || target.dataset["type"] == "number") {
@@ -14,10 +29,19 @@ export class SR6Dialog extends FormApplication {
             else {
                 value = target.value;
             }
-            if (value == undefined) {
-                value = 0;
+            foundry.utils.setProperty(this, target.id, value);
+            this.render(true);
+        });
+        html.find("input[direct-data-array]").change((event) => {
+            let target = event.currentTarget;
+            let array = foundry.utils.getProperty(this, target.id);
+            if (target.checked) {
+                array.push(target.value);
             }
-            this[target.id] = value;
+            else {
+                array = array.filter((v) => v !== target.value);
+            }
+            foundry.utils.setProperty(this, target.id, array);
             this.render(true);
         });
     }

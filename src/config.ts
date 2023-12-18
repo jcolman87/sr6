@@ -1,6 +1,11 @@
 import type {
-  EffectChangeDataConstructorData
+  EffectChangeDataConstructorData as EffectChangeData
 } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/effectChangeData';
+import * as Rules from "./rules.js";
+
+export { Rules, EffectChangeData };
+export type EffectChangeMode = foundry.CONST.ACTIVE_EFFECT_MODES;
+export const EffectChangeMode = foundry.CONST.ACTIVE_EFFECT_MODES;
 
 export namespace Enums {
 	export enum Initiative {
@@ -13,15 +18,6 @@ export namespace Enums {
 		Under = "under",
 		Barrel = "barrel",
 		Top = "top"
-	}
-
-	export enum RollType {
-		Initiative,
-		Attribute,
-		Skill,
-		WeaponAttack,
-		Defend,
-		SoakDamage
 	}
 
 	export enum Attribute {
@@ -276,7 +272,8 @@ export namespace Enums {
 	export enum FireMode {
 		SS = "SS",
 		SA = "SA", // -2 AR +1 DR
-		BF = "BF", // narrow -4 AR +2 DR, wide=split dice pool
+		BF_narrow = "BF_narrow", // narrow -4 AR +2 DR, wide=split dice pool
+		BF_wide = "BF_wide", // narrow -4 AR +2 DR, wide=split dice pool
 		FA = "FA" // -6 AR 
 	}
 
@@ -358,10 +355,10 @@ export class Activation {
 
 export class CombatActionDef {
 	activation: Activation;
-	changes: EffectChangeDataConstructorData[];
+	changes: EffectChangeData[];
 	duration: number;
 
-	constructor(activation: Activation, changes: EffectChangeDataConstructorData[] = [], duration: number = 1) {
+	constructor(activation: Activation, changes: EffectChangeData[] = [], duration: number = 1) {
 		this.activation = activation;
 		this.changes = changes;
 		this.duration = duration;
@@ -394,6 +391,11 @@ export class MatrixProgramDef {
 		this.illegal = illegal;
 		this.modifier = modifier;
 	}
+}
+
+export class SkillUse {
+		skill: undefined | Enums.Skill;
+		specialization: undefined | Enums.Specialization;
 }
 
 export class SR6Config {
@@ -778,13 +780,13 @@ export class SR6Config {
 			[{
 				key: "system.effect_modifiers.damage",
 				value: "2",
-				mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+				mode: EffectChangeMode.ADD,
 				priority: 1,
 			},
 			{
 				key: "system.effect_modifiers.attack_pool",
 				value: "-4",
-				mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+				mode: EffectChangeMode.ADD,
 				priority: 1,
 			}]
 		)],
@@ -1068,21 +1070,26 @@ export class SR6Config {
 		]
 	]);
 
+	getSkillOfSpecialization(ty: Enums.Specialization) : Enums.Skill {
+		
+		return [...this.skills.keys()].find((key: Enums.Skill) => { this.skills.get(key)!.specializations.find((spec)=>spec.id == ty) != undefined })!;
+	}
+
 	getCombatActionDef(ty: Enums.CombatAction): CombatActionDef {
-		return SR6CONFIG.combat_actions.get(ty)!;
+		return this.combat_actions.get(ty)!;
 	}
 
 	getMatrixActionDef(ty: Enums.MatrixAction): MatrixActionDef {
-		return SR6CONFIG.matrix_actions.get(ty)!;
+		return this.matrix_actions.get(ty)!;
 	}
 
 	getSkillDef(ty: Enums.Skill): SkillDef {
-		return SR6CONFIG.skills.get(ty)!;
+		return this.skills.get(ty)!;
 	}
 
 	getSkillSpecializationDef(ty: Enums.Specialization): SkillSpecializationDef {
-		for (let key of SR6CONFIG.skills.keys()) {
-			for (let special of SR6CONFIG.skills.get(key)!.specializations) {
+		for (let key of this.skills.keys()) {
+			for (let special of this.skills.get(key)!.specializations) {
 				if (special.id == ty) {
 					return special;
 				}

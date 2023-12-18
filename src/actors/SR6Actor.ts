@@ -1,10 +1,17 @@
-import { SR6Roll } from "../SR6Roll.js";
-import { Enums } from "../config.js";
+import { SR6Roll, SR6RollData } from "../rolls/Rolls.js";
+import { Enums, SkillUse } from "../config.js";
 import { ActorTypes, BaseActorData } from "./Data.js";
 
 export class SR6Actor extends Actor {
 	get base_data(): BaseActorData {
 		return  (this as any).system as BaseActorData;
+	}
+
+	getData(): BaseActorData {
+		//if(this.isCharacter) { TODO
+			let data: BaseActorData = (this as any).system;
+			return data;
+		//}
 	}
 
 	constructor(a: any, b: any) {
@@ -13,36 +20,24 @@ export class SR6Actor extends Actor {
 	}
 
 	solveFormula(formula: string): number {
-		let roll = new SR6Roll(formula, { actor: this });
+		let roll = new SR6Roll(formula, new SR6RollData(this));
 		roll.evaluate({ async: false });
 
 		return roll.total!;
 	}
 
-	rollFormula(formula: string, type: Enums.RollType) {
-		let pool = this.solveFormula(formula);
-		let roll = new SR6Roll(pool + "d6", { actor: this, type: type });
-
-		roll.evaluate({ async: false });
-
-		roll.toMessage(roll, {});
+	getSkill(ty: Enums.Skill): ActorTypes.Skill {
+		return new ActorTypes.Skill();
 	}
 
-	prepareAttribute(attr: ActorTypes.Attribute) {
-		let formulaSolution: number = 0;
-		if (attr.formula) {
-			formulaSolution = this.solveFormula(attr.formula);
-		}
-		attr.pool = attr.base + attr.modifier + attr.augment + formulaSolution;
+	getAttribute(ty: Enums.Attribute): ActorTypes.Attribute {
+		return new ActorTypes.Attribute();
 	}
 
-	prepareMonitor(attr: ActorTypes.Attribute) {
-		let formulaSolution: number = 0;
-		if (attr.formula) {
-			formulaSolution = Math.ceil(this.solveFormula(attr.formula));
-		}
+	applyDamage(value: number,  type: Enums.DamageType) { ui.notifications!.error("applyDamage not implemented on this actor type"); }
+	healDamage(value: number,  type: Enums.DamageType) { ui.notifications!.error("healDamage not implemented on this actor type"); }
 
-		attr.base = attr.modifier + attr.augment + formulaSolution;
+	get wound_modifier(): number { 
+		return 0;
 	}
-
 }

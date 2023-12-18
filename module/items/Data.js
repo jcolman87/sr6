@@ -15,13 +15,6 @@ export var ItemTypes;
         capacity = "0";
     }
     ItemTypes.Capacity = Capacity;
-    class SkillUse {
-        skill_use = {
-            skill: Enums.Skill.firearms,
-            specialization: Enums.Specialization.holdouts,
-        };
-    }
-    ItemTypes.SkillUse = SkillUse;
     class Matrix {
         matrix_attributes = {
             a: "0",

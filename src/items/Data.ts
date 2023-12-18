@@ -1,4 +1,4 @@
-import { Enums } from "../config.js";
+import { SkillUse as ConfigSkillUse, Enums } from "../config.js";
 
 export class Formula extends String {}
 
@@ -25,17 +25,6 @@ export namespace ItemTypes {
 	export class Capacity {
 		capacity: ItemFormula = "0";
 	}
-
-	export class SkillUse {
-		skill_use: {
-			skill: Enums.Skill;
-			specialization: Enums.Specialization
-		} = {
-			skill: Enums.Skill.firearms,
-			specialization: Enums.Specialization.holdouts,
-		}
-	}
-
 
 	export class Matrix {
 		matrix_attributes: {

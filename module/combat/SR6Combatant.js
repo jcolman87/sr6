@@ -1,5 +1,5 @@
 import { Enums } from "../config.js";
-import { SR6Roll } from "../SR6Roll.js";
+import { SR6InitiativeRoll } from "../rolls/SR6InitiativeRoll.js";
 export class SR6Combatant extends Combatant {
     constructor(data, context) {
         super(data, context);
@@ -49,6 +49,6 @@ export class SR6Combatant extends Combatant {
     getInitiativeRoll(f) {
         let formula = this._getInitiativeFormula();
         console.log("SR6Combatant::getInitiativeRoll", formula);
-        return new SR6Roll(formula, { actor: this.actor, type: Enums.RollType.Initiative });
+        return new SR6InitiativeRoll(formula);
     }
 }

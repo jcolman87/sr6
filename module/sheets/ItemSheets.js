@@ -37,7 +37,7 @@ export class SR6ItemSheet extends ItemSheet {
             let value;
             if (target.type == "number" || target.dataset["type"] == "number") {
                 value = parseInt(target.value);
-                if (value == undefined) {
+                if (isNaN(value)) {
                     value = 0;
                 }
             }

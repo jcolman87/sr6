@@ -71,6 +71,7 @@ export var ActorTypes;
     }
     ActorTypes.Skills = Skills;
     class EffectModifiers {
+        global_pool = 0;
         attack_pool = 0;
         damage = 0;
         defense = 0;

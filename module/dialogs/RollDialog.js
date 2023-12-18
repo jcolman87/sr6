@@ -1,5 +1,5 @@
 import { SR6Dialog } from "./SR6Dialog.js";
-import { SR6Roll } from "../SR6Roll.js";
+import { SR6Roll } from "../rolls/SR6Roll.js";
 export class RollDialog extends SR6Dialog {
     pool_modifier;
     current_pool;
@@ -30,7 +30,7 @@ export class RollDialog extends SR6Dialog {
         this.current_pool = this.getCurrentPool();
         let roll = new SR6Roll(`${this.current_pool}d6`, this.getRollData(html));
         roll.evaluate({ async: false });
-        roll.toMessage(roll, {});
+        roll.toMessage();
         this.close({});
     }
 }

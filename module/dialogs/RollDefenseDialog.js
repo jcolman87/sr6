@@ -1,6 +1,6 @@
 import { RollDialog } from "./RollDialog.js";
 import { Enums } from "../config.js";
-class RollDefenseDialog extends RollDialog {
+class DefenseRollDialog extends RollDialog {
     actor;
     attacker;
     weapon;
@@ -22,7 +22,7 @@ class RollDefenseDialog extends RollDialog {
             closeOnSubmit: false,
             submitOnClose: true,
             submitOnChange: true,
-            template: "systems/sr6/templates/dialogs/RollDefenseDialog.html",
+            template: "systems/sr6/templates/dialogs/DefenseRollDialog.html",
             tabs: []
         });
     }
@@ -40,6 +40,6 @@ class RollDefenseDialog extends RollDialog {
         return data;
     }
 }
-export async function showRollDefenseDialog(actor, attacker, weapon, damage) {
-    let dialog = new RollDefenseDialog(actor, attacker, weapon, damage).render(true);
+export async function showDefenseRollDialog(actor, attacker, weapon, damage) {
+    let dialog = new DefenseRollDialog(actor, attacker, weapon, damage).render(true);
 }

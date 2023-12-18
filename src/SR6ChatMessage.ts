@@ -1,13 +1,21 @@
 import { SR6Actor } from "./actors/SR6Actor.js";
 import { SR6Item } from "./items/SR6Item.js";
-import { showRollDefenseDialog } from "./dialogs/RollDefenseDialog.js";
-import { showRollSoakDialog } from "./dialogs/RollSoakDialog.js";
-import { getSelfOrSelectedActors } from "./util.js";
+import { SR6WeaponRoll, SR6DefenseRoll, SR6SoakRoll } from "./rolls/Rolls.js";
+
+import { SR6DefenseRollDialog } from "./dialogs/SR6DefenseRollDialog.js";
+import { SR6SoakRollDialog } from "./dialogs/SR6SoakRollDialog.js";
+
+import { Enums } from "./config.js";
+import * as util from "./util.js";
+
+
+export interface SR6ChatMessageConstructorData extends ConstructorParameters<ConstructorOf<foundry.documents.BaseChatMessage>> {
+
+}
 
 export class SR6ChatMessage extends ChatMessage {
-	constructor(data?: ConstructorParameters<ConstructorOf<foundry.documents.BaseChatMessage>>[0], context?: ConstructorParameters<ConstructorOf<foundry.documents.BaseChatMessage>>[1]) {
+	constructor(data?: SR6ChatMessageConstructorData, context?: ConstructorParameters<ConstructorOf<foundry.documents.BaseChatMessage>>[1]) {
 		super(data, context);
-		console.log("SR6ChatMessage", this);
 	}
 
 	getHTML(): Promise<JQuery> {
@@ -15,37 +23,26 @@ export class SR6ChatMessage extends ChatMessage {
 	}
 }
 
-export function SR6RenderChatMessage(app: ChatMessage, html: JQuery, data: any) {
+export function SR6RenderChatMessage(msg: ChatMessage, html: JQuery, data: any) {
+	// add a hidden input field to all chat messages
+	html.find("#message-id").attr("value", msg.id);
+
 	html.on("click", "#roll-soak", (event) => {
-		//event.preventDefault();
-		let target: HTMLInputElement = event.currentTarget;
-		let attacker_id: string = target.dataset["attackerId"]!;
-		let item_id: string = target.dataset["weaponId"]!;
-		let hits: number = parseInt(target.dataset["hits"]!);
-		let damage: number = parseInt(target.dataset["damage"]!);
-
-		let attacker: SR6Actor = (game as Game).actors!.get(attacker_id)! as SR6Actor;
-		let item: SR6Item = attacker.items.get(item_id)! as SR6Item;
-
-		//console.log("roll-soak", hits, threshold, damage, attacker_id, item_id);
-
-		let rollers = getSelfOrSelectedActors();
-		rollers.forEach((actor) => showRollSoakDialog(actor, attacker, item, damage));
+		event.preventDefault();
+		let defense_roll: SR6DefenseRoll = (msg as any).rolls[0];
+		
+		util.getSelfOrSelectedActors().forEach((actor) => {
+			new SR6SoakRollDialog(actor, defense_roll).render(true);
+		});
 	});
 
 	html.on("click", "#roll-defense", (event) => {
-		//event.preventDefault();
-		let target: HTMLInputElement = event.currentTarget;
-		let attacker_id: string = target.dataset["attackerId"]!;
-		let item_id: string = target.dataset["weaponId"]!;
-		let hits: number = parseInt(target.dataset["hits"]!);
-		let damage: number = parseInt(target.dataset["damage"]!) + hits;
+		event.preventDefault();
+		let attack_roll: SR6WeaponRoll = (msg as any).rolls[0];
 
-		let attacker: SR6Actor = (game as Game).actors!.get(attacker_id)! as SR6Actor;
-		let item: SR6Item = attacker.items.get(item_id)! as SR6Item;
-
-		let rollers = getSelfOrSelectedActors();
-		rollers.forEach((actor) => showRollDefenseDialog(actor, attacker, item, damage));
+		util.getSelfOrSelectedActors().forEach((actor) => {
+			new SR6DefenseRollDialog(actor, attack_roll).render(true);
+		});
 	});
 
 	html.on("click", ".chat-dice", (event) => {
@@ -59,14 +56,64 @@ export function SR6RenderChatMessage(app: ChatMessage, html: JQuery, data: any) 
 		}
 	});
 
-	html.on("click", ".chat-weapon", (event) => {
+	html.on("click", ".chat-item", (event) => {
 		event.preventDefault();
 		let roll = $(event.currentTarget.parentElement);
-		let tip = roll.find(".chat-weapon-collapsible");
+		let tip = roll.find(".chat-item-collapsible");
 		if (!tip.is(":visible")) {
 			tip.slideDown(200);
 		} else {
 			tip.slideUp(200);
 		}
 	});
+
+	// Multiple formulas
+	for(let i = 0; i < 9; i++) {
+		html.on("click", `.chat-formula-${i}`, (event) => {
+			event.preventDefault();
+			let roll = $(event.currentTarget.parentElement);
+			let tip = roll.find(`.chat-formula-${i}-collapsible`);
+			if (!tip.is(":visible")) {
+				tip.slideDown(200);
+			} else {
+				tip.slideUp(200);
+			}
+		});
+	}
+}
+
+export function SR6ChatLogContext(html: JQuery, data: ContextMenuEntry[]) {
+
+	console.log("getChatLogEntryContext", data);
+	const healPhysicalDamage: ContextMenuEntry = {
+		name: "Heal Damage",
+		icon: '<i class="fas fa-user-minus"></i>',
+		condition: (li: JQuery<HTMLElement>) => {
+			return ((game as Game).messages!.get(li.data("messageId"))! as any).rolls[0]! instanceof SR6SoakRoll;
+		},
+		callback: (li: JQuery<HTMLElement>) => {
+			let roll: SR6SoakRoll = ((game as Game).messages!.get(li.data("messageId"))! as any).rolls[0]! as SR6SoakRoll;
+
+			 util.getSelfOrSelectedActors().forEach((actor) => {
+				actor.healDamage(roll.damage, (roll.item! as any).system.damage_type);
+			}); 
+		}
+	};
+	const applyPhysicalDamage: ContextMenuEntry = {
+		name: "Apply Damage",
+		icon: '<i class="fas fa-user-minus"></i>',
+		condition: (li: JQuery<HTMLElement>) => {
+			return ((game as Game).messages!.get(li.data("messageId"))! as any).rolls[0]! instanceof SR6SoakRoll;
+		},
+		callback: (li: JQuery<HTMLElement>) => {
+			let roll: SR6SoakRoll = ((game as Game).messages!.get(li.data("messageId"))! as any).rolls[0]! as SR6SoakRoll;
+
+			 util.getSelfOrSelectedActors().forEach((actor) => {
+				actor.applyDamage(roll.damage, (roll.item! as any).system.damage_type);
+			}); 
+		}
+	};
+
+	data.unshift(healPhysicalDamage);
+	data.unshift(applyPhysicalDamage);
 }

@@ -1,3 +1,6 @@
+import * as Rules from "./rules.js";
+export { Rules };
+export const EffectChangeMode = foundry.CONST.ACTIVE_EFFECT_MODES;
 export var Enums;
 (function (Enums) {
     let Initiative;
@@ -12,15 +15,6 @@ export var Enums;
         WeaponAccessoryLocation["Barrel"] = "barrel";
         WeaponAccessoryLocation["Top"] = "top";
     })(WeaponAccessoryLocation = Enums.WeaponAccessoryLocation || (Enums.WeaponAccessoryLocation = {}));
-    let RollType;
-    (function (RollType) {
-        RollType[RollType["Initiative"] = 0] = "Initiative";
-        RollType[RollType["Attribute"] = 1] = "Attribute";
-        RollType[RollType["Skill"] = 2] = "Skill";
-        RollType[RollType["WeaponAttack"] = 3] = "WeaponAttack";
-        RollType[RollType["Defend"] = 4] = "Defend";
-        RollType[RollType["SoakDamage"] = 5] = "SoakDamage";
-    })(RollType = Enums.RollType || (Enums.RollType = {}));
     let Attribute;
     (function (Attribute) {
         Attribute[Attribute["body"] = 0] = "body";
@@ -274,7 +268,8 @@ export var Enums;
     (function (FireMode) {
         FireMode["SS"] = "SS";
         FireMode["SA"] = "SA";
-        FireMode["BF"] = "BF";
+        FireMode["BF_narrow"] = "BF_narrow";
+        FireMode["BF_wide"] = "BF_wide";
         FireMode["FA"] = "FA"; // -6 AR 
     })(FireMode = Enums.FireMode || (Enums.FireMode = {}));
     let DamageType;
@@ -379,6 +374,10 @@ export class MatrixProgramDef {
         this.illegal = illegal;
         this.modifier = modifier;
     }
+}
+export class SkillUse {
+    skill;
+    specialization;
 }
 export class SR6Config {
     GEAR_TYPES = ["ACCESSORY", "ARMOR", "ARMOR_ADDITION", "BIOWARE", "CYBERWARE", "TOOLS", "ELECTRONICS", "NANOWARE", "GENETICS", "WEAPON_CLOSE_COMBAT", "WEAPON_RANGED", "WEAPON_FIREARMS", "WEAPON_SPECIAL", "AMMUNITION", "CHEMICALS", "SOFTWARE", "SURVIVAL", "BIOLOGY", "VEHICLES", "DRONES", "MAGICAL"];
@@ -564,13 +563,13 @@ export class SR6Config {
         [Enums.CombatAction.call_shot, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative), [{
                     key: "system.effect_modifiers.damage",
                     value: "2",
-                    mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+                    mode: EffectChangeMode.ADD,
                     priority: 1,
                 },
                 {
                     key: "system.effect_modifiers.attack_pool",
                     value: "-4",
-                    mode: foundry.CONST.ACTIVE_EFFECT_MODES.ADD,
+                    mode: EffectChangeMode.ADD,
                     priority: 1,
                 }])],
         [Enums.CombatAction.change_device_mode, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
@@ -851,18 +850,21 @@ export class SR6Config {
             }
         ]
     ]);
+    getSkillOfSpecialization(ty) {
+        return [...this.skills.keys()].find((key) => { this.skills.get(key).specializations.find((spec) => spec.id == ty) != undefined; });
+    }
     getCombatActionDef(ty) {
-        return SR6CONFIG.combat_actions.get(ty);
+        return this.combat_actions.get(ty);
     }
     getMatrixActionDef(ty) {
-        return SR6CONFIG.matrix_actions.get(ty);
+        return this.matrix_actions.get(ty);
     }
     getSkillDef(ty) {
-        return SR6CONFIG.skills.get(ty);
+        return this.skills.get(ty);
     }
     getSkillSpecializationDef(ty) {
-        for (let key of SR6CONFIG.skills.keys()) {
-            for (let special of SR6CONFIG.skills.get(key).specializations) {
+        for (let key of this.skills.keys()) {
+            for (let special of this.skills.get(key).specializations) {
                 if (special.id == ty) {
                     return special;
                 }

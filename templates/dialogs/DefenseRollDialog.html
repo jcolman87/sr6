@@ -1,0 +1,17 @@
+{{ log this }}
+
+<form class="flexcol" autocomplete="off">
+	<header>
+		<h1>Roll Defense</h1>
+		<h3 style="font-style: italic">Agility({{roll.actor.system.attributes.agility.pool}}) + Intuition({{roll.actor.system.attributes.intuition.pool}})</h3>
+	</header>
+	<section>
+		<div>Threshold to Defend: <i style="font-weight: bold">{{ roll.attack_roll.hits }}</i></div>
+		<div>Damage: <i style="font-weight: bold">{{ roll.attack_roll.data.damage }}</i></div>
+		<div>AR: <i style="font-weight: bold">{{ roll.attack_roll.data.attack_rating }}</i></div>
+		<div>Defense Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.defense }}</i><br/></div>
+		
+	</section>
+	
+	{{> "systems/sr6/templates/dialogs/shared.html" }}
+</form>

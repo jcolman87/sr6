@@ -19,7 +19,7 @@ class ImportDialog extends SR6Dialog {
             closeOnSubmit: false,
             submitOnClose: true,
             submitOnChange: true,
-            template: "systems/sr6/templates/dialogs/RollWeaponDialog.html",
+            template: "systems/sr6/templates/dialogs/WeaponRollDialog.html",
             tabs: []
         });
     }
@@ -27,7 +27,7 @@ class ImportDialog extends SR6Dialog {
         const pool_modifier = parseInt(html.find("#pool-modifier").val());
         const distance = Enums.Distance[html.find("#distance").val()];
         const firemode = Enums.FireMode[html.find("#firemode").val()];
-        //console.log("RollWeaponDialog::_onComplete", pool_modifier, Enums.Distance[distance] as string, Enums.FireMode[firemode] as string);
+        //console.log("WeaponRollDialog::_onComplete", pool_modifier, Enums.Distance[distance] as string, Enums.FireMode[firemode] as string);
         const data = {
             type: Enums.RollType.WeaponAttack,
             actor: this.actor,

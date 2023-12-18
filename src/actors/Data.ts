@@ -96,6 +96,7 @@ export namespace ActorTypes {
 	}
 
 	export class EffectModifiers {
+		global_pool: number = 0;
 		attack_pool: number = 0;
 		damage: number = 0;
 		defense: number = 0;
@@ -105,6 +106,7 @@ export namespace ActorTypes {
 
 export interface BaseActorData {
 	initiatives: ActorTypes.Initiatives;
+	effect_modifiers: ActorTypes.EffectModifiers;
 }
 
 export class CharacterActorData implements BaseActorData {
@@ -121,6 +123,5 @@ export class CharacterActorData implements BaseActorData {
 	attributes: ActorTypes.Attributes = new ActorTypes.Attributes();
 	derived_attributes: ActorTypes.DerivedAttributes = new ActorTypes.DerivedAttributes();
 	skills: ActorTypes.Skills = new ActorTypes.Skills();
-
 	effect_modifiers: ActorTypes.EffectModifiers = new ActorTypes.EffectModifiers();
 }

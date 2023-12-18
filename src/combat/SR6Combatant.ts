@@ -1,7 +1,7 @@
 import { Enums } from "../config.js";
 import { BaseActorData } from "../actors/Data.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
-import { SR6Roll } from "../SR6Roll.js";
+import { SR6InitiativeRoll } from "../rolls/SR6InitiativeRoll.js";
 
 export class SR6Combatant extends Combatant {
 	constructor(data: ConstructorParameters<typeof foundry.documents.BaseCombatant>[0], context: ConstructorParameters<typeof foundry.documents.BaseCombatant>[1]) {
@@ -54,7 +54,7 @@ export class SR6Combatant extends Combatant {
 	getInitiativeRoll(f?: string): Roll {
 		let formula = this._getInitiativeFormula();
 		console.log("SR6Combatant::getInitiativeRoll", formula);
-		return new SR6Roll(formula, { actor: this.actor, type: Enums.RollType.Initiative });
+		return new SR6InitiativeRoll(formula);
 	}
 
 }

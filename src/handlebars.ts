@@ -2,10 +2,15 @@ import { SR6Actor } from "./actors/SR6Actor.js";
 import { SR6CharacterActor } from "./actors/SR6CharacterActor.js";
 import { SR6Item } from "./items/SR6Item.js";
 import { ItemTypes } from "./items/Data.js";
-import { SR6CONFIG, Enums } from "./config.js";
+import { SR6CONFIG, Enums, SkillUse } from "./config.js";
 
 
 export function defineHandlebarHelpers() {
+	Handlebars.registerHelper("bold", function(this: any, options: any) {
+	  return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
+	});
+
+	////
 	Handlebars.registerHelper("itemHas", function (item: SR6Item, ty_str: string) {
 		return item.has(ItemTypes.Types[ty_str as keyof typeof ItemTypes.Types]);
 	});
@@ -26,17 +31,22 @@ export function defineHandlebarHelpers() {
 		return actor.getSkill(ty);
 	});
 
-	Handlebars.registerHelper("getWoundModifier", function (actor: SR6CharacterActor) {
-		return actor.getWoundModifier();
-	});
-
 	Handlebars.registerHelper("getAttackRating", function (item: SR6Item, distance: Enums.Distance) {
 		return item.getAttackRating(distance);
 	});
 
-
+	Handlebars.registerHelper("attributeAsString", function (ty: Enums.Attribute) {
+		return Enums.Attribute[ty];
+	});
 	Handlebars.registerHelper("skillAsString", function (ty: Enums.Skill) {
 		return Enums.Skill[ty];
+	});
+	Handlebars.registerHelper("skillUseAsString", function (ty: SkillUse) {
+		if(ty.specialization) {
+			return Enums.Specialization[ty.specialization];
+		} else {
+			return Enums.Skill[ty.skill!];
+		}
 	});
 	Handlebars.registerHelper("specializationAsString", function (ty: Enums.Specialization) {
 		console.log("ty", ty, Enums.Specialization[ty]);
@@ -65,10 +75,6 @@ export function defineHandlebarHelpers() {
 		} else if (list instanceof Map) {
 			return list.has(elem);
 		}
-	});
-
-	Handlebars.registerHelper("isRollType", function (val: Enums.RollType, ty: string) {
-		return val == Enums.RollType[ty as keyof typeof Enums.RollType];
 	});
 
 	Handlebars.registerHelper("var", function (varName, varValue, options) {

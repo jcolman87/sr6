@@ -65,6 +65,7 @@ export class EffectModifiers extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
         return {
+            global_pool: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
             attack_pool: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
             damage: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),
             defense: new fields.NumberField({ initial: 0, required: false, nullable: false, integer: true }),

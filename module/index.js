@@ -1,6 +1,6 @@
 import { SR6CONFIG } from "./config.js";
-import { SR6Roll } from "./SR6Roll.js";
-import { SR6ChatMessage, SR6RenderChatMessage } from "./SR6ChatMessage.js";
+import * as Rolls from "./rolls/Rolls.js";
+import { SR6ChatMessage, SR6RenderChatMessage, SR6ChatLogContext } from "./SR6ChatMessage.js";
 import { SR6ActorProxy } from "./actors/SR6ActorProxy.js";
 import { SR6Item } from "./items/SR6Item.js";
 import { SR6ActiveEffect } from "./SR6ActiveEffect.js";
@@ -12,6 +12,7 @@ import { preloadHandlebarsTemplates } from "./templates.js";
 import { defineHandlebarHelpers } from "./handlebars.js";
 import * as ActorDataModels from "./actors/DataModels.js";
 import * as ItemDataModels from "./items/DataModels.js";
+import * as util from "./util.js";
 function registerSheets() {
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("sr6", SR6CharacterSheet, {
@@ -36,7 +37,7 @@ Hooks.once("init", async function () {
     CONFIG.SR6 = SR6CONFIG;
     CONFIG.Actor.documentClass = SR6ActorProxy;
     CONFIG.Item.documentClass = SR6Item;
-    CONFIG.Dice.rolls = [SR6Roll];
+    CONFIG.Dice.rolls = Rolls.RollTypes;
     CONFIG.ActiveEffect.documentClass = SR6ActiveEffect;
     CONFIG.ChatMessage.documentClass = SR6ChatMessage;
     CONFIG.Actor.dataModels.Player = ActorDataModels.Character;
@@ -53,13 +54,22 @@ Hooks.once("init", async function () {
     registerSheets();
     preloadHandlebarsTemplates();
     defineHandlebarHelpers();
-});
-Hooks.on("renderChatMessage", function (app, html, data) {
-    SR6RenderChatMessage(app, html, data);
+    exportUseful();
 });
 Hooks.on("dropActorSheetData", (dragTarget, sheet, data) => {
     //console.log("dropActorSheetData", dragTarget, sheet, data);
 });
 Hooks.on("renderItemDirectory", (app, html, data) => {
     //addImportButton(app, html, data);
+});
+Hooks.on("renderChatMessage", function (app, html, data) {
+    SR6RenderChatMessage(app, html, data);
+});
+function exportUseful() {
+    let w = window;
+    w.getTargetedActors = util.getTargetedActors;
+    w.getSelectedActors = util.getSelectedActors;
+}
+Hooks.on("getChatLogEntryContext", function (html, data) {
+    SR6ChatLogContext(html, data);
 });

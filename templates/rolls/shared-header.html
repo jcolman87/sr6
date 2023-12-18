@@ -1,0 +1,22 @@
+<input id="message-id" type="hidden"  value=""/>
+<h3>
+	{{#unless (undefined data.actor)}}
+	<img class="profile-img" src="{{data.actor.img}}" data-edit="img" title="{{actor.name}}" height="24" width="24" /> 
+	{{data.actor.name}}
+	{{/unless}}
+	<i style="font-size: 16px">{{ action_text }}</i>
+</h3>
+<header class="part-header flexrow chat-dice">
+	<div>{{roll.formula}}</div>
+	<br/>
+	<div class="resulttext" style="flex:2">
+		<i style="font-weight: bold">{{roll.hits}}</i> hits</div>
+		
+	<br/>
+	{{#if roll.is_critical_glitch}}
+	<span style="color: rgb(215, 14, 233); flex:2">Critical Glitch!</span><br/>
+	{{else roll.is_glitch}}
+	<span style="color: rgb(194, 76, 29); flex:2">Glitch!</span><br/>
+	{{/if}}
+</header>
+<hr/>

@@ -1,6 +1,10 @@
 import { ItemTypes } from "./items/Data.js";
 import { SR6CONFIG, Enums } from "./config.js";
 export function defineHandlebarHelpers() {
+    Handlebars.registerHelper("bold", function (options) {
+        return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
+    });
+    ////
     Handlebars.registerHelper("itemHas", function (item, ty_str) {
         return item.has(ItemTypes.Types[ty_str]);
     });
@@ -16,14 +20,22 @@ export function defineHandlebarHelpers() {
     Handlebars.registerHelper("getSkill", function (actor, ty) {
         return actor.getSkill(ty);
     });
-    Handlebars.registerHelper("getWoundModifier", function (actor) {
-        return actor.getWoundModifier();
-    });
     Handlebars.registerHelper("getAttackRating", function (item, distance) {
         return item.getAttackRating(distance);
     });
+    Handlebars.registerHelper("attributeAsString", function (ty) {
+        return Enums.Attribute[ty];
+    });
     Handlebars.registerHelper("skillAsString", function (ty) {
         return Enums.Skill[ty];
+    });
+    Handlebars.registerHelper("skillUseAsString", function (ty) {
+        if (ty.specialization) {
+            return Enums.Specialization[ty.specialization];
+        }
+        else {
+            return Enums.Skill[ty.skill];
+        }
     });
     Handlebars.registerHelper("specializationAsString", function (ty) {
         console.log("ty", ty, Enums.Specialization[ty]);
@@ -50,9 +62,6 @@ export function defineHandlebarHelpers() {
         else if (list instanceof Map) {
             return list.has(elem);
         }
-    });
-    Handlebars.registerHelper("isRollType", function (val, ty) {
-        return val == Enums.RollType[ty];
     });
     Handlebars.registerHelper("var", function (varName, varValue, options) {
         options.data.root[varName] = varValue;

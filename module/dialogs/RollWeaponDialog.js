@@ -1,6 +1,6 @@
 import { RollDialog } from "./RollDialog.js";
 import { Enums } from "../config.js";
-class RollWeaponDialog extends RollDialog {
+class WeaponRollDialog extends RollDialog {
     actor;
     weapon;
     distance;
@@ -40,7 +40,7 @@ class RollWeaponDialog extends RollDialog {
             closeOnSubmit: false,
             submitOnClose: true,
             submitOnChange: true,
-            template: "systems/sr6/templates/dialogs/RollWeaponDialog.html",
+            template: "systems/sr6/templates/dialogs/WeaponRollDialog.html",
             tabs: []
         });
     }
@@ -100,6 +100,6 @@ class RollWeaponDialog extends RollDialog {
         return data;
     }
 }
-export async function showRollWeaponDialog(actor, weapon) {
-    let dialog = new RollWeaponDialog(actor, weapon).render(true);
+export async function showWeaponRollDialog(actor, weapon) {
+    let dialog = new WeaponRollDialog(actor, weapon).render(true);
 }

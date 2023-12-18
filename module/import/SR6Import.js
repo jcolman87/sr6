@@ -22,7 +22,7 @@ class SR6Import extends SR6Dialog {
         const pool_modifier = parseInt(html.find("#pool-modifier").val());
         const distance = Enums.Distance[html.find("#distance").val()];
         const firemode = Enums.FireMode[html.find("#firemode").val()];
-        //console.log("RollWeaponDialog::_onComplete", pool_modifier, Enums.Distance[distance] as string, Enums.FireMode[firemode] as string);
+        //console.log("WeaponRollDialog::_onComplete", pool_modifier, Enums.Distance[distance] as string, Enums.FireMode[firemode] as string);
         const data = {
             type: Enums.RollType.WeaponAttack,
             actor: this.actor,
@@ -52,6 +52,6 @@ class SR6Import extends SR6Dialog {
         return super.close();
     }
 }
-export async function showRollWeaponDialog(actor, weapon) {
-    let dialog = new RollWeaponDialog(actor, weapon).render(true);
+export async function showWeaponRollDialog(actor, weapon) {
+    let dialog = new WeaponRollDialog(actor, weapon).render(true);
 }

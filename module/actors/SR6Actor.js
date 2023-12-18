@@ -1,35 +1,33 @@
-import { SR6Roll } from "../SR6Roll.js";
+import { SR6Roll, SR6RollData } from "../rolls/Rolls.js";
+import { ActorTypes } from "./Data.js";
 export class SR6Actor extends Actor {
     get base_data() {
         return this.system;
+    }
+    getData() {
+        //if(this.isCharacter) { TODO
+        let data = this.system;
+        return data;
+        //}
     }
     constructor(a, b) {
         super(a, b);
         console.log("SR6Actor::constructor");
     }
     solveFormula(formula) {
-        let roll = new SR6Roll(formula, { actor: this });
+        let roll = new SR6Roll(formula, new SR6RollData(this));
         roll.evaluate({ async: false });
         return roll.total;
     }
-    rollFormula(formula, type) {
-        let pool = this.solveFormula(formula);
-        let roll = new SR6Roll(pool + "d6", { actor: this, type: type });
-        roll.evaluate({ async: false });
-        roll.toMessage(roll, {});
+    getSkill(ty) {
+        return new ActorTypes.Skill();
     }
-    prepareAttribute(attr) {
-        let formulaSolution = 0;
-        if (attr.formula) {
-            formulaSolution = this.solveFormula(attr.formula);
-        }
-        attr.pool = attr.base + attr.modifier + attr.augment + formulaSolution;
+    getAttribute(ty) {
+        return new ActorTypes.Attribute();
     }
-    prepareMonitor(attr) {
-        let formulaSolution = 0;
-        if (attr.formula) {
-            formulaSolution = Math.ceil(this.solveFormula(attr.formula));
-        }
-        attr.base = attr.modifier + attr.augment + formulaSolution;
+    applyDamage(value, type) { ui.notifications.error("applyDamage not implemented on this actor type"); }
+    healDamage(value, type) { ui.notifications.error("healDamage not implemented on this actor type"); }
+    get wound_modifier() {
+        return 0;
     }
 }

@@ -1,0 +1,38 @@
+{{> "systems/sr6/templates/rolls/shared-header.html" action_text="Attack"}}
+<div>
+	<i style="font-weight: bold">{{ distanceToString roll.data.distance }}</i> distance 
+	<i style="font-weight: bold">
+	{{#if (eq roll.data.firemode "SS") }}Single shot
+	{{else if (eq roll.data.firemode "SS") }}Semi Auto
+	{{else if (eq roll.data.firemode "BF") }}Burst Fire
+	{{else if (eq roll.data.firemode "FA") }}Full Auto
+	{{/if}}</i>
+	with <a class="chat-item" style="font-style: italic">{{roll.data.item.name }}</a><br/>
+
+	<a class="chat-formula-1" style="font-style: italic">
+		Damage: <i style="font-weight: bold; color: rgb(194, 76, 29);">{{ roll.damage }}</i></a>
+	<br/>
+	<div class="chat-tooltip chat-formula chat-formula-1-collapsible" style="display: none">
+		DV({{roll.data.damage}}) + Hits({{roll.hits}}) = {{ roll.damage }}
+	</div>
+
+	Attack Rating: <i style="font-weight: bold">{{ roll.data.attack_rating }}</i><br/>
+
+	<div class="chat-tooltip chat-item-collapsible" style="display: none">
+	<section>
+		<div>
+			<hr/>
+			DV <i style="font-weight: bold">{{ roll.data.item.system.damage}}</i><br/> 
+			AR {{roll.data.item.system.attack_ratings.close}} / 
+			{{roll.data.item.system.attack_ratings.near}} / 
+			{{roll.data.item.system.attack_ratings.medium}} / 
+			{{roll.data.item.system.attack_ratings.far}} / 
+			{{roll.data.item.system.attack_ratings.extreme}}
+			<br/><div style="font-size: 10px">{{ roll.data.item.system.description}}</div>
+		</div>
+	</section>
+</div>
+<hr/>
+<input id="roll-defense" type="button" value="Roll Defense"/>
+
+{{> "systems/sr6/templates/rolls/shared-footer.html"}}

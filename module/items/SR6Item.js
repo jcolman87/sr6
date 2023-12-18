@@ -1,15 +1,14 @@
 import { ItemTypes } from "./Data.js";
-import { SR6Roll } from "../SR6Roll.js";
-import { Enums } from "../config.js";
+import * as Rolls from "../rolls/Rolls.js";
+import { Enums, SkillUse } from "../config.js";
 export class SR6Item extends Item {
     solveFormula(formula) {
         return this.solveFormulaWithActor(this.actor, formula);
     }
     solveFormulaWithActor(actor, formula) {
-        //console.log("SR6Item::solveFormulaWithActor", formula);
-        let roll = new SR6Roll(formula, { actor: actor, item: this });
+        console.log("SR6Item::solveFormulaWithActor", formula);
+        let roll = new Rolls.SR6Roll(formula, { actor: this.actor, item: this });
         roll.evaluate({ async: false });
-        //console.log("solved", formula, roll);
         return roll.total;
     }
     prepareData() {
@@ -17,16 +16,16 @@ export class SR6Item extends Item {
     }
     getAttackRating(distance) {
         switch (distance) {
-            case Enums.Distance.Close: return this.solveFormula(this.weapon().attack_ratings.close);
-            case Enums.Distance.Near: return this.solveFormula(this.weapon().attack_ratings.near);
-            case Enums.Distance.Medium: return this.solveFormula(this.weapon().attack_ratings.medium);
-            case Enums.Distance.Far: return this.solveFormula(this.weapon().attack_ratings.far);
-            case Enums.Distance.Extreme: return this.solveFormula(this.weapon().attack_ratings.extreme);
+            case Enums.Distance.Close: return this.solveFormula(this.weapon.attack_ratings.close);
+            case Enums.Distance.Near: return this.solveFormula(this.weapon.attack_ratings.near);
+            case Enums.Distance.Medium: return this.solveFormula(this.weapon.attack_ratings.medium);
+            case Enums.Distance.Far: return this.solveFormula(this.weapon.attack_ratings.far);
+            case Enums.Distance.Extreme: return this.solveFormula(this.weapon.attack_ratings.extreme);
             default: return 0;
         }
     }
     get damage() {
-        return this.solveFormula(this.weapon().damage);
+        return this.solveFormula(this.weapon.damage);
     }
     addType(ty) {
         let data = this.getData();
@@ -57,7 +56,7 @@ export class SR6Item extends Item {
                 mergeObject(data, new ItemTypes.Mountable());
                 break;
             case ItemTypes.Types.SkillUse:
-                mergeObject(data, new ItemTypes.SkillUse());
+                mergeObject(data, new SkillUse());
                 break;
             default:
                 throw "WTF";
@@ -74,47 +73,47 @@ export class SR6Item extends Item {
     has(ty) {
         return (this.getData().types & ty) == ty;
     }
-    cost() {
+    get skill_use() {
+        if (!this.has(ItemTypes.Types.SkillUse))
+            return undefined;
+        return this.getData().skill_use;
+    }
+    get cost() {
         if (!this.has(ItemTypes.Types.Cost))
             return undefined;
         return this.getData();
     }
-    skill_use() {
-        if (!this.has(ItemTypes.Types.SkillUse))
-            return undefined;
-        return this.getData();
-    }
-    capacity() {
+    get capacity() {
         if (!this.has(ItemTypes.Types.Capacity))
             return undefined;
         return this.getData();
     }
-    defense() {
+    get defense() {
         if (!this.has(ItemTypes.Types.Cost))
             return undefined;
         return this.getData();
     }
-    matrix() {
+    get matrix() {
         if (!this.has(ItemTypes.Types.Matrix))
             return undefined;
         return this.getData();
     }
-    mountable() {
+    get mountable() {
         if (!this.has(ItemTypes.Types.Mountable))
             return undefined;
         return this.getData();
     }
-    explosive() {
+    get explosive() {
         if (!this.has(ItemTypes.Types.Explosive))
             return undefined;
         return this.getData();
     }
-    weapon() {
+    get weapon() {
         if (!this.has(ItemTypes.Types.Weapon))
             return undefined;
         return this.getData();
     }
-    firearm() {
+    get firearm() {
         if (!this.has(ItemTypes.Types.Firearm))
             return undefined;
         return this.getData();
