@@ -5,14 +5,15 @@ export class SR6Combatant extends Combatant {
         super(data, context);
         //
         if (this.isOwner) {
-            this.setFlag("sr6", "Enums.Initiative", Enums.Initiative.Physical);
+            this.setFlag("sr6", "actions", this.actor.actions);
+            this.setFlag("sr6", "initiative_type", Enums.Initiative.Physical);
         }
     }
     get actions() {
-        return this.actor.initiatives.actions;
+        return this.getFlag("sr6", "actions");
     }
     get initiative_type() {
-        return this.getFlag("sr6", "Enums.Initiative");
+        return this.getFlag("sr6", "initiative_type");
     }
     get actor_data() {
         return this.actor.base_data;

@@ -8,11 +8,11 @@
 		"src/index.ts"
 	],
 	"devDependencies": {
-		"@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
 		"@types/jquery": "^3.5.29",
 		"@typescript-eslint/parser": "^6.13.2"
 	},
 	"dependencies": {
+		"@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
 		"typescript-formatter": "^7.2.2"
 	},
 	"scripts": {

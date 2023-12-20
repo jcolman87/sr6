@@ -35,8 +35,8 @@
 				<tbody>
 					{{#each config.matrix_programs as |program program_id| }} 
 					{{#if program.1.illegal }}
-					<tr>
-						<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_programs." (matrixProgramAsString program_id) ) ".name")}}</td>
+					<tr title="{{localizeDescription 'matrix_program' (matrixProgramAsString program_id) }}">
+						<td style="padding: 0; margin: 0">{{localizeName 'matrix_program' (matrixProgramAsString program_id) }}</td>
 						<td style="padding: 0; margin: 0"><input type="checkbox" class="switch" {{#if (in program_id item.system.programs) }} checked {{/if}}/></td>
 					</tr>
 					{{/if }}
@@ -53,8 +53,8 @@
 				<tbody>
 					{{#each config.matrix_programs as |program program_id| }} 
 					{{#unless program.1.illegal }}
-					<tr>
-						<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_programs." (matrixProgramAsString program_id) ) ".name")}}</td>
+					<tr title="{{localizeDescription 'matrix_program' (matrixProgramAsString program_id) }}">
+						<td style="padding: 0; margin: 0">{{localizeName 'matrix_program' (matrixProgramAsString program_id) }}</td>
 						<td style="padding: 0; margin: 0"><input type="checkbox" class="switch" /></td>
 					</tr>
 					{{/unless}}

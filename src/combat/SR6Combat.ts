@@ -1,5 +1,1 @@
-
-
-export class SR6Combat extends Combat {
-	
-}
+export class SR6Combat extends Combat {}

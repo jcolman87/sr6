@@ -9,16 +9,17 @@ export class SR6Combatant extends Combatant {
 		super(data, context);
 		//
 		if (this.isOwner) {
-			this.setFlag("sr6", "Enums.Initiative", Enums.Initiative.Physical);
+			this.setFlag("sr6", "actions", (this.actor! as SR6Actor).actions);
+			this.setFlag("sr6", "initiative_type", Enums.Initiative.Physical);
 		}
 	}
 
-	get actions() : ActorTypes.Actions {
-		return (this.actor as SR6Actor).initiatives.actions;
+	get actions(): Enums.Initiative {
+		return this.getFlag("sr6", "actions") as Enums.Initiative;
 	}
 
 	get initiative_type(): Enums.Initiative {
-		return this.getFlag("sr6", "Enums.Initiative") as Enums.Initiative;
+		return this.getFlag("sr6", "initiative_type") as Enums.Initiative;
 	}
 
 	get actor_data(): BaseActorData {
@@ -29,20 +30,20 @@ export class SR6Combatant extends Combatant {
 		console.log("SR6Combatant::_getInitiativeFormula", this.actor_data);
 		switch (this.initiative_type) {
 			case Enums.Initiative.Physical: {
-				if(this.actor_data.initiatives.physical_formula == undefined) {
+				if (this.actor_data.initiatives.physical_formula == undefined) {
 					ui.notifications!.error(`Actor'${this.actor!.name}'[${this.actor!.id}] does not have Physical initiative`);
 				} else {
 					return this.actor_data.initiatives.physical_formula!;
 				}
 			}
 			case Enums.Initiative.Astral:
-				if(this.actor_data.initiatives.astral_formula == undefined) {
+				if (this.actor_data.initiatives.astral_formula == undefined) {
 					ui.notifications!.error(`Actor'${this.actor!.name}'[${this.actor!.id}] does not have Astral initiative`);
 				} else {
 					return this.actor_data.initiatives.astral_formula!;
 				}
 			case Enums.Initiative.Matrix:
-				if(this.actor_data.initiatives.matrix_formula == undefined) {
+				if (this.actor_data.initiatives.matrix_formula == undefined) {
 					ui.notifications!.error(`Actor'${this.actor!.name}'[${this.actor!.id}] does not have Matrix initiative`);
 				} else {
 					return this.actor_data.initiatives.matrix_formula!;
@@ -59,5 +60,4 @@ export class SR6Combatant extends Combatant {
 	getInitiativeRoll(f?: string): Roll {
 		return new SR6InitiativeRoll(this._getInitiativeFormula(), { actor: this.actor });
 	}
-
 }

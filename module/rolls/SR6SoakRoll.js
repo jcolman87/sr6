@@ -10,7 +10,9 @@ export class SR6SoakRollData extends SR6RollData {
 }
 export class SR6SoakRoll extends SR6Roll {
     static CHAT_TEMPLATE = "systems/sr6/templates/rolls/SR6SoakRoll.html";
-    get template() { return SR6SoakRoll.CHAT_TEMPLATE; }
+    get template() {
+        return SR6SoakRoll.CHAT_TEMPLATE;
+    }
     get damage() {
         console.log("damage", this.data.defense_roll.damage, this.hits);
         return this.data.defense_roll.damage - this.hits;

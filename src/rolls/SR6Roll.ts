@@ -1,9 +1,8 @@
 import { Data, Evaluated, Options } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
-import { SR6Item } from "../items/SR6Item.js";
+import { SR6Gear } from "../items/SR6Gear.js";
 import { Enums, EffectChangeData, SR6CONFIG } from "../config.js";
 import { applyChangesetToObject } from "../util.js";
-
 
 export class SR6RollData {
 	actor: SR6Actor | null;
@@ -31,7 +30,7 @@ export class SR6RollData {
 
 	applyEdge() {
 		console.log("Apply edge:", this.edge.boost);
-		if(this.edge.boost != null) {
+		if (this.edge.boost != null) {
 			let boost = SR6CONFIG.edge_boosts.get(this.edge.boost)!;
 			boost.prepareData(this);
 			this.applyChangeset(boost.changes);
@@ -53,25 +52,23 @@ downside, a 1 cancels all the 5s rolled. A 2, 3, or 4 mancers are both sought af
 on the wild die means nothing.
 */
 
-
 export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
-
 	static CHAT_TEMPLATE = "systems/sr6/templates/rolls/SR6Roll.html";
 
-	parameters: { glitch: number[], success: number[] } = { glitch: [1], success: [5, 6] };
+	parameters: { glitch: number[]; success: number[] } = { glitch: [1], success: [5, 6] };
 
 	constructor(formula: string, data: any = {}, options: any = {}) {
-		super(formula,data,options);
+		super(formula, data, options);
 	}
 
 	async finish() {
-		if(this.data.explode) {
+		if (this.data.explode) {
 			await this.explode();
-		}	
+		}
 	}
 	async finishEdge() {
 		console.log("SR6Roll::finishEdge", this);
-		if(this.data.edge.boost != null) {
+		if (this.data.edge.boost != null) {
 			let boost = SR6CONFIG.edge_boosts.get(this.data.edge.boost)!;
 			await boost.apply(this);
 		}
@@ -86,16 +83,16 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	_getLowestRollIndex(): number {
-		return this.sides.indexOf(Math.min.apply(Math, this.sides));;
+		return this.sides.indexOf(Math.min.apply(Math, this.sides));
 	}
 
-	_updateDie(idx: number, value: number) : void {
+	_updateDie(idx: number, value: number): void {
 		console.log("_updateDie", idx, value, (this.terms[0] as any).results);
 		(this.terms[0] as any).results[idx].result = value;
 	}
 
-	async rerollOne(die: null | number = null) : Promise<boolean> {
-		if(die == null) {
+	async rerollOne(die: null | number = null): Promise<boolean> {
+		if (die == null) {
 			die = this._getLowestRollIndex();
 		}
 		let reroll = new SR6Roll(`1d6`, new SR6RollData(this.data.actor!));
@@ -107,22 +104,22 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 		return true;
 	}
 
-	async addOne(die: null | number = null) : Promise<boolean> {
-		if(die == null) {
-			// Find the best candidate to add one to, 
+	async addOne(die: null | number = null): Promise<boolean> {
+		if (die == null) {
+			// Find the best candidate to add one to,
 
 			// First check for glitches and replace
-			if(this.glitches - 1 <= Math.floor(this.pool / 2)) {
-				let idx_glitch: undefined | number  = this.sides.indexOf(1);
-				if(idx_glitch != -1) {
+			if (this.glitches - 1 <= Math.floor(this.pool / 2)) {
+				let idx_glitch: undefined | number = this.sides.indexOf(1);
+				if (idx_glitch != -1) {
 					this._updateDie(idx_glitch, this.sides[idx_glitch] + 1);
 					return true;
 				}
 			}
 
 			// this should be a 4 ideally next
-			let idx_four: undefined | number  = this.sides.indexOf(4);
-			if(idx_four != -1) {
+			let idx_four: undefined | number = this.sides.indexOf(4);
+			if (idx_four != -1) {
 				this._updateDie(idx_four, this.sides[idx_four] + 1);
 				return true;
 			}
@@ -130,23 +127,23 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 			ui.notifications!.warn("You are adding +1 to a roll with no glitches and no near-successes, this was worthless");
 			return false;
 		}
-			
+
 		return false;
 	}
 
 	// return false if there are no hits to buy
-	async addHit() : Promise<boolean> {
+	async addHit(): Promise<boolean> {
 		this.data.auto_hits += 1;
 
 		return true;
 	}
 
 	// return false if there are no hits to buy
-	async addHitToPool(die: null | number = null) : Promise<boolean> {
+	async addHitToPool(die: null | number = null): Promise<boolean> {
 		(this.terms[0] as any).results.push({
 			active: true,
 			result: 5,
-			indexThrow: 0,
+			indexThrow: 0
 		});
 		this._termsUpdated();
 
@@ -154,15 +151,15 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	// return false if theres no glitches to reroll
-	async rerollFailed() : Promise<boolean> {
+	async rerollFailed(): Promise<boolean> {
 		let failedList: number[] = [];
-		for(let i =0; i < this.sides.length; i++) {
-			if(!this.parameters.success.includes(this.sides[i])) {
+		for (let i = 0; i < this.sides.length; i++) {
+			if (!this.parameters.success.includes(this.sides[i])) {
 				failedList.push(i);
 			}
 		}
 
-		if(failedList.length == 0) {
+		if (failedList.length == 0) {
 			return false;
 		}
 
@@ -171,21 +168,22 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 		await reroll.showVisual();
 
 		// Replace the glitches.
-		for(let i = 0; i < failedList.length; i++) {
+		for (let i = 0; i < failedList.length; i++) {
 			this._updateDie(failedList[i], (reroll.terms[0] as any).results[i].result);
 		}
 
 		return true;
 	}
 
-	async showVisual() : Promise<void> {
-		if((game as any).dice3d) { // DICE-SO-NICE show the roll
+	async showVisual(): Promise<void> {
+		if ((game as any).dice3d) {
+			// DICE-SO-NICE show the roll
 			await (game as any).dice3d.showForRoll(this, (game as Game).user, true);
 		}
 	}
 
 	async explode() {
-		if(this.sixes > 0) {
+		if (this.sixes > 0) {
 			console.log(`exploding ${this.sixes} sixes`);
 			let explode_roll = new SR6Roll(`${this.sixes}d6`, new SR6RollData(this.data.actor!));
 			explode_roll.evaluate({ async: false });
@@ -193,10 +191,10 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 
 			// recurse the explosions
 			let explode_results = (explode_roll.terms[0] as any).results;
-			if(explode_roll.sixes > 0) {
+			if (explode_roll.sixes > 0) {
 				explode_roll.explode();
 			}
-			
+
 			// Add the results to our results
 			(this.terms[0] as any).results = (this.terms[0] as any).results.concat(explode_results);
 			this._termsUpdated();
@@ -204,7 +202,7 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	get sixes(): number {
-		return this.sides.reduce((hits, result) => result == 6 ? hits + 1 : hits, 0);
+		return this.sides.reduce((hits, result) => (result == 6 ? hits + 1 : hits), 0);
 	}
 
 	get actor(): SR6Actor | null {
@@ -216,41 +214,41 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	get sides(): number[] {
-    	return (this.terms[0] as any).results.map((result: any) => result.result);
-    }
+		return (this.terms[0] as any).results.map((result: any) => result.result);
+	}
 
 	get hits(): number {
-      return this.sides.reduce((hits, result) => this.parameters.success.includes(result) ? hits + 1 : hits, 0) + this.data.auto_hits;
-    }
+		return this.sides.reduce((hits, result) => (this.parameters.success.includes(result) ? hits + 1 : hits), 0) + this.data.auto_hits;
+	}
 
-    get glitches(): number {
-      return this.sides.reduce((glitches, result) => this.parameters.glitch.includes(result) ? glitches + 1 : glitches, 0);
-    }
+	get glitches(): number {
+		return this.sides.reduce((glitches, result) => (this.parameters.glitch.includes(result) ? glitches + 1 : glitches), 0);
+	}
 
 	get is_glitch(): boolean {
-    		return this.glitches > Math.floor(this.pool / 2);
-    }
+		return this.glitches > Math.floor(this.pool / 2);
+	}
 
-    get is_critical_glitch(): boolean {
-   	return this.is_glitch && this.hits == 0;
-    }
+	get is_critical_glitch(): boolean {
+		return this.is_glitch && this.hits == 0;
+	}
 
-    async render(options: any = {}): Promise<string> {
-		if ( !this._evaluated ) await this.evaluate({async: true});
-		
+	async render(options: any = {}): Promise<string> {
+		if (!this._evaluated) await this.evaluate({ async: true });
+
 		return renderTemplate((this.constructor as any).CHAT_TEMPLATE, {
-				user: (game as Game).user!.id,
-				tooltip: options.isPrivate ? "" : await this.getTooltip(),
-				roll: this,
-				config: SR6CONFIG,
-			});
-    }
+			user: (game as Game).user!.id,
+			tooltip: options.isPrivate ? "" : await this.getTooltip(),
+			roll: this,
+			config: SR6CONFIG
+		});
+	}
 
-    toMessage(messageData: any = {}): any {
-    	return super.toMessage(messageData);
-    }
+	toMessage(messageData: any = {}): any {
+		return super.toMessage(messageData);
+	}
 
-	static make(data: SR6RollData) : SR6Roll {
+	static make(data: SR6RollData): SR6Roll {
 		return new SR6Roll(`(@pool)d6`, data);
 	}
 

@@ -1,17 +1,17 @@
-import { ItemTypes } from "../items/Data.js";
+import { GearTypes } from "../items/Data.js";
 import { SR6CONFIG } from "../config.js";
 import * as util from "../util.js";
-export class SR6ItemSheet extends ItemSheet {
+export class SR6GearSheet extends ItemSheet {
     _onAddType(event) {
         let target = event.currentTarget;
         let ty_str = target.dataset["addType"];
-        let ty = parseInt(ItemTypes.Types[ty_str]);
+        let ty = parseInt(GearTypes.Types[ty_str]);
         this.item.addType(ty);
     }
     _onRemoveType(event) {
         let target = event.currentTarget;
         let ty_str = target.dataset["removeType"];
-        let ty = parseInt(ItemTypes.Types[ty_str]);
+        let ty = parseInt(GearTypes.Types[ty_str]);
         this.item.removeType(ty);
     }
     activateListeners(html) {
@@ -19,7 +19,7 @@ export class SR6ItemSheet extends ItemSheet {
         html.find(".remove-type").click(this._onRemoveType.bind(this));
         html.find("input[direct-data-array]").change((event) => {
             let target = event.currentTarget;
-            //console.log("SR6ItemSheet::change - ", target.id, target.value);
+            //console.log("SR6GearSheet::change - ", target.id, target.value);
             let data = this.item.system;
             let array = data[target.id];
             if (target.checked) {
@@ -115,51 +115,51 @@ export class SR6ItemSheet extends ItemSheet {
         let data = super.getData(options);
         data.config = SR6CONFIG;
         data.user = game.user;
-        //console.log("SR6ItemSheet::getData", data);
+        //console.log("SR6GearSheet::getData", data);
         return data;
     }
 }
-export class SINSheet extends SR6ItemSheet {
+export class SINSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/sin.html";
     }
 }
-export class LifestyleSheet extends SR6ItemSheet {
+export class LifestyleSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/lifestyle.html";
     }
 }
-export class ContactSheet extends SR6ItemSheet {
+export class ContactSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/contact.html";
     }
 }
-export class AugmentationSheet extends SR6ItemSheet {
+export class AugmentationSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/augmentation.html";
     }
 }
-export class QualitySheet extends SR6ItemSheet {
+export class QualitySheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/quality.html";
     }
 }
-export class SpellSheet extends SR6ItemSheet {
+export class SpellSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/spell.html";
     }
 }
-export class WeaponAccessorySheet extends SR6ItemSheet {
+export class WeaponAccessorySheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/weapon-accessory.html";
     }
 }
-export class AdeptPowerSheet extends SR6ItemSheet {
+export class AdeptPowerSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/adept-power.html";
     }
 }
-export class CredstickSheet extends SR6ItemSheet {
+export class CredstickSheet extends SR6GearSheet {
     get template() {
         return "systems/sr6/templates/items/credstick.html";
     }

@@ -64,7 +64,6 @@ export class SR6Roll extends Roll {
     }
     _getLowestRollIndex() {
         return this.sides.indexOf(Math.min.apply(Math, this.sides));
-        ;
     }
     _updateDie(idx, value) {
         console.log("_updateDie", idx, value, this.terms[0].results);
@@ -82,7 +81,7 @@ export class SR6Roll extends Roll {
     }
     async addOne(die = null) {
         if (die == null) {
-            // Find the best candidate to add one to, 
+            // Find the best candidate to add one to,
             // First check for glitches and replace
             if (this.glitches - 1 <= Math.floor(this.pool / 2)) {
                 let idx_glitch = this.sides.indexOf(1);
@@ -112,7 +111,7 @@ export class SR6Roll extends Roll {
         this.terms[0].results.push({
             active: true,
             result: 5,
-            indexThrow: 0,
+            indexThrow: 0
         });
         this._termsUpdated();
         return true;
@@ -138,7 +137,8 @@ export class SR6Roll extends Roll {
         return true;
     }
     async showVisual() {
-        if (game.dice3d) { // DICE-SO-NICE show the roll
+        if (game.dice3d) {
+            // DICE-SO-NICE show the roll
             await game.dice3d.showForRoll(this, game.user, true);
         }
     }
@@ -159,7 +159,7 @@ export class SR6Roll extends Roll {
         }
     }
     get sixes() {
-        return this.sides.reduce((hits, result) => result == 6 ? hits + 1 : hits, 0);
+        return this.sides.reduce((hits, result) => (result == 6 ? hits + 1 : hits), 0);
     }
     get actor() {
         return this.data.actor;
@@ -171,10 +171,10 @@ export class SR6Roll extends Roll {
         return this.terms[0].results.map((result) => result.result);
     }
     get hits() {
-        return this.sides.reduce((hits, result) => this.parameters.success.includes(result) ? hits + 1 : hits, 0) + this.data.auto_hits;
+        return this.sides.reduce((hits, result) => (this.parameters.success.includes(result) ? hits + 1 : hits), 0) + this.data.auto_hits;
     }
     get glitches() {
-        return this.sides.reduce((glitches, result) => this.parameters.glitch.includes(result) ? glitches + 1 : glitches, 0);
+        return this.sides.reduce((glitches, result) => (this.parameters.glitch.includes(result) ? glitches + 1 : glitches), 0);
     }
     get is_glitch() {
         return this.glitches > Math.floor(this.pool / 2);
@@ -189,7 +189,7 @@ export class SR6Roll extends Roll {
             user: game.user.id,
             tooltip: options.isPrivate ? "" : await this.getTooltip(),
             roll: this,
-            config: SR6CONFIG,
+            config: SR6CONFIG
         });
     }
     toMessage(messageData = {}) {

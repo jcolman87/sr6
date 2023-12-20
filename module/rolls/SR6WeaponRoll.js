@@ -20,7 +20,9 @@ export class SR6WeaponRoll extends SR6Roll {
     get attacker() {
         return this.data.actor;
     }
-    get template() { return SR6WeaponRoll.CHAT_TEMPLATE; }
+    get template() {
+        return SR6WeaponRoll.CHAT_TEMPLATE;
+    }
     get damage() {
         return this.data.damage + this.hits;
     }

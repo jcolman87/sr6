@@ -1,49 +1,154 @@
-<div class="section" style="width: 50%; margin: 5px; display: flex">
-	<table style="align-self: start; border-collapse: collapse;">
-		<thead>
-			<tr>
-				<th colspan="3">Legal</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each config.matrix_actions as |action action_id| }} 
-			{{#unless action.1.illegal }}
-			<tr>
-				<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_actions." (matrixActionAsString action_id) ) ".name")}}</td>
-				{{#if (undefined action.1.formula) }}
-				<td class="matrix-action"></td>
-				<td class="matrix-action"></td>
-				{{else}}
-				<td class="matrix-action">{{ solveActorFormula ../actor action.1.formula }} </td>
-				<td class="matrix-action"><a data-pool="{{action.1.formula}}" class="roll roll-formula">&nbsp;</a></td>
-				{{/if}}
-			</tr>
-			{{/unless}}
-			{{/each}}
-		</tbody>
-	</table>
-	<table style="align-self: start; border-collapse: collapse;">
-		<thead>
-			<tr>
-				<th colspan="3">Illegal</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each config.matrix_actions as |action action_id| }} 
+<section>
+	<div style="margin-right: 5px;">
+		<div style="display: flex; width:100%;">
+			<div class="section" style="width: 50%;">
+				<table style="align-self: start; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th colspan="3">Legal</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#eachMap config.player_matrix_actions }} 
+						{{#unless value.illegal }}
+						<tr title="{{localizeDescription 'matrix_action' (matrixActionAsString key) }}">
+							<td style="padding: 0; margin: 0">{{localizeName 'matrix_action' (matrixActionAsString key) }}</td>
+							<td class="matrix-action">{{ solveActorFormula ../actor value.formula }}</td>
+							<td class="matrix-action"><a data-matrix-action="{{key}}" class="roll roll-matrix-action" style="background-size: 16px 16px;">&nbsp;</a></td>
+						</tr>
+						{{/unless}}
+						{{/eachMap}}
+					</tbody>
+				</table>
+				<table style="align-self: start; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th colspan="3">Illegal</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#eachMap config.player_matrix_actions }} 
+						{{#if value.illegal }}
+						<tr title="{{localizeDescription 'matrix_action' (matrixActionAsString key) }}">
+							<td style="padding: 0; margin: 0">{{localizeName 'matrix_action' (matrixActionAsString key) }}</td>
+							<td class="matrix-action">{{ solveActorFormula ../actor value.formula }}</td>
+							<td class="matrix-action"><a data-matrix-action="{{key}}" class="roll roll-matrix-action" style="background-size: 16px 16px;">&nbsp;</a></td>
+						</tr>
+						{{/if}}
+						{{/eachMap}}
+					</tbody>
+				</table>
+			</div>
+			<div class="section" style="width: 50%;">
+				<div class="section">		
+					<!-- Actions -->
+					<table style="border-collapse: collapse">
+						<thead>
+							<tr><td colspan="5">
+								Jacked {{#if (isNull actor.matrix_persona)}}Out{{else}}In{{/if}}
+								<label class="switch">
+									<input id="activate-persona" type="checkbox" {{#unless (isNull actor.matrix_persona)}}checked{{/unless}}>
+									<span class="sr6-slider round"></span>
+								</label>
+							</td></tr>
+						</thead>
 
-			{{#if action.1.illegal }}
-			<tr>
-				<td style="padding: 0; margin: 0">{{localize (concat (concat "matrix_actions." (matrixActionAsString action_id) ) ".name")}}</td>
-				{{#if (undefined action.1.formula) }}
-				<td class="matrix-action"></td>
-				<td class="matrix-action"></td>
-				{{else}}
-				<td class="matrix-action">{{ solveActorFormula ../actor action.1.formula }} </td>
-				<td class="matrix-action"><a data-pool="{{action.1.formula}}" class="roll roll-formula">&nbsp;</a></td>
-				{{/if}}
-			</tr>
-			{{/if}}
-			{{/each}}
-		</tbody>
-	</table>
-</div>
+						{{#if (isNull actor.matrix_persona) }}
+						<tr>
+							<td>
+								
+							</td>
+						</tr>
+						{{else}}
+						<tr>
+							<td>
+								Sim: <select>
+									<option>AR</option>
+									<option>Cold-Sim</option>
+									<option>Hot-Sim</option>
+								</select>
+								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Device: <select direct-data id="system.matrix.persona.device">
+								{{#each actor.items as |item idx|}}
+								{{#if (itemHas item "Matrix") }} {{#if item.system.matrix_active }}
+									<option value="{{item.id}}" {{#if (eq item.id actor.persona.device.id) }}checked{{/if}} >{{item.name}}</option>
+								{{/if}}{{/if}}
+								{{/each}}
+								</select>
+
+								<table>
+									<thead>
+										<tr><td>A</td><td>S</td><td>D</td><td>F</td></tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{ solveActorFormula actor actor.matrix_persona.base_attributes.a }}</td>
+											<td>{{ solveActorFormula actor actor.matrix_persona.base_attributes.s }}</td>
+											<td>{{ solveActorFormula actor actor.matrix_persona.base_attributes.d }}</td>
+											<td>{{ solveActorFormula actor actor.matrix_persona.base_attributes.f }}</td>
+										</tr>
+										<tr>
+											<td><input direct-data id="system.matrix.persona.attributes.a" type="text" value="{{actor.matrix_persona.attributes.a}}" style="width: 2em" /></td>
+											<td><input direct-data id="system.matrix.persona.attributes.s" type="text" value="{{actor.matrix_persona.attributes.s}}" style="width: 2em" /></td>
+											<td><input direct-data id="system.matrix.persona.attributes.d" type="text" value="{{actor.matrix_persona.attributes.d}}" style="width: 2em" /></td>
+											<td><input direct-data id="system.matrix.persona.attributes.f" type="text" value="{{actor.matrix_persona.attributes.f}}" style="width: 2em" /></td>
+										</tr>
+									</tbody>
+								</table> 
+							</td>
+						</tr>
+						{{/if}}
+					</table>
+				</div>
+				<div class="section">		
+					<!-- Actions -->
+					<table style="align-self: start; border-collapse: collapse;">
+						<thead>
+							<tr>
+								<th colspan="2" style="text-align: left">Matrix Devices</th>
+							</tr>
+						</thead>
+						{{#each actor.items as |item idx|}}
+						{{#if (itemHas item "Matrix")}}
+						<tr>
+							<td style="text-align: left; width: 100%" nowrap="nowrap">
+								{{item.name}} 
+								<label class="switch">
+									<input id="item-{{item.id}}.system.matrix_active" type="checkbox" direct-item-data data-item-id="{{item.id}}" data-field="system.matrix_active" {{#if item.system.matrix_active }}checked{{/if}}>
+									<span class="sr6-slider round"></span>
+								</label>
+								<table>
+									<thead>
+										<tr><td>A</td><td>S</td><td>D</td><td>F</td></tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{ solveItemFormula item item.system.matrix_attributes.a }}</td>
+											<td>{{ solveItemFormula item item.system.matrix_attributes.s }}</td>
+											<td>{{ solveItemFormula item item.system.matrix_attributes.d }}</td>
+											<td>{{ solveItemFormula item item.system.matrix_attributes.f }}</td>
+										</tr>
+										<tr>
+											<td><input direct-item-data data-item-id="{{item.id}}" data-field="system.matrix_attributes.a" type="text" value="{{item.system.matrix_attributes.a}}" style="width: 2em" /></td>
+											<td><input direct-item-data data-item-id="{{item.id}}" data-field="system.matrix_attributes.s" type="text" value="{{item.system.matrix_attributes.s}}" style="width: 2em" /></td>
+											<td><input direct-item-data data-item-id="{{item.id}}" data-field="system.matrix_attributes.d" type="text" value="{{item.system.matrix_attributes.d}}" style="width: 2em" /></td>
+											<td><input direct-item-data data-item-id="{{item.id}}" data-field="system.matrix_attributes.f" type="text" value="{{item.system.matrix_attributes.f}}" style="width: 2em" /></td>
+										</tr>
+									</tbody>
+								</table> 
+							</td>
+						</tr>
+						<tr style="border-bottom: 5px solid"><td colspan="5"></td></tr>
+
+						{{/if}}
+						{{/each}}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

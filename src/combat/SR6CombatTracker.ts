@@ -1,10 +1,8 @@
 import { SR6Combatant } from "./SR6Combatant.js";
 
-
 type SR6Turn = CombatTracker.Turn & {
 	combatant: SR6Combatant;
 };
-
 
 export class SR6CombatTracker extends CombatTracker {
 	get template() {

@@ -1,24 +1,24 @@
 import { SR6ActiveEffect } from "../SR6ActiveEffect.js";
-import { SR6Item } from "../items/SR6Item.js";
-import { ItemTypes } from "../items/Data.js";
+import { SR6Gear } from "../items/SR6Gear.js";
+import { GearTypes } from "../items/Data.js";
 import { SR6CONFIG } from "../config.js";
 import * as util from "../util.js";
 
-export class SR6ItemSheet extends ItemSheet {
+export class SR6GearSheet extends ItemSheet {
 	_onAddType(event: JQuery.ClickEvent) {
 		let target = event.currentTarget as HTMLInputElement;
 		let ty_str: string = target.dataset["addType"]!;
-		let ty: number = parseInt(ItemTypes.Types[ty_str as any]);
+		let ty: number = parseInt(GearTypes.Types[ty_str as any]);
 
-		(this.item as SR6Item).addType(ty);
+		(this.item as SR6Gear).addType(ty);
 	}
 
 	_onRemoveType(event: JQuery.ClickEvent) {
 		let target = event.currentTarget as HTMLInputElement;
 		let ty_str: string = target.dataset["removeType"]!;
-		let ty: number = parseInt(ItemTypes.Types[ty_str as any]);
+		let ty: number = parseInt(GearTypes.Types[ty_str as any]);
 
-		(this.item as SR6Item).removeType(ty);
+		(this.item as SR6Gear).removeType(ty);
 	}
 
 	activateListeners(html: JQuery) {
@@ -27,10 +27,10 @@ export class SR6ItemSheet extends ItemSheet {
 
 		html.find("input[direct-data-array]").change((event) => {
 			let target = event.currentTarget as HTMLInputElement;
-			//console.log("SR6ItemSheet::change - ", target.id, target.value);
+			//console.log("SR6GearSheet::change - ", target.id, target.value);
 			let data = (this.item as any).system;
 			let array = data[target.id];
-			if(target.checked) {
+			if (target.checked) {
 				array.push(target.value);
 			} else {
 				array = array.filter((v: string) => v !== target.value);
@@ -43,15 +43,14 @@ export class SR6ItemSheet extends ItemSheet {
 		html.find("input[direct-data], textarea[direct-data], select[direct-data]").change((event) => {
 			let target = event.currentTarget as HTMLInputElement;
 			let value = util.directDataValue(target);
-			
+
 			this.item.update({
 				[target.id]: value
 			});
 		});
-		
+
 		this._activateActiveEffectListeners(html);
 	}
-
 
 	_activateActiveEffectListeners(html: JQuery) {
 		html.find(".add-effect").click(async (event: JQuery.ClickEvent) => {
@@ -62,15 +61,13 @@ export class SR6ItemSheet extends ItemSheet {
 					rounds: undefined
 				},
 				flags: {
-					sr6: {
-
-					}
+					sr6: {}
 				},
 				changes: []
-	        };
+			};
 
-			let effect: SR6ActiveEffect = (await this.item.createEmbeddedDocuments("ActiveEffect", [activeEffectData]) as any)[0] as SR6ActiveEffect;
-	
+			let effect: SR6ActiveEffect = ((await this.item.createEmbeddedDocuments("ActiveEffect", [activeEffectData])) as any)[0] as SR6ActiveEffect;
+
 			effect.sheet!.render(true);
 		});
 		html.find(".edit-effect").click((event: JQuery.ClickEvent) => {
@@ -103,10 +100,8 @@ export class SR6ItemSheet extends ItemSheet {
 			});
 		});
 
-
 		html.find(".add-effect-change").click((event: JQuery.ClickEvent) => {
 			let id: string = (event.currentTarget as HTMLInputElement).dataset["effectId"]!;
-			
 		});
 		html.find(".remove-effect-change").click((event: JQuery.ClickEvent) => {
 			let effect_id: string = (event.currentTarget as HTMLInputElement).dataset["effectId"]!;
@@ -139,62 +134,62 @@ export class SR6ItemSheet extends ItemSheet {
 		let data = super.getData(options);
 		(data as any).config = SR6CONFIG;
 		(data as any).user = (game as Game).user!;
-		//console.log("SR6ItemSheet::getData", data);
+
+		//console.log("SR6GearSheet::getData", data);
 		return data;
 	}
 }
 
-export class SINSheet extends SR6ItemSheet {
+export class SINSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/sin.html";
 	}
 }
 
-export class LifestyleSheet extends SR6ItemSheet {
+export class LifestyleSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/lifestyle.html";
 	}
 }
 
-export class ContactSheet extends SR6ItemSheet {
+export class ContactSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/contact.html";
 	}
 }
 
-export class AugmentationSheet extends SR6ItemSheet {
+export class AugmentationSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/augmentation.html";
 	}
 }
 
-export class QualitySheet extends SR6ItemSheet {
+export class QualitySheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/quality.html";
 	}
 }
 
-export class SpellSheet extends SR6ItemSheet {
+export class SpellSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/spell.html";
 	}
 }
 
-export class WeaponAccessorySheet extends SR6ItemSheet {
+export class WeaponAccessorySheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/weapon-accessory.html";
 	}
 }
 
-export class AdeptPowerSheet extends SR6ItemSheet {
+export class AdeptPowerSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/adept-power.html";
 	}
 }
 
-export class CredstickSheet extends SR6ItemSheet {
+export class CredstickSheet extends SR6GearSheet {
 	override get template() {
 		return "systems/sr6/templates/items/credstick.html";
 	}
 }
-

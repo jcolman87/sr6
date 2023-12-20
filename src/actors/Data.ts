@@ -15,8 +15,8 @@ export namespace ActorTypes {
 	export class Skill {
 		points: number = 0;
 		pool: number = 0;
-		specialization: undefined | Enums.Specialization;
-		expertise: undefined | Enums.Specialization;
+		specialization: null | Enums.Specialization = null;
+		expertise: null | Enums.Specialization = null;
 	}
 
 	export class Monitors {
@@ -35,11 +35,11 @@ export namespace ActorTypes {
 		matrix_perception: Attribute = new Attribute();
 	}
 
-	export interface MatrixAttributes {
-		a: Formula;
-		s: Formula;
-		d: Formula;
-		f: Formula;
+	export class MatrixAttributes {
+		a: number = 0;
+		s: number = 0;
+		d: number = 0;
+		f: number = 0;
 	}
 
 	export class Attributes {
@@ -104,7 +104,18 @@ export namespace ActorTypes {
 		damage: number = 0;
 		defense: number = 0;
 		soak: number = 0;
-	};
+	}
+
+	export class Matrix {
+		persona: null | MatrixPersona = null;
+	}
+
+	export class MatrixPersona {
+		device: null | string = null;
+		base_attributes: MatrixAttributes = new MatrixAttributes();
+		attributes: MatrixAttributes = new MatrixAttributes();
+		vr_type: Enums.VRType = Enums.VRType.AR;
+	}
 }
 
 export interface BaseActorData {
@@ -117,11 +128,11 @@ export class CharacterActorData implements BaseActorData {
 		die: {
 			physical: 1,
 			matrix: 1,
-			astral: 1,
+			astral: 1
 		},
 		actions: {
 			major: 1,
-			minor: 1,
+			minor: 1
 		},
 
 		physical_formula: undefined,
@@ -136,4 +147,6 @@ export class CharacterActorData implements BaseActorData {
 	derived_attributes: ActorTypes.DerivedAttributes = new ActorTypes.DerivedAttributes();
 	skills: ActorTypes.Skills = new ActorTypes.Skills();
 	effect_modifiers: ActorTypes.EffectModifiers = new ActorTypes.EffectModifiers();
+
+	matrix: ActorTypes.Matrix = new ActorTypes.Matrix();
 }

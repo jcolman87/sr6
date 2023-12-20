@@ -13,13 +13,12 @@ export interface ItemBaseData {
 export interface GearBaseData extends ItemBaseData {
 	size: ItemFormula;
 	category: {
-		type: string,
-		subtype: string,
-	},
+		type: string;
+		subtype: string;
+	};
 }
 
-export namespace ItemTypes {
-
+export namespace GearTypes {
 	export class Condition extends ActorTypes.Attribute {}
 
 	export class Cost {
@@ -33,6 +32,7 @@ export namespace ItemTypes {
 	}
 
 	export class Matrix {
+		matrix_active: boolean = false;
 		matrix_attributes: {
 			a: ItemFormula;
 			s: ItemFormula;
@@ -98,11 +98,11 @@ export namespace ItemTypes {
 		Firearm = 1 << 7,
 		Mountable = 1 << 8,
 		SkillUse = 1 << 9,
-		Condition = 1 << 10,
+		Condition = 1 << 10
 	}
 }
 
-export class ItemData implements GearBaseData {
+export class GearData implements GearBaseData {
 	description: string = "";
 	rating: ItemFormula = "1";
 	size: ItemFormula = "3";
@@ -110,8 +110,8 @@ export class ItemData implements GearBaseData {
 	types: number = 0;
 
 	category: {
-		type: string,
-		subtype: string,
+		type: string;
+		subtype: string;
 	} = {
 		type: "",
 		subtype: ""
@@ -121,6 +121,4 @@ export class ItemData implements GearBaseData {
 export class MatrixPersona implements ItemBaseData {
 	description: string = "";
 	rating: ItemFormula = "1";
-
-	
 }

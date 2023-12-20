@@ -18,7 +18,7 @@ export class SR6SkillRollData extends SR6RollData {
 export class SR6SkillRoll extends SR6Roll<SR6SkillRollData> {
 	static CHAT_TEMPLATE: string = "systems/sr6/templates/rolls/SR6SkillRoll.html";
 
-	static make(data: SR6SkillRollData) : SR6SkillRoll {
-		return new SR6SkillRoll('(@pool)d6', data);
+	static make(data: SR6SkillRollData): SR6SkillRoll {
+		return new SR6SkillRoll("(@pool)d6", data);
 	}
 }

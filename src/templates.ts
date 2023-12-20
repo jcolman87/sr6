@@ -24,7 +24,7 @@ export const preloadHandlebarsTemplates = async function () {
 		//
 		"systems/sr6/templates/rolls/shared-header.html",
 		"systems/sr6/templates/rolls/shared-footer.html",
-		"systems/sr6/templates/rolls/shared-edge-boost.html",
+		"systems/sr6/templates/rolls/shared-edge-boost.html"
 	];
 
 	return loadTemplates(templatePaths);

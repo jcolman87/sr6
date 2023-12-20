@@ -1,18 +1,23 @@
 import { EffectChangeMode } from "./config.js";
 export function directDataValue(target) {
-    if (target.value == "null") {
-        return null;
+    if (target.type == "checkbox") {
+        return target.checked;
     }
     else {
-        if (target.type == "number" || target.dataset["type"] == "number") {
-            let value = parseInt(target.value);
-            if (isNaN(value)) {
-                return 0;
-            }
-            return value;
+        if (target.value == "null") {
+            return null;
         }
         else {
-            return target.value;
+            if (target.type == "number" || target.dataset["type"] == "number") {
+                let value = parseInt(target.value);
+                if (isNaN(value)) {
+                    return 0;
+                }
+                return value;
+            }
+            else {
+                return target.value;
+            }
         }
     }
 }

@@ -3,18 +3,22 @@ import { EffectChangeData, EffectChangeMode } from "./config.js";
 
 declare var game: Game;
 
-export function directDataValue(target: HTMLInputElement) : string | number | null {
-	if(target.value == "null") {  
-		return null;
+export function directDataValue(target: HTMLInputElement): string | number | boolean | null {
+	if(target.type == "checkbox") {
+		return target.checked;
 	} else {
-		if (target.type == "number" || target.dataset["type"] == "number") {
-			let value = parseInt(target.value);
-			if (isNaN(value)) {
-				return 0;
-			}
-			return value;
+		if (target.value == "null") {
+			return null;
 		} else {
-			return target.value;
+			if (target.type == "number" || target.dataset["type"] == "number") {
+				let value = parseInt(target.value);
+				if (isNaN(value)) {
+					return 0;
+				}
+				return value;
+			} else {
+				return target.value;
+			}
 		}
 	}
 }
@@ -67,37 +71,37 @@ export function getSelectedTokens(): Token[] {
 
 export function applyChangesetToObject(obj: any, mods: EffectChangeData[]) {
 	mods.forEach((change) => {
-		if(change.key && change.value) {
+		if (change.key && change.value) {
 			let value: number = parseInt(change.value);
-			if(isNaN(value) || isNaN(obj[change.key])) {
+			if (isNaN(value) || isNaN(obj[change.key])) {
 				ui.notifications!.error("Custom mods only support numbers");
 				return;
 			}
 
-			switch ( change.mode ) {
-		      case EffectChangeMode.ADD:
-		        obj[change.key] += +value;
-		        break;
-		      case EffectChangeMode.MULTIPLY:
-		        obj[change.key] += +value;
-		        break;
-		      case EffectChangeMode.OVERRIDE:
-		        obj[change.key] += +value;
-		        break;
-		      case EffectChangeMode.UPGRADE:
-		      	if(change.value > obj[change.key]) {
-		      		obj[change.key] = change.value;
-		      	}
-		      	break;
-		      case EffectChangeMode.DOWNGRADE:
-		        if(change.value < obj[change.key]) {
-		      		obj[change.key] = change.value;
-		      	}
-		        break;
-		      default:
-		        ui.notifications!.error("Custom mods not supported for manual effect changes");
-		        break;
-		    }
+			switch (change.mode) {
+				case EffectChangeMode.ADD:
+					obj[change.key] += +value;
+					break;
+				case EffectChangeMode.MULTIPLY:
+					obj[change.key] += +value;
+					break;
+				case EffectChangeMode.OVERRIDE:
+					obj[change.key] += +value;
+					break;
+				case EffectChangeMode.UPGRADE:
+					if (change.value > obj[change.key]) {
+						obj[change.key] = change.value;
+					}
+					break;
+				case EffectChangeMode.DOWNGRADE:
+					if (change.value < obj[change.key]) {
+						obj[change.key] = change.value;
+					}
+					break;
+				default:
+					ui.notifications!.error("Custom mods not supported for manual effect changes");
+					break;
+			}
 		}
 	});
 }

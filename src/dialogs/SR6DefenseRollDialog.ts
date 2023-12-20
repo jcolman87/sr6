@@ -1,12 +1,10 @@
 import { SR6RollDialog } from "./SR6RollDialog.js";
 import { SR6DefenseRoll, SR6DefenseRollData, SR6WeaponRoll } from "../rolls/Rolls.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
-import { SR6Item } from "../items/SR6Item.js";
+import { SR6Gear } from "../items/SR6Gear.js";
 import * as Rules from "../rules.js";
 
-
 export class SR6DefenseRollDialog extends SR6RollDialog<SR6DefenseRoll, SR6DefenseRollData> {
-	
 	get template(): string {
 		return "systems/sr6/templates/dialogs/DefenseRollDialog.html";
 	}
@@ -23,4 +21,3 @@ export class SR6DefenseRollDialog extends SR6RollDialog<SR6DefenseRoll, SR6Defen
 		super(SR6DefenseRoll.make, new SR6DefenseRollData(actor, attack_roll), options);
 	}
 }
-

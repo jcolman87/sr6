@@ -12,7 +12,15 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 		return "systems/sr6/templates/dialogs/RollDialog.html";
 	}
 
-	constructor(private maker: (roll: D) => R, roll: D, options: any = {}) {
+	simple(data: SR6RollData, options: any = {}): SR6RollDialog {
+		return new SR6RollDialog(SR6Roll.make, data, options);
+	}
+
+	constructor(
+		private maker: (roll: D) => R,
+		roll: D,
+		options: any = {}
+	) {
 		super({}, options);
 
 		this.roll = roll;
@@ -23,8 +31,10 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 		// Reset originals
 		this.roll.pool = this.original.pool;
 
-		if(this.roll.pool + this.pool_modifier <= 0) {
-			this.pool_modifier += 1 - (this.roll.pool + this.pool_modifier);
+		if(this.original.pool > 0) {
+			if (this.roll.pool + this.pool_modifier <= 0) {
+				this.pool_modifier += 1 - (this.roll.pool + this.pool_modifier);
+			}
 		}
 
 		// Apply modifier
@@ -33,7 +43,6 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 		// Fix-up edge
 		console.log("prepareData", this.roll.edge.boost);
 		this.roll.applyEdge();
-		
 	}
 
 	getData(options: any) {
@@ -52,7 +61,6 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 
 		html.find("#do-roll").focus();
 		html.find("#do-roll").click(this._onComplete.bind(this, html));
-
 
 		html.on("click", ".edge-select", async (event) => {
 			event.preventDefault();
@@ -78,6 +86,13 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 		this.close({});
 	}
 
+	static get defaultOptions() {
+		return mergeObject(super.defaultOptions, {
+			width: 150,
+			height: 500,
+		});
+	}
+
 	/* _onKeyDown
 	if ( event.key === "Enter" ) {
 
@@ -93,6 +108,4 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
       return this.submit(choice);
     }
     */
-
-	
 }

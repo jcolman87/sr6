@@ -10,7 +10,9 @@ export class SR6DefenseRollData extends SR6RollData {
 }
 export class SR6DefenseRoll extends SR6Roll {
     static CHAT_TEMPLATE = "systems/sr6/templates/rolls/SR6DefenseRoll.html";
-    get template() { return SR6DefenseRoll.CHAT_TEMPLATE; }
+    get template() {
+        return SR6DefenseRoll.CHAT_TEMPLATE;
+    }
     get defender() {
         return this.data.actor;
     }

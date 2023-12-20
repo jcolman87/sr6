@@ -6,11 +6,11 @@
 	<section>
 		<div>
 			<select id="edge-boost">
-				{{#eachInMap config.edge_boosts }}
+				{{#eachMap config.edge_boosts }}
 					{{# if (canUseEdgeBoost key "post" roll) }}
 					<option value="{{key}}" title="{{ localizeDescription "edge_boost" (edgeBoostAsString key) }}" {{#if (eq ../roll.data.boost key)}}selected{{/if}}>{{ localizeName "edge_boost" (edgeBoostAsString key) }}</option>
 					{{/if}}
-				{{/eachInMap}}
+				{{/eachMap}}
 			</select>
 		</div>
 		<input id="spend-edge" type="button" class="chat-edge" value="Spend"/>

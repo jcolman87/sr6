@@ -2,7 +2,7 @@ import { SR6CONFIG } from "./config.js";
 import * as Rolls from "./rolls/Rolls.js";
 import { SR6ChatMessage, SR6RenderChatMessage, SR6ChatLogContext } from "./SR6ChatMessage.js";
 import { SR6ActorProxy } from "./actors/SR6ActorProxy.js";
-import { SR6Item } from "./items/SR6Item.js";
+import { SR6ItemProxy } from "./items/SR6ItemProxy.js";
 import { SR6ActiveEffect } from "./SR6ActiveEffect.js";
 import { SR6Combat } from "./combat/SR6Combat.js";
 import { SR6Combatant } from "./combat/SR6Combatant.js";
@@ -21,7 +21,7 @@ function registerSheets() {
         types: ["Player"],
         makeDefault: true
     });
-    Items.registerSheet("shadowrun6-eden", ItemSheets.SR6ItemSheet, { types: ["Gear"], makeDefault: true });
+    Items.registerSheet("shadowrun6-eden", ItemSheets.SR6GearSheet, { types: ["Gear"], makeDefault: true });
     Items.registerSheet("shadowrun6-eden", ItemSheets.SINSheet, { types: ["SIN"], makeDefault: true });
     Items.registerSheet("shadowrun6-eden", ItemSheets.ContactSheet, { types: ["Contact"], makeDefault: true });
     Items.registerSheet("shadowrun6-eden", ItemSheets.LifestyleSheet, { types: ["Lifestyle"], makeDefault: true });
@@ -38,7 +38,7 @@ Hooks.once("init", async function () {
     CONFIG.ActiveEffect.legacyTransferral = false;
     CONFIG.SR6 = SR6CONFIG;
     CONFIG.Actor.documentClass = SR6ActorProxy;
-    CONFIG.Item.documentClass = SR6Item;
+    CONFIG.Item.documentClass = SR6ItemProxy;
     CONFIG.Dice.rolls = Rolls.RollTypes;
     CONFIG.ActiveEffect.documentClass = SR6ActiveEffect;
     CONFIG.ChatMessage.documentClass = SR6ChatMessage;
@@ -51,6 +51,7 @@ Hooks.once("init", async function () {
     CONFIG.Item.dataModels.WeaponAccessory = ItemDataModels.WeaponAccessory;
     CONFIG.Item.dataModels.AdeptPower = ItemDataModels.AdeptPower;
     CONFIG.Item.dataModels.Credstick = ItemDataModels.Credstick;
+    CONFIG.Item.dataModels.Spell = ItemDataModels.Spell;
     CONFIG.Item.dataModels.Gear = GearDataModels.Gear;
     CONFIG.Combat.documentClass = SR6Combat;
     CONFIG.Combatant.documentClass = SR6Combatant;

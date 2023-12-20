@@ -1,3 +1,4 @@
+import { Enums } from "../config.js";
 export class Formula extends String {
 }
 export var ActorTypes;
@@ -13,8 +14,8 @@ export var ActorTypes;
     class Skill {
         points = 0;
         pool = 0;
-        specialization;
-        expertise;
+        specialization = null;
+        expertise = null;
     }
     ActorTypes.Skill = Skill;
     class Monitors {
@@ -33,6 +34,13 @@ export var ActorTypes;
         matrix_perception = new Attribute();
     }
     ActorTypes.DerivedAttributes = DerivedAttributes;
+    class MatrixAttributes {
+        a = 0;
+        s = 0;
+        d = 0;
+        f = 0;
+    }
+    ActorTypes.MatrixAttributes = MatrixAttributes;
     class Attributes {
         body = new Attribute();
         agility = new Attribute();
@@ -78,18 +86,28 @@ export var ActorTypes;
         soak = 0;
     }
     ActorTypes.EffectModifiers = EffectModifiers;
-    ;
+    class Matrix {
+        persona = null;
+    }
+    ActorTypes.Matrix = Matrix;
+    class MatrixPersona {
+        device = null;
+        base_attributes = new MatrixAttributes();
+        attributes = new MatrixAttributes();
+        vr_type = Enums.VRType.AR;
+    }
+    ActorTypes.MatrixPersona = MatrixPersona;
 })(ActorTypes || (ActorTypes = {}));
 export class CharacterActorData {
     initiatives = {
         die: {
             physical: 1,
             matrix: 1,
-            astral: 1,
+            astral: 1
         },
         actions: {
             major: 1,
-            minor: 1,
+            minor: 1
         },
         physical_formula: undefined,
         matrix_formula: undefined,
@@ -101,4 +119,5 @@ export class CharacterActorData {
     derived_attributes = new ActorTypes.DerivedAttributes();
     skills = new ActorTypes.Skills();
     effect_modifiers = new ActorTypes.EffectModifiers();
+    matrix = new ActorTypes.Matrix();
 }

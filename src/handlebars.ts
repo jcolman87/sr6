@@ -1,10 +1,9 @@
 import { SR6Actor } from "./actors/SR6Actor.js";
 import { SR6CharacterActor } from "./actors/SR6CharacterActor.js";
-import { SR6Item } from "./items/SR6Item.js";
+import { SR6Gear } from "./items/SR6Gear.js";
 import * as Rolls from "./rolls/Rolls.js";
-import { ItemTypes } from "./items/Data.js";
+import { GearTypes } from "./items/Data.js";
 import { SR6CONFIG, Enums, SkillUse, EdgeBoostDef } from "./config.js";
-
 
 export function defineHandlebarHelpers() {
 	Handlebars.registerHelper("isGM", function (user_id: string) {
@@ -19,26 +18,24 @@ export function defineHandlebarHelpers() {
 		return (game as Game).user!.id == user_id;
 	});
 
-
-	Handlebars.registerHelper("bold", function(this: any, options: any) {
-	  return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
+	Handlebars.registerHelper("bold", function (this: any, options: any) {
+		return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
 	});
 
 	////
-	Handlebars.registerHelper("itemHas", function (item: SR6Item, ty_str: string) {
-		return item.has(ItemTypes.Types[ty_str as keyof typeof ItemTypes.Types]);
+	Handlebars.registerHelper("itemHas", function (item: SR6Gear, ty_str: string) {
+		return item.has(GearTypes.Types[ty_str as keyof typeof GearTypes.Types]);
 	});
 
 	Handlebars.registerHelper("solveActorFormula", function (actor: SR6Actor, formula: string) {
 		return actor.solveFormula(formula);
 	});
 
-	Handlebars.registerHelper("solveItemFormula", function (item: SR6Item, formula: string) {
-		console.log("solving", formula, item);
+	Handlebars.registerHelper("solveItemFormula", function (item: SR6Gear, formula: string) {
 		return item.solveFormula(formula);
 	});
 
-	Handlebars.registerHelper("solveActorItemFormula", function (actor: SR6Actor, item: SR6Item, formula: string) {
+	Handlebars.registerHelper("solveActorItemFormula", function (actor: SR6Actor, item: SR6Gear, formula: string) {
 		return item.solveFormulaWithActor(actor, formula);
 	});
 
@@ -46,7 +43,7 @@ export function defineHandlebarHelpers() {
 		return actor.getSkill(ty);
 	});
 
-	Handlebars.registerHelper("getAttackRating", function (item: SR6Item, distance: Enums.Distance) {
+	Handlebars.registerHelper("getAttackRating", function (item: SR6Gear, distance: Enums.Distance) {
 		return item.getAttackRating(distance);
 	});
 
@@ -60,14 +57,13 @@ export function defineHandlebarHelpers() {
 		return Enums.CombatAction[ty];
 	});
 	Handlebars.registerHelper("skillUseAsString", function (ty: SkillUse) {
-		if(ty.specialization) {
+		if (ty.specialization) {
 			return Enums.Specialization[ty.specialization];
 		} else {
 			return Enums.Skill[ty.skill!];
 		}
 	});
 	Handlebars.registerHelper("specializationAsString", function (ty: Enums.Specialization) {
-		console.log("ty", ty, Enums.Specialization[ty]);
 		return Enums.Specialization[ty];
 	});
 	Handlebars.registerHelper("distanceToString", function (ty: Enums.Distance) {
@@ -84,7 +80,6 @@ export function defineHandlebarHelpers() {
 	});
 
 	Handlebars.registerHelper("specializationsOfSkill", function (ty: Enums.Skill) {
-		console.log("specializationsOfSkill", ty, SR6CONFIG.skills.get(ty)!.specializations);
 		return SR6CONFIG.skills.get(ty)!.specializations;
 	});
 
@@ -97,8 +92,8 @@ export function defineHandlebarHelpers() {
 		}
 	});
 
-	Handlebars.registerHelper("var", function (varName, varValue, options) {
-		options.data.root[varName] = varValue;
+	Handlebars.registerHelper("var", function (this: any, varName, varValue, options) {
+		this[varName] = varValue;
 	});
 
 	Handlebars.registerHelper("add", function (a: number, b: number) {
@@ -116,47 +111,55 @@ export function defineHandlebarHelpers() {
 	Handlebars.registerHelper("undefined", function (a) {
 		return a == undefined;
 	});
+
+	Handlebars.registerHelper("isNull", function (a) {
+		return a == null;
+	});
+
 	Handlebars.registerHelper("null", function (a) {
 		return a == null;
 	});
 
-	Handlebars.registerHelper('ifCond', function (this: any, v1, operator, v2, options) {
-	    switch (operator) {
-	        case '==':
-	            return (v1 == v2) ? options.fn(this) : options.inverse(this);
-	        case '===':
-	            return (v1 === v2) ? options.fn(this) : options.inverse(this);
-	        case '!=':
-	            return (v1 != v2) ? options.fn(this) : options.inverse(this);
-	        case '!==':
-	            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-	        case '<':
-	            return (v1 < v2) ? options.fn(this) : options.inverse(this);
-	        case '<=':
-	            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-	        case '>':
-	            return (v1 > v2) ? options.fn(this) : options.inverse(this);
-	        case '>=':
-	            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-	        case '&&':
-	            return (v1 && v2) ? options.fn(this) : options.inverse(this);
-	        case '||':
-	            return (v1 || v2) ? options.fn(this) : options.inverse(this);
-	        default:
-	            return options.inverse(this);
-	    }
+	Handlebars.registerHelper("ifBoth", function (a: boolean, b: boolean) {
+		return a && b;
 	});
 
+	Handlebars.registerHelper("ifCond", function (this: any, v1, operator, v2, options) {
+		switch (operator) {
+			case "==":
+				return v1 == v2 ? options.fn(this) : options.inverse(this);
+			case "===":
+				return v1 === v2 ? options.fn(this) : options.inverse(this);
+			case "!=":
+				return v1 != v2 ? options.fn(this) : options.inverse(this);
+			case "!==":
+				return v1 !== v2 ? options.fn(this) : options.inverse(this);
+			case "<":
+				return v1 < v2 ? options.fn(this) : options.inverse(this);
+			case "<=":
+				return v1 <= v2 ? options.fn(this) : options.inverse(this);
+			case ">":
+				return v1 > v2 ? options.fn(this) : options.inverse(this);
+			case ">=":
+				return v1 >= v2 ? options.fn(this) : options.inverse(this);
+			case "&&":
+				return v1 && v2 ? options.fn(this) : options.inverse(this);
+			case "||":
+				return v1 || v2 ? options.fn(this) : options.inverse(this);
+			default:
+				return options.inverse(this);
+		}
+	});
 
 	Handlebars.registerHelper("canUseEdgeBoost", function (boost_id: Enums.EdgeBoost, activation: Enums.ActivationLimit, roll: Rolls.SR6RollData) {
 		return SR6CONFIG.edge_boosts.get(boost_id)!.condition(activation, roll);
 	});
 
-	Handlebars.registerHelper( 'eachInMap', function ( map, block ) {
-		var out = '';
+	Handlebars.registerHelper("eachMap", function (map, block) {
+		var out = "";
 
 		map.forEach((value: any, key: any) => {
-			out += block.fn( {key: key, value: value} );
+			out += block.fn({ key: key, value: value });
 		});
 
 		return out;

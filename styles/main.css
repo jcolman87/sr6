@@ -59,9 +59,22 @@
 	white-space: nowrap;
 }
 
-
-
 .roll {
+	position: relative;
+	width: 16px;
+	line-height: 16px;
+	float: left;
+	margin-right: 1px;
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	font-size: 16px;
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+	background-image: url(../icons/dice/die_6.png);
+}
+
+.chat-roll {
 	position: relative;
 	width: 24px;
 	line-height: 24px;
@@ -69,11 +82,23 @@
 	margin-right: 1px;
 	background-repeat: no-repeat;
 	background-size: 24px 24px;
-	font-size: 16px;
+	font-size: 24px;
 	color: #000;
 	font-weight: bold;
 	text-align: center;
 	background-image: url(../icons/dice/die_6.png);
+}
+
+.roll-disabled {
+	filter: grayscale(100%);
+	pointer-events: none;
+	cursor: default;
+	opacity: 0.6;
+}
+
+.row-disabled {
+	filter: grayscale(100%);
+	opacity: 0.2;
 }
 
 .die_1 {

@@ -7,7 +7,7 @@ export class Gear extends foundry.abstract.DataModel {
             description: new fields.StringField({ initial: "This is a description", required: true, blank: false }),
             category: new fields.SchemaField({
                 type: new fields.StringField({ initial: "INVALID", required: true, blank: false, nullable: false }),
-                subtype: new fields.StringField({ initial: "INVALID", required: true, blank: false, nullable: false }),
+                subtype: new fields.StringField({ initial: "INVALID", required: true, blank: false, nullable: false })
             }, { required: true, blank: false, nullable: true }),
             rating: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true }),
             size: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true }),
@@ -21,6 +21,7 @@ export class Gear extends foundry.abstract.DataModel {
             cost: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             cost: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             // has-matrix
+            matrix_active: new fields.BooleanField({ initial: false, required: true, nullable: false }),
             matrix_attributes: new fields.EmbeddedDataField(shared.MatrixAttributes, { required: false, nullable: false }),
             program_slots: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             loaded_programs: new fields.ArrayField(new fields.StringField(), { initial: [], required: false, blank: false, nullable: false }),
@@ -35,13 +36,13 @@ export class Gear extends foundry.abstract.DataModel {
             blast: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             // has-weapon-mountable
             locations: new fields.ArrayField(new fields.StringField(), { initial: [], required: false, blank: false, nullable: false }),
-            //weapoon 
+            //weapoon
             attack_ratings: new fields.EmbeddedDataField(shared.AttackRatings, { required: false, nullable: false }),
             damage: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             damage_type: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             damage_form: new fields.StringField({ initial: "0", required: false, blank: false, nullable: false }),
             // firearm
-            firemodes: new fields.ArrayField(new fields.StringField(), { initial: ["SS"], required: false, blank: false, nullable: false }),
+            firemodes: new fields.ArrayField(new fields.StringField(), { initial: ["SS"], required: false, blank: false, nullable: false })
         };
     }
 }

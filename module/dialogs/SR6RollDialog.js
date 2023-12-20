@@ -1,4 +1,5 @@
 import { SR6Dialog } from "./SR6Dialog.js";
+import { SR6Roll } from "../rolls/SR6Roll.js";
 export class SR6RollDialog extends SR6Dialog {
     maker;
     roll;
@@ -6,6 +7,9 @@ export class SR6RollDialog extends SR6Dialog {
     pool_modifier = 0;
     get template() {
         return "systems/sr6/templates/dialogs/RollDialog.html";
+    }
+    simple(data, options = {}) {
+        return new SR6RollDialog(SR6Roll.make, data, options);
     }
     constructor(maker, roll, options = {}) {
         super({}, options);
@@ -16,8 +20,10 @@ export class SR6RollDialog extends SR6Dialog {
     prepareData() {
         // Reset originals
         this.roll.pool = this.original.pool;
-        if (this.roll.pool + this.pool_modifier <= 0) {
-            this.pool_modifier += 1 - (this.roll.pool + this.pool_modifier);
+        if (this.original.pool > 0) {
+            if (this.roll.pool + this.pool_modifier <= 0) {
+                this.pool_modifier += 1 - (this.roll.pool + this.pool_modifier);
+            }
         }
         // Apply modifier
         this.roll.pool += this.pool_modifier;
@@ -55,5 +61,11 @@ export class SR6RollDialog extends SR6Dialog {
         await r.finish();
         r.toMessage();
         this.close({});
+    }
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            width: 150,
+            height: 500,
+        });
     }
 }

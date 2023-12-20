@@ -214,6 +214,8 @@ export var Enums;
         MatrixAction[MatrixAction["switch_ifmode"] = 29] = "switch_ifmode";
         MatrixAction[MatrixAction["tarpit"] = 30] = "tarpit";
         MatrixAction[MatrixAction["trace_icon"] = 31] = "trace_icon";
+        // IC actions
+        MatrixAction[MatrixAction["ic_blaster_attack"] = 32] = "ic_blaster_attack";
     })(MatrixAction = Enums.MatrixAction || (Enums.MatrixAction = {}));
     let MatrixProgram;
     (function (MatrixProgram) {
@@ -302,7 +304,7 @@ export var Enums;
         FireMode["SA"] = "SA";
         FireMode["BF_narrow"] = "BF_narrow";
         FireMode["BF_wide"] = "BF_wide";
-        FireMode["FA"] = "FA"; // -6 AR 
+        FireMode["FA"] = "FA"; // -6 AR
     })(FireMode = Enums.FireMode || (Enums.FireMode = {}));
     let DamageType;
     (function (DamageType) {
@@ -400,7 +402,7 @@ export class EdgeBoostDef {
     changes;
     activation_limit;
     condition(activation, roll) {
-        return (activation == this.activation_limit) || (this.activation_limit == Enums.ActivationLimit.Any);
+        return activation == this.activation_limit || this.activation_limit == Enums.ActivationLimit.Any;
     }
     async prepareData(roll) { }
     async apply(roll) { }
@@ -427,15 +429,24 @@ export class EdgeActionDef {
 export class MatrixActionDef {
     formula;
     illegal;
+    is_player_action;
     activation;
     access_level;
     specialization;
-    constructor(formula, specialization, illegal, activation, access_level) {
+    defendAgainstFormula;
+    damageFormula;
+    async apply(roll) { }
+    constructor(formula, specialization, illegal, activation, access_level, player_action = true, defendAgainstFormula = null, damageFormula = null, apply = null) {
         this.formula = formula;
         this.illegal = illegal;
         this.activation = activation;
         this.access_level = access_level;
         this.specialization = specialization;
+        this.is_player_action = true;
+        this.defendAgainstFormula = defendAgainstFormula;
+        this.damageFormula = damageFormula;
+        if (apply != null)
+            this.apply = apply;
     }
 }
 export class MatrixProgramDef {
@@ -447,7 +458,29 @@ export class MatrixProgramDef {
     }
 }
 export class SR6Config {
-    GEAR_TYPES = ["ACCESSORY", "ARMOR", "ARMOR_ADDITION", "BIOWARE", "CYBERWARE", "TOOLS", "ELECTRONICS", "NANOWARE", "GENETICS", "WEAPON_CLOSE_COMBAT", "WEAPON_RANGED", "WEAPON_FIREARMS", "WEAPON_SPECIAL", "AMMUNITION", "CHEMICALS", "SOFTWARE", "SURVIVAL", "BIOLOGY", "VEHICLES", "DRONES", "MAGICAL"];
+    GEAR_TYPES = [
+        "ACCESSORY",
+        "ARMOR",
+        "ARMOR_ADDITION",
+        "BIOWARE",
+        "CYBERWARE",
+        "TOOLS",
+        "ELECTRONICS",
+        "NANOWARE",
+        "GENETICS",
+        "WEAPON_CLOSE_COMBAT",
+        "WEAPON_RANGED",
+        "WEAPON_FIREARMS",
+        "WEAPON_SPECIAL",
+        "AMMUNITION",
+        "CHEMICALS",
+        "SOFTWARE",
+        "SURVIVAL",
+        "BIOLOGY",
+        "VEHICLES",
+        "DRONES",
+        "MAGICAL"
+    ];
     GEAR_SUBTYPES = new Map([
         ["ACCESSORY", ["TOP_OR_UNDERBARREL", "TOP", "BARREL", "UNDERBARREL"]],
         ["ARMOR", ["ARMOR_BODY", "ARMOR_HELMET", "ARMOR_SHIELD"]],
@@ -455,13 +488,34 @@ export class SR6Config {
         ["BIOWARE", ["BIOWARE_STANDARD", "BIOWARE_CULTURED", "BIOWARE_IMPLANT_WEAPON"]],
         ["CYBERWARE", ["CYBER_HEADWARE", "CYBERJACK", "CYBER_EYEWARE", "CYBER_BODYWARE", "CYBER_EARWARE", "CYBER_IMPLANT_WEAPON", "CYBER_LIMBS", "COMMLINK", "CYBERDECK"]],
         ["TOOLS", ["TOOLS"]],
-        ["ELECTRONICS", ["COMMLINK", "CYBERDECK", "ELECTRONIC_ACCESSORIES", "RIGGER_CONSOLE", "RFID", "COMMUNICATION", "ID_CREDIT", "IMAGING", "OPTICAL", "AUDIO", "SENSOR_HOUSING", "SECURITY", "BREAKING", "TAC_NET"]],
+        [
+            "ELECTRONICS",
+            ["COMMLINK", "CYBERDECK", "ELECTRONIC_ACCESSORIES", "RIGGER_CONSOLE", "RFID", "COMMUNICATION", "ID_CREDIT", "IMAGING", "OPTICAL", "AUDIO", "SENSOR_HOUSING", "SECURITY", "BREAKING", "TAC_NET"]
+        ],
         ["NANOWARE", []],
         ["GENETICS", []],
         ["SOFTWARE", ["AUTOSOFT", "SKILLSOFT"]],
         ["WEAPON_CLOSE_COMBAT", ["BLADES", "CLUBS", "WHIPS", "UNARMED", "OTHER_CLOSE"]],
         ["WEAPON_RANGED", ["BOWS", "CROSSBOWS", "THROWING"]],
-        ["WEAPON_FIREARMS", ["TASERS", "HOLDOUTS", "PISTOLS_LIGHT", "MACHINE_PISTOLS", "PISTOLS_HEAVY", "SUBMACHINE_GUNS", "SHOTGUNS", "RIFLE_ASSAULT", "RIFLE_HUNTING", "RIFLE_SNIPER", "LMG", "MMG", "HMG", "ASSAULT_CANNON"]],
+        [
+            "WEAPON_FIREARMS",
+            [
+                "TASERS",
+                "HOLDOUTS",
+                "PISTOLS_LIGHT",
+                "MACHINE_PISTOLS",
+                "PISTOLS_HEAVY",
+                "SUBMACHINE_GUNS",
+                "SHOTGUNS",
+                "RIFLE_ASSAULT",
+                "RIFLE_HUNTING",
+                "RIFLE_SNIPER",
+                "LMG",
+                "MMG",
+                "HMG",
+                "ASSAULT_CANNON"
+            ]
+        ],
         ["WEAPON_SPECIAL", ["LAUNCHERS", "THROWERS", "OTHER_SPECIAL"]],
         ["AMMUNITION", ["AMMO_TASER", "AMMO_LIGHT", "AMMO_HEAVY", "AMMO_RIFLE", "AMMO_SHOTGUN", "AMMO_MG", "AMMO_ROCKETS", "AMMO_MISSILES", "AMMO_EXPLOSIVES", "AMMO_GRENADES"]],
         ["CHEMICALS", ["INDUSTRIAL_CHEMICALS", "TOXINS", "DRUGS", "BTL"]],
@@ -476,7 +530,7 @@ export class SR6Config {
         [Enums.EdgeBoost.reroll_one, new EdgeBoostDef(1, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_one.apply)],
         [Enums.EdgeBoost.buy_auto_hit, new EdgeBoostDef(3, Enums.ActivationLimit.Any, [], null, Rules.EdgeBoosts.buy_auto_hit.prepareData, Rules.EdgeBoosts.buy_auto_hit.apply)],
         [Enums.EdgeBoost.add_edge_pool, new EdgeBoostDef(4, Enums.ActivationLimit.Pre, [], null, Rules.EdgeBoosts.add_edge_pool.prepareData, Rules.EdgeBoosts.add_edge_pool.apply)],
-        [Enums.EdgeBoost.reroll_failed, new EdgeBoostDef(5, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_failed.apply)],
+        [Enums.EdgeBoost.reroll_failed, new EdgeBoostDef(5, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_failed.apply)]
     ]);
     matrix_programs = new Map([
         [Enums.MatrixProgram.browse, new MatrixProgramDef(false, "+1 Edge on Matrix Search")],
@@ -500,160 +554,180 @@ export class SR6Config {
         [Enums.MatrixProgram.stealth, new MatrixProgramDef(true, "+1 Edge on Matrix Hide")],
         [Enums.MatrixProgram.trace, new MatrixProgramDef(true, "+11 Edge on Trace")]
     ]);
+    get player_matrix_actions() {
+        return new Map([...this.matrix_actions].filter((action) => action[1].is_player_action));
+    }
     matrix_actions = new Map([
         [
+            Enums.MatrixAction.ic_blaster_attack,
+            new MatrixActionDef("@actor.rating * 2", //attack
+            0, // specialization
+            false, // illegal
+            new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), //activation
+            0, // access
+            false, //player usable
+            "@actor.system.attributes.logic.pool + @actor.matrix_persona.attributes.f", //defend
+            "@actor.rating" //damage
+            )
+        ],
+        [
             Enums.MatrixAction.backdoor_entry,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.brute_force,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.change_icon,
-            new MatrixActionDef(undefined, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef(null, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, null, null)
         ],
         [
             Enums.MatrixAction.check_os,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.electronic_warfare, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.electronic_warfare, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.control_device,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.crack_file,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.crash_program,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.data_spike,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", "ceil(@actor.matrix_persona.attributes.a / 2)")
         ],
         [
             Enums.MatrixAction.disarm_data_bomb,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.edit_file,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.encrypt_file,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.enter_host,
-            new MatrixActionDef(undefined, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef(null, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, null, null)
         ],
         [
             Enums.MatrixAction.erase_matrix_signature,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.format_device,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.full_matrix_defense,
-            new MatrixActionDef(undefined, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef(null, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, null, null)
         ],
         [
             Enums.MatrixAction.hash_check,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.hide,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.electronic_warfare, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.electronic_warfare, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.jack_out,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.jam_signals,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.electronic_warfare, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.electronic_warfare, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.jump_rigged,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.matrix_perception,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.matrix_search,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.computer, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.probe,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.reboot_device,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.reconfigure,
-            new MatrixActionDef(undefined, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef(null, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, null, null)
         ],
         [
             Enums.MatrixAction.send_message,
-            new MatrixActionDef(undefined, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef(null, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, null, null)
         ],
         [
             Enums.MatrixAction.set_data_bomb,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.snoop,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.software, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.software, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.spoof_command,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.hacking, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.switch_ifmode,
-            new MatrixActionDef(undefined, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef(null, Enums.Specialization.hacking, false, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, null, null)
         ],
         [
             Enums.MatrixAction.tarpit,
-            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.cracking.pool", Enums.Specialization.cybercombat, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ],
         [
             Enums.MatrixAction.trace_icon,
-            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin)
+            new MatrixActionDef("@actor.system.skills.electronics.pool", Enums.Specialization.software, true, new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative), Enums.AccessLevel.Outsider | Enums.AccessLevel.User | Enums.AccessLevel.Admin, true, "@actor.system.attributes.willpower.pool + @actor.matrix_persona.attributes.f", null)
         ]
     ]);
     combat_actions = new Map([
         [Enums.CombatAction.change_focus, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.avoid_incoming, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.block, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.call_shot, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative), [{
+        [Enums.CombatAction.avoid_incoming, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
+        [Enums.CombatAction.block, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
+        [
+            Enums.CombatAction.call_shot,
+            new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative), [
+                {
                     key: "system.effect_modifiers.damage",
                     value: "2",
                     mode: EffectChangeMode.ADD,
-                    priority: 1,
+                    priority: 1
                 },
                 {
                     key: "system.effect_modifiers.attack_pool",
                     value: "-4",
                     mode: EffectChangeMode.ADD,
-                    priority: 1,
-                }])],
-        [Enums.CombatAction.change_device_mode, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
+                    priority: 1
+                }
+            ])
+        ],
+        [Enums.CombatAction.change_device_mode, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
         [Enums.CombatAction.command_drone, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.command_spirit, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.dodge, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.drop_object, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.dodge, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
+        [Enums.CombatAction.drop_object, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
         [Enums.CombatAction.drop_prone, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.hit_the_dirt, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.intercept, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.hit_the_dirt, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
+        [Enums.CombatAction.intercept, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Any))],
         [Enums.CombatAction.move, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.multiple_attacks, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.quick_draw, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
@@ -663,24 +737,25 @@ export class SR6Config {
         [Enums.CombatAction.take_aim, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.take_cover, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
         [Enums.CombatAction.trip, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.assist, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.astral_projection, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.attack, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.banish_spirit, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.cast_spell, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.cleanse, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.counterspell, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.full_defense, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.manifest, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.observe_in_detail, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.manipulate_object, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.ready_weapon, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.reload_weapon, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.rigger_jump_in, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.sprint, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.summon_spirit, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.use_simple_device, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))],
-        [Enums.CombatAction.use_skill, new CombatActionDef(new Activation(Enums.Activation.Minor, Enums.ActivationLimit.Initiative))]
+        // Major
+        [Enums.CombatAction.assist, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Any))],
+        [Enums.CombatAction.astral_projection, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.attack, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.banish_spirit, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.cast_spell, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.cleanse, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.counterspell, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Any))],
+        [Enums.CombatAction.full_defense, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Any))],
+        [Enums.CombatAction.manifest, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.observe_in_detail, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.manipulate_object, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.ready_weapon, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.reload_weapon, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.rigger_jump_in, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.sprint, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.summon_spirit, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.use_simple_device, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))],
+        [Enums.CombatAction.use_skill, new CombatActionDef(new Activation(Enums.Activation.Major, Enums.ActivationLimit.Initiative))]
     ]);
     skills = new Map([
         [
@@ -925,7 +1000,9 @@ export class SR6Config {
         ]
     ]);
     getSkillOfSpecialization(ty) {
-        return [...this.skills.keys()].find((key) => { this.skills.get(key).specializations.find((spec) => spec.id == ty) != undefined; });
+        return [...this.skills.keys()].find((key) => {
+            this.skills.get(key).specializations.find((spec) => spec.id == ty) != undefined;
+        });
     }
     getCombatActionDef(ty) {
         return this.combat_actions.get(ty);

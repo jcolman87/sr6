@@ -1,7 +1,9 @@
 import { SR6Actor } from "./SR6Actor.js";
 import { SR6CONFIG, Enums } from "../config.js";
 import * as Rolls from "../rolls/Rolls.js";
+import { SR6RollDialog } from "../dialogs/SR6RollDialog.js";
 import { SR6WeaponRollDialog } from "../dialogs/SR6WeaponRollDialog.js";
+import { SR6MatrixRollDialog } from "../dialogs/SR6MatrixRollDialog.js";
 export class SR6CharacterActor extends SR6Actor {
     get total_nuyen() {
         let total = 0;
@@ -11,6 +13,14 @@ export class SR6CharacterActor extends SR6Actor {
             }
         });
         return total;
+    }
+    get wound_modifier() {
+        let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
+        let stun_modifier = -Math.floor(this.getData().monitors.stun.pool / 3);
+        return physical_modifier + stun_modifier;
+    }
+    get matrix_persona() {
+        return this.getData().matrix.persona;
     }
     prepareData() {
         super.prepareData();
@@ -33,19 +43,16 @@ export class SR6CharacterActor extends SR6Actor {
         new SR6WeaponRollDialog(this, weapon).render(true);
     }
     rollSkill(skill) {
-        let roll = Rolls.SR6SkillRoll.make(new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined }));
-        roll.evaluate({ async: false });
-        roll.toMessage();
+        new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined })).render(true);
     }
     rollSpecialization(special) {
-        let roll = Rolls.SR6SkillRoll.make(new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special }));
-        roll.evaluate({ async: false });
-        roll.toMessage();
+        new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special })).render(true);
     }
     rollAttribute(attribute) {
-        let roll = Rolls.SR6AttributeRoll.make(new Rolls.SR6AttributeRollData(this, attribute));
-        roll.evaluate({ async: false });
-        roll.toMessage();
+        new SR6RollDialog(Rolls.SR6AttributeRoll.make, new Rolls.SR6AttributeRollData(this, attribute)).render(true);
+    }
+    rollMatrixAction(action) {
+        new SR6MatrixRollDialog(this, action).render(true);
     }
     getSkill(ty) {
         return this.getData().skills[Enums.Skill[ty]];
@@ -57,11 +64,6 @@ export class SR6CharacterActor extends SR6Actor {
         let data = this.getData();
         return data.attributes[Enums.Attribute[ty]];
     }
-    get wound_modifier() {
-        let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
-        let stun_modifier = -Math.floor(this.getData().monitors.stun.pool / 3);
-        return physical_modifier + stun_modifier;
-    }
     ////
     applyDamage(value, type) {
         let monitors = this.getData().monitors;
@@ -69,7 +71,8 @@ export class SR6CharacterActor extends SR6Actor {
             case Enums.DamageType.Physical: {
                 // If it overflows, dump it in overflow
                 monitors.physical.pool += value;
-                if (monitors.physical.pool > monitors.physical.base) { // Overflow damage
+                if (monitors.physical.pool > monitors.physical.base) {
+                    // Overflow damage
                     monitors.overflow.pool += monitors.physical.pool - monitors.physical.base;
                     monitors.physical.pool = monitors.physical.base;
                 }
@@ -78,7 +81,8 @@ export class SR6CharacterActor extends SR6Actor {
             }
             case Enums.DamageType.Stun: {
                 monitors.stun.pool += value;
-                if (monitors.stun.pool > monitors.stun.base) { // Overflow damage
+                if (monitors.stun.pool > monitors.stun.base) {
+                    // Overflow damage
                     // Recursively apply physical damage if we are overflowing
                     this.applyDamage(monitors.stun.pool - monitors.stun.base, Enums.DamageType.Physical);
                     monitors.stun.pool = monitors.stun.base;

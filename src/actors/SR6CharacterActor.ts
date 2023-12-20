@@ -1,11 +1,13 @@
-import { SR6Actor } from "./SR6Actor.js"
+import { SR6Actor } from "./SR6Actor.js";
 import { SR6CONFIG, Enums, CombatActionDef, SkillUse } from "../config.js";
 import * as Rolls from "../rolls/Rolls.js";
-import { SR6Item } from "../items/SR6Item.js";
-import { ItemTypes } from "../items/Data.js";
+import { SR6Gear } from "../items/SR6Gear.js";
+import { GearTypes } from "../items/Data.js";
 import { CharacterActorData, ActorTypes } from "./Data.js";
 
+import { SR6RollDialog } from "../dialogs/SR6RollDialog.js";
 import { SR6WeaponRollDialog } from "../dialogs/SR6WeaponRollDialog.js";
+import { SR6MatrixRollDialog } from "../dialogs/SR6MatrixRollDialog.js";
 
 import * as util from "../util.js";
 
@@ -13,12 +15,25 @@ export class SR6CharacterActor extends SR6Actor {
 	get total_nuyen(): number {
 		let total: number = 0;
 		this.items.forEach((i) => {
-			if(i.type == "Credstick") {
+			if (i.type == "Credstick") {
 				total += (i as any).system.nuyen;
 			}
 		});
 
 		return total;
+	}
+
+
+	get wound_modifier(): number {
+		let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
+		let stun_modifier = -Math.floor(this.getData().monitors.stun.pool / 3);
+
+		return physical_modifier + stun_modifier;
+	}
+
+
+	get matrix_persona(): null | ActorTypes.MatrixPersona {
+		return this.getData().matrix.persona;
 	}
 
 	override prepareData() {
@@ -35,35 +50,32 @@ export class SR6CharacterActor extends SR6Actor {
 		this.prepareSkillPools();
 
 		this.prepareInitiatives();
-
 	}
 
 	getData(): CharacterActorData {
 		//if(this.isCharacter) { TODO
-			let data: CharacterActorData = (this as any).system;
-			return data;
+		let data: CharacterActorData = (this as any).system;
+		return data;
 		//}
 	}
 
-	rollWeapon(weapon: SR6Item) {
+	rollWeapon(weapon: SR6Gear) {
 		new SR6WeaponRollDialog(this, weapon).render(true);
 	}
 
 	rollSkill(skill: Enums.Skill) {
-		let roll = Rolls.SR6SkillRoll.make(new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined }));
-		roll.evaluate({ async: false });
-		roll.toMessage();
+		new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined })).render(true);
 	}
 	rollSpecialization(special: Enums.Specialization) {
-		let roll = Rolls.SR6SkillRoll.make(new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special }));
-		roll.evaluate({ async: false });
-		roll.toMessage();
+		new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special })).render(true);
 	}
 
 	rollAttribute(attribute: Enums.Attribute) {
-		let roll = Rolls.SR6AttributeRoll.make(new Rolls.SR6AttributeRollData(this, attribute));
-		roll.evaluate({ async: false });
-		roll.toMessage();
+		new SR6RollDialog(Rolls.SR6AttributeRoll.make, new Rolls.SR6AttributeRollData(this, attribute)).render(true);
+	}
+
+	rollMatrixAction(action: Enums.MatrixAction) {
+		new SR6MatrixRollDialog(this, action).render(true);
 	}
 
 	getSkill(ty: Enums.Skill | Enums.Specialization): ActorTypes.Skill {
@@ -78,23 +90,17 @@ export class SR6CharacterActor extends SR6Actor {
 		return (data.attributes as any)[Enums.Attribute[ty]];
 	}
 
-	get wound_modifier(): number {
-		let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
-		let stun_modifier = -Math.floor(this.getData().monitors.stun.pool / 3);
-		
-		return physical_modifier + stun_modifier;
-	}
-
 	////
 
-	applyDamage(value: number,  type: Enums.DamageType) {
+	applyDamage(value: number, type: Enums.DamageType) {
 		let monitors = this.getData().monitors;
 
-		switch(type) {
-			case Enums.DamageType.Physical: { 
+		switch (type) {
+			case Enums.DamageType.Physical: {
 				// If it overflows, dump it in overflow
 				monitors.physical.pool += value;
-				if(monitors.physical.pool > monitors.physical.base) { // Overflow damage
+				if (monitors.physical.pool > monitors.physical.base) {
+					// Overflow damage
 					monitors.overflow.pool += monitors.physical.pool - monitors.physical.base;
 					monitors.physical.pool = monitors.physical.base;
 				}
@@ -102,25 +108,26 @@ export class SR6CharacterActor extends SR6Actor {
 				this.update({ ["system.monitors"]: monitors });
 				break;
 			}
-			case Enums.DamageType.Stun: { 
+			case Enums.DamageType.Stun: {
 				monitors.stun.pool += value;
-				if(monitors.stun.pool > monitors.stun.base) { // Overflow damage
+				if (monitors.stun.pool > monitors.stun.base) {
+					// Overflow damage
 					// Recursively apply physical damage if we are overflowing
 					this.applyDamage(monitors.stun.pool - monitors.stun.base, Enums.DamageType.Physical);
 					monitors.stun.pool = monitors.stun.base;
 				}
 				break;
 			}
-			case Enums.DamageType.Matrix: { 
+			case Enums.DamageType.Matrix: {
 				ui.notifications!.error("Matrix damage unsupported");
 			}
-			case Enums.DamageType.Astral: { 
+			case Enums.DamageType.Astral: {
 				ui.notifications!.error("Astral damage unsupported");
 			}
 		}
 	}
 
-	healDamage(value: number,  type: Enums.DamageType) {
+	healDamage(value: number, type: Enums.DamageType) {
 		ui.notifications!.error("Healing isnt implemented");
 	}
 
@@ -134,9 +141,9 @@ export class SR6CharacterActor extends SR6Actor {
 				rounds: 1
 			},
 			changes: action.changes
-        };
-        console.log("action", action);
-	   	console.log("Data", activeEffectData);
+		};
+		console.log("action", action);
+		console.log("Data", activeEffectData);
 		this.createEmbeddedDocuments("ActiveEffect", [activeEffectData]);
 	}
 
@@ -164,10 +171,9 @@ export class SR6CharacterActor extends SR6Actor {
 		if (attr.formula) {
 			formulaSolution = Math.ceil(this.solveFormula(attr.formula));
 		}
-		
+
 		attr.base = attr.modifier + attr.augment + formulaSolution;
 	}
-	
 
 	prepareSkillPools() {
 		let skills = this.getData().skills;
@@ -179,8 +185,8 @@ export class SR6CharacterActor extends SR6Actor {
 				let skillDef = SR6CONFIG.skills.get(skillEnum)!;
 				let calcedPool: number = this.solveFormula(skillDef.pool);
 				let points: number = (skills as any)[key].points;
-				let modifier: number = (skills as any)[key].modifier
-				
+				let modifier: number = (skills as any)[key].modifier;
+
 				let pool: number = calcedPool + points + modifier;
 
 				(skills as any)[key].pool = pool.toString();
@@ -228,6 +234,4 @@ export class SR6CharacterActor extends SR6Actor {
 	prepareInitiatives() {
 		this.initiatives.actions.minor = 1 + this.initiatives.die.physical;
 	}
-	
-
 }

@@ -2,8 +2,11 @@
 	<section>
 		<div>
 			{{#each roll.sides as |num id|}}
-			<i class="roll die_{{num}}" style="width: 24px; height: 24px;">&nbsp; </i>
+			<i class="chat-roll die_{{num}}">&nbsp; </i>
 			{{/each}}
 		</div>
 	</section>
+</div>
+<div class="chat-tooltip chat-action-expand-text-collapsible" style="display: none; font-size: 12px; font-style: italic">
+	{{action_expand_text}}
 </div>

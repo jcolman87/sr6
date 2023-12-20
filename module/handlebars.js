@@ -1,4 +1,4 @@
-import { ItemTypes } from "./items/Data.js";
+import { GearTypes } from "./items/Data.js";
 import { SR6CONFIG, Enums } from "./config.js";
 export function defineHandlebarHelpers() {
     Handlebars.registerHelper("isGM", function (user_id) {
@@ -15,13 +15,12 @@ export function defineHandlebarHelpers() {
     });
     ////
     Handlebars.registerHelper("itemHas", function (item, ty_str) {
-        return item.has(ItemTypes.Types[ty_str]);
+        return item.has(GearTypes.Types[ty_str]);
     });
     Handlebars.registerHelper("solveActorFormula", function (actor, formula) {
         return actor.solveFormula(formula);
     });
     Handlebars.registerHelper("solveItemFormula", function (item, formula) {
-        console.log("solving", formula, item);
         return item.solveFormula(formula);
     });
     Handlebars.registerHelper("solveActorItemFormula", function (actor, item, formula) {
@@ -51,7 +50,6 @@ export function defineHandlebarHelpers() {
         }
     });
     Handlebars.registerHelper("specializationAsString", function (ty) {
-        console.log("ty", ty, Enums.Specialization[ty]);
         return Enums.Specialization[ty];
     });
     Handlebars.registerHelper("distanceToString", function (ty) {
@@ -67,7 +65,6 @@ export function defineHandlebarHelpers() {
         return Enums.EdgeBoost[ty];
     });
     Handlebars.registerHelper("specializationsOfSkill", function (ty) {
-        console.log("specializationsOfSkill", ty, SR6CONFIG.skills.get(ty).specializations);
         return SR6CONFIG.skills.get(ty).specializations;
     });
     Handlebars.registerHelper("in", function (elem, list, options) {
@@ -80,7 +77,7 @@ export function defineHandlebarHelpers() {
         }
     });
     Handlebars.registerHelper("var", function (varName, varValue, options) {
-        options.data.root[varName] = varValue;
+        this[varName] = varValue;
     });
     Handlebars.registerHelper("add", function (a, b) {
         return +a + +b;
@@ -94,31 +91,37 @@ export function defineHandlebarHelpers() {
     Handlebars.registerHelper("undefined", function (a) {
         return a == undefined;
     });
+    Handlebars.registerHelper("isNull", function (a) {
+        return a == null;
+    });
     Handlebars.registerHelper("null", function (a) {
         return a == null;
     });
-    Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+    Handlebars.registerHelper("ifBoth", function (a, b) {
+        return a && b;
+    });
+    Handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
         switch (operator) {
-            case '==':
-                return (v1 == v2) ? options.fn(this) : options.inverse(this);
-            case '===':
-                return (v1 === v2) ? options.fn(this) : options.inverse(this);
-            case '!=':
-                return (v1 != v2) ? options.fn(this) : options.inverse(this);
-            case '!==':
-                return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-            case '<':
-                return (v1 < v2) ? options.fn(this) : options.inverse(this);
-            case '<=':
-                return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-            case '>':
-                return (v1 > v2) ? options.fn(this) : options.inverse(this);
-            case '>=':
-                return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-            case '&&':
-                return (v1 && v2) ? options.fn(this) : options.inverse(this);
-            case '||':
-                return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            case "==":
+                return v1 == v2 ? options.fn(this) : options.inverse(this);
+            case "===":
+                return v1 === v2 ? options.fn(this) : options.inverse(this);
+            case "!=":
+                return v1 != v2 ? options.fn(this) : options.inverse(this);
+            case "!==":
+                return v1 !== v2 ? options.fn(this) : options.inverse(this);
+            case "<":
+                return v1 < v2 ? options.fn(this) : options.inverse(this);
+            case "<=":
+                return v1 <= v2 ? options.fn(this) : options.inverse(this);
+            case ">":
+                return v1 > v2 ? options.fn(this) : options.inverse(this);
+            case ">=":
+                return v1 >= v2 ? options.fn(this) : options.inverse(this);
+            case "&&":
+                return v1 && v2 ? options.fn(this) : options.inverse(this);
+            case "||":
+                return v1 || v2 ? options.fn(this) : options.inverse(this);
             default:
                 return options.inverse(this);
         }
@@ -126,8 +129,8 @@ export function defineHandlebarHelpers() {
     Handlebars.registerHelper("canUseEdgeBoost", function (boost_id, activation, roll) {
         return SR6CONFIG.edge_boosts.get(boost_id).condition(activation, roll);
     });
-    Handlebars.registerHelper('eachInMap', function (map, block) {
-        var out = '';
+    Handlebars.registerHelper("eachMap", function (map, block) {
+        var out = "";
         map.forEach((value, key) => {
             out += block.fn({ key: key, value: value });
         });

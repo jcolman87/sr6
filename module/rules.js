@@ -1,4 +1,4 @@
-import { EffectChangeMode, Enums } from "./config.js";
+import { SR6CONFIG, EffectChangeMode, Enums } from "./config.js";
 export var EdgeBoosts;
 (function (EdgeBoosts) {
     let buy_auto_hit;
@@ -46,6 +46,16 @@ export var EdgeBoosts;
         reroll_failed.apply = apply;
     })(reroll_failed = EdgeBoosts.reroll_failed || (EdgeBoosts.reroll_failed = {}));
 })(EdgeBoosts || (EdgeBoosts = {}));
+export function calcMatrixDefensePool(actor, matrix_action, apply_modifiers = true) {
+    let action = SR6CONFIG.matrix_actions.get(matrix_action);
+    let pool = actor.solveFormula(action.defendAgainstFormula);
+    let modifiers = 0;
+    if (apply_modifiers) {
+        modifiers += +actor.wound_modifier;
+        modifiers += +actor.getData().effect_modifiers.global_pool;
+    }
+    return +pool + +modifiers;
+}
 export function calcWeaponPool(actor, item) {
     let skill_use = item.skill_use;
     if (!skill_use)
@@ -83,18 +93,20 @@ export function calcSoakPool(actor, apply_modifiers = true) {
 }
 export function getFiremodeModifiers(firemode) {
     switch (firemode) {
-        case Enums.FireMode.SS: return [];
-        case Enums.FireMode.SA: return [
-            { key: "damage", mode: EffectChangeMode.ADD, value: "1", },
-            { key: "attack_rating", mode: EffectChangeMode.ADD, value: "-2", }
-        ];
-        case Enums.FireMode.BF_narrow: return [
-            { key: "damage", mode: EffectChangeMode.ADD, value: "2", },
-            { key: "attack_rating", mode: EffectChangeMode.ADD, value: "-4", }
-        ];
-        case Enums.FireMode.FA: return [
-            { key: "attack_rating", mode: EffectChangeMode.ADD, value: "-6", }
-        ];
+        case Enums.FireMode.SS:
+            return [];
+        case Enums.FireMode.SA:
+            return [
+                { key: "damage", mode: EffectChangeMode.ADD, value: "1" },
+                { key: "attack_rating", mode: EffectChangeMode.ADD, value: "-2" }
+            ];
+        case Enums.FireMode.BF_narrow:
+            return [
+                { key: "damage", mode: EffectChangeMode.ADD, value: "2" },
+                { key: "attack_rating", mode: EffectChangeMode.ADD, value: "-4" }
+            ];
+        case Enums.FireMode.FA:
+            return [{ key: "attack_rating", mode: EffectChangeMode.ADD, value: "-6" }];
     }
     return [];
 }

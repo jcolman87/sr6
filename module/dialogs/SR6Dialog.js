@@ -5,15 +5,14 @@ export class SR6Dialog extends FormApplication {
         return mergeObject(super.defaultOptions, {
             closeOnSubmit: false,
             submitOnClose: true,
-            submitOnChange: true,
+            submitOnChange: true
         });
     }
-    prepareData() {
-    }
+    prepareData() { }
     activateListeners(html) {
         super.activateListeners(html);
         html.find("[autofocus]")[0]?.focus();
-        html.on('keydown', (event) => {
+        html.on("keydown", (event) => {
             if (event.key === "Enter") {
                 console.log("enter in dialog");
             }

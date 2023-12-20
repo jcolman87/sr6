@@ -4,22 +4,23 @@ export class Formula extends String {
 }
 export class ItemFormula extends Formula {
 }
-export var ItemTypes;
-(function (ItemTypes) {
+export var GearTypes;
+(function (GearTypes) {
     class Condition extends ActorTypes.Attribute {
     }
-    ItemTypes.Condition = Condition;
+    GearTypes.Condition = Condition;
     class Cost {
         cost = "0";
         availability = "1";
         illegal = false;
     }
-    ItemTypes.Cost = Cost;
+    GearTypes.Cost = Cost;
     class Capacity {
         capacity = "0";
     }
-    ItemTypes.Capacity = Capacity;
+    GearTypes.Capacity = Capacity;
     class Matrix {
+        matrix_active = false;
         matrix_attributes = {
             a: "0",
             s: "0",
@@ -28,18 +29,18 @@ export var ItemTypes;
         };
         program_slots = "0";
     }
-    ItemTypes.Matrix = Matrix;
+    GearTypes.Matrix = Matrix;
     class Defense {
         dr = "0";
     }
-    ItemTypes.Defense = Defense;
+    GearTypes.Defense = Defense;
     class Explosive {
         dv_gz = "0";
         dv_close = "0";
         dv_near = "0";
         blast = "0";
     }
-    ItemTypes.Explosive = Explosive;
+    GearTypes.Explosive = Explosive;
     class Weapon {
         attack_ratings = {
             close: "0",
@@ -52,16 +53,16 @@ export var ItemTypes;
         damage_type = Enums.DamageType.Physical;
         damage_form = Enums.DamageType.Physical;
     }
-    ItemTypes.Weapon = Weapon;
+    GearTypes.Weapon = Weapon;
     class Firearm {
         firemodes = [Enums.FireMode.SS];
         mount_locations = [];
     }
-    ItemTypes.Firearm = Firearm;
+    GearTypes.Firearm = Firearm;
     class Mountable {
         locations = [];
     }
-    ItemTypes.Mountable = Mountable;
+    GearTypes.Mountable = Mountable;
     let Types;
     (function (Types) {
         Types[Types["Base"] = 0] = "Base";
@@ -75,9 +76,9 @@ export var ItemTypes;
         Types[Types["Mountable"] = 256] = "Mountable";
         Types[Types["SkillUse"] = 512] = "SkillUse";
         Types[Types["Condition"] = 1024] = "Condition";
-    })(Types = ItemTypes.Types || (ItemTypes.Types = {}));
-})(ItemTypes || (ItemTypes = {}));
-export class ItemData {
+    })(Types = GearTypes.Types || (GearTypes.Types = {}));
+})(GearTypes || (GearTypes = {}));
+export class GearData {
     description = "";
     rating = "1";
     size = "3";
