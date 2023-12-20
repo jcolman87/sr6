@@ -28,6 +28,7 @@ export var Enums;
         Attribute[Attribute["magic"] = 8] = "magic";
         Attribute[Attribute["resonance"] = 9] = "resonance";
         Attribute[Attribute["essense"] = 10] = "essense";
+        Attribute[Attribute["edge"] = 11] = "edge";
     })(Attribute = Enums.Attribute || (Enums.Attribute = {}));
     let Specialization;
     (function (Specialization) {
@@ -239,6 +240,35 @@ export var Enums;
         MatrixProgram[MatrixProgram["stealth"] = 18] = "stealth";
         MatrixProgram[MatrixProgram["trace"] = 19] = "trace";
     })(MatrixProgram = Enums.MatrixProgram || (Enums.MatrixProgram = {}));
+    let EdgeBoost;
+    (function (EdgeBoost) {
+        EdgeBoost[EdgeBoost["add_edge_pool"] = 0] = "add_edge_pool";
+        EdgeBoost[EdgeBoost["buy_auto_hit"] = 1] = "buy_auto_hit";
+        EdgeBoost[EdgeBoost["count_2_glitch"] = 2] = "count_2_glitch";
+        EdgeBoost[EdgeBoost["create_special"] = 3] = "create_special";
+        EdgeBoost[EdgeBoost["heal_1_physic"] = 4] = "heal_1_physic";
+        EdgeBoost[EdgeBoost["heal_1_stun"] = 5] = "heal_1_stun";
+        EdgeBoost[EdgeBoost["negate_1_edge"] = 6] = "negate_1_edge";
+        EdgeBoost[EdgeBoost["plus_1_roll"] = 7] = "plus_1_roll";
+        EdgeBoost[EdgeBoost["plus_3_ini"] = 8] = "plus_3_ini";
+        EdgeBoost[EdgeBoost["reroll_failed"] = 9] = "reroll_failed";
+        EdgeBoost[EdgeBoost["reroll_one"] = 10] = "reroll_one";
+    })(EdgeBoost = Enums.EdgeBoost || (Enums.EdgeBoost = {}));
+    let EdgeAction;
+    (function (EdgeAction) {
+        EdgeAction[EdgeAction["anticipation"] = 0] = "anticipation";
+        EdgeAction[EdgeAction["big_speech"] = 1] = "big_speech";
+        EdgeAction[EdgeAction["bring_the_drama"] = 2] = "bring_the_drama";
+        EdgeAction[EdgeAction["called_shot_disarm"] = 3] = "called_shot_disarm";
+        EdgeAction[EdgeAction["called_shot_vitals"] = 4] = "called_shot_vitals";
+        EdgeAction[EdgeAction["fire_from_cover"] = 5] = "fire_from_cover";
+        EdgeAction[EdgeAction["knockout_blow"] = 6] = "knockout_blow";
+        EdgeAction[EdgeAction["shank"] = 7] = "shank";
+        EdgeAction[EdgeAction["sudden_insight"] = 8] = "sudden_insight";
+        EdgeAction[EdgeAction["tactical_roll"] = 9] = "tactical_roll";
+        EdgeAction[EdgeAction["tumble"] = 10] = "tumble";
+        EdgeAction[EdgeAction["wrest"] = 11] = "wrest";
+    })(EdgeAction = Enums.EdgeAction || (Enums.EdgeAction = {}));
     let Activation;
     (function (Activation) {
         Activation[Activation["Passive"] = 0] = "Passive";
@@ -248,7 +278,9 @@ export var Enums;
     let ActivationLimit;
     (function (ActivationLimit) {
         ActivationLimit["Initiative"] = "initiative";
-        ActivationLimit["Anytime"] = "anytime";
+        ActivationLimit["Any"] = "any";
+        ActivationLimit["Pre"] = "pre";
+        ActivationLimit["Post"] = "post";
     })(ActivationLimit = Enums.ActivationLimit || (Enums.ActivationLimit = {}));
     let AccessLevel;
     (function (AccessLevel) {
@@ -321,7 +353,17 @@ export var Enums;
         AugmentationQuality[AugmentationQuality["Alpha"] = 1] = "Alpha";
         AugmentationQuality[AugmentationQuality["Beta"] = 2] = "Beta";
     })(AugmentationQuality = Enums.AugmentationQuality || (Enums.AugmentationQuality = {}));
+    let VRType;
+    (function (VRType) {
+        VRType[VRType["AR"] = 0] = "AR";
+        VRType[VRType["Cold"] = 1] = "Cold";
+        VRType[VRType["Hot"] = 2] = "Hot";
+    })(VRType = Enums.VRType || (Enums.VRType = {}));
 })(Enums || (Enums = {}));
+export class SkillUse {
+    skill;
+    specialization;
+}
 export class SkillSpecializationDef {
     id;
     pool;
@@ -353,6 +395,35 @@ export class CombatActionDef {
         this.duration = duration;
     }
 }
+export class EdgeBoostDef {
+    cost;
+    changes;
+    activation_limit;
+    condition(activation, roll) {
+        return (activation == this.activation_limit) || (this.activation_limit == Enums.ActivationLimit.Any);
+    }
+    async prepareData(roll) { }
+    async apply(roll) { }
+    constructor(cost, activation_limit, changes = [], condition = null, prepareData = null, apply = null) {
+        this.cost = cost;
+        this.activation_limit = activation_limit;
+        if (condition != null)
+            this.condition = condition;
+        if (prepareData != null)
+            this.prepareData = prepareData;
+        if (apply != null)
+            this.apply = apply;
+        this.changes = changes;
+    }
+}
+export class EdgeActionDef {
+    cost;
+    changes = [];
+    constructor(cost, changes) {
+        this.cost = cost;
+        this.changes = changes;
+    }
+}
 export class MatrixActionDef {
     formula;
     illegal;
@@ -374,10 +445,6 @@ export class MatrixProgramDef {
         this.illegal = illegal;
         this.modifier = modifier;
     }
-}
-export class SkillUse {
-    skill;
-    specialization;
 }
 export class SR6Config {
     GEAR_TYPES = ["ACCESSORY", "ARMOR", "ARMOR_ADDITION", "BIOWARE", "CYBERWARE", "TOOLS", "ELECTRONICS", "NANOWARE", "GENETICS", "WEAPON_CLOSE_COMBAT", "WEAPON_RANGED", "WEAPON_FIREARMS", "WEAPON_SPECIAL", "AMMUNITION", "CHEMICALS", "SOFTWARE", "SURVIVAL", "BIOLOGY", "VEHICLES", "DRONES", "MAGICAL"];
@@ -403,6 +470,13 @@ export class SR6Config {
         ["VEHICLES", ["BIKES", "CARS", "TRUCKS", "BOATS", "SUBMARINES", "FIXED_WING", "ROTORCRAFT", "VTOL", "WALKER"]],
         ["DRONES", ["MICRODRONES", "MINIDRONES", "SMALL_DRONES", "MEDIUM_DRONES", "LARGE_DRONES"]],
         ["MAGICAL", ["MAGIC_SUPPLIES"]]
+    ]);
+    edge_boosts = new Map([
+        [Enums.EdgeBoost.plus_1_roll, new EdgeBoostDef(2, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.plus_1_roll.apply)],
+        [Enums.EdgeBoost.reroll_one, new EdgeBoostDef(1, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_one.apply)],
+        [Enums.EdgeBoost.buy_auto_hit, new EdgeBoostDef(3, Enums.ActivationLimit.Any, [], null, Rules.EdgeBoosts.buy_auto_hit.prepareData, Rules.EdgeBoosts.buy_auto_hit.apply)],
+        [Enums.EdgeBoost.add_edge_pool, new EdgeBoostDef(4, Enums.ActivationLimit.Pre, [], null, Rules.EdgeBoosts.add_edge_pool.prepareData, Rules.EdgeBoosts.add_edge_pool.apply)],
+        [Enums.EdgeBoost.reroll_failed, new EdgeBoostDef(5, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_failed.apply)],
     ]);
     matrix_programs = new Map([
         [Enums.MatrixProgram.browse, new MatrixProgramDef(false, "+1 Edge on Matrix Search")],

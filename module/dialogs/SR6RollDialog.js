@@ -21,6 +21,9 @@ export class SR6RollDialog extends SR6Dialog {
         }
         // Apply modifier
         this.roll.pool += this.pool_modifier;
+        // Fix-up edge
+        console.log("prepareData", this.roll.edge.boost);
+        this.roll.applyEdge();
     }
     getData(options) {
         let data = super.getData(options);
@@ -33,11 +36,23 @@ export class SR6RollDialog extends SR6Dialog {
         super.activateListeners(html);
         html.find("#do-roll").focus();
         html.find("#do-roll").click(this._onComplete.bind(this, html));
+        html.on("click", ".edge-select", async (event) => {
+            event.preventDefault();
+            let roll = $(event.currentTarget.parentElement);
+            let tip = roll.find(".edge-select-collapsible");
+            if (!tip.is(":visible")) {
+                tip.slideDown(200);
+            }
+            else {
+                tip.slideUp(200);
+            }
+        });
     }
-    _onComplete() {
+    async _onComplete() {
         this.prepareData();
         let r = this.maker(this.roll);
-        r.evaluate({ async: false });
+        await r.evaluate();
+        await r.finish();
         r.toMessage();
         this.close({});
     }

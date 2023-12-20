@@ -8,6 +8,9 @@ export class SR6Combatant extends Combatant {
             this.setFlag("sr6", "Enums.Initiative", Enums.Initiative.Physical);
         }
     }
+    get actions() {
+        return this.actor.initiatives.actions;
+    }
     get initiative_type() {
         return this.getFlag("sr6", "Enums.Initiative");
     }
@@ -47,8 +50,6 @@ export class SR6Combatant extends Combatant {
         return super.rollInitiative(formula);
     }
     getInitiativeRoll(f) {
-        let formula = this._getInitiativeFormula();
-        console.log("SR6Combatant::getInitiativeRoll", formula);
-        return new SR6InitiativeRoll(formula);
+        return new SR6InitiativeRoll(this._getInitiativeFormula(), { actor: this.actor });
     }
 }

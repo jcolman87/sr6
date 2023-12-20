@@ -8,8 +8,6 @@ export class SR6Item extends Item {
 		return this.solveFormulaWithActor(this.actor as SR6Actor, formula);
 	}
 	solveFormulaWithActor(actor: SR6Actor | undefined, formula: ItemFormula): number {
-		console.log("SR6Item::solveFormulaWithActor", formula);
-
 		let roll = new Rolls.SR6Roll(formula as string, { actor: this.actor, item: this });
 		roll.evaluate({ async: false });
 		return roll.total!;

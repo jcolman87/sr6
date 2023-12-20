@@ -1,4 +1,51 @@
 import { EffectChangeMode, Enums } from "./config.js";
+export var EdgeBoosts;
+(function (EdgeBoosts) {
+    let buy_auto_hit;
+    (function (buy_auto_hit) {
+        async function prepareData(roll) {
+            roll.auto_hits += 1;
+        }
+        buy_auto_hit.prepareData = prepareData;
+        async function apply(roll) {
+            return prepareData(roll.data);
+        }
+        buy_auto_hit.apply = apply;
+    })(buy_auto_hit = EdgeBoosts.buy_auto_hit || (EdgeBoosts.buy_auto_hit = {}));
+    let plus_1_roll;
+    (function (plus_1_roll) {
+        async function apply(roll) {
+            await roll.addOne();
+        }
+        plus_1_roll.apply = apply;
+    })(plus_1_roll = EdgeBoosts.plus_1_roll || (EdgeBoosts.plus_1_roll = {}));
+    let reroll_one;
+    (function (reroll_one) {
+        async function apply(roll) {
+            await roll.rerollOne();
+        }
+        reroll_one.apply = apply;
+    })(reroll_one = EdgeBoosts.reroll_one || (EdgeBoosts.reroll_one = {}));
+    let add_edge_pool;
+    (function (add_edge_pool) {
+        async function prepareData(roll) {
+            roll.pool += roll.actor.getAttribute(Enums.Attribute.edge).pool;
+            roll.explode = true;
+        }
+        add_edge_pool.prepareData = prepareData;
+        async function apply(roll) {
+            console.log("Rules::EdgeBoosts::apply::apply");
+        }
+        add_edge_pool.apply = apply;
+    })(add_edge_pool = EdgeBoosts.add_edge_pool || (EdgeBoosts.add_edge_pool = {}));
+    let reroll_failed;
+    (function (reroll_failed) {
+        async function apply(roll) {
+            await roll.rerollFailed();
+        }
+        reroll_failed.apply = apply;
+    })(reroll_failed = EdgeBoosts.reroll_failed || (EdgeBoosts.reroll_failed = {}));
+})(EdgeBoosts || (EdgeBoosts = {}));
 export function calcWeaponPool(actor, item) {
     let skill_use = item.skill_use;
     if (!skill_use)

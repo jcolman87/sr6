@@ -21,6 +21,7 @@ export class SR6CharacterActor extends SR6Actor {
         this.prepareAttributes();
         this.prepareDerivedAttributes();
         this.prepareSkillPools();
+        this.prepareInitiatives();
     }
     getData() {
         //if(this.isCharacter) { TODO
@@ -151,6 +152,7 @@ export class SR6CharacterActor extends SR6Actor {
         this.prepareMonitor(monitors.physical);
         this.prepareMonitor(monitors.overflow);
         this.prepareMonitor(monitors.stun);
+        this.prepareMonitor(monitors.edge);
     }
     prepareDerivedAttributes() {
         let derived_attributes = this.getData().derived_attributes;
@@ -171,5 +173,12 @@ export class SR6CharacterActor extends SR6Actor {
         this.prepareAttribute(attributes.logic);
         this.prepareAttribute(attributes.intuition);
         this.prepareAttribute(attributes.charisma);
+        this.prepareAttribute(attributes.edge);
+        this.prepareAttribute(attributes.resonance);
+        this.prepareAttribute(attributes.magic);
+        this.prepareAttribute(attributes.essense);
+    }
+    prepareInitiatives() {
+        this.initiatives.actions.minor = 1 + this.initiatives.die.physical;
     }
 }

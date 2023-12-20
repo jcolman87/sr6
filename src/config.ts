@@ -3,6 +3,9 @@ import type {
 } from '@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/data/data.mjs/effectChangeData';
 import * as Rules from "./rules.js";
 
+import { SR6Actor } from "./actors/SR6Actor.js";
+import * as Rolls from "./rolls/Rolls.js";
+
 export { Rules, EffectChangeData };
 export type EffectChangeMode = foundry.CONST.ACTIVE_EFFECT_MODES;
 export const EffectChangeMode = foundry.CONST.ACTIVE_EFFECT_MODES;
@@ -31,7 +34,8 @@ export namespace Enums {
 		charisma,
 		magic,
 		resonance,
-		essense
+		essense,
+		edge
 	}
 
 	export enum Specialization {
@@ -244,6 +248,35 @@ export namespace Enums {
 		trace
 	}
 
+	export enum EdgeBoost {
+		add_edge_pool,
+		buy_auto_hit,
+		count_2_glitch,
+		create_special,
+		heal_1_physic,
+		heal_1_stun,
+		negate_1_edge,
+		plus_1_roll,
+		plus_3_ini,
+		reroll_failed,
+		reroll_one
+	}
+
+	export enum EdgeAction {
+		anticipation,
+		big_speech,
+		bring_the_drama,
+		called_shot_disarm,
+		called_shot_vitals,
+		fire_from_cover,
+		knockout_blow,
+		shank,
+		sudden_insight,
+		tactical_roll,
+		tumble,
+		wrest
+	}
+
 	export enum Activation {
 		Passive = 0,
 		Minor = 1,
@@ -252,7 +285,9 @@ export namespace Enums {
 
 	export enum ActivationLimit {
 		Initiative = "initiative",
-		Anytime = "anytime"
+		Any = "any",
+		Pre = "pre",
+		Post = "post",
 	}
 
 	export enum AccessLevel {
@@ -325,6 +360,17 @@ export namespace Enums {
 		Alpha = 1,
 		Beta = 2,
 	}
+
+	export enum VRType {
+		AR,
+		Cold,
+		Hot,
+	}
+}
+
+export class SkillUse {
+		skill: undefined | Enums.Skill;
+		specialization: undefined | Enums.Specialization;
 }
 
 export class SkillSpecializationDef {
@@ -365,6 +411,45 @@ export class CombatActionDef {
 	}
 }
 
+export class EdgeBoostDef {
+	cost: number;
+	changes: EffectChangeData[];
+	activation_limit: Enums.ActivationLimit;
+	
+	condition(activation:  Enums.ActivationLimit, roll: Rolls.SR6RollData): boolean { 
+		return (activation == this.activation_limit) || (this.activation_limit == Enums.ActivationLimit.Any);
+	}
+	async prepareData(roll: Rolls.SR6RollData) { }
+	async apply(roll: Rolls.SR6Roll) {  }
+
+	constructor(cost: number, 
+		  activation_limit: Enums.ActivationLimit,
+			changes: EffectChangeData[] = [],
+			condition: null | ((activation:  Enums.ActivationLimit, roll: Rolls.SR6RollData) => boolean) = null, 
+			prepareData: null | ((roll: Rolls.SR6RollData) => Promise<void>) = null,
+			apply: null | ((roll: Rolls.SR6Roll) => Promise<void>) = null) {
+		this.cost = cost;
+		this.activation_limit = activation_limit;
+		if(condition != null) this.condition = condition;
+		if(prepareData != null) this.prepareData = prepareData;
+		if(apply != null) this.apply = apply;
+		this.changes = changes;
+	}
+
+}
+
+
+export class EdgeActionDef {
+	cost: number;
+	changes: EffectChangeData[] = [];
+
+	constructor(cost: number, changes: EffectChangeData[]) {
+		this.cost = cost;
+		this.changes = changes;
+	}
+
+}
+
 export class MatrixActionDef {
 	formula: string | undefined;
 	illegal: boolean;
@@ -393,10 +478,6 @@ export class MatrixProgramDef {
 	}
 }
 
-export class SkillUse {
-		skill: undefined | Enums.Skill;
-		specialization: undefined | Enums.Specialization;
-}
 
 export class SR6Config {
 	GEAR_TYPES = ["ACCESSORY", "ARMOR", "ARMOR_ADDITION", "BIOWARE", "CYBERWARE", "TOOLS", "ELECTRONICS", "NANOWARE", "GENETICS", "WEAPON_CLOSE_COMBAT", "WEAPON_RANGED", "WEAPON_FIREARMS", "WEAPON_SPECIAL", "AMMUNITION", "CHEMICALS", "SOFTWARE", "SURVIVAL", "BIOLOGY", "VEHICLES", "DRONES", "MAGICAL"];
@@ -423,6 +504,14 @@ export class SR6Config {
 		["VEHICLES", ["BIKES", "CARS", "TRUCKS", "BOATS", "SUBMARINES", "FIXED_WING", "ROTORCRAFT", "VTOL", "WALKER"]],
 		["DRONES", ["MICRODRONES", "MINIDRONES", "SMALL_DRONES", "MEDIUM_DRONES", "LARGE_DRONES"]],
 		["MAGICAL", ["MAGIC_SUPPLIES"]]
+	]);
+
+	edge_boosts: Map<Enums.EdgeBoost, EdgeBoostDef> = new Map([
+		[Enums.EdgeBoost.plus_1_roll, new EdgeBoostDef(2, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.plus_1_roll.apply)],
+		[Enums.EdgeBoost.reroll_one, new EdgeBoostDef(1, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_one.apply)],
+		[Enums.EdgeBoost.buy_auto_hit, new EdgeBoostDef(3, Enums.ActivationLimit.Any, [], null, Rules.EdgeBoosts.buy_auto_hit.prepareData, Rules.EdgeBoosts.buy_auto_hit.apply)],
+		[Enums.EdgeBoost.add_edge_pool, new EdgeBoostDef(4, Enums.ActivationLimit.Pre, [], null, Rules.EdgeBoosts.add_edge_pool.prepareData, Rules.EdgeBoosts.add_edge_pool.apply)],
+		[Enums.EdgeBoost.reroll_failed, new EdgeBoostDef(5, Enums.ActivationLimit.Post, [], null, null, Rules.EdgeBoosts.reroll_failed.apply)],
 	]);
 
 	matrix_programs: Map<Enums.MatrixProgram, MatrixProgramDef> = new Map([

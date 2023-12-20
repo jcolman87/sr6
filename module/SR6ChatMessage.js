@@ -13,21 +13,40 @@ export class SR6ChatMessage extends ChatMessage {
 export function SR6RenderChatMessage(msg, html, data) {
     // add a hidden input field to all chat messages
     html.find("#message-id").attr("value", msg.id);
-    html.on("click", "#roll-soak", (event) => {
+    html.on("click", "#spend-edge", async (event) => {
+        event.preventDefault();
+        let roll = msg.rolls[0];
+        let selection = parseInt(html.find("#edge-boost").val());
+        roll.data.edge.boost = selection;
+        await roll.finishEdge();
+        msg.update({ content: await roll.render(), rolls: [roll] });
+    });
+    html.on("click", "#roll-soak", async (event) => {
         event.preventDefault();
         let defense_roll = msg.rolls[0];
         util.getSelfOrSelectedActors().forEach((actor) => {
             new SR6SoakRollDialog(actor, defense_roll).render(true);
         });
     });
-    html.on("click", "#roll-defense", (event) => {
+    html.on("click", "#roll-defense", async (event) => {
         event.preventDefault();
         let attack_roll = msg.rolls[0];
         util.getSelfOrSelectedActors().forEach((actor) => {
             new SR6DefenseRollDialog(actor, attack_roll).render(true);
         });
     });
-    html.on("click", ".chat-dice", (event) => {
+    html.on("click", ".chat-edge", async (event) => {
+        event.preventDefault();
+        let roll = $(event.currentTarget.parentElement);
+        let tip = roll.find(".chat-edge-collapsible");
+        if (!tip.is(":visible")) {
+            tip.slideDown(200);
+        }
+        else {
+            tip.slideUp(200);
+        }
+    });
+    html.on("click", ".chat-dice", async (event) => {
         event.preventDefault();
         let roll = $(event.currentTarget.parentElement);
         let tip = roll.find(".chat-dice-collapsible");
@@ -38,7 +57,7 @@ export function SR6RenderChatMessage(msg, html, data) {
             tip.slideUp(200);
         }
     });
-    html.on("click", ".chat-item", (event) => {
+    html.on("click", ".chat-item", async (event) => {
         event.preventDefault();
         let roll = $(event.currentTarget.parentElement);
         let tip = roll.find(".chat-item-collapsible");
@@ -51,7 +70,7 @@ export function SR6RenderChatMessage(msg, html, data) {
     });
     // Multiple formulas
     for (let i = 0; i < 9; i++) {
-        html.on("click", `.chat-formula-${i}`, (event) => {
+        html.on("click", `.chat-formula-${i}`, async (event) => {
             event.preventDefault();
             let roll = $(event.currentTarget.parentElement);
             let tip = roll.find(`.chat-formula-${i}-collapsible`);

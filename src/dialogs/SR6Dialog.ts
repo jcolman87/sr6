@@ -1,4 +1,5 @@
 import { SR6CONFIG } from "../config.js";
+import * as util from "../util.js";
 
 export class SR6Dialog extends FormApplication {
 
@@ -28,16 +29,8 @@ export class SR6Dialog extends FormApplication {
 
 		html.find("input[direct-data], textarea[direct-data], select[direct-data]").change((event) => {
 			let target = event.currentTarget as HTMLInputElement;
-
-			let value: string | number;
-			if (target.type == "number" || target.dataset["type"] == "number") {
-				value = parseInt(target.value);
-				if (isNaN(value)) {
-					value = 0;
-				}
-			} else {
-				value = target.value;
-			}
+			
+			let value = util.directDataValue(target);
 			
 			foundry.utils.setProperty(this, target.id, value);
 
@@ -57,6 +50,7 @@ export class SR6Dialog extends FormApplication {
 
 			this.render(true);
 		});
+
 	}
 
 	getData(options: any) {

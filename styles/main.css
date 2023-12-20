@@ -1,3 +1,5 @@
+@import "layout.css";
+
 .attributes {
 	display: flex;
 	flex-flow: row nowrap;
@@ -176,11 +178,12 @@
 .edge-roll {
 	width: 48px;
 	height: 48px;
-	text-align: center;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-items: flex-start;
 	position: relative;
+	flex: 0.48; 
+	margin-right: 10px; 
 }
 .edge-roll .edge-value {
 	z-index: 1;
@@ -191,6 +194,13 @@
 	font-size: large;
 	color: white;
 	font-weight: bold;
+}
+.edge-roll input {
+	background-color: transparent; 
+	width: 2em; 
+	color: white; 
+	border:0;
+	outline:0;
 }
 
 

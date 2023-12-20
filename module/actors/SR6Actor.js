@@ -27,7 +27,11 @@ export class SR6Actor extends Actor {
     }
     applyDamage(value, type) { ui.notifications.error("applyDamage not implemented on this actor type"); }
     healDamage(value, type) { ui.notifications.error("healDamage not implemented on this actor type"); }
+    ////
     get wound_modifier() {
         return 0;
+    }
+    get initiatives() {
+        return this.getData().initiatives;
     }
 }

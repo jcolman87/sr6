@@ -1,3 +1,4 @@
+import * as util from "../util.js";
 import { SR6CONFIG, Enums } from "../config.js";
 export class SR6CharacterSheet extends ActorSheet {
     get character() {
@@ -26,17 +27,7 @@ export class SR6CharacterSheet extends ActorSheet {
         html.find(".roll-attribute").click(this._onRollAttribute.bind(this));
         html.find(":input[direct-data]").change((event) => {
             let target = event.currentTarget;
-            //console.log("SR6CharacterSheet::change - ", target.id, target.value);
-            let value;
-            if (target.type == "number" || target.dataset["type"] == "number") {
-                value = parseInt(target.value);
-                if (isNaN(value)) {
-                    value = 0;
-                }
-            }
-            else {
-                value = target.value;
-            }
+            let value = util.directDataValue(target);
             this.actor.update({
                 [target.id]: value
             });

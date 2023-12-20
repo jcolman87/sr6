@@ -6,12 +6,14 @@ import { SR6Item } from "./items/SR6Item.js";
 import { SR6ActiveEffect } from "./SR6ActiveEffect.js";
 import { SR6Combat } from "./combat/SR6Combat.js";
 import { SR6Combatant } from "./combat/SR6Combatant.js";
+import { SR6CombatTracker } from "./combat/SR6CombatTracker.js";
 import { SR6CharacterSheet } from "./sheets/CharacterSheet.js";
 import * as ItemSheets from "./sheets/ItemSheets.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { defineHandlebarHelpers } from "./handlebars.js";
-import * as ActorDataModels from "./actors/DataModels.js";
-import * as ItemDataModels from "./items/DataModels.js";
+import * as ActorDataModels from "./data/actor.js";
+import * as ItemDataModels from "./data/items.js";
+import * as GearDataModels from "./data/gear.js";
 import * as util from "./util.js";
 function registerSheets() {
     Actors.unregisterSheet("core", ActorSheet);
@@ -49,8 +51,10 @@ Hooks.once("init", async function () {
     CONFIG.Item.dataModels.WeaponAccessory = ItemDataModels.WeaponAccessory;
     CONFIG.Item.dataModels.AdeptPower = ItemDataModels.AdeptPower;
     CONFIG.Item.dataModels.Credstick = ItemDataModels.Credstick;
+    CONFIG.Item.dataModels.Gear = GearDataModels.Gear;
     CONFIG.Combat.documentClass = SR6Combat;
     CONFIG.Combatant.documentClass = SR6Combatant;
+    CONFIG.ui.combat = SR6CombatTracker;
     registerSheets();
     preloadHandlebarsTemplates();
     defineHandlebarHelpers();
@@ -69,6 +73,8 @@ function exportUseful() {
     let w = window;
     w.getTargetedActors = util.getTargetedActors;
     w.getSelectedActors = util.getSelectedActors;
+    w.SR6Roll = Rolls.SR6Roll;
+    w.SR6RollData = Rolls.SR6RollData;
 }
 Hooks.on("getChatLogEntryContext", function (html, data) {
     SR6ChatLogContext(html, data);

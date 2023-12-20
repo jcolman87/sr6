@@ -2,6 +2,7 @@ import { SR6CharacterActor } from "../actors/SR6CharacterActor.js";
 import { SR6Item } from "../items/SR6Item.js";
 import { SR6ActiveEffect } from "../SR6ActiveEffect.js";
 import { ActorTypes } from "../actors/Data.js";
+import * as util from "../util.js";
 
 import { SR6CONFIG, Enums } from "../config.js";
 
@@ -39,17 +40,7 @@ export class SR6CharacterSheet extends ActorSheet {
 
 		html.find(":input[direct-data]").change((event) => {
 			let target = event.currentTarget as HTMLInputElement;
-			//console.log("SR6CharacterSheet::change - ", target.id, target.value);
-
-			let value: string | number;
-			if (target.type == "number" || target.dataset["type"] == "number") {
-				value = parseInt(target.value);
-				if (isNaN(value)) {
-					value = 0;
-				}
-			} else {
-				value = target.value;
-			}
+			let value = util.directDataValue(target);
 
 			this.actor.update({
 				[target.id]: value

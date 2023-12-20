@@ -151,7 +151,22 @@
 		</div>
 	</div>
 
-
-
-
+	<div class="attribute-container">
+		<label for="system.attributes.edge.pool" class="attribute-label" title="Charisma">Edge</label>
+		<i id="system.attributes.edge.pool" class="attribute-pool">
+			{{attributes.edge.pool}}
+			<a data-attribute="edge" class="roll roll-attribute" style="background-size: 16px 16px;">&nbsp;</a>
+		</i>
+		
+		<div class="attribute-edit-container">
+			<div>
+				<label for="system.attributes.edge.base" style="display: block">base</label>
+				<input direct-data id="system.attributes.edge.base" value="{{attributes.edge.base}}" class="attribute-edit attribute-base" type="number"  />
+			</div>
+			<div>
+				<label for="system.attributes.edge.modifier" style="display: block">mod</label>
+				<input direct-data id="system.attributes.edge.modifier" value="{{attributes.edge.modifier}}" class="attribute-edit attribute-mod" type="number"  />
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,6 +1,15 @@
 import { ItemTypes } from "./items/Data.js";
 import { SR6CONFIG, Enums } from "./config.js";
 export function defineHandlebarHelpers() {
+    Handlebars.registerHelper("isGM", function (user_id) {
+        return game.user.isGM;
+    });
+    Handlebars.registerHelper("isUserIdGM", function (user_id) {
+        return game.users.get(user_id).isGM;
+    });
+    Handlebars.registerHelper("isUserIdSelf", function (user_id) {
+        return game.user.id == user_id;
+    });
     Handlebars.registerHelper("bold", function (options) {
         return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
     });
@@ -12,6 +21,7 @@ export function defineHandlebarHelpers() {
         return actor.solveFormula(formula);
     });
     Handlebars.registerHelper("solveItemFormula", function (item, formula) {
+        console.log("solving", formula, item);
         return item.solveFormula(formula);
     });
     Handlebars.registerHelper("solveActorItemFormula", function (actor, item, formula) {
@@ -28,6 +38,9 @@ export function defineHandlebarHelpers() {
     });
     Handlebars.registerHelper("skillAsString", function (ty) {
         return Enums.Skill[ty];
+    });
+    Handlebars.registerHelper("combatActionAsString", function (ty) {
+        return Enums.CombatAction[ty];
     });
     Handlebars.registerHelper("skillUseAsString", function (ty) {
         if (ty.specialization) {
@@ -49,6 +62,9 @@ export function defineHandlebarHelpers() {
     });
     Handlebars.registerHelper("matrixActionAsString", function (ty) {
         return Enums.MatrixAction[ty];
+    });
+    Handlebars.registerHelper("edgeBoostAsString", function (ty) {
+        return Enums.EdgeBoost[ty];
     });
     Handlebars.registerHelper("specializationsOfSkill", function (ty) {
         console.log("specializationsOfSkill", ty, SR6CONFIG.skills.get(ty).specializations);
@@ -77,5 +93,50 @@ export function defineHandlebarHelpers() {
     });
     Handlebars.registerHelper("undefined", function (a) {
         return a == undefined;
+    });
+    Handlebars.registerHelper("null", function (a) {
+        return a == null;
+    });
+    Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+            case '==':
+                return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            case '===':
+                return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            case '!=':
+                return (v1 != v2) ? options.fn(this) : options.inverse(this);
+            case '!==':
+                return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+            case '<':
+                return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            case '<=':
+                return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            case '>':
+                return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            case '>=':
+                return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            case '&&':
+                return (v1 && v2) ? options.fn(this) : options.inverse(this);
+            case '||':
+                return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            default:
+                return options.inverse(this);
+        }
+    });
+    Handlebars.registerHelper("canUseEdgeBoost", function (boost_id, activation, roll) {
+        return SR6CONFIG.edge_boosts.get(boost_id).condition(activation, roll);
+    });
+    Handlebars.registerHelper('eachInMap', function (map, block) {
+        var out = '';
+        map.forEach((value, key) => {
+            out += block.fn({ key: key, value: value });
+        });
+        return out;
+    });
+    Handlebars.registerHelper("localizeName", function (root, name) {
+        return game.i18n.localize(`${root}.${name}.name`);
+    });
+    Handlebars.registerHelper("localizeDescription", function (root, name) {
+        return game.i18n.localize(`${root}.${name}.description`);
     });
 }

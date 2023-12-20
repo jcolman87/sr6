@@ -1,3 +1,4 @@
+import { MatrixAttributes } from "../../data/shared.js";
 export class Attribute extends foundry.abstract.DataModel {
     static _enableV10Validation = true;
     static defineSchema() {
@@ -21,20 +22,6 @@ export class Skill extends foundry.abstract.DataModel {
             modifier: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true }),
             specialization: new fields.StringField({ required: false, nullable: true, blank: false }),
             expertise: new fields.StringField({ required: false, nullable: true, blank: false }),
-        };
-    }
-}
-export class MatrixAttributes extends foundry.abstract.DataModel {
-    static _enableV10Validation = true;
-    static defineSchema() {
-        const fields = foundry.data.fields;
-        return {
-            matrix_attributes: new fields.SchemaField({
-                a: new fields.StringField({ initial: "0", required: true, nullable: false, blank: false }),
-                s: new fields.StringField({ initial: "0", required: true, nullable: false, blank: false }),
-                d: new fields.StringField({ initial: "0", required: true, nullable: false, blank: false }),
-                f: new fields.StringField({ initial: "0", required: true, nullable: false, blank: false })
-            })
         };
     }
 }

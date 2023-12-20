@@ -1,4 +1,14 @@
 import { Enums } from "../config.js";
+export class MatrixPersona extends foundry.abstract.DataModel {
+    static _enableV10Validation = true;
+    static defineSchema() {
+        const fields = foundry.data.fields;
+        return {
+            description: new fields.StringField({ initial: "This is a description", required: true, blank: false }),
+            rating: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 6 }),
+        };
+    }
+}
 export class Credstick extends foundry.abstract.DataModel {
     static _enableV10Validation = true;
     static defineSchema() {

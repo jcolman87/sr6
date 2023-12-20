@@ -1,8 +1,50 @@
 import { SR6Actor } from "./actors/SR6Actor.js";
 import { SR6CharacterActor } from "./actors/SR6CharacterActor.js";
 import { SR6Item } from "./items/SR6Item.js";
+import * as Rolls from "./rolls/Rolls.js";
 
 import { EffectChangeData, EffectChangeMode, Enums, SkillUse } from "./config.js";
+
+export namespace EdgeBoosts {
+
+	export namespace buy_auto_hit {
+		export async function prepareData(roll: Rolls.SR6RollData) {
+			roll.auto_hits += 1;
+		}
+		export async function apply(roll: Rolls.SR6Roll) {
+			return prepareData(roll.data);
+		}
+	}
+
+	export namespace plus_1_roll {
+		export async function apply(roll: Rolls.SR6Roll) {
+			await roll.addOne();
+		}
+	}
+
+	export namespace reroll_one {
+		export async function apply(roll: Rolls.SR6Roll) {
+			await roll.rerollOne();
+		}
+	}
+
+	export namespace add_edge_pool {
+		export async function prepareData(roll: Rolls.SR6RollData) {
+			roll.pool += roll.actor!.getAttribute(Enums.Attribute.edge).pool;
+			roll.explode = true;
+
+		}
+		export async function apply(roll: Rolls.SR6Roll)  {
+			console.log("Rules::EdgeBoosts::apply::apply");
+		}
+	}
+
+	export namespace reroll_failed {
+		export async function apply(roll: Rolls.SR6Roll) {
+			await roll.rerollFailed();
+		}
+	}
+}
 
 export function calcWeaponPool(actor: SR6Actor, item: SR6Item): number {
 	let skill_use = item.skill_use;

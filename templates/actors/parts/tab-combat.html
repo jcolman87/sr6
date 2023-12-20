@@ -1,31 +1,41 @@
-<div class="section" style="display: inline-block; width: 50%; margin: 5px">
+<div class="flexcol">
+	<div class="section" style="width: 50%; margin: 5px">
+		<table style="align-self: start; border-collapse: collapse;">
+			<thead>
+				<tr>
+					<th colspan="2" style="text-align: left">Weapon</th>
+					<th style="text-align: left">DV</th>
+					<th style="text-align: left">Ratings</th>
+					<th style="text-align: left"></th>
+				</tr>
+			</thead>
+			{{#each actor.items as |item idx|}}
+			{{#if (itemHas item "Weapon")}}
+			<tr>
+				<td style="text-align: left" nowrap="nowrap"><a data-item-id="{{item.id}}" class="roll roll-weapon">&nbsp;</a></td>
+				<td style="text-align: left; width: 100%" nowrap="nowrap">{{item.name}}</td>
+				<td style="text-align: left" nowrap="nowrap">{{item.system.damage}}{{#if (eq item.system.damage_type 'Physical')}}P{{else}}S{{/if}}&nbsp;&nbsp;&nbsp;</td>
+				<td style="text-align: left" nowrap="nowrap">{{item.system.attack_ratings.close}}/{{item.system.attack_ratings.near}}/{{item.system.attack_ratings.medium}}/{{item.system.attack_ratings.far}}/{{item.system.attack_ratings.extreme}} </td>
+				<td style="text-align: right" nowrap="nowrap">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="edit-item" data-id="{{item.id}}" title="Edit Item"><i class="fa fa-edit" aria-hidden="true"></i></a>
+					<a class="remove-item" data-id="{{item.id}}" title="Remove Item"><i class="fa fa-minus" aria-hidden="true"></i></a>
+					
+				</td>
+					
+				</td>
+			</tr>
+			{{/if}}
+			{{/each}}
+		</table>
+	</div>
+	<!-- Actions -->
 	<table style="align-self: start; border-collapse: collapse;">
 		<thead>
-			<tr>
-				<th colspan="2" style="text-align: left">Weapon</th>
-				<th style="text-align: left">DV</th>
-				<th style="text-align: left">Ratings</th>
-				<th style="text-align: left"></th>
-			</tr>
+			<tr><td></td><td></td></tr>
 		</thead>
-		{{#each actor.items as |item idx|}}
-		{{#if (itemHas item "Weapon")}}
-		<tr>
-			<td style="text-align: left" nowrap="nowrap"><a data-item-id="{{item.id}}" class="roll roll-weapon">&nbsp;</a></td>
-			<td style="text-align: left; width: 100%" nowrap="nowrap">{{item.name}}</td>
-			<td style="text-align: left" nowrap="nowrap">{{item.system.damage}}{{#if (eq item.system.damage_type 'Physical')}}P{{else}}S{{/if}}&nbsp;&nbsp;&nbsp;</td>
-			<td style="text-align: left" nowrap="nowrap">{{item.system.attack_ratings.close}}/{{item.system.attack_ratings.near}}/{{item.system.attack_ratings.medium}}/{{item.system.attack_ratings.far}}/{{item.system.attack_ratings.extreme}} </td>
-			<td style="text-align: right" nowrap="nowrap">
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a class="edit-item" data-id="{{item.id}}" title="Edit Item"><i class="fa fa-edit" aria-hidden="true"></i></a>
-				<a class="remove-item" data-id="{{item.id}}" title="Remove Item"><i class="fa fa-minus" aria-hidden="true"></i></a>
-				
-			</td>
-				
-			</td>
-		</tr>
-		{{/if}}
-		{{/each}}
+		{{#eachInMap config.combat_actions }}
+			<tr title="{{ localizeDescription 'combat_action' (combatActionAsString key) }}"><td>{{ localizeName 'combat_action' (combatActionAsString key) }}</td></tr>
+		{{/eachInMap}}
 	</table>
-
 </div>

@@ -3,6 +3,22 @@ import { EffectChangeData, EffectChangeMode } from "./config.js";
 
 declare var game: Game;
 
+export function directDataValue(target: HTMLInputElement) : string | number | null {
+	if(target.value == "null") {  
+		return null;
+	} else {
+		if (target.type == "number" || target.dataset["type"] == "number") {
+			let value = parseInt(target.value);
+			if (isNaN(value)) {
+				return 0;
+			}
+			return value;
+		} else {
+			return target.value;
+		}
+	}
+}
+
 export function getSelfOrSelectedActors(): SR6Actor[] {
 	let actors: SR6Actor[] = [];
 

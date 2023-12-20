@@ -1,6 +1,7 @@
-{{ log this }}
+
 
 <form class="flexcol" autocomplete="off">
+	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Roll Weapon" formula="Agility + Firearms" }}
 	<section>
 		<label for="roll.distance">Firemode</label>
 		<select direct-data id="roll.firemode">
@@ -27,5 +28,5 @@
 		<div>Attack Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.attack_pool }}</i><br/></div>
 		<div>Damage Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.damage }}</i><br/></div>
 	</section>
-	{{> "systems/sr6/templates/dialogs/shared.html" }}
+	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
 </form>

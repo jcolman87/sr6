@@ -7,6 +7,7 @@ import { SR6ActiveEffect } from "./SR6ActiveEffect.js";
 
 import { SR6Combat } from "./combat/SR6Combat.js";
 import { SR6Combatant } from "./combat/SR6Combatant.js";
+import { SR6CombatTracker } from "./combat/SR6CombatTracker.js"
 
 import { SR6CharacterSheet } from "./sheets/CharacterSheet.js";
 import * as ItemSheets from "./sheets/ItemSheets.js";
@@ -14,8 +15,10 @@ import * as ItemSheets from "./sheets/ItemSheets.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { defineHandlebarHelpers } from "./handlebars.js";
 
-import * as ActorDataModels  from "./actors/DataModels.js";
-import * as ItemDataModels  from "./items/DataModels.js";
+import * as ActorDataModels  from "./data/actor.js";
+import * as ItemDataModels  from "./data/items.js";
+import * as GearDataModels  from "./data/gear.js";
+
 import * as util from "./util.js";
 
 declare var game: Game;
@@ -50,6 +53,7 @@ Hooks.once("init", async function () {
 	CONFIG.Dice.rolls = Rolls.RollTypes;
 	CONFIG.ActiveEffect.documentClass = SR6ActiveEffect;
 	CONFIG.ChatMessage.documentClass = SR6ChatMessage; 
+	
 
 	(CONFIG.Actor as any).dataModels.Player = ActorDataModels.Character;
 	(CONFIG.Actor as any).dataModels.MatrixHost = ActorDataModels.MatrixHost;
@@ -62,9 +66,12 @@ Hooks.once("init", async function () {
 	(CONFIG.Item as any).dataModels.AdeptPower = ItemDataModels.AdeptPower;
 	(CONFIG.Item as any).dataModels.Credstick = ItemDataModels.Credstick;
 
+	(CONFIG.Item as any).dataModels.Gear = GearDataModels.Gear;
+
 	CONFIG.Combat.documentClass = SR6Combat;
 	CONFIG.Combatant.documentClass = SR6Combatant; 
-
+	CONFIG.ui.combat = SR6CombatTracker;
+	
 	registerSheets();
 
 	preloadHandlebarsTemplates();
@@ -89,6 +96,8 @@ function exportUseful() {
 	let w = window as any;
 	w.getTargetedActors = util.getTargetedActors;
 	w.getSelectedActors = util.getSelectedActors;
+	w.SR6Roll = Rolls.SR6Roll;
+	w.SR6RollData = Rolls.SR6RollData;
 }
 
 

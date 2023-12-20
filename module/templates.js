@@ -16,10 +16,13 @@ export const preloadHandlebarsTemplates = async function () {
         "systems/sr6/templates/items/parts/tab-matrix.html",
         "systems/sr6/templates/items/parts/tab-weapon.html",
         //
-        "systems/sr6/templates/dialogs/shared.html",
+        "systems/sr6/templates/dialogs/shared-header.html",
+        "systems/sr6/templates/dialogs/shared-footer.html",
+        "systems/sr6/templates/dialogs/shared-edge-boost.html",
         //
         "systems/sr6/templates/rolls/shared-header.html",
         "systems/sr6/templates/rolls/shared-footer.html",
+        "systems/sr6/templates/rolls/shared-edge-boost.html",
     ];
     return loadTemplates(templatePaths);
 };

@@ -2,6 +2,7 @@ import { SR6ActiveEffect } from "../SR6ActiveEffect.js";
 import { SR6Item } from "../items/SR6Item.js";
 import { ItemTypes } from "../items/Data.js";
 import { SR6CONFIG } from "../config.js";
+import * as util from "../util.js";
 
 export class SR6ItemSheet extends ItemSheet {
 	_onAddType(event: JQuery.ClickEvent) {
@@ -41,17 +42,7 @@ export class SR6ItemSheet extends ItemSheet {
 
 		html.find("input[direct-data], textarea[direct-data], select[direct-data]").change((event) => {
 			let target = event.currentTarget as HTMLInputElement;
-			//console.log("SR6ItemSheet::change - ", target.id, target.value);
-
-			let value: string | number;
-			if (target.type == "number" || target.dataset["type"] == "number") {
-				value = parseInt(target.value);
-				if (isNaN(value)) {
-					value = 0;
-				}
-			} else {
-				value = target.value;
-			}
+			let value = util.directDataValue(target);
 			
 			this.item.update({
 				[target.id]: value

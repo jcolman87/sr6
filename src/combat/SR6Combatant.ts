@@ -1,6 +1,7 @@
 import { Enums } from "../config.js";
 import { BaseActorData } from "../actors/Data.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
+import { ActorTypes } from "../actors/Data.js";
 import { SR6InitiativeRoll } from "../rolls/SR6InitiativeRoll.js";
 
 export class SR6Combatant extends Combatant {
@@ -10,6 +11,10 @@ export class SR6Combatant extends Combatant {
 		if (this.isOwner) {
 			this.setFlag("sr6", "Enums.Initiative", Enums.Initiative.Physical);
 		}
+	}
+
+	get actions() : ActorTypes.Actions {
+		return (this.actor as SR6Actor).initiatives.actions;
 	}
 
 	get initiative_type(): Enums.Initiative {
@@ -52,9 +57,7 @@ export class SR6Combatant extends Combatant {
 	}
 
 	getInitiativeRoll(f?: string): Roll {
-		let formula = this._getInitiativeFormula();
-		console.log("SR6Combatant::getInitiativeRoll", formula);
-		return new SR6InitiativeRoll(formula);
+		return new SR6InitiativeRoll(this._getInitiativeFormula(), { actor: this.actor });
 	}
 
 }

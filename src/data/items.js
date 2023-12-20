@@ -1,4 +1,5 @@
 import { Enums } from "../config.js";
+import * as shared from "./shared.js";
 
 export class Credstick extends foundry.abstract.DataModel {
 	static _enableV10Validation = true;
@@ -113,6 +114,20 @@ export class AdeptPower extends foundry.abstract.DataModel {
 		return {
 			description: new fields.StringField({initial: "This is a description", required: true, blank: false}),
 			activation: new fields.NumberField({initial: 0, required: true, nullable: false, integer: true, min: 0, max: 3}),
+		}
+	}
+}
+
+export class MatrixPersona extends foundry.abstract.DataModel {
+	static _enableV10Validation = true;
+
+	static defineSchema() {
+		const fields = foundry.data.fields;
+		return {
+			device: new fields.DocumentIdField({required: true, nullable: true }),
+			base_attributes: new fields.EmbeddedDataField(MatrixAttributes, { required: true, nullable: false  }),
+			current_attributes: new fields.EmbeddedDataField(MatrixAttributes, { required: true, nullable: false }),
+			vr_type:  new fields.NumberField({initial: 0, required: false, nullable: false, integer: true, min: 0, max: 2}),
 		}
 	}
 }

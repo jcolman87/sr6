@@ -1,8 +1,9 @@
-{{ log this }}
+
 
 <form class="flexcol" autocomplete="off">
+	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Roll Soak" formula="Body" }}
 	<section>
 		<div>Damage: <i style="font-weight: bold">{{ roll.defense_roll.damage }}</i></div>
 	</section>
-	{{> "systems/sr6/templates/dialogs/shared.html" }}
+	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
 </form>

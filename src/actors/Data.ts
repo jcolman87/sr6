@@ -42,13 +42,6 @@ export namespace ActorTypes {
 		f: Formula;
 	}
 
-	export interface Matrix {
-		current_device: undefined | string;
-		base_attributes: MatrixAttributes;
-		current_attributes: MatrixAttributes;
-		monitor: Attribute;
-	}
-
 	export class Attributes {
 		body: Attribute = new Attribute();
 		agility: Attribute = new Attribute();
@@ -85,14 +78,24 @@ export namespace ActorTypes {
 		stealth: Skill = new Skill();
 		tasking: Skill = new Skill();
 	}
+
 	export interface Initiatives {
-		physical_pool: number;
-		matrix_pool: number;
-		astral_pool: number;
+		die: {
+			physical: number;
+			matrix: number;
+			astral: number;
+		};
+
+		actions: ActorTypes.Actions;
 
 		physical_formula: undefined | string;
 		matrix_formula: undefined | string;
 		astral_formula: undefined | string;
+	}
+
+	export interface Actions {
+		major: number;
+		minor: number;
 	}
 
 	export class EffectModifiers {
@@ -111,14 +114,23 @@ export interface BaseActorData {
 
 export class CharacterActorData implements BaseActorData {
 	initiatives: ActorTypes.Initiatives = {
-		physical_pool: 0,
-		matrix_pool: 0,
-		astral_pool: 0,
+		die: {
+			physical: 1,
+			matrix: 1,
+			astral: 1,
+		},
+		actions: {
+			major: 1,
+			minor: 1,
+		},
 
 		physical_formula: undefined,
 		matrix_formula: undefined,
 		astral_formula: undefined
 	};
+
+	karma: number = 0;
+
 	monitors: ActorTypes.Monitors = new ActorTypes.Monitors();
 	attributes: ActorTypes.Attributes = new ActorTypes.Attributes();
 	derived_attributes: ActorTypes.DerivedAttributes = new ActorTypes.DerivedAttributes();

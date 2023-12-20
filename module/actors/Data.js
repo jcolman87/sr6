@@ -82,13 +82,20 @@ export var ActorTypes;
 })(ActorTypes || (ActorTypes = {}));
 export class CharacterActorData {
     initiatives = {
-        physical_pool: 0,
-        matrix_pool: 0,
-        astral_pool: 0,
+        die: {
+            physical: 1,
+            matrix: 1,
+            astral: 1,
+        },
+        actions: {
+            major: 1,
+            minor: 1,
+        },
         physical_formula: undefined,
         matrix_formula: undefined,
         astral_formula: undefined
     };
+    karma = 0;
     monitors = new ActorTypes.Monitors();
     attributes = new ActorTypes.Attributes();
     derived_attributes = new ActorTypes.DerivedAttributes();

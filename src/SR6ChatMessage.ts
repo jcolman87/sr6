@@ -1,6 +1,6 @@
 import { SR6Actor } from "./actors/SR6Actor.js";
 import { SR6Item } from "./items/SR6Item.js";
-import { SR6WeaponRoll, SR6DefenseRoll, SR6SoakRoll } from "./rolls/Rolls.js";
+import { SR6Roll, SR6WeaponRoll, SR6DefenseRoll, SR6SoakRoll } from "./rolls/Rolls.js";
 
 import { SR6DefenseRollDialog } from "./dialogs/SR6DefenseRollDialog.js";
 import { SR6SoakRollDialog } from "./dialogs/SR6SoakRollDialog.js";
@@ -27,7 +27,19 @@ export function SR6RenderChatMessage(msg: ChatMessage, html: JQuery, data: any) 
 	// add a hidden input field to all chat messages
 	html.find("#message-id").attr("value", msg.id);
 
-	html.on("click", "#roll-soak", (event) => {
+	html.on("click", "#spend-edge", async (event) => {
+		event.preventDefault();
+		let roll: SR6Roll = (msg as any).rolls[0];
+
+		 let selection: Enums.EdgeBoost = parseInt(html.find("#edge-boost").val() as string) as Enums.EdgeBoost;
+		 roll.data.edge.boost = selection;
+		 await roll.finishEdge();
+		
+		 msg.update({ content: await roll.render(), rolls: [roll] });
+
+	});
+
+	html.on("click", "#roll-soak", async (event) => {
 		event.preventDefault();
 		let defense_roll: SR6DefenseRoll = (msg as any).rolls[0];
 		
@@ -36,7 +48,7 @@ export function SR6RenderChatMessage(msg: ChatMessage, html: JQuery, data: any) 
 		});
 	});
 
-	html.on("click", "#roll-defense", (event) => {
+	html.on("click", "#roll-defense", async (event) => {
 		event.preventDefault();
 		let attack_roll: SR6WeaponRoll = (msg as any).rolls[0];
 
@@ -45,7 +57,18 @@ export function SR6RenderChatMessage(msg: ChatMessage, html: JQuery, data: any) 
 		});
 	});
 
-	html.on("click", ".chat-dice", (event) => {
+	html.on("click", ".chat-edge", async (event) => {
+		event.preventDefault();
+		let roll = $(event.currentTarget.parentElement);
+		let tip = roll.find(".chat-edge-collapsible");
+		if (!tip.is(":visible")) {
+			tip.slideDown(200);
+		} else {
+			tip.slideUp(200);
+		}
+	});
+
+	html.on("click", ".chat-dice", async (event) => {
 		event.preventDefault();
 		let roll = $(event.currentTarget.parentElement);
 		let tip = roll.find(".chat-dice-collapsible");
@@ -56,7 +79,7 @@ export function SR6RenderChatMessage(msg: ChatMessage, html: JQuery, data: any) 
 		}
 	});
 
-	html.on("click", ".chat-item", (event) => {
+	html.on("click", ".chat-item", async (event) => {
 		event.preventDefault();
 		let roll = $(event.currentTarget.parentElement);
 		let tip = roll.find(".chat-item-collapsible");
@@ -69,7 +92,7 @@ export function SR6RenderChatMessage(msg: ChatMessage, html: JQuery, data: any) 
 
 	// Multiple formulas
 	for(let i = 0; i < 9; i++) {
-		html.on("click", `.chat-formula-${i}`, (event) => {
+		html.on("click", `.chat-formula-${i}`, async (event) => {
 			event.preventDefault();
 			let roll = $(event.currentTarget.parentElement);
 			let tip = roll.find(`.chat-formula-${i}-collapsible`);

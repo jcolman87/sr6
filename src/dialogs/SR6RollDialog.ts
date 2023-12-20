@@ -1,5 +1,6 @@
 import { SR6Dialog } from "./SR6Dialog.js";
 import { SR6Roll, SR6RollData } from "../rolls/SR6Roll.js";
+import { SR6CONFIG } from "../config.js";
 
 export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = SR6RollData> extends SR6Dialog {
 	roll: D;
@@ -28,6 +29,11 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 
 		// Apply modifier
 		this.roll.pool += this.pool_modifier;
+
+		// Fix-up edge
+		console.log("prepareData", this.roll.edge.boost);
+		this.roll.applyEdge();
+		
 	}
 
 	getData(options: any) {
@@ -46,14 +52,27 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 
 		html.find("#do-roll").focus();
 		html.find("#do-roll").click(this._onComplete.bind(this, html));
+
+
+		html.on("click", ".edge-select", async (event) => {
+			event.preventDefault();
+			let roll = $(event.currentTarget.parentElement);
+			let tip = roll.find(".edge-select-collapsible");
+			if (!tip.is(":visible")) {
+				tip.slideDown(200);
+			} else {
+				tip.slideUp(200);
+			}
+		});
 	}
 
-	_onComplete() {
+	async _onComplete() {
 		this.prepareData();
 
 		let r: R = this.maker(this.roll);
 
-		r.evaluate({ async: false });
+		await r.evaluate();
+		await r.finish();
 		r.toMessage();
 
 		this.close({});

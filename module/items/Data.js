@@ -1,10 +1,14 @@
 import { Enums } from "../config.js";
+import { ActorTypes } from "../actors/Data.js";
 export class Formula extends String {
 }
 export class ItemFormula extends Formula {
 }
 export var ItemTypes;
 (function (ItemTypes) {
+    class Condition extends ActorTypes.Attribute {
+    }
+    ItemTypes.Condition = Condition;
     class Cost {
         cost = "0";
         availability = "1";
@@ -70,6 +74,7 @@ export var ItemTypes;
         Types[Types["Firearm"] = 128] = "Firearm";
         Types[Types["Mountable"] = 256] = "Mountable";
         Types[Types["SkillUse"] = 512] = "SkillUse";
+        Types[Types["Condition"] = 1024] = "Condition";
     })(Types = ItemTypes.Types || (ItemTypes.Types = {}));
 })(ItemTypes || (ItemTypes = {}));
 export class ItemData {
@@ -81,4 +86,8 @@ export class ItemData {
         type: "",
         subtype: ""
     };
+}
+export class MatrixPersona {
+    description = "";
+    rating = "1";
 }

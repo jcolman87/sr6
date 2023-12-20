@@ -37,7 +37,13 @@ export class SR6Actor extends Actor {
 	applyDamage(value: number,  type: Enums.DamageType) { ui.notifications!.error("applyDamage not implemented on this actor type"); }
 	healDamage(value: number,  type: Enums.DamageType) { ui.notifications!.error("healDamage not implemented on this actor type"); }
 
+	////
+
 	get wound_modifier(): number { 
 		return 0;
+	}
+
+	get initiatives(): ActorTypes.Initiatives { 
+		return this.getData().initiatives;
 	}
 }

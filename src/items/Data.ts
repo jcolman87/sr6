@@ -1,13 +1,16 @@
 import { SkillUse as ConfigSkillUse, Enums } from "../config.js";
+import { ActorTypes } from "../actors/Data.js";
 
 export class Formula extends String {}
 
 export class ItemFormula extends Formula {}
 
-
 export interface ItemBaseData {
 	description: string;
 	rating: ItemFormula;
+}
+
+export interface GearBaseData extends ItemBaseData {
 	size: ItemFormula;
 	category: {
 		type: string,
@@ -16,6 +19,9 @@ export interface ItemBaseData {
 }
 
 export namespace ItemTypes {
+
+	export class Condition extends ActorTypes.Attribute {}
+
 	export class Cost {
 		cost: ItemFormula = "0";
 		availability: ItemFormula = "1";
@@ -92,10 +98,11 @@ export namespace ItemTypes {
 		Firearm = 1 << 7,
 		Mountable = 1 << 8,
 		SkillUse = 1 << 9,
+		Condition = 1 << 10,
 	}
 }
 
-export class ItemData implements ItemBaseData {
+export class ItemData implements GearBaseData {
 	description: string = "";
 	rating: ItemFormula = "1";
 	size: ItemFormula = "3";
@@ -109,4 +116,11 @@ export class ItemData implements ItemBaseData {
 		type: "",
 		subtype: ""
 	};
+}
+
+export class MatrixPersona implements ItemBaseData {
+	description: string = "";
+	rating: ItemFormula = "1";
+
+	
 }
