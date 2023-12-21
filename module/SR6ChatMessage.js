@@ -2,6 +2,8 @@ import * as Rolls from "./rolls/Rolls.js";
 import { SR6DefenseRollDialog } from "./dialogs/SR6DefenseRollDialog.js";
 import { SR6SoakRollDialog } from "./dialogs/SR6SoakRollDialog.js";
 import { SR6MatrixDefenseRollDialog } from "./dialogs/SR6MatrixDefenseRollDialog.js";
+import { SR6SpellDefenseRollDialog } from "./dialogs/SR6SpellDefenseRollDialog.js";
+import { SR6SpellDrainRollDialog } from "./dialogs/SR6SpellDrainRollDialog.js";
 import * as util from "./util.js";
 export class SR6ChatMessage extends ChatMessage {
     constructor(data, context) {
@@ -17,23 +19,33 @@ export function SR6RenderChatMessage(msg, html, data) {
     //
     html.on("click", "#roll-soak", async (event) => {
         event.preventDefault();
-        let defense_roll = msg.rolls[0];
         util.getSelfOrSelectedActors().forEach((actor) => {
-            new SR6SoakRollDialog(actor, defense_roll).render(true);
+            new SR6SoakRollDialog(actor, msg.rolls[0]).render(true);
         });
     });
     html.on("click", "#roll-defense", async (event) => {
         event.preventDefault();
-        let attack_roll = msg.rolls[0];
         util.getSelfOrSelectedActors().forEach((actor) => {
-            new SR6DefenseRollDialog(actor, attack_roll).render(true);
+            new SR6DefenseRollDialog(actor, msg.rolls[0]).render(true);
         });
     });
     html.on("click", "#roll-matrix-defense", async (event) => {
         event.preventDefault();
-        let attack_roll = msg.rolls[0];
         util.getSelfOrSelectedActors().forEach((actor) => {
-            new SR6MatrixDefenseRollDialog(actor, attack_roll).render(true);
+            new SR6MatrixDefenseRollDialog(actor, msg.rolls[0]).render(true);
+        });
+    });
+    ///
+    html.on("click", "#roll-spell-drain", async (event) => {
+        event.preventDefault();
+        util.getSelfOrSelectedActors().forEach((actor) => {
+            new SR6SpellDrainRollDialog(actor, msg.rolls[0]).render(true);
+        });
+    });
+    html.on("click", "#roll-spell-defense", async (event) => {
+        event.preventDefault();
+        util.getSelfOrSelectedActors().forEach((actor) => {
+            new SR6SpellDefenseRollDialog(actor, msg.rolls[0]).render(true);
         });
     });
     //

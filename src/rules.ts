@@ -1,14 +1,20 @@
 import { SR6Actor } from "./actors/SR6Actor.js";
 import { SR6CharacterActor } from "./actors/SR6CharacterActor.js";
 import { SR6Gear } from "./items/SR6Gear.js";
+import { SR6Spell } from "./items/SR6Spell.js";
 import * as Rolls from "./rolls/Rolls.js";
 
 import { SR6CONFIG, EffectChangeData, EffectChangeMode, Enums, SkillUse } from "./config.js";
 
+export function getGlobalPoolModifier(actor: SR6Actor): number {
+	return +actor.wound_modifier+ +actor.getData().effect_modifiers.global_pool;
+}
+
+
 export namespace EdgeBoosts {
 	export namespace buy_auto_hit {
 		export async function prepareData(roll: Rolls.SR6RollData) {
-			roll.auto_hits += 1;
+			roll.auto_hits = 1;
 		}
 		export async function apply(roll: Rolls.SR6Roll) {
 			return prepareData(roll.data);
@@ -44,18 +50,60 @@ export namespace EdgeBoosts {
 	}
 }
 
+export namespace Magic {
+	export function calcSpellAttackPool(actor: SR6Actor, spell: SR6Spell, apply_modifiers: boolean = true) : number {
+		return +actor.getSkill(Enums.Skill.sorcery).pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
+	}
+	export function calcSpellDrainPool(actor: SR6Actor, spell: SR6Spell, apply_modifiers: boolean = true) : number {
+		// TODO: school of magic
+		return +actor.getAttribute(Enums.Attribute.logic).pool + +actor.getAttribute(Enums.Attribute.willpower).pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
+	}
+	export function calcSpellDefensePool(actor: SR6Actor, spell: SR6Spell, apply_modifiers: boolean = true) : number {
+		if(spell.damage == null) {
+			return 0;
+		}
+
+		let damage: number = 0;
+		switch(spell.damage.combat) {
+			case Enums.SpellCombatType.Direct: {
+				damage = (actor.getAttribute(Enums.Attribute.willpower).pool + actor.getAttribute(Enums.Attribute.intuition).pool);
+				break;
+			}
+			case Enums.SpellCombatType.Indirect: {
+				damage = (actor.getAttribute(Enums.Attribute.reaction).pool + actor.getAttribute(Enums.Attribute.willpower).pool);
+				break;
+			}
+		}
+
+		return +damage + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
+	}
+
+	export function calcSpellStartingDamage(actor: SR6Actor, spell: SR6Spell) : number {
+		if(spell.damage == null) {
+			return 0;
+		}
+
+		switch(spell.damage.combat) {
+			case Enums.SpellCombatType.Direct: {
+				return 0;
+				break;
+			}
+			case Enums.SpellCombatType.Indirect: {
+				return Math.ceil(actor.getAttribute(Enums.Attribute.magic).pool / 2);
+				break;
+			}
+		}
+
+		return 0;
+	}
+}
+
 
 export function calcMatrixDefensePool(actor: SR6Actor, matrix_action: Enums.MatrixAction, apply_modifiers: boolean = true): number {
 	let action = SR6CONFIG.matrix_actions.get(matrix_action)!;
 	let pool: number = actor.solveFormula(action.defendAgainstFormula!);
 
-	let modifiers: number = 0;
-	if (apply_modifiers) {
-		modifiers += +actor.wound_modifier;
-		modifiers += +actor.getData().effect_modifiers.global_pool;
-	}
-
-	return +pool + +modifiers;
+	return +pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
 }
 
 
@@ -85,8 +133,7 @@ export function calcDefensePool(actor: SR6Actor, apply_modifiers: boolean = true
 
 	let modifiers: number = 0;
 	if (apply_modifiers) {
-		modifiers += +actor.wound_modifier;
-		modifiers += +actor.getData().effect_modifiers.global_pool;
+		modifiers += getGlobalPoolModifier(actor);
 		modifiers += +actor.getData().effect_modifiers.defense;
 	}
 
@@ -96,13 +143,7 @@ export function calcDefensePool(actor: SR6Actor, apply_modifiers: boolean = true
 export function calcSoakPool(actor: SR6Actor, apply_modifiers: boolean = true): number {
 	let body = actor.getAttribute(Enums.Attribute.body);
 
-	let modifiers: number = 0;
-	if (apply_modifiers) {
-		modifiers += +actor.wound_modifier;
-		modifiers += +actor.getData().effect_modifiers.global_pool;
-	}
-
-	return +body.pool + +modifiers;
+	return +body.pool + (apply_modifiers ? getGlobalPoolModifier(actor) : 0);
 }
 
 export function getFiremodeModifiers(firemode: Enums.FireMode): EffectChangeData[] {
@@ -138,12 +179,7 @@ export function calcSkillPool(actor: SR6Actor, skill_use: SkillUse, apply_modifi
 		}
 	}
 
-	if (apply_modifiers) {
-		modifiers += +actor.wound_modifier;
-		modifiers += +actor.getData().effect_modifiers.global_pool;
-	}
-
-	return +skill.pool + +modifiers;
+	return +skill.pool + (apply_modifiers ? getGlobalPoolModifier(actor) : 0);
 }
 
 export function calcAttributePool(actor: SR6Actor, attr_id: Enums.Attribute, apply_modifiers: boolean = true): number {
@@ -151,10 +187,5 @@ export function calcAttributePool(actor: SR6Actor, attr_id: Enums.Attribute, app
 
 	let attribute = actor.getAttribute(attr_id);
 
-	if (apply_modifiers) {
-		modifiers += +actor.wound_modifier;
-		modifiers += +actor.getData().effect_modifiers.global_pool;
-	}
-
-	return +attribute.pool + +modifiers;
+	return +attribute.pool + (apply_modifiers ? getGlobalPoolModifier(actor) : 0);
 }

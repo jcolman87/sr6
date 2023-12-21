@@ -4,6 +4,7 @@ import * as Rolls from "../rolls/Rolls.js";
 import { SR6RollDialog } from "../dialogs/SR6RollDialog.js";
 import { SR6WeaponRollDialog } from "../dialogs/SR6WeaponRollDialog.js";
 import { SR6MatrixRollDialog } from "../dialogs/SR6MatrixRollDialog.js";
+import { SR6SpellRollDialog } from "../dialogs/SR6SpellRollDialog.js";
 export class SR6CharacterActor extends SR6Actor {
     get total_nuyen() {
         let total = 0;
@@ -13,6 +14,12 @@ export class SR6CharacterActor extends SR6Actor {
             }
         });
         return total;
+    }
+    get skills() {
+        return this.getData().skills;
+    }
+    get attributes() {
+        return this.getData().attributes;
     }
     get wound_modifier() {
         let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
@@ -53,6 +60,9 @@ export class SR6CharacterActor extends SR6Actor {
     }
     rollMatrixAction(action) {
         new SR6MatrixRollDialog(this, action).render(true);
+    }
+    rollSpell(spell) {
+        new SR6SpellRollDialog(this, spell).render(true);
     }
     getSkill(ty) {
         return this.getData().skills[Enums.Skill[ty]];

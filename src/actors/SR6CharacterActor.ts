@@ -2,12 +2,14 @@ import { SR6Actor } from "./SR6Actor.js";
 import { SR6CONFIG, Enums, CombatActionDef, SkillUse } from "../config.js";
 import * as Rolls from "../rolls/Rolls.js";
 import { SR6Gear } from "../items/SR6Gear.js";
+import { SR6Spell } from "../items/SR6Spell.js";
 import { GearTypes } from "../items/Data.js";
 import { CharacterActorData, ActorTypes } from "./Data.js";
 
 import { SR6RollDialog } from "../dialogs/SR6RollDialog.js";
 import { SR6WeaponRollDialog } from "../dialogs/SR6WeaponRollDialog.js";
 import { SR6MatrixRollDialog } from "../dialogs/SR6MatrixRollDialog.js";
+import { SR6SpellRollDialog } from "../dialogs/SR6SpellRollDialog.js";
 
 import * as util from "../util.js";
 
@@ -23,6 +25,13 @@ export class SR6CharacterActor extends SR6Actor {
 		return total;
 	}
 
+	get skills(): ActorTypes.Skills {
+		return this.getData().skills;
+	}
+
+	get attributes(): ActorTypes.Attributes {
+		return this.getData().attributes;
+	}
 
 	get wound_modifier(): number {
 		let physical_modifier = -Math.floor(this.getData().monitors.physical.pool / 3);
@@ -76,6 +85,10 @@ export class SR6CharacterActor extends SR6Actor {
 
 	rollMatrixAction(action: Enums.MatrixAction) {
 		new SR6MatrixRollDialog(this, action).render(true);
+	}
+
+	rollSpell(spell: SR6Spell) {
+		new SR6SpellRollDialog(this, spell).render(true);
 	}
 
 	getSkill(ty: Enums.Skill | Enums.Specialization): ActorTypes.Skill {

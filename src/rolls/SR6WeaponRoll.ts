@@ -23,16 +23,16 @@ export class SR6WeaponRollData extends SR6ItemRollData {
 export class SR6WeaponRoll extends SR6Roll<SR6WeaponRollData> {
 	static CHAT_TEMPLATE: string = "systems/sr6/templates/rolls/SR6WeaponRoll.html";
 
+	get template() {
+		return SR6WeaponRoll.CHAT_TEMPLATE;
+	}
+	
 	get item(): SR6Gear | null {
 		return this.data.item;
 	}
 
 	get attacker(): SR6Actor | null {
 		return this.data.actor;
-	}
-
-	get template() {
-		return SR6WeaponRoll.CHAT_TEMPLATE;
 	}
 
 	get damage(): number {

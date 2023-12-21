@@ -41,7 +41,6 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 		this.roll.pool += this.pool_modifier;
 
 		// Fix-up edge
-		console.log("prepareData", this.roll.edge.boost);
 		this.roll.applyEdge();
 	}
 

@@ -1,0 +1,16 @@
+{{> "systems/sr6/templates/rolls/shared-header.html" action_text="Defend Spell" }}
+
+{{#if roll.success }}
+	<i style="color: #006400">Defended Successfully!</i>
+{{ else }}
+	<a class="chat-formula-1" style="font-style: italic">
+		Damage: <i style="font-weight: bold; color: rgb(194, 76, 29);">{{ roll.damage }}</i>
+	</a>
+	<br/>
+	<div class="chat-tooltip chat-formula chat-formula-1-collapsible" style="display: none">
+		DV: DV({{roll.attack_roll.data.damage}}) + Hits({{roll.attack_roll.hits}}) = {{roll.attack_roll.damage }} <br/>
+		DV({{roll.attack_roll.damage }}) - Hits({{roll.hits}}) = {{ roll.damage }}
+	</div>
+	<input id="roll-soak" type="button" value="Soak Damage"/>
+{{/if }}
+{{> "systems/sr6/templates/rolls/shared-footer.html"}}

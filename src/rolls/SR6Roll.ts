@@ -29,7 +29,6 @@ export class SR6RollData {
 	}
 
 	applyEdge() {
-		console.log("Apply edge:", this.edge.boost);
 		if (this.edge.boost != null) {
 			let boost = SR6CONFIG.edge_boosts.get(this.edge.boost)!;
 			boost.prepareData(this);

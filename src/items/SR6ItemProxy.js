@@ -37,7 +37,7 @@ export const SR6ItemProxy = new Proxy(function () {}, {
 				return function (data, options) {
 					if (data.constructor === Array) {
 						//Array of data, this happens when creating Actors imported from a compendium
-						return data.map((i) => NumeneraItem.create(i, options));
+						return data.map((i) => itemMappings[i.type].create(i, options));
 					}
 
 					if (!itemMappings.hasOwnProperty(data.type)) throw new Error("Unsupported Entity type for create(): " + data.type);

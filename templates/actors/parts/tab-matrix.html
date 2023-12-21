@@ -74,9 +74,9 @@
 							<td>
 								Device: <select direct-data id="system.matrix.persona.device">
 								{{#each actor.items as |item idx|}}
-								{{#if (itemHas item "Matrix") }} {{#if item.system.matrix_active }}
+								{{#if (eq item.type "Gear" )}}{{#if (itemHas item "Matrix") }} {{#if item.system.matrix_active }}
 									<option value="{{item.id}}" {{#if (eq item.id actor.persona.device.id) }}checked{{/if}} >{{item.name}}</option>
-								{{/if}}{{/if}}
+								{{/if}}{{/if}}{{/if}}
 								{{/each}}
 								</select>
 
@@ -113,7 +113,7 @@
 							</tr>
 						</thead>
 						{{#each actor.items as |item idx|}}
-						{{#if (itemHas item "Matrix")}}
+						{{#if (eq item.type "Gear" )}}{{#if (itemHas item "Matrix")}}
 						<tr>
 							<td style="text-align: left; width: 100%" nowrap="nowrap">
 								{{item.name}} 
@@ -144,7 +144,7 @@
 						</tr>
 						<tr style="border-bottom: 5px solid"><td colspan="5"></td></tr>
 
-						{{/if}}
+						{{/if}}{{/if}}
 						{{/each}}
 					</table>
 				</div>

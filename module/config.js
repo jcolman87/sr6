@@ -313,6 +313,14 @@ export var Enums;
         DamageType["Matrix"] = "Matrix";
         DamageType["Astral"] = "Astral";
     })(DamageType = Enums.DamageType || (Enums.DamageType = {}));
+    let DamageForm;
+    (function (DamageForm) {
+        DamageForm[DamageForm["Physical"] = 0] = "Physical";
+        DamageForm[DamageForm["Fire"] = 1] = "Fire";
+        DamageForm[DamageForm["Cold"] = 2] = "Cold";
+        DamageForm[DamageForm["Acid"] = 3] = "Acid";
+        DamageForm[DamageForm["Magic"] = 4] = "Magic";
+    })(DamageForm = Enums.DamageForm || (Enums.DamageForm = {}));
     let Size;
     (function (Size) {
         Size[Size["Large"] = 0] = "Large";
@@ -336,6 +344,11 @@ export var Enums;
         Lifestyle[Lifestyle["High"] = 4] = "High";
         Lifestyle[Lifestyle["Luxury"] = 5] = "Luxury";
     })(Lifestyle = Enums.Lifestyle || (Enums.Lifestyle = {}));
+    let SpellCombatType;
+    (function (SpellCombatType) {
+        SpellCombatType[SpellCombatType["Direct"] = 0] = "Direct";
+        SpellCombatType[SpellCombatType["Indirect"] = 1] = "Indirect";
+    })(SpellCombatType = Enums.SpellCombatType || (Enums.SpellCombatType = {}));
     let SpellRangeType;
     (function (SpellRangeType) {
         SpellRangeType[SpellRangeType["Touch"] = 0] = "Touch";

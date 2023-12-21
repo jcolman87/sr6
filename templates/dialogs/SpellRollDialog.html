@@ -1,4 +1,7 @@
 <form class="flexcol" autocomplete="off">
 	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Spell Cast" action_text=asdf }}
+	<section>
+		<div>Autoroll Drain: <input id="roll.autoroll_drain" direct-data type="checkbox" {{#if roll.autoroll_drain }}checked{{/if}}></div>
+	</section>
 	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
 </form>

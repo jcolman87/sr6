@@ -8,36 +8,27 @@ export class SR6CharacterSheet extends ActorSheet {
     get character() {
         return this.actor;
     }
-    _onRollAttribute(event) {
-        let target = event.currentTarget;
-        let attribute = Enums.Attribute[target.dataset["attribute"]];
-        this.character.rollAttribute(attribute);
-    }
-    _onRollSkill(event) {
-        this.character.rollSkill(parseInt(event.currentTarget.dataset["skill"]));
-    }
-    _onRollWeapon(event) {
-        let target = event.currentTarget;
-        let item_id = target.dataset["itemId"];
-        let item = this.actor.items.get(item_id);
-        this.character.rollWeapon(item);
-    }
-    _onRollMatrixAction(event) {
-        let target = event.currentTarget;
-        let actionId = parseInt(target.dataset["matrixAction"]);
-        this.character.rollMatrixAction(actionId);
-    }
     activateListeners(html) {
         //console.log("SR6CharacterSheet::activateListeners");
-        html.find(".roll-weapon").click(this._onRollWeapon.bind(this));
-        html.find(".roll-skill").click(this._onRollSkill.bind(this));
-        html.find(".roll-attribute").click(this._onRollAttribute.bind(this));
-        html.find(".roll-matrix-action").click(this._onRollMatrixAction.bind(this));
+        html.find(".roll-weapon").click(async (event) => {
+            this.character.rollWeapon(this.actor.items.get(event.currentTarget.dataset["itemId"]));
+        });
+        html.find(".roll-skill").click(async (event) => {
+            this.character.rollSkill(parseInt(event.currentTarget.dataset["skill"]));
+        });
+        html.find(".roll-spell").click(async (event) => {
+            this.character.rollSpell(this.actor.items.get(event.currentTarget.dataset["spellId"]));
+        });
+        html.find(".roll-attribute").click(async (event) => {
+            this.character.rollAttribute(Enums.Attribute[event.currentTarget.dataset["attribute"]]);
+        });
+        html.find(".roll-matrix-action").click(async (event) => {
+            this.character.rollMatrixAction(parseInt(event.currentTarget.dataset["matrixAction"]));
+        });
         html.find("input[direct-data], textarea[direct-data], select[direct-data]").change((event) => {
             let target = event.currentTarget;
-            let value = util.directDataValue(target);
             this.actor.update({
-                [target.id]: value
+                [target.id]: util.directDataValue(target)
             });
         });
         html.find("input[direct-item-data], textarea[direct-item-data], select[direct-item-data]").change((event) => {
@@ -47,10 +38,8 @@ export class SR6CharacterSheet extends ActorSheet {
             if (item == null) {
                 throw `Invalid Item for direct-item-data ${target} ${field} ${target.dataset["itemId"]}`;
             }
-            let value = util.directDataValue(target);
-            console.log("SR6CharacterSheet::direct-item-update", field, value);
             item.update({
-                [field]: value
+                [field]: util.directDataValue(target)
             });
         });
         html.find(".expand-skill").click(async (event) => {

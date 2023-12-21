@@ -14,14 +14,14 @@ export class SR6WeaponRollData extends SR6ItemRollData {
 }
 export class SR6WeaponRoll extends SR6Roll {
     static CHAT_TEMPLATE = "systems/sr6/templates/rolls/SR6WeaponRoll.html";
+    get template() {
+        return SR6WeaponRoll.CHAT_TEMPLATE;
+    }
     get item() {
         return this.data.item;
     }
     get attacker() {
         return this.data.actor;
-    }
-    get template() {
-        return SR6WeaponRoll.CHAT_TEMPLATE;
     }
     get damage() {
         return this.data.damage + this.hits;

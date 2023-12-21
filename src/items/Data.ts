@@ -122,6 +122,7 @@ export namespace Spell {
 	export interface Spell {
 		description: string;
 		drain: number;
+
 		range: {
 			type: Enums.SpellRangeType;
 			value: number;
@@ -129,6 +130,11 @@ export namespace Spell {
 		duration: {
 			type: Enums.SpellDurationType;
 			value: number;
+		};
+		damage: {
+			combat: Enums.SpellCombatType;
+			type: Enums.DamageType;
+			form: Enums.DamageForm;
 		};
 	}
 }

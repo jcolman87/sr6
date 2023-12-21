@@ -28,7 +28,6 @@ export class SR6RollDialog extends SR6Dialog {
         // Apply modifier
         this.roll.pool += this.pool_modifier;
         // Fix-up edge
-        console.log("prepareData", this.roll.edge.boost);
         this.roll.applyEdge();
     }
     getData(options) {

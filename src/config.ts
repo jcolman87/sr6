@@ -320,6 +320,14 @@ export namespace Enums {
 		Astral = "Astral"
 	}
 
+	export enum DamageForm {
+		Physical,
+		Fire,
+		Cold,
+		Acid,
+		Magic
+	}
+
 	export enum Size {
 		Large = 0,
 		Bulky = 1,
@@ -341,6 +349,11 @@ export namespace Enums {
 		Middle = 3,
 		High = 4,
 		Luxury = 5
+	}
+
+	export enum SpellCombatType {
+		Direct = 0,
+		Indirect = 1
 	}
 
 	export enum SpellRangeType {

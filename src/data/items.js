@@ -118,11 +118,16 @@ export class Spell extends foundry.abstract.DataModel {
 			range: new fields.SchemaField({
 				type: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 2 }),
 				value: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true })
-			}),
+			}, { required: true, nullable: false }),
 			duration: new fields.SchemaField({
 				type: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 3 }),
 				value: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true })
-			})
+			}, { required: true, nullable: false }),
+			damage: new fields.SchemaField({
+				combat: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 9 }),
+				type: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 9 }),
+				form: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 9 })
+			}, { required: true, nullable: true })
 		};
 	}
 }
