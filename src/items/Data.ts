@@ -118,6 +118,21 @@ export class GearData implements GearBaseData {
 	};
 }
 
+export namespace Spell {
+	export interface Spell {
+		description: string;
+		drain: number;
+		range: {
+			type: Enums.SpellRangeType;
+			value: number;
+		},
+		duration: {
+			type: Enums.SpellDurationType;
+			value: number;
+		};
+	}
+}
+
 export class MatrixPersona implements ItemBaseData {
 	description: string = "";
 	rating: ItemFormula = "1";

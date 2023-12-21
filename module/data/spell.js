@@ -1,6 +1,6 @@
 import DataModel from "./foundry/abstract/data.js";
 import * as fields from "./foundry/data/fields.js";
-export class Spell extends DataModel {
+export class Model extends DataModel {
     static _enableV10Validation = true;
     static defineSchema() {
         return {
