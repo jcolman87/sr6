@@ -5,20 +5,25 @@ import { SR6Gear } from "../items/SR6Gear.js";
 import { Enums, Rules } from "../config.js";
 
 export class SR6ItemRollData extends SR6RollData {
-	item: SR6Gear | null = null;
+	item_id: string | null = null;
+
+	getItem(): SR6Gear | null {
+		let item = this.getActor()!.items.get(this.item_id!);
+		return (item == undefined) ? null : item as SR6Gear;
+	}
 
 	constructor(actor: SR6Actor, item: SR6Gear) {
 		super(actor);
 
-		this.item = item;
+		this.item_id = item.id;
 
-		this.pool = Rules.calcSkillPool(this.actor!, this.item!.skill_use!);
+		this.pool = Rules.calcSkillPool(actor, item.skill_use!);
 	}
 }
 
 export class SR6ItemRoll extends SR6Roll<SR6ItemRollData> {
 	get item(): SR6Gear | null {
-		return this.data.item;
+		return this.data.getItem();
 	}
 
 	static make(data: SR6ItemRollData): SR6ItemRoll {

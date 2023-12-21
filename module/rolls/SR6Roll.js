@@ -2,12 +2,18 @@ import { SR6CONFIG } from "../config.js";
 import { applyChangesetToObject } from "../util.js";
 export class SR6RollData {
     actor;
+    actor_id;
     pool;
     auto_hits;
     explode = false;
     edge;
+    getActor() {
+        let actor = game.actors.get(this.actor_id);
+        return (actor == undefined) ? null : actor;
+    }
     constructor(actor, pool = 0, explode = false, auto_hits = 0) {
         this.actor = actor;
+        this.actor_id = actor.id;
         this.pool = pool;
         this.explode = explode;
         this.auto_hits = auto_hits;
@@ -72,7 +78,7 @@ export class SR6Roll extends Roll {
         if (die == null) {
             die = this._getLowestRollIndex();
         }
-        let reroll = new SR6Roll(`1d6`, new SR6RollData(this.data.actor));
+        let reroll = new SR6Roll(`1d6`, new SR6RollData(this.actor));
         reroll.evaluate({ async: false });
         await reroll.showVisual();
         this._updateDie(die, reroll.terms[0].results[0].result);
@@ -126,7 +132,7 @@ export class SR6Roll extends Roll {
         if (failedList.length == 0) {
             return false;
         }
-        let reroll = new SR6Roll(`${failedList.length}d6`, new SR6RollData(this.data.actor));
+        let reroll = new SR6Roll(`${failedList.length}d6`, new SR6RollData(this.actor));
         reroll.evaluate({ async: false });
         await reroll.showVisual();
         // Replace the glitches.
@@ -144,7 +150,7 @@ export class SR6Roll extends Roll {
     async explode() {
         if (this.sixes > 0) {
             console.log(`exploding ${this.sixes} sixes`);
-            let explode_roll = new SR6Roll(`${this.sixes}d6`, new SR6RollData(this.data.actor));
+            let explode_roll = new SR6Roll(`${this.sixes}d6`, new SR6RollData(this.actor));
             explode_roll.evaluate({ async: false });
             await explode_roll.showVisual();
             // recurse the explosions
@@ -161,7 +167,7 @@ export class SR6Roll extends Roll {
         return this.sides.reduce((hits, result) => (result == 6 ? hits + 1 : hits), 0);
     }
     get actor() {
-        return this.data.actor;
+        return this.data.getActor();
     }
     get pool() {
         return this.data.pool;
@@ -192,7 +198,9 @@ export class SR6Roll extends Roll {
         });
     }
     toMessage(messageData = {}) {
-        return super.toMessage(messageData);
+        this.data.actor = null;
+        let msg = super.toMessage(messageData);
+        return msg;
     }
     static make(data) {
         return new SR6Roll(`(@pool)d6`, data);

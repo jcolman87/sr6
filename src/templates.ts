@@ -12,6 +12,7 @@ export const preloadHandlebarsTemplates = async function () {
 		"systems/sr6/templates/actors/parts/tab-effects.html",
 		"systems/sr6/templates/actors/parts/tab-magic.html",
 		//
+		"systems/sr6/templates/items/shared-header.html",
 		"systems/sr6/templates/items/parts/tab-basics.html",
 		"systems/sr6/templates/items/parts/tab-effects.html",
 		"systems/sr6/templates/items/parts/tab-matrix.html",

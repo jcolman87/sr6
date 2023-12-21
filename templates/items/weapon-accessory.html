@@ -1,16 +1,5 @@
 <form class="editable flexcol {{cssClass}}" autocomplete="off">
-	<header class="sheet-header">
-		<div>
-			<img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="120" width="120" /><br />
-			<br />
-		</div>
-		<div class="header-fields">
-			<h1>
-				<input direct-data type="text" value="{{item.name}}" />
-			</h1>
-		</div>
-		<br/>
-	</header>
+	{{> "systems/sr6/templates/items/shared-header.html" }}
 	<section class="sheet">
 		<div id="base" class="section">
 			<label for="system.size">Rating</label>

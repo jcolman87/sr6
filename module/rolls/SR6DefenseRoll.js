@@ -14,7 +14,7 @@ export class SR6DefenseRoll extends SR6Roll {
         return SR6DefenseRoll.CHAT_TEMPLATE;
     }
     get defender() {
-        return this.data.actor;
+        return this.data.getActor();
     }
     get success() {
         return this.hits > this.data.attack_roll.hits;

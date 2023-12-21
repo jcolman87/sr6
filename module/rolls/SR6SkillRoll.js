@@ -5,7 +5,7 @@ export class SR6SkillRollData extends SR6RollData {
     constructor(actor, skill) {
         super(actor);
         this.skill = skill;
-        this.pool = Rules.calcSkillPool(this.actor, this.skill);
+        this.pool = Rules.calcSkillPool(actor, this.skill);
     }
 }
 export class SR6SkillRoll extends SR6Roll {

@@ -35,7 +35,7 @@ export namespace EdgeBoosts {
 
 	export namespace add_edge_pool {
 		export async function prepareData(roll: Rolls.SR6RollData) {
-			roll.pool += roll.actor!.getAttribute(Enums.Attribute.edge).pool;
+			roll.pool += roll.getActor()!.getAttribute(Enums.Attribute.edge).pool;
 			roll.explode = true;
 		}
 		export async function apply(roll: Rolls.SR6Roll) {

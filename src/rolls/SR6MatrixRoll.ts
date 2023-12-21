@@ -13,10 +13,10 @@ export class SR6MatrixRollData extends SR6RollData {
 		let action = SR6CONFIG.matrix_actions.get(matrix_action)!;
 
 		this.matrix_action = matrix_action;
-		this.pool = this.actor!.solveFormula(action.formula!);
+		this.pool = actor.solveFormula(action.formula!);
 
 		if(action.damageFormula) {
-			this.damage = this.actor!.solveFormula(action.damageFormula!);
+			this.damage = actor.solveFormula(action.damageFormula!);
 		}
 
 	}

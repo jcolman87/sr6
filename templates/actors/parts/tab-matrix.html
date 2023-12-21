@@ -9,14 +9,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{#eachMap config.player_matrix_actions }} 
-						{{#unless value.illegal }}
+						{{#eachMap config.matrix_actions }} 
+						{{#if value.is_player_action}}{{#unless value.illegal }}
 						<tr title="{{localizeDescription 'matrix_action' (matrixActionAsString key) }}">
 							<td style="padding: 0; margin: 0">{{localizeName 'matrix_action' (matrixActionAsString key) }}</td>
 							<td class="matrix-action">{{ solveActorFormula ../actor value.formula }}</td>
 							<td class="matrix-action"><a data-matrix-action="{{key}}" class="roll roll-matrix-action" style="background-size: 16px 16px;">&nbsp;</a></td>
 						</tr>
-						{{/unless}}
+						{{/unless}}{{/if}}
 						{{/eachMap}}
 					</tbody>
 				</table>
@@ -27,14 +27,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{#eachMap config.player_matrix_actions }} 
-						{{#if value.illegal }}
+						{{#eachMap config.matrix_actions }} 
+						{{#if value.is_player_action}}{{#if value.illegal }}
 						<tr title="{{localizeDescription 'matrix_action' (matrixActionAsString key) }}">
 							<td style="padding: 0; margin: 0">{{localizeName 'matrix_action' (matrixActionAsString key) }}</td>
 							<td class="matrix-action">{{ solveActorFormula ../actor value.formula }}</td>
 							<td class="matrix-action"><a data-matrix-action="{{key}}" class="roll roll-matrix-action" style="background-size: 16px 16px;">&nbsp;</a></td>
 						</tr>
-						{{/if}}
+						{{/if}}{{/if}}
 						{{/eachMap}}
 					</tbody>
 				</table>

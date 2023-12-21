@@ -11,7 +11,7 @@ export class SR6SkillRollData extends SR6RollData {
 
 		this.skill = skill;
 
-		this.pool = Rules.calcSkillPool(this.actor!, this.skill);
+		this.pool = Rules.calcSkillPool(actor, this.skill);
 	}
 }
 

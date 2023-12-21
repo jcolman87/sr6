@@ -1,7 +1,6 @@
 {{> "systems/sr6/templates/rolls/shared-header.html" action_text=(concat "Matrix - " (localizeName "matrix_action" (matrixActionAsString roll.matrix_action))) }}
 <hr/>
-{{ log roll }}
-{{ log roll.damage }}
+
 {{#unless (isNull roll.damage)}}
 <div>Damage: <i style="font-weight: bold; color: rgb(194, 76, 29);">{{roll.damage}}</i></div>
 {{/unless}}

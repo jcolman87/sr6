@@ -477,13 +477,21 @@ export class MatrixActionDef {
 
 	async apply(roll: Rolls.SR6MatrixDefenseRoll) {}
 
-	constructor(formula: string | null, specialization: Enums.Specialization, illegal: boolean, activation: Activation, access_level: Enums.AccessLevel, player_action: boolean = true, defendAgainstFormula: string | null = null, damageFormula: null | string = null, apply: null | ((roll: Rolls.SR6MatrixDefenseRoll) => Promise<void>) = null) {
+	constructor(formula: string | null, 
+		specialization: Enums.Specialization, 
+		illegal: boolean, 
+		activation: Activation, 
+		access_level: Enums.AccessLevel, 
+		is_player_action: boolean = true, 
+		defendAgainstFormula: string | null = null, 
+		damageFormula: null | string = null, 
+		apply: null | ((roll: Rolls.SR6MatrixDefenseRoll) => Promise<void>) = null) {
 		this.formula = formula;
 		this.illegal = illegal;
 		this.activation = activation;
 		this.access_level = access_level;
 		this.specialization = specialization;
-		this.is_player_action = true;
+		this.is_player_action = is_player_action;
 
 		this.defendAgainstFormula = defendAgainstFormula;
 		this.damageFormula = damageFormula;
@@ -604,9 +612,17 @@ export class SR6Config {
 		[Enums.MatrixProgram.trace, new MatrixProgramDef(true, "+11 Edge on Trace")]
 	]);
 
-	get player_matrix_actions() : Map<Enums.MatrixAction, MatrixActionDef>  {
-		return new Map([...this.matrix_actions].filter((action)=> action[1].is_player_action));
-	}
+	/*
+		formula: string | null, 
+		specialization: Enums.Specialization, 
+		illegal: boolean, 
+		activation: Activation, 
+		access_level: Enums.AccessLevel, 
+		player_action: boolean = true, 
+		defendAgainstFormula: string | null = null, 
+		damageFormula: null | string = null, 
+		apply: null | ((roll: Rolls.SR6MatrixDefenseRoll) => Promise<void>) = null
+	*/
 
 	matrix_actions: Map<Enums.MatrixAction, MatrixActionDef> = new Map([
 		[

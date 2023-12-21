@@ -16,7 +16,6 @@ export class SR6Actor extends Actor {
 
 	constructor(a: any, b: any) {
 		super(a, b);
-		console.log("SR6Actor::constructor");
 	}
 
 	solveFormula(formula: string): number {

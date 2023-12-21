@@ -6,6 +6,7 @@ import { applyChangesetToObject } from "../util.js";
 
 export class SR6RollData {
 	actor: SR6Actor | null;
+	actor_id: string | null;
 	pool: number;
 
 	auto_hits: number;
@@ -16,8 +17,15 @@ export class SR6RollData {
 		action: null | Enums.EdgeAction;
 	};
 
+	getActor(): SR6Actor | null {
+		let actor = (game as Game).actors!.get(this.actor_id!);
+		return (actor == undefined) ? null : actor as SR6Actor;
+	}
+
 	constructor(actor: SR6Actor, pool: number = 0, explode: boolean = false, auto_hits: number = 0) {
 		this.actor = actor;
+
+		this.actor_id = actor.id;
 		this.pool = pool;
 		this.explode = explode;
 		this.auto_hits = auto_hits;
@@ -94,7 +102,7 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 		if (die == null) {
 			die = this._getLowestRollIndex();
 		}
-		let reroll = new SR6Roll(`1d6`, new SR6RollData(this.data.actor!));
+		let reroll = new SR6Roll(`1d6`, new SR6RollData(this.actor!));
 		reroll.evaluate({ async: false });
 		await reroll.showVisual();
 
@@ -162,7 +170,7 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 			return false;
 		}
 
-		let reroll = new SR6Roll(`${failedList.length}d6`, new SR6RollData(this.data.actor!));
+		let reroll = new SR6Roll(`${failedList.length}d6`, new SR6RollData(this.actor!));
 		reroll.evaluate({ async: false });
 		await reroll.showVisual();
 
@@ -184,7 +192,7 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	async explode() {
 		if (this.sixes > 0) {
 			console.log(`exploding ${this.sixes} sixes`);
-			let explode_roll = new SR6Roll(`${this.sixes}d6`, new SR6RollData(this.data.actor!));
+			let explode_roll = new SR6Roll(`${this.sixes}d6`, new SR6RollData(this.actor!));
 			explode_roll.evaluate({ async: false });
 			await explode_roll.showVisual();
 
@@ -205,7 +213,7 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	get actor(): SR6Actor | null {
-		return this.data.actor;
+		return this.data.getActor();
 	}
 
 	get pool(): number {
@@ -244,7 +252,10 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	toMessage(messageData: any = {}): any {
-		return super.toMessage(messageData);
+		this.data.actor = null;
+		let msg = super.toMessage(messageData);
+	
+		return msg;
 	}
 
 	static make(data: SR6RollData): SR6Roll {
@@ -260,7 +271,7 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	// NOTE: we need to do this to copy in teh actual class instance of the sub-roll caried here
 	static fromData<T extends Roll>(this: ConstructorOf<T>, data: Data): T {
 		const roll: Roll = super.fromData(data);
-
+		
 		return roll as T;
 	}
 }

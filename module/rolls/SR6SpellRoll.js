@@ -9,8 +9,8 @@ export class SR6SpellRollData extends SR6RollData {
         super(actor);
         this.spell = spell;
         this.autoroll_drain = autoroll_drain;
-        this.pool = Rules.Magic.calcSpellAttackPool(this.actor, this.spell);
-        this.damage = Rules.Magic.calcSpellStartingDamage(this.actor, this.spell);
+        this.pool = Rules.Magic.calcSpellAttackPool(actor, this.spell);
+        this.damage = Rules.Magic.calcSpellStartingDamage(actor, this.spell);
     }
 }
 export class SR6SpellRoll extends SR6Roll {
@@ -22,7 +22,7 @@ export class SR6SpellRoll extends SR6Roll {
         return this.data.spell;
     }
     get attacker() {
-        return this.data.actor;
+        return this.data.getActor();
     }
     get drain() {
         return this.data.spell.drain;

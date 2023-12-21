@@ -7,9 +7,9 @@ export class SR6WeaponRollData extends SR6ItemRollData {
     attack_rating = 0;
     constructor(actor, item) {
         super(actor, item);
-        this.pool = Rules.calcWeaponPool(this.actor, this.item);
-        this.damage = Rules.calcWeaponDamage(this.actor, this.item);
-        this.attack_rating = this.item.getAttackRating(this.distance);
+        this.pool = Rules.calcWeaponPool(actor, item);
+        this.damage = Rules.calcWeaponDamage(actor, item);
+        this.attack_rating = item.getAttackRating(this.distance);
     }
 }
 export class SR6WeaponRoll extends SR6Roll {
@@ -18,10 +18,10 @@ export class SR6WeaponRoll extends SR6Roll {
         return SR6WeaponRoll.CHAT_TEMPLATE;
     }
     get item() {
-        return this.data.item;
+        return this.data.getItem();
     }
     get attacker() {
-        return this.data.actor;
+        return this.data.getActor();
     }
     get damage() {
         return this.data.damage + this.hits;
