@@ -72,7 +72,7 @@ export class Initiatives extends foundry.abstract.DataModel {
         };
     }
 }
-export class MatrixAttributes extends foundry.abstract.DataModel {
+export class MatrixAttributesFormula extends foundry.abstract.DataModel {
     static _enableV10Validation = true;
     static defineSchema() {
         const fields = foundry.data.fields;
@@ -97,11 +97,24 @@ export class AttackRatings extends foundry.abstract.DataModel {
         };
     }
 }
+export class MatrixAttributes extends foundry.abstract.DataModel {
+    static _enableV10Validation = true;
+    static defineSchema() {
+        const fields = foundry.data.fields;
+        return {
+            a: new fields.NumberField({ initial: 0, required: true, nullable: false }),
+            s: new fields.NumberField({ initial: 0, required: true, nullable: false }),
+            d: new fields.NumberField({ initial: 0, required: true, nullable: false }),
+            f: new fields.NumberField({ initial: 0, required: true, nullable: false })
+        };
+    }
+}
 export class MatrixPersona extends foundry.abstract.DataModel {
     static _enableV10Validation = true;
     static defineSchema() {
         const fields = foundry.data.fields;
         return {
+            active: new fields.BooleanField({ initial: false, required: true, nullable: false }),
             device: new fields.DocumentIdField({ required: true, nullable: true }),
             base_attributes: new fields.EmbeddedDataField(MatrixAttributes, { required: true, nullable: false }),
             attributes: new fields.EmbeddedDataField(MatrixAttributes, { required: true, nullable: false }),

@@ -32,7 +32,7 @@ export class SR6SpellRoll extends SR6Roll<SR6SpellRollData> {
 	}
 
 	get attacker(): SR6Actor | null {
-		return this.data.getActor();
+		return this.actor;
 	}
 
 	get drain(): number {

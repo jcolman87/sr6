@@ -1,32 +1,38 @@
-
-
 <form class="flexcol" autocomplete="off">
-	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Roll Weapon" formula="Agility + Firearms" }}
 	<section>
-		<label for="roll.distance">Firemode</label>
-		<select direct-data id="roll.firemode">
-			<option value="SS" {{#if (eq roll.firemode 'SS')}}selected{{/if}}>SS</option>
-			<option value="SA" {{#if (eq roll.firemode 'SA')}}selected{{/if}}>SA</option>
-			<option value="BF_narrow" {{#if (eq roll.firemode 'BF_narrow')}}selected{{/if}}>BF (narrow)</option>
-			<option value="BF_wide" {{#if (eq roll.firemode 'BF_wide')}}selected{{/if}}>BF (wide)</option>
-			<option value="FA" {{#if (eq roll.firemode 'FA')}}selected{{/if}}>FA</option>
-		</select>
+		<div style="margin-right: 5px;">
+			<div style="display: inline-block; width:100%;">
+				<div class="section">
+					{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Roll Weapon" formula="Agility + Firearms" }}
+					<section>
+						<label for="roll.distance">Firemode</label>
+						<select direct-data id="roll.firemode">
+							<option value="SS" {{#if (eq roll.firemode 'SS')}}selected{{/if}}>SS</option>
+							<option value="SA" {{#if (eq roll.firemode 'SA')}}selected{{/if}}>SA</option>
+							<option value="BF_narrow" {{#if (eq roll.firemode 'BF_narrow')}}selected{{/if}}>BF (narrow)</option>
+							<option value="BF_wide" {{#if (eq roll.firemode 'BF_wide')}}selected{{/if}}>BF (wide)</option>
+							<option value="FA" {{#if (eq roll.firemode 'FA')}}selected{{/if}}>FA</option>
+						</select>
+					</section>
+					<section>
+						<label for="roll.distance">Distance</label>
+						<select direct-data data-type="number" id="roll.distance">
+							<option value="0" {{#if (eq roll.distance 0)}}selected{{/if}}>Close</option>
+							<option value="1" {{#if (eq roll.distance 1)}}selected{{/if}}>Near</option>
+							<option value="2" {{#if (eq roll.distance 2)}}selected{{/if}}>Medium</option>
+							<option value="3" {{#if (eq roll.distance 3)}}selected{{/if}}>Far</option>
+							<option value="4" {{#if (eq roll.distance 4)}}selected{{/if}}>Extreme</option>
+						</select>
+					</section>
+					<section>
+						<div>Damage: <i style="font-weight: bold">{{ roll.damage }}</i></div>
+						<div>AR: <i style="font-weight: bold">{{ roll.attack_rating }}</i></div>
+						<div>Attack Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.attack_pool }}</i><br/></div>
+						<div>Damage Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.damage }}</i><br/></div>
+					</section>
+					{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
+				</div>
+			</div>
+		</div>
 	</section>
-	<section>
-		<label for="roll.distance">Distance</label>
-		<select direct-data data-type="number" id="roll.distance">
-			<option value="0" {{#if (eq roll.distance 0)}}selected{{/if}}>Close</option>
-			<option value="1" {{#if (eq roll.distance 1)}}selected{{/if}}>Near</option>
-			<option value="2" {{#if (eq roll.distance 2)}}selected{{/if}}>Medium</option>
-			<option value="3" {{#if (eq roll.distance 3)}}selected{{/if}}>Far</option>
-			<option value="4" {{#if (eq roll.distance 4)}}selected{{/if}}>Extreme</option>
-		</select>
-	</section>
-	<section>
-		<div>Damage: <i style="font-weight: bold">{{ roll.damage }}</i></div>
-		<div>AR: <i style="font-weight: bold">{{ roll.attack_rating }}</i></div>
-		<div>Attack Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.attack_pool }}</i><br/></div>
-		<div>Damage Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.damage }}</i><br/></div>
-	</section>
-	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
 </form>

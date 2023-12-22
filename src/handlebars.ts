@@ -10,14 +10,6 @@ export function defineHandlebarHelpers() {
 		return (game as Game).user!.isGM;
 	});
 
-	Handlebars.registerHelper("isUserIdGM", function (user_id: string) {
-		return (game as Game).users!.get(user_id)!.isGM;
-	});
-
-	Handlebars.registerHelper("isUserIdSelf", function (user_id: string) {
-		return (game as Game).user!.id == user_id;
-	});
-
 	Handlebars.registerHelper("bold", function (this: any, options: any) {
 		return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
 	});
@@ -45,6 +37,10 @@ export function defineHandlebarHelpers() {
 
 	Handlebars.registerHelper("getAttackRating", function (item: SR6Gear, distance: Enums.Distance) {
 		return item.getAttackRating(distance);
+	});
+
+	Handlebars.registerHelper("canUseEdgeBoost", function (boost_id: Enums.EdgeBoost, activation: Enums.ActivationLimit, roll: Rolls.SR6RollData) {
+		return SR6CONFIG.edge_boosts.get(boost_id)!.condition(activation, roll);
 	});
 
 	Handlebars.registerHelper("attributeAsString", function (ty: Enums.Attribute) {
@@ -151,9 +147,13 @@ export function defineHandlebarHelpers() {
 		}
 	});
 
-	Handlebars.registerHelper("canUseEdgeBoost", function (boost_id: Enums.EdgeBoost, activation: Enums.ActivationLimit, roll: Rolls.SR6RollData) {
-		return SR6CONFIG.edge_boosts.get(boost_id)!.condition(activation, roll);
+	Handlebars.registerHelper('times', function(n, block) {
+	    var accum = '';
+	    for(var i = 0; i < n; ++i)
+	        accum += block.fn(i);
+	    return accum;
 	});
+
 
 	Handlebars.registerHelper("eachMap", function (map, block) {
 		var out = "";

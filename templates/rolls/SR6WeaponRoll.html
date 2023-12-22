@@ -1,3 +1,5 @@
+{{log roll.isUserOwner }}
+
 {{> "systems/sr6/templates/rolls/shared-header.html" action_text="Attack"}}
 <div>
 	<i style="font-weight: bold">{{ distanceToString roll.data.distance }}</i> distance 
@@ -33,6 +35,8 @@
 	</section>
 </div>
 <hr/>
+{{#unless roll.isUserOwner }}
 <input id="roll-defense" type="button" value="Roll Defense"/>
+{{/unless}}
 {{> "systems/sr6/templates/rolls/shared-edge-boost.html"}}
 {{> "systems/sr6/templates/rolls/shared-footer.html"}}

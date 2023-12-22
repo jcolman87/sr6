@@ -72,6 +72,10 @@ export class SR6Gear extends SR6Item {
 		});
 	}
 
+	wtf(ty: GearTypes.Types): boolean {
+		return (this.getData().types & ty) == ty;
+	}
+
 	has(ty: GearTypes.Types): boolean {
 		return (this.getData().types & ty) == ty;
 	}

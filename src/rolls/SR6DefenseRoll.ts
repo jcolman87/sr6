@@ -23,7 +23,7 @@ export class SR6DefenseRoll extends SR6Roll<SR6DefenseRollData> {
 	}
 
 	get defender(): SR6Actor | null {
-		return this.data.getActor();
+		return this.actor;
 	}
 
 	get success(): boolean {

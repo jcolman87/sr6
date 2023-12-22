@@ -1,11 +1,17 @@
-
-
 <form class="flexcol" autocomplete="off">
-	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Matrix Defense" }}
-	<h3>Defending against {{ localizeName "matrix_action" (matrixActionAsString roll.attack_roll.matrix_action) }}</h3>
 	<section>
-
-		<div>Threshold to Defend: <i style="font-weight: bold">{{ roll.attack_roll.hits }}</i></div>
+		<div style="margin-right: 5px;">
+			<div style="display: inline-block; width:100%;">
+				<div class="section">
+					{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Matrix Defense" }}
+					
+					<div>Defending against {{ localizeName "matrix_action" (matrixActionAsString roll.data.attack_roll.data.matrix_action) }}</div>
+					<div>Threshold to Defend: <i style="font-weight: bold">{{ roll.data.attack_roll.data.hits }}</i></div>
+					
+					{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
+				</div>
+			</div>
+		</div>
 	</section>
-	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
+</form>
 </form>

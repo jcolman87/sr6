@@ -64,6 +64,9 @@ export class SR6Gear extends SR6Item {
             ["system.types"]: this.getData().types & ~ty
         });
     }
+    wtf(ty) {
+        return (this.getData().types & ty) == ty;
+    }
     has(ty) {
         return (this.getData().types & ty) == ty;
     }

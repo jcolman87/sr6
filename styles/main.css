@@ -51,6 +51,21 @@
 	font-size: 14px;
 }
 
+.expand-unskilled {
+	cursor: pointer;
+	padding-top: 10px;
+}
+
+.expand-unskilled:hover {
+	cursor: pointer;
+}
+
+
+.skill-unskilled {
+	display: none;
+}
+
+
 .matrix-action {
 	width: 1%; 
 	padding: 0; 

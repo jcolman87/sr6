@@ -36,7 +36,7 @@ export class SR6SoakRoll extends SR6Roll<SR6SoakRollData> {
 	}
 
 	get defender(): SR6Actor | null {
-		return this.data.getActor();
+		return this.actor;
 	}
 
 	get defense_roll(): SR6DefenseRoll {

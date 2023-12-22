@@ -24,7 +24,7 @@ export class SR6SoakRoll extends SR6Roll {
         return this.data.defense_roll.attack_roll.attacker;
     }
     get defender() {
-        return this.data.getActor();
+        return this.actor;
     }
     get defense_roll() {
         return this.data.defense_roll;

@@ -21,6 +21,20 @@ export namespace Enums {
 		Top = "top"
 	}
 
+	export enum MagicType {
+		Mundane = 0,
+		Technomancer = 1,
+		Adept = 2,
+		MysticAdept = 3,
+		Aspected = 4,
+		Full = 5,
+	}
+
+	export enum MagicTradition {
+		Shamanic = 0,
+		Hermetic = 1,
+	}
+
 	export enum Attribute {
 		body,
 		agility,
@@ -41,6 +55,7 @@ export namespace Enums {
 		astral_signatures,
 		spirit_types,
 		climbing,
+		escaping,
 		flying,
 		emotional_states,
 		gymnastics,
@@ -376,9 +391,9 @@ export namespace Enums {
 	}
 
 	export enum VRType {
-		AR,
-		Cold,
-		Hot
+		AR = 0,
+		Cold = 1,
+		Hot = 2
 	}
 }
 

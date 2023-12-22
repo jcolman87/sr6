@@ -7,6 +7,8 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 	original: D;
 
 	pool_modifier: number = 0;
+	action_text: string = "";
+	header_text: string = "";
 
 	get template(): string {
 		return "systems/sr6/templates/dialogs/RollDialog.html";
@@ -19,11 +21,15 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 	constructor(
 		private maker: (roll: D) => R,
 		roll: D,
-		options: any = {}
+		header_text = "",
+		action_text = "",
+		options: any = {},
 	) {
 		super({}, options);
 
 		this.roll = roll;
+		this.header_text = header_text;
+		this.action_text = action_text;
 		this.original = Object.assign(Object.create(Object.getPrototypeOf(roll)), roll);
 	}
 
@@ -51,7 +57,9 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 
 		(data as any).dialog = this;
 		(data as any).roll = this.roll;
-
+		(data as any).header_text = this.header_text;
+		(data as any).action_text = this.action_text;
+		
 		return data;
 	}
 
@@ -85,12 +93,6 @@ export class SR6RollDialog<R extends SR6Roll = SR6Roll, D extends SR6RollData = 
 		this.close({});
 	}
 
-	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
-			width: 150,
-			height: 500,
-		});
-	}
 
 	/* _onKeyDown
 	if ( event.key === "Enter" ) {

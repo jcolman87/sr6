@@ -21,6 +21,7 @@ export class Character extends BaseActor {
 		console.log("Character::defineSchema");
 
 		return foundry.utils.mergeObject(super.defineSchema(), {
+			realName: new fields.StringField({ initial: "Real Name", required: true, nullable: false }),
 			karma: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
 			monitors: new fields.SchemaField({
 				physical: new fields.EmbeddedDataField(shared.Attribute, {
@@ -106,8 +107,12 @@ export class Character extends BaseActor {
 				stealth: new fields.EmbeddedDataField(shared.Skill),
 				tasking: new fields.EmbeddedDataField(shared.Skill)
 			}),
+			magic: new fields.SchemaField({
+				type: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 4 }),
+				tradition: new fields.NumberField({ initial: 1, required: true, nullable: true, integer: true, min: 0, max: 1 }),
+			}, { required: true, nullable: false }),
 			matrix: new fields.SchemaField({
-				persona: new fields.EmbeddedDataField(shared.MatrixPersona, { required: true, nullable: true }),
+				persona: new fields.EmbeddedDataField(shared.MatrixPersona, { initial: null, required: true, nullable: true }),
 			}, { required: true }),
 		});
 	}

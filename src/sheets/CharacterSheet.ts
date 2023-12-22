@@ -56,6 +56,13 @@ export class SR6CharacterSheet extends ActorSheet {
 			});
 		});
 
+	html.find(".expand-unskilled").click(async (event: JQuery.ClickEvent) => {
+			event.preventDefault();
+			html.find(".skill-unskilled").each((i: any, target: any) => {
+				// TODO: expand
+				//target.is(":visible") ? target.attr("style", "display: none") : target.attr("style", "");
+			});
+		});
 		html.find(".expand-skill").click(async (event: JQuery.ClickEvent) => {
 			let target = event.currentTarget as HTMLInputElement;
 			let skillId: Enums.Skill = parseInt(target.dataset["skill"]!);
@@ -79,32 +86,12 @@ export class SR6CharacterSheet extends ActorSheet {
 	_activateMatrixListeners(html: JQuery) {
 		html.find("#activate-persona").change(async (event: JQuery.ChangeEvent) => {
 			if(event.currentTarget.checked) {
-				// Are there any active devices? If not, error.
-				let activeMatrixItems = this.actor.items.filter((i) => {
-					let item = (i as SR6Gear);
-					return item.has(GearTypes.Types.Matrix) && item.matrix!.matrix_active;
-				});
-				if(activeMatrixItems.length < 1) {
-					ui.notifications!.warn("No active matrix item to jack in to!");
+				if(!this.character.activateMatrix()) { 
+					// failure case
 					event.currentTarget.checked = false;
-					return;
 				}
-
-				let device = (activeMatrixItems[0] as SR6Gear);
-				let persona = {
-					device: device.id,
-					base_attributes: device.matrix!.matrix_attributes,
-					attributes: device.matrix!.matrix_attributes,
-					vr_type: Enums.VRType.AR
-				};
-
-				this.actor.update({
-					["system.matrix.persona"]: persona,
-				});
 			} else {
-				this.actor.update({
-					["system.matrix.persona"]: null,
-				});
+				this.character.deactivateMatrix();
 			}
 		});
 	}

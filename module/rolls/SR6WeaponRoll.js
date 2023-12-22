@@ -18,10 +18,11 @@ export class SR6WeaponRoll extends SR6Roll {
         return SR6WeaponRoll.CHAT_TEMPLATE;
     }
     get item() {
-        return this.data.getItem();
+        let item = this.actor.items.get(this.data.item_id);
+        return (item == undefined) ? null : item;
     }
     get attacker() {
-        return this.data.getActor();
+        return this.actor;
     }
     get damage() {
         return this.data.damage + this.hits;

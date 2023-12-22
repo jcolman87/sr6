@@ -5,7 +5,7 @@ export class SR6AttributeRollData extends SR6RollData {
     constructor(actor, attribute) {
         super(actor);
         this.attribute = attribute;
-        this.pool = Rules.calcAttributePool(this.getActor(), this.attribute);
+        this.pool = Rules.calcAttributePool(actor, this.attribute);
     }
 }
 export class SR6AttributeRoll extends SR6Roll {

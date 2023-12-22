@@ -27,7 +27,7 @@ export class SR6SpellDefenseRoll extends SR6Roll<SR6SpellDefenseRollData> {
 	}
 
 	get defender(): SR6Actor | null {
-		return this.data.getActor();
+		return this.actor;
 	}
 
 	get success(): boolean {

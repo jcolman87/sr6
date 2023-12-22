@@ -16,7 +16,7 @@ export class SR6MatrixDefenseRollDialog extends SR6RollDialog {
     }
     getData(options) {
         let data = super.getData(options);
-        data.matrix_action = SR6CONFIG.matrix_actions.get(this.roll.attack_roll.matrix_action);
+        data.matrix_action = SR6CONFIG.matrix_actions.get(this.roll.attack_roll.matrix_action_id);
         return data;
     }
 }

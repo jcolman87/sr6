@@ -1,6 +1,7 @@
 import { SR6Actor } from "./SR6Actor.js";
 import { SR6CONFIG, Enums } from "../config.js";
 import * as Rolls from "../rolls/Rolls.js";
+import { GearTypes } from "../items/Data.js";
 import { SR6RollDialog } from "../dialogs/SR6RollDialog.js";
 import { SR6WeaponRollDialog } from "../dialogs/SR6WeaponRollDialog.js";
 import { SR6MatrixRollDialog } from "../dialogs/SR6MatrixRollDialog.js";
@@ -26,12 +27,19 @@ export class SR6CharacterActor extends SR6Actor {
         let stun_modifier = -Math.floor(this.getData().monitors.stun.pool / 3);
         return physical_modifier + stun_modifier;
     }
+    get jacked_in() {
+        if (this.matrix_persona) {
+            return this.matrix_persona.active;
+        }
+        return false;
+    }
     get matrix_persona() {
         return this.getData().matrix.persona;
     }
     prepareData() {
         super.prepareData();
         this.prepareMonitors();
+        this.prepareMatrixPersona();
     }
     prepareDerivedData() {
         super.prepareDerivedData();
@@ -39,6 +47,84 @@ export class SR6CharacterActor extends SR6Actor {
         this.prepareDerivedAttributes();
         this.prepareSkillPools();
         this.prepareInitiatives();
+    }
+    prepareMatrixPersona() {
+        if (this.matrix_persona != null && this.matrix_persona.active) {
+            if (this.matrix_persona.device != null) {
+                let device = this.items.get(this.matrix_persona.device);
+                if (device == undefined) {
+                    this.deactivateMatrix();
+                }
+                else {
+                    let attributes = {
+                        a: device.solveFormulaWithActor(this, device.matrix.matrix_attributes.a),
+                        s: device.solveFormulaWithActor(this, device.matrix.matrix_attributes.s),
+                        d: device.solveFormulaWithActor(this, device.matrix.matrix_attributes.d),
+                        f: device.solveFormulaWithActor(this, device.matrix.matrix_attributes.f),
+                    };
+                    let persona = {
+                        device: device.id,
+                        base_attributes: attributes,
+                        attributes: attributes,
+                        vr_type: Enums.VRType.AR
+                    };
+                    this.update({
+                        ["system.matrix.persona"]: persona,
+                    });
+                }
+            }
+        }
+        else {
+            if (this.matrix_persona) {
+                this.matrix_persona.active = false;
+            }
+        }
+    }
+    activateMatrix(device = null) {
+        if (this.getData().magic.type == Enums.MagicType.Technomancer) {
+            let living_attributes = {
+                a: this.getAttribute(Enums.Attribute.charisma).pool,
+                s: this.getAttribute(Enums.Attribute.intuition).pool,
+                d: this.getAttribute(Enums.Attribute.logic).pool,
+                f: this.getAttribute(Enums.Attribute.willpower).pool,
+            };
+            let persona = {
+                active: true,
+                device: null,
+                base_attributes: living_attributes,
+                attributes: living_attributes,
+                vr_type: Enums.VRType.Cold
+            };
+            this.update({
+                ["system.matrix.persona"]: persona,
+            });
+        }
+        else {
+            // Are there any active devices? If not, error.
+            let activeMatrixItems = this.items.filter((i) => {
+                let item = i;
+                if (item.type != "Gear") {
+                    return false;
+                }
+                return item.has(GearTypes.Types.Matrix) && item.matrix.matrix_active;
+            });
+            if (activeMatrixItems.length < 1) {
+                ui.notifications.warn("No active matrix item to jack in to!");
+                return false;
+            }
+            let device = activeMatrixItems[0];
+            let persona = {
+                active: true,
+                device: device.id
+            };
+            this.update({
+                ["system.matrix.persona"]: persona,
+            });
+        }
+        return true;
+    }
+    deactivateMatrix() {
+        this.update({ ["system.matrix.persona"]: { active: false } });
     }
     getData() {
         //if(this.isCharacter) { TODO
@@ -50,15 +136,19 @@ export class SR6CharacterActor extends SR6Actor {
         new SR6WeaponRollDialog(this, weapon).render(true);
     }
     rollSkill(skill) {
-        new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined })).render(true);
+        new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined }), "Roll Skill", game.i18n.localize(`skill.${Enums.Skill[skill]}.name`)).render(true);
     }
     rollSpecialization(special) {
-        new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special })).render(true);
+        new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special }), "Roll Skill", game.i18n.localize(`specialization.${Enums.Specialization[special]}.name`)).render(true);
     }
     rollAttribute(attribute) {
-        new SR6RollDialog(Rolls.SR6AttributeRoll.make, new Rolls.SR6AttributeRollData(this, attribute)).render(true);
+        new SR6RollDialog(Rolls.SR6AttributeRoll.make, new Rolls.SR6AttributeRollData(this, attribute), "Roll Attribute", Enums.Attribute[attribute]).render(true);
     }
     rollMatrixAction(action) {
+        if (!this.jacked_in) {
+            ui.notifications.warn("You cannot perform a matrix action because you're not jacked in!");
+            return;
+        }
         new SR6MatrixRollDialog(this, action).render(true);
     }
     rollSpell(spell) {

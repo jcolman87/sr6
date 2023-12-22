@@ -91,12 +91,18 @@ export var ActorTypes;
     }
     ActorTypes.Matrix = Matrix;
     class MatrixPersona {
+        active = false;
         device = null;
         base_attributes = new MatrixAttributes();
         attributes = new MatrixAttributes();
         vr_type = Enums.VRType.AR;
     }
     ActorTypes.MatrixPersona = MatrixPersona;
+    class Magic {
+        type = Enums.MagicType.Mundane;
+        tradition = null;
+    }
+    ActorTypes.Magic = Magic;
 })(ActorTypes || (ActorTypes = {}));
 export class CharacterActorData {
     initiatives = {
@@ -119,5 +125,6 @@ export class CharacterActorData {
     derived_attributes = new ActorTypes.DerivedAttributes();
     skills = new ActorTypes.Skills();
     effect_modifiers = new ActorTypes.EffectModifiers();
+    magic = new ActorTypes.Magic();
     matrix = new ActorTypes.Matrix();
 }

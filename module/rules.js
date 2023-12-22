@@ -32,7 +32,7 @@ export var EdgeBoosts;
     let add_edge_pool;
     (function (add_edge_pool) {
         async function prepareData(roll) {
-            roll.pool += roll.getActor().getAttribute(Enums.Attribute.edge).pool;
+            roll.pool += roll.actor.getAttribute(Enums.Attribute.edge).pool;
             roll.explode = true;
         }
         add_edge_pool.prepareData = prepareData;
@@ -52,7 +52,14 @@ export var EdgeBoosts;
 export var Magic;
 (function (Magic) {
     function calcSpellAttackPool(actor, spell, apply_modifiers = true) {
-        return +actor.getSkill(Enums.Skill.sorcery).pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
+        let special = 0;
+        if (actor.getSkill(Enums.Skill.sorcery).specialization == Enums.Specialization.spellcasting) {
+            special = 2;
+        }
+        else if (actor.getSkill(Enums.Skill.sorcery).expertise == Enums.Specialization.spellcasting) {
+            special = 3;
+        }
+        return +special + +actor.getSkill(Enums.Skill.sorcery).pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
     }
     Magic.calcSpellAttackPool = calcSpellAttackPool;
     function calcSpellDrainPool(actor, spell, apply_modifiers = true) {

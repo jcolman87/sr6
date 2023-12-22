@@ -4,12 +4,6 @@ export function defineHandlebarHelpers() {
     Handlebars.registerHelper("isGM", function (user_id) {
         return game.user.isGM;
     });
-    Handlebars.registerHelper("isUserIdGM", function (user_id) {
-        return game.users.get(user_id).isGM;
-    });
-    Handlebars.registerHelper("isUserIdSelf", function (user_id) {
-        return game.user.id == user_id;
-    });
     Handlebars.registerHelper("bold", function (options) {
         return new Handlebars.SafeString('<div class="mybold">' + options.fn(this) + "</div>");
     });
@@ -31,6 +25,9 @@ export function defineHandlebarHelpers() {
     });
     Handlebars.registerHelper("getAttackRating", function (item, distance) {
         return item.getAttackRating(distance);
+    });
+    Handlebars.registerHelper("canUseEdgeBoost", function (boost_id, activation, roll) {
+        return SR6CONFIG.edge_boosts.get(boost_id).condition(activation, roll);
     });
     Handlebars.registerHelper("attributeAsString", function (ty) {
         return Enums.Attribute[ty];
@@ -126,8 +123,11 @@ export function defineHandlebarHelpers() {
                 return options.inverse(this);
         }
     });
-    Handlebars.registerHelper("canUseEdgeBoost", function (boost_id, activation, roll) {
-        return SR6CONFIG.edge_boosts.get(boost_id).condition(activation, roll);
+    Handlebars.registerHelper('times', function (n, block) {
+        var accum = '';
+        for (var i = 0; i < n; ++i)
+            accum += block.fn(i);
+        return accum;
     });
     Handlebars.registerHelper("eachMap", function (map, block) {
         var out = "";

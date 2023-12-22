@@ -111,10 +111,16 @@ export namespace ActorTypes {
 	}
 
 	export class MatrixPersona {
+		active: boolean = false;
 		device: null | string = null;
 		base_attributes: MatrixAttributes = new MatrixAttributes();
 		attributes: MatrixAttributes = new MatrixAttributes();
 		vr_type: Enums.VRType = Enums.VRType.AR;
+	}
+
+	export class Magic {
+		type: Enums.MagicType = Enums.MagicType.Mundane;
+		tradition: Enums.MagicTradition | null = null;
 	}
 }
 
@@ -148,5 +154,6 @@ export class CharacterActorData implements BaseActorData {
 	skills: ActorTypes.Skills = new ActorTypes.Skills();
 	effect_modifiers: ActorTypes.EffectModifiers = new ActorTypes.EffectModifiers();
 
+	magic: ActorTypes.Magic = new ActorTypes.Magic();
 	matrix: ActorTypes.Matrix = new ActorTypes.Matrix();
 }

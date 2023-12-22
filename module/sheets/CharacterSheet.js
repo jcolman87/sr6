@@ -1,4 +1,3 @@
-import { GearTypes } from "../items/Data.js";
 import * as util from "../util.js";
 import { SR6CONFIG, Enums } from "../config.js";
 export class SR6CharacterSheet extends ActorSheet {
@@ -42,6 +41,13 @@ export class SR6CharacterSheet extends ActorSheet {
                 [field]: util.directDataValue(target)
             });
         });
+        html.find(".expand-unskilled").click(async (event) => {
+            event.preventDefault();
+            html.find(".skill-unskilled").each((i, target) => {
+                // TODO: expand
+                //target.is(":visible") ? target.attr("style", "display: none") : target.attr("style", "");
+            });
+        });
         html.find(".expand-skill").click(async (event) => {
             let target = event.currentTarget;
             let skillId = parseInt(target.dataset["skill"]);
@@ -60,31 +66,13 @@ export class SR6CharacterSheet extends ActorSheet {
     _activateMatrixListeners(html) {
         html.find("#activate-persona").change(async (event) => {
             if (event.currentTarget.checked) {
-                // Are there any active devices? If not, error.
-                let activeMatrixItems = this.actor.items.filter((i) => {
-                    let item = i;
-                    return item.has(GearTypes.Types.Matrix) && item.matrix.matrix_active;
-                });
-                if (activeMatrixItems.length < 1) {
-                    ui.notifications.warn("No active matrix item to jack in to!");
+                if (!this.character.activateMatrix()) {
+                    // failure case
                     event.currentTarget.checked = false;
-                    return;
                 }
-                let device = activeMatrixItems[0];
-                let persona = {
-                    device: device.id,
-                    base_attributes: device.matrix.matrix_attributes,
-                    attributes: device.matrix.matrix_attributes,
-                    vr_type: Enums.VRType.AR
-                };
-                this.actor.update({
-                    ["system.matrix.persona"]: persona,
-                });
             }
             else {
-                this.actor.update({
-                    ["system.matrix.persona"]: null,
-                });
+                this.character.deactivateMatrix();
             }
         });
     }

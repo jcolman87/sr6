@@ -1,4 +1,4 @@
-import { Data, Evaluated, Options } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll.js";
+import { Data } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/client/dice/roll.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
 import { SR6Gear } from "../items/SR6Gear.js";
 import { Enums, EffectChangeData, SR6CONFIG } from "../config.js";
@@ -16,11 +16,6 @@ export class SR6RollData {
 		boost: null | Enums.EdgeBoost;
 		action: null | Enums.EdgeAction;
 	};
-
-	getActor(): SR6Actor | null {
-		let actor = (game as Game).actors!.get(this.actor_id!);
-		return (actor == undefined) ? null : actor as SR6Actor;
-	}
 
 	constructor(actor: SR6Actor, pool: number = 0, explode: boolean = false, auto_hits: number = 0) {
 		this.actor = actor;
@@ -208,12 +203,29 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 		}
 	}
 
+	get isUserOwner(): boolean {
+		if((game as Game).user!.isGM) {
+			return false;
+		}
+		
+		return (game as Game).user!.character?.id == this.data.actor_id;
+	}
+
+	get isOwner(): boolean {
+		if((game as Game).user!.isGM) {
+			return true;
+		}
+		console.log("isOwner", (game as Game).user!.character!.id, this.data.actor_id);
+		return (game as Game).user!.character!.id == this.data.actor_id;
+	}
+
 	get sixes(): number {
 		return this.sides.reduce((hits, result) => (result == 6 ? hits + 1 : hits), 0);
 	}
 
 	get actor(): SR6Actor | null {
-		return this.data.getActor();
+		let actor = (game as Game).actors!.get(this.data.actor_id!);
+		return (actor == undefined) ? null : actor as SR6Actor;
 	}
 
 	get pool(): number {
@@ -225,7 +237,12 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 	}
 
 	get hits(): number {
-		return this.sides.reduce((hits, result) => (this.parameters.success.includes(result) ? hits + 1 : hits), 0) + this.data.auto_hits;
+		let hits: number = this.sides.reduce((hits, result) => (this.parameters.success.includes(result) ? hits + 1 : hits), 0);
+		if(this.data.auto_hits != undefined) {
+			return hits + this.data.auto_hits;
+		} else {
+			return hits;
+		}
 	}
 
 	get glitches(): number {
@@ -251,6 +268,10 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 		});
 	}
 
+	static make(data: SR6RollData): SR6Roll {
+		return new SR6Roll(`(@pool)d6`, data);
+	}
+
 	toMessage(messageData: any = {}): any {
 		this.data.actor = null;
 		let msg = super.toMessage(messageData);
@@ -258,20 +279,17 @@ export class SR6Roll<D extends SR6RollData = SR6RollData> extends Roll<D> {
 		return msg;
 	}
 
-	static make(data: SR6RollData): SR6Roll {
-		return new SR6Roll(`(@pool)d6`, data);
-	}
-
 	toJSON() {
 		const json = super.toJSON();
 		(json as any).data = this.data;
+		(json as any).data.actor = null;
 		return json;
 	}
 
 	// NOTE: we need to do this to copy in teh actual class instance of the sub-roll caried here
 	static fromData<T extends Roll>(this: ConstructorOf<T>, data: Data): T {
 		const roll: Roll = super.fromData(data);
-		
+		(roll as SR6Roll).data.actor = (roll as SR6Roll).actor;
 		return roll as T;
 	}
 }

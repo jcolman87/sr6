@@ -1,12 +1,18 @@
 <form class="flexcol" autocomplete="off">
-	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Roll Defense" formula="Agility + Intuition" }}
 	<section>
-		<div>Threshold to Defend: <i style="font-weight: bold">{{ roll.attack_roll.hits }}</i></div>
-		<div>Damage: <i style="font-weight: bold">{{ roll.attack_roll.data.damage }}</i></div>
-		<div>AR: <i style="font-weight: bold">{{ roll.attack_roll.data.attack_rating }}</i></div>
-		<div>Defense Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.defense }}</i><br/></div>
-		
+		<div style="margin-right: 5px;">
+			<div style="display: inline-block; width:100%;">
+				<div class="section">
+					{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Spell Defense" formula="" }}
+					<section>
+						<div>Threshold to Defend: <i style="font-weight: bold">{{ roll.attack_roll.hits }}</i></div>
+						<div>Damage: <i style="font-weight: bold">{{ roll.attack_roll.data.damage }}</i></div>
+						<div>AR: <i style="font-weight: bold">{{ roll.attack_roll.data.attack_rating }}</i></div>
+						<div>Defense Modifier: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.defense }}</i><br/></div>
+					</section>
+					{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
+				</div>
+			</div>
+		</div>
 	</section>
-	
-	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
 </form>

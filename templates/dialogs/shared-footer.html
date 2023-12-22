@@ -1,10 +1,11 @@
+<hr/>
 <section style="align-content: center">
 	Pool Modifier: <input style="width: 3em" id="pool_modifier" direct-data type="number" value="{{dialog.pool_modifier}}" /><br/>
 	Wound Modifier: <i style="font-weight: bold">{{ roll.actor.wound_modifier }}</i><br/>
 	Other Modifiers: <i style="font-weight: bold">{{ roll.actor.system.effect_modifiers.global_pool }}</i><br/>
 	<section>
 		{{#unless (eq is_matrix 1) }}
-		{{> "systems/sr6/templates/dialogs/shared-edge-boost.html" header_text="Roll Weapon" formula="Agility + Firearms" }}
+		{{> "systems/sr6/templates/dialogs/shared-edge-boost.html" }}
 		{{/unless}}
 	</section>
 

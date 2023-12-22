@@ -7,10 +7,6 @@ export class SR6RollData {
     auto_hits;
     explode = false;
     edge;
-    getActor() {
-        let actor = game.actors.get(this.actor_id);
-        return (actor == undefined) ? null : actor;
-    }
     constructor(actor, pool = 0, explode = false, auto_hits = 0) {
         this.actor = actor;
         this.actor_id = actor.id;
@@ -163,11 +159,25 @@ export class SR6Roll extends Roll {
             this._termsUpdated();
         }
     }
+    get isUserOwner() {
+        if (game.user.isGM) {
+            return false;
+        }
+        return game.user.character?.id == this.data.actor_id;
+    }
+    get isOwner() {
+        if (game.user.isGM) {
+            return true;
+        }
+        console.log("isOwner", game.user.character.id, this.data.actor_id);
+        return game.user.character.id == this.data.actor_id;
+    }
     get sixes() {
         return this.sides.reduce((hits, result) => (result == 6 ? hits + 1 : hits), 0);
     }
     get actor() {
-        return this.data.getActor();
+        let actor = game.actors.get(this.data.actor_id);
+        return (actor == undefined) ? null : actor;
     }
     get pool() {
         return this.data.pool;
@@ -176,7 +186,13 @@ export class SR6Roll extends Roll {
         return this.terms[0].results.map((result) => result.result);
     }
     get hits() {
-        return this.sides.reduce((hits, result) => (this.parameters.success.includes(result) ? hits + 1 : hits), 0) + this.data.auto_hits;
+        let hits = this.sides.reduce((hits, result) => (this.parameters.success.includes(result) ? hits + 1 : hits), 0);
+        if (this.data.auto_hits != undefined) {
+            return hits + this.data.auto_hits;
+        }
+        else {
+            return hits;
+        }
     }
     get glitches() {
         return this.sides.reduce((glitches, result) => (this.parameters.glitch.includes(result) ? glitches + 1 : glitches), 0);
@@ -197,22 +213,24 @@ export class SR6Roll extends Roll {
             config: SR6CONFIG
         });
     }
+    static make(data) {
+        return new SR6Roll(`(@pool)d6`, data);
+    }
     toMessage(messageData = {}) {
         this.data.actor = null;
         let msg = super.toMessage(messageData);
         return msg;
     }
-    static make(data) {
-        return new SR6Roll(`(@pool)d6`, data);
-    }
     toJSON() {
         const json = super.toJSON();
         json.data = this.data;
+        json.data.actor = null;
         return json;
     }
     // NOTE: we need to do this to copy in teh actual class instance of the sub-roll caried here
     static fromData(data) {
         const roll = super.fromData(data);
+        roll.data.actor = roll.actor;
         return roll;
     }
 }

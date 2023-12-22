@@ -30,7 +30,10 @@ export class Lifestyle extends foundry.abstract.DataModel {
         const fields = foundry.data.fields;
         return {
             description: new fields.StringField({ initial: "This is a description", required: true, blank: false }),
-            rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1, max: 6 })
+            rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1, max: 6 }),
+            cost: new fields.NumberField({ initial: 0, required: true }),
+            months_paid: new fields.NumberField({ initial: 1, required: true }),
+            sin: new fields.DocumentIdField({ required: true, nullable: true }),
         };
     }
 }
@@ -40,6 +43,7 @@ export class Contact extends foundry.abstract.DataModel {
         const fields = foundry.data.fields;
         return {
             description: new fields.StringField({ initial: "This is a description", required: true, blank: false }),
+            type: new fields.StringField({ initial: "This is a type", required: true, blank: false }),
             rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1, max: 12 }),
             loyalty: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1, max: 12 })
         };
@@ -60,7 +64,8 @@ export class WeaponAccessory extends foundry.abstract.DataModel {
                         .forEach((key, index) => choices.push(key));
                     return choices;
                 }
-            }))
+            }), { initial: [], required: true, nullable: false }),
+            attached_to: new fields.DocumentIdField({ required: true, nullable: true }),
         };
     }
 }
@@ -91,6 +96,7 @@ export class AdeptPower extends foundry.abstract.DataModel {
         const fields = foundry.data.fields;
         return {
             description: new fields.StringField({ initial: "This is a description", required: true, blank: false }),
+            rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true }),
             activation: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0, max: 3 })
         };
     }

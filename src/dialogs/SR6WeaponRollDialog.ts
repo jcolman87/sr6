@@ -15,7 +15,7 @@ export class SR6WeaponRollDialog extends SR6RollDialog<SR6WeaponRoll, SR6WeaponR
 		this.roll.damage = this.original.damage;
 
 		// Apply attack rating
-		this.roll.getItem()!.getAttackRating(this.roll.distance);
+		this.roll.item!.getAttackRating(this.roll.distance);
 
 		// Apply Firemode
 		this.roll.applyChangeset(Rules.getFiremodeModifiers(this.roll.firemode));

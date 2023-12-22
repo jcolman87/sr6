@@ -1,6 +1,6 @@
 import { SR6Roll, SR6RollData } from "./SR6Roll.js";
 import { SR6Actor } from "../actors/SR6Actor.js";
-import { SR6CONFIG, Enums } from "../config.js";
+import { SR6CONFIG, Enums, MatrixActionDef } from "../config.js";
 import * as Rules from "../rules.js";
 
 export class SR6MatrixRollData extends SR6RollData {
@@ -37,7 +37,11 @@ export class SR6MatrixRoll extends SR6Roll<SR6MatrixRollData> {
 		}
 	}
 
-	get matrix_action(): Enums.MatrixAction {
+	get matrix_action(): MatrixActionDef {
+		return SR6CONFIG.matrix_actions.get(this.matrix_action_id)!
+	}
+
+	get matrix_action_id(): Enums.MatrixAction {
 		return this.data.matrix_action;
 	}
 }

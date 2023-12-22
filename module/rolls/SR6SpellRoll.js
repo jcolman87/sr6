@@ -22,7 +22,7 @@ export class SR6SpellRoll extends SR6Roll {
         return this.data.spell;
     }
     get attacker() {
-        return this.data.getActor();
+        return this.actor;
     }
     get drain() {
         return this.data.spell.drain;

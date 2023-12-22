@@ -27,6 +27,9 @@ export class SR6MatrixRoll extends SR6Roll {
         }
     }
     get matrix_action() {
+        return SR6CONFIG.matrix_actions.get(this.matrix_action_id);
+    }
+    get matrix_action_id() {
         return this.data.matrix_action;
     }
 }

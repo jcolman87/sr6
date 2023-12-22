@@ -29,11 +29,12 @@ export class SR6WeaponRoll extends SR6Roll<SR6WeaponRollData> {
 	}
 	
 	get item(): SR6Gear | null {
-		return this.data.getItem();
+		let item = this.actor!.items.get(this.data.item_id!);
+		return (item == undefined) ? null : item as SR6Gear;
 	}
 
 	get attacker(): SR6Actor | null {
-		return this.data.getActor();
+		return this.actor;
 	}
 
 	get damage(): number {

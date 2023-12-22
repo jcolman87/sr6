@@ -16,8 +16,12 @@
 	</section>
 </div>
 <hr/>
+{{#if roll.isUserOwner }}
 {{#unless roll.data.autoroll_drain}}
 <input id="roll-spell-drain" type="button" value="Roll Drain"/>
 {{/unless}}
+{{/if}}
+{{#unless roll.isUserOwner }}
 <input id="roll-defense" type="button" value="Roll Defense"/>
+{{/unless}}
 {{> "systems/sr6/templates/rolls/shared-footer.html"}}

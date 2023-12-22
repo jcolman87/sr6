@@ -1101,33 +1101,33 @@
         },
         "count_2_glitch":
         {
-            "name": "count_2_glitch",
+            "name": "Count 2's as glitches for target",
             "description": "Count 2s as glitches for the target"
         },
         "create_special":
         {
-            "name": "create_special",
+            "name": "Create Special Effect",
             "description": "Create special effect"
         },
         "edge_action":
         {
-            "name": "edge_action",
+            "name": "Use Edge Action",
             "description": "Edge Action - (1-5)"
         },
         "heal_1_physic":
         {
-            "name": "heal_1_physic",
+            "name": "Heal 1 Physical",
             "description": "Heal 1 point of Physical damage"
         },
         "heal_1_stun":
         {
-            "name": "heal_1_stun",
+            "name": "Heal 1 Stun",
             "description": "Heal one box of Stun damage"
         },
         "negate_1_edge":
         {
-            "name": "negate_1_edge",
-            "description": "Negate 1 Edge of a foe"
+            "name": "Negative 1 edge of Foe",
+            "description": "Negate 1 Edge of target"
         },
         "plus_1_roll":
         {
@@ -1136,17 +1136,17 @@
         },
         "plus_3_ini":
         {
-            "name": "plus_3_ini",
+            "name": "+3 to Initiative",
             "description": "Add 3 to your Initiative Score"
         },
         "reroll_failed":
         {
-            "name": "reroll_failed",
+            "name": "Reroll all failed dice",
             "description": "Reroll all failed dice"
         },
         "reroll_one":
         {
-            "name": "reroll_one",
+            "name": "Reroll One die",
             "description": "Reroll one die. This automatically rerolls the lowest dice roll."
         }
     }

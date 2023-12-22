@@ -35,7 +35,7 @@ export namespace EdgeBoosts {
 
 	export namespace add_edge_pool {
 		export async function prepareData(roll: Rolls.SR6RollData) {
-			roll.pool += roll.getActor()!.getAttribute(Enums.Attribute.edge).pool;
+			roll.pool += roll.actor!.getAttribute(Enums.Attribute.edge).pool;
 			roll.explode = true;
 		}
 		export async function apply(roll: Rolls.SR6Roll) {
@@ -52,7 +52,13 @@ export namespace EdgeBoosts {
 
 export namespace Magic {
 	export function calcSpellAttackPool(actor: SR6Actor, spell: SR6Spell, apply_modifiers: boolean = true) : number {
-		return +actor.getSkill(Enums.Skill.sorcery).pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
+		let special: number = 0;
+		if(actor.getSkill(Enums.Skill.sorcery).specialization == Enums.Specialization.spellcasting) {
+			special = 2;
+		} else if(actor.getSkill(Enums.Skill.sorcery).expertise == Enums.Specialization.spellcasting) {
+			special = 3;
+		}
+		return +special + +actor.getSkill(Enums.Skill.sorcery).pool + +(apply_modifiers ? getGlobalPoolModifier(actor) : 0);
 	}
 	export function calcSpellDrainPool(actor: SR6Actor, spell: SR6Spell, apply_modifiers: boolean = true) : number {
 		// TODO: school of magic

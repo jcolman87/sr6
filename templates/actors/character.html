@@ -32,7 +32,7 @@
 		<a class="item" data-tab="skills">Skills</a>
 		<a class="item" data-tab="combat">Combat</a>
 		<a class="item" data-tab="matrix">Matrix</a>
-		<a class="item" data-tab="magic">Magic</a>
+		{{#unless (eq actor.system.magic.type 0) }} <a class="item" data-tab="magic">Magic</a> {{/unless}}
 		<a class="item" data-tab="gear">Gear</a>
 		{{#if user.isGM }}
 		<a class="item" data-tab="effects">Effects</a>
@@ -51,10 +51,10 @@
 		</div>
 		<div class="tab matrix" data-group="primary" data-tab="matrix">
 			{{> "systems/sr6/templates/actors/parts/tab-matrix.html"}}
-		</div>
-		<div class="tab magic" data-group="primary" data-tab="magic">
+		</div> 
+		{{#unless (eq actor.system.magic.type 0) }}<div class="tab magic" data-group="primary" data-tab="magic">
 			{{> "systems/sr6/templates/actors/parts/tab-magic.html"}}
-		</div>
+		</div>{{/unless}}
 		<div class="tab gear" data-group="primary" data-tab="gear">
 			{{> "systems/sr6/templates/actors/parts/tab-gear.html"}}
 		</div>

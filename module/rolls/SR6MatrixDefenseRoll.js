@@ -6,7 +6,7 @@ export class SR6MatrixDefenseRollData extends SR6RollData {
         super(defender);
         this.attack_roll = attack_roll;
         console.log("SR6MatrixDefenseRoll::constructor", this);
-        this.pool = Rules.calcMatrixDefensePool(defender, this.attack_roll.matrix_action);
+        this.pool = Rules.calcMatrixDefensePool(defender, this.attack_roll.matrix_action_id);
     }
 }
 export class SR6MatrixDefenseRoll extends SR6Roll {
@@ -15,7 +15,7 @@ export class SR6MatrixDefenseRoll extends SR6Roll {
         return SR6MatrixDefenseRoll.CHAT_TEMPLATE;
     }
     get defender() {
-        return this.data.getActor();
+        return this.actor;
     }
     get attacker() {
         return this.data.attack_roll.actor;
@@ -30,6 +30,9 @@ export class SR6MatrixDefenseRoll extends SR6Roll {
         else {
             return null;
         }
+    }
+    get matrix_action_id() {
+        return this.data.attack_roll.matrix_action_id;
     }
     get attack_roll() {
         return this.data.attack_roll;

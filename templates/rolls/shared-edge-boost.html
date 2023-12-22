@@ -1,7 +1,6 @@
-
-{{#ifCond (isUserIdSelf user) '||' (isGM) }}
+{{#if roll.isOwner }}
 <input id="open-spend-edge" type="button" class="chat-edge" value="Edge"/> 
-{{/ifCond}}
+{{/if}}
 <div class="chat-tooltip chat-edge-collapsible" style="display: none">
 	<section>
 		<div>

@@ -1,4 +1,15 @@
 <form class="flexcol" autocomplete="off">
-	{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Matrix Roll" action_text=(localizeName "matrix_action" (matrixActionAsString roll.matrix_action)) formula="" is_matrix=1 }}
-	{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
+	<section>
+		<div style="margin-right: 5px;">
+			<div style="display: inline-block; width:100%;">
+				<div class="section">
+					{{> "systems/sr6/templates/dialogs/shared-header.html" header_text="Matrix Action" action_text=(localizeName "matrix_action" (matrixActionAsString roll.matrix_action)) }}
+				
+					<div style="width: 150px">{{localizeDescription "matrix_action" (matrixActionAsString roll.matrix_action)}}</div>
+					
+					{{> "systems/sr6/templates/dialogs/shared-footer.html" }}
+				</div>
+			</div>
+		</div>
+	</section>
 </form>

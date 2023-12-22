@@ -9,7 +9,7 @@ const itemMappings = {
 	SIN: SR6Item,
     Lifestyle: SR6Item,
     Contact: SR6Item,
-    WeaponAccessor: SR6Item,
+    WeaponAccessory: SR6Item,
     Augmentation: SR6Item,
     Quality: SR6Item,
     AdeptPower: SR6Item,

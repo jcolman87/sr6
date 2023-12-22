@@ -21,6 +21,7 @@ import * as ActorDataModels from "./data/actor.js";
 import * as ItemDataModels from "./data/items.js";
 import * as GearDataModels from "./data/gear.js";
 
+import SR6ImportDialog from "./import/SR6ImportDialog.js";
 import * as util from "./util.js";
 
 declare var game: Game;
@@ -104,4 +105,17 @@ function exportUseful() {
 
 Hooks.on("getChatLogEntryContext", function (html: JQuery, data: ContextMenuEntry[]) {
 	SR6ChatLogContext(html, data);
+});
+
+Hooks.on("renderActorDirectory", function (app: ActorDirectory, html: JQuery, data: any) {
+	let button = $(
+		"<button class='open-import-dialog'><i class='fas fa-edit'></i></i>Import</button>"
+	);
+
+	button.click(async () => {
+		new SR6ImportDialog().render(true);
+	});
+
+	// Render Button
+	$(html).find('.header-actions').append(button);
 });

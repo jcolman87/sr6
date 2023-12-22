@@ -1,5 +1,10 @@
 {{> "systems/sr6/templates/rolls/shared-header.html" action_text="Matrix Defend" }}
 
+Defending against <i style="font-weight: bold; font-style: italic">{{localizeName "matrix_action" (matrixActionAsString roll.attack_roll.matrix_action_id)}}</i>
+by <i style="font-weight: bold; font-style: italic">{{roll.attack_roll.actor.name}}</i></br>
+
+</br>
+
 {{#if roll.success }}
 	<i style="color: #006400">Defended Successfully!</i>
 {{ else }}

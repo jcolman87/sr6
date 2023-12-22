@@ -40,6 +40,13 @@ export class SR6CharacterActor extends SR6Actor {
 		return physical_modifier + stun_modifier;
 	}
 
+	get jacked_in(): boolean {
+		if(this.matrix_persona) {
+			return this.matrix_persona.active;
+		}
+
+		return false;
+	}
 
 	get matrix_persona(): null | ActorTypes.MatrixPersona {
 		return this.getData().matrix.persona;
@@ -49,6 +56,8 @@ export class SR6CharacterActor extends SR6Actor {
 		super.prepareData();
 
 		this.prepareMonitors();
+
+		this.prepareMatrixPersona();
 	}
 
 	override prepareDerivedData() {
@@ -59,6 +68,90 @@ export class SR6CharacterActor extends SR6Actor {
 		this.prepareSkillPools();
 
 		this.prepareInitiatives();
+	}
+
+	prepareMatrixPersona() {
+		if(this.matrix_persona != null && this.matrix_persona!.active) {
+			if(this.matrix_persona.device != null) {
+				let device: SR6Gear = this.items.get(this.matrix_persona.device) as SR6Gear;
+				if(device == undefined) {
+					this.deactivateMatrix();
+				} else {
+					let attributes = {
+							a: device.solveFormulaWithActor(this, device!.matrix!.matrix_attributes.a),
+							s: device.solveFormulaWithActor(this, device!.matrix!.matrix_attributes.s),
+							d: device.solveFormulaWithActor(this, device!.matrix!.matrix_attributes.d),
+							f: device.solveFormulaWithActor(this, device!.matrix!.matrix_attributes.f),
+						};
+					let persona = {
+						device: device.id,
+						base_attributes: attributes,
+						attributes: attributes,
+						vr_type: Enums.VRType.AR
+					};
+
+					this.update({
+						["system.matrix.persona"]: persona,
+					});
+				}
+			}
+		} else {
+			if(this.matrix_persona) {
+				this.matrix_persona.active = false;
+			}
+		}
+	}
+
+
+	activateMatrix(device: null | SR6Gear = null): boolean {
+		if(this.getData().magic.type == Enums.MagicType.Technomancer) {
+			let living_attributes = {
+				a: this.getAttribute(Enums.Attribute.charisma).pool,
+				s: this.getAttribute(Enums.Attribute.intuition).pool,
+				d: this.getAttribute(Enums.Attribute.logic).pool,
+				f: this.getAttribute(Enums.Attribute.willpower).pool,
+			};
+			let persona = {
+				active: true,
+				device: null,
+				base_attributes: living_attributes,
+				attributes: living_attributes,
+				vr_type: Enums.VRType.Cold
+			};
+
+			this.update({
+				["system.matrix.persona"]: persona,
+			});
+		} else {
+			// Are there any active devices? If not, error.
+			let activeMatrixItems = this.items.filter((i) => {
+				let item = (i as SR6Gear);
+				if(item.type != "Gear") {
+					return false;
+				}
+				return item.has(GearTypes.Types.Matrix) && item.matrix!.matrix_active;
+			});
+			if(activeMatrixItems.length < 1) {
+				ui.notifications!.warn("No active matrix item to jack in to!");
+				return false; 
+			}
+
+			let device = (activeMatrixItems[0] as SR6Gear);
+			let persona = {
+				active: true,
+				device: device.id
+			};
+
+			this.update({
+				["system.matrix.persona"]: persona,
+			});
+		}
+
+		return true;
+	}
+
+	deactivateMatrix() {
+		this.update({["system.matrix.persona"]: {active: false}});
 	}
 
 	getData(): CharacterActorData {
@@ -73,17 +166,27 @@ export class SR6CharacterActor extends SR6Actor {
 	}
 
 	rollSkill(skill: Enums.Skill) {
-		new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined })).render(true);
+		new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: skill, specialization: undefined }),
+			"Roll Skill",
+			(game as Game).i18n.localize(`skill.${Enums.Skill[skill]}.name`)).render(true);
 	}
 	rollSpecialization(special: Enums.Specialization) {
-		new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special })).render(true);
+		new SR6RollDialog(Rolls.SR6SkillRoll.make, new Rolls.SR6SkillRollData(this, { skill: SR6CONFIG.getSkillOfSpecialization(special), specialization: special }),
+			"Roll Skill",
+			(game as Game).i18n.localize(`specialization.${Enums.Specialization[special]}.name`)).render(true);
 	}
 
 	rollAttribute(attribute: Enums.Attribute) {
-		new SR6RollDialog(Rolls.SR6AttributeRoll.make, new Rolls.SR6AttributeRollData(this, attribute)).render(true);
+		new SR6RollDialog(Rolls.SR6AttributeRoll.make, new Rolls.SR6AttributeRollData(this, attribute),
+			"Roll Attribute",
+			Enums.Attribute[attribute]).render(true);
 	}
 
 	rollMatrixAction(action: Enums.MatrixAction) {
+		if(!this.jacked_in) {
+			ui.notifications!.warn("You cannot perform a matrix action because you're not jacked in!");
+			return;
+		}
 		new SR6MatrixRollDialog(this, action).render(true);
 	}
 

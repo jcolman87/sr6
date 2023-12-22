@@ -5,16 +5,20 @@ export class SR6RollDialog extends SR6Dialog {
     roll;
     original;
     pool_modifier = 0;
+    action_text = "";
+    header_text = "";
     get template() {
         return "systems/sr6/templates/dialogs/RollDialog.html";
     }
     simple(data, options = {}) {
         return new SR6RollDialog(SR6Roll.make, data, options);
     }
-    constructor(maker, roll, options = {}) {
+    constructor(maker, roll, header_text = "", action_text = "", options = {}) {
         super({}, options);
         this.maker = maker;
         this.roll = roll;
+        this.header_text = header_text;
+        this.action_text = action_text;
         this.original = Object.assign(Object.create(Object.getPrototypeOf(roll)), roll);
     }
     prepareData() {
@@ -35,6 +39,8 @@ export class SR6RollDialog extends SR6Dialog {
         this.prepareData();
         data.dialog = this;
         data.roll = this.roll;
+        data.header_text = this.header_text;
+        data.action_text = this.action_text;
         return data;
     }
     activateListeners(html) {
@@ -60,11 +66,5 @@ export class SR6RollDialog extends SR6Dialog {
         await r.finish();
         r.toMessage();
         this.close({});
-    }
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            width: 150,
-            height: 500,
-        });
     }
 }
