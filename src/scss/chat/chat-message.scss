@@ -1,0 +1,159 @@
+@use '@scss/mixins/backgrounds.scss';
+@use '@scss/vars/colors.scss';
+
+.chat-message {
+	@include backgrounds.crossboxes();
+
+	.message-header {
+		border-bottom: 1px dashed colors.$blue !important;
+	}
+
+	.message-sender {
+		color: colors.$dark-blue;
+		font-family: 'Bebas Neue', sans-serif;
+		font-size: 1.5em;
+	}
+
+	.message-content {
+		padding: 0.25em;
+	}
+
+	.story-point {
+		width: 100%;
+		text-align: center;
+		font-family: 'Bebas Neue', sans-serif;
+		font-size: 1.5em;
+		color: colors.$blue;
+
+		&.gm {
+			color: colors.$red;
+		}
+	}
+
+	%details-card {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		gap: 0.25em;
+
+		.imageAndName {
+			display: grid;
+			grid-template-columns: 1.25em 1fr;
+			gap: 0.25em;
+
+			font-family: 'Bebas Neue', sans-serif;
+			font-size: 1.5em;
+			color: colors.$blue;
+
+			img {
+				border: none;
+				border-radius: 5px;
+			}
+		}
+
+		.description {
+			&:empty {
+				display: none;
+			}
+		}
+
+		label {
+			font-family: 'Bebas Neue', sans-serif;
+			color: colors.$blue;
+		}
+
+		& > label {
+			font-size: 1.25em;
+		}
+
+		.details-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: auto auto;
+			align-items: center;
+			justify-items: center;
+
+			label {
+				grid-row: 1 / span 1;
+				font-size: 1.1em;
+			}
+
+			span {
+				grid-row: 2 / span 1;
+			}
+		}
+	}
+
+	.item-card {
+		@extend %details-card;
+
+		&.weapon .description,
+		&.armor .description {
+			border-bottom: 1px dashed colors.$gold;
+		}
+
+		.weapon-firing-arc {
+			label {
+				grid-column: 1 / span 2;
+			}
+
+			span {
+				grid-column: 1 / span 2;
+			}
+		}
+
+		// Left for now due to backwards compatibility with version <= 0.1.13 of this package.
+		.defenseAndSoak,
+		.skillAndRange,
+		.damageAndCritical {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: auto auto;
+			align-items: center;
+			justify-items: center;
+
+			label {
+				grid-row: 1 / span 1;
+				font-size: 1.1em;
+			}
+
+			span {
+				grid-row: 2 / span 1;
+			}
+		}
+	}
+
+	.ability {
+		@extend %details-card;
+
+		.description {
+			border-bottom: 1px dashed colors.$gold;
+		}
+
+		.abilityActivation {
+			label {
+				grid-column: 1 / span 2;
+			}
+
+			span {
+				grid-column: 1 / span 2;
+			}
+		}
+	}
+
+	.qualities {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0.25em;
+
+		font-size: 1.05em;
+
+		.quality {
+			background: transparentize(colors.$gold, 0.9);
+			border: 1px dashed colors.$gold;
+			border-radius: 0.25em;
+			padding: 0.25em;
+		}
+	}
+}

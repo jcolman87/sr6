@@ -1,0 +1,34 @@
+id: sr6
+title: SR6
+description: (ALPHA) Unofficial implementation of Shadowrun 6E Seattle City Edition
+version: 0.0.1
+compatibility:
+  minimum: 10
+  verified: 10
+  maximum: 11
+templateVersion: 1
+authors:
+  - name: jaynus
+scripts:
+  - scripts/container-query-polyfill/container-query-polyfill.modern.js
+esmodules:
+  - sr6.js
+styles:
+  - style.css
+languages:
+  - lang: en
+    name: English
+    path: lang/en.json
+#packs:
+#  - name: crb-skills
+#    label: Core Skills
+#    system: genesys
+#    path: ./packs/crb-skills.db
+#    type: Item
+socket: true
+url: https://github.com/jaynus/sr6
+bugs: https://github.com/jaynus/sr6/issues
+changelog: https://github.com/jaynus/sr6/blob/release/CHANGELOG.md
+license: https://github.com/jaynus/sr6/blob/main/LICENSE
+manifest: https://github.com/jaynus/sr6/releases/latest/download/manifest.json
+download: https://github.com/jaynus/sr6/releases/latest/download/sr6.zip

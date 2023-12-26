@@ -1,0 +1,23 @@
+<div class="ability">
+	<div class="imageAndName">
+		<img src="{{img}}" />
+		<span>{{ name }}</span>
+	</div>
+
+	<div class="description">{{{ description }}}</div>
+
+    <div class="details-grid abilityActivation">
+        <label class="activation">{{localize 'SR6.Labels.Activation'}}</label>
+        <span class="activation">{{localize (concat 'SR6.Labels.' (capitalize activation.type))}} {{#if activation.detail}}({{ activation.detail }}){{/if}}</span>
+    </div>
+
+	{{!-- Talent: Effective Tier, Rank --}}
+	{{#if effectiveTier}}
+		<div class="details-grid">
+			<label class="effectiveTier">{{localize 'SR6.Labels.EffectiveTier'}}</label>
+			<label class="rank">{{localize 'SR6.Labels.Rank'}}</label>
+			<span class="effectiveTier">{{ effectiveTier }}</span>
+			<span class="rank">{{#if ranked}}{{ rank }}{{else}}{{localize 'SR6.Labels.NotApplicable'}}{{/if}}</span>
+		</div>
+	{{/if}}
+</div>

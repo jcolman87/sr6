@@ -1,1 +1,0 @@
-console.log(game.actors.getName("Test").testPhysical());
