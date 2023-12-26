@@ -1,10 +1,54 @@
 <script lang="ts" setup>
+import { computed, toRaw, inject } from 'vue';
+
+import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
+import CharacterDataModel from '@/actor/data/CharacterDataModel';
+
+import Localized from '@/vue/components/Localized.vue';
+import CharacterMeta from '@/vue/sheets/actor/character/CharacterMeta.vue';
+
+import BasicsTab from '@/vue/sheets/actor/character/BasicsTab.vue';
+import SkillsTab from '@/vue/sheets/actor/character/SkillsTab.vue';
+import InventoryTab from '@/vue/sheets/actor/character/InventoryTab.vue';
+import CombatTab from '@/vue/sheets/actor/character/CombatTab.vue';
+import MatrixTab from '@/vue/sheets/actor/character/MatrixTab.vue';
+import MagicTab from '@/vue/sheets/actor/character/MagicTab.vue';
+
+const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
+const system = computed(() => toRaw(context.data.actor).systemData);
 
 </script>
 
 <template>
 	<div class="character-sheet">
+		<CharacterMeta />
 
+		<section class="combat-stat-row">
+
+		</section>
+
+		<nav class="sheet-tabs" data-group="primary">
+			<div class="spacer"></div>
+
+			<a class="item" data-tab="basics"><Localized label="SR6.Tabs.Basics" /></a>
+			<a class="item" data-tab="skills"><Localized label="SR6.Tabs.Skills" /></a>
+			<a class="item" data-tab="inventory"><Localized label="SR6.Tabs.Inventory" /></a>
+			<a class="item" data-tab="combat"><Localized label="SR6.Tabs.Combat" /></a>
+			<a class="item" data-tab="matrix"><Localized label="SR6.Tabs.Matrix" /></a>
+			<a class="item" data-tab="magic"><Localized label="SR6.Tabs.Magic" /></a>
+
+			<div class="spacer"></div>
+		</nav>
+
+		<section class="sheet-body">
+			<div class="tab" data-tab="basics"><BasicsTab /></div>
+			<div class="tab" data-tab="skills"><SkillsTab /></div>
+			<div class="tab" data-tab="inventory"><InventoryTab /></div>
+			<div class="tab" data-tab="combat"><CombatTab /></div>
+			<div class="tab" data-tab="matrix"><MatrixTab /></div>
+			<div class="tab" data-tab="magic"><MagicTab /></div>
+
+		</section>
 	</div>
 </template>
 

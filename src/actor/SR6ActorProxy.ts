@@ -1,9 +1,10 @@
 import SR6Actor from '@/actor/SR6Actor';
 import CharacterDataModel from "@/actor/data/CharacterDataModel";
+import SR6LifeformActor from "@/actor/SR6LifeformActor";
 
 //Provide a type string to class object mapping to keep our code clean
 const actorMappings: any = {
-	character: SR6Actor<CharacterDataModel>
+	character: SR6LifeformActor
 };
 
 export const SR6ActorProxy = new Proxy(function () {}, {

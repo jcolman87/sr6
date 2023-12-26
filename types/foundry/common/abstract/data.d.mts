@@ -1,6 +1,4 @@
 import * as fields from '../data/fields.mjs';
-import { MergeObjectOptions } from '../utils/helpers.mjs';
-import { EmbeddedCollection } from './embedded-collection.mjs';
 
 /**
  * The abstract base class which defines the data schema contained within a Document.
@@ -15,8 +13,6 @@ export default abstract class DataModel<
 		data?: DeepPartial<SourceFromSchema<fields.DataSchema>>,
 		options?: DataModelConstructionOptions<TParent>,
 	);
-
-	static _enableV10Validation: boolean;
 
 	/**
 	 * The source data object for this DataModel instance.

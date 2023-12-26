@@ -91,7 +91,7 @@
 		// Styling for the active tab link.
 		.active {
 			position: relative;
-			background: colors.$red;
+			background: colors.$purple;
 
 			// Add a small triangle to the bottom of the active tab for some visual flair!
 			&::after {
@@ -102,7 +102,7 @@
 				top: 100%;
 				height: 0.25rem;
 				width: 100%;
-				background-color: colors.$red;
+				background-color: colors.$purple;
 				clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 25%, 0% 100%);
 			}
 

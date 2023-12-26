@@ -1,4 +1,5 @@
 $red: #90231e;
+$purple: #b4107f;
 
 $light-blue: #71c6ff;
 $blue: #2b4b73;
@@ -13,3 +14,11 @@ $die-proficiency: #fff200;
 $die-challenge: #761213;
 $die-boost: #72cddc;
 $die-setback: #1e1e1e;
+
+:root {
+  --highlight-color: #892378;
+  --accent-color: #00a8ff;
+  --section-background: #efefeb;
+  --tablehead-background: #e0e0d9;
+  --input-color: #202020;
+}
