@@ -5,6 +5,7 @@ declare global {
 		module abstract {
 			export import DataModel = AbstractDataModel.DataModel;
 			export import _DataModel = AbstractDataModel._DataModel;
+			export import DataModelValidationOptions = AbstractDataModel.DataModelValidationOptions;
 
 			/**
 			 * A schema entry which describes a field of DocumentData

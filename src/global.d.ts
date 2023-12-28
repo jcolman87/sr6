@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Provides overridden, system-specific type data for Foundry's CONFIG global.
  */
@@ -15,7 +15,6 @@ import { SR6_CONFIG } from '@/config';
 declare global {
 	const ui: FoundryUI;
 	const canvas: Canvas;
-
 	interface SR6Config
 		extends Config<
 			AmbientLightDocument,
@@ -45,4 +44,16 @@ declare global {
 	const CONFIG: SR6Config;
 
 	const game: Game<SR6Actor, Actors, ChatMessage, SR6Combat, SR6Item, Macro, Scene, User>;
+
+	interface LoggerParams {
+		type?: 'log' | 'trace' | 'warn' | 'info' | 'debug';
+		inputs?: boolean;
+		outputs?: boolean;
+	}
+
+	const defaultParams: Required<LoggerParams> = {
+		type: 'log',
+		inputs: true,
+		outputs: true,
+	};
 }

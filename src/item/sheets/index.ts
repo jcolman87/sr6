@@ -1,11 +1,16 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Item Sheet Registration
  */
 
 import VueSheet from '@/vue/VueSheet';
+
 import SR6ItemSheet from '@/item/SR6ItemSheet';
+
+import MatrixActionSheet from '@/vue/sheets/item/MatrixActionSheet.vue';
+import SkillSheet from '@/vue/sheets/item/SkillSheet.vue';
+
 import { SR6ItemSheetData, ItemSheetContext } from '@/vue/SheetContext';
 
 type VueSheetConstructor = new (...args: any[]) => {
@@ -40,4 +45,13 @@ function basicSheet(vueComponent: any, sheetType: VueSheetConstructor = VueSheet
 export function register() {
 	Items.unregisterSheet('core', ItemSheet);
 
+	Items.registerSheet('sr6', basicSheet(SkillSheet), {
+		types: ['skill'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(MatrixActionSheet), {
+		types: ['matrix_action'],
+		makeDefault: true,
+	});
 }

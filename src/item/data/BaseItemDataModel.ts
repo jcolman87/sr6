@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Basic data model
  */

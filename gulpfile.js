@@ -1,10 +1,40 @@
 import fs from 'fs';
 import gulp from 'gulp';
+
+import through2 from 'through2';
+import mergeStream from 'merge-stream';
+import yaml from 'js-yaml';
+import Datastore from 'nedb';
+import path from 'path';
+
 const { dest, series, src } = gulp;
 
 import gulpClean from 'gulp-clean';
 import gulpYaml from 'gulp-yaml';
 import gulpZip from 'gulp-zip';
+
+const PACK_SRC = './packs';
+function compilePacks() {
+	// determine the source folders to process
+	const folders = fs.readdirSync(PACK_SRC).filter((file) => {
+		return fs.statSync(path.join(PACK_SRC, file)).isDirectory();
+	});
+
+	// process each folder into a compendium db
+	const packs = folders.map((folder) => {
+		const filename = path.resolve('dist', 'packs', `${folder}.db`);
+		fs.unlink(filename, function (err) {});
+		const db = new Datastore({ filename: filename, autoload: true });
+		return gulp.src(path.join(PACK_SRC, folder, '/**/*.yml')).pipe(
+			through2.obj((file, enc, cb) => {
+				let json = yaml.loadAll(file.contents.toString());
+				db.insert(json);
+				cb(null, file);
+			}),
+		);
+	});
+	return mergeStream.call(null, packs);
+}
 
 export function zip() {
 	let version;
@@ -29,9 +59,14 @@ export function data() {
 	return src('yaml/**/*.yml').pipe(gulpYaml()).pipe(dest('public/'));
 }
 
-function watchDirs() {
-	gulp.watch('yaml/**/*.yml', data);
+export function packs() {
+	return compilePacks();
 }
 
-export const watch = series(clean, data, watchDirs);
-export default series(clean, data);
+function watchDirs() {
+	gulp.watch('yaml/**/*.yml', data);
+	gulp.watch('packs/**/*.yml', packs);
+}
+
+export const watch = series(clean, data, packs, watchDirs);
+export default series(clean, packs, data);

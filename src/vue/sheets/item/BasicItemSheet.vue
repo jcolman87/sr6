@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, inject,  ref, toRaw } from 'vue';
+import { computed, inject, ref, toRaw, onBeforeMount, onBeforeUpdate } from 'vue';
 
 import { vLocalize } from '@/vue/directives';
 import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
@@ -28,6 +28,7 @@ const system = computed(() => context.data.item.systemData);
 const effects = ref<any>([]);
 
 async function addEffect(category: string) {
+	console.log('addEffect', category, category === 'suppressed');
 	await toRaw(context.sheet.item).createEmbeddedDocuments('ActiveEffect', [
 		{
 			label: context.data.item.name,
@@ -37,13 +38,20 @@ async function addEffect(category: string) {
 		},
 	]);
 }
+
+function updateEffects() {
+	effects.value = [...toRaw(context.data.item).effects];
+}
+
+onBeforeMount(updateEffects);
+onBeforeUpdate(updateEffects);
 </script>
 
 <template>
 	<div class="item-sheet-basic">
 		<header :class="hasDecoration ? 'with-decoration' : ''">
 			<img :src="context.data.item.img" data-edit="img" :title="context.data.item.name" :alt="context.data.item.name" />
-			<input type="text" name="name" :value="context.data.item.name" v-localize:placeholder="'Genesys.Labels.Name'" />
+			<input type="text" name="name" :value="context.data.item.name" v-localize:placeholder="'SR6.Labels.Name'" />
 			<!-- Decoration -->
 			<slot v-if="hasDecoration" name="decoration"></slot>
 		</header>
@@ -53,15 +61,15 @@ async function addEffect(category: string) {
 
 			<slot name="tabs">
 				<a class="item" data-tab="description">
-					<Localized label="Genesys.Tabs.Description" />
+					<Localized label="SR6.Tabs.Description" />
 				</a>
 
 				<a class="item" data-tab="data">
-					<Localized label="Genesys.Tabs.Data" />
+					<Localized label="SR6.Tabs.Data" />
 				</a>
 
 				<a v-if="showEffectsTab" class="item" data-tab="effects">
-					<Localized label="Genesys.Tabs.Effects" />
+					<Localized label="SR6.Tabs.Effects" />
 				</a>
 			</slot>
 
@@ -70,7 +78,12 @@ async function addEffect(category: string) {
 
 		<section class="sheet-body">
 			<div class="tab" data-group="primary" data-tab="description">
+				<slot name="source">
+					<label><Localized label="SR6.Labels.Source" /></label>
+					<input type="text" name="system.source" :value="system.source" />
+				</slot>
 				<slot name="description">
+					<label><Localized label="SR6.Labels.Description" /></label>
 					<Editor name="system.description" :content="system.description" button />
 				</slot>
 			</div>

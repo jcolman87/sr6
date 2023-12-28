@@ -2,13 +2,13 @@ export {};
 declare global {
 	/**
 	 * A dice pool represents a set of Roll expressions which are collectively modified to compute an effective total
-	 * across all Rolls in the pool. The final total for the pool is defined as the sum over kept rolls, relative to any
+	 * across all Rolls in the pool. The final total for the pool is defined as the sum over kept roll, relative to any
 	 * success count or margin.
 	 *
 	 * @example
 	 * // Keep the highest of the 3 roll expressions
 	 * let pool = new PoolTerm({
-	 *   rolls: ["4d6", "3d8 - 1", "2d10 + 3"],
+	 *   roll: ["4d6", "3d8 - 1", "2d10 + 3"],
 	 *   modifiers: ["kh"]
 	 * });
 	 * pool.evaluate();
@@ -104,7 +104,7 @@ declare global {
 		/**
 		 * Create a PoolTerm by providing an array of existing Roll objects
 		 * @param rolls An array of Roll objects from which to create the pool
-		 * @returns The constructed PoolTerm comprised of the provided rolls
+		 * @returns The constructed PoolTerm comprised of the provided roll
 		 */
 		static fromRolls<TTerm extends PoolTerm>(this: ConstructorOf<TTerm>, rolls?: Roll[]): TTerm;
 
@@ -113,9 +113,9 @@ declare global {
 		/* -------------------------------------------- */
 
 		/**
-		 * Keep a certain number of highest or lowest dice rolls from the result set.
+		 * Keep a certain number of highest or lowest dice roll from the result set.
 		 *
-		 * {1d6,1d8,1d10,1d12}kh2       Keep the 2 best rolls from the pool
+		 * {1d6,1d8,1d10,1d12}kh2       Keep the 2 best roll from the pool
 		 * {1d12,6}kl                   Keep the lowest result in the pool
 		 *
 		 * @param modifier The matched modifier query
@@ -123,7 +123,7 @@ declare global {
 		keep(modifier: string): void;
 
 		/**
-		 * Keep a certain number of highest or lowest dice rolls from the result set.
+		 * Keep a certain number of highest or lowest dice roll from the result set.
 		 *
 		 * {1d6,1d8,1d10,1d12}dl3       Drop the 3 worst results in the pool
 		 * {1d12,6}dh                   Drop the highest result in the pool

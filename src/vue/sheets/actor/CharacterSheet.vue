@@ -16,16 +16,13 @@ import MagicTab from '@/vue/sheets/actor/character/MagicTab.vue';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
-
 </script>
 
 <template>
 	<div class="character-sheet">
 		<CharacterMeta />
 
-		<section class="combat-stat-row">
-
-		</section>
+		<section class="combat-stat-row"></section>
 
 		<nav class="sheet-tabs" data-group="primary">
 			<div class="spacer"></div>
@@ -47,7 +44,6 @@ const system = computed(() => toRaw(context.data.actor).systemData);
 			<div class="tab" data-tab="combat"><CombatTab /></div>
 			<div class="tab" data-tab="matrix"><MatrixTab /></div>
 			<div class="tab" data-tab="magic"><MagicTab /></div>
-
 		</section>
 	</div>
 </template>

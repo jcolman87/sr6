@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Root for Socket utilities
  */
@@ -36,7 +36,7 @@ export enum SocketOperation {
 	UpdateCombatTracker,
 
 	/**
-	 * Called when a player rolls initiative for an extra slot.
+	 * Called when a player roll initiative for an extra slot.
 	 */
 	UpdateInitiativeForExtraSlot,
 }

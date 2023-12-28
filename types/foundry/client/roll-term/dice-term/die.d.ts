@@ -61,7 +61,7 @@ declare global {
 		 * Explosion can be a "small explode" using a lower-case x or a "big explode" using an upper-case "X"
 		 *
 		 * @param modifier The matched modifier query
-		 * @param recursive Explode recursively, such that new rolls can also explode?
+		 * @param recursive Explode recursively, such that new roll can also explode?
 		 */
 		explode(modifier: string, { recursive }?: { recursive?: boolean }): void;
 
@@ -71,7 +71,7 @@ declare global {
 		explodeOnce(modifier: string): void;
 
 		/**
-		 * Keep a certain number of highest or lowest dice rolls from the result set.
+		 * Keep a certain number of highest or lowest dice roll from the result set.
 		 *
 		 * 20d20k       Keep the 1 highest die
 		 * 20d20kh      Keep the 1 highest die
@@ -84,7 +84,7 @@ declare global {
 		keep(modifier: string): void;
 
 		/**
-		 * Drop a certain number of highest or lowest dice rolls from the result set.
+		 * Drop a certain number of highest or lowest dice roll from the result set.
 		 *
 		 * 20d20d       Drop the 1 lowest die
 		 * 20d20dh      Drop the 1 highest die

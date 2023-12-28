@@ -1,0 +1,1280 @@
+name: Backdoor Entry
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: This action is linked to the Sleaze Attribute. You attempt to use a backdoor you have put in place to gain illicit entry into a host, device, or other Matrix area. This action can only be used if you have previously used Probe on the target suc- cessfully; net hits from that successful Probe count as a dice-pool bonus on this test. If the test is suc- cessful, you gain Admin access to the target, and it does not count as illegal Admin access (though taking illegal Matrix Actions will still increase your Overwatch Score). If this test fails, the back- door you have made was detected and removed, and you cannot attempt Backdoor Entry again with the same host until a new backdoor is made through the Probe Action. Failing this test does not immediately set off alarms, but the character’s OS increases as normal.
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Hacking
+    attribute: logic
+  linked_attribute: s
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Backdoor Entry
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Brute Force
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: This action is linked to the Attack attribute. You directly attack a device, flooding it with re- quests, commands, queries, and other junk code in order to create an exploit to give you access. Brute Force is by far the fastest way to gain illicit access to a device, but it carries with it many risks. Using Brute Force will always alert the device you are at- tempting to gain access to, so GOD score accumu- lates with each test. Should you fail a Brute Force attempt to gain access, you may attempt another on the next combat round.     If the hacker is attempting to gain User or Admin access, the opposed roll is Willpower + Firewall. When attempting to gain Admin access without first having gained User access, the opposed roll is Will- power + (Firewall + 2), and the target is granted a +4 bonus to their Defense Rating for that Test.
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Cybercombat
+    attribute: logic
+  linked_attribute: a
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Brute Force
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Change Icon
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You change the target’s icon to one that you have a copy of or have designed yourself. Chang- ing an icon doesn’t change the results of a Matrix Perception action but might fool personas who don’t take the time to inspect your new look. You can target your own icon, if you like.
+  type: decker
+  skill_use: null
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: minor
+    activation_period: any
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+effects:
+  -
+    name: Change Icon
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onuse
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Check OS
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: If your test is successful, you are informed ofyour current Overwatch Score.
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Hacking
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+# TODO: Effect to show OS?
+---
+name: Control Device
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: This action allows extended remote control of a device. You maintain control until you relin- quish command or are forced out of the system. While you have control, you can use the device as if you were the owner using a standard skill test, including turning the device off if you have Admin access. If there is no test associated with the device you wish to use, use Electronics + Logic vs. Firewall + Willpower. This test assumes you are using the device directly, not command- ing a device to use another (such as commanding a drone to fire its weapon). A Control Device action versus a device currently “jumped into” by a rigger automatically fails.     When you use Control Device, you may take any action that would normally require the level of access you currently have. Hacking User access allows you to take any action that would normally require legitimate User access. Actions that nor- mally require legitimate Admin access will likewise require hacked Admin access to perform. The Attributes you’ll use for Control Device Tests may change based on whether you are in AR or VR while using it. If you are using a device via Augmented Reality, and the de- vice requires a Physical attribute, use your normal Physical attribute for this test. If you are using this device via Virtual Reality, and the device requires a Physical attribute, substi- tute the appropriate Mental attribute for this test. (Body = Willpower, Agility = Logic, Reaction = Intuition, Strength = Charisma).
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Control Device
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Crack File
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You remove the protection from a file, making it readable.
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Hacking
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@rating * 2'
+    device_defend: '@rating * 2'
+    damage: null
+    soak: null
+---
+name: Crash Program
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You overload part of your target’s memory and scramble one of its running programs. You need to specify which program you’re trying to crash; you can learn what your target is running either with a Matrix Perception action or by observing the program in action. If you succeed, the program is scrambled: it ends and cannot be restarted until the device it was running on is rebooted.'
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Cybercombat
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@persona.d + @persona.device.rating'
+    device_defend: null
+    damage: null
+    soak: null
+effects:
+  -
+    name: Crash Program
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Data Spike
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You send harmful instructions to a persona or device, causing Matrix damage to the target. Your attack has a Damage Value equal to your [Attack Attribute/2, rounded up], with one additional box of damage per net hit. This action is linked to the Attack attribute.
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Cybercombat
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@persona.d + @persona.f'
+    device_defend: '@persona.d + @persona.f'
+    damage: 'ceil(@persona.a/2) + @hits'
+    soak: '@persona.f'
+---
+name: Disarm Data Bomb
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You attempt to disarm a Data Bomb that you have detected (usually as the result of a Matrix Perception action). If you score any net hits, the Data Bomb is removed and deleted. If not, the Data Bomb activates, causing its damage and possibly destroying any file to which it was attached (assuming it was set to destroy the file).
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Cybercombat
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@rating * 2'
+    device_defend: '@rating * 2'
+    damage: null
+    soak: null
+---
+name: Edit File
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: Edit File allows you to create, change, copy, delete, or protect any kind of file. The defender is either the host holding the file or the owner of the file (if it’s not on a host). Each action is enough to alter one detail of a file—a short paragraph of text, a single detail of an image, or two or three seconds of video or audio (you and your gamemaster can work out what exactly “one detail” means). Your gamemaster may impose penalties on the test if your edit is particularly intricate or tricky. If you want to perform a continuous edit, such as removing your teammates from a video feed, you need to perform this action once per combat round for as long as you want to keep the edit going. If you use this action to copy a file, you are the new file’s owner. If the file you want to copy has protection on it, this action automatically fails. If the file has a Data Bomb, the Data Bomb goes off on you (so try to remember to scan files before you open them).
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Computer
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@intuition + @persona.f'
+    device_defend: '@persona.f + @persona.s'
+    damage: null
+    soak: null
+---
+name: Encrypt File
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: The hits on the Encrypt File test establish an Encryption Rating that’s used to oppose future Crack File attempts.
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Computer
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+effects:
+  -
+    name: Encrypt File
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Enter Host
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You enter or leave a host. No test is required, but different hosts have different access levels, so you must have the appropriate access to enter. Leaving can be done without any particular access level, because the Matrix is always happy to see interlopers leave.
+  type: any
+  skill_use: null
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: minor
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+effects:
+  -
+    name: Enter Host
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Erase Matrix Signature
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You eradicate a Matrix signature that has been left by a Resonance being, such as a technomancer or a sprite. If the test is successful, the signature dissipates. You must have a Resonance rating to attempt this action. Unlike other actions that need Resonance, this one’s a real Matrix Action, and illegal to boot, so you risk Matrix damage and Overwatch Score when you use it.
+  type: resonance
+  skill_use:
+    skill: Electronics
+    specialization: Computer
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f * f'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Erase Matrix Signature
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Format Device
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: You rewrite the boot code of the target device. The next time it would reboot, it instead shuts down for good, or until its software can be replaced. A device that has been shut down in this fashion loses all of its wireless modifiers but can still be used as a normal mechanism (a door with a manual handle can be opened, a gun with a trigger can be fired, etc.), and it cannot be accessed from the Matrix. Repairing a formatted device follows the same rules as repairing a bricked device (see Bricked Devices, p. 175), requiring a number of hits equal to the device’s Device Rating to restore the corrupted boot code.
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f * 2'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Format Device
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Full Matrix Defense
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description:
+  type: decker
+  skill_use: null
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: any
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+effects:
+  -
+    name: Full Matrix Defense
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onuse
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: 'persona.defense_bonus'
+        value: '@persona.f'
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: 1
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Hash Check
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: This is a specialized Matrix search, made illegal by the fact that it searches for an encrypted file by matching it to a hash value (GOD does not appreciate people trying to skirt encryption). By searching for a specific value, the characters can find an encrypted document on a host or device without first having to decrypt every document to find the right one. This works best if Mr. Johnson provided the hash value to them, but in a pinch the search can be done with the character’s best guess. The threshold is 1 if you have a hash value from Mr. Johnson or some other source, 4 if you are doing the best on your own. Meeting the threshold means you have narrowed the number of possibly matching files down to 32; for every net hit, that number is divided in half (so there are 16 files with 1 net hit, 8 with 2, etc.). If the number of possible matches still seems too large after the initial test, the test can be repeated with the –2 dice pool penalty for repeating an action (see p. 36). Success on this subsequent test, along with any net hits, serves to divide the number of possible matches in half.
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Computer
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+---
+name: Hide
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: When you muck about in the Matrix, you’ll probably be spotted by another icon, even if you’re running silent. You can use this action to make a target lose you. If you succeed, the target stops spotting you and needs to perform a new Matrix Perception action against you if it wants to find you again. You can’t hide from an icon that has gained User or Admin access to anything in your network.
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Electronic Warfare
+    attribute: intuition
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: any
+  formulas:
+    attack: null
+    defend: '@intuition + @persona.d'
+    device_defend: '@persona.d + @persona.s'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Hide
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onuse
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Jack Out
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'This action jacks you out of the Matrix and reboots the device you are using. You suffer dumpshock if you were in VR. The defense pool only applies if you’ve been link-locked by someone; the test is against the icon that locked your link. If more than one persona has you link-locked, you need to beat each of them individually: use a single roll and compare your hits to rolls from each opponent who had established a link-lock. You can only jack out yourself. You can’t dump other people except by beating them into submission through Matrix damage.'
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: willpower
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@charisma + @persona.d'
+    device_defend: 'max(@persona.d, @persona.a) + @persona.s'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Jack Out
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onuse
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Jam Signals
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'This action turns the wireless device you are using into a local jammer. As long as you do not use the device for any further Matrix actions, the device adds any hits you get on the test to the noise rating for all Matrix actions conducted by or targeting any devices within 100 meters. If you want selective jamming or directional jamming, buy a jammer—that’s what they’re for.'
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Electronic Warfare
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+effects:
+  -
+    name: Jam Signals
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      - key: persona.noise
+        value: '@hits'
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Jump Into Rigged Device
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You jump into a device that has a rigger adaptation, usually a vehicle or a drone. There’s a list of things you need to have in order to jump into a device: you have to have the proper access level on the device you want to jump into, you have to be in VR, the device you want to jump into has to have a rigger adaptation, and you have to have a control rig. If you are the device’s owner, or the device’s owner has given you permission to jump into the device, you don’t need to make a test. In the Matrix, the icon of the device you jumped into becomes part of your persona and it cannot be targeted by matrix actions while you are jumped in. If someone else is currently jumped into the device, you cannot attempt this action.'
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f * 2'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Jumped In (Rigged)
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onuse
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Matrix Perception
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: A successful test gives you information about the target. With a tie, you can perceive the item’s icon. A single net hit will give you basic information, such as device rating, or whatever name the device or icon calls itself. Two net hits will give you more specific information, including individual attribute ratings, and what programs it is currently running. Additional hits will give you more information based on what the gamemaster wishes to reveal. This test can also be used to attempt to spot any icons in the vicinity that are running silent.
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Computer
+    attribute: intuition
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.s'
+    device_defend: '@persona.s'
+    damage: null
+    soak: null
+---
+name: Matrix Search
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'Search the publicly accessible grid for information. The number of hits generated gives you more information regarding the subject. Use the Legwork Results table (p. 50) as a general guideline for what is uncovered.'
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Computer
+    attribute: intuition
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: extended
+    activation_period: 10minute
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+---
+name: Probe
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You probe a network for weaknesses, looking to gain access. By taking your time not to alert any security to your presence, you can create an exploit that may last until you are ready to use it. While not as fast as using Brute Force, Probing a network does not raise an alarm automatically. Even if your attempt initially fails, it will not trigger an alarm unless you glitch. A successful Probe creates a backdoor in the system to exploit. Once you create the exploit, you may then use the Backdoor Entry action at a later time. Net hits on this test count as a dice pool bonus on your future Backdoor Entry test. The duration of these backdoors depends on the PAN or host—most systems create a changelog and will automatically correct and report differences to their configurations caused by the presence of these exploits. Generally speaking, the backdoor lasts for [10 – Host/Device Rating] hours or until you go offline. This action is linked to the Sleaze attribute.'
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Hacking
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: extended
+    activation_period: 1minute
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f * 2'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Probe
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Reboot Device
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'The target device, persona, or PAN goes offline and comes back online at the end of the following combat round. The target’s Overwatch Score and any access achieved on or by the target is reset. No dumpshock occurs from rebooting. You cannot reboot if you are link-locked.'
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: logic
+  limits:
+    illegal: false
+    access_level:
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.f'
+    device_defend: '@persona.f * 2'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Reboot Device
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: 2
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Reconfigure Attribute
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'Swap the base ratings of two non-zero attributes of your Matrix Persona, even if the numbers are rooted in different devices. See Personas and Attributes (p. 174) for more information on Matrix Attributes, and the Matrix Attribute Adjustments sidebar (p. 178) for an example'
+  type: decker
+  skill_use: null
+  limits:
+    illegal: false
+    access_level:
+      - admin
+    activation_type: minor
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+---
+name: Send Message
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You send a text or audio message the length of a short sentence, an image, or a file via the Matrix to a user whose commcode you have. If you’re using the Matrix through a DNI, even if you’re in AR, you can send longer and more complicated messages, about a paragraph worth of text. You can also use this action to open a live feed to one or more recipients, using any digital recording devices you have.'
+  type: decker
+  skill_use: null
+  limits:
+    illegal: false
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: minor
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+---
+name: Set Data Bomb
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You set a Data Bomb in a file. Choose the rating of the Data Bomb, up to the net hits on your test. You also need to choose whether or not the Data Bomb will delete the file to which it is attached when activated, and the passcode required to deactivate it. A file can only have one Data Bomb on it at a time. The Data Bomb is triggered when someone attempts to read, edit, copy, protect, delete, or place another Data Bomb on the file without disarming the Data Bomb that’s already in place. When a Data Bomb goes off, it causes (Rating x 2) Matrix Damage (resisted with Willpower) to the icon that tripped it, deletes the file (if it was set that way), and then is itself deleted. If the passcode is used, the Data Bomb doesn’t activate. Instead, it remains attached to the file, waiting for the next guy. A Data Bomb can be detected using Matrix Perception. If it’s detected, it can be defused with the Disarm Data Bomb action; a disarmed Data Bomb is deleted.'
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@persona.device.rating * 2'
+    device_defend: '@rating * 2'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Set Data Bomb
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Snoop
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'This action lets you intercept Matrix traffic sent to and from your target for as long as you have access. You can listen to, view, or read this data live, or you can save it for later playback/viewing if you have something to store it on (your deck or commlink will do).'
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Electronic Warfare
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@logic + @persona.f'
+    device_defend: '@persona.d + @persona.f'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Snoop
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onhit
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Spoof Command
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You send a signal to a device with a command the target perceives as coming from its owner. The device then automatically attempts to perform the action as its next available major action.'
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Hacking
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@logic + @persona.d'
+    device_defend: 'max(@device.d, @skill.piloting + @persona.f)'
+    damage: null
+    soak: null
+---
+name: Switch Interface Mode
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You switch your interface from AR to VR, or back.'
+  type: decker
+  skill_use: null
+  limits:
+    illegal: false
+    access_level:
+      - admin
+    activation_type: minor
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: null
+    device_defend: null
+    damage: null
+    soak: null
+---
+name: Tarpit
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'Sometimes you want to deliver as much hurt as possible; sometimes you want to deliver a little pain and a little slowness, in order to make the rest of your blows land easier. If you succeed in making this attack, do (1 + net hits) damage to the icon you attacked while also reducing their Data Processing rating by the same amount. If a device’s Data Processing rating is reduced to 0, the user cannot perform a Matrix action until it is 1 or more. The Data Processing rating recovers at a rate of 1 point per combat round.'
+  type: decker
+  skill_use:
+    skill: Cracking
+    specialization: Cybercombat
+    attribute: logic
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: major
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@persona.d + @persona.f'
+    device_defend: '@persona.d + @persona.f'
+    damage: null
+    soak: null
+effects:
+  -
+    name: Tarpit
+    icon: /systems/sr6/assets/items/software.webp
+    tint: null
+    origin: null
+    transfer: true
+    disabled: true
+    activation: onuse
+    flags:
+      -
+    statuses:
+      -
+    description:
+    changes:
+      -
+        key: apply
+        value: balls
+        mode: 0
+    duration:
+      -
+        startTime: null
+        seconds: null
+        combat: null
+        rounds: null
+        turns: null
+        startRound: null
+        startTurn: null
+---
+name: Trace Icon
+type: matrix_action
+img: /systems/sr6/assets/items/software.webp
+data:
+  description: 'You find the physical location of a device or persona in the Matrix. After succeeding with this action, you know the target’s location for as long as you can detect the target. This doesn’t work on IC or hosts that have no physical location, but it does work on offline hosts with physical hardware (although if you can access one of those to trace it, you probably know where it is already).'
+  type: decker
+  skill_use:
+    skill: Electronics
+    specialization: Software
+    attribute: intuition
+  limits:
+    illegal: true
+    access_level:
+      - outsider
+      - user
+      - admin
+    activation_type: minor
+    activation_period: initiative
+  formulas:
+    attack: null
+    defend: '@willpower + @persona.s'
+    device_defend: '@persona.s + @persona.f'
+    damage: null
+    soak: null

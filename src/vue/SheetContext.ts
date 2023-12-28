@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Provides typing data for RootContext injected into Vue apps.
  */
@@ -37,8 +37,8 @@ export interface BaseSheetContext<
 	data: SheetDataType;
 }
 
-export interface SR6ActorSheetData<ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel> extends ActorSheetData<SR6Actor<ActorDataModel>> {
-	actor: SR6Actor<ActorDataModel>;
+export interface SR6ActorSheetData<ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel, ActorType extends SR6Actor = SR6Actor<ActorDataModel>> extends ActorSheetData<SR6Actor<ActorDataModel>> {
+	actor: ActorType;
 }
 
 /**
@@ -46,8 +46,9 @@ export interface SR6ActorSheetData<ActorDataModel extends foundry.abstract.DataM
  */
 export interface ActorSheetContext<
 	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel,
+	ActorType extends SR6Actor = SR6Actor<ActorDataModel>,
 	SheetType extends SR6ActorSheet<ActorDataModel> = SR6ActorSheet<ActorDataModel>,
-	SheetDataType extends SR6ActorSheetData<ActorDataModel> = SR6ActorSheetData<ActorDataModel>,
+	SheetDataType extends SR6ActorSheetData<ActorDataModel> = SR6ActorSheetData<ActorDataModel, ActorType>,
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.

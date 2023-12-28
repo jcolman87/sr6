@@ -43,7 +43,91 @@ SR6:
     Combat: Combat
     Matrix: Matrix
     Magic: Magic
+    Details: Details
+    Effects: Effects
+    Duration: Duration
+    Description: Description
+    Data: Data
+
   Labels:
+    Skills: Skills
     CharacterName: Name
     Edit: Edit
+    Add: Add
+    Remove: Remove
     Delete: Delete
+    Attribute: Attribute
+    Roll: Roll
+    Source: Rulebook Source
+    Description: Description
+    Specialization: Specialization
+    Expertise: Expertise
+    Type: Type
+    Legality: Legality
+    Illegal: Illegal
+    Legal: Legal
+    Formulas: Formulas
+    Attack: Attack
+    Defend: Defend
+    Damage: Damage
+    Soak: Soak
+    Base: Base
+    Mod: Modifier
+    Pool: Pool
+    Value: Value
+    Skill: Skill
+
+
+  RollDialog:
+
+  Attributes:
+    body: Body
+    agility: Agility
+    reaction: Reaction
+    strength: Strength
+    willpower: Willpower
+    logic: Logic
+    intuition: Intuition
+    charisma: Charisma
+    magic: Magic
+    resonance: Resonance
+
+  ActiveEffects:
+    Passive: Passive Effects
+    Temporary: Temporary Effects
+    Suppressed: Inactive Effects
+    Source: Source
+    Duration: Duration
+    Activation: Activation
+    Activations:
+      Always: Always
+      OnHit: On Hit
+    Types:
+      ModifyAttribute: Modify Attribute
+      ModifyStat: Modify Stat
+      ModifySkill: Modify Skill
+      ModifyDicePool: Modify Dice Pool
+
+  Matrix:
+    Decker: Decker
+    IC: IC
+    Usage: Usage
+
+
+  Enums:
+    MatrixAccessLevel: Access Level
+    MatrixAccessLevels:
+      Outsider: Outsider
+      User: User
+      Admin: Admin
+    ActivationType: Activation Type
+    ActivationTypes:
+      Major: Major
+      Minor: Minor
+      Passive: Passive
+    ActivationPeriod: Activation Period
+    ActivationPeriods:
+      Any: Anytime
+      Initiative: Initiative
+      PreRoll: Pre-roll
+      PostRoll: Post-roll

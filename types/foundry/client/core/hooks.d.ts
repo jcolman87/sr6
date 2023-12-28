@@ -10,6 +10,8 @@ declare global {
 	type HookParamsCanvasReady = HookParameters<'canvasReady', [DrawnCanvas]>;
 	type HookParamsReady = HookParameters<'ready', never>;
 
+	type HookParamsCreateActor = HookParameters<'createActor', [Actor, boolean]>;
+
 	type HookParamsClose<T extends Application, N extends string> = HookParameters<`close${N}`, [T, JQuery]>;
 	type HookParamsDeleteCombat = HookParameters<'deleteCombat', [Combat, { [key: string]: unknown }, string]>;
 	type HookParamsDropCanvasData = HookParameters<'dropCanvasData', [Canvas, DropCanvasData]>;
@@ -66,6 +68,8 @@ declare global {
 		static on(...args: HookParamsUpdateWorldTime): number;
 		static on(...args: HookParameters<string, unknown[]>): number;
 
+		static on(...args: HookParamsCreateActor): number;
+
 		/**
 		 * Register a callback handler for an event which is only triggered once the first time the event occurs.
 		 * After a "once" hook is triggered the hook is automatically removed.
@@ -104,6 +108,8 @@ declare global {
 		static once(...args: HookParamsUpdate<Scene, 'Scene'>): number;
 		static once(...args: HookParamsUpdateWorldTime): number;
 		static once(...args: HookParameters<string, unknown[]>): number;
+
+		static once(...args: HookParamsCreateActor): number;
 
 		static on(...args: HookParameters<'diceSoNiceReady', [Dice3d]>): number;
 		static once(...args: HookParameters<'diceSoNiceReady', [Dice3d]>): number;

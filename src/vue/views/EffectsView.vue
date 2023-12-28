@@ -44,18 +44,18 @@ async function deleteEffect(effect: SR6Effect) {
 	<section class="effects-view">
 		<template v-for="{ label: section, filter } in sections" :key="section">
 			<div class="effects-header">
-				<div class="name"><Localized :label="`Genesys.ActiveEffects.${section}`" /></div>
-				<div class="source"><Localized label="Genesys.ActiveEffects.Source" /></div>
-				<div class="duration"><Localized label="Genesys.ActiveEffects.Duration" /></div>
+				<div class="name"><Localized :label="`SR6.ActiveEffects.${section}`" /></div>
+				<div class="source"><Localized label="SR6.ActiveEffects.Source" /></div>
+				<div class="duration"><Localized label="SR6.ActiveEffects.Duration" /></div>
 				<div class="buttons">
-					<a @click="emit('addEffect', section.toLowerCase())"><i class="fas fa-plus"></i> <Localized label="Genesys.Labels.Add" /></a>
+					<a @click="emit('addEffect', section.toLowerCase())"><i class="fas fa-plus"></i> <Localized label="SR6.Labels.Add" /></a>
 				</div>
 			</div>
 
 			<section class="effects-category">
 				<div v-for="effect in effects.filter(filter)" :key="effect.id" class="effect">
 					<img :src="effect.icon" :alt="effect.name" />
-					<div class="name">{{ effect.label }}</div>
+					<div class="name">{{ effect.name }}</div>
 					<div class="source">{{ effect.sourceName }}</div>
 					<div class="duration">{{ effect.duration.label }}</div>
 					<div v-if="rootContext.data.editable" class="buttons">

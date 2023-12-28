@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file ActiveEffect configuration sheet
  */
@@ -50,5 +50,9 @@ export default class SR6EffectSheet extends ActiveEffectConfig {
 		});
 
 		return await fp.browse();
+	}
+
+	override getData(options?: DocumentSheetOptions): ActiveEffectConfigData {
+		return super.getData();
 	}
 }

@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Basic Actor Sheet
  */
@@ -30,7 +30,5 @@ export default class SR6ActorSheet<ActorDataModel extends foundry.abstract.DataM
 			html.find('img[data-edit]').off('click');
 			html.find('img[data-edit]').on('click', this._onEditImage.bind(this));
 		}
-
-
 	}
 }

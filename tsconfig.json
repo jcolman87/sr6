@@ -11,6 +11,7 @@
 
 		"strict": true,
 
+		"experimentalDecorators": true,
 		"skipLibCheck": true,
 		"isolatedModules": true,
 		"resolveJsonModule": true,

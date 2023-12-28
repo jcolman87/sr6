@@ -1,10 +1,11 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Base SR6 Actor
  */
 import IHasPreCreate from '@/data/IHasPreCreate';
 import IHasOnDelete from '@/data/IHasOnDelete';
+import { SR6Roll } from '@/roll/SR6Roll';
 
 export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel> extends Actor {
 	/**
@@ -12,6 +13,23 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	 */
 	get systemData(): ActorDataModel {
 		return <ActorDataModel>this.system;
+	}
+
+	override prepareData(): void {
+		this.systemData.prepareData();
+	}
+	override prepareDerivedData(): void {
+		this.systemData.prepareDerivedData();
+	}
+
+	solveFormula(formula: string): number {
+		let roll = new SR6Roll(formula, { ...this.getRollData(), actor: this }, SR6Roll.defaultOptions());
+		roll = roll.evaluate({ async: false });
+		return roll.total!;
+	}
+
+	override getRollData(): Record<string, unknown> {
+		return { actor: this };
 	}
 
 	/**
@@ -34,6 +52,8 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		super._onDelete(options, userId);
 	}
 
+	async onCreate(controlled: boolean) {}
+
 	/**
 	 * Override the createDialog callback to include a unique class that identifies the created dialog.
 	 * @inheritDoc
@@ -47,5 +67,4 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 
 		return super.createDialog(data, touchedOptions);
 	}
-
 }

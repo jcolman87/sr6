@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file System Entry Point
  */
@@ -7,11 +7,15 @@
 import { register as registerConfig, ready as readyConfigs } from '@/config';
 import { register as registerCombat } from '@/combat';
 import { register as registerEnrichers } from '@/enrichers';
-import { register as registerHandlebarsHelpers } from '@/handlebars';
+import { register as registerHandlebarsHelpers, preload as preloadHandlebarsTemplates } from '@/handlebars';
+import { register as registerItems } from '@/item';
+import { register as registerRolls } from '@/roll';
 import { NAMESPACE as SETTINGS_NAMESPACE, register as registerSettings } from '@/settings';
 import { KEY_ALPHA_VERSION } from '@/settings/alpha';
 
-import { register as registerActors, AdversaryTypes } from '@/actor';
+import { register as registerChat } from '@/chat';
+
+import { register as registerActors, AdversaryTypes, onCreate as onCreateActor } from '@/actor';
 import { register as registerEffects } from '@/effects';
 
 import './scss/index.scss';
@@ -80,7 +84,9 @@ Hooks.once('init', async () => {
 
 	// System Documents
 	registerActors();
+	registerItems();
 	registerEffects();
+	registerRolls();
 
 	// Misc. modules with one-time registrations
 	registerCombat();
@@ -88,6 +94,9 @@ Hooks.once('init', async () => {
 	registerHandlebarsHelpers();
 	registerSettings();
 	registerConfig();
+	registerChat();
+
+	await preloadHandlebarsTemplates();
 
 	console.debug('SR6 | Initialization Complete.');
 });
@@ -107,6 +116,10 @@ function constructOptGroup(select: HTMLSelectElement, groupLabel: string, optVal
 
 	return optgroup;
 }
+
+Hooks.on('createActor', (actor: Actor, controlled: boolean) => {
+	onCreateActor(actor, controlled);
+});
 
 Hooks.on('renderDialog', (_dialog: Dialog, html: JQuery<HTMLElement>, _data: object) => {
 	const container = html[0];
@@ -136,5 +149,4 @@ Hooks.on('renderDialog', (_dialog: Dialog, html: JQuery<HTMLElement>, _data: obj
 		}
 	}
 	*/
-
 });

@@ -1,12 +1,26 @@
 <script lang="ts" setup>
+import CharacterActor from '@/actor/CharacterActor';
+import { RollType } from '@/roll';
+import { SR6Roll } from '@/roll/SR6Roll';
 import { computed, inject, toRaw } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
+import { EnumAttribute } from '@/actor/data';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
-const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
+import { AttributeRollData } from '@/roll';
+
+import RollPrompt from '@/app/RollPrompt';
+
+const context = inject<ActorSheetContext<CharacterDataModel, CharacterActor>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
 
+async function rollAttribute(attribute: EnumAttribute) {
+	//let roll = AttributeRoll.make(context.data.actor, attribute);
+	//roll.evaluate({});
+	//await roll.toMessage();
+	new RollPrompt<AttributeRollData>(toRaw(context.data.actor), { ...SR6Roll.defaultOptions(), type: RollType.Attribute, attribute: attribute }).render(true);
+}
 </script>
 
 <template>
@@ -14,7 +28,11 @@ const system = computed(() => context.data.actor.systemData);
 		<div class="attributes">
 			<div class="attribute" augmented-ui="b-clip-x exe">
 				<p>Body</p>
-				<span>{{ system.attributes.body.value }}</span>
+				<span>
+					{{ system.attributes.body.value }}
+					<br />
+					<a @click="rollAttribute(EnumAttribute.body)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+				</span>
 				<div class="field">
 					<label>Base</label>
 					<input type="number" name="system.attributes.body.base" :value="system.attributes.body.base" />
@@ -129,12 +147,11 @@ const system = computed(() => context.data.actor.systemData);
 		flex-flow: row nowrap;
 		justify-content: space-between;
 		align-items: stretch;
-
 	}
 	.attributes .attribute {
 		min-width: 5.25rem;
 		text-align: center;
-		padding: .25rem;
+		padding: 0.25rem;
 		display: flex;
 		flex-flow: column nowrap;
 		justify-items: flex-start;
@@ -149,33 +166,34 @@ const system = computed(() => context.data.actor.systemData);
 	}
 	.attributes .attribute p {
 		text-align: center;
-		margin: 0; }
+		margin: 0;
+	}
 	.attributes .attribute span {
 		font-size: 1.125rem;
-		margin-top: .25rem;
+		margin-top: 0.25rem;
 		color: var(--highlight-color);
 	}
 	.attributes .attribute .field {
 		display: flex;
-		flex-flow: column nowrap; }
+		flex-flow: column nowrap;
+	}
 	.attributes .attribute input::placeholder,
 	.attributes .attribute label {
-		font-size: .75rem;
+		font-size: 0.75rem;
 	}
 	.attributes .attribute .field:nth-of-type(1) {
-		font-size: .89rem;
+		font-size: 0.89rem;
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		width: 2em;
 	}
 	.attributes .attribute .field:nth-of-type(2) {
-		font-size: .89rem;
+		font-size: 0.89rem;
 		position: absolute;
 		bottom: 0;
 		right: 0;
 		width: 2em;
 	}
 }
-
 </style>

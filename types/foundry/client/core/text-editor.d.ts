@@ -34,8 +34,8 @@ declare global {
 		 * @param [options.secrets=false]  Include secret tags in the final HTML? If false secret blocks will be removed.
 		 * @param [options.documents=true] Replace dynamic document links?
 		 * @param [options.links=true]     Replace hyperlink content?
-		 * @param [options.rolls=true]     Replace inline dice rolls?
-		 * @param [options.rollData]       The data object providing context for inline rolls
+		 * @param [options.roll=true]     Replace inline dice roll?
+		 * @param [options.rollData]       The data object providing context for inline roll
 		 * @return The enriched HTML content
 		 */
 		static enrichHTML(content: string | null, options?: EnrichHTMLOptions & { async?: false }): string;

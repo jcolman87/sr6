@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file User-specific config options.
  */
@@ -15,7 +15,7 @@ export const KEY_USE_MAGICAL_GIRL_SYMBOLS = 'useMagicalGirlSymbols';
 export const KEY_CHANCE_TO_SUCCEED_BY_PERMUTATION = 'dicePoolChanceToSucceedByPermutation';
 
 /**
- * Number of simulated rolls to do to calculate the dice pool success chance. A value of 0 disables the feature.
+ * Number of simulated roll to do to calculate the dice pool success chance. A value of 0 disables the feature.
  */
 export const KEY_CHANCE_TO_SUCCEED_BY_SIMULATION = 'dicePoolApproximation';
 

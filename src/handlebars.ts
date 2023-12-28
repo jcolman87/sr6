@@ -1,11 +1,22 @@
 /**
-  *
+ *
  * @author jaynus
  * @file
  */
+import SkillDataModel from '@/item/data/SkillDataModel';
+import SR6Item from '@/item/SR6Item';
+import { get } from 'tinymce';
+
+export async function preload() {
+	const templatePaths = ['systems/sr6/templates/chat/rolls/shared/header.hbs', 'systems/sr6/templates/chat/rolls/shared/footer.hbs'];
+
+	console.log(`Load templates`);
+	return loadTemplates(templatePaths);
+}
 
 export function register() {
 	/** String Utilities */
+
 	Handlebars.registerHelper('capitalize', /** @param {string} value */ (value) => value.capitalize());
 	Handlebars.registerHelper('toLowerCase', /** @param {string} value */ (value) => value.toLowerCase());
 	Handlebars.registerHelper('toUpperCase', /** @param {string} value */ (value) => value.toUpperCase());
@@ -38,4 +49,8 @@ export function register() {
 
 		return results.join('');
 	});
+
+	/** Functional utilities */
+	Handlebars.registerHelper('undefined', /** @param {string} value */ (value) => value === undefined);
+	Handlebars.registerHelper('isNull', /** @param {string} value */ (value) => value === null);
 }

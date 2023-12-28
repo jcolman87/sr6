@@ -16,7 +16,7 @@ declare global {
 
 		/**
 		 * Return the recommended String alias for this message.
-		 * The alias could be a Token name in the case of in-character messages or dice rolls.
+		 * The alias could be a Token name in the case of in-character messages or dice roll.
 		 * Alternatively it could be a User name in the case of OOC chat or whispers.
 		 */
 		get alias(): string;
@@ -26,7 +26,7 @@ declare global {
 
 		/**
 		 * Return whether the content of the message is visible to the current user.
-		 * For certain dice rolls, for example, the message itself may be visible while the content of that message is not.
+		 * For certain dice roll, for example, the message itself may be visible while the content of that message is not.
 		 */
 		get isContentVisible(): boolean;
 
@@ -104,7 +104,7 @@ declare global {
 		 */
 		static getSpeakerActor(speaker: DeepPartial<foundry.data.ChatSpeakerSource>): Actor | null;
 
-		/** Obtain a data object used to evaluate any dice rolls associated with this particular chat message */
+		/** Obtain a data object used to evaluate any dice roll associated with this particular chat message */
 		getRollData(): object;
 
 		/**

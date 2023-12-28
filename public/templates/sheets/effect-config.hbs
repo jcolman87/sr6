@@ -1,7 +1,7 @@
 <form class="sr6 effect-sheet" autocomplete="off">
 	<header class="{{#if (eq hasDecoration true)}}with-decoration{{/if}}">
 		<img src="{{ data.icon }}" data-edit="icon" title="{{ label }}" />
-		<input type="text" name="label" value="{{ data.label }}" placeholder="{{ localize 'SR6.Labels.Name' }}" />
+		<input type="text" name="label" value="{{ data.name }}" placeholder="{{ localize 'SR6.Labels.Name' }}" />
 		{{#if (eq hasDecoration true)}}
 			{{>decoration}}
 		{{/if}}
@@ -32,6 +32,16 @@
 					<label>{{localize 'EFFECT.IconTint'}}</label>
 					<div class="tint-container">
 						{{colorPicker name="tint" value=data.tint}}
+					</div>
+				</div>
+
+				<div class="row">
+					<label>{{localize 'SR6.ActiveEffects.Activation'}}</label>
+					<div class="checkbox-container">
+						<select name="activation">
+							<option value="always">{{localize 'SR6.ActiveEffects.Activations.Always'}}</option>
+							<option value="onhit">{{localize 'SR6.ActiveEffects.Activations.OnHit'}}</option>
+						</select>
 					</div>
 				</div>
 
@@ -118,43 +128,54 @@
 							<select name="changes.{{i}}.key">
 								<option value="">—</option>
 
-                                {{!-- Characteristics Changes --}}
-                                <optgroup label="{{localize 'SR6.ActiveEffects.Types.ModifyCharacteristic'}}">
-                                    {{!-- Character & Adversary Characteristics --}}
-                                    <option value="system.characteristics.brawn">&#x1F9D1; {{localize 'SR6.Characteristics.Brawn'}}</option>
-                                    <option value="system.characteristics.agility">&#x1F9D1; {{localize 'SR6.Characteristics.Agility'}}</option>
-                                    <option value="system.characteristics.intellect">&#x1F9D1; {{localize 'SR6.Characteristics.Intellect'}}</option>
-                                    <option value="system.characteristics.cunning">&#x1F9D1; {{localize 'SR6.Characteristics.Cunning'}}</option>
-                                    <option value="system.characteristics.willpower">&#x1F9D1; {{localize 'SR6.Characteristics.Willpower'}}</option>
-                                    <option value="system.characteristics.presence">&#x1F9D1; {{localize 'SR6.Characteristics.Presence'}}</option>
+								{{!-- Characteristics Changes --}}
+								<optgroup label="{{localize 'SR6.ActiveEffects.Types.ModifyAttribute'}}">
+									{{!-- Character & Adversary Characteristics --}}
+									<option value="system.attribute.body.mod">&#x1F9D1; {{localize 'SR6.Attributes.strength'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.strength.value">&#x1F9D1; {{localize 'SR6.Attributes.Strength'}} {{localize 'SR6.Labels.Value'}}</option>
 
-                                    {{!-- Vehicle Characteristics --}}
-                                    <option value="system.silhouette">&#x1F697; {{localize 'SR6.Labels.Silhouette'}}</option>
-                                    <option value="system.speed">&#x1F697; {{localize 'SR6.Labels.Speed'}}</option>
-                                    <option value="system.handling">&#x1F697; {{localize 'SR6.Labels.Handling'}}</option>
-                                    <option value="system.defense">&#x1F697; {{localize 'SR6.Labels.Defense'}}</option>
-                                    <option value="system.armor">&#x1F697; {{localize 'SR6.Labels.Armor'}}</option>
-                                </optgroup>
+									<option value="system.attribute.agility.mod">&#x1F9D1; {{localize 'SR6.Attributes.agility'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.agility.value">&#x1F9D1; {{localize 'SR6.Attributes.agility'}} {{localize 'SR6.Labels.Value'}}</option>
 
-                                {{!-- Stat Changes --}}
-                                <optgroup label="{{localize 'SR6.ActiveEffects.Types.ModifyStat'}}">
-                                    {{!-- Characert and Adversary Secondary Stats --}}
-                                    <option value="system.soak">&#x1F9D1; {{localize 'SR6.Labels.SoakValue'}}</option>
-                                    <option value="system.wounds.max">&#x1F9D1; {{localize 'SR6.Labels.WoundThreshold'}}</option>
-                                    <option value="system.strain.max">&#x1F9D1; {{localize 'SR6.Labels.StrainThreshold'}}</option>
-                                    <option value="system.defense.melee">&#x1F9D1; {{localize 'SR6.Labels.MeleeDefense'}}</option>
-                                    <option value="system.defense.ranged">&#x1F9D1; {{localize 'SR6.Labels.RangedDefense'}}</option>
+									<option value="system.attribute.reaction.mod">&#x1F9D1; {{localize 'SR6.Attributes.reaction'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.reaction.value">&#x1F9D1; {{localize 'SR6.Attributes.reaction'}} {{localize 'SR6.Labels.Value'}}</option>
 
-                                    {{!-- Vehicle Secondary Stats --}}
-                                    <option value="system.hullTrauma.max">&#x1F697; {{localize 'SR6.Labels.HullTraumaThreshold'}}</option>
-                                    <option value="system.systemStrain.max">&#x1F697; {{localize 'SR6.Labels.SystemStrainThreshold'}}</option>
-                                    <option value="system.passengers.value">&#x1F697; {{localize 'SR6.Labels.Passengers'}}</option>
-                                    <option value="system.passengers.threshold">&#x1F697; {{localize 'SR6.Labels.PassengerCapacity'}}</option>
 
-                                    {{!-- Shared Secondary Stats --}}
-                                    <option value="system.encumbrance.value">&#x1F310; {{localize 'SR6.Labels.Encumbrance'}}</option>
-                                    <option value="system.encumbrance.threshold">&#x1F310; {{localize 'SR6.Labels.EncumbranceThreshold'}}</option>
-                                </optgroup>
+									<option value="system.attribute.strength.mod">&#x1F9D1; {{localize 'SR6.Attributes.Strength'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.strength.value">&#x1F9D1; {{localize 'SR6.Attributes.Strength'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.willpower.mod">&#x1F9D1; {{localize 'SR6.Attributes.willpower'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.willpower.value">&#x1F9D1; {{localize 'SR6.Attributes.willpower'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.logic.mod">&#x1F9D1; {{localize 'SR6.Attributes.logic'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.logic.value">&#x1F9D1; {{localize 'SR6.Attributes.logic'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.intuition.mod">&#x1F9D1; {{localize 'SR6.Attributes.intuition'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.intuition.value">&#x1F9D1; {{localize 'SR6.Attributes.intuition'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.charisma.mod">&#x1F9D1; {{localize 'SR6.Attributes.charisma'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.charisma.value">&#x1F9D1; {{localize 'SR6.Attributes.charisma'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.magic.mod">&#x1F9D1; {{localize 'SR6.Attributes.magic'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.magic.value">&#x1F9D1; {{localize 'SR6.Attributes.magic'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.resonance.mod">&#x1F9D1; {{localize 'SR6.Attributes.resonance'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.resonance.value">&#x1F9D1; {{localize 'SR6.Attributes.resonance'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									{{!-- Vehicle Characteristics --}}
+
+								</optgroup>
+
+								{{!-- Stat Changes --}}
+								<optgroup label="{{localize 'SR6.ActiveEffects.Types.ModifySkill'}}">
+									{{!-- Skill Changes
+                                	{{#each getCoreSkills  }}
+                            		{{ log this }}
+									<option value="skill.{{this.name}}.points">&#x1F9D1; {{localize 'SR6.Labels.Skill'}}</option>
+
+								{{/each}}--}}
+
+								</optgroup>
 
 								{{!-- Skill Changes --}}
 

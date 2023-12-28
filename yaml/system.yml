@@ -19,12 +19,17 @@ languages:
   - lang: en
     name: English
     path: lang/en.json
-#packs:
-#  - name: crb-skills
-#    label: Core Skills
-#    system: genesys
-#    path: ./packs/crb-skills.db
-#    type: Item
+packs:
+  - name: sr6-crb-skills
+    label: Core Skills
+    system: sr6
+    path: ./packs/sr6-crb-skills.db
+    type: Item
+  - name: sr6-crb-matrix-actions
+    label: Core Matrix Actions
+    system: sr6
+    path: ./packs/sr6-crb-matrix-actions.db
+    type: Item
 socket: true
 url: https://github.com/jaynus/sr6
 bugs: https://github.com/jaynus/sr6/issues

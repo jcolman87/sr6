@@ -99,14 +99,14 @@ declare global {
 
 		/**
 		 * Roll initiative for all Combatants in the currently active Combat encounter which are associated with this Actor.
-		 * If viewing a full Actor entity, all Tokens which map to that actor will be targeted for initiative rolls.
+		 * If viewing a full Actor entity, all Tokens which map to that actor will be targeted for initiative roll.
 		 * If viewing a synthetic Token actor, only that particular Token will be targeted for an initiative roll.
 		 *
 		 * @param options Configuration for how initiative for this Actor is rolled.
 		 * @param [options.createCombatants=false] Create new Combatant entries for Tokens associated with this actor.
 		 * @param [options.rerollInitiative=false] Re-roll the initiative for this Actor if it has already been rolled.
 		 * @param [options.initiativeOptions={}]   Additional options passed to the Combat#rollInitiative method.
-		 * @return A promise which resolves to the Combat entity once rolls are complete.
+		 * @return A promise which resolves to the Combat entity once roll are complete.
 		 */
 		rollInitiative({ createCombatants, rerollInitiative, initiativeOptions }?: { createCombatants?: boolean; rerollInitiative?: boolean; initiativeOptions?: object }): Promise<Combat | null>;
 
@@ -118,27 +118,21 @@ declare global {
 
 		protected override _onUpdate(changed: DeepPartial<this['_source']>, options: DocumentUpdateContext<this>, userId: string): void;
 
-		protected override _onCreateEmbeddedDocuments(
-			embeddedName: 'ActiveEffect' | 'Item',
-			documents: ActiveEffect[] | Item[],
-			result: foundry.data.ActiveEffectSource[] | foundry.data.ItemSource[],
-			options: DocumentModificationContext,
+		protected override _onCreateDescendantDocuments(
+			parent: this,
+			collection: 'effects' | 'items',
+			documents: ActiveEffect<this>[] | Item<this>[],
+			result: ActiveEffect<this>['_source'][] | Item<this>['_source'][],
+			options: DocumentModificationContext<this>,
 			userId: string,
 		): void;
 
-		protected override _onUpdateEmbeddedDocuments(
-			embeddedName: 'ActiveEffect' | 'Item',
-			documents: ActiveEffect[] | Item[],
-			result: foundry.data.ActiveEffectSource[] | foundry.data.ItemSource[],
-			options: DocumentModificationContext,
-			userId: string,
-		): void;
-
-		protected override _onDeleteEmbeddedDocuments(
-			embeddedName: 'ActiveEffect' | 'Item',
-			documents: ActiveEffect[] | Item[],
-			result: foundry.data.ActiveEffectSource[] | foundry.data.ItemSource[],
-			options: DocumentModificationContext,
+		protected override _onUpdateDescendantDocuments(
+			parent: this,
+			collection: 'effects' | 'items',
+			documents: ActiveEffect<this>[] | Item<this>[],
+			changes: ActiveEffect<this>['_source'][] | Item<this>['_source'][],
+			options: DocumentModificationContext<this>,
 			userId: string,
 		): void;
 

@@ -6,7 +6,7 @@ declare module foundry {
 		 * @property data The constructed data object for the document.
 		 */
 		class BaseActiveEffect extends abstract.Document {
-			static override get schema(): typeof data.ActiveEffectData;
+			static defineSchema(): typeof foundry.abstract.DataModel;
 
 			static override get metadata(): ActiveEffectMetadata;
 

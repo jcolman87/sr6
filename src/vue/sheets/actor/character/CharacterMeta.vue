@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { inject,  toRaw, computed } from 'vue';
+import { inject, toRaw, computed } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { vLocalize } from '@/vue/directives';
@@ -10,9 +10,8 @@ import CharacterSheet from '@/actor/sheets/CharacterSheet';
 //import ContextMenu from '@/vue/components/ContextMenu.vue';
 //import MenuItem from '@/vue/components/MenuItem.vue';
 
-const context = inject<ActorSheetContext<CharacterDataModel, CharacterSheet>>(RootContext)!;
+const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
-
 </script>
 
 <template>

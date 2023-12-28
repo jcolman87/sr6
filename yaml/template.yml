@@ -8,7 +8,12 @@ Actor:
 Item:
   types:
     # Items
-
+    - weapon
     # Character Building
     - skill
-  gear:
+    - matrix_action
+    - matrix_persona
+  weapon:
+  skill:
+  matrix_action:
+  matrix_persona:

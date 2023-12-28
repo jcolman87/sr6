@@ -35,6 +35,69 @@ declare module foundry {
 			protected override _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext, user: BaseUser): Promise<void>;
 
 			protected override _preUpdate(changed: DocumentUpdateData<BaseActor>, options: DocumentModificationContext, user: BaseUser): Promise<void>;
+
+			/**
+			 * Actions taken after descendant documents have been created, but before changes are applied to the client data.
+			 * @param parent     The direct parent of the created Documents, may be this Document or a child
+			 * @param collection The collection within which documents are being created
+			 * @param data       The source data for new documents that are being created
+			 * @param options    Options which modified the creation operation
+			 * @param userId     The ID of the User who triggered the operation
+			 */
+			protected _preCreateDescendantDocuments(parent: this, collection: string, data: object[], options: DocumentModificationContext<this>, userId: string): void;
+
+			/**
+			 * Actions taken after descendant documents have been created and changes have been applied to client data.
+			 * @param parent     The direct parent of the created Documents, may be this Document or a child
+			 * @param collection The collection within which documents were created
+			 * @param documents  The array of created Documents
+			 * @param data       The source data for new documents that were created
+			 * @param options    Options which modified the creation operation
+			 * @param userId     The ID of the User who triggered the operation
+			 */
+			protected _onCreateDescendantDocuments(parent: this, collection: string, documents: foundry.abstract.Document[], data: object[], options: DocumentModificationContext<this>, userId: string): void;
+
+			/**
+			 * Actions taken after descendant documents have been updated, but before changes are applied to the client data.
+			 * @param parent         The direct parent of the updated Documents, may be this Document or a child
+			 * @param collection       The collection within which documents are being updated
+			 * @param changes        The array of differential Document updates to be applied
+			 * @param options          Options which modified the update operation
+			 * @param userId           The ID of the User who triggered the operation
+			 */
+			protected _preUpdateDescendantDocuments(parent: this, collection: string, changes: object[], options: DocumentModificationContext<this>, userId: string): void;
+
+			/**
+			 * Actions taken after descendant documents have been updated and changes have been applied to client data.
+			 * @param parent     The direct parent of the updated Documents, may be this Document or a child
+			 * @param collection The collection within which documents were updated
+			 * @param documents  The array of updated Documents
+			 * @param changes    The array of differential Document updates which were applied
+			 * @param options    Options which modified the update operation
+			 * @param userId     The ID of the User who triggered the operation
+			 */
+			protected _onUpdateDescendantDocuments(parent: this, collection: string, documents: ClientDocument[], changes: object[], options: DocumentModificationContext<this>, userId: string): void;
+
+			/**
+			 * Actions taken after descendant documents have been deleted, but before deletions are applied to the client data.
+			 * @param parent     The direct parent of the deleted Documents, may be this Document or a child
+			 * @param collection The collection within which documents were deleted
+			 * @param ids        The array of document IDs which were deleted
+			 * @param options    Options which modified the deletion operation
+			 * @param userId     The ID of the User who triggered the operation
+			 */
+			protected _preDeleteDescendantDocuments(parent: this, collection: string, ids: string[], options: DocumentModificationContext<this>, userId: string): void;
+
+			/**
+			 * Actions taken after descendant documents have been deleted and those deletions have been applied to client data.
+			 * @param parent     The direct parent of the deleted Documents, may be this Document or a child
+			 * @param collection The collection within which documents were deleted
+			 * @param documents  The array of Documents which were deleted
+			 * @param ids        The array of document IDs which were deleted
+			 * @param options    Options which modified the deletion operation
+			 * @param userId     The ID of the User who triggered the operation
+			 */
+			protected _onDeleteDescendantDocuments(parent: this, collection: string, documents: foundry.abstract.Document[], ids: string[], options: DocumentModificationContext<this>, userId: string): void;
 		}
 
 		interface BaseActor {

@@ -1,0 +1,330 @@
+name: Astral
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: magic
+  description: ''
+  specializations:
+    - Astral Combat
+    - Astral Signatures
+    - Emotional States
+    - Spirit Types
+  attribute: intuition
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Athletics
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Climbing
+    - Flying
+    - Gymnastics
+    - Sprinting
+    - Swimming
+    - Throwing
+    - Archery
+  attribute: agility
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Biotech
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Biotechnology
+    - Cybertechnology
+    - First Aid
+    - Medicine
+  attribute: logic
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Close Combat
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: combat
+  description: ''
+  specializations:
+    - Blades
+    - Clubs
+    - Unarmed
+  attribute: agility
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Con
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: social
+  description: ''
+  specializations:
+    - Acting
+    - Disguise
+    - Impersonation
+    - Performance
+  attribute: charisma
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Conjuring
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: magic
+  description: ''
+  specializations:
+    - Banishing
+    - Summoning
+  attribute: magic
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Cracking
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: matrix
+  description: ''
+  specializations:
+    - Cybercombat
+    - Electronic Warfare
+    - Hacking
+  attribute: logic
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Electronics
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: matrix
+  description: ''
+  specializations:
+    - Computer
+    - Hardware
+    - Software
+    - Complex Forms
+  attribute: logic
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Enchanting
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: magic
+  description: ''
+  specializations:
+    - Alchemy
+    - Artificing
+    - Disenchanting
+  attribute: magic
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Engineering
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Aeronautics Mechanic
+    - Armorer
+    - Automotive Mechanic
+    - Demolitions
+    - Gunnery
+    - Industrial Mechanic
+    - Lockpicking
+    - Nautical Mechanic
+  attribute: logic
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Exotic Weapons
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: combat
+  description: ''
+  specializations: []
+  attribute: agility
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Firearms
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: combat
+  description: ''
+  specializations:
+    - Tasers
+    - Holdouts
+    - Pistols Light
+    - Pistols Heavy
+    - Machine Pistols
+    - Submachine Guns
+    - Rifles
+    - Shotguns
+    - Assault Cannons
+  attribute: agility
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Influence
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: social
+  description: ''
+  specializations:
+    - Etiquette
+    - Instruction
+    - Intimidation
+    - Leadership
+    - Negotiation
+  attribute: charisma
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Outdoors
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Navigation
+    - Survival
+    - Tracking Woods
+    - Tracking Desert
+    - Tracking Urban
+    - Tracking Other
+  attribute: intuition
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Perception
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Visual
+    - Aural
+    - Tactile
+    - Scent
+    - Taste
+    - Perception Woods
+    - Perception Desert
+    - Perception Urban
+    - Perception Other
+  attribute: intuition
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Piloting
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Ground Craft
+    - Aircraft
+    - Watercraft
+  attribute: reaction
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Sorcery
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: magic
+  description: ''
+  specializations:
+    - Counterspelling
+    - Ritual Spellcasting
+    - Spellcasting
+  attribute: magic
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Stealth
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: other
+  description: ''
+  specializations:
+    - Disguise
+    - Palming
+    - Sneaking
+    - Camouflage
+  attribute: agility
+  canUntrained: true
+  points: 0
+  specialization: null
+  expertise: null
+---
+name: Tasking
+type: skill
+img: /systems/sr6/assets/brain.svg
+data:
+  category: matrix
+  description: ''
+  specializations:
+    - Compiling
+    - Decompiling
+    - Registering
+  attribute: resonance
+  canUntrained: false
+  points: 0
+  specialization: null
+  expertise: null

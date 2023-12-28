@@ -27,6 +27,9 @@ declare global {
 
 		override get documentName(): string | null;
 
+		/** Reference the set of Folders which contain documents in this collection */
+		get folders(): Collection<Folder>;
+
 		/** The base Document type which is contained within this WorldCollection */
 		static documentName: string | null;
 

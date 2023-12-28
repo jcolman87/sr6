@@ -49,7 +49,7 @@ declare global {
 		draw({ roll, recursive, results, displayChat, rollMode }?: { roll?: Roll | null; recursive?: boolean; results?: TableResult[]; displayChat?: boolean; rollMode?: RollMode | null }): Promise<RollTableDraw>;
 
 		/**
-		 * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner rolls.
+		 * Draw multiple results from a RollTable, constructing a final synthetic Roll as a dice pool of inner roll.
 		 * @param number       The number of results to draw
 		 * @param [options={}] Optional arguments which customize the draw
 		 * @param [options.roll]             An optional pre-configured Roll instance which defines the dice roll to use

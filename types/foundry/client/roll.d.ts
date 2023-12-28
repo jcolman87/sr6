@@ -2,7 +2,7 @@ export {};
 
 declare global {
 	/**
-	 * An interface and API for constructing and evaluating dice rolls.
+	 * An interface and API for constructing and evaluating dice roll.
 	 * The basic structure for a dice roll is a string formula and an object of data against which to parse it.
 	 *
 	 * @param formula The string formula to parse
@@ -75,7 +75,7 @@ declare global {
 		/** Return a standardized representation for the displayed formula associated with this Roll. */
 		get formula(): string;
 
-		/** The resulting arithmetic expression after rolls have been evaluated */
+		/** The resulting arithmetic expression after roll have been evaluated */
 		get result(): string;
 
 		/** Return the total result of the Roll expression if it has been evaluated. */
