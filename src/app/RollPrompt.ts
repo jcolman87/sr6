@@ -16,6 +16,7 @@ import VueSheet from '@/vue/VueSheet';
 export interface RollPromptContext<TRollData extends SR6RollData = SR6RollData> extends ContextBase {
 	actor: SR6Actor;
 	rollData: TRollData;
+	resolvePromise: (value: TRollData) => void;
 }
 
 export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> extends VueSheet(Application) {
@@ -28,13 +29,21 @@ export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> ext
 			...super.defaultOptions,
 			classes: ['app-roll-prompt'],
 			width: 500,
+			scroll: true,
+			focus: true,
 		};
 	}
 
-	//static async promptForRoll(actor: GenesysActor, skillId: string, options: DicePromptOptions = {}) {
-	//	const app = new DicePrompt(actor, skillId, options);
-	//	await app.render(true);
-	//}
+	static async promptForRoll<TRollData extends SR6RollData = SR6RollData>(actor: SR6Actor, rollData: TRollData): Promise<TRollData | null> {
+		const sheet = new RollPrompt<TRollData>(actor, rollData);
+		await sheet.render(true);
+
+		return new Promise<TRollData | null>((resolve) => {
+			sheet.#resolvePromise = resolve;
+		});
+	}
+
+	#resolvePromise?: (value: TRollData | null) => void;
 
 	actor: SR6Actor;
 	rollData: TRollData;
@@ -46,12 +55,19 @@ export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> ext
 		this.rollData = rollData;
 	}
 
-	override async close(options: {} = {}) {
+	override async close(options = {}) {
+		this.#resolvePromise?.(null);
 		await super.close(options);
 	}
 
 	override async getVueContext(): Promise<RollPromptContext<TRollData>> {
 		return {
+			resolvePromise: async (data) => {
+				this.#resolvePromise?.(data);
+				this.#resolvePromise = undefined;
+
+				await this.close();
+			},
 			actor: this.actor,
 			app: this,
 			rollData: this.rollData,

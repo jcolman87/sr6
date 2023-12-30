@@ -3,18 +3,19 @@
  * @author jaynus
  * @file
  */
-import SkillDataModel from '@/item/data/SkillDataModel';
-import SR6Item from '@/item/SR6Item';
-import { get } from 'tinymce';
+import { getActor } from '@/util';
+import * as handlebars from 'handlebars';
 
 export async function preload() {
 	const templatePaths = ['systems/sr6/templates/chat/rolls/shared/header.hbs', 'systems/sr6/templates/chat/rolls/shared/footer.hbs'];
 
-	console.log(`Load templates`);
+	
 	return loadTemplates(templatePaths);
 }
 
 export function register() {
+	// Bullshit
+
 	/** String Utilities */
 
 	Handlebars.registerHelper('capitalize', /** @param {string} value */ (value) => value.capitalize());
@@ -38,6 +39,22 @@ export function register() {
 	Handlebars.registerHelper('and', (lhs, rhs) => lhs && rhs);
 	Handlebars.registerHelper('or', (lhs, rhs) => lhs || rhs);
 	Handlebars.registerHelper('not', (val) => !val);
+
+	Handlebars.registerHelper('var', function (this: any, varName, varValue, options) {
+		this[varName] = varValue;
+	});
+
+	Handlebars.registerHelper('getActorItem', function (actor: Actor, itemId: string) {
+		return actor.items.get(itemId);
+	});
+
+	Handlebars.registerHelper('getActorById', function (actorId: string) {
+		return getActor(actorId);
+	});
+
+	Handlebars.registerHelper('getActorItemById', function (actorId: string, itemId: string) {
+		return getActor(actorId)!.items.get(itemId);
+	});
 
 	/** Iteration utilities */
 	Handlebars.registerHelper('repeat', (times, options) => {

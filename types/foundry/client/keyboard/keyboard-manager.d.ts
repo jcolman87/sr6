@@ -14,14 +14,14 @@ declare global {
 		/** The set of movement keys which were recently pressed */
 		moveKeys: Set<string>;
 
-		/** Allowed modifier keys */
+		/** Allowed condition keys */
 		static MODIFIER_KEYS: {
 			CONTROL: 'Control';
 			SHIFT: 'Shift';
 			ALT: 'Alt';
 		};
 
-		/** Track which KeyboardEvent#code presses associate with each modifier */
+		/** Track which KeyboardEvent#code presses associate with each condition */
 		static MODIFIER_CODES: {
 			Alt: ['AltLeft', 'AltRight'];
 			Control: ['ControlLeft', 'ControlRight', 'MetaLeft', 'MetaRight'];
@@ -70,9 +70,9 @@ declare global {
 		 * Emulates a key being pressed, triggering the Keyboard event workflow.
 		 * @param up       If True, emulates the `keyup` Event. Else, the `keydown` event
 		 * @param code     The KeyboardEvent#code which is being pressed
-		 * @param altKey   Emulate the ALT modifier as pressed
-		 * @param ctrlKey  Emulate the CONTROL modifier as pressed
-		 * @param shiftKey Emulate the SHIFT modifier as pressed
+		 * @param altKey   Emulate the ALT condition as pressed
+		 * @param ctrlKey  Emulate the CONTROL condition as pressed
+		 * @param shiftKey Emulate the SHIFT condition as pressed
 		 * @param repeat   Emulate this as a repeat event
 		 */
 		static emulateKeypress(up: boolean, code: string, { altKey, ctrlKey, shiftKey, repeat }?: { altKey?: boolean; ctrlKey?: boolean; shiftKey?: boolean; repeat?: boolean }): KeyboardEvent;
@@ -96,9 +96,9 @@ declare global {
 		static getKeyboardEventContext(event: KeyboardEvent, up?: boolean): KeyboardEventContext;
 
 		/**
-		 * Report whether a modifier in KeyboardManager.MODIFIER_KEYS is currently actively depressed.
-		 * @param modifier A modifier in MODIFIER_KEYS
-		 * @returns Is this modifier key currently down (active)?
+		 * Report whether a condition in KeyboardManager.MODIFIER_KEYS is currently actively depressed.
+		 * @param modifier A condition in MODIFIER_KEYS
+		 * @returns Is this condition key currently down (active)?
 		 */
 		isModifierActive(modifier: ModifierKey): boolean;
 

@@ -1,25 +1,17 @@
 <script lang="ts" setup>
-import CharacterActor from '@/actor/CharacterActor';
-import { RollType } from '@/roll';
-import { SR6Roll } from '@/roll/SR6Roll';
 import { computed, inject, toRaw } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { EnumAttribute } from '@/actor/data';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
-import { AttributeRollData } from '@/roll';
+import { rollAttribute } from '@/roll/Rollers';
 
-import RollPrompt from '@/app/RollPrompt';
-
-const context = inject<ActorSheetContext<CharacterDataModel, CharacterActor>>(RootContext)!;
+const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
 
-async function rollAttribute(attribute: EnumAttribute) {
-	//let roll = AttributeRoll.make(context.data.actor, attribute);
-	//roll.evaluate({});
-	//await roll.toMessage();
-	new RollPrompt<AttributeRollData>(toRaw(context.data.actor), { ...SR6Roll.defaultOptions(), type: RollType.Attribute, attribute: attribute }).render(true);
+async function roll(attribute: EnumAttribute) {
+	await rollAttribute(toRaw(context.data.actor), attribute);
 }
 </script>
 
@@ -31,7 +23,7 @@ async function rollAttribute(attribute: EnumAttribute) {
 				<span>
 					{{ system.attributes.body.value }}
 					<br />
-					<a @click="rollAttribute(EnumAttribute.body)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+					<a @click="roll(EnumAttribute.body)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
 				</span>
 				<div class="field">
 					<label>Base</label>

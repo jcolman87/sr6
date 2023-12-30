@@ -6,23 +6,22 @@
 
 import { register as registerSheets } from '@/actor/sheets';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import { SR6ActorProxy } from '@/actor/SR6ActorProxy';
 
 import SR6Actor from '@/actor/SR6Actor';
 
-export function onCreate(actor: Actor, controlled: boolean): void {
-	(actor as SR6Actor).onCreate(controlled);
+export async function onCreate(actor: Actor, controlled: boolean) {
+	return (actor as unknown as SR6Actor)._onPostCreate(controlled);
 }
 
 export function register() {
-	(CONFIG.Actor.documentClass as any) = SR6ActorProxy;
+	(CONFIG.Actor.documentClass as any) = SR6Actor;
 
 	registerDataModels();
 	registerSheets();
 }
 
-export const AdversaryTypes = ['minion', 'nemesis', 'rival'];
-
 function registerDataModels() {
 	CONFIG.Actor.dataModels.character = CharacterDataModel;
 }
+
+export function setOptGroups(select: HTMLSelectElement) {}

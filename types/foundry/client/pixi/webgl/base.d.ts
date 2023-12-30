@@ -5,7 +5,7 @@ declare global {
 	 * A mixin which decorates a PIXI.Filter or PIXI.Shader with common properties.
 	 * @category - Mixins
 	 * @param ShaderClass The parent ShaderClass class being mixed.
-	 * @returns A Shader/Filter subclass mixed with BaseShaderMixin features.
+	 * @returns A Shader/Filter subclass mixed with BaseShaderMixin feature.
 	 */
 	interface BaseShaderMixin<TBase extends PIXI.Shader> {
 		new (program: string, uniforms: object): TBase;

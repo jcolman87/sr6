@@ -239,7 +239,7 @@ declare class ClientDocument<TDocument extends foundry.abstract.Document = found
 
 	/**
 	 * Transform the Document data to be stored in a Compendium pack.
-	 * Remove any features of the data which are world-specific.
+	 * Remove any feature of the data which are world-specific.
 	 * This function is asynchronous in case any complex operations are required prior to exporting.
 	 * @param [pack] A specific pack being exported to
 	 * @return A data object of cleaned data suitable for compendium import

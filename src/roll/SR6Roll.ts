@@ -3,10 +3,13 @@ import { RollType } from '@/roll';
 
 export type SR6RollData = {
 	type: RollType;
-	token_id: string | null;
+	tokenId: string | null;
+	targetTokenIds: string[] | null;
 	auto_hits: number;
 	explode: boolean;
+	pool: number;
 	parameters: { glitch: number[]; success: number[] };
+	threshold: null | number;
 	template: string;
 };
 
@@ -16,12 +19,30 @@ export class SR6Roll extends Roll {
 	static defaultOptions(): SR6RollData {
 		return {
 			type: RollType.Other,
-			token_id: null,
+			tokenId: null,
+			targetTokenIds: null,
 			auto_hits: 0,
+			pool: 0,
 			explode: false,
+			threshold: null,
 			parameters: { glitch: [1], success: [5, 6] },
 			template: this.CHAT_TEMPLATE,
 		};
+	}
+
+	get success(): boolean {
+		if (this.options.threshold) {
+			return this.hits >= this.options.threshold;
+		} else {
+			return true;
+		}
+	}
+
+	get net_hits(): number {
+		if (this.options.threshold) {
+			return Math.max(0, (this.options.threshold ? this.options.threshold : 0) - this.hits);
+		}
+		return this.hits;
 	}
 
 	override get formula(): string {
@@ -189,10 +210,13 @@ export class SR6Roll extends Roll {
 	override async render(options: any = {}): Promise<string> {
 		if (!this._evaluated) await this.evaluate({ async: true });
 
+		await util.waitForCanvasTokens();
+
 		return renderTemplate(this.options.template, {
 			user: game.user!.id,
 			tooltip: options.isPrivate ? '' : await this.getTooltip(),
 			roll: this,
+			actor: this.options.tokenId ? util.getActor(this.options.tokenId!) : undefined,
 			config: CONFIG,
 		});
 	}
@@ -200,11 +224,9 @@ export class SR6Roll extends Roll {
 	constructor(formula: string, data?: Record<string, unknown>, options?: RollOptions) {
 		super(formula, data, options);
 
-		let token_id: string | null = null;
-		if (data && data.hasOwnProperty('actor')) {
-			token_id = util.getTokenOrActorId((data as any).actor);
+		if (data && data.hasOwnProperty('actor') && (data as any).actor) {
+			this.options.tokenId = util.getTokenOrActorId((data as any).actor);
 		}
-		this.options.token_id = token_id;
 
 		this.options = foundry.utils.mergeObject(SR6Roll.defaultOptions(), this.options);
 	}

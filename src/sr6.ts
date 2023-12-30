@@ -8,17 +8,26 @@ import { register as registerConfig, ready as readyConfigs } from '@/config';
 import { register as registerCombat } from '@/combat';
 import { register as registerEnrichers } from '@/enrichers';
 import { register as registerHandlebarsHelpers, preload as preloadHandlebarsTemplates } from '@/handlebars';
-import { register as registerItems } from '@/item';
+import { register as registerItems, setOptGroups as registerItemOptGroups } from '@/item';
 import { register as registerRolls } from '@/roll';
+import { register as registerConditions } from '@/condition';
+import { register as registerToken } from '@/token';
+
 import { NAMESPACE as SETTINGS_NAMESPACE, register as registerSettings } from '@/settings';
 import { KEY_ALPHA_VERSION } from '@/settings/alpha';
 
 import { register as registerChat } from '@/chat';
 
-import { register as registerActors, AdversaryTypes, onCreate as onCreateActor } from '@/actor';
+import { register as registerActors, onCreate as onCreateActor, setOptGroups as registerActorOptGroups } from '@/actor';
 import { register as registerEffects } from '@/effects';
 
+import { BUGFIX } from '@/roll/Rollers';
+
+import ImportPrompt from '@/app/ImportPrompt';
+
 import './scss/index.scss';
+
+import { Logger } from 'tslog';
 
 async function doAlphaNotice() {
 	if (!game.user.isGM) {
@@ -44,27 +53,18 @@ async function doAlphaNotice() {
 	<div style="text-align: center">@symbol[satfhd]</div>
 	<h4 style="font-family: 'Bebas Neue', sans-serif">Bug Fixes & Updates</h4>
 	<ul style="margin-top: 0">
-		<li><a href="https://github.com/Mezryss/FVTT-SR6/pull/104">PR #104</a>: Feature - Adds an alternate way to calculate the chance to succeed (FVTTv11 only)</li>
-        <li><a href="https://github.com/Mezryss/FVTT-SR6/pull/105">PR #105</a>: Enhancement - Additional enhacenments and fixes to vehicle's sheets</li>
+		<li><a href="asdf">PR #104</a>: </li>
 	</ul>
 	<h4 style="font-family: 'Bebas Neue', sans-serif">Roadmap</h4>
 	<ul style="margin-top: 0">
-        <li><strong>0.3:</strong> CRB: Attachments optional rule</li>
-        <li><strong>0.4:</strong> CRB: Magic optional rule</li>
-        <li><strong>1.0:</strong> Core Rulebook Compatibility</li>
-		<li><strong>1.1:</strong> Expanded Player's Guide Compatibility</li>
-		<li><strong>1.2:</strong> First-Party Setting Books Compatibility</li>
-		<li><strong>1.3:</strong> Community Feature Focus</li>
-		<li><strong>1.4:</strong> Automation Focus</li>
+        <li><strong>0.x:</strong> CRB: X</li>
 	</ul>
-	<div style="text-align: center">@dice[apbdcs]</div>
 	<h4 style="font-family: 'Bebas Neue', sans-serif">Useful Links</h4>
 	<ul style="margin-top: 0">
-		<li><a href="https://github.com/Mezryss/FVTT-SR6/wiki">Project Wiki</a></li>
-		<li><a href="https://github.com/Mezryss/FVTT-SR6">Project Source Code</a></li>
-		<li><a href="https://github.com/Mezryss/FVTT-SR6/discussions">Discuss The System</a></li>
-		<li><a href="https://github.com/Mezryss/FVTT-SR6/issues">Report Bugs &amp; Suggest Features</a></li>
-		<li><a href="https://github.com/Mezryss/FVTT-SR6/blob/main/LICENSE">Licensed under the MIT License</a></li>
+		<li><a href="https://github.com/jaynus/sr6/wiki">Project Wiki</a></li>
+		<li><a href="https://github.com/jaynus/sr6">Project Source Code</a></li>
+		<li><a href="https://github.com/jaynus/sr6/issues">Report Bugs &amp; Suggest Features</a></li>
+		<li><a href="https://github.com/jaynus/sr6/blob/main/LICENSE">Licensed under the MIT License</a></li>
 	</ul>
 	`,
 		{ async: true },
@@ -80,11 +80,18 @@ async function doAlphaNotice() {
 }
 
 Hooks.once('init', async () => {
-	console.debug('SR6 | Initializing...');
+	globalThis.log = new Logger({
+		overwrite: {
+			transportFormatted: (logMetaMarkup: string, logArgs: unknown[], logErrors: string[]): void => {
+				console.log(...logArgs);
+			},
+		},
+	});
 
 	// System Documents
 	registerActors();
 	registerItems();
+	registerConditions();
 	registerEffects();
 	registerRolls();
 
@@ -95,10 +102,14 @@ Hooks.once('init', async () => {
 	registerSettings();
 	registerConfig();
 	registerChat();
+	registerToken();
 
 	await preloadHandlebarsTemplates();
 
-	console.debug('SR6 | Initialization Complete.');
+	log.info('SR6 | Initialization Complete.');
+
+	// fix for rollers not getting caught by vue?
+	(window as any).BUGFIX = BUGFIX;
 });
 
 Hooks.once('ready', async () => {
@@ -107,46 +118,39 @@ Hooks.once('ready', async () => {
 	readyConfigs();
 });
 
-function constructOptGroup(select: HTMLSelectElement, groupLabel: string, optValues?: string[]): HTMLOptGroupElement {
-	const options = select.querySelectorAll<HTMLOptionElement>(':scope > option');
-	const optgroup = document.createElement('optgroup');
-
-	optgroup.label = groupLabel;
-	optgroup.append(...Array.from(options).filter((option) => !optValues || optValues.includes(option.value)));
-
-	return optgroup;
-}
-
-Hooks.on('createActor', (actor: Actor, controlled: boolean) => {
-	onCreateActor(actor, controlled);
+Hooks.on('createActor', async (actor: Actor, controlled: boolean) => {
+	return onCreateActor(actor, controlled);
 });
 
 Hooks.on('renderDialog', (_dialog: Dialog, html: JQuery<HTMLElement>, _data: object) => {
 	const container = html[0];
 
-	/*
 	// Cheks if it's the item creation dialog and categorize the options from the dropdown
 	if (container.classList.contains('dialog-item-create')) {
 		const select = container.querySelector<HTMLSelectElement>('select[name=type]');
 
 		if (select) {
-			select.append(
-				constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.CharacterCreation'), CharacterCreationItemTypes),
-				constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Equipment'), EquipmentItemTypes),
-				constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Other')),
-			);
+			registerItemOptGroups(select);
 			select.querySelector('option')!.selected = true;
 		}
-
 
 		// Cheks if it's the actor creation dialog and categorize the options from the dropdown
 	} else if (container.classList.contains('dialog-actor-create')) {
 		const select = container.querySelector<HTMLSelectElement>('select[name=type]');
-
 		if (select) {
-			select.append(constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Actor.Adversary'), AdversaryTypes), constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Actor.Other')));
+			registerActorOptGroups(select);
 			select.querySelector('option')!.selected = true;
 		}
 	}
-	*/
+});
+
+Hooks.on('renderActorDirectory', function (_app: ActorDirectory<Actor>, html: JQuery, _data: any) {
+	let button = $("<button class='open-import-dialog'><i class='fas fa-edit'></i></i>Import</button>");
+
+	button.click(async () => {
+		new ImportPrompt().render(true);
+	});
+
+	// Render Button
+	$(html).find('.header-actions').append(button);
 });

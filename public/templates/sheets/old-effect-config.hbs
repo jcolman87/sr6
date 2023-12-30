@@ -1,0 +1,201 @@
+<form class="sr6 effect-sheet" autocomplete="off">
+	<header class="{{#if (eq hasDecoration true)}}with-decoration{{/if}}">
+		<img src="{{ data.icon }}" data-edit="icon" title="{{ label }}" />
+		<input type="text" name="label" value="{{ data.name }}" placeholder="{{ localize 'SR6.Labels.Name' }}" />
+		{{#if (eq hasDecoration true)}}
+			{{>decoration}}
+		{{/if}}
+	</header>
+
+	<nav class="sheet-tabs" data-group="primary">
+		<div class="spacer"></div>
+
+		<a class="item" data-tab="details">
+			<i class="fas fa-book"></i> {{localize 'SR6.Tabs.Details'}}
+		</a>
+
+		<a class="item" data-tab="duration">
+			<i class="fas fa-clock"></i> {{localize 'SR6.Tabs.Duration'}}
+		</a>
+
+		<a class="item" data-tab="effects">
+			<i class="fas fa-cogs"></i> {{localize 'SR6.Tabs.Effects'}}
+		</a>
+
+		<div class="spacer"></div>
+	</nav>
+
+	<section class="sheet-body">
+		<div class="tab" data-group="primary" data-tab="details">
+			<section class="data-grid">
+				<div class="row">
+					<label>{{localize 'EFFECT.IconTint'}}</label>
+					<div class="tint-container">
+						{{colorPicker name="tint" value=data.tint}}
+					</div>
+				</div>
+
+				<div class="row">
+					<label>{{localize 'SR6.ActiveEffects.Activation'}}</label>
+					<div class="checkbox-container">
+						<select name="activation">
+							<option value="always">{{localize 'SR6.ActiveEffects.Activations.Always'}}</option>
+							<option value="onhit">{{localize 'SR6.ActiveEffects.Activations.OnHit'}}</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<label>{{localize 'EFFECT.Disabled'}}</label>
+					<div class="checkbox-container">
+						<input type="checkbox" name="disabled" {{checked data.disabled}} />
+					</div>
+				</div>
+
+				{{#if isActorEffect}}
+					<div class="row">
+						<label>{{localize 'EFFECT.Origin'}}</label>
+						<input type="text" name="origin" value="{{data.origin}}" disabled />
+					</div>
+				{{/if}}
+
+				{{#if isItemEffect}}
+					<div class="row">
+						<label>{{localize 'EFFECT.Transfer'}}</label>
+						<div class="checkbox-container">
+							<input type="checkbox" name="transfer" {{checked data.transfer}} />
+						</div>
+					</div>
+				{{/if}}
+			</section>
+		</div>
+
+		<div class="tab" data-group="primary" data-tab="duration">
+			<section class="data-grid">
+				<div class="row">
+					<label>{{localize 'EFFECT.DurationSecs'}}</label>
+					<input type="number" name="duration.seconds" value="{{data.duration.seconds}}" />
+				</div>
+
+				<div class="row">
+					<label>{{localize 'EFFECT.StartTime'}}</label>
+					<input type="number" name="duration.startTime" value="{{data.duration.startTime}}" />
+				</div>
+
+				<div class="row">
+					<label>{{localize 'EFFECT.DurationTurns'}}</label>
+					<div class="split">
+						<label>{{localize 'COMBAT.Rounds'}}</label>
+						<input type="number" name="duration.rounds" value="{{data.duration.rounds}}" />
+						<label>{{localize 'COMBAT.Turns'}}</label>
+						<input type="number" name="duration.turns" value="{{data.duration.turns}}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<label>{{localize 'EFFECT.Combat'}}</label>
+					<input type="text" name="duration.combat" value="{{data.duration.combat}}" disabled />
+				</div>
+
+				<div class="row">
+					<label>{{localize 'EFFECT.StartTurns'}}</label>
+					<div class="split">
+						<label>{{localize 'COMBAT.Round'}}</label>
+						<input type="number" name="duration.startRound" value="{{data.duration.startRound}}" />
+						<label>{{localize 'COMBAT.Turn'}}</label>
+						<input type="number" name="duration.startTurn" value="{{data.duration.startTurn}}" />
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<div class="tab" data-group="primary" data-tab="effects">
+			<section class="effect-grid">
+				<div class="header">
+					<div>{{localize 'EFFECT.ChangeKey'}}</div>
+					<div>{{localize 'EFFECT.ChangeMode'}}</div>
+					<div>{{localize 'EFFECT.ChangeValue'}}</div>
+					<div>
+						<a class="effect-control" data-action="add">
+							<i class="far fa-plus-square"></i>
+						</a>
+					</div>
+				</div>
+
+				{{#each data.changes as |change i|}}
+					<div class="row effect-change" data-index="{{i}}">
+						{{#select change.key}}
+							<select name="changes.{{i}}.key">
+								<option value="">—</option>
+
+								{{!-- Characteristics Changes --}}
+								<optgroup label="{{localize 'SR6.ActiveEffects.Types.ModifyAttribute'}}">
+									{{!-- Character & Adversary Characteristics --}}
+									<option value="system.attribute.body.mod">&#x1F9D1; {{localize 'SR6.Attributes.strength'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.strength.value">&#x1F9D1; {{localize 'SR6.Attributes.Strength'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.agility.mod">&#x1F9D1; {{localize 'SR6.Attributes.agility'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.agility.value">&#x1F9D1; {{localize 'SR6.Attributes.agility'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.reaction.mod">&#x1F9D1; {{localize 'SR6.Attributes.reaction'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.reaction.value">&#x1F9D1; {{localize 'SR6.Attributes.reaction'}} {{localize 'SR6.Labels.Value'}}</option>
+
+
+									<option value="system.attribute.strength.mod">&#x1F9D1; {{localize 'SR6.Attributes.Strength'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.strength.value">&#x1F9D1; {{localize 'SR6.Attributes.Strength'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.willpower.mod">&#x1F9D1; {{localize 'SR6.Attributes.willpower'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.willpower.value">&#x1F9D1; {{localize 'SR6.Attributes.willpower'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.logic.mod">&#x1F9D1; {{localize 'SR6.Attributes.logic'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.logic.value">&#x1F9D1; {{localize 'SR6.Attributes.logic'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.intuition.mod">&#x1F9D1; {{localize 'SR6.Attributes.intuition'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.intuition.value">&#x1F9D1; {{localize 'SR6.Attributes.intuition'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.charisma.mod">&#x1F9D1; {{localize 'SR6.Attributes.charisma'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.charisma.value">&#x1F9D1; {{localize 'SR6.Attributes.charisma'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.magic.mod">&#x1F9D1; {{localize 'SR6.Attributes.magic'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.magic.value">&#x1F9D1; {{localize 'SR6.Attributes.magic'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									<option value="system.attribute.resonance.mod">&#x1F9D1; {{localize 'SR6.Attributes.resonance'}} {{localize 'SR6.Labels.Mod'}}</option>
+									<option value="system.attribute.resonance.value">&#x1F9D1; {{localize 'SR6.Attributes.resonance'}} {{localize 'SR6.Labels.Value'}}</option>
+
+									{{!-- Vehicle Characteristics --}}
+
+								</optgroup>
+
+								{{!-- Stat Changes --}}
+								<optgroup label="{{localize 'SR6.ActiveEffects.Types.ModifySkill'}}">
+									{{!-- Skill Changes
+                                	{{#each getCoreSkills  }}
+                            		{{ log this }}
+									<option value="skill.{{this.name}}.points">&#x1F9D1; {{localize 'SR6.Labels.Skill'}}</option>
+
+								{{/each}}--}}
+
+								</optgroup>
+
+								{{!-- Skill Changes --}}
+
+								{{!-- Dice Pool Changes --}}
+							</select>
+						{{/select}}
+						<select name="changes.{{i}}.mode" data-dtype="Number">
+							{{selectOptions ../modes selected=change.mode}}
+						</select>
+						<input type="text" name="changes.{{i}}.value" value="{{change.value}}" />
+						<div class="effect-controls">
+							<a class="effect-control" data-action="delete"><i class="fas fa-trash"></i></a>
+						</div>
+					</div>
+				{{/each}}
+			</section>
+		</div>
+	</section>
+
+	<footer class="sheet-footer">
+		<button type="submit"><i class="fas fa-save"></i> {{localize submitText}}</button>
+	</footer>
+</form>

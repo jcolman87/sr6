@@ -4,6 +4,7 @@
  * @file Item Sheet Registration
  */
 
+import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
 import VueSheet from '@/vue/VueSheet';
 
 import SR6ItemSheet from '@/item/SR6ItemSheet';
@@ -23,7 +24,7 @@ type VueSheetConstructor = new (...args: any[]) => {
  * @param vueComponent Vue component to use for the sheet.
  * @param sheetType Base class to use for the sheet.
  */
-function basicSheet(vueComponent: any, sheetType: VueSheetConstructor = VueSheet(SR6ItemSheet)) {
+export function basicSheet(vueComponent: any, sheetType: VueSheetConstructor = VueSheet(SR6ItemSheet)) {
 	return class extends sheetType {
 		override get vueComponent() {
 			return vueComponent;
@@ -44,6 +45,11 @@ function basicSheet(vueComponent: any, sheetType: VueSheetConstructor = VueSheet
  */
 export function register() {
 	Items.unregisterSheet('core', ItemSheet);
+
+	Items.registerSheet('sr6', basicSheet(BasicItemSheet), {
+		types: ['gear', 'weapon', 'credstick', 'contact', 'sin', 'lifestyle', 'quality', 'augmentation', 'spell', 'adeptpower', 'complexform', 'matrix_action', 'matrix_persona', 'general_action'],
+		makeDefault: true,
+	});
 
 	Items.registerSheet('sr6', basicSheet(SkillSheet), {
 		types: ['skill'],

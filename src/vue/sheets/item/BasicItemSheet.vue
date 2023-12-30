@@ -7,17 +7,21 @@ import Localized from '@/vue/components/Localized.vue';
 import Editor from '@/vue/components/Editor.vue';
 import EffectsView from '@/vue/views/EffectsView.vue';
 
-defineProps<{
-	/**
-	 * Whether the item has a decoration field to display.
-	 */
-	hasDecoration?: boolean;
+const props = withDefaults(
+	defineProps<{
+		/**
+		 * Whether the item has a decoration field to display.
+		 */
+		hasDecoration?: boolean;
 
-	/**
-	 * Whether to show or hide the ActiveEffects tab
-	 */
-	showEffectsTab?: boolean;
-}>();
+		/**
+		 * Whether to show or hide the ActiveEffects tab
+		 * Whether to show or hide the ActiveEffects tab
+		 */
+		showEffectsTab?: boolean;
+	}>(),
+	{ hasDecoration: false, showEffectsTab: true },
+);
 
 const context = inject<ItemSheetContext>(RootContext)!;
 const system = computed(() => context.data.item.systemData);
@@ -28,7 +32,7 @@ const system = computed(() => context.data.item.systemData);
 const effects = ref<any>([]);
 
 async function addEffect(category: string) {
-	console.log('addEffect', category, category === 'suppressed');
+
 	await toRaw(context.sheet.item).createEmbeddedDocuments('ActiveEffect', [
 		{
 			label: context.data.item.name,

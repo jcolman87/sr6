@@ -1,13 +1,13 @@
-{{log this }}
+{{ log this }}
 <h3>
-	{{#unless (undefined system.actor)}}
-	<img class="profile-img" src="{{system.actor.img}}" data-edit="img" title="{{system.actor.name}}" height="24" width="24" />
+	{{#unless (undefined actor)}}
+	<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="24" width="24" />
 	{{/unless}}
-{{#unless (undefined system.actor)}}
-{{system.actor.name}}
+{{#unless (undefined actor)}}
+{{actor.name}}
 {{/unless}}
 </h3>
-<h4><i style="font-size: 16px"><a class="chat-action-expand-text">{{ action_text }}</a></i></h4>
+<h4><i style="font-size: 16px"><a class="chat-action-expand-text">{{#if (eq roll.options.type 1) }}Attribute ({{ localize (concat "SR6.Attributes." roll.options.attribute) }}){{/if}}</a></i></h4>
 <header class="part-header flexrow chat-expand-dice">
 	<div id="formula">{{roll.formula}}</div>
 	<br/>

@@ -40,6 +40,8 @@ declare global {
 		/** Get the Combatant who has the current turn. */
 		get combatant(): Combatant<this> | undefined;
 
+		get nextCombatant(): Combatant<this> | undefined;
+
 		/** The numeric round of the Combat encounter */
 		get round(): number;
 

@@ -2,18 +2,41 @@ Actor:
   types:
     - character
   character:
-
-
-
 Item:
   types:
     # Items
+    - gear
     - weapon
+    - credstick
     # Character Building
     - skill
+    - contact
+    - sin
+    - lifestyle
+    - quality
+    - augmentation
+    - spell
+    - adeptpower
+    - complexform
+    # Matrix Stuff
     - matrix_action
     - matrix_persona
+    # Combat
+    - general_action
+    #Functionality
+    - condition
+  gear:
   weapon:
   skill:
+  contact:
+  sin:
+  lifestyle:
+  quality:
+  augmentation:
+  spell:
+  adeptpower:
+  complexform:
   matrix_action:
   matrix_persona:
+  general_action:
+  condition:

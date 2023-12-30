@@ -5,7 +5,7 @@ import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
 import Localized from '@/vue/components/Localized.vue';
 import SkillUse from '@/vue/components/SkillUse.vue';
-import MatrixActionDataModel from '@/item/data/MatrixActionDataModel';
+import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 
 const context = inject<ItemSheetContext<MatrixActionDataModel>>(RootContext)!;
 const system = computed(() => context.data.item.systemData);

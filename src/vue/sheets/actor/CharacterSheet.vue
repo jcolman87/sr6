@@ -13,6 +13,8 @@ import InventoryTab from '@/vue/sheets/actor/character/InventoryTab.vue';
 import CombatTab from '@/vue/sheets/actor/character/CombatTab.vue';
 import MatrixTab from '@/vue/sheets/actor/character/MatrixTab.vue';
 import MagicTab from '@/vue/sheets/actor/character/MagicTab.vue';
+import PersonalTab from '@/vue/sheets/actor/character/PersonalTab.vue';
+import EffectsTab from '@/vue/sheets/actor/character/EffectsTab.vue';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
@@ -33,7 +35,9 @@ const system = computed(() => toRaw(context.data.actor).systemData);
 			<a class="item" data-tab="combat"><Localized label="SR6.Tabs.Combat" /></a>
 			<a class="item" data-tab="matrix"><Localized label="SR6.Tabs.Matrix" /></a>
 			<a class="item" data-tab="magic"><Localized label="SR6.Tabs.Magic" /></a>
-
+			<a class="item" data-tab="personal"><Localized label="SR6.Tabs.Personal" /></a>
+			<a class="item" data-tab="effects"><Localized label="SR6.Tabs.Effects" /></a>
+			<a></a>
 			<div class="spacer"></div>
 		</nav>
 
@@ -44,6 +48,8 @@ const system = computed(() => toRaw(context.data.actor).systemData);
 			<div class="tab" data-tab="combat"><CombatTab /></div>
 			<div class="tab" data-tab="matrix"><MatrixTab /></div>
 			<div class="tab" data-tab="magic"><MagicTab /></div>
+			<div class="tab" data-tab="personal"><PersonalTab /></div>
+			<div class="tab" data-tab="effects"><EffectsTab /></div>
 		</section>
 	</div>
 </template>

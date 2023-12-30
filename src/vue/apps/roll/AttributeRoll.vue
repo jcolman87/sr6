@@ -1,26 +1,30 @@
 <script lang="ts" setup>
-import { toRaw } from 'vue';
+import SR6Actor from '@/actor/SR6Actor';
+import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { EnumAttribute } from '@/actor/data';
-import { RollType, AttributeRollData } from '@/roll';
+import * as rollers from '@/roll/Rollers';
 
-import LifeformActor from '@/actor/LifeformActor';
 import { SR6RollData } from '@/roll/SR6Roll';
 import Localized from '@/vue/components/Localized.vue';
 
 const props = defineProps<{
-	actor: LifeformActor;
+	actor: SR6Actor<LifeformDataModel>;
 	roll: SR6RollData;
 }>();
-const data = props.roll as AttributeRollData;
+
+const data = props.roll as rollers.AttributeRollData;
 const attribute_name = EnumAttribute[data.attribute as keyof typeof EnumAttribute];
 
-const finishRoll = (pool_modifier: number) => {
-	toRaw(props.actor).rollAttribute(data.attribute, pool_modifier);
-};
-defineExpose({ finishRoll });
+const emit = defineEmits<{
+	(e: 'setText', value: { title: string; hint: string }): void;
+}>();
+emit('setText', {
+	title: `Roll Attribute (${attribute_name})`,
+	hint: '',
+});
 </script>
 
 <template>
 	<label><Localized label="SR6.Labels.Attribute" /></label>
-	{{ data.type }}, <Localized :label="`SR6.Attributes.${attribute_name}`" />
+	<Localized :label="`SR6.Attributes.${attribute_name}`" />
 </template>

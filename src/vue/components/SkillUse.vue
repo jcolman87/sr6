@@ -4,8 +4,8 @@ import { Ref } from 'vue';
 
 import { getCoreSkills } from '@/item/data';
 import SR6Item from '@/item/SR6Item';
-import SkillDataModel from '@/item/data/SkillDataModel';
-import { SkillUseDataModel } from '@/data/SharedDataModels';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import SkillUseDataModel from '@/data/SkillUseDataModel';
 import Localized from '@/vue/components/Localized.vue';
 
 const props = defineProps<{

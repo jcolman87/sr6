@@ -1,6 +1,7 @@
 name: Astral
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: magic
   description: ''
@@ -18,6 +19,7 @@ data:
 name: Athletics
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -38,6 +40,7 @@ data:
 name: Biotech
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -55,6 +58,7 @@ data:
 name: Close Combat
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: combat
   description: ''
@@ -71,6 +75,7 @@ data:
 name: Con
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: social
   description: ''
@@ -88,6 +93,7 @@ data:
 name: Conjuring
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: magic
   description: ''
@@ -103,6 +109,7 @@ data:
 name: Cracking
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: matrix
   description: ''
@@ -119,6 +126,7 @@ data:
 name: Electronics
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: matrix
   description: ''
@@ -136,6 +144,7 @@ data:
 name: Enchanting
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: magic
   description: ''
@@ -152,6 +161,7 @@ data:
 name: Engineering
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -173,6 +183,7 @@ data:
 name: Exotic Weapons
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: combat
   description: ''
@@ -186,6 +197,7 @@ data:
 name: Firearms
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: combat
   description: ''
@@ -208,6 +220,7 @@ data:
 name: Influence
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: social
   description: ''
@@ -226,6 +239,7 @@ data:
 name: Outdoors
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -245,6 +259,7 @@ data:
 name: Perception
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -267,6 +282,7 @@ data:
 name: Piloting
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -283,6 +299,7 @@ data:
 name: Sorcery
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: magic
   description: ''
@@ -299,6 +316,7 @@ data:
 name: Stealth
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: other
   description: ''
@@ -316,6 +334,7 @@ data:
 name: Tasking
 type: skill
 img: /systems/sr6/assets/brain.svg
+effects: []
 data:
   category: matrix
   description: ''

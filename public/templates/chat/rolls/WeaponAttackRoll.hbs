@@ -1,0 +1,34 @@
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
+{{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
+{{ var "weapon" (getActorItemById roll.options.attack.attackerId roll.options.attack.itemId) }}
+<div>
+	<i style="font-weight: bold">{{ localize (concat "SR6.Combat.Distances." roll.options.attack.distance) }}</i> distance
+	<i style="font-weight: bold">{{ localize (concat (concat "SR6.Combat.FireModes." roll.options.attack.firemode) ".Name") }}</i>
+	with <a class="chat-1-expand" style="font-style: italic; font-weight: bold">{{ weapon.name }}</a><br/>
+
+	<a class="chat-2-expand" style="font-style: italic">
+		Damage: <i style="font-weight: bold; color: rgb(194, 76, 29);">{{ net_damage }}</i></a>
+	<br/>
+	<div class="chat-formula chat-2-collapsible" style="display: none">
+		DV({{roll.options.attack.damage}}) + Hits({{roll.net_hits}}) = {{ net_damage }}
+	</div>
+
+	Attack Rating: <i style="font-weight: bold">{{ roll.options.attack.attackRating }}</i><br/>
+
+	<div class="chat-1-collapsible" style="display: none">
+		<section>
+			<div>
+				<hr/>
+				DV <i style="font-weight: bold">{{weapon.systemData.damage}}</i><br/>
+				AR TODO ITEM AR RATINGS
+				<br/><div style="font-size: 10px">{{weapon.systemData.description}}</div>
+			</div>
+		</section>
+	</div>
+	<hr/>
+	<input id="roll-weapon-defense" type="button" value="Roll Defense"/>
+{{!---#unless roll.isUserOwner }}
+
+{{!---/unless ---}}
+</div>
+{{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

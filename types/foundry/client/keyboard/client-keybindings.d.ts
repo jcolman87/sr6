@@ -65,7 +65,7 @@ declare global {
 		 *   onDown: () => { ui.notifications.info("Pressed!") },
 		 *   onUp: () => {},
 		 *   restricted: true,                         // Restrict this Keybinding to gamemaster only?
-		 *   reservedModifiers: ["Alt""],              // If the ALT modifier is pressed, the notification is permanent instead of temporary
+		 *   reservedModifiers: ["Alt""],              // If the ALT condition is pressed, the notification is permanent instead of temporary
 		 *   precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL
 		 * }
 		 */

@@ -133,11 +133,11 @@ declare global {
 		key: string;
 		/** The originating keypress event */
 		event: KeyboardEvent;
-		/** Is the Shift modifier being pressed */
+		/** Is the Shift condition being pressed */
 		isShift: boolean;
-		/** Is the Control or Meta modifier being processed */
+		/** Is the Control or Meta condition being processed */
 		isControl: boolean;
-		/** Is the Alt modifier being pressed */
+		/** Is the Alt condition being pressed */
 		isAlt: boolean;
 		/** Are any of the modifiers being pressed */
 		hasModifiers: boolean;

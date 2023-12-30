@@ -1,0 +1,25 @@
+name: Blinded I
+type: condition
+img: systems/sr6/assets/status/blind1.svg
+data:
+  description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
+  name: Blinded I
+  activation: any
+  situation: vision
+  target: self
+  duration:
+    turns: 1
+  poolModifiers:
+    - key: Skill
+      value: -3
+    - key: WeaponAttack
+      value: -3
+    - key: WeaponDefend
+      value: -3
+    - key: SpellAction
+      value: -3
+    - key: SpellDefend
+      value: -3
+  icon: icons/svg/item-bag.svg
+  script: null
+effects: []

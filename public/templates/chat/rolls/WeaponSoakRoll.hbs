@@ -1,0 +1,12 @@
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
+{{#if roll.success }}
+	<i style="color: #006400">Soaked Successfully!</i>
+{{ else }}
+	<a class="chat-formula-1" style="font-style: italic">
+		Took <i style="font-weight: bold; color: rgb(194, 76, 29);">{{ roll.net_hits }}</i> Damage
+	</a>
+	<br/>
+	<div class="chat-tooltip chat-formula chat-formula-1-collapsible" style="display: none">
+	</div>
+{{/if }}
+{{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

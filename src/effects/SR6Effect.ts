@@ -3,29 +3,30 @@
  * @author jaynus
  * @file ActiveEffects Customizations
  */
-import { MatrixAccessLevel } from '@/item/data/MatrixActionDataModel';
-
-export enum EffectActivation {
-	Always = 'always',
-	OnHit = 'onhit',
-	OnUse = 'onuse',
-}
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import SR6Actor from '@/actor/SR6Actor';
 
 export default class SR6Effect extends ActiveEffect {
-	activation: EffectActivation = EffectActivation.Always;
+	constructor(data: PreCreate<foundry.data.ActiveEffectSource>, context?: DocumentConstructionContext<ActiveEffect>) {
+		log.debug(`${JSON.stringify(data)}`);
+		super(data, context);
+	}
+
+	override prepareDerivedData() {
+		super.prepareDerivedData();
+	}
 
 	override get isSuppressed() {
 		return this.disabled;
 	}
 
-	static override defineSchema() {
-		return {
-			...foundry.documents.BaseActiveEffect.defineSchema(),
-			activation: new foundry.data.fields.StringField({ initial: EffectActivation.Always, required: true, nullable: false, blank: false, choices: Object.values(EffectActivation) }),
-		};
-	}
-
 	override apply(actor: Actor, change: ApplicableChangeData<this>): unknown {
 		return super.apply(actor, change);
+	}
+
+	override _applyCustom(actor: Actor, change: ApplicableChangeData<this>): unknown {
+		let baseActor = actor as SR6Actor<BaseActorDataModel>;
+
+		return null;
 	}
 }

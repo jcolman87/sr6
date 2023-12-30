@@ -25,8 +25,18 @@ export default class SR6Item<ItemDataModel extends foundry.abstract.DataModel = 
 	}
 
 	solveFormula(formula: string, actor: SR6Actor | null = null): number {
-		let roll = new SR6Roll(formula, { ...this.getRollData(), ...actor?.getRollData(), item: this, actor: actor }, SR6Roll.defaultOptions());
-		return roll.evaluate({}).total;
+		let roll = new SR6Roll(formula, { ...foundry.utils.mergeObject({ ...this.getRollData() }, { ...actor?.getRollData() }), item: this, actor: actor }, SR6Roll.defaultOptions());
+		return roll.evaluate({ async: false }).total;
+	}
+
+	override prepareData() {
+		super.prepareData();
+		this.systemData.prepareData();
+	}
+
+	override prepareDerivedData() {
+		super.prepareDerivedData();
+		this.systemData.prepareDerivedData();
 	}
 
 	/**

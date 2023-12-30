@@ -11,8 +11,11 @@ import SR6Combat from '@/combat/SR6Combat';
 import SR6Combatant from '@/combat/SR6Combatant';
 import SR6CombatTracker from '@/combat/SR6CombatTracker';
 import { SR6_CONFIG } from '@/config';
+import { Logger } from 'tslog';
 
 declare global {
+	declare var log: Logger;
+
 	const ui: FoundryUI;
 	const canvas: Canvas;
 	interface SR6Config

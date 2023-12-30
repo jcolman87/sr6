@@ -118,7 +118,7 @@ declare global {
 		 * {1d6,1d8,1d10,1d12}kh2       Keep the 2 best roll from the pool
 		 * {1d12,6}kl                   Keep the lowest result in the pool
 		 *
-		 * @param modifier The matched modifier query
+		 * @param modifier The matched condition query
 		 */
 		keep(modifier: string): void;
 
@@ -128,33 +128,33 @@ declare global {
 		 * {1d6,1d8,1d10,1d12}dl3       Drop the 3 worst results in the pool
 		 * {1d12,6}dh                   Drop the highest result in the pool
 		 *
-		 * @param modifier The matched modifier query
+		 * @param modifier The matched condition query
 		 */
 		drop(modifier: string): void;
 
 		/**
 		 * Count the number of successful results which occurred in the pool.
 		 * Successes are counted relative to some target, or relative to the maximum possible value if no target is given.
-		 * Applying a count-success modifier to the results re-casts all results to 1 (success) or 0 (failure)
+		 * Applying a count-success condition to the results re-casts all results to 1 (success) or 0 (failure)
 		 *
 		 * 20d20cs      Count the number of dice which rolled a 20
 		 * 20d20cs>10   Count the number of dice which rolled higher than 10
 		 * 20d20cs<10   Count the number of dice which rolled less than 10
 		 *
-		 * @param modifier The matched modifier query
+		 * @param modifier The matched condition query
 		 */
 		countSuccess(modifier: string): void;
 
 		/**
 		 * Count the number of failed results which occurred in a given result set.
 		 * Failures are counted relative to some target, or relative to the lowest possible value if no target is given.
-		 * Applying a count-failures modifier to the results re-casts all results to 1 (failure) or 0 (non-failure)
+		 * Applying a count-failures condition to the results re-casts all results to 1 (failure) or 0 (non-failure)
 		 *
 		 * 6d6cf      Count the number of dice which rolled a 1 as failures
 		 * 6d6cf<=3   Count the number of dice which rolled less than 3 as failures
 		 * 6d6cf>4    Count the number of dice which rolled greater than 4 as failures
 		 *
-		 * @param modifier The matched modifier query
+		 * @param modifier The matched condition query
 		 */
 		countFailures(modifier: string): void;
 	}

@@ -1,6 +1,8 @@
 import { DataModel, EmbeddedCollection } from '../abstract/module.mjs';
 import type { DataModelValidationFailure } from "./validation-failure";
 
+export { DataModelValidationFailure } ;
+
 /* ---------------------------------------- */
 /*  Abstract Data Field                     */
 /* ---------------------------------------- */
@@ -381,7 +383,7 @@ export class BooleanField<
 	protected override _validateType(value: unknown): value is boolean;
 }
 
-interface NumberFieldOptions<
+export interface NumberFieldOptions<
 	TSourceProp extends number,
 	TRequired extends boolean,
 	TNullable extends boolean,

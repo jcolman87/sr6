@@ -25,7 +25,7 @@ declare global {
 		 * Call the result of the coin flip, marking any coins that matched the called target as a success
 		 * 3dcc1      Flip 3 coins and treat "heads" as successes
 		 * 2dcc0      Flip 2 coins and treat "tails" as successes
-		 * @param modifier The matched modifier query
+		 * @param modifier The matched condition query
 		 */
 		call(modifier: string): void;
 	}

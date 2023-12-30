@@ -1,4 +1,8 @@
-export { SkillUseDataModel } from '@/data/SharedDataModels';
+export enum InitiativeType {
+	Physical = 'physical',
+	Matrix = 'matrix',
+	Astral = 'astral',
+}
 
 export enum ActivationType {
 	Passive = 'passive',
@@ -14,4 +18,27 @@ export enum ActivationPeriod {
 	PostRoll = 'post',
 	OneMinute = '1minute',
 	TenMinute = '10minute',
+}
+
+export enum DamageType {
+	Physical = 'P',
+	Stun = 'S',
+	Matrix = 'M',
+	Astral = 'A',
+}
+
+export enum FireMode {
+	SS = 'SS',
+	SA = 'SA',
+	BF_narrow = 'BF_narrow',
+	BF_wide = 'BF_wide',
+	FA = 'FA',
+}
+
+export enum Distance {
+	Close = 'close',
+	Near = 'near',
+	Medium = 'medium',
+	Far = 'far',
+	Extreme = 'extreme',
 }

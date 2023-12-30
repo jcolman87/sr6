@@ -4,6 +4,7 @@ import dotenvExpand from 'dotenv-expand';
 import pluginVue from '@vitejs/plugin-vue';
 import path from 'path';
 import process from 'process';
+import FullReload from 'vite-plugin-full-reload';
 
 const env = dotenv.config();
 dotenvExpand.expand(env);
@@ -32,10 +33,10 @@ export default defineConfig({
 		port: 30001,
 		open: false,
 		proxy: {
-			'^/assets': `http://${ PROXY_HOST }:${ PROXY_PORT }/systems/sr6/`,
-			'^(?!/systems/sr6)': `http://${ PROXY_HOST }:${ PROXY_PORT }/`,
+			'^/assets': `http://${PROXY_HOST}:${PROXY_PORT}/systems/sr6/`,
+			'^(?!/systems/sr6)': `http://${PROXY_HOST}:${PROXY_PORT}/`,
 			'/socket.io': {
-				target: `ws://${ PROXY_HOST }:${ PROXY_PORT }`,
+				target: `ws://${PROXY_HOST}:${PROXY_PORT}`,
 				ws: true,
 			},
 		},
@@ -44,7 +45,7 @@ export default defineConfig({
 	build: {
 		outDir: 'dist',
 		emptyOutDir: true,
-		sourcemap: true,
+		sourcemap: 'inline',
 		// Avoiding minification is important, because we don't want names of globals/etc. to be mangled.
 		minify: false,
 		lib: {
@@ -53,8 +54,11 @@ export default defineConfig({
 			formats: ['es'], // ES Modules
 			fileName: 'sr6',
 		},
+		rollupOptions: {
+			external: /^\/systems.*/,
+		},
 	},
-	plugins: [pluginVue()],
+	plugins: [pluginVue(), FullReload(['public/**/*'])],
 	resolve: {
 		alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }, { find: '@scss', replacement: path.resolve(__dirname, 'src/scss') }, ...devOnlyAliases, ...releaseOnlyAliases],
 	},

@@ -5,6 +5,10 @@
  */
 import IHasPreCreate from '@/data/IHasPreCreate';
 import IHasOnDelete from '@/data/IHasOnDelete';
+import IHasPostCreate from '@/data/IHasPostCreate';
+import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import SR6Item from '@/item/SR6Item';
 import { SR6Roll } from '@/roll/SR6Roll';
 
 export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel> extends Actor {
@@ -15,10 +19,36 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		return <ActorDataModel>this.system;
 	}
 
+	skill(skill_id_or_name: string): SR6Item<SkillDataModel> | null {
+		let skill = this.items.get(skill_id_or_name);
+		if (!skill) {
+			skill = this.items.getName(skill_id_or_name);
+		}
+		if (skill) {
+			return skill as SR6Item<SkillDataModel>;
+		}
+
+		return null;
+	}
+
+	matrixAction(action_id_or_name: string): SR6Item<MatrixActionDataModel> | null {
+		let skill = this.items.get(action_id_or_name);
+		if (!skill) {
+			skill = this.items.getName(action_id_or_name);
+		}
+		if (skill) {
+			return skill as SR6Item<MatrixActionDataModel>;
+		}
+
+		return null;
+	}
+
 	override prepareData(): void {
+		super.prepareData();
 		this.systemData.prepareData();
 	}
 	override prepareDerivedData(): void {
+		super.prepareDerivedData();
 		this.systemData.prepareDerivedData();
 	}
 
@@ -29,7 +59,15 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	}
 
 	override getRollData(): Record<string, unknown> {
-		return { actor: this };
+		let skills: any = {};
+
+		this.items
+			.filter((i) => i.type == 'skill')
+			.forEach((i) => {
+				let skill = i as SR6Item<SkillDataModel>;
+				skills[skill.safe_name] = skill.systemData.points;
+			});
+		return foundry.utils.mergeObject(skills, { ...super.getRollData(), ...this.systemData.getRollData(), actor: this });
 	}
 
 	/**
@@ -52,7 +90,9 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		super._onDelete(options, userId);
 	}
 
-	async onCreate(controlled: boolean) {}
+	async _onPostCreate(controlled: boolean) {
+		(<IHasPostCreate<this>>this.systemData).onPostCreate?.(this, controlled);
+	}
 
 	/**
 	 * Override the createDialog callback to include a unique class that identifies the created dialog.

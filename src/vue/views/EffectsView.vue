@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Effect from '@/effects/SR6Effect';
-import { inject, toRaw } from 'vue';
-import { BaseSheetContext, RootContext } from '@/vue/SheetContext';
+import { inject, toRaw, ref } from 'vue';
+import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 
 defineProps<{
@@ -10,9 +11,10 @@ defineProps<{
 
 const emit = defineEmits<{
 	(e: 'addEffect', category: string): void;
+	(e: 'deleteEffect', effect: SR6Effect): void;
 }>();
 
-const rootContext = inject<BaseSheetContext>(RootContext)!;
+const rootContext = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 
 type EffectSection = {
 	label: string;
@@ -34,10 +36,7 @@ async function suppressEffect(effect: SR6Effect) {
 		disabled: !effect.disabled,
 	});
 }
-
-async function deleteEffect(effect: SR6Effect) {
-	await toRaw(effect).delete();
-}
+const dummy = ref(0);
 </script>
 
 <template>
@@ -50,6 +49,7 @@ async function deleteEffect(effect: SR6Effect) {
 				<div class="buttons">
 					<a @click="emit('addEffect', section.toLowerCase())"><i class="fas fa-plus"></i> <Localized label="SR6.Labels.Add" /></a>
 				</div>
+				<input type="hidden" :value="dummy" />
 			</div>
 
 			<section class="effects-category">
@@ -61,7 +61,7 @@ async function deleteEffect(effect: SR6Effect) {
 					<div v-if="rootContext.data.editable" class="buttons">
 						<a @click="suppressEffect(effect)" :style="effect.isSuppressed ? 'opacity: 25%' : undefined"><i class="fas fa-power-off"></i></a>
 						<a @click="openEffect(effect)"><i class="fas fa-edit"></i></a>
-						<a v-if="!effect.origin" @click="deleteEffect(effect)"><i class="fas fa-trash"></i></a>
+						<a v-if="!effect.origin" @click="emit('deleteEffect', effect)"><i class="fas fa-trash"></i></a>
 					</div>
 				</div>
 			</section>

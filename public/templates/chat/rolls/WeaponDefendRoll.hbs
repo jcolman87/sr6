@@ -1,0 +1,35 @@
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
+{{ var "net_damage" (sub roll.options.attack.damage roll.hits) }}
+{{ var "weapon" (getActorItemById roll.options.attack.attackerId roll.options.attack.itemId) }}
+{{ var "attacker" (getActorById roll.options.attack.attackerId) }}
+<div>
+Defending against  <a class="chat-1-expand" style="font-style: italic; font-weight: bold">{{ weapon.name }}</a>
+shot by <i style="font-weight: bold; font-style: italic">{{attacker.name}}</i><br/>
+</br>
+{{#if roll.success }}
+	<i style="color: #006400">Defended Successfully!</i>
+{{ else }}
+	<a class="chat-2-expand" style="font-style: italic">
+		Damage: <i style="font-weight: bold; color: rgb(194, 76, 29);">{{ net_damage }}</i>
+	</a>
+	<br/>
+	<div class="chat-formula chat-2-collapsible" style="display: none">
+		DV: DV({{roll.options.attack.damage}}) + Hits({{roll.options.threshold}}) = {{roll.attack_roll.damage }} <br/>
+		DV({{roll.options.attack.damage }}) - Hits({{roll.hits}}) = {{ net_damage }}
+	</div>
+	<div class="chat-1-collapsible" style="display: none">
+		<section>
+			<div>
+				<hr/>
+				DV <i style="font-weight: bold">{{weapon.systemData.damage}}</i><br/>
+				AR TODO ITEM AR RATINGS
+				<br/><div style="font-size: 10px">{{weapon.systemData.description}}</div>
+			</div>
+		</section>
+	</div>
+	{{!--#if roll.isUserOwner --}}
+		<input id="roll-weapon-soak" type="button" value="Soak Damage"/>
+	{{!--/if--}}
+{{/if }}
+</div>
+{{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

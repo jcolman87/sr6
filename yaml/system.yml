@@ -25,10 +25,20 @@ packs:
     system: sr6
     path: ./packs/sr6-crb-skills.db
     type: Item
+  - name: sr6-crb-general-actions
+    label: Core General Actions
+    system: sr6
+    path: ./packs/sr6-crb-general-actions.db
+    type: Item
   - name: sr6-crb-matrix-actions
     label: Core Matrix Actions
     system: sr6
     path: ./packs/sr6-crb-matrix-actions.db
+    type: Item
+  - name: sr6-crb-weapons
+    label: Core Weapons
+    system: sr6
+    path: ./packs/sr6-crb-weapons.db
     type: Item
 socket: true
 url: https://github.com/jaynus/sr6

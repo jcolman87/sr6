@@ -1,7 +1,14 @@
 import { EnumAttribute } from '@/actor/data';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import IHasPreCreate from '@/data/IHasPreCreate';
-import * as shared from '@/data/SharedDataModels';
+import { InitiativeType } from '@/data';
+import AttributeDataModel from '@/data/AttributeDataModel';
+import MonitorDataModel from '@/data/MonitorDataModel';
+import IHasInitiative, { AvailableActions } from '@/data/IHasInitiative';
+import IHasPostCreate from '@/data/IHasPostCreate';
+import InitiativeDataModel from '@/data/InitiativeDataModel';
+import { RollType } from '@/roll';
 
 /**s
  *
@@ -9,31 +16,118 @@ import * as shared from '@/data/SharedDataModels';
  * @file Player Character
  */
 
-export default abstract class LifeformDataModel extends foundry.abstract.DataModel implements IHasPreCreate<SR6Actor<LifeformDataModel>> {
-	static _enableV10Validation = true;
+export type Attributes = {
+	body: AttributeDataModel;
+	agility: AttributeDataModel;
+	reaction: AttributeDataModel;
+	strength: AttributeDataModel;
+	willpower: AttributeDataModel;
+	logic: AttributeDataModel;
+	intuition: AttributeDataModel;
+	charisma: AttributeDataModel;
+	magic: AttributeDataModel;
+	resonance: AttributeDataModel;
+};
 
-	get actor(): SR6Actor {
-		return (this as any).parent;
+export type Monitors = {
+	physical: MonitorDataModel;
+	stun: MonitorDataModel;
+	overflow: MonitorDataModel;
+	edge: MonitorDataModel;
+};
+
+export type Initiatives = {
+	physical: InitiativeDataModel;
+	astral: null | InitiativeDataModel;
+	matrix: null | InitiativeDataModel;
+};
+
+export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasPostCreate<SR6Actor<LifeformDataModel>>, IHasInitiative {
+	abstract attributes: Attributes;
+	abstract monitors: Monitors;
+
+	abstract initiatives: Initiatives;
+
+	getInitiativeFormula(type: InitiativeType): null | string {
+		switch (type) {
+			case InitiativeType.Physical:
+				return this.initiatives.physical.formula;
+			case InitiativeType.Astral:
+				return this.initiatives.astral ? this.initiatives.astral!.formula : null;
+			case InitiativeType.Matrix:
+				return this.initiatives.matrix ? this.initiatives.matrix!.formula : null;
+		}
 	}
 
-	abstract attributes: {
-		body: shared.AttributeDataModel;
-		agility: shared.AttributeDataModel;
-		reaction: shared.AttributeDataModel;
-		strength: shared.AttributeDataModel;
-		willpower: shared.AttributeDataModel;
-		logic: shared.AttributeDataModel;
-		intuition: shared.AttributeDataModel;
-		charisma: shared.AttributeDataModel;
-		magic: shared.AttributeDataModel;
-		resonance: shared.AttributeDataModel;
-	};
+	getAvailableActions(type: InitiativeType): AvailableActions {
+		switch (type) {
+			case InitiativeType.Physical:
+				return this.initiatives.physical.availableActions;
+			case InitiativeType.Astral:
+				ui.notifications.error('astral actions not implemented');
+				break;
+			case InitiativeType.Matrix:
+				ui.notifications.error('matrix actions not implemented');
+				break;
+		}
+		return {
+			major: 1,
+			minor: 1,
+		};
+	}
 
-	abstract monitors: {
-		physical: shared.ConditionMonitorDataModel;
-	};
+	override getPool(type: RollType): number {
+		let pool = super.getPool(type);
 
-	attribute(id: EnumAttribute): shared.AttributeDataModel {
+		switch (type) {
+			case RollType.WeaponAttack:
+				return pool;
+			case RollType.WeaponDefend:
+				return pool + this.attribute(EnumAttribute.agility).value + this.attribute(EnumAttribute.intuition).value;
+			case RollType.WeaponSoak:
+				return pool + this.attribute(EnumAttribute.body).value;
+			default:
+				ui.notifications.error('Unimplemented pool type');
+		}
+		return 0;
+	}
+
+	static override defineSchema() {
+		const fields = foundry.data.fields;
+
+		return {
+			...super.defineSchema(),
+			initiatives: new fields.SchemaField(
+				{
+					physical: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: false }),
+					astral: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: true }), // TODO initial
+					matrix: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: true }), // TODO: initial
+				},
+				{ required: true, nullable: false },
+			),
+			monitors: new fields.SchemaField({
+				stun: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
+				physical: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
+				overflow: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 32, formula: null }, required: true, nullable: false }),
+				edge: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 5, formula: null }, required: true, nullable: false }),
+			}),
+			attributes: new fields.SchemaField({
+				body: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				agility: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				reaction: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				strength: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				willpower: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				logic: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				intuition: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				charisma: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				magic: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				resonance: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+			}),
+			modifiers: new fields.EmbeddedDataField(ConditionDataModel, { required: true, nullable: false }),
+		};
+	}
+
+	attribute(id: EnumAttribute): AttributeDataModel {
 		switch (id) {
 			case EnumAttribute.body:
 				return this.attributes.body;
@@ -58,32 +152,53 @@ export default abstract class LifeformDataModel extends foundry.abstract.DataMod
 		}
 	}
 
-	static defineSchema() {
-		const fields = foundry.data.fields;
+	override prepareData() {
+		super.prepareData();
 
+		this.monitors.physical.prepareData();
+		this.monitors.overflow.prepareData();
+	}
+
+	override prepareDerivedData() {
+		super.prepareDerivedData();
+
+		this.monitors.physical.prepareDerivedData();
+		this.monitors.stun.prepareDerivedData();
+
+		this.monitors.overflow.prepareDerivedData();
+		this.monitors.edge.prepareDerivedData();
+		this.prepareDerivedAttributes();
+	}
+
+	override getRollData() {
 		return {
-			monitors: new fields.SchemaField({
-				physical: new fields.EmbeddedDataField(shared.ConditionMonitorDataModel, { initial: { value: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
-				overflow: new fields.EmbeddedDataField(shared.ConditionMonitorDataModel, { initial: { value: 0, max: 32, formula: null }, required: true, nullable: false }),
-			}),
-			attributes: new fields.SchemaField({
-				body: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				agility: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				reaction: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				strength: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				willpower: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				logic: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				intuition: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				charisma: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				magic: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-				resonance: new fields.EmbeddedDataField(shared.AttributeDataModel, { initial: { base: 2, value: 2, modifier: 0 }, required: true, nullable: false }),
-			}),
-
-			//skills: new fields.SchemaField({
-			//	astral: new fields.EmbeddedDataField(SkillDataModel, { initial: new SkillDataModel, required: true  })
-			//}),
+			...super.getRollData(),
+			body: this.attributes.body.value,
+			agility: this.attributes.agility.value,
+			reaction: this.attributes.reaction.value,
+			strength: this.attributes.strength.value,
+			willpower: this.attributes.willpower.value,
+			logic: this.attributes.logic.value,
+			intuition: this.attributes.intuition.value,
+			charisma: this.attributes.charisma.value,
+			magic: this.attributes.magic.value,
+			resonance: this.attributes.resonance.value,
+			initiatives: this.initiatives,
 		};
 	}
 
-	async preCreate(actor: SR6Actor<this>, _data: PreDocumentId<any>, _options: DocumentModificationContext<SR6Actor<LifeformDataModel>>, _user: User) {}
+	prepareDerivedAttributes() {
+		this.attributes.body.prepareDerivedData();
+		this.attributes.agility.prepareDerivedData();
+		this.attributes.reaction.prepareDerivedData();
+		this.attributes.strength.prepareDerivedData();
+		this.attributes.willpower.prepareDerivedData();
+		this.attributes.logic.prepareDerivedData();
+		this.attributes.intuition.prepareDerivedData();
+		this.attributes.charisma.prepareDerivedData();
+		this.attributes.magic.prepareDerivedData();
+		this.attributes.resonance.prepareDerivedData();
+	}
+
+	async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean) {}
 }

@@ -1,4 +1,4 @@
-import * as shared from '@/data/SharedDataModels';
+import BaseDataModel from '@/data/BaseDataModel';
 
 /**s
  *
@@ -6,9 +6,7 @@ import * as shared from '@/data/SharedDataModels';
  * @file Player Character
  */
 
-export default abstract class MatrixICDataModel extends foundry.abstract.DataModel {
-	static _enableV10Validation = true;
-
+export default abstract class MatrixICDataModel extends BaseDataModel {
 	abstract rating: number;
 
 	static defineSchema() {

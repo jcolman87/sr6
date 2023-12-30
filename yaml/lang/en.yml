@@ -31,6 +31,14 @@ SR6:
     SkillsCompendium: Skills Compendium
     SkillsCompendiumHint: An Item compendium containing all of the skills that should be applied to new characters. Changing this value will have no impact on existing characters.
 
+  # Dialog shit for overlays
+  DialogGroups:
+    Item:
+      Character: Character
+      Gear: Gear
+      Matrix: Matrix
+      Other: Other
+
   # Tooltips
   Tooltips:
     NoDescription: No Description Available
@@ -48,6 +56,7 @@ SR6:
     Duration: Duration
     Description: Description
     Data: Data
+    Personal: Personal
 
   Labels:
     Skills: Skills
@@ -76,9 +85,44 @@ SR6:
     Pool: Pool
     Value: Value
     Skill: Skill
+    Information: Information
 
+  Combat:
+    Damage: Damage
+    AttackRating: Attack Rating
+    FireMode: Fire Mode
+    FireModes:
+      SS:
+        Name: Single Shot
+        Description: You fire a single bullet. There are no changes to a weapon’s attributes with a single shot.
+      SA:
+        Name: Semi Auto
+        Description:
+      BFNarrow:
+        Name: Burst Fire (Narrow)
+        Description:
+      BFWide:
+        Name: Burst Fire (Wide)
+        Description:
+      FA:
+        Name: Full Auto
+        Description:
+    Distance: Distance
+    Distances:
+      close: Close
+      near: Near
+      medium: Medium
+      far: Far
+      extreme: Extreme
 
-  RollDialog:
+  Edge:
+    EdgeBoost: Edge Boost
+    EdgeAction: Edge Action
+
+  RollPrompt:
+    Title: Configure Roll
+    PoolModifier: Pool Modifier
+    Conditions: Conditions Modifying
 
   Attributes:
     body: Body
@@ -102,6 +146,7 @@ SR6:
     Activations:
       Always: Always
       OnHit: On Hit
+      OnUse: On Use
     Types:
       ModifyAttribute: Modify Attribute
       ModifyStat: Modify Stat
@@ -131,3 +176,8 @@ SR6:
       Initiative: Initiative
       PreRoll: Pre-roll
       PostRoll: Post-roll
+
+  Effect:
+    Blind1: Blind I
+    Blind2: Blind II
+    Blind3: Blind III

@@ -4,6 +4,9 @@
  * @file Basic data model
  */
 
+import SR6Actor from '@/actor/SR6Actor';
+import BaseDataModel from '@/data/BaseDataModel';
+
 /**
  * Base data model shared by all Item documents.
  *
@@ -12,9 +15,7 @@
  * In this way, we can safely define the value types (to allow for typed access) on the data model. This works only because we never
  * have reason to instantiate any of the DataModel classes ourselves.
  */
-export default abstract class BaseItemDataModel extends foundry.abstract.DataModel {
-	static _enableV10Validation = true;
-
+export default abstract class BaseItemDataModel extends BaseDataModel {
 	abstract description: string;
 	abstract source: string;
 

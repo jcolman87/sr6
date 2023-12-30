@@ -61,7 +61,7 @@ declare global {
 		/** Is this tile a roof */
 		get isRoof(): boolean;
 
-		/** The effective volume at which this Tile should be playing, including the global ambient volume modifier */
+		/** The effective volume at which this Tile should be playing, including the global ambient volume condition */
 		get volume(): number;
 
 		/* -------------------------------------------- */

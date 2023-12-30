@@ -1,14 +1,19 @@
 <script lang="ts" setup>
-import { computed, inject, toRaw } from 'vue';
+import { SR6Roll } from '@/roll/SR6Roll';
+import { computed, inject, unref, toRaw } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
 import SR6Item from '@/item/SR6Item';
-import SkillDataModel from '@/item/data/SkillDataModel';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
+
+import { rollSkill } from '@/roll/Rollers';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
+
+const isGM = game.user.isGM;
 
 const skills = computed(
 	() =>
@@ -21,7 +26,14 @@ function updateSkill(skill: SR6Item<SkillDataModel>) {
 	skill.update({ ['system']: skill.systemData });
 }
 
-function rollSkill(skill: SR6Item<SkillDataModel>) {}
+async function roll(skill: SR6Item<SkillDataModel>) {
+	await rollSkill(toRaw(context.data.actor), skill.id);
+}
+
+function addSkill() {}
+function addCoreSkills() {
+	toRaw(system.value)._addCoreSkills();
+}
 </script>
 
 <template>
@@ -30,15 +42,17 @@ function rollSkill(skill: SR6Item<SkillDataModel>) {}
 			<thead>
 				<tr class="field-table">
 					<td>Skill</td>
-					<td>Points</td>
 					<td></td>
+					<td></td>
+					<td><a v-if="isGM" class="fas fa-plus" @click.prevent="addSkill" /><a v-if="isGM && skills.length == 0" class="fas fa-infinity" @click.prevent="addCoreSkills" /></td>
 				</tr>
 			</thead>
 			<tr v-for="skill in skills">
 				<td style="width: 100%">{{ skill.name }}</td>
 				<td><input class="field-number" type="number" v-model="skill.systemData.points" @change="updateSkill(skill)" /></td>
+				<td style="text-align: left">{{ skill.systemData.pool }}</td>
 				<td>
-					<a @click="rollSkill(skill)" data-die="A"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+					<a @click="roll(skill)" data-die="A"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
 				</td>
 			</tr>
 		</table>
