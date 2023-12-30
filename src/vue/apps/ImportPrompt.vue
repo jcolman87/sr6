@@ -15,7 +15,7 @@ async function click() {
 </script>
 
 <template>
-	<div>Genesys JSON: <input id="pick-file" type="button" value="Select File" @click.prevent="click()" /></div>
+	<div>SR6 JSON: <input id="pick-file" type="button" value="Select File" @click.prevent="click()" /></div>
 </template>
 
 <style lang="scss" scoped></style>

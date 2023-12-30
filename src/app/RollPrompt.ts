@@ -1,8 +1,8 @@
 /**
- * FVTT-Genesys
- * Unofficial implementation of the Genesys RPG for Foundry
+ * FVTT-SR6
+ * Unofficial implementation of the SR6 RPG for Foundry
  *
- * @author Mezryss
+ * @author jaynus
  * @file Dice roll prompt app.
  */
 

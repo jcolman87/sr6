@@ -1,8 +1,8 @@
 /**
- * FVTT-Genesys
- * Unofficial implementation of the Genesys RPG for Foundry
+ * FVTT-SR6
+ * Unofficial implementation of the SR6 RPG for Foundry
  *
- * @author Mezryss
+ * @author jaynus
  * @file Dice roll prompt app.
  */
 
@@ -28,9 +28,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 		const response = await fetch(file);
 		const json = await response.json();
 
-		
-		
-
 		json.attr = (name: string): string => {
 			return json.attributes.find((a: any) => a.id == name.toUpperCase());
 		};
@@ -52,11 +49,9 @@ export default class ImportPrompt extends VueSheet(Application) {
 		Object.keys(data.attributes).forEach((name: string) => {
 			const value = json.attr(name);
 			if (value != undefined) {
-				
 				(data.attributes as any)[name].base = value.points;
 				(data.attributes as any)[name].modifier = value.modifiedValue - value.points;
 			} else {
-				
 			}
 		});
 
@@ -68,7 +63,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 				let skill = s as SR6Item<SkillDataModel>;
 				let entry = json.skill(skill.name);
 				if (entry) {
-					
 					skill.update({ ['system.points']: parseInt(entry.rating) });
 				}
 			});
@@ -118,7 +112,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 						let sin = sins.find((sin) => sin.name == value.sin);
 						if (sin) {
 							sin_id = sin.id;
-							
 						}
 					}
 

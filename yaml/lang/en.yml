@@ -20,7 +20,7 @@ TYPES:
     TypeWeapon: Weapon
     TypeVehicleweapon: Vehicle Weapon
 
-# Genesys
+# SR6
 SR6:
   # System Strings
   System:

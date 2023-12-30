@@ -1,9 +1,9 @@
 {
 	"name": "genesys",
 	"version": "1.0.0",
-	"description": "Unofficial implementation of the Genesys RPG for Foundry",
-	"repository": "https://github.com/Mezryss/FVTT-Genesys",
-	"author": "Mezryss <mezryss@minalien.dev>",
+	"description": "Unofficial implementation of the Shadowrun 6E for Foundry",
+	"repository": "https://github.com/jaynus/sr6",
+	"author": "jaynus <jaynus@gmail.com>",
 	"license": "MIT",
 	"type": "module",
 	"private": true,
