@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
 import { RollPromptContext } from '@/app/RollPrompt';
 import { RootContext } from '@/vue/SheetContext';
@@ -16,6 +17,7 @@ import WeaponSoakRoll from '@/vue/apps/roll/WeaponSoakRoll.vue';
 import MatrixActionRoll from '@/vue/apps/roll/MatrixActionRoll.vue';
 
 const context = inject<RollPromptContext>(RootContext)!;
+const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
 
 let pool_modifier = ref(0);
 let original_pool = context.rollData.pool;
@@ -40,14 +42,7 @@ function onChangeEdgeBoost(ev: Event) {
 	// Reset first
 }
 
-const finishRollButton = ref();
-onMounted(() => {
-	setTimeout(() => {
-		finishRollButton.value.focus();
-	});
-});
-
-const conditions = computed(() => toRaw(context.actor).systemData.getRollConditions(context.rollData.type));
+const conditions = computed(() => baseSystem.value.getRollConditions(context.rollData.type));
 
 let isDisplayConditions = ref(false);
 function toggleConditions() {
@@ -56,6 +51,13 @@ function toggleConditions() {
 function asModifierString(modifier: number): string {
 	return modifier > 0 ? `+${modifier}` : modifier.toString();
 }
+
+const finishRollButton = ref();
+onMounted(() => {
+	setTimeout(() => {
+		finishRollButton.value.focus();
+	});
+});
 </script>
 
 <template>
@@ -76,12 +78,30 @@ function asModifierString(modifier: number): string {
 				</td>
 			</tr>
 		</table>
-		<div v-if="conditions.length > 0" class="section" @click.prevent="toggleConditions">
-			<div class="section-title" style="width: 400px"><Localized label="SR6.RollPrompt.Conditions" /></div>
+		<div v-if="conditions.length > 0 || baseSystem.woundModifier != 0" class="section" @click.prevent="toggleConditions">
+			<div class="section-title" style="width: 100%"><Localized label="SR6.RollPrompt.Conditions" /></div>
 			<table v-if="isDisplayConditions">
+				<tr v-if="baseSystem.woundModifier != 0">
+					<table>
+						<tr>
+							<td style="width: 3em">{{ asModifierString(baseSystem.woundModifier) }}</td>
+							<td><Localized label="SR6.RollPrompt.WoundModifier" /></td>
+						</tr>
+						<tr>
+							<td class="hint" colspan="2"><Localized label="SR6.RollPrompt.WoundModifierDescription" /></td>
+						</tr>
+					</table>
+				</tr>
 				<tr v-for="condition in conditions">
-					<td>{{ condition.name }}</td>
-					<td>{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}</td>
+					<table>
+						<tr>
+							<td style="width: 3em">{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}</td>
+							<td>{{ condition.name }}</td>
+						</tr>
+						<tr>
+							<td class="hint" colspan="2">{{ condition.description }}</td>
+						</tr>
+					</table>
 				</tr>
 			</table>
 		</div>

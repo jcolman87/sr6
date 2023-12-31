@@ -15,10 +15,11 @@ export default abstract class AttributeDataModel extends BaseDataModel {
 		return {
 			base: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
 			mod: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
+			value: new fields.NumberField({ initial: 2, required: true, nullable: false, integer: true, min: 1 }),
 		};
 	}
 
-	override prepareDerivedData() {
+	override prepareData() {
 		this.value = this.base + this.mod;
 	}
 }

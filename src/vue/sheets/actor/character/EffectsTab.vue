@@ -15,7 +15,6 @@ const effects = ref<any>([]);
 const effectsView = ref();
 
 async function addEffect(category: string) {
-
 	await toRaw(context.sheet.actor).createEmbeddedDocuments('ActiveEffect', [
 		{
 			label: 'New Effect',
@@ -28,7 +27,7 @@ async function addEffect(category: string) {
 }
 
 function updateEffects() {
-	effects.value = [...toRaw(context.sheet.actor).effects];
+	effects.value = [...toRaw(context.sheet.actor).allApplicableEffects()];
 }
 
 function deleteEffect(effect: SR6Effect) {

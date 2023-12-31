@@ -4,7 +4,7 @@ import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { InitiativeType } from '@/data';
 import AttributeDataModel from '@/data/AttributeDataModel';
-import MonitorDataModel from '@/data/MonitorDataModel';
+import MonitorDataModel from '@/actor/data/MonitorDataModel';
 import IHasInitiative, { AvailableActions } from '@/data/IHasInitiative';
 import IHasPostCreate from '@/data/IHasPostCreate';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
@@ -76,8 +76,12 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		};
 	}
 
+	override get woundModifier(): number {
+		return -Math.floor(this.monitors.physical.damage / 3) + Math.floor(this.monitors.stun.damage / 3);
+	}
+
 	override getPool(type: RollType): number {
-		let pool = super.getPool(type);
+		let pool = super.getPool(type) + this.woundModifier;
 
 		switch (type) {
 			case RollType.WeaponAttack:
@@ -86,10 +90,15 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 				return pool + this.attribute(EnumAttribute.agility).value + this.attribute(EnumAttribute.intuition).value;
 			case RollType.WeaponSoak:
 				return pool + this.attribute(EnumAttribute.body).value;
+			case RollType.Initiative:
+			case RollType.Attribute:
+			case RollType.Skill:
+				break;
 			default:
 				ui.notifications.error('Unimplemented pool type');
 		}
-		return 0;
+
+		return pool;
 	}
 
 	static override defineSchema() {
@@ -156,18 +165,22 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		super.prepareData();
 
 		this.monitors.physical.prepareData();
+		this.monitors.stun.prepareData();
 		this.monitors.overflow.prepareData();
+		this.monitors.edge.prepareData();
+
+		this._prepareAttributes();
+		if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
+		if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
 	}
 
 	override prepareDerivedData() {
-		super.prepareDerivedData();
-
 		this.monitors.physical.prepareDerivedData();
 		this.monitors.stun.prepareDerivedData();
-
 		this.monitors.overflow.prepareDerivedData();
 		this.monitors.edge.prepareDerivedData();
-		this.prepareDerivedAttributes();
+
+		super.prepareDerivedData();
 	}
 
 	override getRollData() {
@@ -187,17 +200,17 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		};
 	}
 
-	prepareDerivedAttributes() {
-		this.attributes.body.prepareDerivedData();
-		this.attributes.agility.prepareDerivedData();
-		this.attributes.reaction.prepareDerivedData();
-		this.attributes.strength.prepareDerivedData();
-		this.attributes.willpower.prepareDerivedData();
-		this.attributes.logic.prepareDerivedData();
-		this.attributes.intuition.prepareDerivedData();
-		this.attributes.charisma.prepareDerivedData();
-		this.attributes.magic.prepareDerivedData();
-		this.attributes.resonance.prepareDerivedData();
+	_prepareAttributes() {
+		this.attributes.body.prepareData();
+		this.attributes.agility.prepareData();
+		this.attributes.reaction.prepareData();
+		this.attributes.strength.prepareData();
+		this.attributes.willpower.prepareData();
+		this.attributes.logic.prepareData();
+		this.attributes.intuition.prepareData();
+		this.attributes.charisma.prepareData();
+		this.attributes.magic.prepareData();
+		this.attributes.resonance.prepareData();
 	}
 
 	async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean) {}

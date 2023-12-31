@@ -28,9 +28,22 @@ export enum RollType {
 	Any = 9999,
 }
 
+export const ROLL_CATEGORIES = new Map([
+	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellAction, RollType.SpellDefend]],
+	[
+		'AllPoolButSoak',
+		Array.from(
+			Object.keys(RollType)
+				.filter((t) => ![RollType[RollType.Initiative], RollType[RollType.SpellSoak], RollType[RollType.SpellSoak]].includes(t))
+				.map((t) => RollType[t as keyof typeof RollType]),
+		),
+	],
+]);
+
 export const ROLL_TEMPLATES = new Map([
 	[RollType.Initiative, 'systems/sr6/templates/chat/rolls/InitiativeRoll.hbs'],
 	[RollType.Attribute, 'systems/sr6/templates/chat/rolls/SR6Roll.hbs'],
+	[RollType.Skill, 'systems/sr6/templates/chat/rolls/SR6Roll.hbs'],
 
 	[RollType.WeaponAttack, 'systems/sr6/templates/chat/rolls/WeaponAttackRoll.hbs'],
 	[RollType.WeaponDefend, 'systems/sr6/templates/chat/rolls/WeaponDefendRoll.hbs'],

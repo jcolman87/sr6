@@ -34,7 +34,7 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		//if (!this.actor!.items.find((i) => i.type == 'skill')) {
 		//	await this.actor!.createEmbeddedDocuments('Item', await getCoreSkills());
 		//} else {
-		//	
+		//
 		//}
 	}
 

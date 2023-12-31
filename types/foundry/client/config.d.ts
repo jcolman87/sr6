@@ -187,6 +187,7 @@ declare global {
 			documentClass: {
 				new (data: PreCreate<TActiveEffect['_source']>, context?: DocumentConstructionContext<TActiveEffect>): TActiveEffect;
 			};
+			legacyTransferral: boolean;
 		};
 
 		/** Configuration for the Combatant document */

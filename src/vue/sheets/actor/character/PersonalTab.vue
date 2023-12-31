@@ -4,7 +4,7 @@ import { computed, inject, toRaw, ref } from 'vue';
 import SR6Item from '@/item/SR6Item';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-
+import { createNewItem, updateItem } from '@/vue/directives';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
 import SINDataModel from '@/item/data/feature/SINDataModel';
@@ -27,35 +27,6 @@ const contacts = computed(() =>
 		.items.filter((i) => i.type == 'contact')
 		.map((i) => i as SR6Item<ContactDataModel>),
 );
-
-function createNew(type: string) {
-	toRaw(context.data.actor).createEmbeddedDocuments('Item', [{ name: `new ${type}`, type: type }]);
-}
-
-function updateItem(id: string, field: string, event: Event) {
-	let value = null;
-	if (event.target instanceof HTMLSelectElement) {
-		let target = event.target as HTMLSelectElement;
-		if (target.value != '') {
-			value = target.value;
-		}
-	} else {
-		let target = event.target as HTMLInputElement;
-		if (target.type == 'text') {
-			value = target.value;
-		} else if (target.type == 'number') {
-			value = parseInt(target.value);
-		}
-	}
-
-
-	toRaw(context.data.actor).updateEmbeddedDocuments('Item', [
-		{
-			_id: id,
-			[field]: value,
-		},
-	]);
-}
 </script>
 
 <template>
@@ -63,7 +34,7 @@ function updateItem(id: string, field: string, event: Event) {
 		<div class="section" style="width: 58%">
 			<div class="section-head">
 				<h2 class="section-title">Lifestyles</h2>
-				<a class="fas fa-plus" @click.prevent="createNew('lifestyle')" />
+				<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'lifestyle')" />
 			</div>
 			<table>
 				<thead>
@@ -75,10 +46,10 @@ function updateItem(id: string, field: string, event: Event) {
 				</thead>
 				<tr v-for="item in lifestyles">
 					<td class="entry">
-						<input type="text" :value="item.name" @change="(ev) => updateItem(item.id, 'name', ev)" />
+						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
 					</td>
 					<td>
-						<select width="50px" :value="item.systemData.sin" @change="(ev) => updateItem(item.id, 'system.sin', ev)">
+						<select width="50px" :value="item.systemData.sin" @change="(ev) => updateItem(context.data.actor, item.id, 'system.sin', ev)">
 							<option value="">-</option>
 							<option v-for="sin in sins" :value="sin.id">{{ sin.name }}</option>
 						</select>
@@ -90,12 +61,12 @@ function updateItem(id: string, field: string, event: Event) {
 		<div class="section" style="width: 30%">
 			<div class="section-head">
 				<h2 class="section-title">SIN</h2>
-				<a class="fas fa-plus" @click.prevent="createNew('sin')" />
+				<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'sin')" />
 			</div>
 			<table>
 				<tr v-for="item in sins">
 					<td class="entry">
-						<input type="text" :value="item.name" @change="(ev) => updateItem(item.id, 'name', ev)" />
+						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
 					</td>
 					<td class="actions"><a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a class="fas fa-minus" @click.prevent="item.delete()" /></td>
 				</tr>
@@ -104,7 +75,7 @@ function updateItem(id: string, field: string, event: Event) {
 		<div class="section" style="width: 31%">
 			<div class="section-head">
 				<h2 class="section-title">Contacts</h2>
-				<a class="fas fa-plus" @click.prevent="createNew('contact')" />
+				<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'contact')" />
 			</div>
 			<table>
 				<thead>
@@ -116,9 +87,9 @@ function updateItem(id: string, field: string, event: Event) {
 					</tr>
 				</thead>
 				<tr v-for="item in contacts">
-					<td class="entry"><input type="text" :value="item.name" @change="(ev) => updateItem(item.id, 'name', ev)" /></td>
-					<td><input type="number" :value="item.system.rating" @change="(ev) => updateItem(item.id, 'system.rating', ev)" /></td>
-					<td><input type="number" :value="item.system.loyalty" @change="(ev) => updateItem(item.id, 'system.loyalty', ev)" /></td>
+					<td class="entry"><input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" /></td>
+					<td><input type="number" :value="item.system.rating" @change="(ev) => updateItem(context.data.actor, item.id, 'system.rating', ev)" /></td>
+					<td><input type="number" :value="item.system.loyalty" @change="(ev) => updateItem(context.data.actor, item.id, 'system.loyalty', ev)" /></td>
 					<td class="actions"><a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a class="fas fa-minus" @click.prevent="item.delete()" /></td>
 				</tr>
 			</table>

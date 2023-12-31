@@ -1,6 +1,10 @@
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import SR6Actor from '@/actor/SR6Actor';
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import { basicSheet } from '@/item/sheets';
+import SR6Item from '@/item/SR6Item';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
+import BaseActor = foundry.documents.BaseActor;
 
 function registerStatusEffects() {
 	CONFIG.statusEffects = [
@@ -10,99 +14,24 @@ function registerStatusEffects() {
 			icon: 'icons/svg/skull.svg',
 		},
 		{
-			id: 'unconscious',
-			label: 'EFFECT.StatusUnconscious',
-			icon: 'icons/svg/unconscious.svg',
+			id: 'sr6.condition.chilled',
+			label: 'SR6.Effect.Chilled',
+			icon: 'systems/sr6/assets/status/chilled.svg',
 		},
 		{
-			id: 'sleep',
-			label: 'EFFECT.StatusAsleep',
-			icon: 'icons/svg/sleep.svg',
-		},
-		{
-			id: 'stun',
-			label: 'EFFECT.StatusStunned',
-			icon: 'icons/svg/daze.svg',
-		},
-		{
-			id: 'prone',
-			label: 'EFFECT.StatusProne',
-			icon: 'icons/svg/falling.svg',
-		},
-		{
-			id: 'restrain',
-			label: 'EFFECT.StatusRestrained',
-			icon: 'icons/svg/net.svg',
-		},
-		{
-			id: 'paralysis',
-			label: 'EFFECT.StatusParalysis',
-			icon: 'icons/svg/paralysis.svg',
-		},
-		{
-			id: 'blind1',
+			id: 'sr6.condition.blind1',
 			label: 'SR6.Effect.Blind1',
 			icon: 'systems/sr6/assets/status/blind1.svg',
 		},
 		{
-			id: 'blind2',
+			id: 'sr6.condition.blind2',
 			label: 'SR6.Effect.Blind2',
 			icon: 'systems/sr6/assets/status/blind2.svg',
 		},
 		{
-			id: 'blind3',
+			id: 'sr6.condition.blind3',
 			label: 'SR6.Effect.Blind3',
 			icon: 'systems/sr6/assets/status/blind3.svg',
-		},
-		{
-			id: 'deaf',
-			label: 'EFFECT.StatusDeaf',
-			icon: 'icons/svg/deaf.svg',
-		},
-		{
-			id: 'burning',
-			label: 'EFFECT.StatusBurning',
-			icon: 'icons/svg/fire.svg',
-		},
-		{
-			id: 'frozen',
-			label: 'EFFECT.StatusFrozen',
-			icon: 'icons/svg/frozen.svg',
-		},
-		{
-			id: 'shock',
-			label: 'EFFECT.StatusShocked',
-			icon: 'icons/svg/lightning.svg',
-		},
-		{
-			id: 'corrode',
-			label: 'EFFECT.StatusCorrode',
-			icon: 'icons/svg/acid.svg',
-		},
-		{
-			id: 'bleeding',
-			label: 'EFFECT.StatusBleeding',
-			icon: 'icons/svg/blood.svg',
-		},
-		{
-			id: 'disease',
-			label: 'EFFECT.StatusDisease',
-			icon: 'icons/svg/biohazard.svg',
-		},
-		{
-			id: 'poison',
-			label: 'EFFECT.StatusPoison',
-			icon: 'icons/svg/poison.svg',
-		},
-		{
-			id: 'invisible',
-			label: 'EFFECT.StatusInvisible',
-			icon: 'icons/svg/invisible.svg',
-		},
-		{
-			id: 'target',
-			label: 'EFFECT.StatusTarget',
-			icon: 'icons/svg/target.svg',
 		},
 	];
 }
@@ -120,9 +49,36 @@ function registerDataModels() {
 }
 
 export function register() {
+	CONFIG.ActiveEffect.legacyTransferral = false;
+
 	registerStatusEffects();
 	registerDataModels();
 	registerSheets();
+}
+
+export async function getCoreConditions(): Promise<SR6Item<ConditionDataModel>[]> {
+	return Array.from((await game.packs.get('sr6.sr6-crb-conditions')!.getDocuments()).filter((i2) => i2 instanceof SR6Item<ConditionDataModel>).map((i) => i as unknown as SR6Item<ConditionDataModel>));
+}
+
+export async function toggleStatusEffectCondition(statusEffectId: string, actor: SR6Actor<BaseActorDataModel>): Promise<boolean> {
+	let conditions = await getCoreConditions();
+	let condition = conditions.filter((c) => c.systemData.statusEffectId).find((condition) => condition.systemData.statusEffectId == statusEffectId);
+	if (condition) {
+		// Does the actor already have the condition?
+		let existing = actor.systemData.conditions.find((c) => c.statusEffectId == condition!.systemData.statusEffectId);
+		if (existing) {
+			// Toggle is a remove
+			actor.deleteEmbeddedDocuments('Item', [existing.item!.id]);
+
+			return false;
+		} else {
+			await condition.systemData.apply(actor);
+			return true;
+		}
+	} else {
+		ui.notifications.error('Status effect is marked as a condition, but has no associated ConditionDataModel');
+		return false;
+	}
 }
 
 /*

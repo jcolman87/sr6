@@ -53,13 +53,16 @@ export interface MatrixActionRollData extends SR6RollData {
 	matrixActionId: string;
 }
 
-export function getInitiativeRoll(actor: SR6Actor<IHasInitiative>, formula: string): SR6Roll {
-	return new SR6Roll(formula, { ...actor.getRollData(), actor: actor }, { ...SR6Roll.defaultOptions(), template: ROLL_TEMPLATES.get(RollType.Initiative)! });
+export function getInitiativeRoll(actor: SR6Actor<LifeformDataModel>, formula: string): SR6Roll {
+	const poolModifier = actor.systemData.getPool(RollType.Initiative);
+	return new SR6Roll(`(${formula}) + ${poolModifier}`, { ...actor.getRollData(), actor: actor }, { ...SR6Roll.defaultOptions(), template: ROLL_TEMPLATES.get(RollType.Initiative)! });
 }
 
 export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribute: EnumAttribute) {
-	let pool = actor.systemData.attribute(attribute).pool;
-	let rollData = await RollPrompt.promptForRoll<AttributeRollData>(actor, { ...SR6Roll.defaultOptions(), pool: pool, template: ROLL_TEMPLATES.get(RollType.Attribute)!, type: RollType.Attribute, attribute: attribute });
+	const rollType = RollType.Attribute;
+	const pool = actor.systemData.attribute(attribute).pool + actor.systemData.getPool(rollType);
+
+	const rollData = await RollPrompt.promptForRoll<AttributeRollData>(actor, { ...SR6Roll.defaultOptions(), pool: pool, template: ROLL_TEMPLATES.get(rollType)!, type: rollType, attribute: attribute });
 	if (rollData) {
 		let roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
 		await (await roll.evaluate({ async: true })).toMessage();
@@ -67,8 +70,10 @@ export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribut
 }
 
 export async function rollSkill(actor: SR6Actor, skill_id: string) {
-	let pool = actor.skill(skill_id)!.systemData.pool;
-	let rollData = await RollPrompt.promptForRoll<SkillRollData>(actor, { ...SR6Roll.defaultOptions(), pool: pool, template: ROLL_TEMPLATES.get(RollType.Attribute)!, type: RollType.Skill, skill_id: skill_id });
+	const rollType = RollType.Skill;
+	const pool = actor.skill(skill_id)!.systemData.pool + actor.systemData.getPool(rollType);
+
+	const rollData = await RollPrompt.promptForRoll<SkillRollData>(actor, { ...SR6Roll.defaultOptions(), pool: pool, template: ROLL_TEMPLATES.get(rollType)!, type: rollType, skill_id: skill_id });
 	if (rollData) {
 		let roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
 		await (await roll.evaluate({ async: true })).toMessage();

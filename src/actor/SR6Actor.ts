@@ -6,6 +6,7 @@
 import IHasPreCreate from '@/data/IHasPreCreate';
 import IHasOnDelete from '@/data/IHasOnDelete';
 import IHasPostCreate from '@/data/IHasPostCreate';
+import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -17,6 +18,12 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	 */
 	get systemData(): ActorDataModel {
 		return <ActorDataModel>this.system;
+	}
+
+	// This is a fix needed for handling active effects from items showing as icon effects.
+	override get temporaryEffects(): TemporaryEffect[] {
+		// Only return actual temporary effects and then condition transferred effects
+		return [...Array.from(this.allApplicableEffects()).filter((effect) => (effect as SR6Effect).isStatusEffectCondition), ...super.temporaryEffects];
 	}
 
 	skill(skill_id_or_name: string): SR6Item<SkillDataModel> | null {
@@ -54,6 +61,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 
 	solveFormula(formula: string): number {
 		let roll = new SR6Roll(formula, { ...this.getRollData(), actor: this }, SR6Roll.defaultOptions());
+
 		roll = roll.evaluate({ async: false });
 		return roll.total!;
 	}

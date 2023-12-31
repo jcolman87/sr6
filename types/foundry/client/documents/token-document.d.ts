@@ -42,6 +42,8 @@ declare global {
 
 		override prepareBaseData(): void;
 
+		overlayEffect: string | null;
+
 		/**
 		 * Prepare detection modes which are available to the Token.
 		 * Ensure that every Token has the basic sight detection mode configured.

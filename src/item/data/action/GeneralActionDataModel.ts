@@ -20,6 +20,10 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 
 	abstract conditions: ConditionDataModel[];
 
+	async use(): Promise<boolean> {
+		return true;
+	}
+
 	static override defineSchema() {
 		const fields = foundry.data.fields;
 		return {

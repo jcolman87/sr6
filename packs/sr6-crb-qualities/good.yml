@@ -1,0 +1,18 @@
+# Skipped: Burning
+
+name: Ambidextrous
+type: quality
+img: icons/svg/item-bag.svg
+data:
+  condition:
+    description:
+    name: Ambidextrous
+    activation: always
+    situation: any
+    target: self
+    poolModifiers:
+      - key: category.Vision
+        value: -3
+    script: null
+effects: []
+---

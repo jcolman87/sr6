@@ -19,7 +19,7 @@ export default abstract class MonitorDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareDerivedData() {
+	override prepareData() {
 		if (this.formula) {
 			this.max = this.solveFormula(this.formula);
 		}

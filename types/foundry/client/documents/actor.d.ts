@@ -71,6 +71,14 @@ declare global {
 		getActiveTokens(linked?: undefined, document?: undefined): NonNullable<TParent['object']>[];
 		getActiveTokens(linked?: boolean, document?: boolean): Embedded<NonNullable<TParent>>[] | NonNullable<TParent['object']>[];
 
+		/**
+		 * Get all ActiveEffects that may apply to this Actor.
+		 * If CONFIG.ActiveEffect.legacyTransferral is true, this is equivalent to actor.effects.contents.
+		 * If CONFIG.ActiveEffect.legacyTransferral is false, this will also return all the transferred ActiveEffects on any
+		 * of the Actor's owned Items.
+		 */
+		allApplicableEffects(): Generator<ActiveEffect, void, void>;
+
 		/** Prepare a data object which defines the data schema used by dice roll commands against this Actor */
 		getRollData(): Record<string, unknown>;
 

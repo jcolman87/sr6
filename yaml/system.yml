@@ -20,6 +20,11 @@ languages:
     name: English
     path: lang/en.json
 packs:
+  - name: sr6-crb-conditions
+    label: Core Conditions
+    system: sr6
+    path: ./packs/sr6-crb-conditions.db
+    type: Item
   - name: sr6-crb-skills
     label: Core Skills
     system: sr6

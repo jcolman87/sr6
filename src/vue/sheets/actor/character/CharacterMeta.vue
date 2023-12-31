@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import MonitorDataModel from '@/data/MonitorDataModel';
+import MonitorDataModel from '@/actor/data/MonitorDataModel';
 import { inject, toRaw, computed, ref } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -12,10 +12,11 @@ const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
 
 function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
+	console.log('Setting damage', monitor, field, amount);
 	if (monitor.damage == amount) {
-		context.data.actor.update({ [field]: 0 });
+		toRaw(context.data.actor).update({ [field]: 0 });
 	} else {
-		context.data.actor.update({ [field]: amount });
+		toRaw(context.data.actor).update({ [field]: amount });
 	}
 }
 

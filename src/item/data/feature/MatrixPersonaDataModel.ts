@@ -1,5 +1,5 @@
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import MonitorDataModel from '@/data/MonitorDataModel';
+import MonitorDataModel from '@/actor/data/MonitorDataModel';
 import MatrixAttributesDataModel from '@/data/MatrixAttributesDataModel';
 
 import SR6Item from '@/item/SR6Item';

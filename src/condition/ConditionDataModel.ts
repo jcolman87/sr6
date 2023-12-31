@@ -2,7 +2,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import SR6Effect from '@/effects/SR6Effect';
 import SR6Item from '@/item/SR6Item';
-import { RollType } from '@/roll';
+import { ROLL_CATEGORIES, RollType } from '@/roll';
 import fields = foundry.data.fields;
 import EffectChangeSource = foundry.data.EffectChangeSource;
 
@@ -20,6 +20,8 @@ export enum ConditionTarget {
 export enum ConditionSituation {
 	Any = 'any',
 	Roll = 'roll',
+	Attack = 'attack',
+	Defend = 'defend',
 }
 
 export type ConditionDuration = {
@@ -40,6 +42,8 @@ export type ConditionActiveEffectData = {
 
 export default abstract class ConditionDataModel extends BaseDataModel {
 	abstract name: string;
+	abstract description: string;
+	abstract statusEffectId: string | null;
 
 	abstract activation: ConditionActivation;
 	abstract situation: ConditionSituation;
@@ -52,13 +56,34 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 
 	abstract script: string | null;
 
+	getModifiersForRoll(type: RollType): ConditionEffectChangeData[] {
+		return this.poolModifiers.filter((modifier) => {
+			let path = modifier.key.split('.');
+			if (path.length == 1) {
+				if (modifier.key == RollType[type]) {
+					return true;
+				}
+			} else {
+				switch (path[0]) {
+					case 'category':
+						let category = ROLL_CATEGORIES.get(path[1]);
+						if (category && category.includes(type)) {
+							return true;
+						}
+						break;
+					default:
+						ui.notifications.error(`Invalid category for modification ${path[0]}`);
+						throw 'ERR';
+				}
+			}
+		});
+	}
+
 	getPoolModifier(type: RollType): number {
 		let pool = 0;
 
-		this.poolModifiers.forEach((modifier) => {
-			if (modifier.key == RollType[type]) {
-				pool += this.actor!.solveFormula(modifier.value);
-			}
+		this.getModifiersForRoll(type).forEach((modifier) => {
+			pool += this.item!.solveFormula(modifier.value, this.actor);
 		});
 
 		return pool;
@@ -88,11 +113,14 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		});
 
 		let effect = (
-			await this.item!.createEmbeddedDocuments('ActiveEffect', [
+			await item.createEmbeddedDocuments('ActiveEffect', [
 				{
 					name: this.name,
+					descriont: this.description,
 					icon: this.icon,
-					transfers: true,
+					transfer: true,
+					origin: item.id,
+					disabled: false,
 					duration: {
 						turns: this.duration.turns,
 						rounds: this.duration.rounds,
@@ -108,9 +136,19 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		});
 	}
 
+	override prepareDerivedData() {
+		// If we are part of a condition item, set the icon to the item image
+		if (this.item) {
+			if (this.item!.type == 'condition') {
+				this.icon = this.item!.img;
+			}
+		}
+	}
+
 	static defineSchema() {
 		return {
 			name: new fields.StringField({ initial: 'Condition!', required: true, nullable: false, blank: false }),
+			statusEffectId: new fields.StringField({ required: true, nullable: true, blank: false }),
 			description: new fields.StringField({ initial: '', required: true, nullable: false, blank: true }),
 
 			activation: new fields.StringField({ initial: ConditionActivation.OnUse, required: true, nullable: false, blank: false, choices: Object.values(ConditionActivation) }),
@@ -124,10 +162,10 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 				},
 				{ required: true, nullable: false },
 			),
-			icon: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
+			icon: new fields.StringField({ initial: 'icons/svg/item-bag.svg', required: true, nullable: false, blank: false }),
 			poolModifiers: new fields.ArrayField(
 				new fields.SchemaField({
-					key: new fields.StringField({ required: true, nullable: false, blank: false, choices: Object.keys(RollType) }),
+					key: new fields.StringField({ required: true, nullable: false, blank: false, choices: [...Object.keys(RollType), ...Array.from(ROLL_CATEGORIES.keys()).map((k: string) => `category.${k}`)] }),
 					value: new fields.StringField({ required: true, nullable: false, blank: false }),
 				}),
 				{ initial: [], required: true, nullable: false },

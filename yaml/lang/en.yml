@@ -123,6 +123,8 @@ SR6:
     Title: Configure Roll
     PoolModifier: Pool Modifier
     Conditions: Conditions Modifying
+    WoundModifier: Wound Modifier
+    WoundModifierDescription: This modifier is a calculated total of penalty modifiers from damage to your Physical and Stun monitors.
 
   Attributes:
     body: Body
@@ -181,3 +183,4 @@ SR6:
     Blind1: Blind I
     Blind2: Blind II
     Blind3: Blind III
+    Chilled: Chilled
