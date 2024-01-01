@@ -15,12 +15,11 @@ export default class SR6Effect extends ActiveEffect {
 
 	// Ghetto hack, determine if we are a condition by our name
 	get isStatusEffectCondition(): boolean {
-		if (this.parent instanceof SR6Item<ConditionDataModel>) {
-			let parent = this.parent as SR6Item<ConditionDataModel>;
-			if (parent.systemData.statusEffectId) {
-				return true;
-			}
+		let parent = this.parent as SR6Item<ConditionDataModel>;
+		if (parent.systemData.statusEffectId) {
+			return true;
 		}
+
 		return false;
 	}
 

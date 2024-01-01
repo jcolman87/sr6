@@ -57,7 +57,7 @@ export function register() {
 }
 
 export async function getCoreConditions(): Promise<SR6Item<ConditionDataModel>[]> {
-	return Array.from((await game.packs.get('sr6.sr6-crb-conditions')!.getDocuments()).filter((i2) => i2 instanceof SR6Item<ConditionDataModel>).map((i) => i as unknown as SR6Item<ConditionDataModel>));
+	return Array.from((await game.packs.get('sr6.sr6-crb-conditions')!.getDocuments()).map((i) => i as unknown as SR6Item<ConditionDataModel>));
 }
 
 export async function toggleStatusEffectCondition(statusEffectId: string, actor: SR6Actor<BaseActorDataModel>): Promise<boolean> {
