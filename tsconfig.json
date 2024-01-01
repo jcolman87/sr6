@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ES2022",
-		"module": "NodeNext",
+		"module": "ES2022",
 		"moduleResolution": "Node",
 
 		"baseUrl": ".",
@@ -32,19 +32,9 @@
 			"DOM"
 		],
 		"typeRoots": [
-			"node_modules",
-			"node_modules/handlebars",
-			"node_modules/types",
+			"node_modules/@types",
 			"types"
 		],
-		"types": [
-			"dice-so-nice",
-			"foundry",
-			"handlebars",
-			"jquery",
-			"node",
-			"socket.io"
-		]
 	},
 	"include": [
 		"src/**/*.ts",
