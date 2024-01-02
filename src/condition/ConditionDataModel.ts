@@ -20,8 +20,6 @@ export enum ConditionTarget {
 export enum ConditionSituation {
 	Any = 'any',
 	Roll = 'roll',
-	Attack = 'attack',
-	Defend = 'defend',
 }
 
 export type ConditionDuration = {

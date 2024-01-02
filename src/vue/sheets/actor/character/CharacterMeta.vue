@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import MonitorDataModel from '@/actor/data/MonitorDataModel';
+import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import { inject, toRaw, computed, ref } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';

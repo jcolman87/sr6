@@ -1,24 +1,34 @@
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import MonitorDataModel from '@/actor/data/MonitorDataModel';
+import MonitorDataModel from '@/actor/data/MonitorsDataModel';
 import MatrixAttributesDataModel from '@/data/MatrixAttributesDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import GearDataModel from '@/item/data/gear/GearDataModel';
+
+export enum PersonaType {
+	Device = 'device',
+	Living = 'living',
+	IC = 'ic',
+}
 
 export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	abstract deviceId: string;
 	abstract baseAttributes: MatrixAttributesDataModel;
 	abstract attributes: MatrixAttributesDataModel;
 
-	get monitors(): MonitorDataModel {
+	get type(): PersonaType {
+		if (this.device == null) {
+			return PersonaType.Living;
+		}
+		return PersonaType.Device;
+	}
+
+	get conditionMonitor(): MonitorDataModel {
 		if (this.deviceId) {
 			return this.device!.monitors.matrix!;
 		} else {
-			return this.bio_monitor;
+			return this.actor!.systemData.monitors.stun;
 		}
-	}
-	get bio_monitor(): MonitorDataModel {
-		return this.actor!.systemData.monitors.physical;
 	}
 
 	get device(): null | GearDataModel {
@@ -29,14 +39,26 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	get a(): number {
 		return this.attributes.attack;
 	}
+	set a(value) {
+		this.attributes.attack = value;
+	}
 	get s(): number {
 		return this.attributes.sleaze;
+	}
+	set s(value) {
+		this.attributes.sleaze = value;
 	}
 	get d(): number {
 		return this.attributes.dataProcessing;
 	}
+	set d(value) {
+		this.attributes.dataProcessing = value;
+	}
 	get f(): number {
 		return this.attributes.firewall;
+	}
+	set f(value) {
+		this.attributes.firewall = value;
 	}
 
 	static override defineSchema() {

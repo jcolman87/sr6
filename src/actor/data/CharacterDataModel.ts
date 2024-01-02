@@ -7,6 +7,7 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import IHasMatrix from '@/data/IHasMatrix';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
+import GearDataModel from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
 import SR6Actor from '@/actor/SR6Actor';
 import { getCoreSkills, getCoreMatrixActions, getCoreGeneralActions } from '@/item/data';
@@ -14,10 +15,25 @@ import { getCoreSkills, getCoreMatrixActions, getCoreGeneralActions } from '@/it
 export default abstract class CharacterDataModel extends LifeformDataModel implements IHasMatrix {
 	abstract balls: number;
 
+	//
+	// Matrix Stuff
+	//
+
 	get matrixPersona(): null | MatrixPersonaDataModel {
 		let persona = this.actor!.items.find((i) => i.type == 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
 		return persona ? persona.systemData : null;
 	}
+
+	toggleMatrixPersona(model: MatrixPersonaDataModel): boolean {
+		if (this.matrixPersona) {
+			ui.notifications.error('Cannot activate when a persona already exists');
+			return false;
+		}
+
+		return true;
+	}
+
+	////
 
 	static override defineSchema() {
 		const fields = foundry.data.fields;

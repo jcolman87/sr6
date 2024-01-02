@@ -4,7 +4,7 @@ import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { InitiativeType } from '@/data';
 import AttributeDataModel from '@/data/AttributeDataModel';
-import MonitorDataModel from '@/actor/data/MonitorDataModel';
+import MonitorDataModel from '@/actor/data/MonitorsDataModel';
 import IHasInitiative, { AvailableActions } from '@/data/IHasInitiative';
 import IHasPostCreate from '@/data/IHasPostCreate';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
@@ -44,7 +44,6 @@ export type Initiatives = {
 
 export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasPostCreate<SR6Actor<LifeformDataModel>>, IHasInitiative {
 	abstract attributes: Attributes;
-	abstract monitors: Monitors;
 
 	abstract initiatives: Initiatives;
 
@@ -74,10 +73,6 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 			major: 1,
 			minor: 1,
 		};
-	}
-
-	override get woundModifier(): number {
-		return -Math.floor(this.monitors.physical.damage / 3) + Math.floor(this.monitors.stun.damage / 3);
 	}
 
 	override getPool(type: RollType): number {
@@ -114,12 +109,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 				},
 				{ required: true, nullable: false },
 			),
-			monitors: new fields.SchemaField({
-				stun: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
-				physical: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
-				overflow: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 32, formula: null }, required: true, nullable: false }),
-				edge: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 5, formula: null }, required: true, nullable: false }),
-			}),
+
 			attributes: new fields.SchemaField({
 				body: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
 				agility: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),

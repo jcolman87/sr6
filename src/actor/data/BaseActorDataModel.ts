@@ -1,3 +1,4 @@
+import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import IHasPools from '@/data/IHasPools';
@@ -5,12 +6,14 @@ import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
 
 export default abstract class BaseActorDataModel extends BaseDataModel implements IHasPools {
+	abstract monitors: MonitorsDataModel;
+
 	get conditions(): ConditionDataModel[] {
 		return this.actor!.items.filter((i) => i.type == 'condition').map((i) => (i as SR6Item<ConditionDataModel>).systemData);
 	}
 
 	get woundModifier(): number {
-		return 0;
+		return this.monitors.woundModifier;
 	}
 
 	getPool(type: RollType): number {
@@ -46,6 +49,9 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	static defineSchema() {
-		return {};
+		const fields = foundry.data.fields;
+		return {
+			monitors: new fields.EmbeddedDataField(MonitorsDataModel, { required: true, nullable: false }),
+		};
 	}
 }
