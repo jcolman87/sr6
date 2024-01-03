@@ -21,10 +21,12 @@ const props = withDefaults(
 	}>(),
 	{
 		enriched: false,
-	},
+	}
 );
 
-const localizedValue = computed(() => (props?.formatArgs === undefined ? game.i18n.localize(props.label) : game.i18n.format(props.label, props.formatArgs)));
+const localizedValue = computed(() =>
+	props?.formatArgs === undefined ? game.i18n.localize(props.label) : game.i18n.format(props.label, props.formatArgs)
+);
 </script>
 
 <template>

@@ -46,30 +46,72 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),
-			type: new fields.StringField({ initial: MatrixActionType.IC, required: true, nullable: false, blank: false, choices: Object.values(MatrixActionType) }),
-			skillUse: new fields.EmbeddedDataField(SkillUseDataModel, { initial: { skill: 'Cracking', specialization: 'Hacking' }, required: true, nullable: true }),
-			linkedAttribute: new fields.StringField({ initial: null, required: true, nullable: true, blank: false, choices: Object.values(MatrixAttribute) }),
+			type: new fields.StringField({
+				initial: MatrixActionType.IC,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(MatrixActionType),
+			}),
+			skillUse: new fields.EmbeddedDataField(SkillUseDataModel, {
+				initial: { skill: 'Cracking', specialization: 'Hacking' },
+				required: true,
+				nullable: true,
+			}),
+			linkedAttribute: new fields.StringField({
+				initial: null,
+				required: true,
+				nullable: true,
+				blank: false,
+				choices: Object.values(MatrixAttribute),
+			}),
 			limits: new fields.SchemaField(
 				{
 					illegal: new fields.BooleanField({ initial: false, required: true, nullable: false }),
-					accessLevel: new fields.ArrayField(new fields.StringField({ initial: MatrixAccessLevel.Outsider, required: true, nullable: false, blank: false, choices: Object.values(MatrixAccessLevel) }), {
+					accessLevel: new fields.ArrayField(
+						new fields.StringField({
+							initial: MatrixAccessLevel.Outsider,
+							required: true,
+							nullable: false,
+							blank: false,
+							choices: Object.values(MatrixAccessLevel),
+						}),
+						{
+							required: true,
+							nullable: false,
+						}
+					),
+					activationType: new fields.StringField({
+						initial: ActivationType.Major,
 						required: true,
 						nullable: false,
+						blank: false,
+						choices: Object.values(ActivationType),
 					}),
-					activationType: new fields.StringField({ initial: ActivationType.Major, required: true, nullable: false, blank: false, choices: Object.values(ActivationType) }),
-					activationPeriod: new fields.StringField({ initial: ActivationPeriod.Initiative, required: true, nullable: false, blank: false, choices: Object.values(ActivationPeriod) }),
+					activationPeriod: new fields.StringField({
+						initial: ActivationPeriod.Initiative,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(ActivationPeriod),
+					}),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 			formulas: new fields.SchemaField(
 				{
 					attack: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 					defend: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
-					deviceDefend: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
+					deviceDefend: new fields.StringField({
+						initial: null,
+						required: true,
+						nullable: true,
+						blank: false,
+					}),
 					damage: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 					soak: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 		};
 	}

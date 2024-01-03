@@ -16,7 +16,13 @@ export default abstract class SkillUseDataModel extends BaseDataModel {
 
 		return {
 			skill: new fields.StringField({ nullable: false, blank: false, required: true }),
-			attribute: new fields.StringField({ initial: null, nullable: true, blank: false, required: true, choices: () => Object.keys(EnumAttribute) }),
+			attribute: new fields.StringField({
+				initial: null,
+				nullable: true,
+				blank: false,
+				required: true,
+				choices: () => Object.keys(EnumAttribute),
+			}),
 			specialization: new fields.StringField({ nullable: false, blank: false, required: true }),
 		};
 	}

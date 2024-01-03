@@ -21,7 +21,7 @@ const props = withDefaults(
 		 */
 		showEffectsTab?: boolean;
 	}>(),
-	{ hasDecoration: false, showEffectsTab: true },
+	{ hasDecoration: false, showEffectsTab: true }
 );
 
 const context = inject<ItemSheetContext>(RootContext)!;
@@ -44,6 +44,7 @@ async function addEffect(category: string) {
 }
 
 function updateEffects() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	effects.value = [...(toRaw(context.data.item).effects as any)];
 }
 
@@ -54,7 +55,12 @@ onBeforeUpdate(updateEffects);
 <template>
 	<div class="item-sheet-basic">
 		<header :class="hasDecoration ? 'with-decoration' : ''">
-			<img :src="context.data.item.img" data-edit="img" :title="context.data.item.name" :alt="context.data.item.name" />
+			<img
+				:src="context.data.item.img"
+				data-edit="img"
+				:title="context.data.item.name"
+				:alt="context.data.item.name"
+			/>
 			<input type="text" name="name" :value="context.data.item.name" v-localize:placeholder="'SR6.Labels.Name'" />
 			<!-- Decoration -->
 			<slot v-if="hasDecoration" name="decoration"></slot>

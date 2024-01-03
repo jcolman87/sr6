@@ -15,7 +15,7 @@ const skills = computed(
 	() =>
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'spell')
-			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SpellDataModel>[],
+			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SpellDataModel>[]
 );
 
 async function rollSpell(action: SR6Item<SpellDataModel>) {}
@@ -23,7 +23,10 @@ async function rollSpell(action: SR6Item<SpellDataModel>) {}
 
 <template>
 	<section class="tab-skills">
-		<table class="field-table" style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 30%">
+		<table
+			class="field-table"
+			style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 30%"
+		>
 			<thead>
 				<tr class="field-table">
 					<td colspan="3">Spells</td>

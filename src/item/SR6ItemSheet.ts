@@ -17,7 +17,9 @@ export type DropData = {
 /**
  * Basic functionality shared by all ItemSheets.
  */
-export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = BaseItemDataModel> extends ItemSheet<SR6Item<ItemDataModel>> {
+export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = BaseItemDataModel> extends ItemSheet<
+	SR6Item<ItemDataModel>
+> {
 	static override get defaultOptions(): DocumentSheetOptions {
 		return {
 			...super.defaultOptions,

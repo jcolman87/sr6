@@ -9,7 +9,9 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	abstract monitors: MonitorsDataModel;
 
 	get conditions(): ConditionDataModel[] {
-		return this.actor!.items.filter((i) => i.type === 'condition').map((i) => (i as SR6Item<ConditionDataModel>).systemData);
+		return this.actor!.items.filter((i) => i.type === 'condition').map(
+			(i) => (i as SR6Item<ConditionDataModel>).systemData
+		);
 	}
 
 	get woundModifier(): number {
@@ -27,12 +29,17 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	getRollConditions(type: RollType): ConditionDataModel[] {
-		return this.getSituationalConditions(ConditionSituation.Roll).filter((condition) => condition.getModifiersForRoll(type).length > 0);
+		return this.getSituationalConditions(ConditionSituation.Roll).filter(
+			(condition) => condition.getModifiersForRoll(type).length > 0
+		);
 	}
 
 	getSituationalConditions(situation: ConditionSituation): ConditionDataModel[] {
 		return this.conditions.filter((condition) => {
-			return condition.activationSituation === ConditionSituation.Always || condition.activationSituation === situation;
+			return (
+				condition.activationSituation === ConditionSituation.Always ||
+				condition.activationSituation === situation
+			);
 		});
 	}
 

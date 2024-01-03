@@ -73,7 +73,10 @@ emit('setText', {
 			<div class="section-title" style="width: 400px"><Localized label="SR6.Labels.Information" /></div>
 			<table>
 				<tr>
-					<td><Localized label="SR6.Combat.Damage" />: {{ roll.attack.damage }}{{ system.damageData.damageType }}</td>
+					<td>
+						<Localized label="SR6.Combat.Damage" />: {{ roll.attack.damage
+						}}{{ system.damageData.damageType }}
+					</td>
 					<td><Localized label="SR6.Combat.AttackRating" />: {{ roll.attack.attackRating }}</td>
 				</tr>
 			</table>

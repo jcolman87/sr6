@@ -44,7 +44,11 @@ export class SR6ChatMessage extends ChatMessage {
 			event.preventDefault();
 
 			util.getSelfOrSelectedActors().forEach((actor) => {
-				rollers.rollWeaponDefend(actor, (this.rolls[0] as SR6Roll).hits, this.rolls[0].options as unknown as rollers.WeaponAttackRollData);
+				rollers.rollWeaponDefend(
+					actor,
+					(this.rolls[0] as SR6Roll).hits,
+					this.rolls[0].options as unknown as rollers.WeaponAttackRollData
+				);
 			});
 		});
 
@@ -52,7 +56,11 @@ export class SR6ChatMessage extends ChatMessage {
 			event.preventDefault();
 
 			util.getSelfOrSelectedActors().forEach((actor) => {
-				rollers.rollWeaponSoak(actor as SR6Actor<LifeformDataModel>, (this.rolls[0] as SR6Roll).hits, this.rolls[0].options as unknown as rollers.WeaponSoakRollData);
+				rollers.rollWeaponSoak(
+					actor as SR6Actor<LifeformDataModel>,
+					(this.rolls[0] as SR6Roll).hits,
+					this.rolls[0].options as unknown as rollers.WeaponSoakRollData
+				);
 			});
 		});
 

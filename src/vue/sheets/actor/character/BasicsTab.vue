@@ -15,12 +15,12 @@ const system = context.data.actor.systemData;
 const qualities = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'quality')
-		.map((i) => i as SR6Item<QualityDataModel>),
+		.map((i) => i as SR6Item<QualityDataModel>)
 );
 const augmentations = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'augmentation')
-		.map((i) => i as SR6Item<QualityDataModel>),
+		.map((i) => i as SR6Item<QualityDataModel>)
 );
 </script>
 
@@ -42,9 +42,18 @@ const augmentations = computed(() =>
 				</thead>
 				<tr v-for="item in qualities" :key="item.id">
 					<td class="entry">
-						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
+						<input
+							type="text"
+							:value="item.name"
+							@change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)"
+						/>
 					</td>
-					<td class="actions"><a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a class="fas fa-minus" @click.prevent="item.delete()" /></td>
+					<td class="actions">
+						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
+							class="fas fa-minus"
+							@click.prevent="item.delete()"
+						/>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -63,9 +72,18 @@ const augmentations = computed(() =>
 				</thead>
 				<tr v-for="item in augmentations" :key="item.id">
 					<td class="entry">
-						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
+						<input
+							type="text"
+							:value="item.name"
+							@change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)"
+						/>
 					</td>
-					<td class="actions"><a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a class="fas fa-minus" @click.prevent="item.delete()" /></td>
+					<td class="actions">
+						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
+							class="fas fa-minus"
+							@click.prevent="item.delete()"
+						/>
+					</td>
 				</tr>
 			</table>
 		</div>

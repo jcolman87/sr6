@@ -22,13 +22,28 @@ export default abstract class InitiativeDataModel extends BaseDataModel {
 
 		return {
 			dice: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1 }),
-			formula: new fields.StringField({ initial: '(@reaction + @intuition) + (@initiatives.physical.dice)d6', required: true, nullable: false, blank: false }),
+			formula: new fields.StringField({
+				initial: '(@reaction + @intuition) + (@initiatives.physical.dice)d6',
+				required: true,
+				nullable: false,
+				blank: false,
+			}),
 			actions: new fields.SchemaField(
 				{
-					majorFormula: new fields.StringField({ initial: '1', required: true, nullable: false, blank: false }),
-					minorFormula: new fields.StringField({ initial: '1 + @initiatives.physical.dice', required: true, nullable: false, blank: false }),
+					majorFormula: new fields.StringField({
+						initial: '1',
+						required: true,
+						nullable: false,
+						blank: false,
+					}),
+					minorFormula: new fields.StringField({
+						initial: '1 + @initiatives.physical.dice',
+						required: true,
+						nullable: false,
+						blank: false,
+					}),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 		};
 	}

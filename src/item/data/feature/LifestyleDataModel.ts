@@ -23,7 +23,14 @@ export default abstract class LifestyleDataModel extends BaseItemDataModel {
 		return {
 			...super.defineSchema(),
 
-			rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: LifestyleRating.Street, max: LifestyleRating.Luxury }),
+			rating: new fields.NumberField({
+				initial: 1,
+				required: true,
+				nullable: false,
+				integer: true,
+				min: LifestyleRating.Street,
+				max: LifestyleRating.Luxury,
+			}),
 
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
 			monthsPaid: new fields.NumberField({ initial: 1, nullable: false, required: true }),

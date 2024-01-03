@@ -20,8 +20,7 @@ async function roll(attribute: EnumAttribute) {
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Body</p>
 			<span>
-				{{ system.attributes.body.value }}
-				<br />
+				{{ system.attributes.body.value }}<br />
 				<a @click="roll(EnumAttribute.body)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
 			</span>
 			<div class="field">
@@ -35,7 +34,10 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Agility</p>
-			<span>{{ system.attributes.agility.value }}</span>
+			<span>
+				{{ system.attributes.agility.value }}<br />
+				<a @click="roll(EnumAttribute.agility)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+			</span>
 			<div class="field">
 				<label>Base</label>
 				<input type="number" name="system.attributes.agility.base" :value="system.attributes.agility.base" />
@@ -47,7 +49,10 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Reaction</p>
-			<span>{{ system.attributes.reaction.value }}</span>
+			<span
+				>{{ system.attributes.reaction.value }}<br />
+				<a @click="roll(EnumAttribute.reaction)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+			</span>
 			<div class="field">
 				<label>Base</label>
 				<input type="number" name="system.attributes.reaction.base" :value="system.attributes.reaction.base" />
@@ -59,7 +64,10 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Strength</p>
-			<span>{{ system.attributes.strength.value }}</span>
+			<span
+				>{{ system.attributes.strength.value }}<br />
+				<a @click="roll(EnumAttribute.strength)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+			</span>
 			<div class="field">
 				<label>Base</label>
 				<input type="number" name="system.attributes.strength.base" :value="system.attributes.strength.base" />
@@ -71,10 +79,17 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Willpower</p>
-			<span>{{ system.attributes.willpower.value }}</span>
+			<span
+				>{{ system.attributes.willpower.value }}<br />
+				<a @click="roll(EnumAttribute.willpower)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+			</span>
 			<div class="field">
 				<label>Base</label>
-				<input type="number" name="system.attributes.willpower.base" :value="system.attributes.willpower.base" />
+				<input
+					type="number"
+					name="system.attributes.willpower.base"
+					:value="system.attributes.willpower.base"
+				/>
 			</div>
 			<div class="field">
 				<label>Mod</label>
@@ -83,7 +98,10 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Logic</p>
-			<span>{{ system.attributes.logic.value }}</span>
+			<span
+				>{{ system.attributes.logic.value }}<br />
+				<a @click="roll(EnumAttribute.logic)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a></span
+			>
 			<div class="field">
 				<label>Base</label>
 				<input type="number" name="system.attributes.logic.base" :value="system.attributes.logic.base" />
@@ -95,10 +113,17 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Intuition</p>
-			<span>{{ system.attributes.intuition.value }}</span>
+			<span
+				>{{ system.attributes.intuition.value }}<br />
+				<a @click="roll(EnumAttribute.intuition)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a></span
+			>
 			<div class="field">
 				<label>Base</label>
-				<input type="number" name="system.attributes.intuition.base" :value="system.attributes.intuition.base" />
+				<input
+					type="number"
+					name="system.attributes.intuition.base"
+					:value="system.attributes.intuition.base"
+				/>
 			</div>
 			<div class="field">
 				<label>Mod</label>
@@ -107,7 +132,10 @@ async function roll(attribute: EnumAttribute) {
 		</div>
 		<div class="attribute" augmented-ui="b-clip-x exe">
 			<p>Charisma</p>
-			<span>{{ system.attributes.charisma.value }}</span>
+			<span
+				>{{ system.attributes.charisma.value }}<br />
+				<a @click="roll(EnumAttribute.charisma)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a></span
+			>
 			<div class="field">
 				<label>Base</label>
 				<input type="number" name="system.attributes.charisma.base" :value="system.attributes.charisma.base" />
@@ -139,9 +167,10 @@ async function roll(attribute: EnumAttribute) {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-items: flex-start;
+	// TODO: why did this break?
 	--aug-border: 1px;
 	--aug-inset: 2px;
-	--aug-border-bg: rgb(82, 81, 78);
+	--aug-border-bg: rgb(82, 81, 78, 0.1);
 	--aug-inset-bg: rgba(255, 255, 255, 0);
 	--aug-b-width: 33%;
 	--aug-b-height: 10px;

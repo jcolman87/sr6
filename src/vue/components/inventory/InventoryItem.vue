@@ -14,7 +14,7 @@ const props = withDefaults(
 	}>(),
 	{
 		dragging: false,
-	},
+	}
 );
 
 const weaponData = computed(() => props.item.systemData as WeaponDataModel);
@@ -71,9 +71,11 @@ function rollWeapon(item: SR6Item<WeaponDataModel>) {
 				>
 
 				<div v-if="item.type === 'weapon'">
-					{{ weaponData.damage }}{{ weaponData.damageData.damageType }} ({{ weaponData.attackRatings.close }}-{{ weaponData.attackRatings.near }}-{{ weaponData.attackRatings.medium }}-{{ weaponData.attackRatings.far }}-{{
-						weaponData.attackRatings.extreme
-					}})
+					{{ weaponData.damage }}{{ weaponData.damageData.damageType }} ({{
+						weaponData.attackRatings.close
+					}}-{{ weaponData.attackRatings.near }}-{{ weaponData.attackRatings.medium }}-{{
+						weaponData.attackRatings.far
+					}}-{{ weaponData.attackRatings.extreme }})
 				</div>
 			</span>
 			<div :data-item-type="item.type">

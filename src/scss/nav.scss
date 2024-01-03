@@ -62,7 +62,13 @@
 				// Radial gradient to mask some of the repeating vertical line.
 				radial-gradient(colors.$blue 60%, transparent 100%),
 				// Vertical bar on the left.
-				linear-gradient(to right, transparent 2px, $decoration-color 2px, $decoration-color 3px, transparent 3px);
+				linear-gradient(
+						to right,
+						transparent 2px,
+						$decoration-color 2px,
+						$decoration-color 3px,
+						transparent 3px
+					);
 			background-color: colors.$blue;
 
 			&:not(.active) {
@@ -82,7 +88,13 @@
 						// Radial gradient to mask some of the repeating vertical line.
 						radial-gradient(colors.$blue 0%, transparent 100%),
 						// Vertical line
-						linear-gradient(to right, transparent 2px, $decoration-color 2px, $decoration-color 3px, transparent 3px);
+						linear-gradient(
+								to right,
+								transparent 2px,
+								$decoration-color 2px,
+								$decoration-color 3px,
+								transparent 3px
+							);
 					background-color: colors.$blue;
 				}
 			}

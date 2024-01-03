@@ -107,16 +107,25 @@ export default abstract class WeaponDataModel extends GearDataModel {
 					type: new fields.StringField({ initial: '', required: false, nullable: false }),
 					subtype: new fields.StringField({ initial: '', required: false, nullable: false }),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 			damageData: new fields.SchemaField(
 				{
 					damageFormula: new fields.StringField({ initial: '0', required: true, nullable: false }),
-					damageType: new fields.StringField({ initial: DamageType.Physical, required: true, nullable: false, blank: false, choices: Object.values(DamageType) }),
+					damageType: new fields.StringField({
+						initial: DamageType.Physical,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(DamageType),
+					}),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
-			firemodes: new fields.ArrayField(new fields.StringField({ blank: false, choices: Object.values(FireMode) }), { initial: [FireMode.SS], required: true, nullable: true }),
+			firemodes: new fields.ArrayField(
+				new fields.StringField({ blank: false, choices: Object.values(FireMode) }),
+				{ initial: [FireMode.SS], required: true, nullable: true }
+			),
 		};
 	}
 }

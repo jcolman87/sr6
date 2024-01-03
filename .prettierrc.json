@@ -1,8 +1,28 @@
 {
-	"$schema": "https://json.schemastore.org/prettierrc",
-	"trailingComma": "all",
-	"semi": true,
+	"printWidth": 120,
+	"tabWidth": 4,
 	"singleQuote": true,
-	"printWidth": 240,
-	"useTabs": true
+	"overrides": [
+		{
+			"files": ["*.scss", "*.css"],
+			"options": {
+				"requirePragma": false,
+				"parser": "scss"
+			}
+		},
+		{
+			"files": ["*.yml"],
+			"options": {
+				"tabWidth": 2
+			}
+		},
+		{
+			"files": "*.hbs",
+			"options": {
+				"requirePragma": false,
+				"parser": "html",
+				"htmlWhitespaceSensitivity": "ignore"
+			}
+		}
+	]
 }

@@ -24,7 +24,9 @@ export interface RollPromptContext<TRollData extends SR6RollData = SR6RollData> 
 	resolvePromise: (value: TRollData) => void;
 }
 
-export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> extends VueSheet(ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>) {
+export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> extends VueSheet(
+	ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>
+) {
 	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
@@ -39,7 +41,10 @@ export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> ext
 		};
 	}
 
-	static async promptForRoll<TRollData extends SR6RollData = SR6RollData>(actor: SR6Actor, rollData: TRollData): Promise<TRollData | null> {
+	static async promptForRoll<TRollData extends SR6RollData = SR6RollData>(
+		actor: SR6Actor,
+		rollData: TRollData
+	): Promise<TRollData | null> {
 		const sheet = new RollPrompt<TRollData>(actor, rollData);
 		await sheet.render(true);
 

@@ -66,7 +66,17 @@ onMounted(() => {
 			<tr>
 				<td>
 					<div class="edge-roll" style="flex: 0.48; margin-right: 10px">
-						<img src="/systems/sr6/assets/blank_dice.png" style="border: 0; height: auto; width: 48px; z-index: 0; position: absolute; filter: drop-shadow(0 0 4px #000000)" />
+						<img
+							src="/systems/sr6/assets/blank_dice.png"
+							style="
+								border: 0;
+								height: auto;
+								width: 48px;
+								z-index: 0;
+								position: absolute;
+								filter: drop-shadow(0 0 4px #000000);
+							"
+						/>
 						<label name="pool" class="edge-value">{{ context.rollData.pool }}</label>
 					</div>
 				</td>
@@ -78,7 +88,11 @@ onMounted(() => {
 				</td>
 			</tr>
 		</table>
-		<div v-if="conditions.length > 0 || baseSystem.woundModifier != 0" class="section" @click.prevent="toggleConditions">
+		<div
+			v-if="conditions.length > 0 || baseSystem.woundModifier != 0"
+			class="section"
+			@click.prevent="toggleConditions"
+		>
 			<div class="section-title" style="width: 100%"><Localized label="SR6.RollPrompt.Conditions" /></div>
 			<table v-if="isDisplayConditions">
 				<tr v-if="baseSystem.woundModifier != 0">
@@ -88,14 +102,18 @@ onMounted(() => {
 							<td><Localized label="SR6.RollPrompt.WoundModifier" /></td>
 						</tr>
 						<tr>
-							<td class="hint" colspan="2"><Localized label="SR6.RollPrompt.WoundModifierDescription" /></td>
+							<td class="hint" colspan="2">
+								<Localized label="SR6.RollPrompt.WoundModifierDescription" />
+							</td>
 						</tr>
 					</table>
 				</tr>
 				<tr v-for="condition in conditions" :key="condition.name">
 					<table>
 						<tr>
-							<td style="width: 3em">{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}</td>
+							<td style="width: 3em">
+								{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}
+							</td>
 							<td>{{ condition.name }}</td>
 						</tr>
 						<tr>
@@ -107,14 +125,50 @@ onMounted(() => {
 		</div>
 
 		<section class="data-grid">
-			<AttributeRoll ref="inner_roll" v-if="context.rollData.type == RollType.Attribute" :roll="context.rollData" :actor="context.actor as any" @setText="setText" />
-			<SkillRoll ref="inner_roll" v-else-if="context.rollData.type == RollType.Skill" :roll="context.rollData" :actor="context.actor as any" @setText="setText" />
+			<AttributeRoll
+				ref="inner_roll"
+				v-if="context.rollData.type == RollType.Attribute"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
+			<SkillRoll
+				ref="inner_roll"
+				v-else-if="context.rollData.type == RollType.Skill"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
 
-			<WeaponAttackRoll ref="inner_roll" v-else-if="context.rollData.type == RollType.WeaponAttack" :roll="context.rollData" :actor="context.actor as any" @setText="setText" />
-			<WeaponDefendRoll ref="inner_roll" v-else-if="context.rollData.type == RollType.WeaponDefend" :roll="context.rollData" :actor="context.actor as any" @setText="setText" />
-			<WeaponSoakRoll ref="inner_roll" v-else-if="context.rollData.type == RollType.WeaponSoak" :roll="context.rollData" :actor="context.actor as any" @setText="setText" />
+			<WeaponAttackRoll
+				ref="inner_roll"
+				v-else-if="context.rollData.type == RollType.WeaponAttack"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
+			<WeaponDefendRoll
+				ref="inner_roll"
+				v-else-if="context.rollData.type == RollType.WeaponDefend"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
+			<WeaponSoakRoll
+				ref="inner_roll"
+				v-else-if="context.rollData.type == RollType.WeaponSoak"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
 
-			<MatrixActionRoll ref="inner_roll" v-else-if="context.rollData.type == RollType.MatrixAction" :roll="context.rollData" :actor="context.actor as any" @setText="setText" />
+			<MatrixActionRoll
+				ref="inner_roll"
+				v-else-if="context.rollData.type == RollType.MatrixAction"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
 
 			<div class="section">
 				<label><Localized label="SR6.RollPrompt.PoolModifier" /></label>

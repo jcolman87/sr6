@@ -91,10 +91,26 @@ export default abstract class MonitorsDataModel extends BaseDataModel {
 		const fields = foundry.data.fields;
 
 		return {
-			stun: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
-			physical: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' }, required: true, nullable: false }),
-			overflow: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 32, formula: null }, required: true, nullable: false }),
-			edge: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 5, formula: null }, required: true, nullable: false }),
+			stun: new fields.EmbeddedDataField(MonitorDataModel, {
+				initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' },
+				required: true,
+				nullable: false,
+			}),
+			physical: new fields.EmbeddedDataField(MonitorDataModel, {
+				initial: { damage: 0, max: 0, formula: '8 + ceil(@body / 2)' },
+				required: true,
+				nullable: false,
+			}),
+			overflow: new fields.EmbeddedDataField(MonitorDataModel, {
+				initial: { damage: 0, max: 32, formula: null },
+				required: true,
+				nullable: false,
+			}),
+			edge: new fields.EmbeddedDataField(MonitorDataModel, {
+				initial: { damage: 0, max: 5, formula: null },
+				required: true,
+				nullable: false,
+			}),
 		};
 	}
 }

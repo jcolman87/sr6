@@ -87,8 +87,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 							rating: value.level,
 						},
 					};
-				}),
-			),
+				})
+			)
 		);
 
 		const sins = (await actor.createEmbeddedDocuments(
@@ -105,8 +105,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 							rating: value.quality,
 						},
 					};
-				}),
-			),
+				})
+			)
 		)) as SR6Item<SINDataModel>[];
 
 		await actor.createEmbeddedDocuments(
@@ -134,8 +134,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 							sin: sin_id,
 						},
 					};
-				}),
-			),
+				})
+			)
 		);
 
 		await actor.createEmbeddedDocuments(
@@ -154,8 +154,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 							type: value.type,
 						},
 					};
-				}),
-			),
+				})
+			)
 		);
 
 		await actor.createEmbeddedDocuments(
@@ -186,8 +186,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 							essenseCost: value.essence,
 						},
 					};
-				}),
-			),
+				})
+			)
 		);
 
 		await actor.createEmbeddedDocuments(
@@ -233,8 +233,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 							damage: null,
 						},
 					};
-				}),
-			),
+				})
+			)
 		);
 
 		await actor.update({ ['system']: data });

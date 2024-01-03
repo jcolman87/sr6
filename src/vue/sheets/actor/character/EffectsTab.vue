@@ -28,6 +28,7 @@ async function addEffect(category: string) {
 }
 
 function updateEffects() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	effects.value = [...toRaw(context.sheet.actor).allApplicableEffects()] as any;
 }
 
@@ -41,7 +42,14 @@ onBeforeUpdate(updateEffects);
 </script>
 
 <template>
-	<section class="tab-effects"><EffectsView ref="effectsView" :effects="[...effects as any]" @add-effect="addEffect" @delete-effect="deleteEffect" /></section>
+	<section class="tab-effects">
+		<EffectsView
+			ref="effectsView"
+			:effects="[...effects as any]"
+			@add-effect="addEffect"
+			@delete-effect="deleteEffect"
+		/>
+	</section>
 </template>
 
 <style lang="scss" scoped>

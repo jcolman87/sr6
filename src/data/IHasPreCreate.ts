@@ -5,6 +5,11 @@
  */
 
 export default interface IHasPreCreate<DocumentType extends foundry.abstract.Document> {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	preCreate?(document: DocumentType, data: PreDocumentId<any>, options: DocumentModificationContext<DocumentType>, user: foundry.documents.BaseUser): Promise<void>;
+	preCreate?(
+		document: DocumentType,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		data: PreDocumentId<any>,
+		options: DocumentModificationContext<DocumentType>,
+		user: foundry.documents.BaseUser
+	): Promise<void>;
 }

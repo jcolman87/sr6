@@ -27,7 +27,7 @@ type VueSheetConstructor = new (...args: any[]) => {
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function basicSheet(vueComponent: Component, sheetType: any = VueSheet(SR6ItemSheet)) {
+export function basicSheet(vueComponent: Component, sheetType: any = VueSheet(SR6ItemSheet)): typeof sheetType {
 	return class extends sheetType {
 		get vueComponent(): Component {
 			return vueComponent;
@@ -50,7 +50,22 @@ export function register(): void {
 	Items.unregisterSheet('core', ItemSheet);
 
 	Items.registerSheet('sr6', basicSheet(BasicItemSheet), {
-		types: ['gear', 'weapon', 'credstick', 'contact', 'sin', 'lifestyle', 'quality', 'augmentation', 'spell', 'adeptpower', 'complexform', 'matrix_action', 'matrix_persona', 'general_action'],
+		types: [
+			'gear',
+			'weapon',
+			'credstick',
+			'contact',
+			'sin',
+			'lifestyle',
+			'quality',
+			'augmentation',
+			'spell',
+			'adeptpower',
+			'complexform',
+			'matrix_action',
+			'matrix_persona',
+			'general_action',
+		],
 		makeDefault: true,
 	});
 

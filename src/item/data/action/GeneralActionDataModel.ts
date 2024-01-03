@@ -30,12 +30,28 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 			...super.defineSchema(),
 			limits: new fields.SchemaField(
 				{
-					activationType: new fields.StringField({ initial: ActivationType.Major, required: true, nullable: false, blank: false, choices: Object.values(ActivationType) }),
-					activationPeriod: new fields.StringField({ initial: ActivationPeriod.Initiative, required: true, nullable: false, blank: false, choices: Object.values(ActivationPeriod) }),
+					activationType: new fields.StringField({
+						initial: ActivationType.Major,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(ActivationType),
+					}),
+					activationPeriod: new fields.StringField({
+						initial: ActivationPeriod.Initiative,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(ActivationPeriod),
+					}),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
-			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), { initial: [], required: true, nullable: false }),
+			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
 		};
 	}
 }

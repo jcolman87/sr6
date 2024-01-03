@@ -9,8 +9,22 @@ export default abstract class ContactDataModel extends BaseItemDataModel {
 		return {
 			...super.defineSchema(),
 
-			rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1, max: 6 }),
-			loyalty: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1, max: 6 }),
+			rating: new fields.NumberField({
+				initial: 1,
+				required: true,
+				nullable: false,
+				integer: true,
+				min: 1,
+				max: 6,
+			}),
+			loyalty: new fields.NumberField({
+				initial: 1,
+				required: true,
+				nullable: false,
+				integer: true,
+				min: 1,
+				max: 6,
+			}),
 		};
 	}
 }

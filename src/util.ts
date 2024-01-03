@@ -1,6 +1,10 @@
 import SR6Actor from '@/actor/SR6Actor';
 
-export function constructOptGroup(select: HTMLSelectElement, groupLabel: string, optValues?: string[]): HTMLOptGroupElement {
+export function constructOptGroup(
+	select: HTMLSelectElement,
+	groupLabel: string,
+	optValues?: string[]
+): HTMLOptGroupElement {
 	const options = select.querySelectorAll<HTMLOptionElement>(':scope > option');
 	const optgroup = document.createElement('optgroup');
 

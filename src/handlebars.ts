@@ -7,7 +7,10 @@ import { getActor } from '@/util';
 import * as handlebars from 'handlebars';
 
 export async function preload(): Promise<void> {
-	const templatePaths = ['systems/sr6/templates/chat/rolls/shared/header.hbs', 'systems/sr6/templates/chat/rolls/shared/footer.hbs'];
+	const templatePaths = [
+		'systems/sr6/templates/chat/rolls/shared/header.hbs',
+		'systems/sr6/templates/chat/rolls/shared/footer.hbs',
+	];
 
 	return loadTemplates(templatePaths);
 }

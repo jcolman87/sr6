@@ -27,7 +27,7 @@ const props = withDefaults(
 	{
 		button: true,
 		collaborate: false,
-	},
+	}
 );
 
 /**
@@ -86,7 +86,9 @@ onUpdated(async () => {
 	for (let key of splitName) {
 		// If we've still got a key to find, but it isn't present, something's messed up.
 		if (obj[key] === undefined) {
-			console.warn(`Attempting to update ${rootContext.sheet.document.name} editor field but '${props.name}' is undefined!`);
+			console.warn(
+				`Attempting to update ${rootContext.sheet.document.name} editor field but '${props.name}' is undefined!`
+			);
 			obj = undefined;
 			break;
 		}
@@ -119,7 +121,9 @@ async function activate() {
 
 	// Again, this shouldn't happen - but just in case.
 	if (editing.value) {
-		console.error(`Attempted to activate an editor for ${props.name} in ${rootContext.sheet.document.name}, but the editor is already active!`);
+		console.error(
+			`Attempted to activate an editor for ${props.name} in ${rootContext.sheet.document.name}, but the editor is already active!`
+		);
 		return;
 	}
 
@@ -180,7 +184,9 @@ async function save() {
 
 <template>
 	<div class="vue-editor editor prosemirror" ref="rootDiv">
-		<a v-if="button && rootContext.data.editable && !editing" @click="activate" class="editor-edit"><i class="fas fa-edit"></i></a>
+		<a v-if="button && rootContext.data.editable && !editing" @click="activate" class="editor-edit"
+			><i class="fas fa-edit"></i
+		></a>
 		<div v-if="!editing" class="editor-content" v-html="enrichedContent"></div>
 		<div class="editor-content" v-show="editing" ref="editorContainer"></div>
 	</div>

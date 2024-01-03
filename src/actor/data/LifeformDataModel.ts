@@ -42,7 +42,10 @@ export type Initiatives = {
 	matrix: null | InitiativeDataModel;
 };
 
-export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasPostCreate<SR6Actor<LifeformDataModel>>, IHasInitiative {
+export default abstract class LifeformDataModel
+	extends BaseActorDataModel
+	implements IHasPostCreate<SR6Actor<LifeformDataModel>>, IHasInitiative
+{
 	abstract attributes: Attributes;
 
 	abstract initiatives: Initiatives;
@@ -83,7 +86,9 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 			case RollType.WeaponAttack:
 				return pool;
 			case RollType.WeaponDefend:
-				return pool + this.attribute(EnumAttribute.agility).value + this.attribute(EnumAttribute.intuition).value;
+				return (
+					pool + this.attribute(EnumAttribute.agility).value + this.attribute(EnumAttribute.intuition).value
+				);
 			case RollType.WeaponSoak:
 				return pool + this.attribute(EnumAttribute.body).value;
 			case RollType.Initiative:
@@ -108,20 +113,60 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 					astral: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: true }), // TODO initial
 					matrix: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: true }), // TODO: initial
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 
 			attributes: new fields.SchemaField({
-				body: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				agility: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				reaction: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				strength: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				willpower: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				logic: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				intuition: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				charisma: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				magic: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
-				resonance: new fields.EmbeddedDataField(AttributeDataModel, { initial: { base: 2, value: 2, mod: 0 }, required: true, nullable: false }),
+				body: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				agility: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				reaction: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				strength: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				willpower: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				logic: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				intuition: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				charisma: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				magic: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				resonance: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 2, value: 2, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
 			}),
 			modifiers: new fields.EmbeddedDataField(ConditionDataModel, { required: true, nullable: false }),
 		};

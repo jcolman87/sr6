@@ -57,15 +57,26 @@ export function register(): void {
 }
 
 export async function getCoreConditions(): Promise<SR6Item<ConditionDataModel>[]> {
-	return Array.from((await game.packs.get('sr6.sr6-crb-conditions')!.getDocuments()).map((i) => i as unknown as SR6Item<ConditionDataModel>));
+	return Array.from(
+		(await game.packs.get('sr6.sr6-crb-conditions')!.getDocuments()).map(
+			(i) => i as unknown as SR6Item<ConditionDataModel>
+		)
+	);
 }
 
-export async function toggleStatusEffectCondition(statusEffectId: string, actor: SR6Actor<BaseActorDataModel>): Promise<boolean> {
+export async function toggleStatusEffectCondition(
+	statusEffectId: string,
+	actor: SR6Actor<BaseActorDataModel>
+): Promise<boolean> {
 	const conditions = await getCoreConditions();
-	const condition = conditions.filter((c) => c.systemData.statusEffectId).find((condition) => condition.systemData.statusEffectId === statusEffectId);
+	const condition = conditions
+		.filter((c) => c.systemData.statusEffectId)
+		.find((condition) => condition.systemData.statusEffectId === statusEffectId);
 	if (condition) {
 		// Does the actor already have the condition?
-		const existing = actor.systemData.conditions.find((c) => c.statusEffectId === condition!.systemData.statusEffectId);
+		const existing = actor.systemData.conditions.find(
+			(c) => c.statusEffectId === condition!.systemData.statusEffectId
+		);
 		if (existing) {
 			// Toggle is a remove
 			await actor.deleteEmbeddedDocuments('Item', [existing.item!.id]);

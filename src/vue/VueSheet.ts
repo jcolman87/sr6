@@ -13,7 +13,9 @@ type Constructor = new (...args: any[]) => {
 	close(options?: {}): Promise<void>;
 };
 
-export default function VueSheet<TBase extends Constructor, ContextType extends ContextBase | undefined = ContextBase>(base: TBase): TBase {
+export default function VueSheet<TBase extends Constructor, ContextType extends ContextBase | undefined = ContextBase>(
+	base: TBase
+): TBase {
 	return class extends base {
 		form?: HTMLFormElement;
 
@@ -50,8 +52,11 @@ export default function VueSheet<TBase extends Constructor, ContextType extends 
 			if (!this.form) {
 				const form = document.createElement('form');
 
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const cssClass = (vueContext as any)?.data?.cssClass ?? ((options?.classes && (options?.classes as string[] | undefined)) as string[])?.join(' ') ?? '';
+				const cssClass =
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					(vueContext as any)?.data?.cssClass ??
+					((options?.classes && (options?.classes as string[] | undefined)) as string[])?.join(' ') ??
+					'';
 
 				form.className = `${cssClass} vue-app`;
 				form.setAttribute('autocomplete', 'off');

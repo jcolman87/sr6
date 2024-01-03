@@ -23,7 +23,14 @@ export default abstract class SINDataModel extends BaseItemDataModel {
 		return {
 			...super.defineSchema(),
 
-			rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: SIN_RATING_BOUND.min, max: SIN_RATING_BOUND.max }),
+			rating: new fields.NumberField({
+				initial: 1,
+				required: true,
+				nullable: false,
+				integer: true,
+				min: SIN_RATING_BOUND.min,
+				max: SIN_RATING_BOUND.max,
+			}),
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
 		};
 	}

@@ -34,8 +34,15 @@ export const ROLL_CATEGORIES = new Map([
 		'AllPoolButSoak',
 		Array.from(
 			Object.keys(RollType)
-				.filter((t) => ![RollType[RollType.Initiative], RollType[RollType.SpellSoak], RollType[RollType.SpellSoak]].includes(t))
-				.map((t) => RollType[t as keyof typeof RollType]),
+				.filter(
+					(t) =>
+						![
+							RollType[RollType.Initiative],
+							RollType[RollType.SpellSoak],
+							RollType[RollType.SpellSoak],
+						].includes(t)
+				)
+				.map((t) => RollType[t as keyof typeof RollType])
 		),
 	],
 ]);

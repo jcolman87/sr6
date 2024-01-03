@@ -63,7 +63,10 @@ export class SR6Roll extends Roll {
 	}
 
 	get hits(): number {
-		const hits: number = this.sides.reduce((hits, result) => (this.options.parameters.success.includes(result) ? hits + 1 : hits), 0);
+		const hits: number = this.sides.reduce(
+			(hits, result) => (this.options.parameters.success.includes(result) ? hits + 1 : hits),
+			0
+		);
 		if (this.options.auto_hits !== undefined) {
 			return hits + this.options.auto_hits;
 		} else {
@@ -72,7 +75,10 @@ export class SR6Roll extends Roll {
 	}
 
 	get glitches(): number {
-		return this.sides.reduce((glitches, result) => (this.options.parameters.glitch.includes(result) ? glitches + 1 : glitches), 0);
+		return this.sides.reduce(
+			(glitches, result) => (this.options.parameters.glitch.includes(result) ? glitches + 1 : glitches),
+			0
+		);
 	}
 
 	get is_glitch(): boolean {
@@ -122,7 +128,9 @@ export class SR6Roll extends Roll {
 				return true;
 			}
 
-			ui.notifications!.warn('You are adding +1 to a roll with no glitches and no near-successes, this was worthless');
+			ui.notifications!.warn(
+				'You are adding +1 to a roll with no glitches and no near-successes, this was worthless'
+			);
 			return false;
 		}
 
@@ -199,11 +207,11 @@ export class SR6Roll extends Roll {
 
 	_termsUpdated(): void {
 		// TODO: make sure we dont need this? what kind of rollterm do we have? do we need to simplify?
-		//(this.terms[0] as DiceTerm).number = (this.terms[0] as DiceTerm).results.length;
+		// (this.terms[0] as DiceTerm).number = (this.terms[0] as DiceTerm).results.length;
 	}
 
 	_getLowestRollIndex(): number {
-		return this.sides.indexOf(Math.min.apply(Math, this.sides));
+		return this.sides.indexOf(Math.min(...this.sides));
 	}
 
 	_updateDie(idx: number, value: number): void {

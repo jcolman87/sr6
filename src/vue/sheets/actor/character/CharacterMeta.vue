@@ -33,7 +33,14 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 	<header class="character-meta">
 		<div class="section">
 			<div class="section-head">
-				<div class="title"><Localized label="Character" /><input type="text" name="name" :value="context.data.actor.name" v-localize:placeholder="'SR6.Labels.CharacterName'" /></div>
+				<div class="title">
+					<Localized label="Character" /><input
+						type="text"
+						name="name"
+						:value="context.data.actor.name"
+						v-localize:placeholder="'SR6.Labels.CharacterName'"
+					/>
+				</div>
 			</div>
 			<div class="section" style="align-self: start; width: 95%">
 				<div class="physical-bar" style="width: 100%">
@@ -45,7 +52,9 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 								:style="boxStyle(system.monitors.physical, idx)"
 								v-for="idx in system.monitors.physical.max"
 								:key="idx"
-								@click.prevent="setDamage(system.monitors.physical, 'system.monitors.physical.damage', idx)"
+								@click.prevent="
+									setDamage(system.monitors.physical, 'system.monitors.physical.damage', idx)
+								"
 							>
 								<template v-if="idx % 3 == 0">
 									{{ -Math.round((idx + 1) / 3) }}
@@ -58,7 +67,13 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 					<table>
 						<tr>
 							<td class="stun-bar-header"></td>
-							<td class="physical-bar-box" :style="boxStyle(system.monitors.stun, idx)" v-for="idx in system.monitors.stun.max" :key="idx" @click.prevent="setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)">
+							<td
+								class="physical-bar-box"
+								:style="boxStyle(system.monitors.stun, idx)"
+								v-for="idx in system.monitors.stun.max"
+								:key="idx"
+								@click.prevent="setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)"
+							>
 								<template v-if="idx % 3 == 0">
 									{{ -Math.round((idx + 1) / 3) }}
 								</template>

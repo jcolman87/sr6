@@ -43,7 +43,10 @@ export default class CharacterSheet extends VueSheet(SR6ActorSheet<CharacterData
 		};
 	}
 
-	protected override async _onDropItem(event: DragEvent, data: DropCanvasData<'Item', SR6Item<BaseItemDataModel>>): Promise<SR6Item<BaseItemDataModel>[] | boolean> {
+	protected override async _onDropItem(
+		event: DragEvent,
+		data: DropCanvasData<'Item', SR6Item<BaseItemDataModel>>
+	): Promise<SR6Item<BaseItemDataModel>[] | boolean> {
 		return await super._onDropItem(event, data);
 	}
 }

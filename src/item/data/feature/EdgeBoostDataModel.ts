@@ -13,7 +13,13 @@ export default abstract class EdgeBoostDataModel extends BaseItemDataModel {
 		return {
 			...super.defineSchema(),
 			edgeCostFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
-			activationPeriod: new fields.StringField({ initial: ActivationPeriod.Any, required: true, nullable: false, blank: false, choices: Object.values(ActivationPeriod) }),
+			activationPeriod: new fields.StringField({
+				initial: ActivationPeriod.Any,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(ActivationPeriod),
+			}),
 
 			rollDataScript: new fields.StringField({ initial: null, nullable: true, blank: false }),
 			finishRollScript: new fields.StringField({ initial: null, nullable: true, blank: false }),

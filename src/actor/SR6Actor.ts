@@ -12,7 +12,9 @@ import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import SR6Item from '@/item/SR6Item';
 import { SR6Roll } from '@/roll/SR6Roll';
 
-export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel> extends Actor {
+export default class SR6Actor<
+	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel
+> extends Actor {
 	/**
 	 * Specialized property for accessing `actor.system` in a typed manner.
 	 */
@@ -23,7 +25,12 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	// This is a fix needed for handling active effects from items showing as icon effects.
 	override get temporaryEffects(): TemporaryEffect[] {
 		// Only return actual temporary effects and then condition transferred effects
-		return [...Array.from(this.allApplicableEffects()).filter((effect) => (effect as SR6Effect).isStatusEffectCondition), ...super.temporaryEffects];
+		return [
+			...Array.from(this.allApplicableEffects()).filter(
+				(effect) => (effect as SR6Effect).isStatusEffectCondition
+			),
+			...super.temporaryEffects,
+		];
 	}
 
 	skill(skill_id_or_name: string): SR6Item<SkillDataModel> | null {
@@ -76,14 +83,22 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 				const skill = i as SR6Item<SkillDataModel>;
 				skills[skill.safe_name] = skill.systemData.points;
 			});
-		return foundry.utils.mergeObject(skills, { ...super.getRollData(), ...this.systemData.getRollData(), actor: this });
+		return foundry.utils.mergeObject(skills, {
+			...super.getRollData(),
+			...this.systemData.getRollData(),
+			actor: this,
+		});
 	}
 
 	/**
 	 * Override the _preCreate callback to call preCreate from the data model class, if present.
 	 * @inheritDoc
 	 */
-	protected override async _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext<this>, user: User): Promise<void> {
+	protected override async _preCreate(
+		data: PreDocumentId<this['_source']>,
+		options: DocumentModificationContext<this>,
+		user: User
+	): Promise<void> {
 		await (<IHasPreCreate<this>>this.systemData).preCreate?.(this, data, options, user);
 
 		return super._preCreate(data, options, user);
@@ -107,7 +122,10 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	 * Override the createDialog callback to include a unique class that identifies the created dialog.
 	 * @inheritDoc
 	 */
-	static override createDialog(data?: { folder?: string | undefined } | undefined, options?: Partial<FormApplicationOptions> | undefined): Promise<ClientDocument<foundry.documents.BaseActor> | undefined> {
+	static override createDialog(
+		data?: { folder?: string | undefined } | undefined,
+		options?: Partial<FormApplicationOptions> | undefined
+	): Promise<ClientDocument<foundry.documents.BaseActor> | undefined> {
 		// The 'dialog' class needs to be added explicitly, otherwise it won't be added by the super call.
 		const touchedOptions = {
 			...options,

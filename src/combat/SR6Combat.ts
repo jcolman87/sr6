@@ -84,6 +84,9 @@ export default class SR6Combat extends Combat {
 export function register(): void {
 	// Helper function to determine if the code is being executed by only one GM.
 	const isGmHub = () => {
-		return game.user.isGM && game.users.filter((user) => user.isGM && user.active).every((candidate) => candidate.id >= game.user.id);
+		return (
+			game.user.isGM &&
+			game.users.filter((user) => user.isGM && user.active).every((candidate) => candidate.id >= game.user.id)
+		);
 	};
 }

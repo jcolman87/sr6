@@ -52,28 +52,58 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 			availability: new fields.SchemaField(
 				{
 					illegal: new fields.BooleanField({ initial: false, required: true, nullable: false }),
-					license: new fields.StringField({ initial: null, blank: false, nullable: true, required: true, choices: Object.values(LicenseType) }),
+					license: new fields.StringField({
+						initial: null,
+						blank: false,
+						nullable: true,
+						required: true,
+						choices: Object.values(LicenseType),
+					}),
 					rating: new fields.NumberField({ initial: 1, nullable: false, required: true, min: 1 }),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 			size: new EnumNumberField({ initial: 0, nullable: false, required: true, min: 0 }),
 			monitors: new fields.SchemaField(
 				{
-					matrix: new fields.EmbeddedDataField(MonitorDataModel, { initial: null, required: true, nullable: true }),
-					physical: new fields.EmbeddedDataField(MonitorDataModel, { initial: { damage: 0, max: 0, formula: '8 + ceil(@rating / 2)' }, required: true, nullable: false }),
+					matrix: new fields.EmbeddedDataField(MonitorDataModel, {
+						initial: null,
+						required: true,
+						nullable: true,
+					}),
+					physical: new fields.EmbeddedDataField(MonitorDataModel, {
+						initial: { damage: 0, max: 0, formula: '8 + ceil(@rating / 2)' },
+						required: true,
+						nullable: false,
+					}),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
 			matrix: new fields.SchemaField(
 				{
 					active: new fields.BooleanField({ initial: true, required: true, nullable: false }),
-					supportsModes: new fields.ArrayField(new fields.StringField({ blank: false, nullable: false, required: true, choices: Object.values(MatrixUseType) }), { initial: [], required: true, nullable: false }),
-					attributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, { initial: null, required: true, nullable: true }),
+					supportsModes: new fields.ArrayField(
+						new fields.StringField({
+							blank: false,
+							nullable: false,
+							required: true,
+							choices: Object.values(MatrixUseType),
+						}),
+						{ initial: [], required: true, nullable: false }
+					),
+					attributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, {
+						initial: null,
+						required: true,
+						nullable: true,
+					}),
 				},
-				{ initial: null, required: true, nullable: true },
+				{ initial: null, required: true, nullable: true }
 			),
-			skillUse: new fields.EmbeddedDataField(SkillUseDataModel, { initial: null, required: true, nullable: true }),
+			skillUse: new fields.EmbeddedDataField(SkillUseDataModel, {
+				initial: null,
+				required: true,
+				nullable: true,
+			}),
 		};
 	}
 

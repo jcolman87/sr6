@@ -68,8 +68,15 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		return this.modifiers.filter((modifier) => modifier.type === ConditionModifierType.Pool);
 	}
 
-	getModifiersForSituation(situation: ConditionSituation, activation: ConditionActivation = ConditionActivation.Always): ConditionEffectChangeData[] {
-		return this.modifiers.filter((modifier) => modifier.situation === situation && (modifier.activation === ConditionActivation.Always || modifier.activation === activation));
+	getModifiersForSituation(
+		situation: ConditionSituation,
+		activation: ConditionActivation = ConditionActivation.Always
+	): ConditionEffectChangeData[] {
+		return this.modifiers.filter(
+			(modifier) =>
+				modifier.situation === situation &&
+				(modifier.activation === ConditionActivation.Always || modifier.activation === activation)
+		);
 	}
 
 	getModifiersForRoll(type: RollType): ConditionEffectChangeData[] {
@@ -166,28 +173,95 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 			statusEffectId: new fields.StringField({ required: true, nullable: true, blank: false }),
 			description: new fields.StringField({ initial: '', required: true, nullable: false, blank: true }),
 
-			activation: new fields.StringField({ initial: ConditionActivation.Always, required: true, nullable: false, blank: false, choices: Object.values(ConditionActivation) }),
-			activationSituation: new fields.StringField({ initial: ConditionSituation.Always, required: true, nullable: false, blank: false, choices: Object.values(ConditionSituation) }),
+			activation: new fields.StringField({
+				initial: ConditionActivation.Always,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(ConditionActivation),
+			}),
+			activationSituation: new fields.StringField({
+				initial: ConditionSituation.Always,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(ConditionSituation),
+			}),
 
-			target: new fields.StringField({ initial: ConditionTarget.Self, required: true, nullable: false, blank: false, choices: Object.values(ConditionTarget) }),
+			target: new fields.StringField({
+				initial: ConditionTarget.Self,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(ConditionTarget),
+			}),
 			duration: new fields.SchemaField(
 				{
-					turns: new fields.NumberField({ initial: null, required: true, nullable: true, integer: true, min: 1 }),
-					rounds: new fields.NumberField({ initial: null, required: true, nullable: true, integer: true, min: 1 }),
-					rolls: new fields.NumberField({ initial: null, required: true, nullable: true, integer: true, min: 1 }),
+					turns: new fields.NumberField({
+						initial: null,
+						required: true,
+						nullable: true,
+						integer: true,
+						min: 1,
+					}),
+					rounds: new fields.NumberField({
+						initial: null,
+						required: true,
+						nullable: true,
+						integer: true,
+						min: 1,
+					}),
+					rolls: new fields.NumberField({
+						initial: null,
+						required: true,
+						nullable: true,
+						integer: true,
+						min: 1,
+					}),
 				},
-				{ required: true, nullable: false },
+				{ required: true, nullable: false }
 			),
-			icon: new fields.StringField({ initial: 'icons/svg/item-bag.svg', required: true, nullable: false, blank: false }),
+			icon: new fields.StringField({
+				initial: 'icons/svg/item-bag.svg',
+				required: true,
+				nullable: false,
+				blank: false,
+			}),
 			modifiers: new fields.ArrayField(
 				new fields.SchemaField({
-					type: new fields.StringField({ initial: ConditionModifierType.Pool, required: true, nullable: false, blank: false, choices: Object.values(ConditionModifierType) }),
-					situation: new fields.StringField({ initial: ConditionSituation.Always, required: true, nullable: false, blank: false, choices: Object.values(ConditionSituation) }),
-					activation: new fields.StringField({ initial: ConditionActivation.Always, required: true, nullable: false, blank: false, choices: Object.values(ConditionActivation) }),
-					key: new fields.StringField({ required: true, nullable: false, blank: false, choices: [...Object.keys(RollType), ...Array.from(ROLL_CATEGORIES.keys()).map((k: string) => `category.${k}`)] }),
+					type: new fields.StringField({
+						initial: ConditionModifierType.Pool,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(ConditionModifierType),
+					}),
+					situation: new fields.StringField({
+						initial: ConditionSituation.Always,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(ConditionSituation),
+					}),
+					activation: new fields.StringField({
+						initial: ConditionActivation.Always,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: Object.values(ConditionActivation),
+					}),
+					key: new fields.StringField({
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: [
+							...Object.keys(RollType),
+							...Array.from(ROLL_CATEGORIES.keys()).map((k: string) => `category.${k}`),
+						],
+					}),
 					value: new fields.StringField({ required: true, nullable: false, blank: false }),
 				}),
-				{ initial: [], required: true, nullable: true },
+				{ initial: [], required: true, nullable: true }
 			),
 		};
 	}

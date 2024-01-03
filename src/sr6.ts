@@ -67,7 +67,7 @@ async function doAlphaNotice() {
 		<li><a href="https://github.com/jaynus/sr6/blob/main/LICENSE">Licensed under the MIT License</a></li>
 	</ul>
 	`,
-		{ async: true },
+		{ async: true }
 	);
 
 	await ChatMessage.create({

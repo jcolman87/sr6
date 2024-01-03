@@ -75,7 +75,10 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 			...super.defineSchema(),
 			deviceId: new fields.DocumentIdField({ initial: null, nullable: true, required: true }),
 			attributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, { required: true, nullable: false }),
-			baseAttributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, { required: true, nullable: false }),
+			baseAttributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, {
+				required: true,
+				nullable: false,
+			}),
 		};
 	}
 }

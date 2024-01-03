@@ -31,7 +31,16 @@ export function register(): void {
 	registerSheets();
 }
 
-export const CharacterItemTypes = ['skill', 'contact', 'sin', 'lifestyle', 'augmentation', 'quality', 'adeptpower', 'complexform'];
+export const CharacterItemTypes = [
+	'skill',
+	'contact',
+	'sin',
+	'lifestyle',
+	'augmentation',
+	'quality',
+	'adeptpower',
+	'complexform',
+];
 
 export const GearItemTypes = ['weapon', 'gear', 'credstick'];
 
@@ -70,6 +79,6 @@ export function setOptGroups(select: HTMLSelectElement): void {
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Gear'), GearItemTypes),
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Matrix'), MatrixItemTypes),
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Matrix'), GameplayItemTypes),
-		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Other')),
+		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Other'))
 	);
 }

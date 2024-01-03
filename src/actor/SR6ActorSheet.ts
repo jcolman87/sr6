@@ -9,10 +9,10 @@ import SR6Item from '@/item/SR6Item';
 
 import './SR6ActorSheet.scss';
 
-export default class SR6ActorSheet<ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel, ItemDataModel extends BaseItemDataModel = BaseItemDataModel> extends ActorSheet<
-	SR6Actor<ActorDataModel>,
-	SR6Item<ItemDataModel>
-> {
+export default class SR6ActorSheet<
+	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel,
+	ItemDataModel extends BaseItemDataModel = BaseItemDataModel
+> extends ActorSheet<SR6Actor<ActorDataModel>, SR6Item<ItemDataModel>> {
 	static override get defaultOptions(): ActorSheetOptions {
 		return {
 			...super.defaultOptions,

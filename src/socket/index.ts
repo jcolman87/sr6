@@ -108,7 +108,10 @@ export function emit(operation: SocketOperation.UpdateCombatTracker, data: Comba
 /**
  * Update the initiative value of some extra slots.
  */
-export function emit(operation: SocketOperation.UpdateInitiativeForExtraSlot, data: UpdateInitiativeForExtraSlotData): void;
+export function emit(
+	operation: SocketOperation.UpdateInitiativeForExtraSlot,
+	data: UpdateInitiativeForExtraSlotData
+): void;
 
 /**
  * Utility wrapper for the system's socket emits, providing type-safe argument checking for each operation.

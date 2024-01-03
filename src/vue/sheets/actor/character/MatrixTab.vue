@@ -18,7 +18,7 @@ const matrix_actions = computed(
 	() =>
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'matrix_action')
-			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<MatrixActionDataModel>[],
+			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<MatrixActionDataModel>[]
 );
 
 async function rollMatrixAction(action: SR6Item<MatrixActionDataModel>) {
@@ -34,19 +34,30 @@ function addCoreActions() {
 
 <template>
 	<section class="tab-skills">
-		<table class="field-table" style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 30%">
+		<table
+			class="field-table"
+			style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 30%"
+		>
 			<thead>
 				<tr class="field-table">
 					<td>Skill</td>
 					<td>Pool</td>
-					<td><a v-if="isGM" class="fas fa-plus" @click.prevent="addMatrixAction" /><a v-if="isGM && matrix_actions.length == 0" class="fas fa-infinity" @click.prevent="addCoreActions" /></td>
+					<td>
+						<a v-if="isGM" class="fas fa-plus" @click.prevent="addMatrixAction" /><a
+							v-if="isGM && matrix_actions.length == 0"
+							class="fas fa-infinity"
+							@click.prevent="addCoreActions"
+						/>
+					</td>
 				</tr>
 			</thead>
 			<tr v-for="action in matrix_actions" :key="action.id">
 				<td style="width: 100%">{{ action.name }}</td>
 				<td>{{ action.systemData.pool }}</td>
 				<td>
-					<a @click="rollMatrixAction(action)" data-die="A"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+					<a @click="rollMatrixAction(action)" data-die="A"
+						><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+					>
 				</td>
 			</tr>
 		</table>

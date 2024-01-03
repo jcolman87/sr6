@@ -29,7 +29,14 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),
-			rating: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: CredstickRating.Standard, max: CredstickRating.Ebony }),
+			rating: new fields.NumberField({
+				initial: 1,
+				required: true,
+				nullable: false,
+				integer: true,
+				min: CredstickRating.Standard,
+				max: CredstickRating.Ebony,
+			}),
 			nuyen: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true }),
 		};
 	}
