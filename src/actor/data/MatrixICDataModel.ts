@@ -3,15 +3,15 @@ import BaseDataModel from '@/data/BaseDataModel';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import SR6Item from '@/item/SR6Item';
 
-export default abstract class MatrixICDataModel extends BaseDataModel /*implements IHasMatrix */ {
+export default abstract class MatrixICDataModel extends BaseDataModel /* implements IHasMatrix */ {
 	abstract rating: number;
 
 	get matrixPersona(): null | MatrixPersonaDataModel {
-		let persona = this.actor!.items.find((i) => i.type == 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
+		const persona = this.actor!.items.find((i) => i.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
 		return persona ? persona.systemData : null;
 	}
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

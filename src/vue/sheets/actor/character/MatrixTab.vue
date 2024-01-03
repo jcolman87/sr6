@@ -17,7 +17,7 @@ const isGM = game.user.isGM;
 const matrix_actions = computed(
 	() =>
 		toRaw(context.data.actor)
-			.items.filter((i) => i.type == 'matrix_action')
+			.items.filter((i) => i.type === 'matrix_action')
 			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<MatrixActionDataModel>[],
 );
 
@@ -42,7 +42,7 @@ function addCoreActions() {
 					<td><a v-if="isGM" class="fas fa-plus" @click.prevent="addMatrixAction" /><a v-if="isGM && matrix_actions.length == 0" class="fas fa-infinity" @click.prevent="addCoreActions" /></td>
 				</tr>
 			</thead>
-			<tr v-for="action in matrix_actions">
+			<tr v-for="action in matrix_actions" :key="action.id">
 				<td style="width: 100%">{{ action.name }}</td>
 				<td>{{ action.systemData.pool }}</td>
 				<td>

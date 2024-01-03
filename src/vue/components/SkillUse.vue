@@ -30,7 +30,7 @@ function getSkill(name: string): undefined | SR6Item<SkillDataModel> {
 
 	<label><Localized label="SR6.Labels.Skill" /></label>
 	<select name="system.skillUse.skill" :value="skillUse.skill">
-		<option v-for="skill in skills">{{ skill.name }}</option>
+		<option v-for="skill in skills" :key="skill.id">{{ skill.name }}</option>
 	</select>
 
 	<label><Localized label="SR6.Labels.Specialization" /></label>

@@ -2,6 +2,7 @@ import BaseDataModel from '@/data/BaseDataModel';
 
 export enum MonitorType {
 	Physical = 'physical',
+	Overflow = 'overflow',
 	Stun = 'stun',
 	Matrix = 'matrix',
 	Edge = 'edge',
@@ -21,16 +22,72 @@ export default abstract class MonitorsDataModel extends BaseDataModel {
 		switch (type) {
 			case MonitorType.Physical:
 				return this.physical;
+			case MonitorType.Overflow:
+				return this.overflow;
 			case MonitorType.Stun:
 				return this.physical;
 			case MonitorType.Matrix:
 				return this.physical;
 			case MonitorType.Edge:
-				return this.physical;
+				return this.edge;
+		}
+		throw 'ERROR INVALID MONITOR TYPE';
+	}
+
+	// returns remainder
+	private async _applyDamage(type: MonitorType, value: number): Promise<number> {
+		const monitor: MonitorDataModel = this.get(type);
+
+		const newDamage: number = monitor.value + value;
+		const remainder: number = newDamage - monitor.max;
+
+		if (remainder > 0) {
+			await this.actor!.update({ [`system.monitors.${type.toString()}.damage`]: monitor.max });
+			return remainder;
+		} else {
+			await this.actor!.update({ [`system.monitors.${type.toString()}.damage`]: newDamage });
+			return 0;
 		}
 	}
 
-	static defineSchema() {
+	async applyDamage(type: MonitorType, value: number): Promise<void> {
+		if (type === MonitorType.Edge) {
+			ui.notifications.error('Dont use applyDamage for edge, use spendEdge instaed');
+		}
+		let physicalDamage: number = type === MonitorType.Physical ? value : 0;
+		let overflowDamage: number = 0;
+
+		if (type === MonitorType.Stun) {
+			const remainder: number = await this._applyDamage(type, value);
+			if (remainder > 0) {
+				physicalDamage = await this._applyDamage(MonitorType.Physical, remainder);
+			}
+		}
+
+		if (physicalDamage > 0) {
+			const remainder: number = await this._applyDamage(MonitorType.Physical, value);
+			if (remainder > 0) {
+				overflowDamage = await this._applyDamage(MonitorType.Overflow, remainder);
+			}
+		}
+
+		if (overflowDamage > 0) {
+			const remainder: number = await this._applyDamage(MonitorType.Physical, value);
+			if (remainder > 0) {
+				// They are dead
+			}
+		}
+	}
+
+	// Returns true if they edge got spent
+	async spendEdge(count: number): Promise<boolean> {
+		if (this.edge.value < count) {
+			return false;
+		}
+		return true;
+	}
+
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
@@ -51,7 +108,7 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		return Math.max(0, this.max - this.damage);
 	}
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
@@ -61,7 +118,7 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareData() {
+	override prepareData(): void {
 		if (this.formula) {
 			this.max = this.solveFormula(this.formula);
 		}

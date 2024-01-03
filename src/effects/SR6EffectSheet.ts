@@ -7,7 +7,7 @@
 import './SR6EffectSheet.scss';
 
 export default class SR6EffectSheet extends ActiveEffectConfig {
-	static override get defaultOptions() {
+	static override get defaultOptions(): ActiveEffectConfigOptions {
 		return {
 			...super.defaultOptions,
 			classes: ['sr6', 'sheet'],
@@ -27,7 +27,7 @@ export default class SR6EffectSheet extends ActiveEffectConfig {
 		return 'systems/sr6/templates/sheets/effect-config.hbs';
 	}
 
-	override activateListeners(html: JQuery) {
+	override activateListeners(html: JQuery): void {
 		super.activateListeners(html);
 
 		if (this.isEditable) {
@@ -37,7 +37,8 @@ export default class SR6EffectSheet extends ActiveEffectConfig {
 		}
 	}
 
-	protected async _onEditImage(event: Event) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async _onEditImage(event: Event): Promise<any> {
 		const fp = new FilePicker({
 			type: 'image',
 			current: this.object.icon,

@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Central point of registration for all game settings.
  */
@@ -18,7 +18,7 @@ export const NAMESPACE = 'sr6';
 /**
  * Register all system settings.
  */
-export function register() {
+export function register(): void {
 	registerCampaignSettings(NAMESPACE);
 	registerStoryPoints(NAMESPACE);
 	registerUser(NAMESPACE);

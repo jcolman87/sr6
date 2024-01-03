@@ -40,6 +40,10 @@ export const ROLL_CATEGORIES = new Map([
 	],
 ]);
 
+export function getRollCategory(key: string): RollType[] {
+	return ROLL_CATEGORIES.has(key) ? ROLL_CATEGORIES.get(key)! : [];
+}
+
 export const ROLL_TEMPLATES = new Map([
 	[RollType.Initiative, 'systems/sr6/templates/chat/rolls/InitiativeRoll.hbs'],
 	[RollType.Attribute, 'systems/sr6/templates/chat/rolls/SR6Roll.hbs'],
@@ -52,8 +56,9 @@ export const ROLL_TEMPLATES = new Map([
 	[RollType.MatrixAction, 'systems/sr6/templates/chat/rolls/MatrixActionRoll.hbs'],
 ]);
 
-export function register() {
+export function register(): void {
 	CONFIG.Dice.rolls = [SR6Roll];
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(window as any).SR6Roll = SR6Roll;
 }

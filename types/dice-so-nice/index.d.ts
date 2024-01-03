@@ -171,4 +171,14 @@ declare class Dice3d {
 	 * @see {@link https://gitlab.com/riccisi/foundryvtt-dice-so-nice/-/wikis/API/Customization#show-all-extra-dice-by-default-for-new-users}
 	 */
 	showExtraDiceByDefault(show?: boolean);
+
+	showForRoll<TActor extends Actor, TRoll extends Roll, TUser extends User<TActor> = User<TActor>>(
+		roll: TRoll,
+		user: TUser = game.user,
+		synchronize: boolean,
+		users: string[] | null = null,
+		blind: boolean = false,
+		messageID: string | null = null,
+		speaker: string | null = null,
+	);
 }

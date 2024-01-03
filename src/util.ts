@@ -10,7 +10,7 @@ export function constructOptGroup(select: HTMLSelectElement, groupLabel: string,
 	return optgroup;
 }
 
-export function toSnakeCase(string: string) {
+export function toSnakeCase(string: string): string {
 	return string
 		.replace(/\W+/g, ' ')
 		.split(/ |\B(?=[A-Z])/)
@@ -27,7 +27,7 @@ export function getTokenOrActorId<TActor extends Actor>(actor: TActor): string {
 }
 
 export function getActor<TActor extends Actor>(id: string): null | TActor {
-	let token = canvas.tokens.get(id);
+	const token = canvas.tokens.get(id);
 	if (token) {
 		return token.actor as TActor;
 	} else {
@@ -35,13 +35,13 @@ export function getActor<TActor extends Actor>(id: string): null | TActor {
 	}
 }
 
-export async function waitForCanvasTokens() {
+export async function waitForCanvasTokens(): Promise<void> {
 	while (!canvas.ready) {
 		await new Promise((resolve) => setTimeout(resolve, 250));
 	}
 }
 
-////
+/// /
 export function getSelfOrSelectedActors(): SR6Actor[] {
 	let actors: SR6Actor[] = [];
 
@@ -65,7 +65,7 @@ export function getSelectedActors(): SR6Actor[] {
 }
 
 export function getSelectedTokens(): Token[] {
-	let canvas_tokens = canvas.tokens;
+	const canvas_tokens = canvas.tokens;
 	if (!canvas_tokens) {
 		return [];
 	}

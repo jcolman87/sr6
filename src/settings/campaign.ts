@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file System settings data related to campaign setting customization.
  */
@@ -53,7 +53,7 @@ export const KEY_SUPER_CHARACTERISTICS = 'useSuperCharacteristics';
  * Register campaign settings.
  * @param namespace Namespace to register settings under.
  */
-export function register(namespace: string) {
+export function register(namespace: string): void {
 	game.settings.register(namespace, KEY_SKILLS_COMPENDIUM, {
 		name: game.i18n.localize('SR6.Settings.SkillsCompendium'),
 		hint: game.i18n.localize('SR6.Settings.SkillsCompendiumHint'),

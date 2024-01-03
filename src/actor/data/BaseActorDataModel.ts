@@ -9,7 +9,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	abstract monitors: MonitorsDataModel;
 
 	get conditions(): ConditionDataModel[] {
-		return this.actor!.items.filter((i) => i.type == 'condition').map((i) => (i as SR6Item<ConditionDataModel>).systemData);
+		return this.actor!.items.filter((i) => i.type === 'condition').map((i) => (i as SR6Item<ConditionDataModel>).systemData);
 	}
 
 	get woundModifier(): number {
@@ -19,7 +19,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	getPool(type: RollType): number {
 		let pool = 0;
 
-		this.getSituationalConditions(ConditionSituation.Roll).forEach((condition) => {
+		this.getRollConditions(type).forEach((condition) => {
 			pool += condition.getPoolModifier(type);
 		});
 
@@ -32,15 +32,15 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 	getSituationalConditions(situation: ConditionSituation): ConditionDataModel[] {
 		return this.conditions.filter((condition) => {
-			return condition.situation == ConditionSituation.Any || condition.situation == situation;
+			return condition.activationSituation === ConditionSituation.Always || condition.activationSituation === situation;
 		});
 	}
 
-	override prepareData() {
+	override prepareData(): void {
 		super.prepareData();
 	}
 
-	override prepareDerivedData() {
+	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 	}
 
@@ -48,7 +48,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		return super.getRollData();
 	}
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			monitors: new fields.EmbeddedDataField(MonitorsDataModel, { required: true, nullable: false }),

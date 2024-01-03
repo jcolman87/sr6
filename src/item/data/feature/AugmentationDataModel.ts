@@ -5,7 +5,7 @@ export default abstract class AugmentationDataModel extends BaseItemDataModel {
 	abstract quality: number;
 	abstract essenseCost: number;
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

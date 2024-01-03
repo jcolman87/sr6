@@ -6,12 +6,17 @@
  * @file Dice roll prompt app.
  */
 
-import SR6Actor from '@/actor/SR6Actor';
-import { SR6RollData } from '@/roll/SR6Roll';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
+import SR6Actor from '@/actor/SR6Actor';
+import SR6Item from '@/item/SR6Item';
+
+import { SR6RollData } from '@/roll/SR6Roll';
 import { ContextBase } from '@/vue/SheetContext';
 import VueRollPrompt from '@/vue/apps/RollPrompt.vue';
 import VueSheet from '@/vue/VueSheet';
+import { Component } from 'vue';
 
 export interface RollPromptContext<TRollData extends SR6RollData = SR6RollData> extends ContextBase {
 	actor: SR6Actor;
@@ -19,12 +24,12 @@ export interface RollPromptContext<TRollData extends SR6RollData = SR6RollData> 
 	resolvePromise: (value: TRollData) => void;
 }
 
-export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> extends VueSheet(Application) {
-	override get vueComponent() {
+export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> extends VueSheet(ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>) {
+	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
 
-	static override get defaultOptions() {
+	static override get defaultOptions(): ActorSheetOptions {
 		return {
 			...super.defaultOptions,
 			classes: ['app-roll-prompt'],
@@ -45,22 +50,19 @@ export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> ext
 
 	#resolvePromise?: (value: TRollData | null) => void;
 
-	actor: SR6Actor;
 	rollData: TRollData;
 
 	constructor(actor: SR6Actor, rollData: TRollData) {
-		super();
-
-		this.actor = actor;
+		super(actor);
 		this.rollData = rollData;
 	}
 
-	override async close(options = {}) {
+	override async close(options = {}): Promise<void> {
 		this.#resolvePromise?.(null);
-		await super.close(options);
+		return super.close(options);
 	}
 
-	override async getVueContext(): Promise<RollPromptContext<TRollData>> {
+	async getVueContext(): Promise<RollPromptContext<TRollData>> {
 		return {
 			resolvePromise: async (data) => {
 				this.#resolvePromise?.(data);

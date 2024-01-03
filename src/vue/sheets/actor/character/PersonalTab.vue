@@ -14,17 +14,17 @@ const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
 const lifestyles = computed(() =>
 	toRaw(context.data.actor)
-		.items.filter((i) => i.type == 'lifestyle')
+		.items.filter((i) => i.type === 'lifestyle')
 		.map((i) => i as SR6Item<LifestyleDataModel>),
 );
 const sins = computed(() =>
 	toRaw(context.data.actor)
-		.items.filter((i) => i.type == 'sin')
+		.items.filter((i) => i.type === 'sin')
 		.map((i) => i as SR6Item<SINDataModel>),
 );
 const contacts = computed(() =>
 	toRaw(context.data.actor)
-		.items.filter((i) => i.type == 'contact')
+		.items.filter((i) => i.type === 'contact')
 		.map((i) => i as SR6Item<ContactDataModel>),
 );
 </script>
@@ -44,14 +44,14 @@ const contacts = computed(() =>
 						<td></td>
 					</tr>
 				</thead>
-				<tr v-for="item in lifestyles">
+				<tr v-for="item in lifestyles" :key="item.id">
 					<td class="entry">
 						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
 					</td>
 					<td>
 						<select width="50px" :value="item.systemData.sin" @change="(ev) => updateItem(context.data.actor, item.id, 'system.sin', ev)">
 							<option value="">-</option>
-							<option v-for="sin in sins" :value="sin.id">{{ sin.name }}</option>
+							<option v-for="sin in sins" :key="sin.id" :value="sin.id">{{ sin.name }}</option>
 						</select>
 					</td>
 					<td class="actions"><a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a class="fas fa-minus" @click.prevent="item.delete()" /></td>
@@ -64,7 +64,7 @@ const contacts = computed(() =>
 				<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'sin')" />
 			</div>
 			<table>
-				<tr v-for="item in sins">
+				<tr v-for="item in sins" :key="item.id">
 					<td class="entry">
 						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
 					</td>
@@ -86,7 +86,7 @@ const contacts = computed(() =>
 						<td></td>
 					</tr>
 				</thead>
-				<tr v-for="item in contacts">
+				<tr v-for="item in contacts" :key="item.id">
 					<td class="entry"><input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" /></td>
 					<td><input type="number" :value="item.system.rating" @change="(ev) => updateItem(context.data.actor, item.id, 'system.rating', ev)" /></td>
 					<td><input type="number" :value="item.system.loyalty" @change="(ev) => updateItem(context.data.actor, item.id, 'system.loyalty', ev)" /></td>

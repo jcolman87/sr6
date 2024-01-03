@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file System settings data related to the Story Point Tracker.
  */
@@ -24,7 +24,7 @@ export type StoryPointData = {
 	player: number;
 };
 
-export function register(namespace: string) {
+export function register(namespace: string): void {
 	game.settings.register(namespace, KEY_STORY_POINTS, {
 		name: 'StoryPoints',
 		scope: 'world',

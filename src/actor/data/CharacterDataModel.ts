@@ -20,7 +20,7 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	//
 
 	get matrixPersona(): null | MatrixPersonaDataModel {
-		let persona = this.actor!.items.find((i) => i.type == 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
+		const persona = this.actor!.items.find((i) => i.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
 		return persona ? persona.systemData : null;
 	}
 
@@ -33,9 +33,9 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		return true;
 	}
 
-	////
+	/// /
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
@@ -44,26 +44,26 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		};
 	}
 
-	override async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean) {
-		await super.onPostCreate(actor, controlled);
+	override async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean): Promise<void> {
+		return await super.onPostCreate(actor, controlled);
 		// Only add base skills if none were adding such as an import
-		//if (!this.actor!.items.find((i) => i.type == 'skill')) {
+		// if (!this.actor!.items.find((i) => i.type == 'skill')) {
 		//	await this.actor!.createEmbeddedDocuments('Item', await getCoreSkills());
-		//} else {
+		// } else {
 		//
-		//}
+		// }
 	}
 
-	override getRollData() {
+	override getRollData(): Record<string, unknown> {
 		return super.getRollData();
 	}
 
-	async _addCoreSkills() {
+	async _addCoreSkills(): Promise<void> {
 		// Only add base skills if none were adding such as an import
 		await this.actor!.createEmbeddedDocuments('Item', await getCoreSkills());
 	}
 
-	async _addCoreMatrixActions() {
+	async _addCoreMatrixActions(): Promise<void> {
 		// Only add base skills if none were adding such as an import
 		await this.actor!.createEmbeddedDocuments('Item', await getCoreMatrixActions());
 	}

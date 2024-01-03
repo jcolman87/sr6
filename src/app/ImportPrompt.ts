@@ -11,6 +11,7 @@ import { getCoreMatrixActions, getCoreSkills } from '@/item/data';
 import VueImportPrompt from '@/vue/apps/ImportPrompt.vue';
 import { ContextBase } from '@/vue/SheetContext';
 import VueSheet from '@/vue/VueSheet';
+import { Component } from 'vue';
 
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
@@ -24,44 +25,47 @@ export interface ImportPromptContext extends ContextBase {
 }
 
 export default class ImportPrompt extends VueSheet(Application) {
-	async _onImportGenesisActor(file: string) {
+	async _onImportGenesisActor(file: string): Promise<void> {
 		const response = await fetch(file);
 		const json = await response.json();
 
 		json.attr = (name: string): string => {
-			return json.attributes.find((a: any) => a.id == name.toUpperCase());
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			return json.attributes.find((a: any) => a.id === name.toUpperCase());
 		};
 		json.skill = (name: string): string => {
-			return json.skills.find((a: any) => a.id == name.toLowerCase());
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			return json.skills.find((a: any) => a.id === name.toLowerCase());
 		};
 
-		let actor = (await Actor.create({
+		const actor = (await Actor.create({
 			name: json.streetName,
 			type: 'character',
 		})) as SR6Actor<CharacterDataModel>;
 
-		if (actor == undefined) {
+		if (actor === undefined) {
 			ui.notifications!.error('import failed to create actor');
 			return;
 		}
-		let data = actor.systemData;
+		const data = actor.systemData;
 
 		Object.keys(data.attributes).forEach((name: string) => {
 			const value = json.attr(name);
-			if (value != undefined) {
+			if (value !== undefined) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(data.attributes as any)[name].base = value.points;
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(data.attributes as any)[name].modifier = value.modifiedValue - value.points;
-			} else {
 			}
 		});
 
-		let coreSkills = await getCoreSkills();
+		const coreSkills = await getCoreSkills();
 		await actor.createEmbeddedDocuments('Item', coreSkills);
 		actor.items
-			.filter((i) => i.type == 'skill')
+			.filter((i) => i.type === 'skill')
 			.forEach((s) => {
-				let skill = s as SR6Item<SkillDataModel>;
-				let entry = json.skill(skill.name);
+				const skill = s as SR6Item<SkillDataModel>;
+				const entry = json.skill(skill.name);
 				if (entry) {
 					skill.update({ ['system.points']: parseInt(entry.rating) });
 				}
@@ -72,6 +76,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments(
 			'Item',
 			Array.from(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				json.adeptPowers.map((value: any) => {
 					return {
 						name: value.name,
@@ -86,16 +91,17 @@ export default class ImportPrompt extends VueSheet(Application) {
 			),
 		);
 
-		let sins = (await actor.createEmbeddedDocuments(
+		const sins = (await actor.createEmbeddedDocuments(
 			'Item',
 			Array.from(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				json.sins.map((value: any) => {
 					return {
 						name: value.name,
 						type: 'sin',
 						img: 'icons/svg/item-bag.svg',
 						system: {
-							description: value.description != undefined ? value.description : 'No description!',
+							description: value.description !== undefined ? value.description : 'No description!',
 							rating: value.quality,
 						},
 					};
@@ -106,10 +112,11 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments(
 			'Item',
 			Array.from(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				json.lifestyles.map((value: any) => {
 					let sin_id = null;
-					if (value.sin && value.sin != '') {
-						let sin = sins.find((sin) => sin.name == value.sin);
+					if (value.sin && value.sin !== '') {
+						const sin = sins.find((sin) => sin.name === value.sin);
 						if (sin) {
 							sin_id = sin.id;
 						}
@@ -134,13 +141,14 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments(
 			'Item',
 			Array.from(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				json.contacts.map((value: any) => {
 					return {
-						name: value.name != undefined ? value.name : 'No Name!',
+						name: value.name !== undefined ? value.name : 'No Name!',
 						type: 'contact',
 						img: 'icons/svg/item-bag.svg',
 						system: {
-							description: value.description != undefined ? value.description : 'No description!',
+							description: value.description !== undefined ? value.description : 'No description!',
 							rating: value.influence,
 							loyalty: value.level,
 							type: value.type,
@@ -153,16 +161,17 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments(
 			'Item',
 			Array.from(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				json.augmentations.map((value: any) => {
 					let quality: number = 1;
 					let rating: number = 1;
 
-					if (value.level == '-') {
+					if (value.level === '-') {
 						rating = 1;
 					} else {
 						rating = parseInt(value.level);
 					}
-					if (value.quality == 'ALPHA') {
+					if (value.quality === 'ALPHA') {
 						quality = 3;
 					}
 
@@ -184,9 +193,10 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments(
 			'Item',
 			Array.from(
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				json.spells.map((value: any) => {
 					let range_type = SpellRangeType.Touch;
-					if (value.range.indexOf('Line of sight') != -1) {
+					if (value.range.indexOf('Line of sight') !== -1) {
 						range_type = SpellRangeType.LineOfSight;
 					}
 					let duration = SpellDuration.Instantaneous;
@@ -228,14 +238,10 @@ export default class ImportPrompt extends VueSheet(Application) {
 		);
 
 		await actor.update({ ['system']: data });
-		//await actor.delete();
+		// await actor.delete();
 	}
 
-	override get vueComponent() {
-		return VueImportPrompt;
-	}
-
-	static override get defaultOptions() {
+	static override get defaultOptions(): ApplicationOptions {
 		return {
 			...super.defaultOptions,
 			classes: ['app-import-prompt'],
@@ -247,11 +253,15 @@ export default class ImportPrompt extends VueSheet(Application) {
 		super();
 	}
 
-	override async close(options: {} = {}) {
-		await super.close(options);
+	override async close(options: {} = {}): Promise<void> {
+		return super.close(options);
 	}
 
-	override async getVueContext(): Promise<any> {
+	get vueComponent(): Component {
+		return VueImportPrompt;
+	}
+
+	async getVueContext(): Promise<ImportPromptContext> {
 		return {
 			app: this,
 		};

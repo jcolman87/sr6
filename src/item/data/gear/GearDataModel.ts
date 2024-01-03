@@ -42,7 +42,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 		return this.solveFormula(this.costFormula);
 	}
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
@@ -77,7 +77,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 		};
 	}
 
-	override prepareDerivedData() {
+	override prepareDerivedData(): void {
 		if (this.monitors.matrix) {
 			this.monitors.matrix.prepareDerivedData();
 		}

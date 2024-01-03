@@ -1,6 +1,6 @@
 export const KEY_ALPHA_VERSION = 'alphaVersion';
 
-export function register(namespace: string) {
+export function register(namespace: string): void {
 	game.settings.register(namespace, KEY_ALPHA_VERSION, {
 		name: 'Alpha Version',
 		config: false,

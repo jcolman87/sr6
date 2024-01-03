@@ -92,7 +92,7 @@ onMounted(() => {
 						</tr>
 					</table>
 				</tr>
-				<tr v-for="condition in conditions">
+				<tr v-for="condition in conditions" :key="condition.name">
 					<table>
 						<tr>
 							<td style="width: 3em">{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}</td>

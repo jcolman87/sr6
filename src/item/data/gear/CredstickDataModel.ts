@@ -25,7 +25,7 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 		return Object.values(CredstickCapacity)[this.rating] as number;
 	}
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

@@ -14,12 +14,12 @@ const system = context.data.actor.systemData;
 
 const qualities = computed(() =>
 	toRaw(context.data.actor)
-		.items.filter((i) => i.type == 'quality')
+		.items.filter((i) => i.type === 'quality')
 		.map((i) => i as SR6Item<QualityDataModel>),
 );
 const augmentations = computed(() =>
 	toRaw(context.data.actor)
-		.items.filter((i) => i.type == 'augmentation')
+		.items.filter((i) => i.type === 'augmentation')
 		.map((i) => i as SR6Item<QualityDataModel>),
 );
 </script>
@@ -40,7 +40,7 @@ const augmentations = computed(() =>
 						<td></td>
 					</tr>
 				</thead>
-				<tr v-for="item in qualities">
+				<tr v-for="item in qualities" :key="item.id">
 					<td class="entry">
 						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
 					</td>
@@ -61,7 +61,7 @@ const augmentations = computed(() =>
 						<td></td>
 					</tr>
 				</thead>
-				<tr v-for="item in augmentations">
+				<tr v-for="item in augmentations" :key="item.id">
 					<td class="entry">
 						<input type="text" :value="item.name" @change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)" />
 					</td>

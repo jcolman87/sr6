@@ -6,6 +6,7 @@ import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 import Editor from '@/vue/components/Editor.vue';
 import EffectsView from '@/vue/views/EffectsView.vue';
+import SR6Effect from '@/effects/SR6Effect';
 
 const props = withDefaults(
 	defineProps<{
@@ -29,10 +30,9 @@ const system = computed(() => context.data.item.systemData);
 // We have to:
 //   1. Use an 'any' typing to skirt around TypeScript's complaints.
 //   2. Keep a local ref that gets updated in onBeforeUpdate in order to work around some struggles with Foundry.
-const effects = ref<any>([]);
+const effects = ref<SR6Effect[]>([]);
 
 async function addEffect(category: string) {
-
 	await toRaw(context.sheet.item).createEmbeddedDocuments('ActiveEffect', [
 		{
 			label: context.data.item.name,
@@ -44,7 +44,7 @@ async function addEffect(category: string) {
 }
 
 function updateEffects() {
-	effects.value = [...toRaw(context.data.item).effects];
+	effects.value = [...(toRaw(context.data.item).effects as any)];
 }
 
 onBeforeMount(updateEffects);
@@ -97,7 +97,7 @@ onBeforeUpdate(updateEffects);
 			</div>
 
 			<div v-if="showEffectsTab" class="tab" data-group="primary" data-tab="effects">
-				<EffectsView :effects="[...effects]" @add-effect="addEffect" />
+				<EffectsView :effects="[...effects as any]" @add-effect="addEffect" />
 			</div>
 		</section>
 	</div>

@@ -31,7 +31,8 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 	get pool(): number {
 		return this.solveFormula(`@${EnumAttribute[this.attribute]} + ${this.points}`);
 	}
-	static override defineSchema() {
+
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

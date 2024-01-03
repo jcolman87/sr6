@@ -24,7 +24,7 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 		return true;
 	}
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

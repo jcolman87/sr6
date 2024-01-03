@@ -10,7 +10,7 @@ import IHasPostCreate from '@/data/IHasPostCreate';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
 import { RollType } from '@/roll';
 
-/**s
+/** s
  *
  * @author jaynus
  * @file Player Character
@@ -48,13 +48,14 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 	abstract initiatives: Initiatives;
 
 	getInitiativeFormula(type: InitiativeType): null | string {
+		const modifier = super.getPool(RollType.Initiative);
 		switch (type) {
 			case InitiativeType.Physical:
-				return this.initiatives.physical.formula;
+				return `${this.initiatives.physical.formula} + ${modifier}`;
 			case InitiativeType.Astral:
-				return this.initiatives.astral ? this.initiatives.astral!.formula : null;
+				return this.initiatives.astral ? `${this.initiatives.astral!.formula} + ${modifier}` : null;
 			case InitiativeType.Matrix:
-				return this.initiatives.matrix ? this.initiatives.matrix!.formula : null;
+				return this.initiatives.matrix ? `${this.initiatives.matrix!.formula} + ${modifier}` : null;
 		}
 	}
 
@@ -76,7 +77,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 	}
 
 	override getPool(type: RollType): number {
-		let pool = super.getPool(type) + this.woundModifier;
+		const pool = super.getPool(type) + this.woundModifier;
 
 		switch (type) {
 			case RollType.WeaponAttack:
@@ -96,7 +97,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		return pool;
 	}
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
@@ -151,7 +152,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		}
 	}
 
-	override prepareData() {
+	override prepareData(): void {
 		super.prepareData();
 
 		this.monitors.physical.prepareData();
@@ -164,7 +165,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
 	}
 
-	override prepareDerivedData() {
+	override prepareDerivedData(): void {
 		this.monitors.physical.prepareDerivedData();
 		this.monitors.stun.prepareDerivedData();
 		this.monitors.overflow.prepareDerivedData();
@@ -173,7 +174,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		super.prepareDerivedData();
 	}
 
-	override getRollData() {
+	override getRollData(): Record<string, unknown> {
 		return {
 			...super.getRollData(),
 			body: this.attributes.body.value,
@@ -190,7 +191,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		};
 	}
 
-	_prepareAttributes() {
+	_prepareAttributes(): void {
 		this.attributes.body.prepareData();
 		this.attributes.agility.prepareData();
 		this.attributes.reaction.prepareData();
@@ -203,5 +204,5 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		this.attributes.resonance.prepareData();
 	}
 
-	async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean) {}
+	async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean): Promise<void> {}
 }

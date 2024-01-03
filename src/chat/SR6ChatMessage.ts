@@ -8,14 +8,15 @@ export class SR6ChatMessage extends ChatMessage {
 	constructor(data: PreCreate<foundry.data.ChatMessageSource>, context?: DocumentConstructionContext<ChatMessage>) {
 		super(data, context);
 	}
+
 	override async getHTML(): Promise<JQuery> {
-		let html = await super.getHTML();
+		const html = await super.getHTML();
 
 		html.find('.chat-expand-dice').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 			event.preventDefault();
 
-			let roll = $(event.currentTarget.parentElement);
-			let tip = roll.find('.chat-dice-collapsible');
+			const roll = $(event.currentTarget.parentElement);
+			const tip = roll.find('.chat-dice-collapsible');
 			if (!tip.is(':visible')) {
 				tip.slideDown(200);
 			} else {
@@ -28,8 +29,8 @@ export class SR6ChatMessage extends ChatMessage {
 			html.find(`.chat-${i}-expand`).click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 				event.preventDefault();
 
-				let roll = $(event.currentTarget.parentElement);
-				let tip = roll.find(`.chat-${i}-collapsible`);
+				const roll = $(event.currentTarget.parentElement);
+				const tip = roll.find(`.chat-${i}-collapsible`);
 				if (!tip.is(':visible')) {
 					tip.slideDown(200);
 				} else {

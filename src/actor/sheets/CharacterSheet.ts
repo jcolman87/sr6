@@ -4,30 +4,33 @@
  * @file Player Character Sheet
  */
 
+import { Component } from 'vue';
 import VueCharacterSheet from '@/vue/sheets/actor/CharacterSheet.vue';
-import SR6Item from '@/item/SR6Item';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import CharacterDataModel from '@/actor/data/CharacterDataModel';
+
 import VueSheet from '@/vue/VueSheet';
 import SR6ActorSheet from '@/actor/SR6ActorSheet';
 import { ActorSheetContext } from '@/vue/SheetContext';
+
+import SR6Item from '@/item/SR6Item';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
 /**
  * Actor sheet used for Player Characters
  */
 export default class CharacterSheet extends VueSheet(SR6ActorSheet<CharacterDataModel>) {
-	override get vueComponent() {
+	get vueComponent(): Component {
 		return VueCharacterSheet;
 	}
 
-	override async getVueContext(): Promise<ActorSheetContext<CharacterDataModel>> {
+	async getVueContext(): Promise<ActorSheetContext<CharacterDataModel>> {
 		return {
 			sheet: this,
 			data: await this.getData(),
 		};
 	}
 
-	static override get defaultOptions() {
+	static override get defaultOptions(): ActorSheetOptions {
 		return {
 			...super.defaultOptions,
 			tabs: [

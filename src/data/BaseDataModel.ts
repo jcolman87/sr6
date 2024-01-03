@@ -2,10 +2,12 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 
 export default abstract class BaseDataModel extends foundry.abstract.DataModel {
+	abstract parent: SR6Item | SR6Actor | BaseDataModel;
+
 	static _enableV10Validation = true;
 
 	get actor(): SR6Actor | null {
-		let parent = (this as any).parent;
+		const parent = this.parent;
 
 		if (parent instanceof SR6Actor) {
 			return parent;
@@ -18,8 +20,9 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 			return null;
 		}
 	}
+
 	get item(): SR6Item | null {
-		let parent = (this as any).parent;
+		const parent = this.parent;
 
 		if (parent instanceof SR6Item) {
 			return parent;
@@ -32,8 +35,8 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 	}
 
 	solveFormula(formula: string): number {
-		let item = this.item;
-		let actor = this.actor;
+		const item = this.item;
+		const actor = this.actor;
 
 		if (item) {
 			return item.solveFormula(formula, actor);
@@ -46,9 +49,9 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 		throw 'err';
 	}
 
-	prepareData() {}
+	prepareData(): void {}
 
-	prepareDerivedData() {}
+	prepareDerivedData(): void {}
 
 	getRollData(): Record<string, unknown> {
 		return {};

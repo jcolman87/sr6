@@ -4,19 +4,19 @@ import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import SR6Item from '@/item/SR6Item';
 
 export async function getCoreSkills(): Promise<SR6Item<SkillDataModel>[]> {
-	let pack = game.packs.get('sr6.sr6-crb-skills')!;
+	const pack = game.packs.get('sr6.sr6-crb-skills')!;
 
 	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<SkillDataModel>));
 }
 
 export async function getCoreMatrixActions(): Promise<SR6Item<MatrixActionDataModel>[]> {
-	let pack = game.packs.get('sr6.sr6-crb-matrix-actions')!;
+	const pack = game.packs.get('sr6.sr6-crb-matrix-actions')!;
 
 	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<MatrixActionDataModel>));
 }
 
 export async function getCoreGeneralActions(): Promise<SR6Item<GeneralActionDataModel>[]> {
-	let pack = game.packs.get('sr6.sr6-crb-combat-actions')!;
+	const pack = game.packs.get('sr6.sr6-crb-combat-actions')!;
 
 	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<GeneralActionDataModel>));
 }

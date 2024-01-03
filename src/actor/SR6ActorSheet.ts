@@ -13,7 +13,7 @@ export default class SR6ActorSheet<ActorDataModel extends foundry.abstract.DataM
 	SR6Actor<ActorDataModel>,
 	SR6Item<ItemDataModel>
 > {
-	static override get defaultOptions() {
+	static override get defaultOptions(): ActorSheetOptions {
 		return {
 			...super.defaultOptions,
 			classes: ['sr6', 'sheet', 'actor'],
@@ -22,7 +22,7 @@ export default class SR6ActorSheet<ActorDataModel extends foundry.abstract.DataM
 		};
 	}
 
-	override activateListeners(html: JQuery) {
+	override activateListeners(html: JQuery): void {
 		super.activateListeners(html);
 
 		if (this.isEditable) {

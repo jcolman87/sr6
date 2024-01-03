@@ -24,25 +24,14 @@ const dragCounter = ref(0);
 const isBeingDragged = ref(false);
 const dimForDrag = computed(() => props.dragging && props.item.type !== 'container');
 
-function dragEnter(event: DragEvent) {
+function dragEnter(event: DragEvent) {}
+function dragLeave(event: DragEvent) {}
+function dragStart(event: DragEvent) {}
+function dragEnd(event: DragEvent) {}
 
-}
-function dragLeave(event: DragEvent) {
-
-}
-function dragStart(event: DragEvent) {
-
-}
-function dragEnd(event: DragEvent) {
-
-}
-
-function drop(event: DragEvent) {
-
-}
+function drop(event: DragEvent) {}
 
 function openItem() {
-
 	toRaw(props.item).sheet.render(true);
 }
 

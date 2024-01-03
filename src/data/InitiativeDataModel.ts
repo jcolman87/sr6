@@ -17,7 +17,7 @@ export default abstract class InitiativeDataModel extends BaseDataModel {
 		};
 	}
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

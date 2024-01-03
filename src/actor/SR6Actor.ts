@@ -54,6 +54,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		super.prepareData();
 		this.systemData.prepareData();
 	}
+
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.systemData.prepareDerivedData();
@@ -67,12 +68,12 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	}
 
 	override getRollData(): Record<string, unknown> {
-		let skills: any = {};
+		const skills: Record<string, unknown> = {};
 
 		this.items
-			.filter((i) => i.type == 'skill')
+			.filter((i) => i.type === 'skill')
 			.forEach((i) => {
-				let skill = i as SR6Item<SkillDataModel>;
+				const skill = i as SR6Item<SkillDataModel>;
 				skills[skill.safe_name] = skill.systemData.points;
 			});
 		return foundry.utils.mergeObject(skills, { ...super.getRollData(), ...this.systemData.getRollData(), actor: this });
@@ -82,7 +83,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	 * Override the _preCreate callback to call preCreate from the data model class, if present.
 	 * @inheritDoc
 	 */
-	protected override async _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext<this>, user: User) {
+	protected override async _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext<this>, user: User): Promise<void> {
 		await (<IHasPreCreate<this>>this.systemData).preCreate?.(this, data, options, user);
 
 		return super._preCreate(data, options, user);
@@ -92,13 +93,13 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	 * Override the _onDelete callback to call onDelete from the data model class, if present.
 	 * @inheritDoc
 	 */
-	protected override _onDelete(options: DocumentModificationContext<this>, userId: string) {
+	protected override _onDelete(options: DocumentModificationContext<this>, userId: string): void {
 		(<IHasOnDelete<this>>this.systemData).onDelete?.(this, options, userId);
 
 		super._onDelete(options, userId);
 	}
 
-	async _onPostCreate(controlled: boolean) {
+	async _onPostCreate(controlled: boolean): Promise<void> {
 		(<IHasPostCreate<this>>this.systemData).onPostCreate?.(this, controlled);
 	}
 

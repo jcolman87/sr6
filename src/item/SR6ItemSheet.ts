@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Basic Item Sheet
  */
@@ -18,7 +18,7 @@ export type DropData = {
  * Basic functionality shared by all ItemSheets.
  */
 export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = BaseItemDataModel> extends ItemSheet<SR6Item<ItemDataModel>> {
-	static override get defaultOptions() {
+	static override get defaultOptions(): DocumentSheetOptions {
 		return {
 			...super.defaultOptions,
 			classes: ['sr6', 'sheet', 'item'],
@@ -48,39 +48,4 @@ export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = Base
 			html.find('img[data-edit]').on('click', this._onEditImage.bind(this));
 		}
 	}
-
-	/**
-	 * Add support for drop data on Item sheets.
-	 */
-	protected override _onDrop(event: DragEvent) {
-		const data: DropData = <DropData>TextEditor.getDragEventData(event);
-
-		switch (data.type) {
-			case 'ActiveEffect':
-				return this._onDropActiveEffect(event, data);
-			case 'Actor':
-				return this._onDropActor(event, data);
-			case 'Item':
-				return this._onDropItem(event, data);
-			case 'Folder':
-				return this._onDropFolder(event, data);
-		}
-	}
-
-	/**
-	 * Called when an ActiveEffect is dropped on the item sheet.
-	 */
-	protected async _onDropActiveEffect(_event: DragEvent, _data: DropData) {}
-	/**
-	 * Called when an Actor is dropped on the item sheet.
-	 */
-	protected async _onDropActor(_event: DragEvent, _data: DropData) {}
-	/**
-	 * Called when an Item is dropped on the item sheet.
-	 */
-	protected async _onDropItem(_event: DragEvent, _data: DropData) {}
-	/**
-	 * Called when a Folder is dropped on the item sheet.
-	 */
-	protected async _onDropFolder(_event: DragEvent, _data: DropData) {}
 }

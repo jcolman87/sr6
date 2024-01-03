@@ -18,7 +18,7 @@ const isGM = game.user.isGM;
 const skills = computed(
 	() =>
 		toRaw(context.data.actor)
-			.items.filter((i) => i.type == 'skill')
+			.items.filter((i) => i.type === 'skill')
 			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SkillDataModel>[],
 );
 
@@ -47,7 +47,7 @@ function addCoreSkills() {
 					<td><a v-if="isGM" class="fas fa-plus" @click.prevent="addSkill" /><a v-if="isGM && skills.length == 0" class="fas fa-infinity" @click.prevent="addCoreSkills" /></td>
 				</tr>
 			</thead>
-			<tr v-for="skill in skills">
+			<tr v-for="skill in skills" :key="skill.id">
 				<td style="width: 100%">{{ skill.name }}</td>
 				<td><input class="field-number" type="number" v-model="skill.systemData.points" @change="updateSkill(skill)" /></td>
 				<td style="text-align: left">{{ skill.systemData.pool }}</td>

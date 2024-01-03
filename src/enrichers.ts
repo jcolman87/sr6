@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file TextEditor enrichment methods
  */
@@ -13,7 +13,7 @@ const DICE_COLOR_TO_SYMBOL: Record<string, string> = {
 	K: 'S', // Setback
 };
 
-export function register() {
+export function register(): void {
 	CONFIG.TextEditor.enrichers = [
 		...CONFIG.TextEditor.enrichers,
 

@@ -12,7 +12,7 @@ declare global {
 		active: boolean;
 
 		/** Track the sorted turn order of this combat encounter */
-		turns: Combatant<this>[];
+		turns: CollectionValue<this['combatants']>[];
 
 		/** Record the current round, turn, and tokenId to understand changes in the encounter state */
 		current: {
@@ -38,9 +38,9 @@ declare global {
 		/* -------------------------------------------- */
 
 		/** Get the Combatant who has the current turn. */
-		get combatant(): Combatant<this> | undefined;
+		get combatant(): CollectionValue<this['combatants']> | undefined;
 
-		get nextCombatant(): Combatant<this> | undefined;
+		get nextCombatant(): CollectionValue<this['combatants']> | undefined;
 
 		/** The numeric round of the Combat encounter */
 		get round(): number;

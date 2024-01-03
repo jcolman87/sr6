@@ -25,16 +25,16 @@ export default class SR6Item<ItemDataModel extends foundry.abstract.DataModel = 
 	}
 
 	solveFormula(formula: string, actor: SR6Actor | null = null): number {
-		let roll = new SR6Roll(formula, { ...foundry.utils.mergeObject({ ...this.getRollData() }, { ...actor?.getRollData() }), item: this, actor: actor }, SR6Roll.defaultOptions());
+		const roll = new SR6Roll(formula, { ...foundry.utils.mergeObject({ ...this.getRollData() }, { ...actor?.getRollData() }), item: this, actor: actor }, SR6Roll.defaultOptions());
 		return roll.evaluate({ async: false }).total;
 	}
 
-	override prepareData() {
+	override prepareData(): void {
 		super.prepareData();
 		this.systemData.prepareData();
 	}
 
-	override prepareDerivedData() {
+	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.systemData.prepareDerivedData();
 	}
@@ -43,7 +43,7 @@ export default class SR6Item<ItemDataModel extends foundry.abstract.DataModel = 
 	 * Override the _preCreate callback to call preCreate from the data model class, if present.
 	 * @inheritDoc
 	 */
-	protected override async _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext<this>, user: foundry.documents.BaseUser) {
+	protected override async _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext<this>, user: foundry.documents.BaseUser): Promise<void> {
 		await (<IHasPreCreate<this>>this.systemData).preCreate?.(this, data, options, user);
 
 		return super._preCreate(data, options, user);

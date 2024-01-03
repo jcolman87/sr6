@@ -15,7 +15,7 @@ export default class SR6Effect extends ActiveEffect {
 
 	// Ghetto hack, determine if we are a condition by our name
 	get isStatusEffectCondition(): boolean {
-		let parent = this.parent as SR6Item<ConditionDataModel>;
+		const parent = this.parent as SR6Item<ConditionDataModel>;
 		if (parent.systemData.statusEffectId) {
 			return true;
 		}
@@ -23,11 +23,11 @@ export default class SR6Effect extends ActiveEffect {
 		return false;
 	}
 
-	override prepareDerivedData() {
+	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 	}
 
-	override get isSuppressed() {
+	override get isSuppressed(): boolean {
 		return this.disabled;
 	}
 
@@ -36,7 +36,7 @@ export default class SR6Effect extends ActiveEffect {
 	}
 
 	override _applyCustom(actor: Actor, change: ApplicableChangeData<this>): unknown {
-		let baseActor = actor as SR6Actor<BaseActorDataModel>;
+		const baseActor = actor as SR6Actor<BaseActorDataModel>;
 
 		return null;
 	}

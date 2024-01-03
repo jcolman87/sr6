@@ -9,19 +9,19 @@ import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
 import SR6Actor from '@/actor/SR6Actor';
 
-export async function onCreate(actor: Actor, controlled: boolean) {
+export async function onCreate(actor: Actor, controlled: boolean): Promise<void> {
 	return (actor as unknown as SR6Actor)._onPostCreate(controlled);
 }
 
-export function register() {
-	(CONFIG.Actor.documentClass as any) = SR6Actor;
+export function register(): void {
+	CONFIG.Actor.documentClass = SR6Actor;
 
 	registerDataModels();
 	registerSheets();
 }
 
-function registerDataModels() {
+function registerDataModels(): void {
 	CONFIG.Actor.dataModels.character = CharacterDataModel;
 }
 
-export function setOptGroups(select: HTMLSelectElement) {}
+export function setOptGroups(select: HTMLSelectElement): void {}

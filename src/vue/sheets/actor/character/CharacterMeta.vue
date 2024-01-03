@@ -13,7 +13,7 @@ const system = computed(() => toRaw(context.data.actor).systemData);
 
 function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
 	console.log('Setting damage', monitor, field, amount);
-	if (monitor.damage == amount) {
+	if (monitor.damage === amount) {
 		toRaw(context.data.actor).update({ [field]: 0 });
 	} else {
 		toRaw(context.data.actor).update({ [field]: amount });
@@ -44,6 +44,7 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 								class="physical-bar-box"
 								:style="boxStyle(system.monitors.physical, idx)"
 								v-for="idx in system.monitors.physical.max"
+								:key="idx"
 								@click.prevent="setDamage(system.monitors.physical, 'system.monitors.physical.damage', idx)"
 							>
 								<template v-if="idx % 3 == 0">
@@ -57,7 +58,7 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 					<table>
 						<tr>
 							<td class="stun-bar-header"></td>
-							<td class="physical-bar-box" :style="boxStyle(system.monitors.stun, idx)" v-for="idx in system.monitors.stun.max" @click.prevent="setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)">
+							<td class="physical-bar-box" :style="boxStyle(system.monitors.stun, idx)" v-for="idx in system.monitors.stun.max" :key="idx" @click.prevent="setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)">
 								<template v-if="idx % 3 == 0">
 									{{ -Math.round((idx + 1) / 3) }}
 								</template>

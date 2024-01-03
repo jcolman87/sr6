@@ -17,7 +17,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	abstract attributes: MatrixAttributesDataModel;
 
 	get type(): PersonaType {
-		if (this.device == null) {
+		if (this.device === null) {
 			return PersonaType.Living;
 		}
 		return PersonaType.Device;
@@ -32,36 +32,43 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	}
 
 	get device(): null | GearDataModel {
-		let device = this.actor!.items.get(this.deviceId);
+		const device = this.actor!.items.get(this.deviceId);
 		return device ? (device as SR6Item<GearDataModel>).systemData : null;
 	}
 
 	get a(): number {
 		return this.attributes.attack;
 	}
-	set a(value) {
+
+	set a(value: number) {
 		this.attributes.attack = value;
 	}
+
 	get s(): number {
 		return this.attributes.sleaze;
 	}
-	set s(value) {
+
+	set s(value: number) {
 		this.attributes.sleaze = value;
 	}
+
 	get d(): number {
 		return this.attributes.dataProcessing;
 	}
-	set d(value) {
+
+	set d(value: number) {
 		this.attributes.dataProcessing = value;
 	}
+
 	get f(): number {
 		return this.attributes.firewall;
 	}
-	set f(value) {
+
+	set f(value: number) {
 		this.attributes.firewall = value;
 	}
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

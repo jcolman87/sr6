@@ -11,7 +11,7 @@ data:
     -
       name: Taking Aim
       activation: onuse
-      situation: roll
+      activationSituation: roll
       target: self
       duration:
         turns: 1

@@ -44,6 +44,7 @@ const editorContainer = ref<HTMLDivElement | null>(null);
  *
  * Typing data for ProseMirror is extraordinarily bare-bones, so just using `any` for now.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let editorInstance: any | null = null;
 
 /**
@@ -80,6 +81,7 @@ onMounted(enrichContent);
 onUpdated(async () => {
 	// Name should be a path split by '.' - such as system.notes.value
 	const splitName = props.name.split('.');
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let obj: any = rootContext.sheet.document;
 	for (let key of splitName) {
 		// If we've still got a key to find, but it isn't present, something's messed up.

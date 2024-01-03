@@ -11,13 +11,13 @@ const system = computed(() => context.data.item.systemData);
 
 const skillExpertise = computed({
 	get() {
-		if (context.data.item.systemData.expertise == null) {
+		if (context.data.item.systemData.expertise === null) {
 			return 'null';
 		}
 		return context.data.item.systemData.expertise;
 	},
 	set(newValue) {
-		if (newValue == 'null') {
+		if (newValue === 'null') {
 			context.data.item.systemData.expertise = null;
 		} else {
 			context.data.item.systemData.expertise = newValue;
@@ -28,13 +28,13 @@ const skillExpertise = computed({
 
 const skillSpecialization = computed({
 	get() {
-		if (context.data.item.systemData.specialization == null) {
+		if (context.data.item.systemData.specialization === null) {
 			return 'null';
 		}
 		return context.data.item.systemData.specialization;
 	},
 	set(newValue) {
-		if (newValue == 'null') {
+		if (newValue === 'null') {
 			context.data.item.systemData.specialization = null;
 		} else {
 			context.data.item.systemData.specialization = newValue;
@@ -67,7 +67,7 @@ const skillSpecialization = computed({
 					<label><Localized label="SR6.Labels.Specialization" /></label>
 					<select v-model="skillSpecialization">
 						<option value="null">—</option>
-						<template v-for="spec in system.specializations">
+						<template v-for="spec in system.specializations" :key="spec">
 							<option v-if="spec != system.expertise" v-bind:value="spec">{{ spec }}</option>
 						</template>
 					</select>
@@ -76,7 +76,7 @@ const skillSpecialization = computed({
 					<label><Localized label="SR6.Labels.Expertise" /></label>
 					<select v-model="skillExpertise">
 						<option value="null">—</option>
-						<template v-for="spec in system.specializations">
+						<template v-for="spec in system.specializations" :key="spec">
 							<option v-if="spec != system.specialization" v-bind:value="spec">{{ spec }}</option>
 						</template>
 					</select>

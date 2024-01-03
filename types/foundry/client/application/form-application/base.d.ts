@@ -193,6 +193,9 @@ declare global {
 		 * or select element is changed. Default is false.
 		 */
 		submitOnChange: boolean;
+
+		scroll: boolean;
+		focus: boolean;
 	}
 
 	interface TinyMCEEditorData {

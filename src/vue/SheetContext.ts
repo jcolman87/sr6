@@ -10,6 +10,7 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6ItemSheet from '@/item/SR6ItemSheet';
 import SR6ActorSheet from '@/actor/SR6ActorSheet';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ContextBase = { [key: string]: any };
 
 /**

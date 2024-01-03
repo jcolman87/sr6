@@ -8,7 +8,7 @@ export default abstract class EdgeBoostDataModel extends BaseItemDataModel {
 	abstract rollDataScript: string | null;
 	abstract finishRollScript: string | null;
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

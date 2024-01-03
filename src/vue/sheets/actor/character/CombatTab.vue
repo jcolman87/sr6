@@ -6,16 +6,12 @@ import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
-
 </script>
 
 <template>
-	<section class="tab-combat">
-		Hello World Combat
-	</section>
+	<section class="tab-combat">Hello World Combat</section>
 </template>
 
 <style lang="scss" scoped>
 @use '@scss/vars/colors.scss';
-
 </style>

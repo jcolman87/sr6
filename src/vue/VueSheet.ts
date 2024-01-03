@@ -1,5 +1,5 @@
 /**
-  *
+ *
  * @author jaynus
  * @file Mixin for empowering Applications with Sheets!
  */
@@ -7,12 +7,13 @@
 import { App, createApp, reactive, UnwrapNestedRefs } from 'vue';
 import { ContextBase, RootContext } from '@/vue/SheetContext';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor = new (...args: any[]) => {
 	activateListeners(html: JQuery): void;
 	close(options?: {}): Promise<void>;
 };
 
-export default function VueSheet<TBase extends Constructor, ContextType extends ContextBase | undefined = ContextBase>(base: TBase) {
+export default function VueSheet<TBase extends Constructor, ContextType extends ContextBase | undefined = ContextBase>(base: TBase): TBase {
 	return class extends base {
 		form?: HTMLFormElement;
 
@@ -29,6 +30,8 @@ export default function VueSheet<TBase extends Constructor, ContextType extends 
 		/**
 		 * This component must be implemented by children to define the Vue component to use for the sheet.
 		 */
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		get vueComponent(): any {
 			return null;
 		}
@@ -40,14 +43,15 @@ export default function VueSheet<TBase extends Constructor, ContextType extends 
 			return undefined;
 		}
 
-		async _renderInner(_data: unknown, options: any) {
+		async _renderInner(_data: unknown, options: Record<string, unknown>) {
 			const vueContext = await this.getVueContext();
 
 			// Instantiate our form object.
 			if (!this.form) {
 				const form = document.createElement('form');
 
-				const cssClass = (vueContext as any)?.data?.cssClass ?? (options?.classes && (options?.classes as string[] | undefined))?.join(' ') ?? '';
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const cssClass = (vueContext as any)?.data?.cssClass ?? ((options?.classes && (options?.classes as string[] | undefined)) as string[])?.join(' ') ?? '';
 
 				form.className = `${cssClass} vue-app`;
 				form.setAttribute('autocomplete', 'off');

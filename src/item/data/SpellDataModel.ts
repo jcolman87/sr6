@@ -3,7 +3,7 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { SpellDuration, SpellRangeType, SpellCombatType } from '@/data/magic';
 
 export default abstract class SpellDataModel extends BaseItemDataModel {
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

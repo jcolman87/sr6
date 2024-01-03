@@ -1,5 +1,43 @@
+# Edge bonuses
+name: Edge Boost (1) - Reroll One Die
+type: condition
+img: systems/sr6/assets/status/chilled.svg
+data:
+  statusEffectId: sr6.condition.chilled
+  description:
+  name: Edge Boost (1) - Reroll One Die
+  activation: onuse
+  activationSituation: roll
+  duration:
+    rolls: 1
+  target: self
+  rollModifiers:
+    - key: reroll_one
+      value: true
+  script: null
+effects: []
+---
+# Edge bonuses
+name: Edge Boost (1) - +3 Initiative
+type: condition
+img: systems/sr6/assets/status/chilled.svg
+data:
+  statusEffectId: sr6.condition.chilled
+  description:
+  name: Edge Boost (1) - +3 Initiative
+  activation: onuse
+  activationSituation: roll
+  duration:
+    rolls: 1
+  target: self
+  poolModifiers:
+    - key: Initiative
+      value: 3
+  script: null
+effects: []
+######
 # Skipped: Burning
-
+---
 name: Blinded I
 type: condition
 img: systems/sr6/assets/status/blind1.svg
@@ -8,7 +46,7 @@ data:
   description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
   name: Blinded I
   activation: always
-  situation: roll
+  activationSituation: roll
   target: self
   poolModifiers:
     - key: category.Vision
@@ -24,7 +62,7 @@ data:
   description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
   name: Blinded II
   activation: always
-  situation: roll
+  activationSituation: roll
   target: self
   poolModifiers:
     - key: category.Vision
@@ -40,7 +78,7 @@ data:
   description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
   name: Blinded III
   activation: always
-  situation: roll
+  activationSituation: roll
   target: self
   poolModifiers:
     - key: category.Vision
@@ -56,7 +94,7 @@ data:
   description: When you are truly, damagingly cold, it seeps into your bones and won’t let go, and you can’t move as smoothly and nimbly as you would like. When you are Chilled, you get –4 to your Initiative Score and –1 to all dice pools besides Damage Resistance tests. This status cancels and is canceled by the Burning status.
   name: Chilled
   activation: always
-  situation: roll
+  activationSituation: roll
   target: self
   poolModifiers:
     - key: Initiative

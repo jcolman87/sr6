@@ -6,7 +6,7 @@
 
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
 import VueSheet from '@/vue/VueSheet';
-
+import { Component } from 'vue';
 import SR6ItemSheet from '@/item/SR6ItemSheet';
 
 import MatrixActionSheet from '@/vue/sheets/item/MatrixActionSheet.vue';
@@ -14,8 +14,9 @@ import SkillSheet from '@/vue/sheets/item/SkillSheet.vue';
 
 import { SR6ItemSheetData, ItemSheetContext } from '@/vue/SheetContext';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type VueSheetConstructor = new (...args: any[]) => {
-	get vueComponent(): any;
+	get vueComponent(): Component;
 	getVueContext(): Promise<ItemSheetContext | undefined>;
 };
 
@@ -24,13 +25,15 @@ type VueSheetConstructor = new (...args: any[]) => {
  * @param vueComponent Vue component to use for the sheet.
  * @param sheetType Base class to use for the sheet.
  */
-export function basicSheet(vueComponent: any, sheetType: VueSheetConstructor = VueSheet(SR6ItemSheet)) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function basicSheet(vueComponent: Component, sheetType: any = VueSheet(SR6ItemSheet)) {
 	return class extends sheetType {
-		override get vueComponent() {
+		get vueComponent(): Component {
 			return vueComponent;
 		}
 
-		override async getVueContext(): Promise<ItemSheetContext | undefined> {
+		async getVueContext(): Promise<ItemSheetContext | undefined> {
 			const thisAsSheet = this as unknown as SR6ItemSheet;
 			return {
 				sheet: thisAsSheet,
@@ -43,7 +46,7 @@ export function basicSheet(vueComponent: any, sheetType: VueSheetConstructor = V
 /**
  * Registers Item sheets used by the system.
  */
-export function register() {
+export function register(): void {
 	Items.unregisterSheet('core', ItemSheet);
 
 	Items.registerSheet('sr6', basicSheet(BasicItemSheet), {

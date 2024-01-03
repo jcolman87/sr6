@@ -8,7 +8,7 @@ data:
     description:
     name: Ambidextrous
     activation: always
-    situation: any
+    activationSituation: always
     target: self
     poolModifiers:
       - key: category.Vision

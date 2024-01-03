@@ -19,7 +19,7 @@ export const KEY_CHANCE_TO_SUCCEED_BY_PERMUTATION = 'dicePoolChanceToSucceedByPe
  */
 export const KEY_CHANCE_TO_SUCCEED_BY_SIMULATION = 'dicePoolApproximation';
 
-export function register(namespace: string) {
+export function register(namespace: string): void {
 	game.settings.register(namespace, KEY_USE_MAGICAL_GIRL_SYMBOLS, {
 		name: game.i18n.localize('SR6.Settings.UseMagicalGirlSymbols'),
 		hint: game.i18n.localize('SR6.Settings.UseMagicalGirlSymbolsHint'),

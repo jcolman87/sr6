@@ -19,7 +19,7 @@ export default abstract class BaseItemDataModel extends BaseDataModel {
 	abstract description: string;
 	abstract source: string;
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

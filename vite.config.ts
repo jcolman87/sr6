@@ -5,6 +5,8 @@ import pluginVue from '@vitejs/plugin-vue';
 import path from 'path';
 import process from 'process';
 import FullReload from 'vite-plugin-full-reload';
+import checker from 'vite-plugin-checker';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 const env = dotenv.config();
 dotenvExpand.expand(env);
@@ -58,7 +60,7 @@ export default defineConfig({
 			external: /^\/systems.*/,
 		},
 	},
-	plugins: [pluginVue(), FullReload(['public/**/*'])],
+	plugins: [checker({ typescript: true }), tsconfigPaths(), pluginVue(), FullReload(['public/**/*'])],
 	resolve: {
 		alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }, { find: '@scss', replacement: path.resolve(__dirname, 'src/scss') }, ...devOnlyAliases, ...releaseOnlyAliases],
 	},

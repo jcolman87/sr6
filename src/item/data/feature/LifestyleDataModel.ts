@@ -17,7 +17,8 @@ export default abstract class LifestyleDataModel extends BaseItemDataModel {
 	get cost(): number {
 		return this.solveFormula(this.costFormula);
 	}
-	static override defineSchema() {
+
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

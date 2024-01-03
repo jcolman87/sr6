@@ -1,3 +1,4 @@
+/* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import { computed } from 'vue';
 
@@ -11,7 +12,7 @@ const props = withDefaults(
 		/**
 		 * String formatting args.
 		 */
-		formatArgs?: { [key: string]: any };
+		formatArgs?: { [key: string]: string | number | boolean | null };
 
 		/**
 		 * Whether to handle HTML formatting in the localized value.
@@ -23,7 +24,7 @@ const props = withDefaults(
 	},
 );
 
-const localizedValue = computed(() => (props.formatArgs === undefined ? game.i18n.localize(props.label) : game.i18n.format(props.label, props.formatArgs)));
+const localizedValue = computed(() => (props?.formatArgs === undefined ? game.i18n.localize(props.label) : game.i18n.format(props.label, props.formatArgs)));
 </script>
 
 <template>

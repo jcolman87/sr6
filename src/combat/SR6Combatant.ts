@@ -30,7 +30,7 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 	constructor(data: PreCreate<foundry.data.CombatantSource>, context?: DocumentConstructionContext<Combatant>) {
 		super(data, context);
 
-		let availableActions = this.actorSystemData.getAvailableActions(InitiativeType.Physical);
+		const availableActions = this.actorSystemData.getAvailableActions(InitiativeType.Physical);
 
 		if (this.isOwner) {
 			this._setSystemData({
@@ -41,7 +41,7 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		}
 	}
 
-	async _setSystemData(data: CombatantFlagData) {
+	async _setSystemData(data: CombatantFlagData): Promise<void> {
 		if (!this.isOwner && !game.user!.isGM) {
 			ui.notifications.error('Cannot set combat data for unowned combatant');
 		}
@@ -49,16 +49,16 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		await this.setFlag('sr6', 'CombatantFlagData', data);
 	}
 
-	async _resetActions() {
+	async _resetActions(): Promise<void> {
 		const data = this.systemData;
 		data.roundActions = data.availableActions;
 		await this._setSystemData(data);
 	}
 
-	async _cycleConditions() {
+	async _cycleConditions(): Promise<void> {
 		this.actor.effects.forEach((effect) => {
-			if (effect.isTemporary && effect.duration.remaining != null && effect.duration.remaining <= 0) {
-				let conditionData = effect.getFlag('sr6', 'ConditionActiveEffectData') as ConditionActiveEffectData;
+			if (effect.isTemporary && effect.duration.remaining !== null && effect.duration.remaining <= 0) {
+				const conditionData = effect.getFlag('sr6', 'ConditionActiveEffectData') as ConditionActiveEffectData;
 				if (conditionData) {
 					// it came from a condition, so delete the source condition too
 					if (conditionData.sourceConditionId) {
@@ -75,23 +75,17 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		});
 	}
 
-	nextRound() {
-		
+	async nextRound(): Promise<void> {}
+
+	async beginTurn(): Promise<void> {
+		await this._resetActions();
+		await this._cycleConditions();
 	}
 
-	beginTurn() {
-		
-		this._resetActions();
-		this._cycleConditions();
-	}
-
-	endTurn() {
-		
-	}
+	async endTurn(): Promise<void> {}
 
 	override _getInitiativeFormula(): string {
-		
-		let formula = this.actorSystemData.getInitiativeFormula(this.systemData.initiativeType);
+		const formula = this.actorSystemData.getInitiativeFormula(this.systemData.initiativeType);
 		if (formula) {
 			return formula!;
 		} else {

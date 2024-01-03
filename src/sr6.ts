@@ -45,7 +45,7 @@ async function doAlphaNotice() {
 	}
 
 	const enrichedMessage = await TextEditor.enrichHTML(
-		/*html*/ `
+		/* html*/ `
 	<h3 style="font-family: 'Bebas Neue', sans-serif">SR6 Alpha ${game.system.version}</h3>
 	<p>
 		Hello! Thank you for giving the SR6 system a try! Please note that this system is currently in an alpha state; it is ready for some early playtesting and experimentation, but there are many features that are yet unimplemented and may be bugs!
@@ -80,7 +80,8 @@ async function doAlphaNotice() {
 }
 
 Hooks.once('init', async () => {
-	globalThis.log = new Logger({
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(globalThis as any).log = new Logger({
 		overwrite: {
 			transportFormatted: (logMetaMarkup: string, logArgs: unknown[], logErrors: string[]): void => {
 				console.log(...logArgs);
@@ -107,9 +108,6 @@ Hooks.once('init', async () => {
 	await preloadHandlebarsTemplates();
 
 	log.info('SR6 | Initialization Complete.');
-
-	// fix for rollers not getting caught by vue?
-	(window as any).BUGFIX = BUGFIX;
 });
 
 Hooks.once('ready', async () => {
@@ -118,11 +116,11 @@ Hooks.once('ready', async () => {
 	readyConfigs();
 });
 
-Hooks.on('createActor', async (actor: Actor, controlled: boolean) => {
+Hooks.on('createActor', async (actor: Actor, controlled: boolean): Promise<void> => {
 	return onCreateActor(actor, controlled);
 });
 
-Hooks.on('renderDialog', (_dialog: Dialog, html: JQuery<HTMLElement>, _data: object) => {
+Hooks.on('renderDialog', (_dialog: Dialog, html: JQuery<HTMLElement>, _data: object): void => {
 	const container = html[0];
 
 	// Cheks if it's the item creation dialog and categorize the options from the dropdown
@@ -144,8 +142,8 @@ Hooks.on('renderDialog', (_dialog: Dialog, html: JQuery<HTMLElement>, _data: obj
 	}
 });
 
-Hooks.on('renderActorDirectory', function (_app: ActorDirectory<Actor>, html: JQuery, _data: any) {
-	let button = $("<button class='open-import-dialog'><i class='fas fa-edit'></i></i>Import</button>");
+Hooks.on('renderActorDirectory', async (_app: ActorDirectory<Actor>, html: JQuery): Promise<void> => {
+	const button = $("<button class='open-import-dialog'><i class='fas fa-edit'></i></i>Import</button>");
 
 	button.click(async () => {
 		new ImportPrompt().render(true);

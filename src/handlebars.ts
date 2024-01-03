@@ -6,14 +6,13 @@
 import { getActor } from '@/util';
 import * as handlebars from 'handlebars';
 
-export async function preload() {
+export async function preload(): Promise<void> {
 	const templatePaths = ['systems/sr6/templates/chat/rolls/shared/header.hbs', 'systems/sr6/templates/chat/rolls/shared/footer.hbs'];
 
-	
 	return loadTemplates(templatePaths);
 }
 
-export function register() {
+export function register(): void {
 	// Bullshit
 
 	/** String Utilities */
@@ -40,7 +39,7 @@ export function register() {
 	Handlebars.registerHelper('or', (lhs, rhs) => lhs || rhs);
 	Handlebars.registerHelper('not', (val) => !val);
 
-	Handlebars.registerHelper('var', function (this: any, varName, varValue, options) {
+	Handlebars.registerHelper('var', function (this: Record<string, unknown>, varName, varValue, options) {
 		this[varName] = varValue;
 	});
 

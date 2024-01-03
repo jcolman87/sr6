@@ -14,7 +14,7 @@ const system = computed(() => context.data.actor.systemData);
 const skills = computed(
 	() =>
 		toRaw(context.data.actor)
-			.items.filter((i) => i.type == 'spell')
+			.items.filter((i) => i.type === 'spell')
 			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SpellDataModel>[],
 );
 
@@ -29,7 +29,7 @@ async function rollSpell(action: SR6Item<SpellDataModel>) {}
 					<td colspan="3">Spells</td>
 				</tr>
 			</thead>
-			<tr v-for="skill in skills">
+			<tr v-for="skill in skills" :key="skill.id">
 				<td style="width: 100%">{{ skill.name }}</td>
 				<td>
 					<a @click="rollSpell(skill)" data-die="A"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>

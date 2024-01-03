@@ -14,10 +14,12 @@ import { SR6_CONFIG } from '@/config';
 import { Logger } from 'tslog';
 
 declare global {
-	declare var log: Logger;
+	declare let log: Logger;
 
 	const ui: FoundryUI;
+
 	const canvas: Canvas;
+
 	interface SR6Config
 		extends Config<
 			AmbientLightDocument,
@@ -42,11 +44,13 @@ declare global {
 		> {
 		sr6: typeof SR6_CONFIG;
 	}
-
-	// Override the typings for various CONFIG values in order to provide strongly-typed config within the system.
 	const CONFIG: SR6Config;
 
-	const game: Game<SR6Actor, Actors, ChatMessage, SR6Combat, SR6Item, Macro, Scene, User>;
+	interface SR6Game extends Game<SR6Actor, Actors, ChatMessage, SR6Combat, SR6Item, Macro, Scene, User> {
+		dice3d: Dice3d;
+	}
+
+	const game: SR6Game;
 
 	interface LoggerParams {
 		type?: 'log' | 'trace' | 'warn' | 'info' | 'debug';

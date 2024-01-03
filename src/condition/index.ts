@@ -43,12 +43,12 @@ function registerSheets() {
 	});
 }
 
-function registerDataModels() {
+function registerDataModels(): void {
 	// Functionality
 	CONFIG.Item.dataModels.condition = ConditionDataModel;
 }
 
-export function register() {
+export function register(): void {
 	CONFIG.ActiveEffect.legacyTransferral = false;
 
 	registerStatusEffects();
@@ -61,18 +61,18 @@ export async function getCoreConditions(): Promise<SR6Item<ConditionDataModel>[]
 }
 
 export async function toggleStatusEffectCondition(statusEffectId: string, actor: SR6Actor<BaseActorDataModel>): Promise<boolean> {
-	let conditions = await getCoreConditions();
-	let condition = conditions.filter((c) => c.systemData.statusEffectId).find((condition) => condition.systemData.statusEffectId == statusEffectId);
+	const conditions = await getCoreConditions();
+	const condition = conditions.filter((c) => c.systemData.statusEffectId).find((condition) => condition.systemData.statusEffectId === statusEffectId);
 	if (condition) {
 		// Does the actor already have the condition?
-		let existing = actor.systemData.conditions.find((c) => c.statusEffectId == condition!.systemData.statusEffectId);
+		const existing = actor.systemData.conditions.find((c) => c.statusEffectId === condition!.systemData.statusEffectId);
 		if (existing) {
 			// Toggle is a remove
-			actor.deleteEmbeddedDocuments('Item', [existing.item!.id]);
+			await actor.deleteEmbeddedDocuments('Item', [existing.item!.id]);
 
 			return false;
 		} else {
-			await condition.systemData.apply(actor);
+			condition.systemData.apply(actor);
 			return true;
 		}
 	} else {

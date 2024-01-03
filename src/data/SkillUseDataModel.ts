@@ -10,7 +10,8 @@ export default abstract class SkillUseDataModel extends BaseDataModel {
 		// TODO: specialization bonus
 		return this.solveFormula(`@${EnumAttribute[this.attribute]} + @${this.skill}`);
 	}
-	static defineSchema() {
+
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

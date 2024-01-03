@@ -4,9 +4,9 @@
  * @file Vue custom directives
  */
 import SR6Actor from '@/actor/SR6Actor';
-import { toRaw } from 'vue';
+import { toRaw, DirectiveBinding } from 'vue';
 
-function doLocalize(el: HTMLInputElement, binding: any) {
+function doLocalize(el: HTMLInputElement, binding: DirectiveBinding): void {
 	if (typeof binding.arg !== 'string') {
 		console.warn(`Attempt to localize non-string attribute '${binding.arg}'`);
 		return;
@@ -29,22 +29,22 @@ export const vLocalize = {
 	updated: doLocalize,
 };
 
-export async function createNewItem(actor: SR6Actor, type: string) {
+export async function createNewItem(actor: SR6Actor, type: string): Promise<void> {
 	await toRaw(actor).createEmbeddedDocuments('Item', [{ name: `new ${type}`, type: type }]);
 }
 
-export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event) {
+export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event): Promise<void> {
 	let value = null;
 	if (event.target instanceof HTMLSelectElement) {
-		let target = event.target as HTMLSelectElement;
-		if (target.value != '') {
+		const target = event.target as HTMLSelectElement;
+		if (target.value !== '') {
 			value = target.value;
 		}
 	} else {
-		let target = event.target as HTMLInputElement;
-		if (target.type == 'text') {
+		const target = event.target as HTMLInputElement;
+		if (target.type === 'text') {
 			value = target.value;
-		} else if (target.type == 'number') {
+		} else if (target.type === 'number') {
 			value = parseInt(target.value);
 		}
 	}

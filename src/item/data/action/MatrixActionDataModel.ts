@@ -42,8 +42,7 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 		return 0;
 	}
 
-	static override defineSchema() {
-		
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),

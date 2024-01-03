@@ -6,7 +6,7 @@ export default abstract class MatrixAttributesDataModel extends BaseDataModel {
 	abstract dataProcessing: number;
 	abstract firewall: number;
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {

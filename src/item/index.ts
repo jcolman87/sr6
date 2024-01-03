@@ -24,7 +24,7 @@ import SpellDataModel from '@/item/data/SpellDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 
-export function register() {
+export function register(): void {
 	CONFIG.Item.documentClass = SR6Item;
 
 	registerDataModels();
@@ -39,7 +39,7 @@ export const MatrixItemTypes = ['matrix_action', 'matrix_persona'];
 
 export const GameplayItemTypes = ['condition'];
 
-function registerDataModels() {
+function registerDataModels(): void {
 	// Gear
 	CONFIG.Item.dataModels.weapon = WeaponDataModel;
 	CONFIG.Item.dataModels.gear = GearDataModel;
@@ -64,7 +64,7 @@ function registerDataModels() {
 	CONFIG.Item.dataModels.general_action = GeneralActionDataModel;
 }
 
-export function setOptGroups(select: HTMLSelectElement) {
+export function setOptGroups(select: HTMLSelectElement): void {
 	select.append(
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Character'), CharacterItemTypes),
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Gear'), GearItemTypes),

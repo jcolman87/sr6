@@ -39,20 +39,24 @@ export abstract class AttackRatingDataModel extends BaseDataModel {
 	get close(): number {
 		return this.solveFormula(this.closeFormula);
 	}
+
 	get near(): number {
 		return this.solveFormula(this.nearFormula);
 	}
+
 	get medium(): number {
 		return this.solveFormula(this.mediumFormula);
 	}
+
 	get far(): number {
 		return this.solveFormula(this.farFormula);
 	}
+
 	get extreme(): number {
 		return this.solveFormula(this.extremeFormula);
 	}
 
-	static defineSchema() {
+	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
@@ -92,7 +96,7 @@ export default abstract class WeaponDataModel extends GearDataModel {
 		return this.skillUse ? this.skillUse!.pool : 0;
 	}
 
-	static override defineSchema() {
+	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
