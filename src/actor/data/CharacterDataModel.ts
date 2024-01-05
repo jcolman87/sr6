@@ -44,8 +44,8 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		};
 	}
 
-	override async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean): Promise<void> {
-		return await super.onPostCreate(actor, controlled);
+	override async onPostCreate(): Promise<void> {
+		return await super.onPostCreate();
 		// Only add base skills if none were adding such as an import
 		// if (!this.actor!.items.find((i) => i.type == 'skill')) {
 		//	await this.actor!.createEmbeddedDocuments('Item', await getCoreSkills());
@@ -66,5 +66,10 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	async _addCoreMatrixActions(): Promise<void> {
 		// Only add base skills if none were adding such as an import
 		await this.actor!.createEmbeddedDocuments('Item', await getCoreMatrixActions());
+	}
+
+	async _addCoreGeneralActions(): Promise<void> {
+		// Only add base skills if none were adding such as an import
+		await this.actor!.createEmbeddedDocuments('Item', await getCoreGeneralActions());
 	}
 }

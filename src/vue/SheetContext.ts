@@ -5,6 +5,7 @@
  */
 
 import SR6Actor from '@/actor/SR6Actor';
+import SR6Combat from '@/combat/SR6Combat';
 import SR6Item from '@/item/SR6Item';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6ItemSheet from '@/item/SR6ItemSheet';
@@ -43,6 +44,7 @@ export interface SR6ActorSheetData<
 	ActorType extends SR6Actor = SR6Actor<ActorDataModel>
 > extends ActorSheetData<SR6Actor<ActorDataModel>> {
 	actor: ActorType;
+	combat: SR6Combat | null;
 }
 
 /**
@@ -64,7 +66,6 @@ export interface ActorSheetContext<
 	 */
 	data: SheetDataType;
 
-	// Active user
 	user: User;
 }
 
@@ -90,4 +91,6 @@ export interface ItemSheetContext<
 	 * Rendering context data retrieved from `getData()`.
 	 */
 	data: SheetDataType;
+
+	user: User;
 }

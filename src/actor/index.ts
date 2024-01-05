@@ -9,8 +9,8 @@ import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
 import SR6Actor from '@/actor/SR6Actor';
 
-export async function onCreate(actor: Actor, controlled: boolean): Promise<void> {
-	return (actor as unknown as SR6Actor)._onPostCreate(controlled);
+export async function onCreate(actor: Actor): Promise<void> {
+	return (actor as unknown as SR6Actor)._onPostCreate();
 }
 
 export function register(): void {

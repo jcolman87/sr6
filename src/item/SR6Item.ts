@@ -3,11 +3,13 @@
  * @author jaynus
  * @file Base SR6 Item
  */
+import IHasPostCreate from '@/data/IHasPostCreate';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import IHasPreCreate from '@/data/IHasPreCreate';
+import IHasOnDelete from '@/data/IHasOnDelete';
 
 /**
  * Item class used as a base for all SR6 items.
@@ -36,7 +38,18 @@ export default class SR6Item<
 			},
 			SR6Roll.defaultOptions()
 		);
+
 		return roll.evaluate({ async: false }).total;
+	}
+
+	override prepareEmbeddedDocuments(): void {
+		super.prepareEmbeddedDocuments();
+		this.systemData.prepareEmbeddedDocuments();
+	}
+
+	override prepareBaseData(): void {
+		super.prepareBaseData();
+		this.systemData.prepareBaseData();
 	}
 
 	override prepareData(): void {
@@ -61,6 +74,16 @@ export default class SR6Item<
 		await (<IHasPreCreate<this>>this.systemData).preCreate?.(this, data, options, user);
 
 		return super._preCreate(data, options, user);
+	}
+
+	protected override _onDelete(options: DocumentModificationContext<this>, userId: string): void {
+		(<IHasOnDelete<this>>this.systemData).onDelete?.(this, options, userId);
+
+		super._onDelete(options, userId);
+	}
+
+	async _onPostCreate(): Promise<void> {
+		(<IHasPostCreate<this>>this.systemData).onPostCreate?.();
 	}
 
 	/**

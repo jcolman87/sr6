@@ -1,7 +1,7 @@
 import { ActivationPeriod } from '@/data';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
-export default abstract class EdgeBoostDataModel extends BaseItemDataModel {
+export default abstract class EdgeActionDataModel extends BaseItemDataModel {
 	abstract edgeCostFormula: string;
 	abstract activationPeriod: ActivationPeriod;
 

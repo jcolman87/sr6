@@ -54,6 +54,9 @@ export function register(): void {
 	registerStatusEffects();
 	registerDataModels();
 	registerSheets();
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).getCoreConditions = getCoreConditions;
 }
 
 export async function getCoreConditions(): Promise<SR6Item<ConditionDataModel>[]> {
@@ -83,7 +86,7 @@ export async function toggleStatusEffectCondition(
 
 			return false;
 		} else {
-			condition.systemData.apply(actor);
+			condition.systemData.applyToActor(actor);
 			return true;
 		}
 	} else {

@@ -20,7 +20,7 @@ export enum RollType {
 	MatrixActionDefend,
 	MatrixActionSoak,
 
-	SpellAction,
+	SpellCast,
 	SpellDrain,
 	SpellDefend,
 	SpellSoak,
@@ -29,7 +29,7 @@ export enum RollType {
 }
 
 export const ROLL_CATEGORIES = new Map([
-	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellAction, RollType.SpellDefend]],
+	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],
 	[
 		'AllPoolButSoak',
 		Array.from(

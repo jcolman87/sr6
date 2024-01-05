@@ -16,6 +16,8 @@ import WeaponSoakRoll from '@/vue/apps/roll/WeaponSoakRoll.vue';
 
 import MatrixActionRoll from '@/vue/apps/roll/MatrixActionRoll.vue';
 
+import SpellCastRoll from '@/vue/apps/roll/SpellCastRoll.vue';
+
 const context = inject<RollPromptContext>(RootContext)!;
 const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
 
@@ -165,6 +167,14 @@ onMounted(() => {
 			<MatrixActionRoll
 				ref="inner_roll"
 				v-else-if="context.rollData.type == RollType.MatrixAction"
+				:roll="context.rollData"
+				:actor="context.actor as any"
+				@setText="setText"
+			/>
+
+			<SpellCastRoll
+				ref="inner_roll"
+				v-else-if="context.rollData.type == RollType.SpellCast"
 				:roll="context.rollData"
 				:actor="context.actor as any"
 				@setText="setText"

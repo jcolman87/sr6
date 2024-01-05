@@ -11,7 +11,7 @@ const props = defineProps<{
 }>();
 
 const data = props.roll as rollers.SkillRollData;
-const skill = computed(() => toRaw(props.actor).skill(data.skill_id)!);
+const skill = computed(() => toRaw(props.actor).skill(data.skillId)!);
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;

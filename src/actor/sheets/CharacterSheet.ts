@@ -4,6 +4,7 @@
  * @file Player Character Sheet
  */
 
+import SR6Combat from '@/combat/SR6Combat';
 import { Component } from 'vue';
 import VueCharacterSheet from '@/vue/sheets/actor/CharacterSheet.vue';
 
@@ -23,10 +24,15 @@ export default class CharacterSheet extends VueSheet(SR6ActorSheet<CharacterData
 		return VueCharacterSheet;
 	}
 
-	async getVueContext(): Promise<ActorSheetContext<CharacterDataModel>> {
+	async getVueContext(): Promise<ActorSheetContext<CharacterDataModel> | undefined> {
+		console.log('getVueContext', this, game.combat);
 		return {
 			sheet: this,
-			data: await this.getData(),
+			data: {
+				...(await this.getData()),
+				combat: game.combat,
+			},
+			user: game.user!,
 		};
 	}
 

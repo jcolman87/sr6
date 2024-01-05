@@ -8,6 +8,7 @@ import MonitorDataModel from '@/actor/data/MonitorsDataModel';
 import IHasInitiative, { AvailableActions } from '@/data/IHasInitiative';
 import IHasPostCreate from '@/data/IHasPostCreate';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
+import { MagicAwakenedType, MagicTradition } from '@/data/magic';
 import { RollType } from '@/roll';
 
 /** s
@@ -49,6 +50,9 @@ export default abstract class LifeformDataModel
 	abstract attributes: Attributes;
 
 	abstract initiatives: Initiatives;
+
+	abstract magicAwakened: MagicAwakenedType;
+	abstract magicTradition: MagicTradition;
 
 	getInitiativeFormula(type: InitiativeType): null | string {
 		const modifier = super.getPool(RollType.Initiative);
@@ -158,17 +162,31 @@ export default abstract class LifeformDataModel
 					nullable: false,
 				}),
 				magic: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 0, value: 0, mod: 0 },
 					required: true,
 					nullable: false,
 				}),
 				resonance: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 0, value: 0, mod: 0 },
 					required: true,
 					nullable: false,
 				}),
 			}),
-			modifiers: new fields.EmbeddedDataField(ConditionDataModel, { required: true, nullable: false }),
+			//modifiers: new fields.EmbeddedDataField(ConditionDataModel, { required: true, nullable: false }),
+			magicTradition: new fields.StringField({
+				initial: null,
+				nullable: true,
+				required: true,
+				blank: false,
+				choices: Object.values(MagicTradition),
+			}),
+			magicAwakened: new fields.StringField({
+				initial: MagicAwakenedType.Mundane,
+				nullable: false,
+				required: true,
+				blank: false,
+				choices: Object.values(MagicAwakenedType),
+			}),
 		};
 	}
 
@@ -197,25 +215,25 @@ export default abstract class LifeformDataModel
 		}
 	}
 
-	override prepareData(): void {
-		super.prepareData();
+	override prepareBaseData(): void {
+		super.prepareBaseData();
+
+		// if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
+		// if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
+
+		this._prepareAttributes();
 
 		this.monitors.physical.prepareData();
 		this.monitors.stun.prepareData();
 		this.monitors.overflow.prepareData();
 		this.monitors.edge.prepareData();
+	}
 
-		this._prepareAttributes();
-		if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
-		if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
+	override prepareData(): void {
+		super.prepareData();
 	}
 
 	override prepareDerivedData(): void {
-		this.monitors.physical.prepareDerivedData();
-		this.monitors.stun.prepareDerivedData();
-		this.monitors.overflow.prepareDerivedData();
-		this.monitors.edge.prepareDerivedData();
-
 		super.prepareDerivedData();
 	}
 
@@ -249,5 +267,5 @@ export default abstract class LifeformDataModel
 		this.attributes.resonance.prepareData();
 	}
 
-	async onPostCreate(actor: SR6Actor<LifeformDataModel>, controlled: boolean): Promise<void> {}
+	async onPostCreate(): Promise<void> {}
 }

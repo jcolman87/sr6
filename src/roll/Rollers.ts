@@ -1,6 +1,7 @@
 import { EnumAttribute } from '@/actor/data';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import SpellDataModel from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 import SR6Actor from '@/actor/SR6Actor';
 import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
@@ -32,7 +33,7 @@ export interface AttributeRollData extends SR6RollData {
 }
 
 export interface SkillRollData extends SR6RollData {
-	skill_id: string;
+	skillId: string;
 }
 
 export interface WeaponAttackRollData extends SR6RollData {
@@ -51,6 +52,10 @@ export interface WeaponSoakRollData extends SR6RollData {
 
 export interface MatrixActionRollData extends SR6RollData {
 	matrixActionId: string;
+}
+
+export interface SpellRollData extends SR6RollData {
+	spellId: string;
 }
 
 export function getInitiativeRoll(actor: SR6Actor<LifeformDataModel>, formula: string): SR6Roll {
@@ -80,16 +85,16 @@ export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribut
 	}
 }
 
-export async function rollSkill(actor: SR6Actor, skill_id: string): Promise<void> {
+export async function rollSkill(actor: SR6Actor, skillId: string): Promise<void> {
 	const rollType = RollType.Skill;
-	const pool = actor.skill(skill_id)!.systemData.pool + actor.systemData.getPool(rollType);
+	const pool = actor.skill(skillId)!.systemData.pool + actor.systemData.getPool(rollType);
 
 	const rollData = await RollPrompt.promptForRoll<SkillRollData>(actor, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
-		skill_id: skill_id,
+		skillId: skillId,
 	});
 	if (rollData) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -203,6 +208,31 @@ export async function rollMatrixAction(
 		template: ROLL_TEMPLATES.get(RollType.MatrixAction)!,
 		type: RollType.MatrixAction,
 		matrixActionId: action.id,
+	});
+
+	if (rollData) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
+		await (await roll.evaluate({ async: true })).toMessage();
+	}
+}
+
+//
+// Magic
+//
+export async function rollSpellCast<TDataModel extends LifeformDataModel = LifeformDataModel>(
+	actor: SR6Actor<TDataModel>,
+	spell: SR6Item<SpellDataModel>
+): Promise<void> {
+	let rollType = RollType.SpellCast;
+	const pool = spell.systemData.pool;
+
+	const rollData = await RollPrompt.promptForRoll<SpellRollData>(actor, {
+		...SR6Roll.defaultOptions(),
+		pool: pool,
+		template: ROLL_TEMPLATES.get(rollType)!,
+		type: rollType,
+		spellId: spell.id,
 	});
 
 	if (rollData) {

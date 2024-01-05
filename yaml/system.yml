@@ -25,6 +25,11 @@ packs:
     system: sr6
     path: ./packs/sr6-crb-conditions.db
     type: Item
+  - name: sr6-crb-qualities
+    label: Core Qualities
+    system: sr6
+    path: ./packs/sr6-crb-qualities.db
+    type: Item
   - name: sr6-crb-skills
     label: Core Skills
     system: sr6
@@ -44,6 +49,16 @@ packs:
     label: Core Weapons
     system: sr6
     path: ./packs/sr6-crb-weapons.db
+    type: Item
+  - name: sr6-crb-spells
+    label: Core Spells
+    system: sr6
+    path: ./packs/sr6-crb-spells.db
+    type: Item
+  - name: sr6-crb-adeptpowers
+    label: Core Adept Powers
+    system: sr6
+    path: ./packs/sr6-crb-adeptpowers.db
     type: Item
 socket: true
 url: https://github.com/jaynus/sr6

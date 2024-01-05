@@ -10,6 +10,7 @@ import SR6Combat from '@/combat/SR6Combat';
 import { ConditionActiveEffectData } from '@/condition/ConditionDataModel';
 import { InitiativeType } from '@/data';
 import IHasInitiative, { AvailableActions } from '@/data/IHasInitiative';
+import SR6Effect from '@/effects/SR6Effect';
 import { getInitiativeRoll } from '@/roll/Rollers';
 
 export type CombatantFlagData = {
@@ -56,23 +57,21 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 	}
 
 	async _cycleConditions(): Promise<void> {
-		this.actor.effects.forEach((effect) => {
-			if (effect.isTemporary && effect.duration.remaining !== null && effect.duration.remaining <= 0) {
-				const conditionData = effect.getFlag('sr6', 'ConditionActiveEffectData') as ConditionActiveEffectData;
-				if (conditionData) {
-					// it came from a condition, so delete the source condition too
-					if (conditionData.sourceConditionId) {
-						this.actor.items.delete(conditionData.sourceConditionId!);
+		// Cycle conditions
+		let toDelete: string[] = [];
+		this.actor.items
+			.filter((i) => i.type == 'condition')
+			.forEach((item) => {
+				item.effects.forEach((effect) => {
+					let e = effect as SR6Effect;
+					if (e.isTemporary && e.duration.remaining !== null && e.duration.remaining < 1) {
+						toDelete.push(item.id);
 					}
-				}
-				effect.delete();
-
-				// if the sheet is up force a render
-				if (this.actor.sheet.rendered) {
-					this.actor.sheet.render(true);
-				}
-			}
-		});
+				});
+			});
+		for (const itemId of toDelete) {
+			await this.actor.items.get(itemId)!.delete();
+		}
 	}
 
 	async nextRound(): Promise<void> {}

@@ -41,6 +41,14 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 						v-localize:placeholder="'SR6.Labels.CharacterName'"
 					/>
 				</div>
+				<div class="section" style="text-align: center; font-weight: bold">
+					<div class="edge-icon">&nbsp;</div>
+					<div>{{ system.monitors.edge.value }}</div>
+				</div>
+				<div class="section" style="text-align: center; font-weight: bold">
+					<div class="nuyen-icon">&nbsp;</div>
+					<div>{{ system.totalNuyen }}</div>
+				</div>
 			</div>
 			<div class="section" style="align-self: start; width: 95%">
 				<div class="physical-bar" style="width: 100%">
@@ -133,6 +141,34 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 		.damaged {
 			background: #ffcccb;
 		}
+	}
+
+	.nuyen-icon {
+		position: relative;
+		width: 32px;
+		line-height: 32px;
+		float: left;
+		margin-right: 1px;
+		background-repeat: no-repeat;
+		background-size: 32px 32px;
+		font-size: 24px;
+		color: #000;
+		font-weight: bold;
+		background-image: url(/systems/sr6/assets/yen.webp);
+	}
+
+	.edge-icon {
+		position: relative;
+		width: 32px;
+		line-height: 32px;
+		float: left;
+		margin-right: 1px;
+		background-repeat: no-repeat;
+		background-size: 32px 32px;
+		font-size: 24px;
+		color: #000;
+		font-weight: bold;
+		background-image: url(/systems/sr6/assets/edge.webp);
 	}
 }
 </style>

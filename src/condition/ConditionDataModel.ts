@@ -20,11 +20,14 @@ export enum ConditionTarget {
 export enum ConditionSituation {
 	Always = 'always',
 	Roll = 'roll',
+	Combat = 'combat',
 }
 
 export enum ConditionModifierType {
+	AddEdge = 'addEdge',
 	Pool = 'pool',
 	ActiveEffect = 'activeEffect',
+	Opposed = 'opposed',
 }
 
 export type ConditionDuration = {
@@ -55,10 +58,28 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 	abstract activation: ConditionActivation;
 	abstract activationSituation: ConditionSituation;
 	abstract duration: ConditionDuration;
+	abstract target: ConditionTarget;
 
 	abstract icon: string | undefined;
 
 	abstract modifiers: ConditionEffectChangeData[];
+
+	abstract source: string;
+
+	async getEffect(): Promise<null | SR6Effect> {
+		if (!this.item) {
+			return null;
+		}
+
+		for (const ef of this.item!.effects) {
+			const e = ef as SR6Effect;
+			let data = await e.getConditionData();
+			if (data && data.sourceConditionId == this.item!.id) {
+				return e;
+			}
+		}
+		return null;
+	}
 
 	get activeEffectModifiers(): ConditionEffectChangeData[] {
 		return this.modifiers.filter((modifier) => modifier.type === ConditionModifierType.ActiveEffect);
@@ -79,8 +100,15 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		);
 	}
 
-	getModifiersForRoll(type: RollType): ConditionEffectChangeData[] {
+	getModifiersForRoll(
+		type: RollType,
+		situation: ConditionSituation = ConditionSituation.Roll
+	): ConditionEffectChangeData[] {
 		return this.poolModifiers.filter((modifier) => {
+			if (modifier.type !== ConditionModifierType.Pool || modifier.situation !== situation) {
+				return false;
+			}
+
 			const path = modifier.key.split('.');
 			if (path.length === 1) {
 				if (modifier.key === RollType[type]) {
@@ -89,7 +117,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 			} else {
 				switch (path[0]) {
 					case 'category':
-						if (getRollCategory(path[0]).includes(type)) {
+						if (getRollCategory(path[1]).includes(type)) {
 							return true;
 						}
 						break;
@@ -102,7 +130,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 	}
 
 	getPoolModifier(type: RollType): number {
-		let pool = 0;
+		let pool: number = 0;
 
 		this.getModifiersForRoll(type).forEach((modifier) => {
 			pool += this.item!.solveFormula(modifier.value, this.actor);
@@ -111,20 +139,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		return pool;
 	}
 
-	// game.actors.getName("test1").items.getName("Take Aim").system.conditions[0].apply(game.actors.getName("test1"));
-	// game.actors.getName("test1").items.filter((i) => i.type == 'condition').forEach((i) => i.delete());
-	// game.actors.getName("test1").items.filter((i) => i.type == 'condition').forEach((i) =>
-	async apply(actor: SR6Actor): Promise<void> {
-		const item = (
-			await actor.createEmbeddedDocuments('Item', [
-				{
-					name: this.name,
-					type: 'condition',
-					system: this,
-				},
-			])
-		)[0] as SR6Item<ConditionDataModel>;
-
+	async applyActiveEffects(actor: SR6Actor, item: SR6Item<ConditionDataModel>): Promise<boolean> {
 		const changes: EffectChangeSource[] = this.activeEffectModifiers.map((effect) => {
 			return {
 				key: effect.key,
@@ -138,24 +153,47 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 			await item.createEmbeddedDocuments('ActiveEffect', [
 				{
 					name: this.name,
-					descriont: this.description,
+					description: this.description,
 					icon: this.icon,
 					transfer: true,
 					origin: item.id,
 					disabled: false,
+					changes: changes,
 					duration: {
 						turns: this.duration.turns,
 						rounds: this.duration.rounds,
+						startRound: game.combat ? game.combat!.round : 0,
 						startTurn: game.combat ? game.combat!.turn : 0,
 					},
 				},
 			])
 		)[0] as SR6Effect;
 		await effect.setFlag('sr6', 'ConditionActiveEffectData', {
-			sourceItemId: this.item! ? this.item!.id : null,
-			sourceActorId: this.actor! ? this.actor!.id : null,
+			sourceItemId: item.id,
+			sourceActorId: actor.id,
 			turnCreated: game.combat ? game.combat!.turn : null,
 		});
+
+		return true;
+	}
+
+	// game.actors.getName("test1").items.getName("Take Aim").system.conditions[0].apply(game.actors.getName("test1"));
+	// game.actors.getName("test1").items.filter((i) => i.type == 'condition').forEach((i) => i.delete());
+	// game.actors.getName("test1").items.filter((i) => i.type == 'condition').forEach((i) =>
+	async applyToActor(actor: SR6Actor): Promise<SR6Item<ConditionDataModel>> {
+		const item = (
+			await actor.createEmbeddedDocuments('Item', [
+				{
+					name: this.name,
+					type: 'condition',
+					system: { ...this, source: this.item! },
+				},
+			])
+		)[0] as SR6Item<typeof this>;
+
+		await this.applyActiveEffects(actor, item);
+
+		return item;
 	}
 
 	override prepareDerivedData(): void {
@@ -170,6 +208,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 	static defineSchema(): foundry.data.fields.DataSchema {
 		return {
 			name: new fields.StringField({ initial: 'Condition!', required: true, nullable: false, blank: false }),
+			source: new fields.DocumentIdField({ initial: null, required: true, nullable: true }),
 			statusEffectId: new fields.StringField({ required: true, nullable: true, blank: false }),
 			description: new fields.StringField({ initial: '', required: true, nullable: false, blank: true }),
 
@@ -254,10 +293,10 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 						required: true,
 						nullable: false,
 						blank: false,
-						choices: [
-							...Object.keys(RollType),
-							...Array.from(ROLL_CATEGORIES.keys()).map((k: string) => `category.${k}`),
-						],
+						// choices: [
+						//	...Object.keys(RollType),
+						//	...Array.from(ROLL_CATEGORIES.keys()).map((k: string) => `category.${k}`),
+						// ],
 					}),
 					value: new fields.StringField({ required: true, nullable: false, blank: false }),
 				}),

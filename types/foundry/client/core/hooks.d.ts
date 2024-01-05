@@ -11,6 +11,7 @@ declare global {
 	type HookParamsReady = HookParameters<'ready', never>;
 
 	type HookParamsCreateActor = HookParameters<'createActor', [Actor, boolean]>;
+	type HookparamsCreateItem = HookParameters<'createItem', [Item]>;
 
 	type HookParamsClose<T extends Application, N extends string> = HookParameters<`close${N}`, [T, JQuery]>;
 	type HookParamsDeleteCombat = HookParameters<'deleteCombat', [Combat, { [key: string]: unknown }, string]>;
@@ -19,13 +20,37 @@ declare global {
 	type HookParamsGetSceneControlButtons = HookParameters<'getSceneControlButtons', [SceneControl[]]>;
 	type HookParamsHotbarDrop = HookParameters<'hotbarDrop', [Hotbar, unknown, string]>;
 	type HookParamsLightingRefresh = HookParameters<'lightingRefresh', [LightingLayer]>;
-	type HookParamsPreCreateItem = HookParameters<'preCreateItem', [PreCreate<foundry.data.ItemSource>, DocumentModificationContext, string]>;
-	type HooksParamsPreUpdateCombat = HookParameters<'preUpdateCombat', [Combat, object, { diff: boolean; advanceTime: number; [key: string]: unknown }, string]>;
-	type HookParamsPreUpdateToken = HookParameters<'preUpdateToken', [Scene, foundry.data.TokenData, Partial<foundry.data.TokenData>, { diff: boolean; [key: string]: unknown }, string]>;
-	type HookParamsRender<T extends Application, N extends string> = HookParameters<`render${N}`, [T, JQuery, ReturnType<T['getData']>]>;
-	type HookParamsRenderChatMessage = HookParameters<'renderChatMessage', [ChatMessage, JQuery, foundry.data.ChatMessageSource]>;
+	type HookParamsPreCreateItem = HookParameters<
+		'preCreateItem',
+		[PreCreate<foundry.data.ItemSource>, DocumentModificationContext, string]
+	>;
+	type HooksParamsPreUpdateCombat = HookParameters<
+		'preUpdateCombat',
+		[Combat, object, { diff: boolean; advanceTime: number; [key: string]: unknown }, string]
+	>;
+	type HookParamsPreUpdateToken = HookParameters<
+		'preUpdateToken',
+		[
+			Scene,
+			foundry.data.TokenData,
+			Partial<foundry.data.TokenData>,
+			{ diff: boolean; [key: string]: unknown },
+			string
+		]
+	>;
+	type HookParamsRender<T extends Application, N extends string> = HookParameters<
+		`render${N}`,
+		[T, JQuery, ReturnType<T['getData']>]
+	>;
+	type HookParamsRenderChatMessage = HookParameters<
+		'renderChatMessage',
+		[ChatMessage, JQuery, foundry.data.ChatMessageSource]
+	>;
 	type HookParamsTargetToken = HookParameters<'targetToken', [User, Token, boolean]>;
-	type HookParamsUpdate<T extends ClientDocument, N extends string> = HookParameters<`update${N}`, [T, DocumentUpdateData<T>, DocumentModificationContext]>;
+	type HookParamsUpdate<T extends ClientDocument, N extends string> = HookParameters<
+		`update${N}`,
+		[T, DocumentUpdateData<T>, DocumentModificationContext]
+	>;
 	type HookParamsUpdateWorldTime = HookParameters<'updateWorldTime', [number, number]>;
 
 	class Hooks {
@@ -69,6 +94,7 @@ declare global {
 		static on(...args: HookParameters<string, unknown[]>): number;
 
 		static on(...args: HookParamsCreateActor): number;
+		static on(...args: HOokParamsCreateItem): number;
 
 		/**
 		 * Register a callback handler for an event which is only triggered once the first time the event occurs.
@@ -110,6 +136,7 @@ declare global {
 		static once(...args: HookParameters<string, unknown[]>): number;
 
 		static once(...args: HookParamsCreateActor): number;
+		static once(...args: HookParamsCreateItem): number;
 
 		static on(...args: HookParameters<'diceSoNiceReady', [Dice3d]>): number;
 		static once(...args: HookParameters<'diceSoNiceReady', [Dice3d]>): number;

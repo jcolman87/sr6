@@ -4,6 +4,8 @@
  * @file Vue custom directives
  */
 import SR6Actor from '@/actor/SR6Actor';
+import BaseDataModel from '@/data/BaseDataModel';
+import SR6Item from '@/item/SR6Item';
 import { toRaw, DirectiveBinding } from 'vue';
 
 function doLocalize(el: HTMLInputElement, binding: DirectiveBinding): void {
@@ -55,4 +57,20 @@ export async function updateItem(actor: SR6Actor, id: string, field: string, eve
 			[field]: value,
 		},
 	]);
+}
+
+export async function deleteItem<TDataModel extends BaseDataModel = BaseDataModel>(
+	item: SR6Item<TDataModel>
+): Promise<boolean> {
+	const confirmed = await Dialog.confirm({
+		title: 'Confirm delete?',
+		content: `Are you sure you want to delete ${item.name}?`,
+		yes: () => true,
+		no: () => false,
+	});
+	if (confirmed) {
+		await item.delete();
+		return true;
+	}
+	return false;
 }

@@ -57,7 +57,11 @@ function addCoreSkills() {
 				</tr>
 			</thead>
 			<tr v-for="skill in skills" :key="skill.id">
-				<td style="width: 100%">{{ skill.name }}</td>
+				<td style="width: 100%">
+					{{ skill.name }}
+					<div v-if="skill.systemData.specialization != null">- {{ skill.systemData.specialization }}</div>
+					<div v-if="skill.systemData.expertise != null">- {{ skill.systemData.expertise }}</div>
+				</td>
 				<td>
 					<input
 						class="field-number"

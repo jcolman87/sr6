@@ -1,0 +1,25 @@
+name: Danger Sense
+type: adeptpower
+img: icons/svg/item-bag.svg
+data:
+  conditions:
+    - name: Danger Sense
+      description: You have a sixth sense for danger, instinctively knowing when it’s nearby and preparing for it. Gain an Edge before making Surprise tests.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+  effects: []
+---
+name: Enhanced Accuracy
+type: adeptpower
+img: icons/svg/item-bag.svg
+data:
+  conditions:
+    - name: Enhanced Accuracy
+      description: You have a sixth sense for danger, instinctively knowing when it’s nearby and preparing for it. Gain an Edge before making Surprise tests.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+  effects: []

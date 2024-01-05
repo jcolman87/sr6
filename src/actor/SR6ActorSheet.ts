@@ -5,14 +5,24 @@
  */
 import SR6Actor from '@/actor/SR6Actor';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Item from '@/item/SR6Item';
 
 import './SR6ActorSheet.scss';
 
 export default class SR6ActorSheet<
-	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel,
-	ItemDataModel extends BaseItemDataModel = BaseItemDataModel
-> extends ActorSheet<SR6Actor<ActorDataModel>, SR6Item<ItemDataModel>> {
+	TActorDataModel extends BaseActorDataModel = BaseActorDataModel,
+	TItemDataModel extends BaseItemDataModel = BaseItemDataModel
+> extends ActorSheet<SR6Actor<TActorDataModel>, SR6Item<TItemDataModel>> {
+	constructor(object: SR6Actor<TActorDataModel>, options?: Partial<ActorSheetOptions>) {
+		super(object, options);
+
+		// Add actor sheets to teh combat apps so when combat updates, the character sheet does
+		if (game.combat) {
+			game.combat.apps[this.appId] = this;
+		}
+	}
+
 	static override get defaultOptions(): ActorSheetOptions {
 		return {
 			...super.defaultOptions,

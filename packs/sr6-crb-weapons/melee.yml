@@ -1,3 +1,35 @@
+name: Unarmed
+type: weapon
+img: systems/sr6/assets/items/fist.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_CLOSE_COMBAT
+    subtype: BLADES
+  skillUse:
+    skill: close_combat
+    specialization: unarmed
+    attribute: strength
+  costFormula: '500'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  matrix: null
+  attackRatings:
+    closeFormula: '@strength + @reaction'
+    nearFormula: '0'
+    mediumFormula: '0'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: S
+  firemodes:
+    - SS
+  description: Unarmed Attack
+---
 name: Combat Axe
 type: weapon
 img: systems/sr6/assets/items/blades.webp
@@ -25,7 +57,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "Whether you\u2019re Neal the Firefighter or Neil the Ork Barbarian,\
@@ -61,7 +93,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "A simple, elegant, efficient killing device with a chisel point to\
@@ -95,7 +127,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "Specifically designed with a cutting edge on one side and a serrated\
@@ -108,7 +140,7 @@ system:
     \ ARO of local maps and your GPS position, along with providing basic biomonitor\
     \ data when in your hand."
 ---
-name: Forearm snap blades
+name: Forearm Snap Blades
 type: weapon
 img: systems/sr6/assets/items/blades.webp
 effects: []
@@ -135,7 +167,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "Don\u2019t like getting implants but still want three razor sharp\
@@ -171,7 +203,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: Max Range 20m. A catchall term for a variety of different deadly fighting
@@ -204,7 +236,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: The iconic two-handed sword of the samurai is standard issue for trid-series
@@ -238,7 +270,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "Take a long stick, add any of a dozen varieties of blades to the head,\
@@ -274,7 +306,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "A heavy blade on a one-handed grip that comes in a variety of styles.\
@@ -308,7 +340,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: The stats listed can be used for a range of objects, including an axe
@@ -343,7 +375,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: "This telescoping club can be extended with a wrist flick or a wireless\
@@ -379,7 +411,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: "Also known as a blackjack, this is a short, flexible club or a leather-wrapped\
@@ -414,7 +446,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: Speak softly and carry a big stick. This is that big stick. Available
@@ -447,7 +479,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '5'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: 'A riot-control staple and viewed as a symbol of corporate-government
@@ -483,7 +515,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: 'A big stick that starts out as a small stick. This metal and composite
@@ -496,7 +528,7 @@ system:
 ---
 name: Bike Chain
 type: weapon
-img: systems/sr6/icons/items/pistols_light.webp
+img: systems/sr6assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -521,7 +553,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: Go-gangs love to pull the old equipment off their scrap bikes and smack
@@ -531,7 +563,7 @@ system:
 ---
 name: Bullwhip
 type: weapon
-img: systems/sr6/icons/items/pistols_light.webp
+img: systems/sr6assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -556,7 +588,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '1'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "The classic leather cord used for centuries to keep cattle, and other\
@@ -567,7 +599,7 @@ system:
 ---
 name: Knucks
 type: weapon
-img: systems/sr6/icons/items/pistols_light.webp
+img: systems/sr6assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -592,7 +624,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: Everything from a roll of quarters in the palm (though who has that
@@ -602,7 +634,7 @@ system:
 ---
 name: Shock Gloves
 type: weapon
-img: systems/sr6/icons/items/pistols_light.webp
+img: systems/sr6assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -627,7 +659,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Stun
+    damageType: S
   firemodes:
     - SS
   description: "Insulated gloves with an integrated system that discharges electric\
@@ -639,9 +671,9 @@ system:
     \ a charge. The shock gloves recharge by induction, regaining one charge per half\
     \ hour of wireless-enabled time."
 ---
-name: Monofilament whip
+name: Monofilament Whip
 type: weapon
-img: systems/sr6/icons/items/pistols_light.webp
+img: systems/sr6assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -666,7 +698,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '6'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: "Striking fear in the hearts of those who have warily watched its serpentine\

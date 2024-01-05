@@ -12,8 +12,6 @@ import * as rollers from '@/roll/Rollers';
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
 
-const isGM = game.user.isGM;
-
 const matrix_actions = computed(
 	() =>
 		toRaw(context.data.actor)
@@ -33,7 +31,7 @@ function addCoreActions() {
 </script>
 
 <template>
-	<section class="tab-skills">
+	<section class="tab-matrix">
 		<table
 			class="field-table"
 			style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 30%"
@@ -43,15 +41,15 @@ function addCoreActions() {
 					<td>Skill</td>
 					<td>Pool</td>
 					<td>
-						<a v-if="isGM" class="fas fa-plus" @click.prevent="addMatrixAction" /><a
-							v-if="isGM && matrix_actions.length == 0"
+						<a v-if="context.user.isGM" class="fas fa-plus" @click.prevent="addMatrixAction" /><a
+							v-if="context.user.isGM && matrix_actions.length == 0"
 							class="fas fa-infinity"
 							@click.prevent="addCoreActions"
 						/>
 					</td>
 				</tr>
 			</thead>
-			<tr v-for="action in matrix_actions" :key="action.id">
+			<tr v-for="action in matrix_actions" :key="action.id" :title="action.systemData.description">
 				<td style="width: 100%">{{ action.name }}</td>
 				<td>{{ action.systemData.pool }}</td>
 				<td>

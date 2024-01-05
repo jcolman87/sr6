@@ -4,7 +4,7 @@ import { computed, inject, toRaw, ref } from 'vue';
 import SR6Item from '@/item/SR6Item';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import { createNewItem, updateItem } from '@/vue/directives';
+import { createNewItem, updateItem, deleteItem } from '@/vue/directives';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
 import SINDataModel from '@/item/data/feature/SINDataModel';
@@ -65,7 +65,7 @@ const contacts = computed(() =>
 					<td class="actions">
 						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 							class="fas fa-minus"
-							@click.prevent="item.delete()"
+							@click.prevent="deleteItem(item)"
 						/>
 					</td>
 				</tr>
@@ -88,7 +88,7 @@ const contacts = computed(() =>
 					<td class="actions">
 						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 							class="fas fa-minus"
-							@click.prevent="item.delete()"
+							@click.prevent="deleteItem(item)"
 						/>
 					</td>
 				</tr>
@@ -133,7 +133,7 @@ const contacts = computed(() =>
 					<td class="actions">
 						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 							class="fas fa-minus"
-							@click.prevent="item.delete()"
+							@click.prevent="deleteItem(item)"
 						/>
 					</td>
 				</tr>

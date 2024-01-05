@@ -42,43 +42,47 @@ const dummy = ref(0);
 <template>
 	<section class="effects-view">
 		<template v-for="{ label: section, filter } in sections" :key="section">
-			<div class="effects-header">
-				<div class="name"><Localized :label="`SR6.ActiveEffects.${section}`" /></div>
-				<div class="source"><Localized label="SR6.ActiveEffects.Source" /></div>
-				<div class="duration"><Localized label="SR6.ActiveEffects.Duration" /></div>
-				<div class="buttons">
-					<a @click="emit('addEffect', section.toLowerCase())"
-						><i class="fas fa-plus"></i> <Localized label="SR6.Labels.Add"
-					/></a>
-				</div>
-				<input type="hidden" :value="dummy" />
-			</div>
-
-			<section class="effects-category">
-				<div v-for="effect in effects.filter(filter)" :key="effect.id" class="effect">
-					<img :src="effect.icon" :alt="effect.name" />
-					<div class="name">{{ effect.name }}</div>
-					<div class="source">{{ effect.sourceName }}</div>
-					<div class="duration">{{ effect.duration.label }}</div>
-					<div v-if="rootContext.data.editable" class="buttons">
-						<a @click="suppressEffect(effect)" :style="effect.isSuppressed ? 'opacity: 25%' : undefined"
-							><i class="fas fa-power-off"></i
-						></a>
-						<a @click="openEffect(effect)"><i class="fas fa-edit"></i></a>
-						<a v-if="!effect.origin" @click="emit('deleteEffect', effect)"><i class="fas fa-trash"></i></a>
+			<div class="section" style="width: 100%">
+				<div class="effects-header">
+					<div class="name"><Localized :label="`SR6.ActiveEffects.${section}`" /></div>
+					<div class="source"><Localized label="SR6.ActiveEffects.Source" /></div>
+					<div class="duration"><Localized label="SR6.ActiveEffects.Duration" /></div>
+					<div class="buttons">
+						<a @click="emit('addEffect', section.toLowerCase())"
+							><i class="fas fa-plus"></i> <Localized label="SR6.Labels.Add"
+						/></a>
 					</div>
+					<input type="hidden" :value="dummy" />
 				</div>
-			</section>
+
+				<section class="effects-category">
+					<div v-for="effect in effects.filter(filter)" :key="effect.id" class="effect">
+						<img :src="effect.icon" :alt="effect.name" />
+						<div class="name">{{ effect.name }}</div>
+						<div class="source">{{ effect.sourceName }}</div>
+						<div class="duration">{{ effect.duration.label }}</div>
+						<div v-if="rootContext.data.editable" class="buttons">
+							<a @click="suppressEffect(effect)" :style="effect.isSuppressed ? 'opacity: 25%' : undefined"
+								><i class="fas fa-power-off"></i
+							></a>
+							<a @click="openEffect(effect)"><i class="fas fa-edit"></i></a>
+							<a v-if="!effect.origin" @click="emit('deleteEffect', effect)"
+								><i class="fas fa-trash"></i
+							></a>
+						</div>
+					</div>
+				</section>
+			</div>
 		</template>
 	</section>
 </template>
 
 <style lang="scss">
+@use '@scss/sheets.scss';
 @use '@scss/vars/colors.scss';
 
 .effects-view {
 	width: 100%;
-	height: 100%;
 
 	.buttons {
 		display: flex;
@@ -88,6 +92,7 @@ const dummy = ref(0);
 
 	.effect,
 	.effects-header {
+		@extend .section-head;
 		align-items: center;
 		display: grid;
 		grid-template-columns: /* Icon */ 1.5rem /* Name */ 1fr /* Source */ 120px /* Duration */ 120px /* Actions */ 60px;
@@ -101,6 +106,8 @@ const dummy = ref(0);
 
 	.effects-category {
 		img {
+			width: 16px;
+			height: 16px;
 			background: darken(colors.$gold, 0.8);
 			border: 1px solid colors.$gold;
 			border-radius: 0.25em;

@@ -5,7 +5,7 @@
  */
 
 import { EnumNumberField } from '@/data/fields';
-import MonitorDataModel from '@/actor/data/MonitorsDataModel';
+import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import MatrixAttributesDataModel from '@/data/MatrixAttributesDataModel';

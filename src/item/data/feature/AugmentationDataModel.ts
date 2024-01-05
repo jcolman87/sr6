@@ -1,6 +1,9 @@
+import ConditionDataModel from '@/condition/ConditionDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 export default abstract class AugmentationDataModel extends BaseItemDataModel {
+	abstract conditions: ConditionDataModel[];
+
 	abstract rating: number;
 	abstract quality: number;
 	abstract essenseCost: number;
@@ -9,6 +12,11 @@ export default abstract class AugmentationDataModel extends BaseItemDataModel {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),
+			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
 			rating: new fields.NumberField({
 				initial: 1,
 				required: true,

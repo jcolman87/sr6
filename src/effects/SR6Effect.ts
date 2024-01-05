@@ -5,7 +5,7 @@
  */
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import ConditionDataModel from '@/condition/ConditionDataModel';
+import ConditionDataModel, { ConditionActiveEffectData } from '@/condition/ConditionDataModel';
 import SR6Item from '@/item/SR6Item';
 
 export default class SR6Effect extends ActiveEffect {
@@ -21,6 +21,26 @@ export default class SR6Effect extends ActiveEffect {
 		}
 
 		return false;
+	}
+
+	get isCondition(): boolean {
+		return this.parent instanceof SR6Item<ConditionDataModel>;
+	}
+
+	get condition(): ConditionDataModel | null {
+		if (this.isCondition) {
+			return (this.parent as SR6Item<ConditionDataModel>).systemData;
+		}
+		return null;
+	}
+
+	async getConditionData(): Promise<ConditionActiveEffectData | null> {
+		const data = this.getFlag('sr6', 'ConditionActiveEffectData');
+		return data ? (data as ConditionActiveEffectData) : null;
+	}
+
+	async setConditionData(data: ConditionActiveEffectData | null): Promise<void> {
+		await this.setFlag('sr6', 'ConditionActiveEffectData', data);
 	}
 
 	override prepareDerivedData(): void {

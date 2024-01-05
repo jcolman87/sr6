@@ -5,12 +5,15 @@
  */
 import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
+
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
+import { register as registerData } from '@/item/data';
 import { constructOptGroup } from '@/util';
 
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
@@ -27,6 +30,7 @@ import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 export function register(): void {
 	CONFIG.Item.documentClass = SR6Item;
 
+	registerData();
 	registerDataModels();
 	registerSheets();
 }
@@ -52,7 +56,7 @@ function registerDataModels(): void {
 	// Gear
 	CONFIG.Item.dataModels.weapon = WeaponDataModel;
 	CONFIG.Item.dataModels.gear = GearDataModel;
-	CONFIG.Item.dataModels.credstick = GearDataModel;
+	CONFIG.Item.dataModels.credstick = CredstickDataModel;
 
 	// Character
 	CONFIG.Item.dataModels.skill = SkillDataModel;
@@ -81,4 +85,8 @@ export function setOptGroups(select: HTMLSelectElement): void {
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Matrix'), GameplayItemTypes),
 		constructOptGroup(select, game.i18n.localize('SR6.DialogGroups.Item.Other'))
 	);
+}
+
+export async function onCreate(item: Item): Promise<void> {
+	return (item as unknown as SR6Item)._onPostCreate();
 }

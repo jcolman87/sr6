@@ -6,6 +6,7 @@
 
 import { EnumAttribute } from '@/actor/data';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import * as util from '@/util';
 
 export enum SkillCategory {
 	Matrix = 'matrix',
@@ -29,7 +30,32 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 	abstract canUntrained: boolean;
 
 	get pool(): number {
-		return this.solveFormula(`@${EnumAttribute[this.attribute]} + ${this.points}`);
+		return this.getPool();
+	}
+
+	getPool(specialization: string | null = null): number {
+		const points = this.getPoints(specialization);
+
+		return this.solveFormula(`@${EnumAttribute[this.attribute]} + ${points}`);
+	}
+
+	getPoints(specialization: string | null = null): number {
+		let specializationPoints: number = 0;
+
+		if (specialization) {
+			if (specialization === this.specialization) {
+				specializationPoints += 2;
+			}
+			if (specialization === this.expertise) {
+				specializationPoints += 3;
+			}
+		}
+
+		return this.points + specializationPoints;
+	}
+
+	get safe_specializations(): string[] {
+		return this.specializations.map((special) => util.toSnakeCase(special));
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

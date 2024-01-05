@@ -32,6 +32,7 @@ export default defineConfig({
 	// Proxy w/Foundry. See https://foundryvtt.wiki/en/development/guides/vite
 	base: '/systems/sr6',
 	server: {
+		host: '0.0.0.0',
 		port: 30001,
 		open: false,
 		proxy: {
@@ -62,6 +63,11 @@ export default defineConfig({
 	},
 	plugins: [checker({ typescript: true }), tsconfigPaths(), pluginVue(), FullReload(['public/**/*'])],
 	resolve: {
-		alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }, { find: '@scss', replacement: path.resolve(__dirname, 'src/scss') }, ...devOnlyAliases, ...releaseOnlyAliases],
+		alias: [
+			{ find: '@', replacement: path.resolve(__dirname, 'src') },
+			{ find: '@scss', replacement: path.resolve(__dirname, 'src/scss') },
+			...devOnlyAliases,
+			...releaseOnlyAliases,
+		],
 	},
 });

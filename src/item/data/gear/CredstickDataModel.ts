@@ -37,7 +37,7 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 				min: CredstickRating.Standard,
 				max: CredstickRating.Ebony,
 			}),
-			nuyen: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true }),
+			nuyen: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
 		};
 	}
 }

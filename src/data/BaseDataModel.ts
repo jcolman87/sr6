@@ -49,6 +49,10 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 		throw 'err';
 	}
 
+	prepareEmbeddedDocuments(): void {}
+
+	prepareBaseData(): void {}
+
 	prepareData(): void {}
 
 	prepareDerivedData(): void {}

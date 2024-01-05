@@ -5,23 +5,46 @@
  * @author jaynus
  * @file Dice roll prompt app.
  */
+import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
-import { SpellDuration, SpellRangeType } from '@/data/magic';
-import { getCoreMatrixActions, getCoreSkills } from '@/item/data';
+import SR6Actor from '@/actor/SR6Actor';
+import { ActivationType } from '@/data';
+/* eslint: @typescript-eslint/no-explicit-any: 0 */
+import { MagicAwakenedType, MagicTradition, SpellDuration, SpellRangeType } from '@/data/magic';
+import {
+	getCoreAdeptPowers,
+	getCoreQualities,
+	getCoreMatrixActions,
+	getCoreSkills,
+	getCoreWeapons,
+	getCoreSpells,
+	getCoreGeneralActions,
+} from '@/item/data';
+import LifestyleType from '@/item/data/feature/LifestyleDataModel';
+import SINDataModel from '@/item/data/feature/SINDataModel';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import SR6Item from '@/item/SR6Item';
 import VueImportPrompt from '@/vue/apps/ImportPrompt.vue';
 import { ContextBase } from '@/vue/SheetContext';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
-import SR6Actor from '@/actor/SR6Actor';
-import SR6Item from '@/item/SR6Item';
-import SINDataModel from '@/item/data/feature/SINDataModel';
-import SkillDataModel from '@/item/data/feature/SkillDataModel';
-import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import LifestyleType from '@/item/data/feature/LifestyleDataModel';
-
 export interface ImportPromptContext extends ContextBase {
 	app: ImportPrompt;
+}
+
+function convertActivation(value: string): ActivationType {
+	switch (value) {
+		case 'PASSIVE':
+			return ActivationType.Passive;
+		case 'MAJOR_ACTION':
+			return ActivationType.Major;
+		case 'MINOR_ACTION':
+			return ActivationType.Minor;
+		default:
+			ui.notifications.error(`Invalid activation type ${value}`);
+			throw `Invalid activation type ${value}`;
+	}
 }
 
 export default class ImportPrompt extends VueSheet(Application) {
@@ -30,11 +53,9 @@ export default class ImportPrompt extends VueSheet(Application) {
 		const json = await response.json();
 
 		json.attr = (name: string): string => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			return json.attributes.find((a: any) => a.id === name.toUpperCase());
 		};
 		json.skill = (name: string): string => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			return json.skills.find((a: any) => a.id === name.toLowerCase());
 		};
 
@@ -49,13 +70,18 @@ export default class ImportPrompt extends VueSheet(Application) {
 		}
 		const data = actor.systemData;
 
+		// Add all core actions
+		await actor.createEmbeddedDocuments('Item', await getCoreGeneralActions());
+		await actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
+
 		Object.keys(data.attributes).forEach((name: string) => {
+			console.log('attribute: ', name);
 			const value = json.attr(name);
 			if (value !== undefined) {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(data.attributes as any)[name].base = value.points;
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				(data.attributes as any)[name].modifier = value.modifiedValue - value.points;
+			} else {
+				console.error(`missing attribute: ${name}`);
 			}
 		});
 
@@ -63,180 +89,268 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments('Item', coreSkills);
 		actor.items
 			.filter((i) => i.type === 'skill')
-			.forEach((s) => {
+			.forEach((s: any) => {
 				const skill = s as SR6Item<SkillDataModel>;
 				const entry = json.skill(skill.name);
 				if (entry) {
-					skill.update({ ['system.points']: parseInt(entry.rating) });
+					const specialization: string | undefined = entry.specializations
+						.filter((s: any) => !s.expertise)
+						.map((s: any) => s.name)[0];
+					const expertise: string | undefined = entry.specializations
+						.filter((s: any) => s.expertise)
+						.map((s: any) => s.name)[0];
+
+					skill.update({
+						['system']: {
+							points: parseInt(entry.rating),
+							specialization: specialization ? specialization : null,
+							expertise: expertise ? expertise : null,
+						},
+					});
 				}
 			});
 
-		await actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
+		let sins: any = [];
+		if (json.hasOwnProperty('sins') && json.sins.length > 0) {
+			sins = (await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.sins.map((value: any) => {
+						return {
+							name: value.name,
+							type: 'sin',
+							img: 'icons/svg/item-bag.svg',
+							system: {
+								description: value.description !== undefined ? value.description : 'No description!',
+								rating: value.quality,
+							},
+						};
+					})
+				)
+			)) as SR6Item<SINDataModel>[];
+		}
 
-		await actor.createEmbeddedDocuments(
-			'Item',
-			Array.from(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json.adeptPowers.map((value: any) => {
-					return {
-						name: value.name,
-						type: 'adeptpower',
-						img: 'icons/svg/item-bag.svg',
-						system: {
-							source: value.page,
-							rating: value.level,
-						},
-					};
-				})
-			)
-		);
-
-		const sins = (await actor.createEmbeddedDocuments(
-			'Item',
-			Array.from(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json.sins.map((value: any) => {
-					return {
-						name: value.name,
-						type: 'sin',
-						img: 'icons/svg/item-bag.svg',
-						system: {
-							description: value.description !== undefined ? value.description : 'No description!',
-							rating: value.quality,
-						},
-					};
-				})
-			)
-		)) as SR6Item<SINDataModel>[];
-
-		await actor.createEmbeddedDocuments(
-			'Item',
-			Array.from(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json.lifestyles.map((value: any) => {
-					let sin_id = null;
-					if (value.sin && value.sin !== '') {
-						const sin = sins.find((sin) => sin.name === value.sin);
-						if (sin) {
-							sin_id = sin.id;
+		if (json.hasOwnProperty('lifestyles') && json.lifestyles.length > 0) {
+			await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.lifestyles.map((value: any) => {
+						let sin_id = null;
+						if (value.sin && value.sin !== '') {
+							const sin = sins.find((sin: any) => sin.name === value.sin);
+							if (sin) {
+								sin_id = sin.id;
+							}
 						}
-					}
 
-					return {
-						name: value.customName,
-						type: 'lifestyle',
-						img: 'icons/svg/item-bag.svg',
-						system: {
-							description: value.description,
-							rating: LifestyleType[value.name as keyof typeof LifestyleType],
-							monthsPaid: value.paidMonths,
-							costFormula: value.cost,
-							sin: sin_id,
-						},
-					};
-				})
-			)
-		);
-
-		await actor.createEmbeddedDocuments(
-			'Item',
-			Array.from(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json.contacts.map((value: any) => {
-					return {
-						name: value.name !== undefined ? value.name : 'No Name!',
-						type: 'contact',
-						img: 'icons/svg/item-bag.svg',
-						system: {
-							description: value.description !== undefined ? value.description : 'No description!',
-							rating: value.influence,
-							loyalty: value.level,
-							type: value.type,
-						},
-					};
-				})
-			)
-		);
-
-		await actor.createEmbeddedDocuments(
-			'Item',
-			Array.from(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json.augmentations.map((value: any) => {
-					let quality: number = 1;
-					let rating: number = 1;
-
-					if (value.level === '-') {
-						rating = 1;
-					} else {
-						rating = parseInt(value.level);
-					}
-					if (value.quality === 'ALPHA') {
-						quality = 3;
-					}
-
-					return {
-						name: value.name,
-						type: 'augmentation',
-						img: 'icons/svg/item-bag.svg',
-						system: {
-							source: value.page,
-							rating: rating,
-							quality: quality,
-							essenseCost: value.essence,
-						},
-					};
-				})
-			)
-		);
-
-		await actor.createEmbeddedDocuments(
-			'Item',
-			Array.from(
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json.spells.map((value: any) => {
-					let range_type = SpellRangeType.Touch;
-					if (value.range.indexOf('Line of sight') !== -1) {
-						range_type = SpellRangeType.LineOfSight;
-					}
-					let duration = SpellDuration.Instantaneous;
-					switch (value.duration) {
-						case 'Instantaneous':
-							duration = SpellDuration.Instantaneous;
-							break;
-						case 'Permanent':
-							duration = SpellDuration.Permanent;
-							break;
-						case 'Sustained':
-							duration = SpellDuration.Sustained;
-							break;
-						case 'Limited':
-							duration = SpellDuration.Limited;
-							break;
-					}
-
-					return {
-						name: value.name,
-						type: 'spell',
-						img: 'icons/svg/item-bag.svg',
-						system: {
-							source: value.page,
-							drain: value.drain,
-							range: {
-								type: range_type,
-								value: 0,
+						return {
+							name: value.customName,
+							type: 'lifestyle',
+							img: 'icons/svg/item-bag.svg',
+							system: {
+								description: value.description,
+								rating: LifestyleType[value.name as keyof typeof LifestyleType],
+								monthsPaid: value.paidMonths,
+								costFormula: value.cost,
+								sin: sin_id,
 							},
-							duration: {
-								type: duration,
-								value: 0,
-							},
-							damage: null,
-						},
-					};
-				})
-			)
-		);
+						};
+					})
+				)
+			);
+		}
 
+		if (json.contacts.length > 0) {
+			await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.contacts.map((value: any) => {
+						return {
+							name: value.name !== null ? value.name : 'No Name!',
+							type: 'contact',
+							img: 'icons/svg/item-bag.svg',
+							system: {
+								description: value.description !== undefined ? value.description : 'No description!',
+								rating: value.influence,
+								loyalty: value.loyalty,
+								type: value.type,
+							},
+						};
+					})
+				)
+			);
+		}
+
+		if (json.augmentations.length > 0) {
+			await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.augmentations.map((value: any) => {
+						let quality: number = 1;
+						let rating: number = 1;
+
+						if (value.level === '-') {
+							rating = 1;
+						} else {
+							rating = parseInt(value.level);
+						}
+						if (value.quality === 'ALPHA') {
+							quality = 3;
+						}
+
+						return {
+							name: value.name,
+							type: 'augmentation',
+							img: 'icons/svg/item-bag.svg',
+							system: {
+								source: value.page,
+								rating: rating,
+								quality: quality,
+								essenseCost: value.essence,
+							},
+						};
+					})
+				)
+			);
+		}
+
+		if (json.adeptPowers.length > 0) {
+			const adeptPowers = await getCoreAdeptPowers();
+			await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.adeptPowers.map((value: any) => {
+						let existingPower = adeptPowers.find((i) => i.name == value.name);
+						if (existingPower) {
+							return existingPower;
+						} else {
+							console.log(`power: ${value.name}`);
+							return {
+								name: value.name,
+								type: 'adeptpower',
+								img: 'icons/svg/item-bag.svg',
+								system: {
+									source: value.page,
+									powerCost: value.cost,
+									level: value.level,
+									activation: convertActivation(value.activation),
+									description: value.description,
+								},
+							};
+						}
+					})
+				)
+			);
+		}
+
+		if (json.qualities.length > 0) {
+			const qualities = await getCoreQualities();
+			await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.qualities
+						.map((value: any) => {
+							let existingQuality = qualities.find((i) => i.name == value.name);
+							if (existingQuality) {
+								return existingQuality;
+							} else {
+								console.log(`quality:`, value);
+								switch (value.name) {
+									case 'Adept': {
+										data.magicAwakened = MagicAwakenedType.Adept;
+										return null;
+									}
+									case 'Magician': {
+										data.magicAwakened = MagicAwakenedType.Full;
+										data.magicTradition = MagicTradition.Hermeticism;
+										return null;
+									}
+									case 'Technomancer': {
+										data.magicAwakened = MagicAwakenedType.Technomancer;
+										return null;
+									}
+									default: {
+										console.log('custom quality unknown', value.name);
+										return {
+											name: value.name,
+											type: 'quality',
+											img: 'icons/svg/item-bag.svg',
+											system: {
+												name: value.name,
+												description: value.choice ? value.choice : '',
+												source: value.page,
+												conditions: [],
+											},
+										};
+									}
+								}
+							}
+						})
+						.filter((p: any) => p != null)
+				)
+			);
+		}
+
+		if (json.spells.length > 0) {
+			const spells = await getCoreSpells();
+			await actor.createEmbeddedDocuments(
+				'Item',
+				Array.from(
+					json.spells.map((value: any) => {
+						let existingSpell = spells.find((i) => i.name == value.name);
+						if (existingSpell) {
+							return existingSpell;
+						} else {
+							ui.notifications.error(`Unknown spell: ${value.name}`);
+						}
+					})
+				)
+			);
+		}
+
+		const weapons = await getCoreWeapons();
+
+		const rangedWeapons = json.longRangeWeapons
+			.filter((value: any) => {
+				let weapon = weapons.find((w) => w.name == value.name);
+				if (!weapon) {
+					ui.notifications.error!(`invalid weapon: ${value.name}`);
+					return false;
+				}
+				return true;
+			})
+			.map((value: any) => {
+				let weapon = weapons.find((w) => w.name == value.name);
+				if (!weapon) {
+					ui.notifications.error!(`invalid weapon: ${value.name}`);
+					return;
+				}
+				//let weapon = await actor.items.createEmb
+				console.log('Adding weapon: ', value.name);
+				return weapon;
+			});
+
+		const meleeWeapons = json.closeCombatWeapons
+			.filter((value: any) => {
+				let weapon = weapons.find((w) => w.name == value.name);
+				if (!weapon) {
+					ui.notifications.error!(`invalid weapon: ${value.name}`);
+					return false;
+				}
+				return true;
+			})
+			.map((value: any) => {
+				let weapon = weapons.find((w) => w.name == value.name);
+				//let weapon = await actor.items.createEmb
+				console.log('Adding weapon: ', value.name);
+				return weapon;
+			});
+
+		let allWeapons = rangedWeapons.concat(meleeWeapons);
+		console.log('Adding', allWeapons);
+		await actor.createEmbeddedDocuments('Item', allWeapons);
+
+		console.log('writing', data);
 		await actor.update({ ['system']: data });
 		// await actor.delete();
 	}

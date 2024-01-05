@@ -38,6 +38,7 @@ export function basicSheet(vueComponent: Component, sheetType: any = VueSheet(SR
 			return {
 				sheet: thisAsSheet,
 				data: (await thisAsSheet.getData()) as SR6ItemSheetData,
+				user: game.user!,
 			};
 		}
 	};

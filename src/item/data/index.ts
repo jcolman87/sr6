@@ -1,6 +1,10 @@
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
+import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
+import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import SpellDataModel from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 
 export async function getCoreSkills(): Promise<SR6Item<SkillDataModel>[]> {
@@ -16,7 +20,48 @@ export async function getCoreMatrixActions(): Promise<SR6Item<MatrixActionDataMo
 }
 
 export async function getCoreGeneralActions(): Promise<SR6Item<GeneralActionDataModel>[]> {
-	const pack = game.packs.get('sr6.sr6-crb-combat-actions')!;
+	const pack = game.packs.get('sr6.sr6-crb-general-actions')!;
 
 	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<GeneralActionDataModel>));
+}
+
+export async function getCoreQualities(): Promise<SR6Item<QualityDataModel>[]> {
+	const pack = game.packs.get('sr6.sr6-crb-qualities')!;
+
+	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<QualityDataModel>));
+}
+
+export async function getCoreAdeptPowers(): Promise<SR6Item<AdeptPowerDataModel>[]> {
+	const pack = game.packs.get('sr6.sr6-crb-adeptpowers')!;
+
+	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<AdeptPowerDataModel>));
+}
+
+export async function getCoreWeapons(): Promise<SR6Item<WeaponDataModel>[]> {
+	const pack = game.packs.get('sr6.sr6-crb-weapons')!;
+
+	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<WeaponDataModel>));
+}
+
+export async function getCoreSpells(): Promise<SR6Item<SpellDataModel>[]> {
+	const pack = game.packs.get('sr6.sr6-crb-spells')!;
+
+	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<SpellDataModel>));
+}
+
+// export async function getCoreAugmentations(): Promise<SR6Item<GeneralActionDataModel>[]> {
+//	const pack = game.packs.get('sr6.sr6-crb-augmentations')!;
+
+//	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<GeneralActionDataModel>));
+// }
+
+export function register(): void {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).getCoreSkills = getCoreSkills;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).getCoreMatrixActions = getCoreMatrixActions;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).getCoreGeneralActions = getCoreGeneralActions;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).getCoreQualities = getCoreQualities;
 }

@@ -1,17 +1,17 @@
+import ConditionDataModel, { ConditionActivation, ConditionTarget } from '@/condition/ConditionDataModel';
 import { ActivationPeriod, ActivationType } from '@/data';
-import { MatrixAccessLevel } from '@/data/matrix';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import ConditionDataModel from '@/condition/ConditionDataModel';
 
 export enum GeneralActionCategory {
 	Social = 'social',
 	Combat = 'combat',
 	General = 'general',
+	Magic = 'magic',
 }
 
 export type GeneralActionLimits = {
-	activation_type: ActivationType;
-	activation_period: ActivationPeriod;
+	activationType: ActivationType;
+	activationPeriod: ActivationPeriod;
 };
 
 export default abstract class GeneralActionDataModel extends BaseItemDataModel {
@@ -20,7 +20,20 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 
 	abstract conditions: ConditionDataModel[];
 
-	async use(): Promise<boolean> {
+	available(): boolean {
+		return false;
+	}
+
+	async use(consumeAction: boolean = true): Promise<boolean> {
+		if (!this.actor) {
+			ui.notifications.error('Applying action error!?');
+		}
+		// Apply the conditions
+		this.conditions.forEach((condition) => {
+			if (condition.activation === ConditionActivation.OnUse && condition.target === ConditionTarget.Self) {
+				condition.applyToActor(this.actor!);
+			}
+		});
 		return true;
 	}
 
@@ -28,6 +41,13 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),
+			category: new fields.StringField({
+				initial: GeneralActionCategory.General,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(GeneralActionCategory),
+			}),
 			limits: new fields.SchemaField(
 				{
 					activationType: new fields.StringField({

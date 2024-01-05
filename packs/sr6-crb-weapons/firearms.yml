@@ -25,7 +25,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: '4(c)
@@ -68,7 +68,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: '6(c)
@@ -104,7 +104,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - BF_narrow
@@ -142,7 +142,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -182,7 +182,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -222,7 +222,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -260,7 +260,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -299,7 +299,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -337,7 +337,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -375,7 +375,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -415,7 +415,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -455,7 +455,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -493,7 +493,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '2'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -530,7 +530,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -575,7 +575,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -615,7 +615,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -651,7 +651,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -690,7 +690,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -729,7 +729,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -765,7 +765,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -806,7 +806,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -847,7 +847,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -888,7 +888,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -929,7 +929,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -968,7 +968,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1007,7 +1007,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1047,7 +1047,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '3'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1087,7 +1087,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1125,7 +1125,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1164,7 +1164,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1204,7 +1204,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1253,7 +1253,7 @@ system:
     extremeFormula: '1'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1292,7 +1292,7 @@ system:
     extremeFormula: '2'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1367,7 +1367,7 @@ system:
     extremeFormula: '1'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1408,7 +1408,7 @@ system:
     extremeFormula: '1'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1448,7 +1448,7 @@ system:
     extremeFormula: '2'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1524,7 +1524,7 @@ system:
     extremeFormula: '0'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1559,7 +1559,7 @@ system:
     extremeFormula: '10'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1594,7 +1594,7 @@ system:
     extremeFormula: '8'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1632,7 +1632,7 @@ system:
     extremeFormula: '12'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1671,7 +1671,7 @@ system:
     extremeFormula: '11'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
   description: '5(m)
@@ -1707,7 +1707,7 @@ system:
     extremeFormula: '11'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1744,7 +1744,7 @@ system:
     extremeFormula: '14'
   damageData:
     damageFormula: '6'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1783,7 +1783,7 @@ system:
     extremeFormula: '3'
   damageData:
     damageFormula: '4'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1823,7 +1823,7 @@ system:
     extremeFormula: '6'
   damageData:
     damageFormula: '5'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1862,7 +1862,7 @@ system:
     extremeFormula: '7'
   damageData:
     damageFormula: '6'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA
@@ -1903,7 +1903,7 @@ system:
     extremeFormula: '6'
   damageData:
     damageFormula: '7'
-    damageType: Physical
+    damageType: P
   firemodes:
     - SS
     - SA

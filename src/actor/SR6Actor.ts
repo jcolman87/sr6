@@ -3,14 +3,18 @@
  * @author jaynus
  * @file Base SR6 Actor
  */
+import BaseDataModel from '@/data/BaseDataModel';
 import IHasPreCreate from '@/data/IHasPreCreate';
 import IHasOnDelete from '@/data/IHasOnDelete';
 import IHasPostCreate from '@/data/IHasPostCreate';
 import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
+import SpellDataModel from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 import { SR6Roll } from '@/roll/SR6Roll';
+import * as util from '@/util';
 
 export default class SR6Actor<
 	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel
@@ -33,13 +37,29 @@ export default class SR6Actor<
 		];
 	}
 
-	skill(skill_id_or_name: string): SR6Item<SkillDataModel> | null {
-		let skill = this.items.get(skill_id_or_name);
+	skill(skillId_or_name: string): SR6Item<SkillDataModel> | null {
+		let skill = this.items.get(skillId_or_name);
 		if (!skill) {
-			skill = this.items.getName(skill_id_or_name);
+			skill = this.items.getName(skillId_or_name);
 		}
 		if (skill) {
 			return skill as SR6Item<SkillDataModel>;
+		}
+
+		return null;
+	}
+
+	get credsticks(): SR6Item<CredstickDataModel>[] {
+		return this.items.filter((item) => item.type === 'credstick') as SR6Item<CredstickDataModel>[];
+	}
+
+	item<TDataModel extends BaseDataModel = BaseDataModel>(id: string): SR6Item<TDataModel> | null {
+		let item = this.items.get(id);
+		if (!item) {
+			item = this.items.getName(id);
+		}
+		if (item) {
+			return item as SR6Item<TDataModel>;
 		}
 
 		return null;
@@ -55,6 +75,11 @@ export default class SR6Actor<
 		}
 
 		return null;
+	}
+
+	override prepareEmbeddedDocuments(): void {
+		super.prepareEmbeddedDocuments();
+		this.systemData.prepareEmbeddedDocuments();
 	}
 
 	override prepareData(): void {
@@ -82,6 +107,10 @@ export default class SR6Actor<
 			.forEach((i) => {
 				const skill = i as SR6Item<SkillDataModel>;
 				skills[skill.safe_name] = skill.systemData.points;
+				skill.systemData.specializations.forEach((special) => {
+					const safe_special = util.toSnakeCase(special);
+					skills[safe_special] = skill.systemData.getPoints(special);
+				});
 			});
 		return foundry.utils.mergeObject(skills, {
 			...super.getRollData(),
@@ -114,8 +143,8 @@ export default class SR6Actor<
 		super._onDelete(options, userId);
 	}
 
-	async _onPostCreate(controlled: boolean): Promise<void> {
-		(<IHasPostCreate<this>>this.systemData).onPostCreate?.(this, controlled);
+	async _onPostCreate(): Promise<void> {
+		(<IHasPostCreate<this>>this.systemData).onPostCreate?.();
 	}
 
 	/**

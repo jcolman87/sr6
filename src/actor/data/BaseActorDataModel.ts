@@ -2,6 +2,7 @@ import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import IHasPools from '@/data/IHasPools';
+import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
 
@@ -27,20 +28,32 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 		return pool;
 	}
-
-	getRollConditions(type: RollType): ConditionDataModel[] {
-		return this.getSituationalConditions(ConditionSituation.Roll).filter(
-			(condition) => condition.getModifiersForRoll(type).length > 0
+	get totalNuyen(): number {
+		return [...this.actor!.credsticks.map((item: SR6Item<CredstickDataModel>) => item.systemData.nuyen), 0].reduce(
+			(total, nuyen) => total + nuyen
 		);
 	}
 
+	getRollConditions(type: RollType): ConditionDataModel[] {
+		return this.getSituationalConditions(ConditionSituation.Roll).filter((condition) => {
+			return condition.getModifiersForRoll(type).length > 0;
+		});
+	}
+
 	getSituationalConditions(situation: ConditionSituation): ConditionDataModel[] {
+		/*
 		return this.conditions.filter((condition) => {
 			return (
 				condition.activationSituation === ConditionSituation.Always ||
 				condition.activationSituation === situation
 			);
 		});
+		 */
+		return this.conditions;
+	}
+
+	override prepareBaseData(): void {
+		super.prepareBaseData();
 	}
 
 	override prepareData(): void {
