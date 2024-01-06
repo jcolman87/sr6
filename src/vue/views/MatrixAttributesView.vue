@@ -26,37 +26,37 @@ function drop(event: DragEvent, target: string) {
 	switch (target) {
 		case 'attack': {
 			dstValue = newAttributes.current.attack;
-			props.attributes.current.attack = dragData.value;
+			newAttributes.current.attack = dragData.value;
 			break;
 		}
 		case 'sleaze': {
 			dstValue = newAttributes.current.sleaze;
-			props.attributes.current.sleaze = dragData.value;
+			newAttributes.current.sleaze = dragData.value;
 			break;
 		}
 		case 'dataProcessing': {
 			dstValue = newAttributes.current.dataProcessing;
-			props.attributes.current.dataProcessing = dragData.value;
+			newAttributes.current.dataProcessing = dragData.value;
 			break;
 		}
 		case 'firewall': {
 			dstValue = newAttributes.current.firewall;
-			props.attributes.current.firewall = dragData.value;
+			newAttributes.current.firewall = dragData.value;
 			break;
 		}
 	}
 	let baseReplace = 'attack';
 	if (target !== 'attack' && newAttributes.current.attack === dragData.value) {
-		props.attributes.current.attack = dstValue;
+		newAttributes.current.attack = dstValue;
 	}
 	if (target !== 'sleaze' && newAttributes.current.sleaze === dragData.value) {
-		props.attributes.current.sleaze = dstValue;
+		newAttributes.current.sleaze = dstValue;
 	}
 	if (target !== 'dataProcessing' && newAttributes.current.dataProcessing === dragData.value) {
-		props.attributes.current.dataProcessing = dstValue;
+		newAttributes.current.dataProcessing = dstValue;
 	}
 	if (target !== 'firewall' && newAttributes.current.firewall === dragData.value) {
-		props.attributes.current.firewall = dstValue;
+		newAttributes.current.firewall = dstValue;
 	}
 
 	emit('change', newAttributes);

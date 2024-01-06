@@ -34,7 +34,7 @@ export default abstract class MatrixHostDataModel extends BaseActorDataModel imp
 		return [...this._personas.map((p) => p())];
 	}
 
-	override prepareDerivedData() {
+	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.attributes.prepareDerivedData();
 	}
@@ -46,6 +46,7 @@ export default abstract class MatrixHostDataModel extends BaseActorDataModel imp
 			type: PersonaType.IC,
 		};
 	}
+
 	async postCreate(): Promise<void> {}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
