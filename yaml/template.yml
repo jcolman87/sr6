@@ -1,7 +1,9 @@
 Actor:
   types:
     - character
+    - matrix_host
   character:
+  matrix_host:
 Item:
   types:
     # Items
@@ -21,6 +23,7 @@ Item:
     # Matrix Stuff
     - matrix_action
     - matrix_persona
+    - matrix_ic
     # Combat
     - general_action
     #Functionality
@@ -38,5 +41,6 @@ Item:
   complexform:
   matrix_action:
   matrix_persona:
+  matrix_ic:
   general_action:
   condition:

@@ -4,8 +4,10 @@
  * @file Basic data model
  */
 
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
+import ConditionDataModel from '@/condition/ConditionDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { ActivationType, ActivationPeriod } from '@/data';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
@@ -20,6 +22,7 @@ export type MatrixActionLimits = {
 
 export type MatrixActionFormulas = {
 	attack: null | string;
+	attackRating: null | string;
 	defend: null | string;
 	deviceDefend: null | string;
 	damage: null | string;
@@ -29,17 +32,40 @@ export type MatrixActionFormulas = {
 export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 	abstract type: MatrixActionType;
 
-	abstract skillUse: SkillUseDataModel;
+	abstract skillUse: SkillUseDataModel | null;
 	abstract linkedAttribute: string | null;
 	abstract limits: MatrixActionLimits;
 
 	abstract formulas: MatrixActionFormulas;
 
+	abstract conditions: ConditionDataModel[];
+
 	get pool(): number {
 		if (this.skillUse) {
 			return this.solveFormula(`@${this.skillUse!.attribute} + @${this.skillUse!.skill.toLowerCase()}`);
+		} else if (this.formulas.attack) {
+			return this.solveFormula(this.formulas.attack!);
 		}
+
 		return 0;
+	}
+
+	defendAgainstPool<TDataModel extends BaseActorDataModel = BaseActorDataModel>(
+		defender: SR6Actor<TDataModel>
+	): number {
+		const fuckme = defender;
+		if (defender instanceof SR6Actor<CharacterDataModel>) {
+			return this.formulas.defend ? defender.solveFormula(this.formulas.defend!) : 0;
+		}
+		return this.formulas.deviceDefend ? fuckme.solveFormula(this.formulas.deviceDefend!) : 0;
+	}
+
+	get damage(): number {
+		return this.formulas.damage ? this.solveFormula(this.formulas.damage!) : 0;
+	}
+
+	get attackRating(): number {
+		return this.formulas.attackRating ? this.solveFormula(this.formulas.attackRating!) : 0;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -98,8 +124,19 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 				},
 				{ required: true, nullable: false }
 			),
+			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
 			formulas: new fields.SchemaField(
 				{
+					attackRating: new fields.StringField({
+						initial: null,
+						required: true,
+						nullable: true,
+						blank: false,
+					}),
 					attack: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 					defend: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 					deviceDefend: new fields.StringField({

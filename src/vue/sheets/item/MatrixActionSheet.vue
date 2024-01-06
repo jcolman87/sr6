@@ -22,8 +22,8 @@ const system = computed(() => context.data.item.systemData);
 						<option value="ic"><Localized label="SR6.Matrix.IC" /></option>
 					</select>
 				</div>
-				<div class="row">
-					<SkillUse :skillUse="system.skillUse" skill_category="matrix" />
+				<div class="row" v-if="system.skillUse">
+					<SkillUse :skillUse="system.skillUse!" skill_category="matrix" />
 				</div>
 				<div class="row">
 					<h4><Localized label="SR6.Matrix.Usage" /></h4>

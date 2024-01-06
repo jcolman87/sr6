@@ -22,7 +22,7 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 	abstract nuyen: number;
 
 	get capacity(): number {
-		return Object.values(CredstickCapacity)[this.rating] as number;
+		return Object.values(CredstickCapacity).at(this.rating - 1) as number;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

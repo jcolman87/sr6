@@ -1,5 +1,6 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
+import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import * as rollers from '@/roll/Rollers';
@@ -15,8 +16,7 @@ export class SR6ChatMessage extends ChatMessage {
 		html.find('.chat-expand-dice').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 			event.preventDefault();
 
-			const roll = $(event.currentTarget.parentElement);
-			const tip = roll.find('.chat-dice-collapsible');
+			const tip = html.find('.chat-dice-collapsible');
 			if (!tip.is(':visible')) {
 				tip.slideDown(200);
 			} else {
@@ -29,8 +29,7 @@ export class SR6ChatMessage extends ChatMessage {
 			html.find(`.chat-${i}-expand`).click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 				event.preventDefault();
 
-				const roll = $(event.currentTarget.parentElement);
-				const tip = roll.find(`.chat-${i}-collapsible`);
+				const tip = html.find(`.chat-${i}-collapsible`);
 				if (!tip.is(':visible')) {
 					tip.slideDown(200);
 				} else {
@@ -45,7 +44,7 @@ export class SR6ChatMessage extends ChatMessage {
 
 			util.getSelfOrSelectedActors().forEach((actor) => {
 				rollers.rollWeaponDefend(
-					actor,
+					actor.systemData,
 					(this.rolls[0] as SR6Roll).hits,
 					this.rolls[0].options as unknown as rollers.WeaponAttackRollData
 				);
@@ -57,11 +56,27 @@ export class SR6ChatMessage extends ChatMessage {
 
 			util.getSelfOrSelectedActors().forEach((actor) => {
 				rollers.rollWeaponSoak(
-					actor as SR6Actor<LifeformDataModel>,
+					actor.systemData,
 					(this.rolls[0] as SR6Roll).hits,
 					this.rolls[0].options as unknown as rollers.WeaponSoakRollData
 				);
 			});
+		});
+
+		// Matrix
+
+		html.on('click', '#roll-matrix-defense', async (event) => {
+			event.preventDefault();
+
+			util.getSelfOrSelectedActors()
+				.filter((actor) => actor.systemData.is<IHasMatrixPersona>())
+				.forEach((actor) => {
+					rollers.rollMatrixDefense(
+						actor.systemData as unknown as IHasMatrixPersona,
+						(this.rolls[0] as SR6Roll).hits,
+						this.rolls[0].options as unknown as rollers.MatrixActionRollData
+					);
+				});
 		});
 
 		return html;

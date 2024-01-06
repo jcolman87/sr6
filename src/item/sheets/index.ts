@@ -9,6 +9,7 @@ import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 import SR6ItemSheet from '@/item/SR6ItemSheet';
 
+import MatrixICSheet from '@/vue/sheets/item/MatrixICSheet.vue';
 import MatrixActionSheet from '@/vue/sheets/item/MatrixActionSheet.vue';
 import SkillSheet from '@/vue/sheets/item/SkillSheet.vue';
 
@@ -77,6 +78,11 @@ export function register(): void {
 
 	Items.registerSheet('sr6', basicSheet(MatrixActionSheet), {
 		types: ['matrix_action'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(MatrixICSheet), {
+		types: ['matrix_ic'],
 		makeDefault: true,
 	});
 }

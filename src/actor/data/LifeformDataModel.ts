@@ -1,5 +1,6 @@
 import { EnumAttribute } from '@/actor/data';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { InitiativeType } from '@/data';
@@ -43,16 +44,17 @@ export type Initiatives = {
 	matrix: null | InitiativeDataModel;
 };
 
-export default abstract class LifeformDataModel
-	extends BaseActorDataModel
-	implements IHasPostCreate<SR6Actor<LifeformDataModel>>, IHasInitiative
-{
+export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasPostCreate, IHasInitiative {
 	abstract attributes: Attributes;
 
 	abstract initiatives: Initiatives;
 
 	abstract magicAwakened: MagicAwakenedType;
 	abstract magicTradition: MagicTradition;
+
+	override get woundModifier(): number {
+		return this.monitors.woundModifier;
+	}
 
 	getInitiativeFormula(type: InitiativeType): null | string {
 		const modifier = super.getPool(RollType.Initiative);
@@ -98,6 +100,8 @@ export default abstract class LifeformDataModel
 			case RollType.Initiative:
 			case RollType.Attribute:
 			case RollType.Skill:
+			case RollType.MatrixAction:
+			case RollType.MatrixActionDefend:
 				break;
 			default:
 				ui.notifications.error('Unimplemented pool type');
@@ -172,7 +176,7 @@ export default abstract class LifeformDataModel
 					nullable: false,
 				}),
 			}),
-			//modifiers: new fields.EmbeddedDataField(ConditionDataModel, { required: true, nullable: false }),
+			monitors: new fields.EmbeddedDataField(MonitorsDataModel, { required: true, nullable: false }),
 			magicTradition: new fields.StringField({
 				initial: null,
 				nullable: true,
@@ -222,19 +226,17 @@ export default abstract class LifeformDataModel
 		// if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
 
 		this._prepareAttributes();
-
-		this.monitors.physical.prepareData();
-		this.monitors.stun.prepareData();
-		this.monitors.overflow.prepareData();
-		this.monitors.edge.prepareData();
+		this.monitors.prepareBaseData();
 	}
 
 	override prepareData(): void {
 		super.prepareData();
+		this.monitors.prepareData();
 	}
 
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
+		this.monitors.prepareDerivedData();
 	}
 
 	override getRollData(): Record<string, unknown> {

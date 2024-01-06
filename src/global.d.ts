@@ -63,4 +63,24 @@ declare global {
 		inputs: true,
 		outputs: true,
 	};
+
+	// Fucking foundry
+	function fromUuid(uuid: CompendiumUUID, relative?: Maybe<ClientDocument>): Promise<CompendiumDocument | null>;
+	function fromUuid(
+		uuid: ActorUUID,
+		relative?: Maybe<ClientDocument>
+	): Promise<Actor<TokenDocument<Scene> | null> | null>;
+	function fromUuid(
+		uuid: ItemUUID,
+		relative?: Maybe<ClientDocument>
+	): Promise<Item<Actor<TokenDocument<Scene> | null>> | null>;
+	function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<TokenDocument<Scene> | null>;
+	function fromUuid<TDocument extends ClientDocument>(
+		uuid: string,
+		relative?: Maybe<ClientDocument>
+	): Promise<TDocument | null>;
+
+	type DeepPartial<T> = {
+		[P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+	};
 }

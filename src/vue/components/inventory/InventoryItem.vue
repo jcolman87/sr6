@@ -36,7 +36,7 @@ function openItem() {
 }
 
 function rollWeapon(item: SR6Item<WeaponDataModel>) {
-	rollWeaponAttack(toRaw(props.actor), toRaw(item));
+	rollWeaponAttack(toRaw(props.actor).systemData, toRaw(item));
 }
 </script>
 

@@ -1,5 +1,8 @@
 import SR6Actor from '@/actor/SR6Actor';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ConstructorOf<T> = new (...args: any[]) => T;
+
 export function constructOptGroup(
 	select: HTMLSelectElement,
 	groupLabel: string,
@@ -22,21 +25,22 @@ export function toSnakeCase(string: string): string {
 		.join('_');
 }
 
-export function getTokenOrActorId<TActor extends Actor>(actor: TActor): string {
-	if (actor.token) {
-		return actor.token!.id;
-	} else {
-		return actor.id;
+export function getActor<TActor extends Actor>(documentClass: ConstructorOf<TActor>, id: ActorUUID): null | TActor {
+	const actor = fromUuidSync(id);
+	if (actor instanceof documentClass) {
+		return actor as TActor;
 	}
+	return null;
 }
 
-export function getActor<TActor extends Actor>(id: string): null | TActor {
-	const token = canvas.tokens.get(id);
-	if (token) {
-		return token.actor as TActor;
-	} else {
-		return game.actors.get(id);
+export function getItem<TItem extends Item>(documentClass: ConstructorOf<TItem>, id: ItemUUID): null | TItem {
+	const item = fromUuidSync(id);
+	console.log('item', id);
+	if (item instanceof documentClass) {
+		console.log('cast success');
+		return item as TItem;
 	}
+	return null;
 }
 
 export async function waitForCanvasTokens(): Promise<void> {
@@ -86,8 +90,8 @@ export function getTargetActors(): Actor[] {
 		return token.actor!;
 	});
 }
-export function getTargetTokenIds(): string[] {
+export function getTargetActorIds(): ActorUUID[] {
 	return Array.from(game.user.targets).map((token) => {
-		return token.id;
+		return token.actor!.uuid as ActorUUID;
 	});
 }

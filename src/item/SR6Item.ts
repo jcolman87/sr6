@@ -28,16 +28,17 @@ export default class SR6Item<
 		return <ItemDataModel>this.system;
 	}
 
-	solveFormula(formula: string, actor: SR6Actor | null = null): number {
-		const roll = new SR6Roll(
-			formula,
-			{
-				...foundry.utils.mergeObject({ ...this.getRollData() }, { ...actor?.getRollData() }),
-				item: this,
-				actor: actor,
-			},
-			SR6Roll.defaultOptions()
-		);
+	solveFormula(formula: string, actor: SR6Actor | null = null, data: Record<string, unknown> = {}): number {
+		const finalData = {
+			...this.getRollData(),
+			...actor?.getRollData(),
+			...data,
+			item: this,
+			actor: actor,
+		};
+		console.log('SR6Actor::solveFormula', finalData);
+
+		const roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
 
 		return roll.evaluate({ async: false }).total;
 	}
@@ -83,7 +84,7 @@ export default class SR6Item<
 	}
 
 	async _onPostCreate(): Promise<void> {
-		(<IHasPostCreate<this>>this.systemData).onPostCreate?.();
+		(<IHasPostCreate>this.systemData).onPostCreate?.();
 	}
 
 	/**

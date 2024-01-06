@@ -12,7 +12,7 @@ type AppliedConditionEntry = {
 
 export default abstract class QualityDataModel
 	extends BaseItemDataModel
-	implements IHasOnDelete<SR6Item<QualityDataModel>>, IHasPostCreate<SR6Item<QualityDataModel>>
+	implements IHasOnDelete<SR6Item<QualityDataModel>>, IHasPostCreate
 {
 	abstract conditions: ConditionDataModel[];
 

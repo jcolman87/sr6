@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { EnumAttribute } from '@/actor/data';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import CredstickDataModel, { CredstickCapacity, CredstickRating } from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -7,7 +8,7 @@ import { computed, inject, toRaw } from 'vue';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import AttributesView from '@/vue/sheets/actor/character/AttributesView.vue';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import { createNewItem, updateItem } from '@/vue/directives';
+import { createNewItem, deleteItem, updateItem } from '@/vue/directives';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = context.data.actor.systemData;
@@ -56,13 +57,14 @@ const augmentations = computed(() =>
 								type="number"
 								:value="item.systemData.nuyen"
 								@change="(ev) => updateItem(context.data.actor, item.id, 'system.nuyen', ev)"
+								style="width: 4em"
 							/>
 							/ {{ CredstickCapacity[item.systemData.capacity] }}
 						</td>
 						<td class="actions">
 							<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 								class="fas fa-minus"
-								@click.prevent="item.delete()"
+								@click.prevent="deleteItem(item)"
 							/>
 						</td>
 					</tr>
@@ -92,7 +94,7 @@ const augmentations = computed(() =>
 						<td class="actions">
 							<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 								class="fas fa-minus"
-								@click.prevent="item.delete()"
+								@click.prevent="deleteItem(item)"
 							/>
 						</td>
 					</tr>
@@ -121,7 +123,7 @@ const augmentations = computed(() =>
 						<td class="actions">
 							<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 								class="fas fa-minus"
-								@click.prevent="item.delete()"
+								@click.prevent="deleteItem(item)"
 							/>
 						</td>
 					</tr>

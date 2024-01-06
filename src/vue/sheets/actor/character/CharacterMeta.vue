@@ -13,6 +13,12 @@ const system = computed(() => toRaw(context.data.actor).systemData);
 
 function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
 	console.log('Setting damage', monitor, field, amount);
+
+	// If we arnt maxed on physical, reset overflow
+	if (toRaw(system.value).monitors.physical.value > 0) {
+		toRaw(context.data.actor).update({ ['system.monitors.overflow.damage']: 0 });
+	}
+
 	if (monitor.damage === amount) {
 		toRaw(context.data.actor).update({ [field]: 0 });
 	} else {
@@ -34,29 +40,40 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 		<div class="section">
 			<div class="section-head">
 				<div class="title">
-					<Localized label="Character" /><input
+					<Localized label="Character" /><br /><input
 						type="text"
 						name="name"
 						:value="context.data.actor.name"
 						v-localize:placeholder="'SR6.Labels.CharacterName'"
+						style="width: 10em"
 					/>
 				</div>
-				<div class="section" style="text-align: center; font-weight: bold">
-					<div class="edge-icon">&nbsp;</div>
-					<div>{{ system.monitors.edge.value }}</div>
-				</div>
-				<div class="section" style="text-align: center; font-weight: bold">
-					<div class="nuyen-icon">&nbsp;</div>
-					<div>{{ system.totalNuyen }}</div>
+				<div class="section" style="display: flex; flex-flow: row nowrap">
+					<div class="text-atop">
+						<img src="/systems/sr6/assets/karma.webp" alt="" />
+						<label class="text-atop-value"
+							><input type="number" name="system.karma" :value="system.karma"
+						/></label>
+					</div>
+					<div class="text-atop">
+						<img src="/systems/sr6/assets/edge.webp" alt="" />
+						<label class="text-atop-value"
+							><input type="number" name="system.monitors.edge.max" :value="system.monitors.edge.max"
+						/></label>
+					</div>
+					<div class="text-atop">
+						<img src="/systems/sr6/assets/yen.webp" alt="" />
+						<label class="text-atop-value">{{ system.totalNuyen }}</label>
+					</div>
 				</div>
 			</div>
 			<div class="section" style="align-self: start; width: 95%">
-				<div class="physical-bar" style="width: 100%">
+				<div style="width: 100%">
 					<table>
 						<tr>
-							<td class="physical-bar-header"></td>
+							<td class="monitor-header physical-bar-header"></td>
 							<td
-								class="physical-bar-box"
+								class="monitor-bar-box"
 								:style="boxStyle(system.monitors.physical, idx)"
 								v-for="idx in system.monitors.physical.max"
 								:key="idx"
@@ -71,12 +88,28 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 						</tr>
 					</table>
 				</div>
-				<div class="physical-bar" style="width: 100%">
+				<div style="width: 100%">
+					<table v-if="system.monitors.physical.value <= 0">
+						<tr>
+							<td><i class="fa-solid fa-skull"></i></td>
+							<td
+								class="monitor-bar-box"
+								:style="boxStyle(system.monitors.overflow, idx)"
+								v-for="idx in system.monitors.overflow.max"
+								:key="idx"
+								@click.prevent="
+									setDamage(system.monitors.overflow, 'system.monitors.overflow.damage', idx)
+								"
+							></td>
+						</tr>
+					</table>
+				</div>
+				<div style="width: 100%">
 					<table>
 						<tr>
-							<td class="stun-bar-header"></td>
+							<td class="monitor-header stun-bar-header"></td>
 							<td
-								class="physical-bar-box"
+								class="monitor-bar-box"
 								:style="boxStyle(system.monitors.stun, idx)"
 								v-for="idx in system.monitors.stun.max"
 								:key="idx"
@@ -115,7 +148,7 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 		border-radius: 1em;
 	}
 
-	.physical-bar-header {
+	.monitor-header {
 		font-weight: bold;
 		width: 32px;
 		background-repeat: no-repeat;
@@ -124,23 +157,58 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 		text-align: center;
 		border-left: solid black 1px;
 	}
+
+	.physical-bar-header {
+		background-image: url('/systems/sr6/assets/heart.svg');
+	}
+	.overflow-bar-header {
+		background-image: url('/systems/sr6/assets/heart.svg');
+	}
 	.stun-bar-header {
-		font-weight: bold;
-		width: 32px;
-		background-repeat: no-repeat;
-		height: 24px;
 		background-image: url('/systems/sr6/assets/brain.svg');
-		text-align: center;
-		border-left: solid black 1px;
 	}
 
-	.physical-bar-box {
+	.monitor-bar-box {
 		text-align: center;
 		border-left: solid black 1px;
 
 		.damaged {
 			background: #ffcccb;
 		}
+	}
+
+	.text-atop {
+		width: 48px;
+		height: 48px;
+		display: flex;
+		flex-flow: row nowrap;
+		position: relative;
+		flex: 0.48;
+		margin-right: 10px;
+	}
+
+	.text-atop img {
+		border: 0;
+		height: auto;
+		width: 48px;
+		z-index: 0;
+		position: absolute;
+		filter: drop-shadow(0 0 4px #000000);
+	}
+	.text-atop input {
+		width: 2em;
+		color: white;
+	}
+
+	.text-atop-value {
+		z-index: 1;
+		position: relative;
+		width: 48px;
+		top: 10px;
+		text-align: center;
+		font-size: large;
+		color: white;
+		font-weight: bold;
 	}
 
 	.nuyen-icon {

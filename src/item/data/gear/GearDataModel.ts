@@ -8,7 +8,7 @@ import { EnumNumberField } from '@/data/fields';
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import MatrixAttributesDataModel from '@/data/MatrixAttributesDataModel';
+import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import { MatrixUseType } from '@/data/matrix';
 import { GearSize } from '@/data/gear';
 
@@ -91,7 +91,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 						}),
 						{ initial: [], required: true, nullable: false }
 					),
-					attributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, {
+					attributes: new fields.EmbeddedDataField(AdjustableMatrixAttributesDataModel, {
 						initial: null,
 						required: true,
 						nullable: true,

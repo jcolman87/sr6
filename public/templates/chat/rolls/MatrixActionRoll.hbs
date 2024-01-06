@@ -1,2 +1,24 @@
 {{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
+{{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
+{{ var "action" (getItemById roll.options.attack.itemId) }}
+<div class="roll">
+	<a class="chat-0-expand"><h3>{{action.name}}</h3></a>
+	<div class="formula chat-0-collapsible" style="display: none">
+		{{ action.system.description }}
+	<hr/>
+	</div>
+	<a class="chat-2-expand">
+		Damage: <i class="dv">{{ net_damage }}</i></a>
+	<br/>
+	<div class="formula chat-2-collapsible" style="display: none">
+		DV({{roll.options.attack.damage}}) + Hits({{roll.net_hits}}) = {{ net_damage }}
+	</div>
+
+	Attack Rating: <i style="font-weight: bold">{{ roll.options.attack.attackRating }}</i><br/>
+	<hr/>
+	<input id="roll-matrix-defense" type="button" value="Roll Defense"/>
+	{{!---#unless roll.isUserOwner }}
+
+	{{!---/unless ---}}
+</div>
 {{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

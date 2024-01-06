@@ -4,8 +4,7 @@ import { RollType } from '@/roll';
 
 export type SR6RollData = {
 	type: RollType;
-	tokenId: string | null;
-	targetTokenIds: string[] | null;
+	actorId: ActorUUID | null;
 	auto_hits: number;
 	explode: boolean;
 	pool: number;
@@ -19,9 +18,8 @@ export class SR6Roll extends Roll {
 
 	static defaultOptions(): SR6RollData {
 		return {
+			actorId: null,
 			type: RollType.Other,
-			tokenId: null,
-			targetTokenIds: null,
 			auto_hits: 0,
 			pool: 0,
 			explode: false,
@@ -227,7 +225,7 @@ export class SR6Roll extends Roll {
 			user: game.user!.id,
 			tooltip: options.isPrivate ? '' : await this.getTooltip(),
 			roll: this,
-			actor: this.options.tokenId ? util.getActor(this.options.tokenId!) : undefined,
+			actor: this.options.actorId ? util.getActor(SR6Actor, this.options.actorId!) : undefined,
 			config: CONFIG,
 		});
 	}
@@ -236,7 +234,7 @@ export class SR6Roll extends Roll {
 		super(formula, data, options);
 
 		if (data && Object.prototype.hasOwnProperty.call(data, 'actor') && data['actor']) {
-			this.options.tokenId = util.getTokenOrActorId(data['actor'] as SR6Actor);
+			this.options.actorId = (data['actor'] as SR6Actor).uuid;
 		}
 
 		this.options = foundry.utils.mergeObject(SR6Roll.defaultOptions(), this.options);

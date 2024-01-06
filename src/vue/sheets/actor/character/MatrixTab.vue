@@ -20,7 +20,7 @@ const matrix_actions = computed(
 );
 
 async function rollMatrixAction(action: SR6Item<MatrixActionDataModel>) {
-	await rollers.rollMatrixAction(toRaw(context.data.actor), toRaw(action));
+	await rollers.rollMatrixAction(toRaw(context.data.actor).systemData, toRaw(action));
 }
 
 function addMatrixAction() {}

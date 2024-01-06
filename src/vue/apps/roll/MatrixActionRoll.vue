@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import SR6Actor from '@/actor/SR6Actor';
+import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
+import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
 import { SR6RollData } from '@/roll/SR6Roll';
+import { getItem } from '@/util';
 
 import { toRaw, computed } from 'vue';
 
@@ -11,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const data = props.roll as rollers.MatrixActionRollData;
-const action = computed(() => toRaw(props.actor).matrixAction(data.matrixActionId)!);
+const action = computed(() => getItem(SR6Item<MatrixActionDataModel>, data.attack.itemId)!);
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;

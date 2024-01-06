@@ -21,6 +21,8 @@ declare global {
 
 		override getData(): BasePlaceableHUDData<TPlaceableObject>;
 
+		refreshStatusIcons(): void;
+
 		/**
 		 * Clear the HUD by fading out it's active HTML and recording the new display state
 		 */

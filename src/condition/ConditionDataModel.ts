@@ -73,8 +73,8 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 
 		for (const ef of this.item!.effects) {
 			const e = ef as SR6Effect;
-			let data = await e.getConditionData();
-			if (data && data.sourceConditionId == this.item!.id) {
+			const data = await e.getConditionData();
+			if (data && data.sourceConditionId === this.item!.id) {
 				return e;
 			}
 		}
@@ -159,6 +159,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 					origin: item.id,
 					disabled: false,
 					changes: changes,
+					statuses: this.statusEffectId ? [this.statusEffectId] : [],
 					duration: {
 						turns: this.duration.turns,
 						rounds: this.duration.rounds,

@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any:0 */
 /**
  * FVTT-SR6
  * Unofficial implementation of the SR6 RPG for Foundry
@@ -9,7 +10,7 @@ import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
 import SR6Actor from '@/actor/SR6Actor';
 import { ActivationType } from '@/data';
-/* eslint: @typescript-eslint/no-explicit-any: 0 */
+
 import { MagicAwakenedType, MagicTradition, SpellDuration, SpellRangeType } from '@/data/magic';
 import {
 	getCoreAdeptPowers,
@@ -85,6 +86,8 @@ export default class ImportPrompt extends VueSheet(Application) {
 			}
 		});
 
+		data.monitors.edge.max = json.attr('edge').points;
+
 		const coreSkills = await getCoreSkills();
 		await actor.createEmbeddedDocuments('Item', coreSkills);
 		actor.items
@@ -111,7 +114,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 			});
 
 		let sins: any = [];
-		if (json.hasOwnProperty('sins') && json.sins.length > 0) {
+		if (Object.prototype.hasOwnProperty.call(json, 'sins') && json.sins.length > 0) {
 			sins = (await actor.createEmbeddedDocuments(
 				'Item',
 				Array.from(
@@ -130,7 +133,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 			)) as SR6Item<SINDataModel>[];
 		}
 
-		if (json.hasOwnProperty('lifestyles') && json.lifestyles.length > 0) {
+		if (Object.prototype.hasOwnProperty.call(json, 'lifestyles') && json.lifestyles.length > 0) {
 			await actor.createEmbeddedDocuments(
 				'Item',
 				Array.from(
@@ -220,7 +223,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 				'Item',
 				Array.from(
 					json.adeptPowers.map((value: any) => {
-						let existingPower = adeptPowers.find((i) => i.name == value.name);
+						const existingPower = adeptPowers.find((i) => i.name === value.name);
 						if (existingPower) {
 							return existingPower;
 						} else {
@@ -250,7 +253,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 				Array.from(
 					json.qualities
 						.map((value: any) => {
-							let existingQuality = qualities.find((i) => i.name == value.name);
+							const existingQuality = qualities.find((i) => i.name === value.name);
 							if (existingQuality) {
 								return existingQuality;
 							} else {
@@ -286,7 +289,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 								}
 							}
 						})
-						.filter((p: any) => p != null)
+						.filter((p: any) => p !== null)
 				)
 			);
 		}
@@ -297,7 +300,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 				'Item',
 				Array.from(
 					json.spells.map((value: any) => {
-						let existingSpell = spells.find((i) => i.name == value.name);
+						const existingSpell = spells.find((i) => i.name === value.name);
 						if (existingSpell) {
 							return existingSpell;
 						} else {
@@ -312,7 +315,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 
 		const rangedWeapons = json.longRangeWeapons
 			.filter((value: any) => {
-				let weapon = weapons.find((w) => w.name == value.name);
+				const weapon = weapons.find((w) => w.name === value.name);
 				if (!weapon) {
 					ui.notifications.error!(`invalid weapon: ${value.name}`);
 					return false;
@@ -320,19 +323,18 @@ export default class ImportPrompt extends VueSheet(Application) {
 				return true;
 			})
 			.map((value: any) => {
-				let weapon = weapons.find((w) => w.name == value.name);
+				const weapon = weapons.find((w) => w.name === value.name);
 				if (!weapon) {
 					ui.notifications.error!(`invalid weapon: ${value.name}`);
 					return;
 				}
-				//let weapon = await actor.items.createEmb
 				console.log('Adding weapon: ', value.name);
 				return weapon;
 			});
 
 		const meleeWeapons = json.closeCombatWeapons
 			.filter((value: any) => {
-				let weapon = weapons.find((w) => w.name == value.name);
+				const weapon = weapons.find((w) => w.name === value.name);
 				if (!weapon) {
 					ui.notifications.error!(`invalid weapon: ${value.name}`);
 					return false;
@@ -340,13 +342,12 @@ export default class ImportPrompt extends VueSheet(Application) {
 				return true;
 			})
 			.map((value: any) => {
-				let weapon = weapons.find((w) => w.name == value.name);
-				//let weapon = await actor.items.createEmb
+				const weapon = weapons.find((w) => w.name === value.name);
 				console.log('Adding weapon: ', value.name);
 				return weapon;
 			});
 
-		let allWeapons = rangedWeapons.concat(meleeWeapons);
+		const allWeapons = rangedWeapons.concat(meleeWeapons);
 		console.log('Adding', allWeapons);
 		await actor.createEmbeddedDocuments('Item', allWeapons);
 

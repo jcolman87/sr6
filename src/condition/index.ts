@@ -14,6 +14,11 @@ function registerStatusEffects() {
 			icon: 'icons/svg/skull.svg',
 		},
 		{
+			id: 'unconscious',
+			label: 'EFFECT.StatusUnconscious',
+			icon: 'icons/svg/unconscious.svg',
+		},
+		{
 			id: 'sr6.condition.chilled',
 			label: 'SR6.Effect.Chilled',
 			icon: 'systems/sr6/assets/status/chilled.svg',
@@ -86,7 +91,7 @@ export async function toggleStatusEffectCondition(
 
 			return false;
 		} else {
-			condition.systemData.applyToActor(actor);
+			await condition.systemData.applyToActor(actor);
 			return true;
 		}
 	} else {

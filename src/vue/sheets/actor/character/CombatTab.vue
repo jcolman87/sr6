@@ -24,7 +24,7 @@ const generalActions = computed(
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>)
-			.filter((i) => i.systemData.category == GeneralActionCategory.General)
+			.filter((i) => i.systemData.category === GeneralActionCategory.General)
 			.sort(sortActions) as SR6Item<GeneralActionDataModel>[]
 );
 const combatActions = computed(
@@ -32,7 +32,7 @@ const combatActions = computed(
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>)
-			.filter((i) => i.systemData.category == GeneralActionCategory.Combat)
+			.filter((i) => i.systemData.category === GeneralActionCategory.Combat)
 			.sort(sortActions) as SR6Item<GeneralActionDataModel>[]
 );
 const magicActions = computed(
@@ -40,13 +40,10 @@ const magicActions = computed(
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>)
-			.filter((i) => i.systemData.category == GeneralActionCategory.Magic)
+			.filter((i) => i.systemData.category === GeneralActionCategory.Magic)
 			.sort(sortActions) as SR6Item<GeneralActionDataModel>[]
 );
 
-//const generalActions = computed(() =>
-//	allActions.data.filter((i) => i.systemData.category == GeneralActionCategory.General)
-//);
 function addGeneralAction() {}
 
 function addCoreActions() {
@@ -82,6 +79,11 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 						<td>When</td>
 						<td>
 							<a v-if="context.user.isGM" class="fas fa-plus" @click.prevent="addGeneralAction" />
+							<a
+								v-if="context.user.isGM && generalActions.length == 0"
+								class="fas fa-infinity"
+								@click.prevent="addCoreActions"
+							/>
 						</td>
 					</tr>
 				</thead>
@@ -123,11 +125,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 						<td>Use</td>
 						<td>When</td>
 						<td>
-							<a v-if="context.user.isGM" class="fas fa-plus" @click.prevent="addGeneralAction" /><a
-								v-if="context.user.isGM && generalActions.length == 0"
-								class="fas fa-infinity"
-								@click.prevent="addCoreActions"
-							/>
+							<a v-if="context.user.isGM" class="fas fa-plus" @click.prevent="addGeneralAction" />
 						</td>
 					</tr>
 				</thead>

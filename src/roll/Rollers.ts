@@ -10,23 +10,28 @@ import { Distance, FireMode, InitiativeType } from '@/data';
 import RollPrompt from '@/app/RollPrompt';
 
 import IHasPools from '@/data/IHasPools';
-import IHasMatrix from '@/data/IHasMatrix';
+import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import IHasInitiative from '@/data/IHasInitiative';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import { getItem } from '@/util';
 import * as util from '@/util';
 
 export const BUGFIX = '';
 
-export type attackData = {
-	attackerId: string;
-	itemId: string;
+export type BaseAttackData = {
+	attackerId: ActorUUID;
+	itemId: ItemUUID;
 	damage: number;
 	attackRating: number;
+};
 
+export type WeaponAttackData = {
 	distance: Distance;
 	firemode: null | FireMode;
-};
+} & BaseAttackData;
+
+export type MatrixAttackData = {} & BaseAttackData;
 
 export interface AttributeRollData extends SR6RollData {
 	attribute: EnumAttribute;
@@ -37,32 +42,37 @@ export interface SkillRollData extends SR6RollData {
 }
 
 export interface WeaponAttackRollData extends SR6RollData {
-	attack: attackData;
+	attack: WeaponAttackData;
 }
 
 export interface WeaponDefendRollData extends SR6RollData {
 	previous: WeaponAttackRollData;
-	attack: attackData;
+	attack: WeaponAttackData;
 }
 
 export interface WeaponSoakRollData extends SR6RollData {
 	previous: WeaponDefendRollData;
-	attack: attackData;
+	attack: WeaponAttackData;
 }
 
 export interface MatrixActionRollData extends SR6RollData {
-	matrixActionId: string;
+	attack: MatrixAttackData;
+}
+
+export interface MatrixDefenseRollData extends SR6RollData {
+	previous: MatrixActionRollData;
+	attack: MatrixAttackData;
 }
 
 export interface SpellRollData extends SR6RollData {
 	spellId: string;
 }
 
-export function getInitiativeRoll(actor: SR6Actor<LifeformDataModel>, formula: string): SR6Roll {
-	const poolModifier = actor.systemData.getPool(RollType.Initiative);
+export function getInitiativeRoll(systemData: IHasInitiative, formula: string): SR6Roll {
+	const poolModifier = systemData.getPool(RollType.Initiative);
 	return new SR6Roll(
 		`(${formula}) + ${poolModifier}`,
-		{ ...actor.getRollData(), actor: actor },
+		{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
 		{ ...SR6Roll.defaultOptions(), template: ROLL_TEMPLATES.get(RollType.Initiative)! }
 	);
 }
@@ -108,22 +118,21 @@ export async function rollSkill(actor: SR6Actor, skillId: string): Promise<void>
 
 
  */
-export async function rollWeaponAttack(actor: SR6Actor, weapon: SR6Item<WeaponDataModel>): Promise<void> {
+export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<WeaponDataModel>): Promise<void> {
 	const rollType = RollType.WeaponAttack;
 
-	const pool = weapon.systemData.pool + actor.systemData.getPool(rollType);
+	const pool = weapon.systemData.pool + systemData.actor!.systemData.getPool(rollType);
 
 	const attackData = {
-		targetTokenIds: util.getTargetTokenIds(),
-		attackerId: util.getTokenOrActorId(actor),
-		itemId: weapon.id,
+		attackerId: systemData.actor!.uuid,
+		itemId: weapon.uuid,
 		damage: weapon.systemData.damage,
 		attackRating: weapon.systemData.attackRatings.near,
 		firemode: weapon.systemData.firemodes ? FireMode.SS : null,
 		distance: weapon.systemData.firemodes ? Distance.Close : Distance.Near,
 	};
 
-	const rollData = await RollPrompt.promptForRoll<WeaponAttackRollData>(actor, {
+	const rollData = await RollPrompt.promptForRoll<WeaponAttackRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
@@ -133,7 +142,7 @@ export async function rollWeaponAttack(actor: SR6Actor, weapon: SR6Item<WeaponDa
 	if (rollData) {
 		const roll = new SR6Roll(
 			`${rollData.pool}d6`,
-			{ ...actor.getRollData(), item: weapon, actor: actor },
+			{ ...systemData.actor!.getRollData(), item: weapon, actor: systemData.actor! },
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			rollData as any
 		);
@@ -142,16 +151,16 @@ export async function rollWeaponAttack(actor: SR6Actor, weapon: SR6Item<WeaponDa
 }
 
 export async function rollWeaponDefend(
-	actor: SR6Actor<IHasPools>,
+	systemData: IHasPools,
 	hits: number,
 	previous: WeaponAttackRollData
 ): Promise<void> {
 	const rollType = RollType.WeaponDefend;
 
-	const pool = actor.systemData.getPool(rollType);
+	const pool = systemData.actor!.systemData.getPool(rollType);
 	const attack = { ...previous.attack, damage: (previous.attack.damage += hits) };
 
-	const rollData = await RollPrompt.promptForRoll<WeaponDefendRollData>(actor, {
+	const rollData = await RollPrompt.promptForRoll<WeaponDefendRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
 		threshold: hits,
@@ -161,23 +170,27 @@ export async function rollWeaponDefend(
 		previous: previous,
 	});
 	if (rollData) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
+		const roll = new SR6Roll(
+			`${rollData.pool}d6`,
+			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			rollData as any
+		);
 		await (await roll.evaluate({ async: true })).toMessage();
 	}
 }
 
 export async function rollWeaponSoak(
-	actor: SR6Actor<LifeformDataModel>,
+	systemData: IHasPools,
 	hits: number,
 	previous: WeaponDefendRollData
 ): Promise<void> {
 	const rollType = RollType.WeaponSoak;
 
-	const pool = actor.systemData.getPool(rollType);
+	const pool = systemData.actor!.systemData.getPool(rollType);
 	const attack = { ...previous.attack, damage: previous.attack.damage - hits };
 
-	const rollData = await RollPrompt.promptForRoll<WeaponSoakRollData>(actor, {
+	const rollData = await RollPrompt.promptForRoll<WeaponSoakRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
 		threshold: previous.attack.damage,
@@ -187,8 +200,12 @@ export async function rollWeaponSoak(
 		previous: previous,
 	});
 	if (rollData) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
+		const roll = new SR6Roll(
+			`${rollData.pool}d6`,
+			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			rollData as any
+		);
 		await (await roll.evaluate({ async: true })).toMessage();
 	}
 }
@@ -197,22 +214,67 @@ export async function rollWeaponSoak(
 // Matrix Actions
 //
 export async function rollMatrixAction(
-	actor: SR6Actor<IHasMatrix>,
+	systemData: IHasMatrixPersona,
 	action: SR6Item<MatrixActionDataModel>
 ): Promise<void> {
-	const pool = action.systemData.pool;
+	const rollType = RollType.MatrixAction;
+	const pool = systemData.actor!.systemData.getPool(rollType) + action.systemData.pool;
 
-	const rollData = await RollPrompt.promptForRoll<MatrixActionRollData>(actor, {
+	const attackData = {
+		attackerId: systemData.actor!.uuid,
+		itemId: action.uuid,
+		attackRating: systemData.matrixPersona!.attackRating,
+		damage: action.systemData.damage,
+	};
+
+	const rollData = await RollPrompt.promptForRoll<MatrixActionRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
-		template: ROLL_TEMPLATES.get(RollType.MatrixAction)!,
-		type: RollType.MatrixAction,
-		matrixActionId: action.id,
+		template: ROLL_TEMPLATES.get(rollType)!,
+		type: rollType,
+		attack: attackData,
 	});
 
 	if (rollData) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
+		const roll = new SR6Roll(
+			`${rollData.pool}d6`,
+			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			rollData as any
+		);
+		await (await roll.evaluate({ async: true })).toMessage();
+	}
+}
+
+export async function rollMatrixDefense(
+	systemData: IHasMatrixPersona,
+	hits: number,
+	previous: MatrixActionRollData
+): Promise<void> {
+	const rollType = RollType.MatrixActionDefend;
+
+	const action = getItem(SR6Item<MatrixActionDataModel>, previous.attack.itemId)!;
+	const defendPool = action.systemData.defendAgainstPool(systemData.actor!);
+
+	const pool = systemData.actor!.systemData.getPool(rollType) + defendPool;
+	const attack = { ...previous.attack, damage: (previous.attack.damage += hits) };
+
+	const rollData = await RollPrompt.promptForRoll<MatrixDefenseRollData>(systemData.actor!, {
+		...SR6Roll.defaultOptions(),
+		pool: pool,
+		threshold: hits,
+		template: ROLL_TEMPLATES.get(rollType)!,
+		type: rollType,
+		attack: attack,
+		previous: previous,
+	});
+	if (rollData) {
+		const roll = new SR6Roll(
+			`${rollData.pool}d6`,
+			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			rollData as any
+		);
 		await (await roll.evaluate({ async: true })).toMessage();
 	}
 }
@@ -224,7 +286,7 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	actor: SR6Actor<TDataModel>,
 	spell: SR6Item<SpellDataModel>
 ): Promise<void> {
-	let rollType = RollType.SpellCast;
+	const rollType = RollType.SpellCast;
 	const pool = spell.systemData.pool;
 
 	const rollData = await RollPrompt.promptForRoll<SpellRollData>(actor, {

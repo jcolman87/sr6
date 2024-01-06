@@ -107,7 +107,7 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 					<td class="actions">
 						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 							class="fas fa-minus"
-							@click.prevent="item.delete()"
+							@click.prevent="deleteItem(item)"
 						/>
 					</td>
 				</tr>

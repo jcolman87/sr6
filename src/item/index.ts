@@ -5,6 +5,7 @@
  */
 import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
+import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
@@ -48,7 +49,7 @@ export const CharacterItemTypes = [
 
 export const GearItemTypes = ['weapon', 'gear', 'credstick'];
 
-export const MatrixItemTypes = ['matrix_action', 'matrix_persona'];
+export const MatrixItemTypes = ['matrix_action', 'matrix_persona', 'matrix_ic'];
 
 export const GameplayItemTypes = ['condition'];
 
@@ -72,6 +73,7 @@ function registerDataModels(): void {
 	// Matrix
 	CONFIG.Item.dataModels.matrix_action = MatrixActionDataModel;
 	CONFIG.Item.dataModels.matrix_persona = MatrixPersonaDataModel;
+	CONFIG.Item.dataModels.matrix_ic = MatrixICDataModel;
 
 	//
 	CONFIG.Item.dataModels.general_action = GeneralActionDataModel;

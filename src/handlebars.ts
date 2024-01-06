@@ -3,7 +3,9 @@
  * @author jaynus
  * @file
  */
-import { getActor } from '@/util';
+import { getActor, getItem } from '@/util';
+import SR6Actor from '@/actor/SR6Actor';
+import SR6Item from '@/item/SR6Item';
 import * as handlebars from 'handlebars';
 
 export async function preload(): Promise<void> {
@@ -46,16 +48,12 @@ export function register(): void {
 		this[varName] = varValue;
 	});
 
-	Handlebars.registerHelper('getActorItem', function (actor: Actor, itemId: string) {
-		return actor.items.get(itemId);
+	Handlebars.registerHelper('getActorById', function (actorId: ActorUUID) {
+		return getActor(SR6Actor, actorId);
 	});
 
-	Handlebars.registerHelper('getActorById', function (actorId: string) {
-		return getActor(actorId);
-	});
-
-	Handlebars.registerHelper('getActorItemById', function (actorId: string, itemId: string) {
-		return getActor(actorId)!.items.get(itemId);
+	Handlebars.registerHelper('getItemById', function (itemId: ItemUUID) {
+		return getItem(SR6Item, itemId);
 	});
 
 	/** Iteration utilities */

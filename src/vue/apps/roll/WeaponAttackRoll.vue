@@ -5,6 +5,7 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import * as rollers from '@/roll/Rollers';
 import { SR6RollData } from '@/roll/SR6Roll';
 import { FireMode, Distance } from '@/data';
+import { getItem } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
@@ -15,7 +16,7 @@ const props = defineProps<{
 	roll: SR6RollData;
 }>();
 const roll = ref(props.roll as rollers.WeaponAttackRollData);
-const weapon = computed(() => toRaw(props.actor).items.get(roll.value.attack.itemId) as SR6Item<WeaponDataModel>);
+const weapon = computed(() => getItem(SR6Item<WeaponDataModel>, roll.value.attack.itemId)!);
 const system = computed(() => toRaw(weapon.value).systemData);
 const original_pool = roll.value.pool;
 

@@ -87,6 +87,27 @@ export default abstract class MonitorsDataModel extends BaseDataModel {
 		return true;
 	}
 
+	override prepareBaseData(): void {
+		this.physical.prepareBaseData();
+		this.stun.prepareBaseData();
+		this.overflow.prepareBaseData();
+		this.edge.prepareBaseData();
+	}
+
+	override prepareData(): void {
+		this.physical.prepareData();
+		this.stun.prepareData();
+		this.overflow.prepareData();
+		this.edge.prepareData();
+	}
+
+	override prepareDerivedData(): void {
+		this.physical.prepareDerivedData();
+		this.stun.prepareDerivedData();
+		this.overflow.prepareDerivedData();
+		this.edge.prepareDerivedData();
+	}
+
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
@@ -134,7 +155,7 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareData(): void {
+	override prepareDerivedData(): void {
 		if (this.formula) {
 			this.max = this.solveFormula(this.formula);
 		}

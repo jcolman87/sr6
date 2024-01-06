@@ -35,39 +35,54 @@ export async function createNewItem(actor: SR6Actor, type: string): Promise<void
 	await toRaw(actor).createEmbeddedDocuments('Item', [{ name: `new ${type}`, type: type }]);
 }
 
-export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event): Promise<void> {
+export function getElementValue(src: HTMLElement): null | string | number {
 	let value = null;
-	if (event.target instanceof HTMLSelectElement) {
-		const target = event.target as HTMLSelectElement;
+
+	if (src instanceof HTMLSelectElement) {
+		const target = src as HTMLSelectElement;
 		if (target.value !== '') {
 			value = target.value;
 		}
 	} else {
-		const target = event.target as HTMLInputElement;
+		const target = src as HTMLInputElement;
 		if (target.type === 'text') {
 			value = target.value;
 		} else if (target.type === 'number') {
 			value = parseInt(target.value);
 		}
 	}
+	return value;
+}
 
+export function getEventValue(event: Event): null | string | number {
+	if (event.target) {
+		return getElementValue(event.target as HTMLElement);
+	}
+	return null;
+}
+
+export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event): Promise<void> {
 	await toRaw(actor).updateEmbeddedDocuments('Item', [
 		{
 			_id: id,
-			[field]: value,
+			[field]: getEventValue(event),
 		},
 	]);
 }
 
 export async function deleteItem<TDataModel extends BaseDataModel = BaseDataModel>(
-	item: SR6Item<TDataModel>
+	item: SR6Item<TDataModel>,
+	bypass_confirmation: boolean = false
 ): Promise<boolean> {
-	const confirmed = await Dialog.confirm({
-		title: 'Confirm delete?',
-		content: `Are you sure you want to delete ${item.name}?`,
-		yes: () => true,
-		no: () => false,
-	});
+	let confirmed = bypass_confirmation;
+	if (!confirmed) {
+		confirmed = await Dialog.confirm({
+			title: 'Confirm delete?',
+			content: `Are you sure you want to delete ${item.name}?`,
+			yes: () => true,
+			no: () => false,
+		});
+	}
 	if (confirmed) {
 		await item.delete();
 		return true;

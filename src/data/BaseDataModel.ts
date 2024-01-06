@@ -34,15 +34,15 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 		}
 	}
 
-	solveFormula(formula: string): number {
+	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
 		const item = this.item;
 		const actor = this.actor;
 
 		if (item) {
-			return item.solveFormula(formula, actor);
+			return item.solveFormula(formula, actor, data);
 		} else {
 			if (actor) {
-				return actor.solveFormula(formula);
+				return actor.solveFormula(formula, data);
 			}
 		}
 		console.error('No parent that can solve a formula exists for this model');

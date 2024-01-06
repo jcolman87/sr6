@@ -17,11 +17,15 @@ export class SR6Token<TDocument extends TokenDocument = SR6TokenDocument> extend
 		effect: StatusEffect,
 		{ active, overlay }: { active?: boolean; overlay?: boolean }
 	): Promise<boolean> {
+		console.log('toggleEffect', effect, active, overlay);
 		const path = effect.id.split('.');
 		if (this.actor && path[0] === 'sr6' && path[1] === 'condition' && path.length === 3) {
 			// Find the matching condition from the conditions pack
 			const res = await toggleStatusEffectCondition(effect.id, this.actor as SR6Actor);
+
 			await this.drawEffects();
+			if (this.hasActiveHUD) canvas.tokens.hud.refreshStatusIcons();
+
 			return res;
 		} else {
 			return super.toggleEffect(effect, { active, overlay });

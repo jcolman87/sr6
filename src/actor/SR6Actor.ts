@@ -4,6 +4,8 @@
  * @file Base SR6 Actor
  */
 import BaseDataModel from '@/data/BaseDataModel';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import IHasOnUpdate from '@/data/IHasOnUpdate';
 import IHasPreCreate from '@/data/IHasPreCreate';
 import IHasOnDelete from '@/data/IHasOnDelete';
 import IHasPostCreate from '@/data/IHasPostCreate';
@@ -11,19 +13,45 @@ import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
-import SpellDataModel from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 
-export default class SR6Actor<
-	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel
-> extends Actor {
+export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = BaseActorDataModel> extends Actor {
 	/**
 	 * Specialized property for accessing `actor.system` in a typed manner.
 	 */
 	get systemData(): ActorDataModel {
 		return <ActorDataModel>this.system;
+	}
+
+	protected override async _onUpdate(
+		changed: DeepPartial<this['_source']>,
+		options: DocumentUpdateContext<this>,
+		userId: string
+	): Promise<void> {
+		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
+		return super._onUpdate(changed, options, userId);
+
+		// Check the update for anything that requires another change to the actor such as status effects
+
+		/*
+		if (changed.system!.monitors!.physical!) {
+
+			if (this.systemData.monitors.physical.value === 0 && this.systemData.monitors.overflow.damage === 0) {
+				const already = this.effects.find((a) => a.label === 'Unconscious');
+				if (!already) {
+					this.createEmbeddedDocuments('ActiveEffect', [
+						{
+							label: 'Unconscious',
+							icon: 'icons/svg/unconscious.svg',
+							statuses: ['unconscious'],
+						},
+					]);
+				}
+			}
+		}
+		*/
 	}
 
 	// This is a fix needed for handling active effects from items showing as icon effects.
@@ -92,8 +120,10 @@ export default class SR6Actor<
 		this.systemData.prepareDerivedData();
 	}
 
-	solveFormula(formula: string): number {
-		let roll = new SR6Roll(formula, { ...this.getRollData(), actor: this }, SR6Roll.defaultOptions());
+	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
+		const finalData = { ...this.getRollData(), ...data, actor: this };
+		console.log('SR6Actor::solveFormula', formula, finalData);
+		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
 
 		roll = roll.evaluate({ async: false });
 		return roll.total!;
@@ -144,7 +174,7 @@ export default class SR6Actor<
 	}
 
 	async _onPostCreate(): Promise<void> {
-		(<IHasPostCreate<this>>this.systemData).onPostCreate?.();
+		(<IHasPostCreate>this.systemData).onPostCreate?.();
 	}
 
 	/**

@@ -1,3 +1,3 @@
-export default interface IHasPostCreate<DocumentType extends foundry.abstract.Document> {
+export default interface IHasPostCreate {
 	onPostCreate?(): Promise<void>;
 }

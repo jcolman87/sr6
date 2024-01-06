@@ -4,6 +4,7 @@
  * @file SR6 Actors root.
  */
 
+import MatrixHostDataModel from '@/actor/data/MatrixHostDataModel';
 import { register as registerSheets } from '@/actor/sheets';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
@@ -22,6 +23,7 @@ export function register(): void {
 
 function registerDataModels(): void {
 	CONFIG.Actor.dataModels.character = CharacterDataModel;
+	CONFIG.Actor.dataModels.matrix_host = MatrixHostDataModel;
 }
 
 export function setOptGroups(select: HTMLSelectElement): void {}

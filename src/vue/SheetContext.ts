@@ -4,6 +4,7 @@
  * @file Provides typing data for RootContext injected into Vue apps.
  */
 
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Combat from '@/combat/SR6Combat';
 import SR6Item from '@/item/SR6Item';
@@ -25,25 +26,23 @@ export const RootContext = Symbol('Vue Root Context');
 export interface BaseSheetContext<
 	DocumentType extends foundry.abstract.Document = foundry.abstract.Document,
 	SheetOptionsType extends DocumentSheetOptions = DocumentSheetOptions,
-	SheetType extends DocumentSheet<DocumentType, SheetOptionsType> = DocumentSheet<DocumentType, SheetOptionsType>,
-	SheetDataType extends DocumentSheetData<DocumentType> = DocumentSheetData<DocumentType>
+	TSheetType extends DocumentSheet<DocumentType, SheetOptionsType> = DocumentSheet<DocumentType, SheetOptionsType>,
+	TSheetDataType extends DocumentSheetData<DocumentType> = DocumentSheetData<DocumentType>
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.
 	 */
-	sheet: SheetType;
+	sheet: TSheetType;
 
 	/**
 	 * Rendering context data retrieved from `getData()`.
 	 */
-	data: SheetDataType;
+	data: TSheetDataType;
 }
 
-export interface SR6ActorSheetData<
-	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel,
-	ActorType extends SR6Actor = SR6Actor<ActorDataModel>
-> extends ActorSheetData<SR6Actor<ActorDataModel>> {
-	actor: ActorType;
+export interface SR6ActorSheetData<TActorDataModel extends BaseActorDataModel = BaseActorDataModel>
+	extends ActorSheetData<SR6Actor<TActorDataModel>> {
+	actor: SR6Actor<TActorDataModel>;
 	combat: SR6Combat | null;
 }
 
@@ -51,46 +50,45 @@ export interface SR6ActorSheetData<
  * Typing for context data injected into Vue Actor sheets.
  */
 export interface ActorSheetContext<
-	ActorDataModel extends foundry.abstract.DataModel = foundry.abstract.DataModel,
-	ActorType extends SR6Actor = SR6Actor<ActorDataModel>,
-	SheetType extends SR6ActorSheet<ActorDataModel> = SR6ActorSheet<ActorDataModel>,
-	SheetDataType extends SR6ActorSheetData<ActorDataModel> = SR6ActorSheetData<ActorDataModel, ActorType>
+	TActorDataModel extends BaseActorDataModel = BaseActorDataModel,
+	TSheetType extends SR6ActorSheet<TActorDataModel> = SR6ActorSheet<TActorDataModel>,
+	TSheetDataType extends SR6ActorSheetData<TActorDataModel> = SR6ActorSheetData<TActorDataModel>
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.
 	 */
-	sheet: SheetType;
+	sheet: TSheetType;
 
 	/**
 	 * Rendering context data retrieved from `getData()`.
 	 */
-	data: SheetDataType;
+	data: TSheetDataType;
 
 	user: User;
 }
 
-export interface SR6ItemSheetData<ItemDataModel extends BaseItemDataModel = BaseItemDataModel>
-	extends ItemSheetData<SR6Item<ItemDataModel>> {
-	item: SR6Item<ItemDataModel>;
+export interface SR6ItemSheetData<TItemDataModel extends BaseItemDataModel = BaseItemDataModel>
+	extends ItemSheetData<SR6Item<TItemDataModel>> {
+	item: SR6Item<TItemDataModel>;
 }
 
 /**
  * Typing for context data injected into Vue Item sheets.
  */
 export interface ItemSheetContext<
-	ItemDataModel extends BaseItemDataModel = BaseItemDataModel,
-	SheetType extends SR6ItemSheet<ItemDataModel> = SR6ItemSheet<ItemDataModel>,
-	SheetDataType extends SR6ItemSheetData<ItemDataModel> = SR6ItemSheetData<ItemDataModel>
+	TItemDataModel extends BaseItemDataModel = BaseItemDataModel,
+	TSheetType extends SR6ItemSheet<TItemDataModel> = SR6ItemSheet<TItemDataModel>,
+	TSheetDataType extends SR6ItemSheetData<TItemDataModel> = SR6ItemSheetData<TItemDataModel>
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.
 	 */
-	sheet: SheetType;
+	sheet: TSheetType;
 
 	/**
 	 * Rendering context data retrieved from `getData()`.
 	 */
-	data: SheetDataType;
+	data: TSheetDataType;
 
 	user: User;
 }

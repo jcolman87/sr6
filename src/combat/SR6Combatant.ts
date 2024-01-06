@@ -58,12 +58,12 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 
 	async _cycleConditions(): Promise<void> {
 		// Cycle conditions
-		let toDelete: string[] = [];
+		const toDelete: string[] = [];
 		this.actor.items
-			.filter((i) => i.type == 'condition')
+			.filter((i) => i.type === 'condition')
 			.forEach((item) => {
 				item.effects.forEach((effect) => {
-					let e = effect as SR6Effect;
+					const e = effect as SR6Effect;
 					if (e.isTemporary && e.duration.remaining !== null && e.duration.remaining < 1) {
 						toDelete.push(item.id);
 					}
@@ -94,6 +94,6 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 	}
 
 	override getInitiativeRoll(f: string): Roll {
-		return getInitiativeRoll(this.actor, this._getInitiativeFormula());
+		return getInitiativeRoll(this.actorSystemData, this._getInitiativeFormula());
 	}
 }

@@ -2,12 +2,20 @@ import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import IHasPools from '@/data/IHasPools';
+import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
 
 export default abstract class BaseActorDataModel extends BaseDataModel implements IHasPools {
 	abstract monitors: MonitorsDataModel;
+	abstract description: string;
+	abstract source: string;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	is<I>(): this is I {
+		return true;
+	}
 
 	get conditions(): ConditionDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'condition').map(
@@ -16,7 +24,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	get woundModifier(): number {
-		return this.monitors.woundModifier;
+		return 0;
 	}
 
 	getPool(type: RollType): number {
@@ -28,6 +36,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 		return pool;
 	}
+
 	get totalNuyen(): number {
 		return [...this.actor!.credsticks.map((item: SR6Item<CredstickDataModel>) => item.systemData.nuyen), 0].reduce(
 			(total, nuyen) => total + nuyen
@@ -52,6 +61,11 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		return this.conditions;
 	}
 
+	protected get _matrixPersona(): null | MatrixPersonaDataModel {
+		const persona = this.actor!.items.find((i) => i.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
+		return persona ? persona.systemData : null;
+	}
+
 	override prepareBaseData(): void {
 		super.prepareBaseData();
 	}
@@ -71,7 +85,8 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
-			monitors: new fields.EmbeddedDataField(MonitorsDataModel, { required: true, nullable: false }),
+			description: new fields.HTMLField(),
+			source: new fields.StringField(),
 		};
 	}
 }

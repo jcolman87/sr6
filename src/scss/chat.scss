@@ -1,0 +1,31 @@
+@use '@scss/vars/colors.scss';
+
+.roll {
+
+	.formula {
+		font-style: italic;
+		font-size: 11px;
+	}
+
+	.dv {
+		font-weight: bold;
+		color: colors.$red;
+	}
+
+	.success {
+		font-weight: bold;
+		color: colors.$green;
+	}
+
+	.glitch {
+		font-weight: bold;
+		font-size: 14px;
+		color: colors.$glitch;
+	}
+
+	.critical-glitch {
+		font-weight: bold;
+		font-size: 14px;
+		color: colors.$critical-glitch;
+	}
+}
