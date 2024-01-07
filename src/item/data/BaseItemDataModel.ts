@@ -19,6 +19,13 @@ export default abstract class BaseItemDataModel extends BaseDataModel {
 	abstract description: string;
 	abstract source: string;
 
+	override getRollData(): Record<string, unknown> {
+		return {
+			...super.getRollData(),
+			item: this.item!,
+		};
+	}
+
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 

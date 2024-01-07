@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, inject, toRaw, ref } from 'vue';
+import { computed, inject, toRaw } from 'vue';
 
 import SR6Item from '@/item/SR6Item';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -10,8 +10,7 @@ import ContactDataModel from '@/item/data/feature/ContactDataModel';
 import SINDataModel from '@/item/data/feature/SINDataModel';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
-
-const system = computed(() => context.data.actor.systemData);
+const _system = computed(() => context.data.actor.systemData);
 const lifestyles = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'lifestyle')

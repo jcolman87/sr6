@@ -1,0 +1,167 @@
+name: Meta Link
+type: gear
+img: systems/sr6/assets/items/commlink.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: ELECTRONICS
+    subtype: MATRIX_DEVICE
+  skillUse: null
+  costFormula: '100'
+  availability:
+    illegal: false
+    license: null
+    rating: 2
+  monitors:
+    matrix:
+      formula: '8 + ceil(@rating / 2)'
+  matrix:
+    active: false
+    availableSlotsFormula: '0'
+    supportsModes:
+      - ar
+    attributes:
+      dataProcessing: 1
+      firewall: 0
+  description: 'Commlinks are universal communication devices used by virtually everyone all the time. They come in a variety of shapes and styles, with some included in augmentations and articles of clothing. Even the most basic of them include AR Matrix browsing capability, telephone, vidphone, text, music players, micro trid-projectors, touchscreen displays, high-resolution video and still-image cameras, image/text and RFID tag scanners, built-in GPS guidance systems, chip players, credstick readers, retractable earbuds, voice access, and text to-speech and speech-to-text technologies. They also offer plenty of other add-on features. '
+---
+name: Sony Emperor
+type: gear
+img: systems/sr6/assets/items/commlink.webp
+effects: []
+system:
+  rating: 2
+  category:
+    type: ELECTRONICS
+    subtype: MATRIX_DEVICE
+  skillUse: null
+  costFormula: '700'
+  availability:
+    illegal: false
+    license: null
+    rating: 2
+  monitors:
+    matrix:
+      formula: '8 + ceil(@rating / 2)'
+  matrix:
+    active: false
+    availableSlotsFormula: '1'
+    supportsModes:
+      - ar
+    attributes:
+      dataProcessing: 1
+      firewall: 1
+  description: 'Commlinks are universal communication devices used by virtually everyone all the time. They come in a variety of shapes and styles, with some included in augmentations and articles of clothing. Even the most basic of them include AR Matrix browsing capability, telephone, vidphone, text, music players, micro trid-projectors, touchscreen displays, high-resolution video and still-image cameras, image/text and RFID tag scanners, built-in GPS guidance systems, chip players, credstick readers, retractable earbuds, voice access, and text to-speech and speech-to-text technologies. They also offer plenty of other add-on features. '
+---
+name: Renraku Sensei
+type: gear
+img: systems/sr6/assets/items/commlink.webp
+effects: []
+system:
+  rating: 3
+  category:
+    type: ELECTRONICS
+    subtype: MATRIX_DEVICE
+  skillUse: null
+  costFormula: '1000'
+  availability:
+    illegal: false
+    license: null
+    rating: 2
+  monitors:
+    matrix:
+      formula: '8 + ceil(@rating / 2)'
+  matrix:
+    active: false
+    availableSlotsFormula: '1'
+    supportsModes:
+      - ar
+    attributes:
+      dataProcessing: 2
+      firewall: 0
+  description: 'Commlinks are universal communication devices used by virtually everyone all the time. They come in a variety of shapes and styles, with some included in augmentations and articles of clothing. Even the most basic of them include AR Matrix browsing capability, telephone, vidphone, text, music players, micro trid-projectors, touchscreen displays, high-resolution video and still-image cameras, image/text and RFID tag scanners, built-in GPS guidance systems, chip players, credstick readers, retractable earbuds, voice access, and text to-speech and speech-to-text technologies. They also offer plenty of other add-on features. '
+---
+name: Erika Elite
+type: gear
+img: systems/sr6/assets/items/commlink.webp
+effects: []
+system:
+  rating: 4
+  category:
+    type: ELECTRONICS
+    subtype: MATRIX_DEVICE
+  skillUse: null
+  costFormula: '2500'
+  availability:
+    illegal: false
+    license: null
+    rating: 2
+  monitors:
+    matrix:
+      formula: '8 + ceil(@rating / 2)'
+  matrix:
+    active: false
+    availableSlotsFormula: '2'
+    supportsModes:
+      - ar
+    attributes:
+      dataProcessing: 2
+      firewall: 1
+  description: 'Commlinks are universal communication devices used by virtually everyone all the time. They come in a variety of shapes and styles, with some included in augmentations and articles of clothing. Even the most basic of them include AR Matrix browsing capability, telephone, vidphone, text, music players, micro trid-projectors, touchscreen displays, high-resolution video and still-image cameras, image/text and RFID tag scanners, built-in GPS guidance systems, chip players, credstick readers, retractable earbuds, voice access, and text to-speech and speech-to-text technologies. They also offer plenty of other add-on features. '
+---
+name: Hermes Ikon
+type: gear
+img: systems/sr6/assets/items/commlink.webp
+effects: []
+system:
+  rating: 5
+  category:
+    type: ELECTRONICS
+    subtype: MATRIX_DEVICE
+  skillUse: null
+  costFormula: '5000'
+  availability:
+    illegal: false
+    license: null
+    rating: 3
+  monitors:
+    matrix:
+      formula: '8 + ceil(@rating / 2)'
+  matrix:
+    active: false
+    availableSlotsFormula: '2'
+    supportsModes:
+      - ar
+    attributes:
+      dataProcessing: 3
+      firewall: 0
+  description: 'Commlinks are universal communication devices used by virtually everyone all the time. They come in a variety of shapes and styles, with some included in augmentations and articles of clothing. Even the most basic of them include AR Matrix browsing capability, telephone, vidphone, text, music players, micro trid-projectors, touchscreen displays, high-resolution video and still-image cameras, image/text and RFID tag scanners, built-in GPS guidance systems, chip players, credstick readers, retractable earbuds, voice access, and text to-speech and speech-to-text technologies. They also offer plenty of other add-on features. '
+---
+name: Transys Avalon
+type: gear
+img: systems/sr6/assets/items/commlink.webp
+effects: []
+system:
+  rating: 6
+  category:
+    type: ELECTRONICS
+    subtype: MATRIX_DEVICE
+  skillUse: null
+  costFormula: '8000'
+  availability:
+    illegal: false
+    license: null
+    rating: 3
+  monitors:
+    matrix:
+      formula: '8 + ceil(@rating / 2)'
+  matrix:
+    active: false
+    availableSlotsFormula: '3'
+    supportsModes:
+      - ar
+    attributes:
+      dataProcessing: 3
+      firewall: 1
+  description: 'Commlinks are universal communication devices used by virtually everyone all the time. They come in a variety of shapes and styles, with some included in augmentations and articles of clothing. Even the most basic of them include AR Matrix browsing capability, telephone, vidphone, text, music players, micro trid-projectors, touchscreen displays, high-resolution video and still-image cameras, image/text and RFID tag scanners, built-in GPS guidance systems, chip players, credstick readers, retractable earbuds, voice access, and text to-speech and speech-to-text technologies. They also offer plenty of other add-on features. '

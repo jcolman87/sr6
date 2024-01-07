@@ -19,9 +19,9 @@ export default abstract class QualityDataModel
 	abstract appliedConditions: AppliedConditionEntry[];
 
 	async clearAppliedConditions(): Promise<void> {
-		this.appliedConditions.forEach((entry) => {
-			this.actor!.items.delete(entry.itemId);
-		});
+		for (const entry of this.appliedConditions) {
+			await this.actor!.items.get(entry.itemId)!.delete();
+		}
 		this.appliedConditions = [];
 	}
 

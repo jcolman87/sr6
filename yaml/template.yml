@@ -23,6 +23,7 @@ Item:
     # Matrix Stuff
     - matrix_action
     - matrix_persona
+    - matrix_program
     - matrix_ic
     # Combat
     - general_action

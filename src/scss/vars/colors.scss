@@ -1,7 +1,10 @@
 $red: #90231e;
+$light-red: #FFCCCB;
+
 $purple: #b4107f;
 
-$light-blue: #71c6ff;
+$lighter-blue: rgba(240, 248, 255, 1);
+$light-blue: rgba(185, 217, 235, 0.5);
 $blue: #2b4b73;
 $dark-blue: #384455;
 
@@ -12,18 +15,13 @@ $glitch: rgb(194, 76, 29);
 $critical-glitch: rgb(215, 14, 233);
 
 $green:  #006400;
-
-$die-ability: #41ad49;
-$die-difficulty: #522380;
-$die-proficiency: #fff200;
-$die-challenge: #761213;
-$die-boost: #72cddc;
-$die-setback: #1e1e1e;
+$light-green: #E0FFE0;
 
 :root {
 	--highlight-color: #892378;
 	--accent-color: #00a8ff;
 	--section-background: #efefeb;
+	--section-foreground: #000000;
 	--tablehead-background: #e0e0d9;
 	--input-color: #202020;
 }

@@ -1,10 +1,11 @@
 {{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
 {{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
 {{ var "weapon" (getItemById roll.options.attack.itemId) }}
+{{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
 <div class="roll">
 	<i style="font-weight: bold">{{ localize (concat "SR6.Combat.Distances." roll.options.attack.distance) }}</i> distance
 	<i style="font-weight: bold">{{ localize (concat (concat "SR6.Combat.FireModes." roll.options.attack.firemode) ".Name") }}</i>
-	with <a class="chat-1-expand" style="font-style: italic; font-weight: bold">{{ weapon.name }}</a><br/>
+	with <a class="chat-1-expand click-item" data-item-id="{{weapon.uuid}}" style="font-style: italic; font-weight: bold">{{ weapon.name }}</a><br/>
 
 	<a class="chat-2-expand" style="font-style: italic">
 		Damage: <i class="dv">{{ net_damage }}</i></a>
@@ -14,6 +15,16 @@
 	</div>
 
 	Attack Rating: <i style="font-weight: bold">{{ roll.options.attack.attackRating }}</i><br/>
+	<hr/>
+
+	{{#if (gt roll.options.attack.targetIds.length 0)}}
+		<i style="font-weight: bold; font-style: italic">Targets:</i><br/>
+		<div class="chat-target-box">
+		{{#each targets }}
+			<div><a class="click-actor" data-actor-id="{{this.uuid}}">{{this.name}}</a></div>
+		{{/each}}
+		</div>
+	{{/if}}
 
 	<div class="chat-1-collapsible" style="display: none">
 		<section>

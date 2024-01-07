@@ -1,11 +1,9 @@
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 
-import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import GearDataModel from '@/item/data/gear/GearDataModel';
+import { getItem } from '@/util';
 
 export enum PersonaType {
 	Device = 'device',
@@ -19,7 +17,6 @@ let item = actor.createEmbeddedDocuments('Item', [{
     name: 'persona',
     type: 'matrix_persona',
 	system: {
-		sourceActor: actor,
 		type: 'ic'
 	}
 }]);
@@ -33,11 +30,22 @@ type MatrixPersonaFormulasData = {
 };
 
 export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
-	abstract sourceDevice: null | SR6Item<GearDataModel>;
-	abstract sourceActor: SR6Actor<BaseActorDataModel>;
+	abstract sourceDeviceId: null | ItemUUID;
 	abstract attributes: AdjustableMatrixAttributesDataModel;
 	abstract formulas: MatrixPersonaFormulasData;
 	abstract type: PersonaType;
+
+	abstract _preparedOnce: boolean;
+
+	get sourceDevice(): null | SR6Item<GearDataModel> {
+		if (this.sourceDeviceId) {
+			let device = getItem(SR6Item<GearDataModel>, this.sourceDeviceId);
+			if (device) {
+				return device;
+			}
+		}
+		return null;
+	}
 
 	get a(): number {
 		return this.attributes.current.attack;
@@ -71,19 +79,24 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 		};
 	}
 
+	override prepareDerivedData(): void {
+		super.prepareDerivedData();
+		if (!this._preparedOnce) {
+			this._preparedOnce = true;
+			//this.item!.update({ ['system._preparedOnce']: true, ['system.attributes.current']: this.attributes.base });
+		}
+	}
+
 	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
 			...super.defineSchema(),
-			sourceDevice: new fields.ForeignDocumentField(SR6Item<GearDataModel>, {
+			sourceDeviceId: new fields.StringField({
 				initial: null,
 				nullable: true,
 				required: true,
-			}),
-			sourceActor: new fields.ForeignDocumentField(SR6Actor<BaseActorDataModel>, {
-				nullable: false,
-				required: true,
+				blank: false,
 			}),
 			attributes: new fields.EmbeddedDataField(AdjustableMatrixAttributesDataModel, {
 				nullable: false,
@@ -111,6 +124,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 				blank: false,
 				choices: Object.values(PersonaType),
 			}),
+			_preparedOnce: new fields.BooleanField({ required: true, initial: false }),
 		};
 	}
 }

@@ -45,7 +45,6 @@ function drop(event: DragEvent, target: string) {
 			break;
 		}
 	}
-	let baseReplace = 'attack';
 	if (target !== 'attack' && newAttributes.current.attack === dragData.value) {
 		newAttributes.current.attack = dstValue;
 	}
@@ -61,10 +60,10 @@ function drop(event: DragEvent, target: string) {
 
 	emit('change', newAttributes);
 }
-function dragOver(event: DragEvent) {
+function dragOver(_event: DragEvent) {
 	// console.log('wtf', event.toElement);
 }
-function dragLeave(event: DragEvent) {
+function dragLeave(_event: DragEvent) {
 	// console.log('wtf', event.toElement);
 }
 

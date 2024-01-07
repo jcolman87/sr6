@@ -6,6 +6,7 @@
 import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
 import MatrixICDataModel from '@/item/data/MatrixICDataModel';
+import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
@@ -73,6 +74,7 @@ function registerDataModels(): void {
 	// Matrix
 	CONFIG.Item.dataModels.matrix_action = MatrixActionDataModel;
 	CONFIG.Item.dataModels.matrix_persona = MatrixPersonaDataModel;
+	CONFIG.Item.dataModels.matrix_program = MatrixProgramDataModel;
 	CONFIG.Item.dataModels.matrix_ic = MatrixICDataModel;
 
 	//

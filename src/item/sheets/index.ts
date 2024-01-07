@@ -4,6 +4,8 @@
  * @file Item Sheet Registration
  */
 
+import AugmentationSheet from '@/vue/sheets/item/AugmentationSheet.vue';
+import BasicGearSheet from '@/vue/sheets/item/BasicGearSheet.vue';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
@@ -53,8 +55,6 @@ export function register(): void {
 
 	Items.registerSheet('sr6', basicSheet(BasicItemSheet), {
 		types: [
-			'gear',
-			'weapon',
 			'credstick',
 			'contact',
 			'sin',
@@ -68,6 +68,16 @@ export function register(): void {
 			'matrix_persona',
 			'general_action',
 		],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(BasicGearSheet), {
+		types: ['gear', 'weapon'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(AugmentationSheet), {
+		types: ['augmentation'],
 		makeDefault: true,
 	});
 

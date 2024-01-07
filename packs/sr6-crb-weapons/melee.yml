@@ -528,7 +528,7 @@ system:
 ---
 name: Bike Chain
 type: weapon
-img: systems/sr6assets/items/pistols_light.webp
+img: systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -563,7 +563,7 @@ system:
 ---
 name: Bullwhip
 type: weapon
-img: systems/sr6assets/items/pistols_light.webp
+img: systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -599,7 +599,7 @@ system:
 ---
 name: Knucks
 type: weapon
-img: systems/sr6assets/items/pistols_light.webp
+img: systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -634,7 +634,7 @@ system:
 ---
 name: Shock Gloves
 type: weapon
-img: systems/sr6assets/items/pistols_light.webp
+img: systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -673,7 +673,7 @@ system:
 ---
 name: Monofilament Whip
 type: weapon
-img: systems/sr6assets/items/pistols_light.webp
+img: systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1

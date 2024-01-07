@@ -76,7 +76,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 		await actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
 
 		Object.keys(data.attributes).forEach((name: string) => {
-			console.log('attribute: ', name);
 			const value = json.attr(name);
 			if (value !== undefined) {
 				(data.attributes as any)[name].base = value.points;
@@ -227,7 +226,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 						if (existingPower) {
 							return existingPower;
 						} else {
-							console.log(`power: ${value.name}`);
 							return {
 								name: value.name,
 								type: 'adeptpower',
@@ -257,7 +255,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 							if (existingQuality) {
 								return existingQuality;
 							} else {
-								console.log(`quality:`, value);
 								switch (value.name) {
 									case 'Adept': {
 										data.magicAwakened = MagicAwakenedType.Adept;
@@ -273,7 +270,6 @@ export default class ImportPrompt extends VueSheet(Application) {
 										return null;
 									}
 									default: {
-										console.log('custom quality unknown', value.name);
 										return {
 											name: value.name,
 											type: 'quality',
@@ -328,7 +324,7 @@ export default class ImportPrompt extends VueSheet(Application) {
 					ui.notifications.error!(`invalid weapon: ${value.name}`);
 					return;
 				}
-				console.log('Adding weapon: ', value.name);
+
 				return weapon;
 			});
 
@@ -343,15 +339,14 @@ export default class ImportPrompt extends VueSheet(Application) {
 			})
 			.map((value: any) => {
 				const weapon = weapons.find((w) => w.name === value.name);
-				console.log('Adding weapon: ', value.name);
+
 				return weapon;
 			});
 
 		const allWeapons = rangedWeapons.concat(meleeWeapons);
-		console.log('Adding', allWeapons);
+
 		await actor.createEmbeddedDocuments('Item', allWeapons);
 
-		console.log('writing', data);
 		await actor.update({ ['system']: data });
 		// await actor.delete();
 	}

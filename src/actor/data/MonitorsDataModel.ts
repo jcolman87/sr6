@@ -15,7 +15,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel {
 	abstract edge: MonitorDataModel;
 
 	get woundModifier(): number {
-		return -Math.floor(this.physical.damage / 3) + Math.floor(this.stun.damage / 3);
+		return this.physical.woundModifier + this.stun.woundModifier;
 	}
 
 	get(type: MonitorType): MonitorDataModel {
@@ -141,6 +141,10 @@ export abstract class MonitorDataModel extends BaseDataModel {
 	abstract max: number;
 	abstract formula: string | null;
 
+	get woundModifier(): number {
+		return -Math.floor(this.damage / 3);
+	}
+
 	get value(): number {
 		return Math.max(0, this.max - this.damage);
 	}
@@ -155,7 +159,7 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareDerivedData(): void {
+	override prepareBaseData(): void {
 		if (this.formula) {
 			this.max = this.solveFormula(this.formula);
 		}

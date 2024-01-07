@@ -1,19 +1,17 @@
 <script lang="ts" setup>
+import MonitorView from '@/vue/views/MonitorView.vue';
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
-import { inject, toRaw, computed, ref } from 'vue';
+import { inject, toRaw, computed } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { vLocalize } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
-import CharacterSheet from '@/actor/sheets/CharacterSheet';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
 
 function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
-	console.log('Setting damage', monitor, field, amount);
-
 	// If we arnt maxed on physical, reset overflow
 	if (toRaw(system.value).monitors.physical.value > 0) {
 		toRaw(context.data.actor).update({ ['system.monitors.overflow.damage']: 0 });
@@ -153,19 +151,20 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 		width: 32px;
 		background-repeat: no-repeat;
 		height: 24px;
-		background-image: url('/systems/sr6/assets/heart.svg');
+		background-image: url('/systems/sr6/assets/heart.webp');
+		background-size: 24px;
 		text-align: center;
 		border-left: solid black 1px;
 	}
 
 	.physical-bar-header {
-		background-image: url('/systems/sr6/assets/heart.svg');
+		background-image: url('/systems/sr6/assets/heart.webp');
 	}
 	.overflow-bar-header {
-		background-image: url('/systems/sr6/assets/heart.svg');
+		background-image: url('/systems/sr6/assets/heart.webp');
 	}
 	.stun-bar-header {
-		background-image: url('/systems/sr6/assets/brain.svg');
+		background-image: url('/systems/sr6/assets/brain.webp');
 	}
 
 	.monitor-bar-box {

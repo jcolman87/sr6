@@ -8,6 +8,7 @@ import SR6Item from '@/item/SR6Item';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 import './SR6ItemSheet.scss';
+import { getItem } from '@/util';
 
 export type DropData = {
 	type: 'ActiveEffect' | 'Actor' | 'Item' | 'Folder';
@@ -49,5 +50,14 @@ export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = Base
 			html.find('img[data-edit]').off('click');
 			html.find('img[data-edit]').on('click', this._onEditImage.bind(this));
 		}
+	}
+
+	protected override _onDrop(event: ElementDragEvent): void {
+		let data: DragEventData = TextEditor.getDragEventData(event) as DragEventData;
+		if (data.type == 'Item') {
+			let item = getItem(SR6Item<BaseItemDataModel>, data.uuid as ItemUUID)!;
+		}
+
+		return super._onDrop(event);
 	}
 }

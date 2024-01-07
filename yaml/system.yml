@@ -45,11 +45,6 @@ packs:
     system: sr6
     path: ./packs/sr6-crb-matrix-actions.db
     type: Item
-  - name: sr6-crb-weapons
-    label: Core Weapons
-    system: sr6
-    path: ./packs/sr6-crb-weapons.db
-    type: Item
   - name: sr6-crb-spells
     label: Core Spells
     system: sr6
@@ -59,6 +54,26 @@ packs:
     label: Core Adept Powers
     system: sr6
     path: ./packs/sr6-crb-adeptpowers.db
+    type: Item
+  - name: sr6-crb-augmentations
+    label: Core Augmentations
+    system: sr6
+    path: ./packs/sr6-crb-augmentations.db
+    type: Item
+  - name: sr6-crb-weapons
+    label: Core Weapons
+    system: sr6
+    path: ./packs/sr6-crb-weapons.db
+    type: Item
+  - name: sr6-crb-gear
+    label: Core Gear
+    system: sr6
+    path: ./packs/sr6-crb-gear.db
+    type: Item
+  - name: sr6-crb-matrix-items
+    label: Core Matrix Items
+    system: sr6
+    path: ./packs/sr6-crb-matrix-items.db
     type: Item
 socket: true
 url: https://github.com/jaynus/sr6

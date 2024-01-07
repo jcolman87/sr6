@@ -14,13 +14,14 @@ import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import IHasInitiative from '@/data/IHasInitiative';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
-import { getItem } from '@/util';
+import { getItem, getTargetActorIds } from '@/util';
 import * as util from '@/util';
 
 export const BUGFIX = '';
 
 export type BaseAttackData = {
 	attackerId: ActorUUID;
+	targetIds: ActorUUID[];
 	itemId: ItemUUID;
 	damage: number;
 	attackRating: number;
@@ -125,6 +126,7 @@ export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<We
 
 	const attackData = {
 		attackerId: systemData.actor!.uuid,
+		targetIds: getTargetActorIds(),
 		itemId: weapon.uuid,
 		damage: weapon.systemData.damage,
 		attackRating: weapon.systemData.attackRatings.near,
@@ -222,6 +224,7 @@ export async function rollMatrixAction(
 
 	const attackData = {
 		attackerId: systemData.actor!.uuid,
+		targetIds: getTargetActorIds(),
 		itemId: action.uuid,
 		attackRating: systemData.matrixPersona!.attackRating,
 		damage: action.systemData.damage,

@@ -54,7 +54,7 @@ onBeforeUpdate(updateEffects);
 
 <template>
 	<div class="item-sheet-basic">
-		<header :class="hasDecoration ? 'with-decoration' : ''">
+		<header :class="props.hasDecoration ? 'with-decoration' : ''">
 			<img
 				:src="context.data.item.img"
 				data-edit="img"
@@ -63,7 +63,7 @@ onBeforeUpdate(updateEffects);
 			/>
 			<input type="text" name="name" :value="context.data.item.name" v-localize:placeholder="'SR6.Labels.Name'" />
 			<!-- Decoration -->
-			<slot v-if="hasDecoration" name="decoration"></slot>
+			<slot v-if="props.hasDecoration" name="decoration"></slot>
 		</header>
 
 		<nav class="sheet-tabs" data-group="primary">
@@ -102,7 +102,7 @@ onBeforeUpdate(updateEffects);
 				<slot name="data"> DATA </slot>
 			</div>
 
-			<div v-if="showEffectsTab" class="tab" data-group="primary" data-tab="effects">
+			<div v-if="props.showEffectsTab" class="tab" data-group="primary" data-tab="effects">
 				<EffectsView :effects="[...effects as any]" @add-effect="addEffect" />
 			</div>
 		</section>

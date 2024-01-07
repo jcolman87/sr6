@@ -25,7 +25,6 @@ export default class CharacterSheet extends VueSheet(SR6ActorSheet<CharacterData
 	}
 
 	async getVueContext(): Promise<ActorSheetContext<CharacterDataModel> | undefined> {
-		console.log('getVueContext', this, game.combat);
 		return {
 			sheet: this,
 			data: {

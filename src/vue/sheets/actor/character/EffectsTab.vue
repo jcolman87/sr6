@@ -2,14 +2,12 @@
 import SR6Item from '@/item/SR6Item';
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Effect from '@/effects/SR6Effect';
-import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import EffectsView from '@/vue/views/EffectsView.vue';
 
 import { computed, inject, toRaw, ref, onBeforeMount, onBeforeUpdate } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-
-import EffectsView from '@/vue/views/EffectsView.vue';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const conditions = computed(

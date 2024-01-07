@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import MatrixActionView from '@/vue/views/MatrixActionView.vue';
-import { computed, toRaw, inject } from 'vue';
+import { computed, inject } from 'vue';
 import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
 import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';

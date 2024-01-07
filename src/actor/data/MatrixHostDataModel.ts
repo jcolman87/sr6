@@ -3,25 +3,34 @@ import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import IHasPostCreate from '@/data/IHasPostCreate';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
+import GearDataModel from '@/item/data/gear/GearDataModel';
 import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 import SR6Item from '@/item/SR6Item';
 
-export default abstract class MatrixHostDataModel extends BaseActorDataModel implements IHasMatrixPersona {
+export default abstract class MatrixHostDataModel
+	extends BaseActorDataModel
+	implements IHasMatrixPersona, IHasPostCreate
+{
 	abstract rating: number;
 	abstract attributes: AdjustableMatrixAttributesDataModel;
 
 	protected abstract _personas: (() => SR6Item<MatrixPersonaDataModel>)[];
 
 	get matrixPersona(): null | MatrixPersonaDataModel {
-		return new MatrixPersonaDataModel(
-			{
-				sourceDevice: null,
-				sourceActor: this.actor!,
-				attributes: this.attributes,
-				type: PersonaType.IC,
-			},
-			{ parent: this }
-		);
+		return this._matrixPersona;
+	}
+	set matrixPersona(persona: null | MatrixPersonaDataModel) {
+		this._matrixPersona = persona;
+	}
+
+	async activateMatrixPersona(
+		device: SR6Item<GearDataModel> | null = null
+	): Promise<SR6Item<MatrixPersonaDataModel>> {
+		return this.actor!.items.find((item) => item.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
+	}
+
+	async deactivateMatrixPersona(): Promise<boolean> {
+		return false;
 	}
 
 	get programs(): SR6Item<MatrixICDataModel>[] {
@@ -42,12 +51,27 @@ export default abstract class MatrixHostDataModel extends BaseActorDataModel imp
 	override getRollData(): Record<string, unknown> {
 		return {
 			...super.getRollData(),
-			...this.attributes.getRollData(),
-			type: PersonaType.IC,
+			persona: {
+				...this.attributes.getRollData(),
+				type: PersonaType.IC,
+			},
 		};
 	}
 
-	async postCreate(): Promise<void> {}
+	async onPostCreate(): Promise<void> {
+		// Create our persona
+		await this.actor!.createEmbeddedDocuments('Item', [
+			{
+				type: 'matrix_persona',
+				name: `${this.actor!.name} persona`,
+				system: {
+					sourceDevice: null,
+					attributes: this.attributes,
+					type: PersonaType.IC,
+				},
+			},
+		]);
+	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;

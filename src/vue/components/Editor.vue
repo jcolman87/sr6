@@ -79,7 +79,6 @@ onMounted(enrichContent);
  * Part of this is a workaround to the slightly hacky way we're wrangling Foundry to support Vue's reactive rendering functionality.
  */
 onUpdated(async () => {
-	console.log('update?');
 	// Name should be a path split by '.' - such as system.notes.value
 	const splitName = props.name.split('.');
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -114,7 +113,6 @@ async function enrichContent() {
  * Activate the ProseMirror editor.
  */
 async function activate() {
-	console.log('activate?"');
 	// This should never happen, unless someone is messing with this component.
 	if (!editorContainer.value) {
 		console.error('No container to insert into!');
@@ -162,14 +160,13 @@ async function activate() {
  * Callback handling the ProseMirror editor's saving behavior.
  */
 async function save() {
-	console.log('save?');
 	if (!editorContainer.value) {
 		return;
 	}
 
 	// Get a string value for the ProseMirror document structure
 	baseContent.value = ProseMirror.dom.serializeString(editorInstance.view.state.doc.content);
-	console.log('udating', props.name, baseContent.value);
+
 	await toRaw(rootContext.sheet.document).update({
 		[props.name]: baseContent.value,
 	});

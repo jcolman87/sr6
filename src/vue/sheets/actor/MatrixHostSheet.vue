@@ -1,5 +1,9 @@
 <script lang="ts" setup>
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
+import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
+import MatrixICDataModel from '@/item/data/MatrixICDataModel';
+import SR6Item from '@/item/SR6Item';
+import * as rollers from '@/roll/Rollers';
 import Localized from '@/vue/components/Localized.vue';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import { computed, toRaw, inject } from 'vue';
@@ -10,7 +14,6 @@ import BasicActorSheet from '@/vue/sheets/actor/BasicActorSheet.vue';
 
 const context = inject<ActorSheetContext<MatrixHostDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
-console.log('LOL', toRaw(system.value));
 
 async function onRatingChanged(ev: Event) {
 	await toRaw(context.data.actor).update({ ['system.rating']: getEventValue(ev) });
@@ -20,6 +23,10 @@ async function onRatingChanged(ev: Event) {
 
 async function attributesUpdated(attributes: AdjustableMatrixAttributesDataModel) {
 	await toRaw(context.data.actor).update({ ['system.attributes']: attributes });
+}
+
+async function rollIC(ic: SR6Item<MatrixICDataModel>) {
+	await rollers.rollMatrixAction(toRaw(system.value), toRaw(ic) as SR6Item<MatrixActionDataModel>);
 }
 </script>
 
@@ -36,7 +43,10 @@ async function attributesUpdated(attributes: AdjustableMatrixAttributesDataModel
 					<div class="section-head">Running IC</div>
 					<table>
 						<tr v-for="ic in system.programs" :key="ic.id">
-							<td style="width: 100%">1 {{ ic.name }}</td>
+							<td style="width: 30%">1 {{ ic.name }}</td>
+							<td>
+								<a @click="rollIC(ic)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+							</td>
 							<td>
 								<a class="fas fa-edit" @click.prevent="ic.sheet?.render(true)" />
 								<a @click.prevent="deleteItem(ic)"><i class="fa-solid fa-minus"></i></a>

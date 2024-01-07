@@ -51,8 +51,6 @@ function addCoreActions() {
 }
 
 async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
-	console.log('use', action);
-
 	// TODO: better dialog
 	const consume = await Dialog.confirm({
 		title: 'Consume action with use?',
@@ -114,7 +112,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 			</table>
 		</div>
 		<div class="section" style="width: 40%">
-			<div class="section-head">Combat Actions</div>
+			<div class="section-head">General Actions</div>
 			<table
 				class="field-table"
 				style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 100%"

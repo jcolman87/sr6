@@ -83,4 +83,16 @@ declare global {
 	type DeepPartial<T> = {
 		[P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 	};
+
+	interface ElementDragEvent extends DragEvent {
+		target: HTMLElement;
+		currentTarget: HTMLElement;
+		readonly dataTransfer: DataTransfer;
+	}
+
+	type DragEventData = {
+		type: string;
+		uuid: ItemUUID | ActorUUID | TokenDocumentUUID;
+	};
+	s;
 }

@@ -29,6 +29,9 @@ export function register(): void {
 	Handlebars.registerHelper('split', /** @param {string} value */ (value) => value.split(' '));
 
 	/** Math Utilities */
+	Handlebars.registerHelper('gt', (lhs, rhs) => lhs > rhs);
+	Handlebars.registerHelper('lt', (lhs, rhs) => lhs < rhs);
+
 	Handlebars.registerHelper('add', (lhs, rhs) => lhs + rhs);
 	Handlebars.registerHelper('sub', (lhs, rhs) => lhs - rhs);
 	Handlebars.registerHelper('mul', (lhs, rhs) => lhs * rhs);
@@ -50,6 +53,9 @@ export function register(): void {
 
 	Handlebars.registerHelper('getActorById', function (actorId: ActorUUID) {
 		return getActor(SR6Actor, actorId);
+	});
+	Handlebars.registerHelper('getActorsByIds', function (actorIds: ActorUUID[]) {
+		return actorIds.map((id) => getActor(SR6Actor, id));
 	});
 
 	Handlebars.registerHelper('getItemById', function (itemId: ItemUUID) {

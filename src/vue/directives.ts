@@ -35,7 +35,7 @@ export async function createNewItem(actor: SR6Actor, type: string): Promise<void
 	await toRaw(actor).createEmbeddedDocuments('Item', [{ name: `new ${type}`, type: type }]);
 }
 
-export function getElementValue(src: HTMLElement): null | string | number {
+export function getElementValue(src: HTMLElement): null | string | number | boolean {
 	let value = null;
 
 	if (src instanceof HTMLSelectElement) {
@@ -47,6 +47,8 @@ export function getElementValue(src: HTMLElement): null | string | number {
 		const target = src as HTMLInputElement;
 		if (target.type === 'text') {
 			value = target.value;
+		} else if (target.type === 'checkbox') {
+			value = target.checked;
 		} else if (target.type === 'number') {
 			value = parseInt(target.value);
 		}
@@ -54,7 +56,7 @@ export function getElementValue(src: HTMLElement): null | string | number {
 	return value;
 }
 
-export function getEventValue(event: Event): null | string | number {
+export function getEventValue(event: Event): null | string | number | boolean {
 	if (event.target) {
 		return getElementValue(event.target as HTMLElement);
 	}

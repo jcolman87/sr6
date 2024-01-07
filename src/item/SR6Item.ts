@@ -3,6 +3,7 @@
  * @author jaynus
  * @file Base SR6 Item
  */
+import BaseDataModel from '@/data/BaseDataModel';
 import IHasPostCreate from '@/data/IHasPostCreate';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
@@ -14,9 +15,7 @@ import IHasOnDelete from '@/data/IHasOnDelete';
 /**
  * Item class used as a base for all SR6 items.
  */
-export default class SR6Item<
-	ItemDataModel extends foundry.abstract.DataModel = BaseItemDataModel
-> extends Item<SR6Actor> {
+export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel> extends Item<SR6Actor> {
 	get safe_name(): string {
 		return util.toSnakeCase(this.name);
 	}
@@ -33,10 +32,8 @@ export default class SR6Item<
 			...this.getRollData(),
 			...actor?.getRollData(),
 			...data,
-			item: this,
 			actor: actor,
 		};
-		console.log('SR6Actor::solveFormula', finalData);
 
 		const roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
 
@@ -61,6 +58,13 @@ export default class SR6Item<
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.systemData.prepareDerivedData();
+	}
+
+	override getRollData(): Record<string, unknown> {
+		return {
+			...super.getRollData(),
+			...this.systemData.getRollData(),
+		};
 	}
 
 	/**

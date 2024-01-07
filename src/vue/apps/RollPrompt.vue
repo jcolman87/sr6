@@ -69,7 +69,7 @@ onMounted(() => {
 				<td>
 					<div class="edge-roll" style="flex: 0.48; margin-right: 10px">
 						<img
-							src="/systems/sr6/assets/blank_dice.png"
+							src="/systems/sr6/assets/blank_dice.webp"
 							style="
 								border: 0;
 								height: auto;

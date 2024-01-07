@@ -24,6 +24,7 @@
 .section {
 	display: inline-block;
 	background-color: var(--section-background);
+	color: var(--section-foreground);
 	vertical-align: top;
 	border: solid black 1px;
 	border-radius: 6px;

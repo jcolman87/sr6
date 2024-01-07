@@ -8,10 +8,10 @@ import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
 import InventoryItem from '@/vue/components/inventory/InventoryItem.vue';
 
-const EQUIPMENT_TYPES = ['gear', 'weapon'];
+const _EQUIPMENT_TYPES = ['gear', 'weapon'];
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
-const system = computed(() => context.data.actor.systemData);
+const _system = computed(() => context.data.actor.systemData);
 
 const gear = computed(
 	() => toRaw(context.data.actor).items.filter((i) => i.type === 'gear') as SR6Item<GearDataModel>[]

@@ -1,15 +1,20 @@
 <script lang="ts" setup>
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import * as rollers from '@/roll/Rollers';
 import { SR6RollData } from '@/roll/SR6Roll';
 import { FireMode, Distance } from '@/data';
-import { getItem } from '@/util';
+import { getActor, getItem } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
 import { toRaw, computed, ref } from 'vue';
+
+const emit = defineEmits<{
+	(e: 'setText', value: { title: string; hint: string }): void;
+}>();
 
 const props = defineProps<{
 	actor: SR6Actor;
@@ -19,6 +24,15 @@ const roll = ref(props.roll as rollers.WeaponAttackRollData);
 const weapon = computed(() => getItem(SR6Item<WeaponDataModel>, roll.value.attack.itemId)!);
 const system = computed(() => toRaw(weapon.value).systemData);
 const original_pool = roll.value.pool;
+
+const targets = computed<SR6Actor<BaseActorDataModel>[]>(() =>
+	roll.value.attack.targetIds.map((id) => getActor(SR6Actor<BaseActorDataModel>, id))
+);
+
+emit('setText', {
+	title: `Roll Attack (${weapon.value.name})`,
+	hint: `${system.value.description}`,
+});
 
 function onChangeDistance() {
 	roll.value.attack.attackRating = system.value.attackRatings.atDistance(roll.value.attack.distance!);
@@ -59,17 +73,31 @@ function onChangeFiremode() {
 	}
 }
 
-const emit = defineEmits<{
-	(e: 'setText', value: { title: string; hint: string }): void;
-}>();
-emit('setText', {
-	title: `Roll Attack (${weapon.value.name})`,
-	hint: `${system.value.description}`,
-});
+async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> {
+	if (target.token) {
+		canvas.ping(target.token.object.center);
+		return canvas.animatePan(target.token.object.center);
+	}
+}
 </script>
 
 <template>
-	<div style="display: flex; flex-flow: wrap">
+	<div class="roll-prompt" style="display: flex; flex-flow: wrap">
+		<div class="section warning-box" v-if="roll.attack.targetIds.length == 0">
+			<div class="section-head warning-title">Warning: No targets selected</div>
+			You did not have any targets selected for this roll. Automatic damage, conditions and effects will not be
+			applied.
+		</div>
+		<div class="section" style="width: 100%" v-else>
+			<div class="section-head">Targets</div>
+			<div class="target-box">
+				<template v-for="target in targets" :key="target.id"
+					><div @click.prevent="focusTarget(target)" @dblclick.prevent="target.sheet?.render(true)">
+						{{ target.name }}
+					</div></template
+				>
+			</div>
+		</div>
 		<div class="section">
 			<div class="section-title" style="width: 400px"><Localized label="SR6.Labels.Information" /></div>
 			<table>
@@ -107,3 +135,38 @@ emit('setText', {
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+@use '@scss/vars/colors.scss';
+
+.roll-prompt {
+	.warning-box {
+		background-color: colors.$light-red;
+		font-size: 16px;
+		.warning-title {
+			font-weight: bold;
+		}
+	}
+
+	.target-box {
+		//background-color: colors.$light-green;
+		display: grid;
+
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+
+		//gap: 1rem;
+
+		div {
+			text-align: center;
+			background: colors.$light-red;
+			padding: 0.5rem;
+			border-radius: 1rem;
+
+			&:hover {
+				font-weight: bold;
+				text-shadow: 0 0 5px #ff0000;
+			}
+		}
+	}
+}
+</style>

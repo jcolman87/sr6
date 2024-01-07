@@ -32,8 +32,6 @@ export default class SR6Combat extends Combat {
 	}
 
 	override async nextTurn(): Promise<this> {
-		console.log('SR6Combat::nextTurn', this);
-
 		if (this.nextCombatant) {
 			const next = this.nextCombatant! as SR6Combatant;
 			await next.beginTurn();

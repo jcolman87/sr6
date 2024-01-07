@@ -28,6 +28,7 @@ export enum ConditionModifierType {
 	Pool = 'pool',
 	ActiveEffect = 'activeEffect',
 	Opposed = 'opposed',
+	PreventActions = 'prevent',
 }
 
 export type ConditionDuration = {
@@ -145,7 +146,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 				key: effect.key,
 				value: effect.value,
 				priority: 0,
-				mode: CONST.ACTIVE_EFFECT_MODES.ADD,
+				mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
 			};
 		});
 
@@ -156,7 +157,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 					description: this.description,
 					icon: this.icon,
 					transfer: true,
-					origin: item.id,
+					origin: this.item!.uuid,
 					disabled: false,
 					changes: changes,
 					statuses: this.statusEffectId ? [this.statusEffectId] : [],
@@ -170,8 +171,8 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 			])
 		)[0] as SR6Effect;
 		await effect.setFlag('sr6', 'ConditionActiveEffectData', {
-			sourceItemId: item.id,
-			sourceActorId: actor.id,
+			sourceItemId: this.item!.uuid,
+			sourceActorId: actor.uuid,
 			turnCreated: game.combat ? game.combat!.turn : null,
 		});
 

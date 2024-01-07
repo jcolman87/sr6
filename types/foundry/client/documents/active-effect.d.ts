@@ -7,7 +7,10 @@ declare global {
 	 * Each ActiveEffect contains a ActiveEffectData object which provides its source data.
 	 */
 	class ActiveEffect extends ActiveEffectConstructor implements TemporaryEffect {
-		constructor(data: PreCreate<foundry.data.ActiveEffectSource>, context?: DocumentConstructionContext<ActiveEffect>);
+		constructor(
+			data: PreCreate<foundry.data.ActiveEffectSource>,
+			context?: DocumentConstructionContext<ActiveEffect>
+		);
 
 		/** A cached reference to the source name to avoid recurring database lookups */
 		protected _sourceName: string | null;
@@ -65,7 +68,7 @@ declare global {
 		 * @param change The change data being applied
 		 * @return The resulting applied value
 		 */
-		apply(actor: Actor, change: ApplicableChangeData<this>): unknown;
+		apply(actor: Actor, change: ApplicableChangeData<this>): ApplicableChangeData<this> | undefined;
 
 		/**
 		 * Apply an ActiveEffect that uses an ADD application mode.
@@ -80,7 +83,13 @@ declare global {
 		 * @param change The change data being applied
 		 * @return The resulting applied value
 		 */
-		protected _applyAdd(actor: Actor, change: ApplicableChangeData<this>): unknown;
+		protected _applyAdd(
+			actor: Actor,
+			change: ApplicableChangeData<this>,
+			current: any,
+			delta: any,
+			changes: any
+		): void;
 
 		/**
 		 * Apply an ActiveEffect that uses a MULTIPLY application mode.
@@ -89,7 +98,13 @@ declare global {
 		 * @param change The change data being applied
 		 * @return The resulting applied value
 		 */
-		protected _applyMultiply(actor: Actor, change: ApplicableChangeData<this>): unknown;
+		protected _applyMultiply(
+			actor: Actor,
+			change: ApplicableChangeData<this>,
+			current: any,
+			delta: any,
+			changes: any
+		): void;
 
 		/**
 		 * Apply an ActiveEffect that uses an OVERRIDE application mode.
@@ -98,7 +113,13 @@ declare global {
 		 * @param change The change data being applied
 		 * @return The resulting applied value
 		 */
-		protected _applyOverride(actor: Actor, change: ApplicableChangeData<this>): unknown;
+		protected _applyOverride(
+			actor: Actor,
+			change: ApplicableChangeData<this>,
+			current: any,
+			delta: any,
+			changes: any
+		): void;
 
 		/**
 		 * Apply an ActiveEffect that uses an UPGRADE, or DOWNGRADE application mode.
@@ -107,7 +128,13 @@ declare global {
 		 * @param change The change data being applied
 		 * @return The resulting applied value
 		 */
-		protected _applyUpgrade(actor: Actor, change: ApplicableChangeData<this>): unknown;
+		protected _applyUpgrade(
+			actor: Actor,
+			change: ApplicableChangeData<this>,
+			current: any,
+			delta: any,
+			changes: any
+		): void;
 
 		/**
 		 * Apply an ActiveEffect that uses a CUSTOM application mode.
@@ -115,7 +142,13 @@ declare global {
 		 * @param change The change data being applied
 		 * @return The resulting applied value
 		 */
-		protected _applyCustom(actor: Actor, change: ApplicableChangeData<this>): unknown;
+		protected _applyCustom(
+			actor: Actor,
+			change: ApplicableChangeData<this>,
+			current: any,
+			delta: any,
+			changes: any
+		): void;
 
 		/** Get the name of the source of the Active Effect */
 		protected _getSourceName(): Promise<string>;
@@ -124,7 +157,14 @@ declare global {
 		/*  Event Handlers                              */
 		/* -------------------------------------------- */
 
-		protected override _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext, user: User): Promise<void>;
+		protected override _preCreate(
+			data: PreDocumentId<this['_source']>,
+			options: DocumentModificationContext,
+			user: User
+		): Promise<void>;
+
+		protected _castDelta(string: raw, string: type): any;
+		protected _castArray(string: raw, string: type): any[];
 	}
 
 	interface ActiveEffect {

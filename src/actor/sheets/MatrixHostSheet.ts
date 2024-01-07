@@ -14,12 +14,6 @@ import VueSheet from '@/vue/VueSheet';
 import SR6ActorSheet from '@/actor/SR6ActorSheet';
 import { ActorSheetContext } from '@/vue/SheetContext';
 
-interface ElementDragEvent extends DragEvent {
-	target: HTMLElement;
-	currentTarget: HTMLElement;
-	readonly dataTransfer: DataTransfer;
-}
-
 /**
  * Actor sheet used for Player Characters
  */
@@ -29,7 +23,6 @@ export default class MatrixHostSheet extends VueSheet(SR6ActorSheet<MatrixHostDa
 	}
 
 	async getVueContext(): Promise<ActorSheetContext<MatrixHostDataModel> | undefined> {
-		console.log('getVueContext', this, game.combat);
 		return {
 			sheet: this,
 			data: {

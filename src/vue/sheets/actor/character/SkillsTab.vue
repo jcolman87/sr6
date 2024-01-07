@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { SR6Roll } from '@/roll/SR6Roll';
-import { computed, inject, unref, toRaw } from 'vue';
+import { computed, inject, toRaw } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 

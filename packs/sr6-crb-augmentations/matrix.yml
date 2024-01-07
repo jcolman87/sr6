@@ -1,0 +1,22 @@
+name: Cyberjack
+type: augmentation
+img: icons/svg/item-bag.svg
+data:
+  essenseCost: 1.0
+  rating: 1
+  conditions:
+    - name: Cyberjack
+      description: Added matrix attributes
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: activeEffect
+          situation: always
+          key: 'matrixPersona:dataProcessing'
+          value: '@rating + 3'
+        - type: activeEffect
+          situation: always
+          key: 'matrixPersona:firewall'
+          value: '@rating + 2'
+  effects: []

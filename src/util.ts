@@ -35,9 +35,8 @@ export function getActor<TActor extends Actor>(documentClass: ConstructorOf<TAct
 
 export function getItem<TItem extends Item>(documentClass: ConstructorOf<TItem>, id: ItemUUID): null | TItem {
 	const item = fromUuidSync(id);
-	console.log('item', id);
+
 	if (item instanceof documentClass) {
-		console.log('cast success');
 		return item as TItem;
 	}
 	return null;

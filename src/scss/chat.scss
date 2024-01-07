@@ -29,3 +29,26 @@
 		color: colors.$critical-glitch;
 	}
 }
+
+.chat-target-box {
+	//background-color: colors.$light-green;
+	display: grid;
+
+	grid-template-columns: minmax(90px, 10px) minmax(90px, 10px) minmax(90px, 10px);
+
+	//gap: 1rem;
+
+	div {
+		text-align: center;
+		background: colors.$lighter-blue;
+		padding: 0.2rem;
+		border-radius: 1rem;
+
+
+		&:hover {
+			background: colors.$light-blue;
+			font-weight: bold;
+			text-shadow: 0 0 5px #ff0000;
+		}
+	}
+}

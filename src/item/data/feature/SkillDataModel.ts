@@ -66,6 +66,7 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 			points: new fields.NumberField({ initial: 0, nullable: false, required: true, min: 0 }),
 
 			category: new fields.StringField({
+				initial: SkillCategory.Other,
 				nullable: false,
 				blank: false,
 				required: true,

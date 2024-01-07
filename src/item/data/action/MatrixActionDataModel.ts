@@ -7,11 +7,11 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import ConditionDataModel from '@/condition/ConditionDataModel';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import { ActivationType, ActivationPeriod } from '@/data';
-import SkillUseDataModel from '@/data/SkillUseDataModel';
+import ConditionDataModel, { ConditionActivation } from '@/condition/ConditionDataModel';
+import { ActivationPeriod, ActivationType } from '@/data';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
+import SkillUseDataModel from '@/data/SkillUseDataModel';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 export type MatrixActionLimits = {
 	illegal: boolean;
@@ -39,6 +39,10 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 	abstract formulas: MatrixActionFormulas;
 
 	abstract conditions: ConditionDataModel[];
+
+	async getHitConditions(): Promise<ConditionDataModel[]> {
+		return this.conditions.filter((condition) => (condition.activation = ConditionActivation.OnHit));
+	}
 
 	get pool(): number {
 		if (this.skillUse) {
