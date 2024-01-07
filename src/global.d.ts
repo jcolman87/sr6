@@ -94,5 +94,4 @@ declare global {
 		type: string;
 		uuid: ItemUUID | ActorUUID | TokenDocumentUUID;
 	};
-	s;
 }

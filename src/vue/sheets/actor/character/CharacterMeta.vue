@@ -23,14 +23,6 @@ function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
 		toRaw(context.data.actor).update({ [field]: amount });
 	}
 }
-
-function boxStyle(monitor: MonitorDataModel, idx: number) {
-	if (idx <= monitor.damage) {
-		return 'width: 32px; background: #FFCCCB';
-	} else {
-		return 'width: 32px';
-	}
-}
 </script>
 
 <template>
@@ -66,60 +58,22 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 				</div>
 			</div>
 			<div class="section" style="align-self: start; width: 95%">
-				<div style="width: 100%">
-					<table>
-						<tr>
-							<td class="monitor-header physical-bar-header"></td>
-							<td
-								class="monitor-bar-box"
-								:style="boxStyle(system.monitors.physical, idx)"
-								v-for="idx in system.monitors.physical.max"
-								:key="idx"
-								@click.prevent="
-									setDamage(system.monitors.physical, 'system.monitors.physical.damage', idx)
-								"
-							>
-								<template v-if="idx % 3 == 0">
-									{{ -Math.round((idx + 1) / 3) }}
-								</template>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div style="width: 100%">
-					<table v-if="system.monitors.physical.value <= 0">
-						<tr>
-							<td><i class="fa-solid fa-skull"></i></td>
-							<td
-								class="monitor-bar-box"
-								:style="boxStyle(system.monitors.overflow, idx)"
-								v-for="idx in system.monitors.overflow.max"
-								:key="idx"
-								@click.prevent="
-									setDamage(system.monitors.overflow, 'system.monitors.overflow.damage', idx)
-								"
-							></td>
-						</tr>
-					</table>
-				</div>
-				<div style="width: 100%">
-					<table>
-						<tr>
-							<td class="monitor-header stun-bar-header"></td>
-							<td
-								class="monitor-bar-box"
-								:style="boxStyle(system.monitors.stun, idx)"
-								v-for="idx in system.monitors.stun.max"
-								:key="idx"
-								@click.prevent="setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)"
-							>
-								<template v-if="idx % 3 == 0">
-									{{ -Math.round((idx + 1) / 3) }}
-								</template>
-							</td>
-						</tr>
-					</table>
-				</div>
+				<MonitorView
+					:monitor="system.monitors.physical"
+					@setDamage="(idx) => setDamage(system.monitors.physical, 'system.monitors.physical.damage', idx)"
+				/>
+				<MonitorView
+					v-if="system.monitors.physical.value <= 0"
+					:monitor="system.monitors.overflow"
+					icon="/icons/svg/skull.svg"
+					:showModifiers="false"
+					@setDamage="(idx) => setDamage(system.monitors.overflow, 'system.monitors.overflow.damage', idx)"
+				/>
+				<MonitorView
+					:monitor="system.monitors.stun"
+					icon="/systems/sr6/assets/brain.webp"
+					@setDamage="(idx) => setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)"
+				/>
 			</div>
 		</div>
 		<img :src="context.data.actor.img" data-edit="img" :alt="context.data.actor.name" />
@@ -144,36 +98,6 @@ function boxStyle(monitor: MonitorDataModel, idx: number) {
 		border: 1px solid colors.$gold;
 		background: transparentize(colors.$gold, 0.5);
 		border-radius: 1em;
-	}
-
-	.monitor-header {
-		font-weight: bold;
-		width: 32px;
-		background-repeat: no-repeat;
-		height: 24px;
-		background-image: url('/systems/sr6/assets/heart.webp');
-		background-size: 24px;
-		text-align: center;
-		border-left: solid black 1px;
-	}
-
-	.physical-bar-header {
-		background-image: url('/systems/sr6/assets/heart.webp');
-	}
-	.overflow-bar-header {
-		background-image: url('/systems/sr6/assets/heart.webp');
-	}
-	.stun-bar-header {
-		background-image: url('/systems/sr6/assets/brain.webp');
-	}
-
-	.monitor-bar-box {
-		text-align: center;
-		border-left: solid black 1px;
-
-		.damaged {
-			background: #ffcccb;
-		}
 	}
 
 	.text-atop {

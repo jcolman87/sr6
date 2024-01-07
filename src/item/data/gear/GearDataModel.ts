@@ -53,10 +53,12 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 			programs: this._programSlots.map((uuid) => getItem(SR6Item<MatrixProgramDataModel>, uuid)!),
 		};
 	}
-	async setProgramSlots(programs: SR6Item<MatrixProgramDataModel>[]) {
+
+	async setProgramSlots(programs: SR6Item<MatrixProgramDataModel>[]): void {
 		this._programSlots = programs.map((p) => p.uuid).slice(0, this.programSlots.total);
 	}
-	async clearProgramSlots() {
+
+	async clearProgramSlots(): void {
 		this._programSlots = [];
 	}
 
@@ -179,10 +181,18 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 		};
 	}
 
+	override prepareBaseData(): void {
+		this.monitors.physical.prepareBaseData();
+		this.monitors.matrix?.prepareBaseData();
+	}
+
+	override prepareData(): void {
+		this.monitors.physical.prepareData();
+		this.monitors.matrix?.prepareData();
+	}
+
 	override prepareDerivedData(): void {
-		//if (this.monitors.matrix) {
-		//	this.monitors.matrix.prepareDerivedData();
-		//}
-		//this.monitors.physical.prepareDerivedData();
+		this.monitors.physical.prepareDerivedData();
+		this.monitors.matrix?.prepareDerivedData();
 	}
 }

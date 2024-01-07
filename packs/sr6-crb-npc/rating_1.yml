@@ -185,7 +185,7 @@ items:
     flags: {}
   - name: Enchanting
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: magic
@@ -202,7 +202,7 @@ items:
     flags: {}
   - name: Stealth
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -220,7 +220,7 @@ items:
     flags: {}
   - name: Perception
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -243,7 +243,7 @@ items:
     flags: {}
   - name: Outdoors
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -263,7 +263,7 @@ items:
     flags: {}
   - name: Tasking
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: matrix
@@ -280,7 +280,7 @@ items:
     flags: {}
   - name: Electronics
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: matrix
@@ -298,7 +298,7 @@ items:
     flags: {}
   - name: Sorcery
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: magic
@@ -315,7 +315,7 @@ items:
     flags: {}
   - name: Close Combat
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: combat
@@ -332,7 +332,7 @@ items:
     flags: {}
   - name: Engineering
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -354,7 +354,7 @@ items:
     flags: {}
   - name: Conjuring
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: magic
@@ -370,7 +370,7 @@ items:
     flags: {}
   - name: Biotech
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -388,7 +388,7 @@ items:
     flags: {}
   - name: Athletics
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -409,7 +409,7 @@ items:
     flags: {}
   - name: Firearms
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: combat
@@ -432,7 +432,7 @@ items:
     flags: {}
   - name: Astral
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: magic
@@ -450,7 +450,7 @@ items:
     flags: {}
   - name: Cracking
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: matrix
@@ -467,7 +467,7 @@ items:
     flags: {}
   - name: Exotic Weapons
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: combat
@@ -481,7 +481,7 @@ items:
     flags: {}
   - name: Piloting
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: other
@@ -498,7 +498,7 @@ items:
     flags: {}
   - name: Influence
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: social
@@ -517,7 +517,7 @@ items:
     flags: {}
   - name: Con
     type: skill
-    img: "/systems/sr6/assets/brain.svg"
+    img: "/systems/sr6/assets/brain.webp"
     effects: []
     system:
       category: social

@@ -39,7 +39,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 
 	get sourceDevice(): null | SR6Item<GearDataModel> {
 		if (this.sourceDeviceId) {
-			let device = getItem(SR6Item<GearDataModel>, this.sourceDeviceId);
+			const device = getItem(SR6Item<GearDataModel>, this.sourceDeviceId);
 			if (device) {
 				return device;
 			}
@@ -83,7 +83,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 		super.prepareDerivedData();
 		if (!this._preparedOnce) {
 			this._preparedOnce = true;
-			//this.item!.update({ ['system._preparedOnce']: true, ['system.attributes.current']: this.attributes.base });
+			// this.item!.update({ ['system._preparedOnce']: true, ['system.attributes.current']: this.attributes.base });
 		}
 	}
 

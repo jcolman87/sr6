@@ -6,10 +6,17 @@ const emit = defineEmits<{
 	(e: 'setDamage', value: number): void;
 }>();
 
-const props = defineProps<{
-	monitor: MonitorDataModel;
-	icon: string;
-}>();
+const props = withDefaults(
+	defineProps<{
+		monitor: MonitorDataModel;
+		icon?: string;
+		showModifiers?: boolean;
+	}>(),
+	{
+		icon: '/systems/sr6/assets/heart.webp',
+		showModifiers: true,
+	}
+);
 
 function setDamage(amount: number) {
 	if (props.monitor.damage === amount) {
@@ -29,10 +36,10 @@ function boxStyle(idx: number) {
 </script>
 
 <template>
-	<div style="width: 100%">
+	<div style="width: 100%" class="monitor-view">
 		<table>
 			<tr>
-				<td class="monitor-header physical-bar-header"></td>
+				<td class="monitor-header" :style="`background-image: url(${props.icon})`"></td>
 				<td
 					class="monitor-bar-box"
 					:style="boxStyle(idx)"
@@ -40,7 +47,7 @@ function boxStyle(idx: number) {
 					:key="idx"
 					@click.prevent="setDamage(idx)"
 				>
-					<template v-if="idx % 3 == 0">
+					<template v-if="props.showModifiers && idx % 3 == 0">
 						{{ -Math.round((idx + 1) / 3) }}
 					</template>
 				</td>
@@ -50,36 +57,18 @@ function boxStyle(idx: number) {
 </template>
 
 <style lang="scss" scoped>
-@use '@scss/mixins/reset.scss';
-@use '@scss/vars/colors.scss';
-
 .monitor-view {
-	display: grid;
-	grid-template-columns: 1fr min(110px, 20%);
-	gap: 1rem;
-	margin-bottom: 0.5em;
-
-	@include reset.input;
-
-	// Actor's image
-	img {
-		border: 1px solid colors.$gold;
-		background: transparentize(colors.$gold, 0.5);
-		border-radius: 1em;
-	}
-
 	.monitor-header {
 		font-weight: bold;
 		width: 32px;
-		background-repeat: no-repeat;
 		height: 24px;
-		background-image: url(v-bind(props.icon));
+		background-repeat: no-repeat;
 		background-size: 24px;
-		text-align: center;
 		border-left: solid black 1px;
 	}
 	.monitor-bar-box {
 		text-align: center;
+		font-size: 12px;
 		border-left: solid black 1px;
 
 		.damaged {

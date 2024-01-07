@@ -27,7 +27,7 @@ export default class SR6ActorSheet<
 		return {
 			...super.defaultOptions,
 			classes: ['sr6', 'sheet', 'actor'],
-			width: 720,
+			width: 750,
 			height: 640,
 		};
 	}

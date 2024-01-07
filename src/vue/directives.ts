@@ -6,7 +6,7 @@
 import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import SR6Item from '@/item/SR6Item';
-import { toRaw, DirectiveBinding } from 'vue';
+import { ref, computed, toRaw, DirectiveBinding } from 'vue';
 
 function doLocalize(el: HTMLInputElement, binding: DirectiveBinding): void {
 	if (typeof binding.arg !== 'string') {

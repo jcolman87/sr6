@@ -66,7 +66,7 @@ export default class SR6Effect extends ActiveEffect {
 			const model = (game as any).model.Actor[actor.type] || {};
 			target = foundry.utils.getProperty(model, change.key) ?? null;
 		}
-		let targetType = foundry.utils.getType(target);
+		const targetType = foundry.utils.getType(target);
 
 		// Cast the effect change value to the correct type
 		let delta;
@@ -81,6 +81,10 @@ export default class SR6Effect extends ActiveEffect {
 			);
 			return undefined;
 		}
+
+		const baseActor = actor as SR6Actor<BaseActorDataModel>;
+		//  let actor = actor as SR6Actor<CharacterDataModel> as any;
+		const path = change.key.split(':');
 
 		// Apply the change depending on the application mode
 		const modes = CONST.ACTIVE_EFFECT_MODES;
@@ -100,13 +104,10 @@ export default class SR6Effect extends ActiveEffect {
 				this._applyUpgrade(actor, change, current, delta, changes);
 				break;
 			default: // CUSTOM CASE
-				const baseActor = actor as SR6Actor<BaseActorDataModel>;
-				//  let actor = actor as SR6Actor<CharacterDataModel> as any;
-				let path = change.key.split(':');
 				if (path.length > 1) {
 					switch (path[0]) {
 						case 'matrixPersona': {
-							let persona = (actor as SR6Actor<CharacterDataModel>).systemData.matrixPersona;
+							const persona = (actor as SR6Actor<CharacterDataModel>).systemData.matrixPersona;
 							if (persona) {
 								// eslint-disable-next-line @typescript-eslint/no-explicit-any
 								(persona.attributes.base as any)[path[1]] = change.value;
@@ -128,17 +129,20 @@ export default class SR6Effect extends ActiveEffect {
 
 		// Apply all changes to the Actor data
 		foundry.utils.mergeObject(actor, changes);
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		return changes as any;
 	}
 
 	_parseChanges(actor: Actor, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
-		if (change.mode != CONST.ACTIVE_EFFECT_MODES.CUSTOM && !change.key.includes('system.')) {
+		if (change.mode !== CONST.ACTIVE_EFFECT_MODES.CUSTOM && !change.key.includes('system.')) {
 			change.key = `system.${change.key}`;
 		}
 
 		if (change.value.includes('@')) {
 			// BUG: we cant use get by UUID here because it causes an infinite loop from preparing data.
-			let origin = actor.items.find((i) => i.uuid == (this.origin as ItemUUID)) as SR6Item<BaseItemDataModel>; //getItem(SR6Item<BaseItemDataModel>, this.origin as ItemUUID);
+			const origin = actor.items.find((i) => i.uuid === (this.origin as ItemUUID)) as SR6Item<BaseItemDataModel>;
+			// getItem(SR6Item<BaseItemDataModel>, this.origin as ItemUUID);
 
 			if (origin) {
 				change.value = origin.solveFormula(change.value, actor as SR6Actor<BaseActorDataModel>).toString();

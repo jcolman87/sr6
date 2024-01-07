@@ -5,6 +5,7 @@ import { getCoreConditions } from '@/condition';
 import ConditionDataModel, { ConditionActivation } from '@/condition/ConditionDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
+import SR6Item from '@/item/SR6Item';
 
 export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 	abstract monitor: MonitorDataModel;
@@ -13,12 +14,15 @@ export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 
 	override async getHitConditions(): Promise<ConditionDataModel[]> {
 		// Find the onHit conditions to apply either in the compendium or global items
-		let conditions = (await getCoreConditions()).filter((condition) =>
-			this._onHitConditions.includes(condition.name)
-		);
+		let conditions = (await getCoreConditions())
+			.filter((item) => this._onHitConditions.includes(item.name))
+			.map((item) => item.systemData);
 		if (conditions.length < this._onHitConditions.length) {
 			conditions = conditions.concat(
-				game.items.filter((condition) => this._onHitConditions.includes(condition.name))
+				game.items
+					.filter((item) => item.type === 'condition')
+					.filter((item) => this._onHitConditions.includes(item.name))
+					.map((item) => (item as SR6Item<ConditionDataModel>).systemData)
 			);
 		}
 		conditions = conditions.concat(await super.getHitConditions());

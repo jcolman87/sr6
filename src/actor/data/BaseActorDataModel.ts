@@ -67,6 +67,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		const persona = this.actor!.items.find((i) => i.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
 		return persona ? persona.systemData : null;
 	}
+
 	protected set _matrixPersona(newPersona: null | MatrixPersonaDataModel) {
 		const persona = this.actor!.items.find((i) => i.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
 		if (newPersona && persona) {
@@ -99,7 +100,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		}
 		 */
 		const attributes =
-			personaType == PersonaType.Device
+			personaType === PersonaType.Device
 				? device!.systemData.matrix!.attributes!
 				: {
 						formulas: {

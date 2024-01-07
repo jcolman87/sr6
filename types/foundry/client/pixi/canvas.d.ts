@@ -6,7 +6,7 @@ declare global {
 		TAmbientLight extends AmbientLight = AmbientLight,
 		TMeasuredTemplate extends MeasuredTemplate = MeasuredTemplate,
 		TToken extends Token = Token,
-		TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup,
+		TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup
 	> {
 		constructor();
 
@@ -235,6 +235,21 @@ declare global {
 		 * @returns A Promise which resolves once the animation has been completed
 		 */
 		animatePan(view?: { x?: number; y?: number; scale?: number; duration?: number }): Promise<unknown>;
+
+		/**
+		 * Animate pinging the canvas to a certain destination coordinate and zoom scale
+		 * Customize the animation speed with additional options
+		 * Returns a Promise which is resolved once the animation has completed
+		 *
+		 * @param view The desired view parameters
+		 * @param [view.x]            The destination x-coordinate
+		 * @param [view.y]            The destination y-coordinate
+		 * @param [view.scale]        The destination zoom scale
+		 * @param [view.duration=250] The total duration of the animation in milliseconds; used if speed is not set
+		 * @param [view.speed]        The speed of animation in pixels per second; overrides duration if set
+		 * @returns A Promise which resolves once the animation has been completed
+		 */
+		ping(view?: { x?: number; y?: number; scale?: number; duration?: number }): Promise<unknown>;
 
 		/**
 		 * Recenter the canvas

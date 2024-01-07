@@ -6,7 +6,7 @@ import SR6Item from '@/item/SR6Item';
 import { computed, toRaw, ref } from 'vue';
 
 const emit = defineEmits<{
-	(e: 'change', GearMatrixDataModel): void;
+	(e: 'change', model: GearMatrixDataModel): void;
 }>();
 const props = defineProps<{
 	model: GearMatrixDataModel;
@@ -16,16 +16,16 @@ const isGM = computed(() => game.user!.isGM);
 
 const basicPrograms = computed(() =>
 	toRaw(props.model)
-		.actor!.items.filter((i) => i.type == 'matrix_program')
+		.actor!.items.filter((i) => i.type === 'matrix_program')
 		.map((i) => i as SR6Item<MatrixProgramDataModel>)
-		.filter((i) => i.systemData.type == MatrixProgramType.Basic)
+		.filter((i) => i.systemData.type === MatrixProgramType.Basic)
 		.sort((a, b) => a.name.localeCompare(b.name))
 );
 const hackingPrograms = computed(() =>
 	toRaw(props.model)
-		.actor!.items.filter((i) => i.type == 'matrix_program')
+		.actor!.items.filter((i) => i.type === 'matrix_program')
 		.map((i) => i as SR6Item<MatrixProgramDataModel>)
-		.filter((i) => i.systemData.type == MatrixProgramType.Hacking)
+		.filter((i) => i.systemData.type === MatrixProgramType.Hacking)
 		.sort((a, b) => a.name.localeCompare(b.name))
 );
 
@@ -40,12 +40,12 @@ async function addAllPrograms() {
 	emit('change', props.model);
 }
 
-async function reset() {
-	await props.model.clearProgramSlots();
+function reset() {
+	props.model.clearProgramSlots();
 	emit('change', props.model);
 }
 
-async function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>) {
+function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>) {
 	if (props.model.programSlots.available <= 0) {
 		ui.notifications.error!('Maximum program slots reached');
 		(ev.target as HTMLInputElement).checked = false;
@@ -53,15 +53,15 @@ async function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>
 	}
 
 	if (!isLoaded(program)) {
-		await props.model.setProgramSlots([...props.model.programSlots.programs, program]);
+		props.model.setProgramSlots([...props.model.programSlots.programs, program]);
 	} else {
-		await props.model.setProgramSlots(props.model.programSlots.programs.filter((p) => p.uuid !== program.uuid));
+		props.model.setProgramSlots(props.model.programSlots.programs.filter((p) => p.uuid !== program.uuid));
 	}
 	emit('change', props.model);
 }
 
 function isLoaded(program: SR6Item<MatrixProgramDataModel>): boolean {
-	return props.model.programSlots.programs.find((p) => p.uuid === program.uuid) != undefined;
+	return props.model.programSlots.programs.find((p) => p.uuid === program.uuid) !== undefined;
 }
 
 function expandDescription(name: string, index: number) {
@@ -89,23 +89,23 @@ function nameStyle(name: string, index: number): string {
 </script>
 
 <template>
-	<div class="section matrix-program-slots" style="width: 100%">
+	<div class="section matrix-program-slots">
 		<div class="section-head">
 			<a @click.prevent="reset"><i class="fa fa-refresh" style="margin-left: auto"></i></a>
 			<a v-if="isGM && basicPrograms.length == 0" class="fas fa-infinity" @click.prevent="addAllPrograms" />
 			Active Programs
-			<span class="slot-text"
-				>Available Slots:
+			<div class="slot-text">
+				Available Slots:
 				<i style="font-weight: bold"
 					>{{ props.model.programSlots.available }} / {{ props.model.programSlots.total }}</i
-				></span
-			>
+				>
+			</div>
 		</div>
 		<table>
 			<template v-for="n in programRows" :key="n">
 				<tr>
 					<template v-if="basicPrograms[n]">
-						<td :title="basicPrograms[n].systemData.description">
+						<td :title="basicPrograms[n].systemData.description" class="selector">
 							<label class="switch">
 								<input
 									type="checkbox"
@@ -129,7 +129,7 @@ function nameStyle(name: string, index: number): string {
 					</template>
 
 					<template v-if="hackingPrograms[n]">
-						<td :title="hackingPrograms[n].systemData.description">
+						<td :title="hackingPrograms[n].systemData.description" class="selector">
 							<label class="switch">
 								<input
 									type="checkbox"
@@ -153,12 +153,12 @@ function nameStyle(name: string, index: number): string {
 					</template>
 				</tr>
 				<tr class="description" :style="descriptionStyle('basic', n)">
-					<td colspan="4">
+					<td colspan="4" class="description">
 						{{ basicPrograms[n] ? basicPrograms[n].systemData.description : '' }}
 					</td>
 				</tr>
 				<tr class="description" :style="descriptionStyle('hacking', n)">
-					<td colspan="4">
+					<td colspan="4" class="description">
 						{{ hackingPrograms[n] ? hackingPrograms[n].systemData.description : '' }}
 					</td>
 				</tr>
@@ -172,12 +172,7 @@ function nameStyle(name: string, index: number): string {
 @use '@scss/vars/colors.scss';
 
 .matrix-program-slots {
-	table {
-		padding: 0;
-		margin: 0;
-		table-layout: fixed;
-		width: 275px;
-	}
+	width: fit-content;
 
 	.slot-text {
 		margin-left: auto;
@@ -185,15 +180,31 @@ function nameStyle(name: string, index: number): string {
 		font-weight: normal;
 	}
 
-	.description {
-		margin-left: auto;
-		font-size: 10px;
-		font-weight: normal;
-		overflow: hidden;
-	}
-}
+	table {
+		padding: 0;
+		margin: 0;
+		table-layout: fixed;
+		width: auto;
 
-.program-name {
-	font-size: 11px;
+		.description {
+			margin-left: auto;
+			font-size: 10px;
+			font-weight: normal;
+			width: 0;
+			overflow: hidden;
+			max-width: 75px;
+		}
+
+		.selector {
+			width: 30px;
+		}
+
+		.program-name {
+			font-size: 11px;
+			text-align: left;
+			padding-right: 10px;
+			white-space: nowrap;
+		}
+	}
 }
 </style>

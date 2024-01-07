@@ -25,18 +25,14 @@ export class SR6ChatMessage extends ChatMessage {
 			}
 		});
 
-		html.find('.click-actor').dblclick(async (event: JQuery.ClickEvent<HTMLElement>) => {
+		html.find('.click-actor').dblclick(async (event: JQuery.DoubleClickEvent<HTMLElement>) => {
 			event.preventDefault();
-			const actorId = event.currentTarget.dataset['actorId'];
-			const actor = getActor(SR6Actor, actorId);
-			actor.sheet?.render(true);
+			getActor(SR6Actor, event.currentTarget.dataset['actorId'] as ActorUUID)?.sheet?.render(true);
 		});
 
-		html.find('.click-item').dblclick(async (event: JQuery.ClickEvent<HTMLElement>) => {
+		html.find('.click-item').dblclick(async (event: JQuery.DoubleClickEvent<HTMLElement>) => {
 			event.preventDefault();
-			const itemId = event.currentTarget.dataset['itemId'];
-			const item = getItem(SR6Item, itemId);
-			item.sheet?.render(true);
+			getItem(SR6Item, event.currentTarget.dataset['itemId'] as ItemUUID)?.sheet?.render(true);
 		});
 
 		html.find('.chat-expand-dice').click(async (event: JQuery.ClickEvent<HTMLElement>) => {

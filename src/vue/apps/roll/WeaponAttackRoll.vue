@@ -25,8 +25,11 @@ const weapon = computed(() => getItem(SR6Item<WeaponDataModel>, roll.value.attac
 const system = computed(() => toRaw(weapon.value).systemData);
 const original_pool = roll.value.pool;
 
-const targets = computed<SR6Actor<BaseActorDataModel>[]>(() =>
-	roll.value.attack.targetIds.map((id) => getActor(SR6Actor<BaseActorDataModel>, id))
+const targets = computed(
+	() =>
+		roll.value.attack.targetIds.map((id) =>
+			getActor(SR6Actor<BaseActorDataModel>, id)
+		) as SR6Actor<BaseActorDataModel>[]
 );
 
 emit('setText', {
@@ -75,8 +78,8 @@ function onChangeFiremode() {
 
 async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> {
 	if (target.token) {
-		canvas.ping(target.token.object.center);
-		return canvas.animatePan(target.token.object.center);
+		await canvas.animatePan(target.token.object.center);
+		await canvas.ping(target.token.object.center);
 	}
 }
 </script>

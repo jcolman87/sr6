@@ -122,7 +122,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 
 	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
 		const finalData = { ...this.getRollData(), ...data, actor: this };
-		//console.log('SR6Actor::solveFormula', formula, finalData);
+		// console.log('SR6Actor::solveFormula', formula, finalData);
 		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
 
 		roll = roll.evaluate({ async: false });

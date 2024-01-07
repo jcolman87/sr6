@@ -19,6 +19,7 @@ export default abstract class MatrixHostDataModel
 	get matrixPersona(): null | MatrixPersonaDataModel {
 		return this._matrixPersona;
 	}
+
 	set matrixPersona(persona: null | MatrixPersonaDataModel) {
 		this._matrixPersona = persona;
 	}

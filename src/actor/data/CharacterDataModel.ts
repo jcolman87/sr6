@@ -21,6 +21,7 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	get matrixPersona(): null | MatrixPersonaDataModel {
 		return this._matrixPersona;
 	}
+
 	set matrixPersona(persona: null | MatrixPersonaDataModel) {
 		this._matrixPersona = persona;
 	}
@@ -32,7 +33,7 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	}
 
 	async deactivateMatrixPersona(): Promise<boolean> {
-		const persona = this.actor!.items.find((item) => item.type == 'matrix_persona');
+		const persona = this.actor!.items.find((item) => item.type === 'matrix_persona');
 		if (persona) {
 			await persona.delete();
 			return true;

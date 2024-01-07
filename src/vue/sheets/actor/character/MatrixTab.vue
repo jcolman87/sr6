@@ -11,7 +11,9 @@ import * as rollers from '@/roll/Rollers';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import MatrixProgramSlotsView from '@/vue/views/MatrixProgramSlotsView.vue';
-import { computed, inject, toRaw } from 'vue';
+import MonitorView from '@/vue/views/MonitorView.vue';
+import { computed, inject, toRaw, ref } from 'vue';
+import { Collapse } from 'vue-collapsed';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
@@ -30,6 +32,19 @@ const matrixDevices = computed(() =>
 		.filter((i) => i.systemData.matrix)
 		.sort((a, b) => a.name.localeCompare(b.name))
 );
+
+const deviceVisible = ref(
+	matrixDevices.value.map((device) => {
+		return {
+			id: device.id,
+			visible: true,
+		};
+	})
+);
+
+matrixDevices.value.forEach((device) => {
+	console.log('monitor', device, device.systemData.monitors);
+});
 
 const persona = computed(() => {
 	let persona = toRaw(context.data.actor).items.find((i) => i.type === 'matrix_persona');
@@ -60,7 +75,7 @@ async function togglePersona(ev: Event): Promise<void> {
 	if (!(ev.target as HTMLInputElement).checked) {
 		await toRaw(system.value).deactivateMatrixPersona();
 	} else {
-		if (context.data.actor.systemData.magicAwakened == MagicAwakenedType.Technomancer) {
+		if (context.data.actor.systemData.magicAwakened === MagicAwakenedType.Technomancer) {
 			const newPersona = await toRaw(system.value).activateMatrixPersona(null);
 			newPersona.systemData.attributes.reset();
 		} else {
@@ -85,6 +100,14 @@ async function onAttributesUpdated(attributes: AdjustableMatrixAttributesDataMod
 }
 async function onProgramSlotsUpdated(model: GearMatrixDataModel) {
 	await toRaw(model.item!).update({ ['system.matrix']: model });
+}
+
+async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
+	if (device.systemData.monitors.matrix.damage === value) {
+		await toRaw(device).update({ ['system.monitors.matrix.damage']: 0 });
+	} else {
+		await toRaw(device).update({ ['system.monitors.matrix.damage']: value });
+	}
 }
 </script>
 
@@ -120,48 +143,69 @@ async function onProgramSlotsUpdated(model: GearMatrixDataModel) {
 				</tr>
 			</table>
 		</div>
-		<div class="section">
-			<div class="section-head">
-				Persona&nbsp;&nbsp;&nbsp;<label class="switch">
-					<input type="checkbox" @change.prevent="togglePersona" :checked="hasPersona" />
-					<span class="slider round"></span>
-				</label>
-			</div>
-			<template v-if="hasPersona">
-				<MatrixAttributesView
-					v-if="persona"
-					:attributes="persona.systemData.attributes"
-					@change="onAttributesUpdated"
-				/>
-			</template>
-		</div>
-		<div class="section">
-			<div class="section-head">Wireless Devices</div>
-			<table>
-				<template v-for="device in matrixDevices" :key="device.id">
-					<tr>
-						<td style="width: 1%">
-							<label class="switch">
-								<input
-									type="checkbox"
-									@change.prevent="toggleMatrixDevice(device)"
-									:checked="device.systemData.matrix!.active"
-								/>
-								<span class="slider round"></span>
-							</label>
-						</td>
-						<td style="width: 100%">{{ device.name }}</td>
-					</tr>
-					<tr v-if="device.systemData.matrix!.programSlots.total > 0 && device.systemData.matrix!.active">
-						<td colspan="5">
-							<MatrixProgramSlotsView
-								:model="device.systemData.matrix!"
-								@change="onProgramSlotsUpdated"
-							/>
-						</td>
-					</tr>
+		<div class="section wireless-section">
+			<div class="section">
+				<div class="section-head">
+					Persona&nbsp;&nbsp;&nbsp;<label class="switch">
+						<input type="checkbox" @change.prevent="togglePersona" :checked="hasPersona" />
+						<span class="slider round"></span>
+					</label>
+				</div>
+				<template v-if="hasPersona">
+					<MatrixAttributesView
+						v-if="persona"
+						:attributes="persona.systemData.attributes"
+						@change="onAttributesUpdated"
+					/>
 				</template>
-			</table>
+			</div>
+			<div class="section wireless-devices">
+				<div class="section-head">Wireless Devices</div>
+				<table>
+					<template v-for="device in matrixDevices" :key="device.id">
+						<tr>
+							<td style="width: 1%">
+								<label class="switch">
+									<input
+										type="checkbox"
+										@change.prevent="toggleMatrixDevice(device)"
+										:checked="device.systemData.matrix!.active"
+									/>
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td style="width: 100%">
+								<a
+									@click="
+										deviceVisible.find((v) => v.id == device.id)!.visible = !deviceVisible.find(
+											(v) => v.id == device.id
+										)!.visible
+									"
+									>{{ device.name }}</a
+								>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="5">
+								<Collapse :when="deviceVisible.find((v) => v.id == device.id)!.visible">
+									<div>
+										<MonitorView
+											:icon="device.img"
+											:monitor="device.systemData.monitors.matrix!"
+											@setDamage="(idx) => setDeviceDamage(device, idx)"
+										/>
+										<MatrixProgramSlotsView
+											v-if="device.systemData.matrix!.programSlots.total > 0"
+											:model="device.systemData.matrix!"
+											@change="onProgramSlotsUpdated"
+										/>
+									</div>
+								</Collapse>
+							</td>
+						</tr>
+					</template>
+				</table>
+			</div>
 		</div>
 	</section>
 </template>
@@ -169,4 +213,12 @@ async function onProgramSlotsUpdated(model: GearMatrixDataModel) {
 <style lang="scss" scoped>
 @use '@scss/vars/colors.scss';
 @use '@scss/sheets.scss';
+
+.wireless-section {
+	width: 375px;
+
+	.wireless-devices {
+		width: 99%;
+	}
+}
 </style>
