@@ -1,3 +1,5 @@
+import { EnumAttribute } from '@/actor/data';
+
 export enum MagicAwakenedType {
 	Mundane = 'mundane',
 	Full = 'full',
@@ -11,6 +13,12 @@ export enum MagicTradition {
 	Hermeticism = 'hermet',
 	Technomancer = 'technomancer',
 }
+export const MAGIC_TRADITION_ATTRIBUTE: Record<MagicTradition, EnumAttribute> = {
+	[MagicTradition.Shamanism]: EnumAttribute.charisma,
+	[MagicTradition.Hermeticism]: EnumAttribute.logic,
+	[MagicTradition.Technomancer]: EnumAttribute.resonance,
+};
+
 export enum SpellCombatType {
 	Direct = 'direct',
 	Indirect = 'indirect',

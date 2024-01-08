@@ -5,6 +5,7 @@
  */
 
 import SR6Actor from '@/actor/SR6Actor';
+import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Effect from '@/effects/SR6Effect';
 import SR6Item from '@/item/SR6Item';
 import SR6Combat from '@/combat/SR6Combat';
@@ -26,8 +27,7 @@ declare global {
 			SR6Effect,
 			SR6Actor,
 			ActorDirectory<SR6Actor>,
-			ChatLog,
-			ChatMessage,
+			SR6ChatMessage,
 			SR6Combat,
 			SR6Combatant,
 			SR6CombatTracker,
@@ -46,7 +46,7 @@ declare global {
 	}
 	const CONFIG: SR6Config;
 
-	interface SR6Game extends Game<SR6Actor, Actors, ChatMessage, SR6Combat, SR6Item, Macro, Scene, User> {
+	interface SR6Game extends Game<SR6Actor, Actors, SR6ChatMessage, SR6Combat, SR6Item, Macro, Scene, User> {
 		dice3d: Dice3d;
 	}
 

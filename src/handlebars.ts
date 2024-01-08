@@ -3,7 +3,7 @@
  * @author jaynus
  * @file
  */
-import { getActor, getItem } from '@/util';
+import { getActor, getItemSync } from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import * as handlebars from 'handlebars';
@@ -21,7 +21,6 @@ export function register(): void {
 	// Bullshit
 
 	/** String Utilities */
-
 	Handlebars.registerHelper('capitalize', /** @param {string} value */ (value) => value.capitalize());
 	Handlebars.registerHelper('toLowerCase', /** @param {string} value */ (value) => value.toLowerCase());
 	Handlebars.registerHelper('toUpperCase', /** @param {string} value */ (value) => value.toUpperCase());
@@ -59,7 +58,11 @@ export function register(): void {
 	});
 
 	Handlebars.registerHelper('getItemById', function (itemId: ItemUUID) {
-		return getItem(SR6Item, itemId);
+		return getItemSync(SR6Item, itemId);
+	});
+
+	Handlebars.registerHelper('solveFormula', function (system, formula: string) {
+		return system.solveFormula(formula);
 	});
 
 	/** Iteration utilities */

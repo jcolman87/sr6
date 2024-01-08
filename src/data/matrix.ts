@@ -18,7 +18,7 @@ export enum MatrixAttribute {
 	Firewall = 'f',
 }
 
-export enum MatrixUseType {
+export enum MatrixSimType {
 	AR = 'ar',
 	VRCold = 'vrcold',
 	VRHot = 'vrhot',

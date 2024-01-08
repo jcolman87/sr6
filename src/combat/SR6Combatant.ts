@@ -34,7 +34,7 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		const availableActions = this.actorSystemData.getAvailableActions(InitiativeType.Physical);
 
 		if (this.isOwner) {
-			this._setSystemData({
+			void this._setSystemData({
 				initiativeType: InitiativeType.Physical,
 				availableActions: availableActions,
 				roundActions: availableActions,

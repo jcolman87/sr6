@@ -31,18 +31,18 @@ async function addEffect(category: string) {
 	updateEffects();
 }
 
-function updateEffects() {
+function updateEffects(): void {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	effects.value = [...toRaw(context.sheet.actor).allApplicableEffects()] as any;
 }
 
-function deleteEffect(effect: SR6Effect) {
-	toRaw(effect).delete();
+async function deleteEffect(effect: SR6Effect): Promise<void> {
+	await toRaw(effect).delete();
 	updateEffects();
 }
 
-function deleteCondition(condition: SR6Item<ConditionDataModel>) {
-	toRaw(context.data.actor).deleteEmbeddedDocuments('Item', [condition.id]);
+async function deleteCondition(condition: SR6Item<ConditionDataModel>): Promise<void> {
+	await toRaw(context.data.actor).deleteEmbeddedDocuments('Item', [condition.id]);
 }
 
 onBeforeMount(updateEffects);

@@ -1,6 +1,6 @@
 name: Manabolt
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: Essential spellcasting, shaping mana to crack skulls. Who can argue
@@ -23,7 +23,7 @@ data:
 ---
 name: Manaball
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: Essential spellcasting, shaping mana to crack skulls. Who can argue
@@ -46,7 +46,7 @@ data:
 ---
 name: Stunbolt
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Can\u2019t sleep? Are the constant police sirens and gang shoot-outs\
@@ -70,7 +70,7 @@ data:
 ---
 name: Stunball
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Can\u2019t sleep? Are the constant police sirens and gang shoot-outs\
@@ -94,7 +94,7 @@ data:
 ---
 name: Flamestrike
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A classic. When you think of hurting people with magic, the first\
@@ -120,7 +120,7 @@ data:
 ---
 name: Fireball
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A classic. When you think of hurting people with magic, the first\
@@ -146,7 +146,7 @@ data:
 ---
 name: Clout
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A tricky little spell\u2014the magic doesn\u2019t hit the target,\
@@ -171,7 +171,7 @@ data:
 ---
 name: Blast
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A tricky little spell\u2014the magic doesn\u2019t hit the target,\
@@ -196,7 +196,7 @@ data:
 ---
 name: Acid Stream
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: These spells shoot acid at targets, doing immediate damage while also
@@ -221,7 +221,7 @@ data:
 ---
 name: Toxic Wave
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: These spells shoot acid at targets, doing immediate damage while also
@@ -246,7 +246,7 @@ data:
 ---
 name: Ice Spear
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "When every corp security goon you run into starts wearing flame-retardant\
@@ -274,7 +274,7 @@ data:
 ---
 name: Ice Storm
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "When every corp security goon you run into starts wearing flame-retardant\
@@ -302,7 +302,7 @@ data:
 ---
 name: Lightning Bolt
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "It\u2019s what deities from Zeus to Thor use to smite those who have\
@@ -328,7 +328,7 @@ data:
 ---
 name: Lightning Ball
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "It\u2019s what deities from Zeus to Thor use to smite those who have\
@@ -354,7 +354,7 @@ data:
 ---
 name: Powerbolt
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: The harsher version of Clout, Powerbolt smacks targets with Physical
@@ -377,7 +377,7 @@ data:
 ---
 name: Powerball
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: The harsher version of Clout, Powerbolt smacks targets with Physical
@@ -400,7 +400,7 @@ data:
 ---
 name: Analyze Device
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Sure, you know what a commlink looks like, but that doesn\u2019t mean\
@@ -429,7 +429,7 @@ data:
 ---
 name: Analyze Magic
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: Sometimes you want to know what magic does without going astral. Treat
@@ -454,7 +454,7 @@ data:
 ---
 name: Analyze Truth
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "The subject of the spell gains some sense if the target is telling\
@@ -480,7 +480,7 @@ data:
 ---
 name: Clairaudience
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: The person on whom this is cast gains the ability to hear distant sounds.
@@ -507,7 +507,7 @@ data:
 ---
 name: Clairvoyance
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: 'Like Clairaudience, but with visuals instead of sound, so: The person
@@ -535,7 +535,7 @@ data:
 ---
 name: Combat Sense
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "The subject gets a heightened awareness of possible dangers and the\
@@ -560,7 +560,7 @@ data:
 ---
 name: Detect Enemies
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "This spell lets the subject know if anyone within the sense\u2019\
@@ -586,7 +586,7 @@ data:
 ---
 name: Detect Life
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: Are there people hiding in that pile of rubble? Or in the forest? This
@@ -610,7 +610,7 @@ data:
 ---
 name: Detect Magic
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "No one wants to sort through an entire landfill to find the magic\
@@ -639,7 +639,7 @@ data:
 ---
 name: Mindlink
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Commlinks and text messaging? So pass\xE9. Just throw your thoughts\
@@ -668,7 +668,7 @@ data:
 ---
 name: Mind Probe
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "The subject of this spell can dig into a target\u2019s mind, seeing\
@@ -700,7 +700,7 @@ data:
 ---
 name: Antidote
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: This spell sends mana coursing through the body to find and purge toxins.
@@ -725,7 +725,7 @@ data:
 ---
 name: Cleansing Heal
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "This spell has the same healing effect as the Heal spell (roll Sorcery\
@@ -751,7 +751,7 @@ data:
 ---
 name: Cooling Heal
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "This spell has the same healing effect as the Heal spell (roll Sorcery\
@@ -777,7 +777,7 @@ data:
 ---
 name: Decrease Attribute
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: The touch of the mage weakens, slows, or stupefies the target, temporarily
@@ -805,7 +805,7 @@ data:
 ---
 name: Heal
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Shadowrunning comes with bumps, bruises, and bullet wounds, and magic\
@@ -832,7 +832,7 @@ data:
 ---
 name: Increase Attribute
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "The touch of the mage strengthens, speeds, or enlightens the target,\
@@ -861,7 +861,7 @@ data:
 ---
 name: Increase Reflexes
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "The reaction time and speed of the target increase, making them better\
@@ -889,7 +889,7 @@ data:
 ---
 name: Resist Pain
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "While not providing healing, this spell allows the target to ignore\
@@ -914,7 +914,7 @@ data:
 ---
 name: Stabilize
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: This is the spell to use when someone is in Overflow damage and is
@@ -940,7 +940,7 @@ data:
 ---
 name: Warming Heal
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "This spell has the same healing effect as the Heal spell (roll Sorcery\
@@ -966,7 +966,7 @@ data:
 ---
 name: Agony
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "This spell brings pain but not actual damage. Roll Sorcery + Magic\
@@ -996,7 +996,7 @@ data:
 ---
 name: Confusion
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1027,7 +1027,7 @@ data:
 ---
 name: Chaos
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1058,7 +1058,7 @@ data:
 ---
 name: Hush
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Single-Sense: This spell affects only one sense. \nSilence descends\
@@ -1088,7 +1088,7 @@ data:
 ---
 name: Silence
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Single-Sense: This spell affects only one sense. \nSilence descends\
@@ -1118,7 +1118,7 @@ data:
 ---
 name: Invisibility
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Single-Sense: This spell affects only one sense. \nThe target fades\
@@ -1146,7 +1146,7 @@ data:
 ---
 name: Improved Invisibility
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Single-Sense: This spell affects only one sense. \nThe target fades\
@@ -1174,7 +1174,7 @@ data:
 ---
 name: Mask
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1203,7 +1203,7 @@ data:
 ---
 name: Physical Mask
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1232,7 +1232,7 @@ data:
 ---
 name: Phantasm
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1262,7 +1262,7 @@ data:
 ---
 name: Trid Phantasm
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1292,7 +1292,7 @@ data:
 ---
 name: Sensor Sneak
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Multi-Sense: This spell affects multiple senses simultaneously. \n\
@@ -1320,7 +1320,7 @@ data:
 ---
 name: Animate Metal
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A chunk of material of the affected type comes to life, moving as\
@@ -1355,7 +1355,7 @@ data:
 ---
 name: Animate Plastic
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A chunk of material of the affected type comes to life, moving as\
@@ -1390,7 +1390,7 @@ data:
 ---
 name: Animate Stone
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A chunk of material of the affected type comes to life, moving as\
@@ -1425,7 +1425,7 @@ data:
 ---
 name: Animate Wood
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A chunk of material of the affected type comes to life, moving as\
@@ -1460,7 +1460,7 @@ data:
 ---
 name: Armor
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Your magic fills the body of the target, hardening it and making it\
@@ -1484,7 +1484,7 @@ data:
 ---
 name: Control Actions
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "The spellcaster acts as master puppeteer, taking control of another\
@@ -1514,7 +1514,7 @@ data:
 ---
 name: Control Thoughts
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Similar to Control Actions but more insidious, this puts the spellcaster\
@@ -1552,7 +1552,7 @@ data:
 ---
 name: Darkness
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: These spells are two sides of the same coin, changing the light level
@@ -1579,7 +1579,7 @@ data:
 ---
 name: Light
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: These spells are two sides of the same coin, changing the light level
@@ -1606,7 +1606,7 @@ data:
 ---
 name: Elemental Armor
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "This works the same as the Armor spell (above), though it provides\
@@ -1636,7 +1636,7 @@ data:
 ---
 name: Fling
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "If you ever thought, \u201CIf I had magic powers, I definitely would\
@@ -1666,7 +1666,7 @@ data:
 ---
 name: Focus Burst
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Foci can be powerful aids for magicians, but who hasn\u2019t found\
@@ -1694,7 +1694,7 @@ data:
 ---
 name: Levitate
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "It may not be exactly the same as flight, but hey, it\u2019s defying\
@@ -1726,7 +1726,7 @@ data:
 ---
 name: Mana Barrier
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Want a spirit-free room? Want a way to enforce your bar\u2019s \u201C\
@@ -1761,7 +1761,7 @@ data:
 ---
 name: Mystic Armor
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Your magic fills the astral form of the target, hardening it and making\
@@ -1785,7 +1785,7 @@ data:
 ---
 name: Overclock
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Magic does not always get along with tech, but sometimes they find\
@@ -1814,7 +1814,7 @@ data:
 ---
 name: Physical Barrier
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: Sometimes you want to keep magic away from you, and other times you
@@ -1841,7 +1841,7 @@ data:
 ---
 name: Shape Metal
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "These spells give you the ability to make the selected material malleable\u2014\
@@ -1871,7 +1871,7 @@ data:
 ---
 name: Shape Plastic
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "These spells give you the ability to make the selected material malleable\u2014\
@@ -1901,7 +1901,7 @@ data:
 ---
 name: Shape Stone
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "These spells give you the ability to make the selected material malleable\u2014\
@@ -1931,7 +1931,7 @@ data:
 ---
 name: Shape Wood
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "These spells give you the ability to make the selected material malleable\u2014\
@@ -1961,7 +1961,7 @@ data:
 ---
 name: Strengthen Wall
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "Whether you\u2019re trying to solidify a wall that your opponents\
@@ -1990,7 +1990,7 @@ data:
 ---
 name: Thunder
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: "A big, loud distraction can be useful, and that\u2019s what this spell\
@@ -2020,7 +2020,7 @@ data:
 ---
 name: Vehicle Armor
 type: spell
-img: assets/bolt-spell-cast.svg
+img: /systems/sr6/assets/items/bolt-spell-cast.webp
 data:
   effects: []
   description: Many shadowrunners learn only too late that car doors are not impenetrable

@@ -11,16 +11,16 @@ import Localized from '@/vue/components/Localized.vue';
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
 
-function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
+async function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
 	// If we arnt maxed on physical, reset overflow
 	if (toRaw(system.value).monitors.physical.value > 0) {
-		toRaw(context.data.actor).update({ ['system.monitors.overflow.damage']: 0 });
+		await toRaw(context.data.actor).update({ ['system.monitors.overflow.damage']: 0 });
 	}
 
 	if (monitor.damage === amount) {
-		toRaw(context.data.actor).update({ [field]: 0 });
+		await toRaw(context.data.actor).update({ [field]: 0 });
 	} else {
-		toRaw(context.data.actor).update({ [field]: amount });
+		await toRaw(context.data.actor).update({ [field]: amount });
 	}
 }
 </script>

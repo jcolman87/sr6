@@ -4,6 +4,7 @@ import { GearMatrixDataModel } from '@/item/data/gear/GearDataModel';
 import MatrixProgramDataModel, { MatrixProgramType } from '@/item/data/MatrixProgramDataModel';
 import SR6Item from '@/item/SR6Item';
 import { computed, toRaw, ref } from 'vue';
+import { Collapse } from 'vue-collapsed';
 
 const emit = defineEmits<{
 	(e: 'change', model: GearMatrixDataModel): void;
@@ -34,18 +35,19 @@ const showProgramDescription = ref({
 	name: 'asdf',
 	index: 0,
 });
+const isCollapsed = ref(false);
 
 async function addAllPrograms() {
 	await toRaw(props.model).actor!.createEmbeddedDocuments('Item', await getCoreMatrixPrograms());
 	emit('change', props.model);
 }
 
-function reset() {
-	props.model.clearProgramSlots();
+async function reset() {
+	await props.model.clearProgramSlots();
 	emit('change', props.model);
 }
 
-function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>) {
+async function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>): Promise<void> {
 	if (props.model.programSlots.available <= 0) {
 		ui.notifications.error!('Maximum program slots reached');
 		(ev.target as HTMLInputElement).checked = false;
@@ -53,9 +55,9 @@ function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>) {
 	}
 
 	if (!isLoaded(program)) {
-		props.model.setProgramSlots([...props.model.programSlots.programs, program]);
+		await props.model.setProgramSlots([...props.model.programSlots.programs, program]);
 	} else {
-		props.model.setProgramSlots(props.model.programSlots.programs.filter((p) => p.uuid !== program.uuid));
+		await props.model.setProgramSlots(props.model.programSlots.programs.filter((p) => p.uuid !== program.uuid));
 	}
 	emit('change', props.model);
 }
@@ -91,79 +93,81 @@ function nameStyle(name: string, index: number): string {
 <template>
 	<div class="section matrix-program-slots">
 		<div class="section-head">
-			<a @click.prevent="reset"><i class="fa fa-refresh" style="margin-left: auto"></i></a>
-			<a v-if="isGM && basicPrograms.length == 0" class="fas fa-infinity" @click.prevent="addAllPrograms" />
-			Active Programs
+			<a @click="isCollapsed = !isCollapsed"> <i class="fa-solid fa-down-from-line"></i> Active Programs</a>
 			<div class="slot-text">
 				Available Slots:
 				<i style="font-weight: bold"
 					>{{ props.model.programSlots.available }} / {{ props.model.programSlots.total }}</i
 				>
+				&nbsp;<a @click.prevent="reset"><i class="fa fa-refresh" style="margin-left: auto"></i></a>
+				<a v-if="isGM && basicPrograms.length == 0" class="fas fa-infinity" @click.prevent="addAllPrograms" />
 			</div>
 		</div>
-		<table>
-			<template v-for="n in programRows" :key="n">
-				<tr>
-					<template v-if="basicPrograms[n]">
-						<td :title="basicPrograms[n].systemData.description" class="selector">
-							<label class="switch">
-								<input
-									type="checkbox"
-									@change.prevent="(ev) => toggleProgram(ev, basicPrograms[n])"
-									:checked="isLoaded(basicPrograms[n])"
-								/>
-								<span class="slider round"></span>
-							</label>
-						</td>
-						<td
-							class="program-name"
-							:style="nameStyle('basic', n)"
-							:title="basicPrograms[n].systemData.description"
-						>
-							<a @click="expandDescription('basic', n)">{{ basicPrograms[n].name }}</a>
-						</td>
-					</template>
-					<template v-else>
-						<td></td>
-						<td></td>
-					</template>
+		<Collapse :when="isCollapsed">
+			<table>
+				<template v-for="n in programRows" :key="n">
+					<tr>
+						<template v-if="basicPrograms[n]">
+							<td :title="basicPrograms[n].systemData.description" class="selector">
+								<label class="switch">
+									<input
+										type="checkbox"
+										@change.prevent="(ev) => toggleProgram(ev, basicPrograms[n])"
+										:checked="isLoaded(basicPrograms[n])"
+									/>
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td
+								class="program-name"
+								:style="nameStyle('basic', n)"
+								:title="basicPrograms[n].systemData.description"
+							>
+								<a @click="expandDescription('basic', n)">{{ basicPrograms[n].name }}</a>
+							</td>
+						</template>
+						<template v-else>
+							<td></td>
+							<td></td>
+						</template>
 
-					<template v-if="hackingPrograms[n]">
-						<td :title="hackingPrograms[n].systemData.description" class="selector">
-							<label class="switch">
-								<input
-									type="checkbox"
-									@change.prevent="(ev) => toggleProgram(ev, hackingPrograms[n])"
-									:checked="isLoaded(hackingPrograms[n])"
-								/>
-								<span class="slider round"></span>
-							</label>
+						<template v-if="hackingPrograms[n]">
+							<td :title="hackingPrograms[n].systemData.description" class="selector">
+								<label class="switch">
+									<input
+										type="checkbox"
+										@change.prevent="(ev) => toggleProgram(ev, hackingPrograms[n])"
+										:checked="isLoaded(hackingPrograms[n])"
+									/>
+									<span class="slider round"></span>
+								</label>
+							</td>
+							<td
+								class="program-name"
+								:style="nameStyle('hacking', n)"
+								:title="hackingPrograms[n].systemData.description"
+							>
+								<a @click="expandDescription('hacking', n)">{{ hackingPrograms[n].name }}</a>
+							</td>
+						</template>
+						<template v-else>
+							<td></td>
+							<td></td>
+						</template>
+					</tr>
+					<tr class="description" :style="descriptionStyle('basic', n)">
+						<td colspan="4" class="description">
+							{{ basicPrograms[n] ? basicPrograms[n].systemData.description : '' }}
 						</td>
-						<td
-							class="program-name"
-							:style="nameStyle('hacking', n)"
-							:title="hackingPrograms[n].systemData.description"
-						>
-							<a @click="expandDescription('hacking', n)">{{ hackingPrograms[n].name }}</a>
+					</tr>
+					<tr class="description" :style="descriptionStyle('hacking', n)">
+						<td colspan="4" class="description">
+							{{ hackingPrograms[n] ? hackingPrograms[n].systemData.description : '' }}
 						</td>
-					</template>
-					<template v-else>
-						<td></td>
-						<td></td>
-					</template>
-				</tr>
-				<tr class="description" :style="descriptionStyle('basic', n)">
-					<td colspan="4" class="description">
-						{{ basicPrograms[n] ? basicPrograms[n].systemData.description : '' }}
-					</td>
-				</tr>
-				<tr class="description" :style="descriptionStyle('hacking', n)">
-					<td colspan="4" class="description">
-						{{ hackingPrograms[n] ? hackingPrograms[n].systemData.description : '' }}
-					</td>
-				</tr>
-			</template>
-		</table>
+					</tr>
+				</template>
+			</table>
+		</Collapse>
 	</div>
 </template>
 

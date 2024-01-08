@@ -8,14 +8,23 @@ export enum MonitorType {
 	Edge = 'edge',
 }
 
+export type WoundModifierData = Partial<Record<MonitorType, number>>;
+
 export default abstract class MonitorsDataModel extends BaseDataModel {
 	abstract physical: MonitorDataModel;
 	abstract stun: MonitorDataModel;
 	abstract overflow: MonitorDataModel;
 	abstract edge: MonitorDataModel;
 
+	get woundModifiers(): WoundModifierData {
+		return {
+			[MonitorType.Physical]: this.physical.woundModifier,
+			[MonitorType.Stun]: this.stun.woundModifier,
+		};
+	}
+
 	get woundModifier(): number {
-		return this.physical.woundModifier + this.stun.woundModifier;
+		return Object.entries(this.woundModifier).reduce((acc, [key, value]) => (acc += value), 0);
 	}
 
 	get(type: MonitorType): MonitorDataModel {

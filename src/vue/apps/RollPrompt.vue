@@ -17,6 +17,7 @@ import WeaponSoakRoll from '@/vue/apps/roll/WeaponSoakRoll.vue';
 import MatrixActionRoll from '@/vue/apps/roll/MatrixActionRoll.vue';
 
 import SpellCastRoll from '@/vue/apps/roll/SpellCastRoll.vue';
+import { Collapse } from 'vue-collapsed';
 
 const context = inject<RollPromptContext>(RootContext)!;
 const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
@@ -44,9 +45,37 @@ function onChangeEdgeBoost(ev: Event) {
 	// Reset first
 }
 
+const woundModifiers = computed(() => Object.entries(toRaw(context.actor.systemData).woundModifiers));
 const conditions = computed(() => baseSystem.value.getRollConditions(context.rollData.type));
 
+const totalModifier = computed(
+	() =>
+		baseSystem.value
+			.getRollConditions(context.rollData.type)
+			.reduce((total, condition) => (total += condition.getPoolModifier(context.rollData.type)), 0) +
+		toRaw(context.actor).systemData.woundModifier
+);
+
 let isDisplayConditions = ref(false);
+
+const conditionsDescriptionsVisible = ref(
+	conditions.value
+		.map((condition) => {
+			return {
+				id: condition.name,
+				visible: false,
+			};
+		})
+		.concat(
+			woundModifiers.value.map(([key, value]) => {
+				return {
+					id: key,
+					visible: false,
+				};
+			})
+		)
+);
+
 function toggleConditions() {
 	isDisplayConditions.value = !isDisplayConditions.value;
 }
@@ -90,22 +119,36 @@ onMounted(() => {
 				</td>
 			</tr>
 		</table>
-		<div
-			v-if="conditions.length > 0 || baseSystem.woundModifier != 0"
-			class="section"
-			@click.prevent="toggleConditions"
-		>
-			<div class="section-title" style="width: 100%"><Localized label="SR6.RollPrompt.Conditions" /></div>
-			<table v-if="isDisplayConditions">
-				<tr v-if="baseSystem.woundModifier != 0">
-					<table>
+		<div v-if="conditions.length > 0 || woundModifiers.length > 0" class="section" style="width: 100%">
+			<div class="section-title" style="width: 100%">
+				<a @click.prevent="toggleConditions"
+					><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;<Localized
+						label="SR6.RollPrompt.Conditions"
+					/>
+					({{ totalModifier }})</a
+				>
+			</div>
+			<table v-if="isDisplayConditions" style="width: 100%">
+				<tr v-for="[key, value] in woundModifiers" v-bind:key="key">
+					<table v-if="value != 0">
 						<tr>
-							<td style="width: 3em">{{ asModifierString(baseSystem.woundModifier) }}</td>
-							<td><Localized label="SR6.RollPrompt.WoundModifier" /></td>
+							<td style="width: 3em">{{ asModifierString(value) }}</td>
+							<td>
+								<a
+									@click="
+										conditionsDescriptionsVisible.find((v) => v.id == key)!.visible =
+											!conditionsDescriptionsVisible.find((v) => v.id == key)!.visible
+									"
+									><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;<Localized
+										:label="`SR6.RollPrompt.WoundModifiers.${key}.Name`"
+								/></a>
+							</td>
 						</tr>
 						<tr>
 							<td class="hint" colspan="2">
-								<Localized label="SR6.RollPrompt.WoundModifierDescription" />
+								<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == key)!.visible">
+									<Localized :label="`SR6.RollPrompt.WoundModifiers.${key}.Description`" />
+								</Collapse>
 							</td>
 						</tr>
 					</table>
@@ -116,10 +159,24 @@ onMounted(() => {
 							<td style="width: 3em">
 								{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}
 							</td>
-							<td>{{ condition.name }}</td>
+							<td>
+								<a
+									@click="
+										conditionsDescriptionsVisible.find((v) => v.id == condition.name)!.visible =
+											!conditionsDescriptionsVisible.find((v) => v.id == condition.name)!.visible
+									"
+									><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;{{ condition.name }}</a
+								>
+							</td>
 						</tr>
 						<tr>
-							<td class="hint" colspan="2">{{ condition.description }}</td>
+							<td class="hint" colspan="2">
+								<Collapse
+									:when="conditionsDescriptionsVisible.find((v) => v.id == condition.name)!.visible"
+								>
+									{{ condition.description }}</Collapse
+								>
+							</td>
 						</tr>
 					</table>
 				</tr>

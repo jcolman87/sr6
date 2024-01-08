@@ -29,11 +29,11 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 			ui.notifications.error('Applying action error!?');
 		}
 		// Apply the conditions
-		this.conditions.forEach((condition) => {
+		for (const condition of this.conditions) {
 			if (condition.activation === ConditionActivation.OnUse && condition.target === ConditionTarget.Self) {
-				condition.applyToActor(this.actor!);
+				await condition.applyToActor(this.actor!);
 			}
-		});
+		}
 		return true;
 	}
 

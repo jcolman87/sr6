@@ -8,7 +8,7 @@ import SR6Item from '@/item/SR6Item';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 import './SR6ItemSheet.scss';
-import { getItem } from '@/util';
+import { getItemSync } from '@/util';
 
 export type DropData = {
 	type: 'ActiveEffect' | 'Actor' | 'Item' | 'Folder';
@@ -55,7 +55,7 @@ export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = Base
 	protected override _onDrop(event: ElementDragEvent): void {
 		const data: DragEventData = TextEditor.getDragEventData(event) as DragEventData;
 		if (data.type === 'Item') {
-			const item = getItem(SR6Item<BaseItemDataModel>, data.uuid as ItemUUID)!;
+			const item = getItemSync(SR6Item<BaseItemDataModel>, data.uuid as ItemUUID)!;
 		}
 
 		return super._onDrop(event);

@@ -21,7 +21,7 @@ declare global {
 		TItem extends Item<TActor> = Item<TActor>,
 		TMacro extends Macro = Macro,
 		TScene extends Scene = Scene,
-		TUser extends User<TActor> = User<TActor>,
+		TUser extends User<TActor> = User<TActor>
 	> {
 		/**
 		 * The named view which is currently active.
@@ -137,7 +137,9 @@ declare global {
 		/* -------------------------------------------- */
 
 		actors: TActors;
-		collections: Collection<WorldCollection<TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>>;
+		collections: Collection<
+			WorldCollection<TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>
+		>;
 
 		combats: CombatEncounters<TCombat>;
 		folders: Folders<Folder>;

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { EnumAttribute } from '@/actor/data';
+import { MagicTradition } from '@/data/magic';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
+import Localized from '@/vue/components/Localized.vue';
 import { createNewItem, updateItem, deleteItem } from '@/vue/directives';
 import { rollAttribute, rollSpellCast } from '@/roll/Rollers';
 import { computed, inject, toRaw } from 'vue';
@@ -82,6 +84,15 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 						/>
 					</div>
 				</div>
+			</div>
+			<div>
+				<label>Tradition</label>
+				<select name="system.magicTradition" :value="system.magicTradition">
+					<option value="">Mundane</option>
+					<option v-for="[key, value] in Object.entries(MagicTradition)" v-bind:key="key" :value="value">
+						<Localized :label="`SR6.Magic.Traditions.${key}`" />
+					</option>
+				</select>
 			</div>
 		</div>
 		<div class="section" style="width: 40%">

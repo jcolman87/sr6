@@ -55,7 +55,8 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	}
 
 	// This is a fix needed for handling active effects from items showing as icon effects.
-	override get temporaryEffects(): TemporaryEffect[] {
+	/*
+		override get temporaryEffects(): TemporaryEffect[] {
 		// Only return actual temporary effects and then condition transferred effects
 		return [
 			...Array.from(this.allApplicableEffects()).filter(
@@ -64,6 +65,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 			...super.temporaryEffects,
 		];
 	}
+	*/
 
 	skill(skillId_or_name: string): SR6Item<SkillDataModel> | null {
 		let skill = this.items.get(skillId_or_name);
@@ -174,7 +176,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	}
 
 	async _onPostCreate(): Promise<void> {
-		(<IHasPostCreate>this.systemData).onPostCreate?.();
+		await (<IHasPostCreate>this.systemData).onPostCreate?.();
 	}
 
 	/**

@@ -1,4 +1,5 @@
 import SR6Actor from '@/actor/SR6Actor';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConstructorOf<T> = new (...args: any[]) => T;
@@ -33,13 +34,25 @@ export function getActor<TActor extends Actor>(documentClass: ConstructorOf<TAct
 	return null;
 }
 
-export function getItem<TItem extends Item>(documentClass: ConstructorOf<TItem>, id: ItemUUID): null | TItem {
+export function getItemSync<TItem extends Item>(documentClass: ConstructorOf<TItem>, id: ItemUUID): null | TItem {
 	const item = fromUuidSync(id);
 
 	if (item instanceof documentClass) {
 		return item as TItem;
 	}
 	return null;
+}
+
+export async function getItem<TItem extends Item>(
+	documentClass: ConstructorOf<TItem>,
+	id: ItemUUID
+): Promise<null | TItem> {
+	const item = fromUuid(id);
+
+	// if (item instanceof documentClass) {
+	//	 return item as TItem;
+	// }
+	return item as unknown as TItem;
 }
 
 export async function waitForCanvasTokens(): Promise<void> {

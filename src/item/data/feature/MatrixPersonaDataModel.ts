@@ -1,9 +1,10 @@
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import GearDataModel from '@/item/data/gear/GearDataModel';
 
 import SR6Item from '@/item/SR6Item';
-import GearDataModel from '@/item/data/gear/GearDataModel';
-import { getItem } from '@/util';
+import { getItemSync } from '@/util';
 
 export enum PersonaType {
 	Device = 'device',
@@ -34,12 +35,45 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	abstract attributes: AdjustableMatrixAttributesDataModel;
 	abstract formulas: MatrixPersonaFormulasData;
 	abstract type: PersonaType;
+	abstract simType: MatrixSimType;
 
 	abstract _preparedOnce: boolean;
 
+	get initiativeBasis(): number {
+		switch (this.simType) {
+			case MatrixSimType.AR:
+				return this.solveFormula('@reaction + @intuition');
+			case MatrixSimType.VRCold:
+			case MatrixSimType.VRHot:
+				return this.solveFormula('@intuition + @persona.d');
+		}
+	}
+
+	get initiativeDice(): number {
+		switch (this.simType) {
+			case MatrixSimType.AR:
+				return 0;
+			case MatrixSimType.VRCold:
+				return 1;
+			case MatrixSimType.VRHot:
+				return 2;
+		}
+	}
+
+	get initiativeFormula(): string {
+		switch (this.simType) {
+			case MatrixSimType.AR:
+				return '@reaction + @intuition';
+			case MatrixSimType.VRCold:
+				return '(@intuition + @persona.d) + 1d6';
+			case MatrixSimType.VRHot:
+				return '(@intuition + @persona.d) + 2d6';
+		}
+	}
+
 	get sourceDevice(): null | SR6Item<GearDataModel> {
 		if (this.sourceDeviceId) {
-			const device = getItem(SR6Item<GearDataModel>, this.sourceDeviceId);
+			const device = getItemSync(SR6Item<GearDataModel>, this.sourceDeviceId);
 			if (device) {
 				return device;
 			}
@@ -69,6 +103,14 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 
 	get defenseRating(): number {
 		return this.actor!.solveFormula(this.formulas.defenseRating);
+	}
+
+	get woundModifier(): number {
+		if (!this.sourceDevice) {
+			return 0;
+		}
+		const modifier = this.sourceDevice?.systemData.monitors.matrix?.woundModifier;
+		return modifier ? modifier : 0;
 	}
 
 	override getRollData(): Record<string, unknown> {
@@ -117,6 +159,13 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 				},
 				{ required: true, nullable: false }
 			),
+			simType: new fields.StringField({
+				initial: MatrixSimType.AR,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(MatrixSimType),
+			}),
 			type: new fields.StringField({
 				initial: PersonaType.Device,
 				required: true,

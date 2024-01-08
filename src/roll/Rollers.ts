@@ -1,7 +1,8 @@
 import { EnumAttribute } from '@/actor/data';
+import { MAGIC_TRADITION_ATTRIBUTE } from '@/data/magic';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
-import SpellDataModel from '@/item/data/SpellDataModel';
+import SpellDataModel, { SpellAdjustmentType } from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 import SR6Actor from '@/actor/SR6Actor';
 import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
@@ -14,7 +15,7 @@ import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import IHasInitiative from '@/data/IHasInitiative';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
-import { getItem, getTargetActorIds } from '@/util';
+import { getItemSync, getTargetActorIds } from '@/util';
 import * as util from '@/util';
 
 export const BUGFIX = '';
@@ -33,6 +34,8 @@ export type WeaponAttackData = {
 } & BaseAttackData;
 
 export type MatrixAttackData = {} & BaseAttackData;
+
+export type SpellAttackData = {} & BaseAttackData;
 
 export interface AttributeRollData extends SR6RollData {
 	attribute: EnumAttribute;
@@ -65,8 +68,10 @@ export interface MatrixDefenseRollData extends SR6RollData {
 	attack: MatrixAttackData;
 }
 
-export interface SpellRollData extends SR6RollData {
-	spellId: string;
+export interface SpellCastRollData extends SR6RollData {
+	attack: SpellAttackData;
+	adjustments: SpellAdjustmentType[];
+	drain: number;
 }
 
 export function getInitiativeRoll(systemData: IHasInitiative, formula: string): SR6Roll {
@@ -96,9 +101,9 @@ export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribut
 	}
 }
 
-export async function rollSkill(actor: SR6Actor, skillId: string): Promise<void> {
+export async function rollSkill(actor: SR6Actor, skillId: string, special: string | null = null): Promise<void> {
 	const rollType = RollType.Skill;
-	const pool = actor.skill(skillId)!.systemData.pool + actor.systemData.getPool(rollType);
+	const pool = actor.skill(skillId)!.systemData.getPool(special) + actor.systemData.getPool(rollType);
 
 	const rollData = await RollPrompt.promptForRoll<SkillRollData>(actor, {
 		...SR6Roll.defaultOptions(),
@@ -219,7 +224,13 @@ export async function rollMatrixAction(
 	systemData: IHasMatrixPersona,
 	action: SR6Item<MatrixActionDataModel>
 ): Promise<void> {
+	if (!systemData.matrixPersona) {
+		ui.notifications.error('You cannot roll a matrix action without activating your persona');
+		return;
+	}
+
 	const rollType = RollType.MatrixAction;
+
 	const pool = systemData.actor!.systemData.getPool(rollType) + action.systemData.pool;
 
 	const attackData = {
@@ -256,7 +267,7 @@ export async function rollMatrixDefense(
 ): Promise<void> {
 	const rollType = RollType.MatrixActionDefend;
 
-	const action = getItem(SR6Item<MatrixActionDataModel>, previous.attack.itemId)!;
+	const action = getItemSync(SR6Item<MatrixActionDataModel>, previous.attack.itemId)!;
 	const defendPool = action.systemData.defendAgainstPool(systemData.actor!);
 
 	const pool = systemData.actor!.systemData.getPool(rollType) + defendPool;
@@ -292,12 +303,28 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	const rollType = RollType.SpellCast;
 	const pool = spell.systemData.pool;
 
-	const rollData = await RollPrompt.promptForRoll<SpellRollData>(actor, {
+	console.log(
+		'formula',
+		actor.systemData.magicTradition,
+		`@magic + @${MAGIC_TRADITION_ATTRIBUTE[actor.systemData.magicTradition]}`
+	);
+
+	const attackData = {
+		attackerId: actor.uuid,
+		targetIds: getTargetActorIds(),
+		itemId: spell.uuid,
+		attackRating: actor.solveFormula(`@magic + @${MAGIC_TRADITION_ATTRIBUTE[actor.systemData.magicTradition]}`),
+		damage: spell.systemData.baseDamage,
+	};
+
+	const rollData = await RollPrompt.promptForRoll<SpellCastRollData>(actor, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
-		spellId: spell.id,
+		attack: attackData,
+		adjustments: [],
+		drain: spell.systemData.drain,
 	});
 
 	if (rollData) {

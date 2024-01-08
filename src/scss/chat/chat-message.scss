@@ -18,18 +18,6 @@
 		padding: 0.25em;
 	}
 
-	.story-point {
-		width: 100%;
-		text-align: center;
-		font-family: 'Bebas Neue', sans-serif;
-		font-size: 1.5em;
-		color: colors.$blue;
-
-		&.gm {
-			color: colors.$red;
-		}
-	}
-
 	%details-card {
 		display: flex;
 		flex-direction: column;
@@ -91,69 +79,59 @@
 		&.armor .description {
 			border-bottom: 1px dashed colors.$gold;
 		}
+	}
 
-		.weapon-firing-arc {
-			label {
-				grid-column: 1 / span 2;
-			}
+	.roll {
 
-			span {
-				grid-column: 1 / span 2;
-			}
+		.formula {
+			font-style: italic;
+			font-size: 11px;
 		}
 
-		// Left for now due to backwards compatibility with version <= 0.1.13 of this package.
-		.defenseAndSoak,
-		.skillAndRange,
-		.damageAndCritical {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: auto auto;
-			align-items: center;
-			justify-items: center;
+		.dv {
+			font-weight: bold;
+			color: colors.$red;
+		}
 
-			label {
-				grid-row: 1 / span 1;
-				font-size: 1.1em;
-			}
+		.success {
+			font-weight: bold;
+			color: colors.$green;
+		}
 
-			span {
-				grid-row: 2 / span 1;
+		.glitch {
+			font-weight: bold;
+			font-size: 14px;
+			color: colors.$glitch;
+		}
+
+		.critical-glitch {
+			font-weight: bold;
+			font-size: 14px;
+			color: colors.$critical-glitch;
+		}
+	}
+
+	.chat-target-box {
+		//background-color: colors.$light-green;
+		display: grid;
+
+		grid-template-columns: minmax(90px, 10px) minmax(90px, 10px) minmax(90px, 10px);
+
+		//gap: 1rem;
+
+		div {
+			text-align: center;
+			background: colors.$lighter-blue;
+			padding: 0.2rem;
+			border-radius: 1rem;
+
+
+			&:hover {
+				background: colors.$light-blue;
+				font-weight: bold;
+				text-shadow: 0 0 5px #ff0000;
 			}
 		}
 	}
 
-	.ability {
-		@extend %details-card;
-
-		.description {
-			border-bottom: 1px dashed colors.$gold;
-		}
-
-		.abilityActivation {
-			label {
-				grid-column: 1 / span 2;
-			}
-
-			span {
-				grid-column: 1 / span 2;
-			}
-		}
-	}
-
-	.qualities {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: 0.25em;
-
-		font-size: 1.05em;
-
-		.quality {
-			background: transparentize(colors.$gold, 0.9);
-			border: 1px dashed colors.$gold;
-			border-radius: 0.25em;
-			padding: 0.25em;
-		}
-	}
 }

@@ -3,7 +3,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import SR6Item from '@/item/SR6Item';
 import { SR6Roll } from '@/roll/SR6Roll';
-import { getActor, getItem } from '@/util';
+import { getActor, getItemSync } from '@/util';
 import * as util from '@/util';
 import * as rollers from '@/roll/Rollers';
 
@@ -20,19 +20,19 @@ export class SR6ChatMessage extends ChatMessage {
 			const actorId = event.currentTarget.dataset['actorId'];
 			const actor = getActor(SR6Actor, actorId);
 			if (actor && actor.token) {
-				canvas.ping(actor.token.object.center);
+				void canvas.ping(actor.token.object.center);
 				return canvas.animatePan(actor.token.object.center);
 			}
 		});
 
 		html.find('.click-actor').dblclick(async (event: JQuery.DoubleClickEvent<HTMLElement>) => {
 			event.preventDefault();
-			getActor(SR6Actor, event.currentTarget.dataset['actorId'] as ActorUUID)?.sheet?.render(true);
+			await getActor(SR6Actor, event.currentTarget.dataset['actorId'] as ActorUUID)?.sheet?.render(true);
 		});
 
 		html.find('.click-item').dblclick(async (event: JQuery.DoubleClickEvent<HTMLElement>) => {
 			event.preventDefault();
-			getItem(SR6Item, event.currentTarget.dataset['itemId'] as ItemUUID)?.sheet?.render(true);
+			await getItemSync(SR6Item, event.currentTarget.dataset['itemId'] as ItemUUID)?.sheet?.render(true);
 		});
 
 		html.find('.chat-expand-dice').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
@@ -64,25 +64,25 @@ export class SR6ChatMessage extends ChatMessage {
 		html.on('click', '#roll-weapon-defense', async (event) => {
 			event.preventDefault();
 
-			util.getSelfOrSelectedActors().forEach((actor) => {
-				rollers.rollWeaponDefend(
+			for (const actor of util.getSelfOrSelectedActors()) {
+				await rollers.rollWeaponDefend(
 					actor.systemData,
 					(this.rolls[0] as SR6Roll).hits,
 					this.rolls[0].options as unknown as rollers.WeaponAttackRollData
 				);
-			});
+			}
 		});
 
 		html.on('click', '#roll-weapon-soak', async (event) => {
 			event.preventDefault();
 
-			util.getSelfOrSelectedActors().forEach((actor) => {
-				rollers.rollWeaponSoak(
+			for (const actor of util.getSelfOrSelectedActors()) {
+				await rollers.rollWeaponSoak(
 					actor.systemData,
 					(this.rolls[0] as SR6Roll).hits,
 					this.rolls[0].options as unknown as rollers.WeaponSoakRollData
 				);
-			});
+			}
 		});
 
 		// Matrix
@@ -90,15 +90,15 @@ export class SR6ChatMessage extends ChatMessage {
 		html.on('click', '#roll-matrix-defense', async (event) => {
 			event.preventDefault();
 
-			util.getSelfOrSelectedActors()
-				.filter((actor) => actor.systemData.is<IHasMatrixPersona>())
-				.forEach((actor) => {
-					rollers.rollMatrixDefense(
-						actor.systemData as unknown as IHasMatrixPersona,
-						(this.rolls[0] as SR6Roll).hits,
-						this.rolls[0].options as unknown as rollers.MatrixActionRollData
-					);
-				});
+			for (const actor of util
+				.getSelfOrSelectedActors()
+				.filter((actor) => actor.systemData.is<IHasMatrixPersona>())) {
+				await rollers.rollMatrixDefense(
+					actor.systemData as unknown as IHasMatrixPersona,
+					(this.rolls[0] as SR6Roll).hits,
+					this.rolls[0].options as unknown as rollers.MatrixActionRollData
+				);
+			}
 		});
 
 		return html;

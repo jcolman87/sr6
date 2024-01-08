@@ -89,28 +89,28 @@ export default class ImportPrompt extends VueSheet(Application) {
 
 		const coreSkills = await getCoreSkills();
 		await actor.createEmbeddedDocuments('Item', coreSkills);
-		actor.items
-			.filter((i) => i.type === 'skill')
-			.forEach((s: any) => {
-				const skill = s as SR6Item<SkillDataModel>;
-				const entry = json.skill(skill.name);
-				if (entry) {
-					const specialization: string | undefined = entry.specializations
-						.filter((s: any) => !s.expertise)
-						.map((s: any) => s.name)[0];
-					const expertise: string | undefined = entry.specializations
-						.filter((s: any) => s.expertise)
-						.map((s: any) => s.name)[0];
+		const filtered = actor.items.filter((i) => i.type === 'skill');
 
-					skill.update({
-						['system']: {
-							points: parseInt(entry.rating),
-							specialization: specialization ? specialization : null,
-							expertise: expertise ? expertise : null,
-						},
-					});
-				}
-			});
+		for (const s of filtered) {
+			const skill = s as SR6Item<SkillDataModel>;
+			const entry = json.skill(skill.name);
+			if (entry) {
+				const specialization: string | undefined = entry.specializations
+					.filter((s: any) => !s.expertise)
+					.map((s: any) => s.name)[0];
+				const expertise: string | undefined = entry.specializations
+					.filter((s: any) => s.expertise)
+					.map((s: any) => s.name)[0];
+
+				await skill.update({
+					['system']: {
+						points: parseInt(entry.rating),
+						specialization: specialization ? specialization : null,
+						expertise: expertise ? expertise : null,
+					},
+				});
+			}
+		}
 
 		let sins: any = [];
 		if (Object.prototype.hasOwnProperty.call(json, 'sins') && json.sins.length > 0) {

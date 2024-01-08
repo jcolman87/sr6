@@ -34,4 +34,29 @@ export default abstract class BaseItemDataModel extends BaseDataModel {
 			source: new fields.StringField(),
 		};
 	}
+
+	static CHAT_TEMPLATE: string = 'systems/sr6/templates/chat/item.hbs';
+	get chatTemplate(): string {
+		return BaseItemDataModel.CHAT_TEMPLATE;
+	}
+
+	async toMessage(): Promise<void> {
+		const enrichedDescription = await TextEditor.enrichHTML(this.description, { async: true });
+
+		const chatTemplate = await renderTemplate(this.chatTemplate, {
+			name: this.item!.name,
+			type: this.item!.type,
+			description: enrichedDescription,
+			img: this.item!.img,
+			system: this.item!.systemData,
+		});
+		await ChatMessage.create({
+			user: game.user.id,
+			speaker: {
+				actor: game.user.character?.id,
+			},
+			content: chatTemplate,
+			type: CONST.CHAT_MESSAGE_TYPES.OOC,
+		});
+	}
 }

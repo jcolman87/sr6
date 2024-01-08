@@ -31,6 +31,8 @@ declare global {
 
 		override close(options?: { force?: boolean }): Promise<void>;
 
+		_onDrop(event: DragEvent): void;
+
 		/** Render the SidebarTab as a pop-out container */
 		renderPopout(...args: unknown[]): void;
 	}

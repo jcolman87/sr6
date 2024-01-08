@@ -32,11 +32,11 @@ function dragEnd(event: DragEvent) {}
 function drop(event: DragEvent) {}
 
 function openItem() {
-	toRaw(props.item).sheet.render(true);
+	void toRaw(props.item).sheet.render(true);
 }
 
 function rollWeapon(item: SR6Item<WeaponDataModel>) {
-	rollWeaponAttack(toRaw(props.actor).systemData, toRaw(item));
+	void rollWeaponAttack(toRaw(props.actor).systemData, toRaw(item));
 }
 </script>
 

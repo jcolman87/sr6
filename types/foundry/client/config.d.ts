@@ -6,7 +6,6 @@ declare global {
 		TActiveEffect extends ActiveEffect = ActiveEffect,
 		TActor extends Actor = Actor,
 		TActorDirectory extends ActorDirectory<TActor> = ActorDirectory<TActor>,
-		TChatLog extends ChatLog = ChatLog,
 		TChatMessage extends ChatMessage = ChatMessage,
 		TCombat extends Combat = Combat,
 		TCombatant extends Combatant<TCombat | null, TActor | null> = Combatant<TCombat | null, TActor | null>,
@@ -20,7 +19,7 @@ declare global {
 		TTokenDocument extends TokenDocument = TokenDocument,
 		TScene extends Scene = Scene,
 		TUser extends User = User,
-		TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup,
+		TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup
 	> {
 		/** Configure debugging flags to display additional information */
 		debug: {
@@ -86,7 +85,10 @@ declare global {
 			batchSize: number;
 			collection: typeof Messages;
 			documentClass: {
-				new (data: PreCreate<TChatMessage['_source']>, context?: DocumentConstructionContext<TChatMessage>): TChatMessage;
+				new (
+					data: PreCreate<TChatMessage['_source']>,
+					context?: DocumentConstructionContext<TChatMessage>
+				): TChatMessage;
 			};
 			sidebarIcon: string;
 			template: string;
@@ -185,14 +187,20 @@ declare global {
 		/** Configuration for the ActiveEffect embedded document type */
 		ActiveEffect: {
 			documentClass: {
-				new (data: PreCreate<TActiveEffect['_source']>, context?: DocumentConstructionContext<TActiveEffect>): TActiveEffect;
+				new (
+					data: PreCreate<TActiveEffect['_source']>,
+					context?: DocumentConstructionContext<TActiveEffect>
+				): TActiveEffect;
 			};
 			legacyTransferral: boolean;
 		};
 
 		/** Configuration for the Combatant document */
 		Combatant: {
-			documentClass: new (data: PreCreate<TCombatant['_source']>, context?: DocumentConstructionContext<TCombatant>) => TCombatant;
+			documentClass: new (
+				data: PreCreate<TCombatant['_source']>,
+				context?: DocumentConstructionContext<TCombatant>
+			) => TCombatant;
 		};
 
 		/** Configuration for the MeasuredTemplate embedded document type and its representation on the game Canvas */
@@ -207,7 +215,10 @@ declare global {
 				rect: string;
 				ray: string;
 			};
-			documentClass: new (data: PreCreate<foundry.data.MeasuredTemplateSource>, context?: DocumentConstructionContext<TMeasuredTemplateDocument>) => TMeasuredTemplateDocument;
+			documentClass: new (
+				data: PreCreate<foundry.data.MeasuredTemplateSource>,
+				context?: DocumentConstructionContext<TMeasuredTemplateDocument>
+			) => TMeasuredTemplateDocument;
 			objectClass: ConstructorOf<TMeasuredTemplateDocument['object']>;
 			layerClass: ConstructorOf<TMeasuredTemplateDocument['object']['layer']>;
 		};

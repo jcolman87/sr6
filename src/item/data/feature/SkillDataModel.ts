@@ -35,7 +35,6 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 
 	getPool(specialization: string | null = null): number {
 		const points = this.getPoints(specialization);
-
 		return this.solveFormula(`@${EnumAttribute[this.attribute]} + ${points}`);
 	}
 

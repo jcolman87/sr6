@@ -3,30 +3,68 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 import { SpellDuration, SpellRangeType, SpellCombatType, SpellDamageForm, SpellType } from '@/data/magic';
 
-type SpellRangeData = {
+export type SpellRangeData = {
 	type: SpellRangeType;
 	value: number;
 };
 
-type SpellDurationData = {
+export type SpellDurationData = {
 	type: SpellDuration;
 	value: number;
 };
 
-type SpellDamageData = {
+export type SpellDamageData = {
 	combat: SpellCombatType;
 	type: DamageType;
 	form: SpellDamageForm;
 };
 
-type SpellFormulaData = {
+export type SpellFormulaData = {
 	drainFormula: string;
+	damageFormula: string;
 	defenseFormula: string;
 	soakFormula: string;
 };
 
+export enum SpellAdjustmentType {
+	AmpUp = 'amp',
+	IncreaseArea = 'increase',
+	ShiftArea = 'shift',
+}
+
+export function drainFromAdjustments(adjustments: SpellAdjustmentType[]): number {
+	return adjustments.reduce((acc, adjustment) => {
+		switch (adjustment) {
+			case SpellAdjustmentType.AmpUp:
+				acc += 2;
+				break;
+			case SpellAdjustmentType.IncreaseArea:
+				acc += 1;
+				break;
+			case SpellAdjustmentType.ShiftArea:
+				acc += 0;
+				break;
+		}
+		return acc;
+	}, 0);
+}
+
+export function damageFromAdjustments(adjustments: SpellAdjustmentType[]): number {
+	return adjustments.reduce((acc, adjustment) => {
+		switch (adjustment) {
+			case SpellAdjustmentType.AmpUp:
+				acc += 1;
+				break;
+			case SpellAdjustmentType.IncreaseArea:
+			case SpellAdjustmentType.ShiftArea:
+				acc += 0;
+				break;
+		}
+		return acc;
+	}, 0);
+}
+
 export default abstract class SpellDataModel extends BaseItemDataModel {
-	abstract drain: number;
 	abstract formulas: SpellFormulaData;
 	abstract type: SpellType;
 	abstract range: SpellRangeData;
@@ -34,6 +72,14 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 
 	get pool(): number {
 		return this.solveFormula('@magic + @spellcasting');
+	}
+
+	get drain(): number {
+		return this.solveFormula(this.formulas.drainFormula);
+	}
+
+	get baseDamage(): number {
+		return this.solveFormula(this.formulas.damageFormula);
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -49,6 +95,12 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 			}),
 			formulas: new fields.SchemaField(
 				{
+					damageFormula: new fields.StringField({
+						initial: '0',
+						required: true,
+						nullable: false,
+						blank: false,
+					}),
 					drainFormula: new fields.StringField({
 						initial: '0',
 						required: true,

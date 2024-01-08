@@ -16,13 +16,13 @@ const skillExpertise = computed({
 		}
 		return context.data.item.systemData.expertise;
 	},
-	set(newValue) {
+	async set(newValue) {
 		if (newValue === 'null') {
 			context.data.item.systemData.expertise = null;
 		} else {
 			context.data.item.systemData.expertise = newValue;
 		}
-		context.data.item.update({ ['system.expertise']: newValue });
+		await context.data.item.update({ ['system.expertise']: newValue });
 	},
 });
 
@@ -33,13 +33,13 @@ const skillSpecialization = computed({
 		}
 		return context.data.item.systemData.specialization;
 	},
-	set(newValue) {
+	async set(newValue) {
 		if (newValue === 'null') {
 			context.data.item.systemData.specialization = null;
 		} else {
 			context.data.item.systemData.specialization = newValue;
 		}
-		context.data.item.update({ ['system.specialization']: newValue });
+		await context.data.item.update({ ['system.specialization']: newValue });
 	},
 });
 </script>

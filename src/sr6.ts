@@ -14,20 +14,21 @@ import { register as registerConditions } from '@/condition';
 import { register as registerToken } from '@/token';
 
 import { NAMESPACE as SETTINGS_NAMESPACE, register as registerSettings } from '@/settings';
-import { KEY_ALPHA_VERSION } from '@/settings/alpha';
 
-import { register as registerChat } from '@/chat';
+import { register as registerChat, renderChatLog } from '@/chat';
 
 import { register as registerActors, onCreate as onCreateActor, setOptGroups as registerActorOptGroups } from '@/actor';
 import { register as registerEffects } from '@/effects';
 
-import { BUGFIX } from '@/roll/Rollers';
+import { register as registerDisplayHelpers } from '@/display';
 
 import ImportPrompt from '@/app/ImportPrompt';
 
 import './scss/index.scss';
 
 import { Logger } from 'tslog';
+
+Hooks.on('renderChatLog', renderChatLog);
 
 Hooks.once('init', async () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,9 +54,8 @@ Hooks.once('init', async () => {
 	registerChat();
 	registerToken();
 
+	registerDisplayHelpers();
 	await preloadHandlebarsTemplates();
-
-	log.info('SR6 | Initialization Complete.');
 });
 
 Hooks.once('ready', async () => {
@@ -96,7 +96,7 @@ Hooks.on('renderActorDirectory', async (_app: ActorDirectory<Actor>, html: JQuer
 	const button = $("<button class='open-import-dialog'><i class='fas fa-edit'></i></i>Import</button>");
 
 	button.click(async () => {
-		new ImportPrompt().render(true);
+		await new ImportPrompt().render(true);
 	});
 
 	// Render Button

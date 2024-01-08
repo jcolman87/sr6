@@ -5,6 +5,7 @@
  */
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import { MonitorType, WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import IHasMatrixPersona from '@/data/IHasMatrixPersona';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
@@ -39,6 +40,15 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 			return true;
 		}
 		return false;
+	}
+
+	override get woundModifiers(): WoundModifierData {
+		const modifiers = super.woundModifiers;
+		if (this.matrixPersona) {
+			modifiers[MonitorType.Matrix] = this.matrixPersona.woundModifier;
+		}
+
+		return modifiers;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

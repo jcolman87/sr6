@@ -1,6 +1,6 @@
 import { EnumAttribute } from '@/actor/data';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
+import MonitorsDataModel, { MonitorType, WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { InitiativeType } from '@/data';
@@ -52,8 +52,11 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 	abstract magicAwakened: MagicAwakenedType;
 	abstract magicTradition: MagicTradition;
 
-	override get woundModifier(): number {
-		return this.monitors.woundModifier;
+	override get woundModifiers(): WoundModifierData {
+		return {
+			...super.woundModifiers,
+			...this.monitors.woundModifiers,
+		};
 	}
 
 	getInitiativeFormula(type: InitiativeType): null | string {

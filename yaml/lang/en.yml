@@ -1,24 +1,24 @@
 TYPES:
   Actor:
-    TypeCharacter: Character
-
+    character: Character
+    matrix_host: Marix Host
   Item:
-    # Character Creation Items
-    TypeAbility: Special Ability
-    TypeArchetype: Archetype
-    TypeCareer: Career
-    TypeInjury: Critical Injury/Hit
-    TypeSkill: Skill
-    TypeTalent: Talent
-
-    # Equipment Items
-    TypeArmor: Armor
-    TypeConsumable: Consumable
-    TypeContainer: Container
-    TypeGear: Gear
-    TypeQuality: Item Quality
-    TypeWeapon: Weapon
-    TypeVehicleweapon: Vehicle Weapon
+    gear: Gear
+    weapon: Weapon
+    skill: Skill
+    contact: Contact
+    sin: SIN
+    lifestyle: Lifestyle
+    quality: Quality
+    augmentation: Augmentation
+    spell: Spell
+    adeptpower: Adept Power
+    complexform: Complex Form
+    matrix_action: Matrix Action
+    matrix_persona: Matrix Persona
+    matrix_ic: Matrix Intrusion Countermeasure
+    general_action: General Action
+    condition: Condition
 
 # SR6
 SR6:
@@ -86,6 +86,7 @@ SR6:
     Value: Value
     Skill: Skill
     Information: Information
+    Drain: Drain
 
   Combat:
     Damage: Damage
@@ -123,8 +124,16 @@ SR6:
     Title: Configure Roll
     PoolModifier: Pool Modifier
     Conditions: Conditions Modifying
-    WoundModifier: Wound Modifier
-    WoundModifierDescription: This modifier is a calculated total of penalty modifiers from damage to your Physical and Stun monitors.
+    WoundModifiers:
+      physical:
+        Name: Wound Modifier (Physical)
+        Description: This modifier is a calculated total of penalty modifiers from damage to your Physical monitor.
+      stun:
+        Name: Wound Modifier (Stun)
+        Description: This modifier is a calculated total of penalty modifiers from damage to your Physical monitor.
+      matrix:
+        Name: Wound Modifier (Matrix)
+        Description: This modifier is a calculated total of penalty modifiers from damage to your devices Matrix monitor.
 
   Attributes:
     body: Body
@@ -159,7 +168,10 @@ SR6:
     Decker: Decker
     IC: IC
     Usage: Usage
-
+    SimType:
+      AR: AR
+      VRCold: VR (Cold)
+      VRHot: VR (Hot)
 
   Enums:
     MatrixAccessLevel: Access Level
@@ -184,3 +196,19 @@ SR6:
     Blind2: Blind II
     Blind3: Blind III
     Chilled: Chilled
+
+  Magic:
+    Traditions:
+      Shamanism: Shamanism
+      Hermeticism: Hermeticism
+      Technomancer: Technomancer
+    SpellAdjustments:
+      AmpUp:
+        Name: Amp Up
+        Description: This is for Combat spells only. For each point of base damage the caster wants to add to a Combat spell, increase the drain of that casting by 2.
+      IncreaseArea:
+        Name: Increase Area
+        Description: Area-effect spells have a base ef- fect of a sphere with a two-meter radius. For each increase of 2 meters in the radius of the area of effect, increase the drain of the casting by 1.
+      ShiftArea:
+        Name: Shift Area
+        Description: This can only be done with certain area-effect spells. The caster can shift the area a sustained spell is affecting to another area within spell range. Spells that can have the area shifted are noted in the spell description. This requires a Minor Action and can be done any time. It does not cause drain.

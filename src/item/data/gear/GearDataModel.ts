@@ -10,11 +10,24 @@ import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { AdjustableMatrixAttributesDataModel, MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
-import { MatrixUseType } from '@/data/matrix';
-import { GearSize } from '@/data/gear';
+import { MatrixSimType } from '@/data/matrix';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 import SR6Item from '@/item/SR6Item';
-import { getItem } from '@/util';
+import { getItemSync } from '@/util';
+
+export enum GearSize {
+	Large = 0,
+	Bulky = 1,
+	Tuckable = 2,
+	Pocket = 3,
+	Hand = 4,
+	Slim = 5,
+	Palmable = 6,
+	Small = 7,
+	Mini = 8,
+	Fine = 9,
+	Microscopic = 10,
+}
 
 export enum LicenseType {
 	HeavyWeapon = 'heavyweapon',
@@ -39,7 +52,7 @@ type ProgramSlotsData = {
 };
 export abstract class GearMatrixDataModel extends BaseDataModel {
 	abstract active: boolean;
-	abstract supportsModes: MatrixUseType[];
+	abstract supportsModes: MatrixSimType[];
 	abstract attributes: MatrixAttributesDataModel | null;
 	abstract availableSlotsFormula: string;
 
@@ -50,15 +63,15 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 		return {
 			total: total,
 			available: total - this._programSlots.length,
-			programs: this._programSlots.map((uuid) => getItem(SR6Item<MatrixProgramDataModel>, uuid)!),
+			programs: this._programSlots.map((uuid) => getItemSync(SR6Item<MatrixProgramDataModel>, uuid)!),
 		};
 	}
 
-	async setProgramSlots(programs: SR6Item<MatrixProgramDataModel>[]): void {
+	async setProgramSlots(programs: SR6Item<MatrixProgramDataModel>[]): Promise<void> {
 		this._programSlots = programs.map((p) => p.uuid).slice(0, this.programSlots.total);
 	}
 
-	async clearProgramSlots(): void {
+	async clearProgramSlots(): Promise<void> {
 		this._programSlots = [];
 	}
 
@@ -72,7 +85,7 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 					blank: false,
 					nullable: false,
 					required: true,
-					choices: Object.values(MatrixUseType),
+					choices: Object.values(MatrixSimType),
 				}),
 				{ initial: [], required: true, nullable: false }
 			),

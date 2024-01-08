@@ -1,8 +1,8 @@
-import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
+import MonitorsDataModel, { MonitorType, WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import IHasPools from '@/data/IHasPools';
-import { AdjustableMatrixAttributesDataModel, MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
+import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
@@ -25,8 +25,12 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		);
 	}
 
+	get woundModifiers(): WoundModifierData {
+		return {};
+	}
+
 	get woundModifier(): number {
-		return 0;
+		return Object.entries(this.woundModifiers).reduce((acc, [key, value]) => (acc += value), 0);
 	}
 
 	getPool(type: RollType): number {
@@ -79,6 +83,20 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		}
 	}
 
+	getHighestMatrixAttributes(): MatrixAttributesData {
+		return this.actor!.items.filter((i) => i.type === 'gear')
+			.map((i) => i as SR6Item<GearDataModel>)
+			.filter((i) => i.systemData.matrix?.attributes)
+			.map((i) => i.systemData.matrix!.attributes!)
+			.reduce((acc, i, _idx, _arr) => {
+				acc.attack = Math.max(acc.attack, i.attack);
+				acc.sleaze = Math.max(acc.sleaze, i.sleaze);
+				acc.dataProcessing = Math.max(acc.dataProcessing, i.dataProcessing);
+				acc.firewall = Math.max(acc.firewall, i.firewall);
+				return acc;
+			});
+	}
+
 	protected async _activateMatrixPersona(
 		device: SR6Item<GearDataModel> | null = null
 	): Promise<SR6Item<MatrixPersonaDataModel>> {
@@ -86,22 +104,10 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		this.actor!.items.filter((i) => i.type === 'matrix_persona').forEach((i) => i.delete());
 
 		const personaType = device ? PersonaType.Device : PersonaType.Living;
-		/*
-		if (this.type == PersonaType.Device) {
-			// Fetch the attributes from the device
-			this.attributes.base = ;
-		} else if (this.type == PersonaType.Living) {
-			this.attributes.base.formulas = {
-				attack: '@charisma',
-				sleaze: '@intuition',
-				dataProcessing: '@logic',
-				firewall: '@willpower',
-			};
-		}
-		 */
+
 		const attributes =
 			personaType === PersonaType.Device
-				? device!.systemData.matrix!.attributes!
+				? this.getHighestMatrixAttributes()
 				: {
 						formulas: {
 							attack: '@charisma',
@@ -119,15 +125,14 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 					name: `${this.actor!.name} persona`,
 					system: {
 						sourceDeviceId: device ? device.uuid : null,
-						attributes: {
-							base: attributes,
-							current: attributes,
-						},
 						type: personaType,
 					},
 				},
 			])
 		)[0] as SR6Item<MatrixPersonaDataModel>;
+
+		// Bugfix, because of the differeing types of data the creation fails, we need to update the partials instead
+		await persona.update({ ['system.attributes.base']: attributes, ['system.attributes.current']: attributes });
 
 		return persona;
 	}

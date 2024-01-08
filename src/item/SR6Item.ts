@@ -88,7 +88,7 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	}
 
 	async _onPostCreate(): Promise<void> {
-		(<IHasPostCreate>this.systemData).onPostCreate?.();
+		await (<IHasPostCreate>this.systemData).onPostCreate?.();
 	}
 
 	/**

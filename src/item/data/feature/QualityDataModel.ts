@@ -91,7 +91,7 @@ export default abstract class QualityDataModel
 		userId: string
 	): void {
 		// Clear our conditions before deletion
-
-		this.clearAppliedConditions();
+		// TODO: make this async?
+		void this.clearAppliedConditions();
 	}
 }

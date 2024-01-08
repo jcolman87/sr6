@@ -9,7 +9,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import ConditionDataModel, { ConditionActiveEffectData } from '@/condition/ConditionDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { getItem } from '@/util';
+import { getItemSync } from '@/util';
 
 export default class SR6Effect extends ActiveEffect {
 	constructor(data: PreCreate<foundry.data.ActiveEffectSource>, context?: DocumentConstructionContext<ActiveEffect>) {
@@ -109,8 +109,12 @@ export default class SR6Effect extends ActiveEffect {
 						case 'matrixPersona': {
 							const persona = (actor as SR6Actor<CharacterDataModel>).systemData.matrixPersona;
 							if (persona) {
+								const value = parseInt(change.value);
 								// eslint-disable-next-line @typescript-eslint/no-explicit-any
-								(persona.attributes.base as any)[path[1]] = change.value;
+								if (value > (persona.attributes.base as any)[path[1]]) {
+									// eslint-disable-next-line @typescript-eslint/no-explicit-any
+									(persona.attributes.base as any)[path[1]] = value;
+								}
 							}
 							break;
 						}

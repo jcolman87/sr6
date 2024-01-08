@@ -1,4 +1,4 @@
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Weapon Attack" }}
 {{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
 {{ var "weapon" (getItemById roll.options.attack.itemId) }}
 {{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
@@ -29,14 +29,19 @@
 	<div class="chat-1-collapsible" style="display: none">
 		<section>
 			<div>
-				<hr/>
-				DV <i style="font-weight: bold">{{weapon.systemData.damage}}</i><br/>
-				AR TODO ITEM AR RATINGS
-				<br/><div style="font-size: 10px">{{weapon.systemData.description}}</div>
+				<div>DV <i style="font-weight: bold">{{weapon.systemData.damage}}</i></div>
+				<div>AR
+					{{weapon.systemData.attackRatings.close }} /
+					{{weapon.systemData.attackRatings.near }} /
+					{{weapon.systemData.attackRatings.medium }} /
+					{{weapon.systemData.attackRatings.far }} /
+					{{weapon.systemData.attackRatings.extreme }}
+				</div>
+				<div style="font-size: 10px">{{weapon.systemData.description}}</div>
 			</div>
+			<hr/>
 		</section>
 	</div>
-	<hr/>
 	<input id="roll-weapon-defense" type="button" value="Roll Defense"/>
 {{!---#unless roll.isUserOwner }}
 

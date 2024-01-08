@@ -46,8 +46,8 @@ const magicActions = computed(
 
 function addGeneralAction() {}
 
-function addCoreActions() {
-	toRaw(system.value)._addCoreGeneralActions();
+async function addCoreActions() {
+	await toRaw(system.value)._addCoreGeneralActions();
 }
 
 async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {

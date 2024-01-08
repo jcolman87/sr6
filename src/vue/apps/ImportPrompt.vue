@@ -7,8 +7,8 @@ const context = inject<ImportPromptContext>(RootContext)!;
 
 async function click() {
 	await new FilePicker({
-		callback: (path: string) => {
-			toRaw(context.app)._onImportGenesisActor(path);
+		callback: async (path: string) => {
+			await toRaw(context.app)._onImportGenesisActor(path);
 		},
 	}).render(true);
 }

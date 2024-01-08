@@ -1,0 +1,9 @@
+{{ var "spell" (getItemById roll.options.attack.itemId) }}
+{{ log spell }}
+{{ var "title" (concat "Spell Cast (" spell.name ")") }}
+
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title=title }}
+<div class="roll">
+
+</div>
+{{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

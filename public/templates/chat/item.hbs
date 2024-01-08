@@ -1,52 +1,32 @@
-<div class="item-card {{ type }}">
+{{ log this }}
+
+<div class="item-card">
 	<div class="imageAndName">
 		<img src="{{img}}" />
 		<span>{{ name }}</span>
 	</div>
+	<label>{{ localize (concat "TYPES.Item." type) }}</label>
+
+	{{#if (eq type "gear") }}
+		<div class="data-table">
+			<div><label class="balls1">Rating:</label> {{ system.rating }}</div>
+			<div><label class="balls1">Size:</label> {{ GearSizeToString system.size }}</div>
+			<div><label class="balls1">Cost:</label> {{ solveFormula system system.costFormula }}</div>
+			<div><label class="balls1">Availability:</label> {{ GearAvailabilityToString system.availability }}</div>
+			{{#unless (undefined system.matrix) }}
+				<div><label class="balls1">Sim Modes:</label> {{ GearAvailabilityToString system.availability }}</div>
+			{{/unless}}
+		</div>
+	{{/if}}
 
 	<div class="description">{{{ description }}}</div>
 
-	{{!-- Armor: Defense, Soak --}}
-	{{#if (eq type 'armor')}}
+	{{#if (eq type "gear") }}
 		<div class="details-grid">
-			<label class="defense">{{localize 'SR6.Labels.Defense'}}</label>
-			<label class="soak">{{localize 'SR6.Labels.Soak'}}</label>
-			<span class="defense">{{#if (gt system.defense 0)}}+{{/if}}{{ system.defense }}</span>
-			<span class="soak">{{#if (gt system.soak 0)}}+{{/if}}{{ system.soak }}</span>
-		</div>
-	{{/if}}
-
-	{{!-- Weapon: Damage, Critical, Range, Skill --}}
-	{{#if (or (eq type 'weapon') (eq type 'vehicleWeapon'))}}
-        {{#if (eq type 'vehicleWeapon')}}
-            <div class="details-grid weapon-firing-arc">
-                <label class="firing-arc">{{localize 'SR6.Labels.FiringArc'}}</label>
-                <span class="firing-arc">{{ weapon.firingArc }}</span>
-            </div>
-        {{/if}}
-
-		<div class="details-grid">
-			<label class="skill">{{localize 'SR6.Labels.Skill'}}</label>
-			<label class="range">{{localize 'SR6.Labels.Range'}}</label>
-			<span class="skill">{{ weapon.skill }}</span>
-			<span class="range">{{localize (concat 'SR6.Range.' (capitalize system.range))}}</span>
-		</div>
-
-		<div class="details-grid">
-			<label class="damage">{{localize 'SR6.Labels.Damage'}}</label>
-			<label class="critical">{{localize 'SR6.Labels.Critical'}}</label>
-			<span class="damage">{{ weapon.damage }}</span>
-			<span class="critical">{{ system.critical }}</span>
-		</div>
-	{{/if}}
-
-	{{!-- Armor & Weapon: Qualities --}}
-	{{#if qualities}}
-		<label>{{localize 'SR6.Labels.Qualities'}}</label>
-		<div class="qualities">
-			{{#each qualities}}
-				<a class="quality" data-tooltip="{{or description 'SR6.Tooltips.NoDescription'}}">{{name}} {{#if isRated}}{{rating}}{{/if}}</a>
-			{{/each}}
+			<label class="balls1">Balls</label>
+			<label class="balls2">Balls</label>
+			<span class="balls1">asdfsdf</span>
+			<span class="balls2">asdfsdfasdf</span>
 		</div>
 	{{/if}}
 </div>

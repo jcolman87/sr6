@@ -25,7 +25,7 @@ export default class SR6Combat extends Combat {
 	override startCombat(): Promise<this> {
 		if (this.turns[0]) {
 			const next = this.turns[0] as SR6Combatant;
-			next.beginTurn();
+			void next.beginTurn();
 		}
 
 		return super.startCombat();

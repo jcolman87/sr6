@@ -4,7 +4,10 @@
 @import 'nav';
 @import 'tooltip';
 @import 'sheets';
-@import 'chat';
 
 @import 'augmented.css';
 
+.flex-break {
+  flex-basis: 100%;
+  height: 0
+}

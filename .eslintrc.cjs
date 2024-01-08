@@ -16,6 +16,8 @@ module.exports = {
 	},
 	ignorePatterns: ["dist/"],
 	rules: {
+		"@typescript-eslint/no-floating-promises": ["error"],
+		"vue/no-mutating-props": "off",
 		"vue/multi-word-component-names": "off",
 		"eqeqeq": "error",
 		"prettier/prettier": "error",
