@@ -120,7 +120,6 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 			case RollType.MatrixAction:
 			case RollType.MatrixActionDefend:
 			case RollType.SpellCast:
-				``;
 			case RollType.SpellDrain:
 				break;
 			default:
@@ -136,6 +135,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 	gainEdge(count: number): boolean {
 		return this.monitors.gainEdge(count);
 	}
+
 	spendEdge(count: number): boolean {
 		return this.monitors.spendEdge(count);
 	}

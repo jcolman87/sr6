@@ -54,11 +54,11 @@ export abstract class WirelessBonusDataModel extends BaseDataModel {
 
 		return {
 			description: new fields.StringField({ initial: '', required: true, blank: true, nullable: false }),
-			//effects: new fields.ArrayField(new fields.EmbeddedDataField(ActiveEffectConfig), {
+			// effects: new fields.ArrayField(new fields.EmbeddedDataField(ActiveEffectConfig), {
 			//	initial: [],
 			//	required: true,
 			//	nullable: false,
-			//}),
+			// }),
 		};
 	}
 }
@@ -186,20 +186,19 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 	protected abstract _attachedTo: null | ItemUUID | ActorUUID;
 
 	get attached(): boolean {
-		return this._attachedTo != null;
+		return this._attachedTo !== null;
 	}
 
 	get attachedTo(): null | SR6Actor<BaseActorDataModel> | SR6Item<GearDataModel> {
 		if (!this._attachedTo) {
 			return null;
 		}
-		let parsed = parseUuid(this._attachedTo);
-		if (parsed.documentType == 'Actor' && parsed.embedded.length == 0) {
+		const parsed = parseUuid(this._attachedTo);
+		if (parsed.documentType === 'Actor' && parsed.embedded.length === 0) {
 			return getActorSync(SR6Actor<BaseActorDataModel>, this._attachedTo as ActorUUID);
 		} else {
 			return getItemSync(SR6Item<GearDataModel>, this._attachedTo as ItemUUID);
 		}
-		return null;
 	}
 
 	async toggleWireless(): Promise<boolean> {

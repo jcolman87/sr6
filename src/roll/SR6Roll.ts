@@ -247,10 +247,7 @@ export class SR6Roll extends Roll {
 		messageData?: PreCreate<foundry.data.ChatMessageSource>,
 		options?: { rollMode?: RollMode | 'roll'; create?: boolean }
 	): Promise<ChatMessage | foundry.data.ChatMessageSource> {
-		return new Promise(async (resolve) => {
-			await this.finish();
-			resolve(super.toMessage(messageData, options));
-		});
+		return this.finish().then(() => super.toMessage(messageData, options));
 	}
 }
 

@@ -13,7 +13,7 @@ import gulpClean from 'gulp-clean';
 import gulpYaml from 'gulp-yaml';
 import gulpZip from 'gulp-zip';
 
-const PACK_SRC = './yaml/packs';
+const PACK_SRC = './packs';
 function compilePacks() {
 	// determine the source folders to process
 	const folders = fs.readdirSync(PACK_SRC).filter((file) => {

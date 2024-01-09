@@ -124,12 +124,12 @@ export default abstract class WeaponDataModel extends GearDataModel {
 	async cleanAccessories(): Promise<void> {
 		const toRemove: string[] = [];
 		this._accessories.forEach((uuid) => {
-			if (getItemSync(SR6Item<GearDataModel>, uuid) == null) {
+			if (getItemSync(SR6Item<GearDataModel>, uuid) === null) {
 				toRemove.push(uuid);
 			}
 		});
 		if (toRemove.length > 0) {
-			this._accessories = this._accessories.filter((uuid) => toRemove.includes(uuid) == false);
+			this._accessories = this._accessories.filter((uuid) => toRemove.includes(uuid) === false);
 			await this.item!.update({ ['system._accessories']: this._accessories });
 		}
 	}
@@ -214,13 +214,13 @@ export default abstract class WeaponDataModel extends GearDataModel {
 			return false;
 		}
 
-		if (accessory.systemData.attachedTo != null) {
+		if (accessory.systemData.attachedTo !== null) {
 			console.error(
 				`Cannot attach (${accessory.uuid})->(${this.item!.uuid}): Child was alread attached to something!`
 			);
 			return false;
 		}
-		if (accessory.systemData.attachedTo == this.item!.uuid) {
+		if (accessory.systemData.attachedTo === this.item!.uuid) {
 			console.warn(`Item was already attached (${accessory.uuid})->(${this.item!.uuid}), returning true`);
 			return true;
 		}
@@ -236,19 +236,20 @@ export default abstract class WeaponDataModel extends GearDataModel {
 
 		return true;
 	}
+
 	async detach(accessory: SR6Item<GearDataModel>): Promise<boolean> {
 		if (!this.isOwner || !accessory.isOwner) {
 			console.error(`User does not have permission:  Child(${accessory.uuid}) Parent(${this.item!.uuid})`);
 			return false;
 		}
 
-		if (!this._accessories.includes(accessory.uuid) || accessory.systemData.attachedTo?.uuid != this.item!.uuid) {
+		if (!this._accessories.includes(accessory.uuid) || accessory.systemData.attachedTo?.uuid !== this.item!.uuid) {
 			console.error(`Item (${accessory.uuid}) was not attached to ${this.item!.uuid}`);
 			return false;
 		}
 
 		await this.item!.update({
-			['system._accessories']: this._accessories.filter((uuid) => uuid != accessory.uuid),
+			['system._accessories']: this._accessories.filter((uuid) => uuid !== accessory.uuid),
 		});
 
 		// Update the child

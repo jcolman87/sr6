@@ -83,7 +83,7 @@ async function finishRoll<T extends SR6RollData>(data: Record<string, unknown>, 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const roll = new SR6Roll(`${options.pool}d6`, data, options as any);
 	const evaluated = await roll.evaluate({ async: true });
-	//await evaluated.finish();
+	// await evaluated.finish();
 	await evaluated.toMessage();
 }
 

@@ -32,7 +32,7 @@ const system = computed(() => (context.data.item as SR6Item<GearDataModel>).syst
 // We have to:
 //   1. Use an 'any' typing to skirt around TypeScript's complaints.
 //   2. Keep a local ref that gets updated in onBeforeUpdate in order to work around some struggles with Foundry.
-const effects = computed<SR6Effect[]>(() => [...(toRaw(context.data.item).effects as any)]);
+const effects = computed<SR6Effect[]>(() => [...(Array.from(toRaw(context.data.item).effects) as SR6Effect[])]);
 
 async function addEffect(category: string) {
 	await toRaw(context.sheet.item).createEmbeddedDocuments('ActiveEffect', [

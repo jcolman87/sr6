@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConstructorOf<T> = new (...args: any[]) => T;
 
 export class EnumNumberField<
@@ -23,11 +24,11 @@ export class DocumentUUIDField<
 		value: unknown,
 		options?: foundry.data.fields.DataFieldValidationOptions
 	): foundry.data.fields.DataModelValidationFailure | void {
-		//let parsed = parseUuid(value as string);
-		//if (!parsed.uuid || !(parsed.collection && parsed.documentId)) {
-		//new foundry.data.fields.DataModelValidationFailure({ message: 'Invalid UUID', unresolved: true });
+		// let parsed = parseUuid(value as string);
+		// if (!parsed.uuid || !(parsed.collection && parsed.documentId)) {
+		// new foundry.data.fields.DataModelValidationFailure({ message: 'Invalid UUID', unresolved: true });
 		//	throw 'WTF';
-		//}
+		// }
 		return super.validate(value, options);
 	}
 }

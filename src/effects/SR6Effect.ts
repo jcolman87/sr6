@@ -63,11 +63,12 @@ export default class SR6Effect extends ActiveEffect {
 		const current: any = foundry.utils.getProperty(document, change.key) ?? null;
 		let target = current;
 		if (current === null) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			if (target instanceof Actor) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const model = (game as any).model.Actor[document.type] || {};
 				target = foundry.utils.getProperty(model, change.key) ?? null;
 			} else if (target instanceof Item) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const model = (game as any).model.Item[document.type] || {};
 				target = foundry.utils.getProperty(model, change.key) ?? null;
 			}
