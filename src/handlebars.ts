@@ -3,7 +3,7 @@
  * @author jaynus
  * @file
  */
-import { getActor, getItemSync } from '@/util';
+import { getActorSync, getItemSync } from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import * as handlebars from 'handlebars';
@@ -30,6 +30,8 @@ export function register(): void {
 	/** Math Utilities */
 	Handlebars.registerHelper('gt', (lhs, rhs) => lhs > rhs);
 	Handlebars.registerHelper('lt', (lhs, rhs) => lhs < rhs);
+	Handlebars.registerHelper('gte', (lhs, rhs) => lhs >= rhs);
+	Handlebars.registerHelper('lte', (lhs, rhs) => lhs <= rhs);
 
 	Handlebars.registerHelper('add', (lhs, rhs) => lhs + rhs);
 	Handlebars.registerHelper('sub', (lhs, rhs) => lhs - rhs);
@@ -51,10 +53,10 @@ export function register(): void {
 	});
 
 	Handlebars.registerHelper('getActorById', function (actorId: ActorUUID) {
-		return getActor(SR6Actor, actorId);
+		return getActorSync(SR6Actor, actorId);
 	});
 	Handlebars.registerHelper('getActorsByIds', function (actorIds: ActorUUID[]) {
-		return actorIds.map((id) => getActor(SR6Actor, id));
+		return actorIds.map((id) => getActorSync(SR6Actor, id));
 	});
 
 	Handlebars.registerHelper('getItemById', function (itemId: ItemUUID) {
@@ -78,5 +80,5 @@ export function register(): void {
 
 	/** Functional utilities */
 	Handlebars.registerHelper('undefined', /** @param {string} value */ (value) => value === undefined);
-	Handlebars.registerHelper('isNull', /** @param {string} value */ (value) => value === null);
+	Handlebars.registerHelper('null', /** @param {string} value */ (value) => value === null);
 }

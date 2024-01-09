@@ -128,8 +128,6 @@ console.log('drain', drainFromAdjustments(adjustments.value), data.drain);
 </template>
 
 <style lang="scss" scoped>
-@use '@scss/mixins/backgrounds.scss';
-@use '@scss/vars/colors.scss';
 @use '@scss/vars/sheet.scss';
 
 .spell-cast-roll {

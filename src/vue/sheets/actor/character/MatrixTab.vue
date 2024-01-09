@@ -14,7 +14,7 @@ import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import MatrixPersonaView from '@/vue/views/MatrixPersonaView.vue';
 import MatrixProgramSlotsView from '@/vue/views/MatrixProgramSlotsView.vue';
 import MonitorView from '@/vue/views/MonitorView.vue';
-import { computed, inject, toRaw, ref } from 'vue';
+import { computed, inject, toRaw, ref, onUpdated } from 'vue';
 import { Collapse } from 'vue-collapsed';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
@@ -35,18 +35,16 @@ const matrixDevices = computed(() =>
 		.sort((a, b) => a.name.localeCompare(b.name))
 );
 
-const deviceVisible = ref(
+const deviceVisible = computed(() =>
 	matrixDevices.value.map((device) => {
 		return {
 			id: device.id,
 			visible: false,
+			descriptionVisible: false,
+			wirelessBonusVisible: false,
 		};
 	})
 );
-
-matrixDevices.value.forEach((device) => {
-	console.log('monitor', device, device.systemData.monitors);
-});
 
 const persona = computed(() => {
 	let persona = toRaw(context.data.actor).items.find((i) => i.type === 'matrix_persona');
@@ -204,15 +202,21 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 								>
 							</td>
 							<td>
-								{{ device.systemData.matrix!.attributes!.a }}
-								{{ device.systemData.matrix!.attributes!.s }}
-								{{ device.systemData.matrix!.attributes!.d }}
-								{{ device.systemData.matrix!.attributes!.f }}
+								<template v-if="device.systemData.matrix!.attributes != null">
+									{{ device.systemData.matrix!.attributes!.a }}
+									{{ device.systemData.matrix!.attributes!.s }}
+									{{ device.systemData.matrix!.attributes!.d }}
+									{{ device.systemData.matrix!.attributes!.f }}
+								</template>
 							</td>
 							<td>
-								{{ device.systemData.matrix!.programSlots.available }}/{{
-									device.systemData.matrix!.programSlots.total
-								}}
+								<template
+									v-if="device.systemData.matrix !== null && device.systemData.matrix!.totalProgramSlots > 0"
+								>
+									{{ device.systemData.matrix!.programSlots.available }}/{{
+										device.systemData.matrix!.programSlots.total
+									}}
+								</template>
 							</td>
 							<td class="buttons">
 								<a class="fas fa-edit" @click.prevent="device.sheet?.render(true)" />&nbsp;<a
@@ -226,15 +230,63 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 								<Collapse :when="deviceVisible.find((v) => v.id == device.id)!.visible">
 									<div>
 										<MonitorView
+											v-if="device.systemData.monitors.matrix !== null"
 											:icon="device.img"
 											:monitor="device.systemData.monitors.matrix!"
 											@setDamage="(idx) => setDeviceDamage(device, idx)"
 										/>
 										<MatrixProgramSlotsView
-											v-if="device.systemData.matrix!.programSlots.total > 0"
+											v-if="
+												device.systemData.matrix !== null &&
+												device.systemData.matrix!.totalProgramSlots > 0
+											"
 											:model="device.systemData.matrix!"
 											@change="onProgramSlotsUpdated"
 										/>
+										<div
+											v-if="device.systemData.matrix!.wirelessBonus != null"
+											class="section description"
+											style="width: 99%"
+										>
+											<div class="section-head">
+												<a
+													@click="
+														deviceVisible.find(
+															(v) => v.id == device.id
+														)!.wirelessBonusVisible = !deviceVisible.find(
+															(v) => v.id == device.id
+														)!.wirelessBonusVisible
+													"
+													@dblclick.prevent="device.sheet?.render(true)"
+													><i class="fa-solid fa-down-from-line"></i> Wireless Bonus</a
+												>
+											</div>
+											<Collapse
+												:when="deviceVisible.find((v) => v.id == device.id)!.wirelessBonusVisible"
+											>
+												{{ device.systemData.matrix!.wirelessBonus!.description }}
+											</Collapse>
+										</div>
+										<div class="section description" style="width: 99%">
+											<div class="section-head">
+												<a
+													@click="
+														deviceVisible.find(
+															(v) => v.id == device.id
+														)!.descriptionVisible = !deviceVisible.find(
+															(v) => v.id == device.id
+														)!.descriptionVisible
+													"
+													@dblclick.prevent="device.sheet?.render(true)"
+													><i class="fa-solid fa-down-from-line"></i> Description</a
+												>
+											</div>
+											<Collapse
+												:when="deviceVisible.find((v) => v.id == device.id)!.descriptionVisible"
+											>
+												{{ device.systemData.description }}
+											</Collapse>
+										</div>
 									</div>
 								</Collapse>
 							</td>
@@ -256,6 +308,10 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 	.wireless-devices {
 		width: 99%;
 		table {
+		}
+
+		.description {
+			font-size: 10px;
 		}
 
 		.device-details {

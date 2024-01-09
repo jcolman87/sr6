@@ -5,6 +5,7 @@
  */
 
 import { EnumAttribute } from '@/actor/data';
+import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import * as util from '@/util';
 
@@ -35,7 +36,15 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 
 	getPool(specialization: string | null = null): number {
 		const points = this.getPoints(specialization);
-		return this.solveFormula(`@${EnumAttribute[this.attribute]} + ${points}`);
+		//return this.solveFormula(`@${EnumAttribute[this.attribute]} + ${points}`);
+		return (this.actor!.systemData as LifeformDataModel).attribute(this.attribute).value + points;
+	}
+
+	override getRollData(): Record<string, unknown> {
+		let base = { ...super.getRollData(), [this.item!.name]: this.getPool() };
+		this.specializations.forEach((special) => (base[special] = this.getPool(special)));
+
+		return base;
 	}
 
 	getPoints(specialization: string | null = null): number {

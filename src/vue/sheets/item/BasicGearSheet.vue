@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import GearDataModel from '@/item/data/gear/GearDataModel';
+import GearDataModel, { GearSize } from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
 import { computed, inject, ref, toRaw, onBeforeMount, onBeforeUpdate } from 'vue';
 
@@ -32,7 +32,7 @@ const system = computed(() => (context.data.item as SR6Item<GearDataModel>).syst
 // We have to:
 //   1. Use an 'any' typing to skirt around TypeScript's complaints.
 //   2. Keep a local ref that gets updated in onBeforeUpdate in order to work around some struggles with Foundry.
-const effects = ref<SR6Effect[]>([]);
+const effects = computed<SR6Effect[]>(() => [...(toRaw(context.data.item).effects as any)]);
 
 async function addEffect(category: string) {
 	await toRaw(context.sheet.item).createEmbeddedDocuments('ActiveEffect', [
@@ -44,14 +44,6 @@ async function addEffect(category: string) {
 		},
 	]);
 }
-
-function updateEffects() {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	effects.value = [...(toRaw(context.data.item).effects as any)];
-}
-
-onBeforeMount(updateEffects);
-onBeforeUpdate(updateEffects);
 </script>
 
 <template>
@@ -96,7 +88,15 @@ onBeforeUpdate(updateEffects);
 				</slot>
 				<slot name="size">
 					<label><Localized label="SR6.Labels.Size" /></label>
-					<input type="text" name="system.size" :value="system.size" />
+					<select name="system.size" :value="system.size">
+						<option
+							v-for="size in Object.keys(GearSize)"
+							v-bind:key="size"
+							:value="GearSize[size as keyof typeof GearSize]"
+						>
+							<Localized :label="`SR6.Gear.Sizes.${size}`" />
+						</option>
+					</select>
 				</slot>
 				<slot name="source">
 					<label><Localized label="SR6.Labels.Source" /></label>

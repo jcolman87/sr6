@@ -3,10 +3,6 @@
  * @author jaynus
  * @file SR6 Items Root.
  */
-import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
-import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
-import MatrixICDataModel from '@/item/data/MatrixICDataModel';
-import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
@@ -15,6 +11,7 @@ import { constructOptGroup } from '@/util';
 
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import AmmoDataModel from '@/item/data/AmmoDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
@@ -23,11 +20,16 @@ import SINDataModel from '@/item/data/feature/SINDataModel';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
+import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
 
+import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
+
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
+import MatrixICDataModel from '@/item/data/MatrixICDataModel';
+import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 export function register(): void {
 	CONFIG.Item.documentClass = SR6Item;
@@ -57,6 +59,7 @@ export const GameplayItemTypes = ['condition'];
 function registerDataModels(): void {
 	// Gear
 	CONFIG.Item.dataModels.weapon = WeaponDataModel;
+	CONFIG.Item.dataModels.ammo = AmmoDataModel;
 	CONFIG.Item.dataModels.gear = GearDataModel;
 	CONFIG.Item.dataModels.credstick = CredstickDataModel;
 

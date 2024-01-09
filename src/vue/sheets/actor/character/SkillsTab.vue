@@ -23,7 +23,7 @@ const skills = computed(
 			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SkillDataModel>[]
 );
 
-const skillsVisible = ref(
+const skillsVisible = computed(() =>
 	skills.value.map((skill) => {
 		return {
 			id: skill.id,

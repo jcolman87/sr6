@@ -1,12 +1,8 @@
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
-{{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
 {{ var "action" (getItemById roll.options.attack.itemId) }}
+{{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
+
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Matrix Action" item=action }}
 <div class="roll">
-	<a class="chat-0-expand"><h3>{{action.name}}</h3></a>
-	<div class="formula chat-0-collapsible" style="display: none">
-		{{ action.system.description }}
-	<hr/>
-	</div>
 	<a class="chat-2-expand">
 		Damage: <i class="dv">{{ net_damage }}</i></a>
 	<br/>
@@ -20,5 +16,11 @@
 	{{!---#unless roll.isUserOwner }}
 
 	{{!---/unless ---}}
+	<div class="formula chat-0-collapsible" style="display: none">
+		<section>
+			<div>{{ action.system.description }}</div>
+			<hr/>
+		</section>
+	</div>
 </div>
 {{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

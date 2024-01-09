@@ -26,7 +26,18 @@ export function toSnakeCase(string: string): string {
 		.join('_');
 }
 
-export function getActor<TActor extends Actor>(documentClass: ConstructorOf<TActor>, id: ActorUUID): null | TActor {
+export async function getActor<TActor extends Actor>(
+	documentClass: ConstructorOf<TActor>,
+	id: ActorUUID
+): Promise<null | TActor> {
+	const actor = await fromUuid(id);
+	if (actor instanceof documentClass) {
+		return actor as TActor;
+	}
+	return null;
+}
+
+export function getActorSync<TActor extends Actor>(documentClass: ConstructorOf<TActor>, id: ActorUUID): null | TActor {
 	const actor = fromUuidSync(id);
 	if (actor instanceof documentClass) {
 		return actor as TActor;

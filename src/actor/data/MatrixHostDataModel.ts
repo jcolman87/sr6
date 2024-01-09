@@ -1,6 +1,7 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import IHasMatrixPersona from '@/data/IHasMatrixPersona';
-import IHasPostCreate from '@/data/IHasPostCreate';
+import { DocumentUUIDField } from '@/data/fields';
+import { IHasMatrixPersona } from '@/data/interfaces';
+import { IHasPostCreate } from '@/data/interfaces';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
@@ -40,10 +41,6 @@ export default abstract class MatrixHostDataModel
 		);
 	}
 
-	get personas(): SR6Item<MatrixPersonaDataModel>[] {
-		return [...this._personas.map((p) => p())];
-	}
-
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.attributes.prepareDerivedData();
@@ -80,11 +77,7 @@ export default abstract class MatrixHostDataModel
 		return {
 			...super.defineSchema(),
 			rating: new fields.NumberField({ initial: 1, min: 1, max: 20, nullable: false, required: true }),
-			_personas: new fields.ArrayField(new fields.ForeignDocumentField(SR6Item<MatrixPersonaDataModel>), {
-				initial: [],
-				required: true,
-				nullable: false,
-			}),
+			_personas: new fields.ArrayField(new DocumentUUIDField()),
 			attributes: new fields.EmbeddedDataField(AdjustableMatrixAttributesDataModel, {
 				initial: {
 					base: {

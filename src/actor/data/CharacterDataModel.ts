@@ -6,7 +6,7 @@
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { MonitorType, WoundModifierData } from '@/actor/data/MonitorsDataModel';
-import IHasMatrixPersona from '@/data/IHasMatrixPersona';
+import { IHasMatrixPersona } from '@/data/interfaces';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -15,10 +15,18 @@ import { getCoreSkills, getCoreMatrixActions, getCoreGeneralActions } from '@/it
 export default abstract class CharacterDataModel extends LifeformDataModel implements IHasMatrixPersona {
 	abstract karma: number;
 
-	//
-	// Matrix Stuff
-	//
+	override get woundModifiers(): WoundModifierData {
+		const modifiers = super.woundModifiers;
+		if (this.matrixPersona) {
+			modifiers[MonitorType.Matrix] = this.matrixPersona.woundModifier;
+		}
 
+		return modifiers;
+	}
+
+	//
+	// IHasMatrixPersona
+	//
 	get matrixPersona(): null | MatrixPersonaDataModel {
 		return this._matrixPersona;
 	}
@@ -42,34 +50,6 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		return false;
 	}
 
-	override get woundModifiers(): WoundModifierData {
-		const modifiers = super.woundModifiers;
-		if (this.matrixPersona) {
-			modifiers[MonitorType.Matrix] = this.matrixPersona.woundModifier;
-		}
-
-		return modifiers;
-	}
-
-	static override defineSchema(): foundry.data.fields.DataSchema {
-		const fields = foundry.data.fields;
-
-		return {
-			...super.defineSchema(),
-			karma: new fields.NumberField({ integer: true, required: true, nullable: false, initial: 0 }),
-		};
-	}
-
-	override async onPostCreate(): Promise<void> {
-		return await super.onPostCreate();
-		// Only add base skills if none were adding such as an import
-		// if (!this.actor!.items.find((i) => i.type == 'skill')) {
-		//	await this.actor!.createEmbeddedDocuments('Item', await getCoreSkills());
-		// } else {
-		//
-		// }
-	}
-
 	override getRollData(): Record<string, unknown> {
 		return {
 			...super.getRollData(),
@@ -90,5 +70,14 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	async _addCoreGeneralActions(): Promise<void> {
 		// Only add base skills if none were adding such as an import
 		await this.actor!.createEmbeddedDocuments('Item', await getCoreGeneralActions());
+	}
+
+	static override defineSchema(): foundry.data.fields.DataSchema {
+		const fields = foundry.data.fields;
+
+		return {
+			...super.defineSchema(),
+			karma: new fields.NumberField({ integer: true, required: true, nullable: false, initial: 0 }),
+		};
 	}
 }

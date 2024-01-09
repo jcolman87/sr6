@@ -63,6 +63,7 @@ export const ROLL_TEMPLATES = new Map([
 	[RollType.MatrixAction, 'systems/sr6/templates/chat/rolls/MatrixActionRoll.hbs'],
 
 	[RollType.SpellCast, 'systems/sr6/templates/chat/rolls/SpellCastRoll.hbs'],
+	[RollType.SpellDrain, 'systems/sr6/templates/chat/rolls/SpellResistDrainRoll.hbs'],
 ]);
 
 export function register(): void {

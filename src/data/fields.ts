@@ -1,7 +1,5 @@
-/**
- * A special `NumberField` which represents an angle of rotation in degrees between 0 and 360.
- * @property base Whether the base angle should be treated as 360 or as 0
- */
+type ConstructorOf<T> = new (...args: any[]) => T;
+
 export class EnumNumberField<
 	TEnum extends object,
 	TRequired extends boolean = true,
@@ -12,6 +10,24 @@ export class EnumNumberField<
 		value: unknown,
 		options?: foundry.data.fields.DataFieldValidationOptions
 	): foundry.data.fields.DataModelValidationFailure | void {
-		super.validate(value, options);
+		return super.validate(value, options);
+	}
+}
+
+export class DocumentUUIDField<
+	TRequired extends boolean = true,
+	TNullable extends boolean = true,
+	THasInitial extends boolean = true
+> extends foundry.data.fields.StringField<string, string, TRequired, TNullable, THasInitial> {
+	override validate(
+		value: unknown,
+		options?: foundry.data.fields.DataFieldValidationOptions
+	): foundry.data.fields.DataModelValidationFailure | void {
+		//let parsed = parseUuid(value as string);
+		//if (!parsed.uuid || !(parsed.collection && parsed.documentId)) {
+		//new foundry.data.fields.DataModelValidationFailure({ message: 'Invalid UUID', unresolved: true });
+		//	throw 'WTF';
+		//}
+		return super.validate(value, options);
 	}
 }

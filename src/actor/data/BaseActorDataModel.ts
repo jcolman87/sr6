@@ -1,11 +1,23 @@
-import MonitorsDataModel, { MonitorType, WoundModifierData } from '@/actor/data/MonitorsDataModel';
+import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
-import IHasPools from '@/data/IHasPools';
 import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
+import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
+import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
+import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
+import ContactDataModel from '@/item/data/feature/ContactDataModel';
+import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
+import QualityDataModel from '@/item/data/feature/QualityDataModel';
+import SINDataModel from '@/item/data/feature/SINDataModel';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
+import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
+
+import { IHasPools } from '@/data/interfaces';
+
 import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
 
@@ -22,6 +34,74 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	get conditions(): ConditionDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'condition').map(
 			(i) => (i as SR6Item<ConditionDataModel>).systemData
+		);
+	}
+
+	get skills(): SkillDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'skill').map(
+			(i) => (i as SR6Item<SkillDataModel>).systemData
+		);
+	}
+
+	get gear(): GearDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'gear').map((i) => (i as SR6Item<GearDataModel>).systemData);
+	}
+
+	get augmentations(): AugmentationDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'augmentation').map(
+			(i) => (i as SR6Item<AugmentationDataModel>).systemData
+		);
+	}
+
+	get contacts(): ContactDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'contact').map(
+			(i) => (i as SR6Item<ContactDataModel>).systemData
+		);
+	}
+
+	get lifestyles(): LifestyleDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'lifestyle').map(
+			(i) => (i as SR6Item<LifestyleDataModel>).systemData
+		);
+	}
+
+	get sins(): SINDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'sin').map((i) => (i as SR6Item<SINDataModel>).systemData);
+	}
+
+	get qualities(): QualityDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'quality').map(
+			(i) => (i as SR6Item<QualityDataModel>).systemData
+		);
+	}
+
+	get credsticks(): CredstickDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'credstick').map(
+			(i) => (i as SR6Item<CredstickDataModel>).systemData
+		);
+	}
+
+	get adeptPowers(): AdeptPowerDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'adeptpower').map(
+			(i) => (i as SR6Item<AdeptPowerDataModel>).systemData
+		);
+	}
+
+	get complexForms(): ComplexFormDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'complexform').map(
+			(i) => (i as SR6Item<ComplexFormDataModel>).systemData
+		);
+	}
+
+	get matrixPrograms(): MatrixProgramDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'matrix_program').map(
+			(i) => (i as SR6Item<MatrixProgramDataModel>).systemData
+		);
+	}
+
+	get weapons(): WeaponDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'weapons').map(
+			(i) => (i as SR6Item<WeaponDataModel>).systemData
 		);
 	}
 

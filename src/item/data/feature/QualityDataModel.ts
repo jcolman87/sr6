@@ -1,6 +1,6 @@
 import SR6Actor from '@/actor/SR6Actor';
-import IHasOnDelete from '@/data/IHasOnDelete';
-import IHasPostCreate from '@/data/IHasPostCreate';
+import { IHasOnDelete } from '@/data/interfaces';
+import { IHasPostCreate } from '@/data/interfaces';
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';

@@ -6,6 +6,16 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 
 	static _enableV10Validation = true;
 
+	get isOwner(): boolean {
+		if (this.actor) {
+			return this.actor!.isOwner;
+		} else if (this.item) {
+			return this.item!.isOwner;
+		}
+
+		return game.user!.isGM;
+	}
+
 	get actor(): SR6Actor | null {
 		const parent = this.parent;
 

@@ -81,34 +81,47 @@
 		}
 	}
 
-	.roll {
+	.formula {
+		font-style: italic;
+		font-size: 11px;
+	}
 
-		.formula {
-			font-style: italic;
-			font-size: 11px;
-		}
+	.dv {
+		font-weight: bold;
+		color: colors.$red;
+	}
 
-		.dv {
-			font-weight: bold;
-			color: colors.$red;
-		}
+	%result-text {
+		font-weight: bold;
+		font-size: 14px;
+		white-space: nowrap;
+	}
 
-		.success {
-			font-weight: bold;
-			color: colors.$green;
-		}
+	.failure {
+		@extend %result-text;
+		color: colors.$red;
+	}
 
-		.glitch {
-			font-weight: bold;
-			font-size: 14px;
-			color: colors.$glitch;
-		}
+	.success {
+		@extend %result-text;
+		color: colors.$green;
+	}
 
-		.critical-glitch {
-			font-weight: bold;
-			font-size: 14px;
-			color: colors.$critical-glitch;
-		}
+	.glitch {
+		@extend %result-text;
+		font-size: 20px;
+		color: colors.$glitch;
+	}
+
+	.critical-glitch {
+		@extend %result-text;
+		font-size: 20px;
+		color: colors.$critical-glitch;
+	}
+
+	.data-value {
+		font-weight: bold;
+		font-style: italic;
 	}
 
 	.chat-target-box {

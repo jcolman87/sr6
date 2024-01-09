@@ -1,4 +1,5 @@
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" }}
+{{ var "weapon" (getItemById roll.options.previous.attack.itemId) }}
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Soak Damage" item=weapon }}
 <div class="roll">
 	{{#if roll.success }}
 		<i style="color: #006400">Soaked Successfully!</i>

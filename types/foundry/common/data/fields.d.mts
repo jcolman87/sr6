@@ -777,6 +777,15 @@ export class DocumentIdField<
 	protected override _validateType(value: unknown): boolean;
 }
 
+interface ForeignDocumentFieldOptions<
+	TRequired extends boolean,
+	TNullable extends boolean,
+	THasInitial extends boolean,
+> extends StringFieldOptions<string, TRequired, TNullable, THasInitial> {
+	idOnly?: boolean;
+	readonly?: boolean;
+}
+
 /**
  * A special class of [StringField]{@link StringField} field which references another DataModel by its id.
  * This field may also be null to indicate that no foreign model is linked.
@@ -793,13 +802,13 @@ export class ForeignDocumentField<
 	 */
 	constructor(
 		model: ConstructorOf<abstract.DataModel>,
-		options?: StringFieldOptions<string, TRequired, TNullable, THasInitial>,
+		options?: ForeignDocumentFieldOptions<string, TRequired, TNullable, THasInitial>,
 	);
 
 	/** A reference to the model class which is stored in this field */
 	model: abstract.DataModel;
 
-	protected static override get _defaults(): StringFieldOptions<string, boolean, boolean, boolean>;
+	protected static override get _defaults(): ForeignDocumentFieldOptions<string, boolean, boolean, boolean>;
 
 	_cast(value: unknown): string;
 

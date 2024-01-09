@@ -1,6 +1,6 @@
-import { GearAvailability, GearSize } from '@/item/data/gear/GearDataModel';
+import { GearAvailabilityDataModel, GearSize } from '@/item/data/gear/GearDataModel';
 
-export function GearAvailabilityToString(avail: GearAvailability): string {
+export function GearAvailabilityToString(avail: GearAvailabilityDataModel): string {
 	const rating = avail.rating.toString();
 	const legal = avail.illegal ? '(I)' : '';
 	const license = avail.license ? '(L)' : '';
@@ -13,7 +13,7 @@ export function GearSizeToString(size: GearSize): string {
 }
 
 export function register(): void {
-	Handlebars.registerHelper('GearAvailabilityToString', function (avail: GearAvailability) {
+	Handlebars.registerHelper('GearAvailabilityToString', function (avail: GearAvailabilityDataModel) {
 		return GearAvailabilityToString(avail);
 	});
 	Handlebars.registerHelper('GearSizeToString', function (avail: GearSize) {

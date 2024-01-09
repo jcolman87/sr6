@@ -1,9 +1,10 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import IHasMatrixPersona from '@/data/IHasMatrixPersona';
+import { IHasMatrixPersona } from '@/data/interfaces';
 import SR6Item from '@/item/SR6Item';
+import { rollSpellResistDrain } from '@/roll/Rollers';
 import { SR6Roll } from '@/roll/SR6Roll';
-import { getActor, getItemSync } from '@/util';
+import { getActorSync, getItemSync } from '@/util';
 import * as util from '@/util';
 import * as rollers from '@/roll/Rollers';
 
@@ -18,7 +19,7 @@ export class SR6ChatMessage extends ChatMessage {
 		html.find('.click-actor').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 			event.preventDefault();
 			const actorId = event.currentTarget.dataset['actorId'];
-			const actor = getActor(SR6Actor, actorId);
+			const actor = getActorSync(SR6Actor, actorId);
 			if (actor && actor.token) {
 				void canvas.ping(actor.token.object.center);
 				return canvas.animatePan(actor.token.object.center);
@@ -27,12 +28,23 @@ export class SR6ChatMessage extends ChatMessage {
 
 		html.find('.click-actor').dblclick(async (event: JQuery.DoubleClickEvent<HTMLElement>) => {
 			event.preventDefault();
-			await getActor(SR6Actor, event.currentTarget.dataset['actorId'] as ActorUUID)?.sheet?.render(true);
+			await getActorSync(SR6Actor, event.currentTarget.dataset['actorId'] as ActorUUID)?.sheet?.render(true);
 		});
 
 		html.find('.click-item').dblclick(async (event: JQuery.DoubleClickEvent<HTMLElement>) => {
 			event.preventDefault();
 			await getItemSync(SR6Item, event.currentTarget.dataset['itemId'] as ItemUUID)?.sheet?.render(true);
+		});
+
+		html.find('.chat-expand-target-box').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
+			event.preventDefault();
+
+			const tip = html.find('.chat-target-box');
+			if (!tip.is(':visible')) {
+				tip.slideDown(200);
+			} else {
+				tip.slideUp(200);
+			}
 		});
 
 		html.find('.chat-expand-dice').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
@@ -97,6 +109,19 @@ export class SR6ChatMessage extends ChatMessage {
 					actor.systemData as unknown as IHasMatrixPersona,
 					(this.rolls[0] as SR6Roll).hits,
 					this.rolls[0].options as unknown as rollers.MatrixActionRollData
+				);
+			}
+		});
+
+		// Magic
+		html.on('click', '#roll-spell-resist-drain', async (event) => {
+			event.preventDefault();
+
+			for (const actor of util.getSelfOrSelectedActors()) {
+				await rollers.rollSpellResistDrain(
+					actor.systemData as LifeformDataModel,
+					(this.rolls[0] as SR6Roll).hits,
+					this.rolls[0].options as unknown as rollers.SpellCastRollData
 				);
 			}
 		});

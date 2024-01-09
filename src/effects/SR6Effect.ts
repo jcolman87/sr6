@@ -37,6 +37,10 @@ export default class SR6Effect extends ActiveEffect {
 		return null;
 	}
 
+	override get isSuppressed(): boolean {
+		return this.disabled;
+	}
+
 	async getConditionData(): Promise<ConditionActiveEffectData | null> {
 		const data = this.getFlag('sr6', 'ConditionActiveEffectData');
 		return data ? (data as ConditionActiveEffectData) : null;
@@ -46,25 +50,27 @@ export default class SR6Effect extends ActiveEffect {
 		await this.setFlag('sr6', 'ConditionActiveEffectData', data);
 	}
 
-	override prepareDerivedData(): void {
-		super.prepareDerivedData();
-	}
-
-	override get isSuppressed(): boolean {
-		return this.disabled;
-	}
-
 	override apply(actor: Actor, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
-		change = this._parseChanges(actor, change);
+		return this._apply(actor, change);
+	}
+
+	_apply(document: Actor | Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
+		console.log('SR6Effect::apply', this.name, this, document, change);
+		change = this._parseChanges(document, change);
 
 		// Determine the data type of the target field
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const current: any = foundry.utils.getProperty(actor, change.key) ?? null;
+		const current: any = foundry.utils.getProperty(document, change.key) ?? null;
 		let target = current;
 		if (current === null) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const model = (game as any).model.Actor[actor.type] || {};
-			target = foundry.utils.getProperty(model, change.key) ?? null;
+			if (target instanceof Actor) {
+				const model = (game as any).model.Actor[document.type] || {};
+				target = foundry.utils.getProperty(model, change.key) ?? null;
+			} else if (target instanceof Item) {
+				const model = (game as any).model.Item[document.type] || {};
+				target = foundry.utils.getProperty(model, change.key) ?? null;
+			}
 		}
 		const targetType = foundry.utils.getType(target);
 
@@ -77,33 +83,34 @@ export default class SR6Effect extends ActiveEffect {
 			} else delta = this._castDelta(change.value, targetType);
 		} catch (err) {
 			console.warn(
-				`Actor [${actor.id}] | Unable to parse active effect change for ${change.key}: "${change.value}"`
+				`Actor [${document.id}] | Unable to parse active effect change for ${change.key}: "${change.value}"`
 			);
 			return undefined;
 		}
 
-		const baseActor = actor as SR6Actor<BaseActorDataModel>;
+		// const baseActor = actor as SR6Actor<BaseActorDataModel>;
 		//  let actor = actor as SR6Actor<CharacterDataModel> as any;
-		const path = change.key.split(':');
+		// const path = change.key.split(':');
 
 		// Apply the change depending on the application mode
 		const modes = CONST.ACTIVE_EFFECT_MODES;
 		const changes = {};
 		switch (change.mode) {
 			case modes.ADD:
-				this._applyAdd(actor, change, current, delta, changes);
+				this._applyAdd(document, change, current, delta, changes);
 				break;
 			case modes.MULTIPLY:
-				this._applyMultiply(actor, change, current, delta, changes);
+				this._applyMultiply(document, change, current, delta, changes);
 				break;
 			case modes.OVERRIDE:
-				this._applyOverride(actor, change, current, delta, changes);
+				this._applyOverride(document, change, current, delta, changes);
 				break;
 			case modes.UPGRADE:
 			case modes.DOWNGRADE:
-				this._applyUpgrade(actor, change, current, delta, changes);
+				this._applyUpgrade(document, change, current, delta, changes);
 				break;
 			default: // CUSTOM CASE
+			/*
 				if (path.length > 1) {
 					switch (path[0]) {
 						case 'matrixPersona': {
@@ -129,21 +136,20 @@ export default class SR6Effect extends ActiveEffect {
 					this._applyAdd(actor, change, current, delta, changes);
 				}
 				break;
+
+				 */
 		}
 
 		// Apply all changes to the Actor data
-		foundry.utils.mergeObject(actor, changes);
+		foundry.utils.mergeObject(document, changes);
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		return changes as any;
 	}
 
-	_parseChanges(actor: Actor, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
-		if (change.mode !== CONST.ACTIVE_EFFECT_MODES.CUSTOM && !change.key.includes('system.')) {
-			change.key = `system.${change.key}`;
-		}
-
+	_parseChanges(document: Actor | Item, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
 		if (change.value.includes('@')) {
+			/*
 			// BUG: we cant use get by UUID here because it causes an infinite loop from preparing data.
 			const origin = actor.items.find((i) => i.uuid === (this.origin as ItemUUID)) as SR6Item<BaseItemDataModel>;
 			// getItem(SR6Item<BaseItemDataModel>, this.origin as ItemUUID);
@@ -153,7 +159,7 @@ export default class SR6Effect extends ActiveEffect {
 			} else {
 				change.value = (actor as SR6Actor<BaseActorDataModel>).solveFormula(change.value).toString();
 			}
-			//
+			 */
 		}
 
 		return change;

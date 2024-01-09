@@ -1,0 +1,587 @@
+name: Holdout/Light/Machine Pistol Ammo (Regular)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '0.5'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+---
+name: Holdout/Light/Machine Pistol Ammo (APDS)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1.5'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '2'
+---
+name: Holdout/Light/Machine Pistol Ammo (Explosive)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Holdout/Light/Machine Pistol Ammo (Flechette)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '0.75'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '1'
+---
+name: Holdout/Light/Machine Pistol Ammo (Gel)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '0.75'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+# Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Holdout/Light/Machine Pistol Ammo (Stick-n-Shock)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+# Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Holdout/Light/Machine Pistol Ammo (Caseless)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Heavy Pistol/SMG Ammo (Regular)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+---
+name: Heavy Pistol/SMG Ammo  (APDS)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '3'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '2'
+---
+name: Heavy Pistol/SMG Ammo  (Explosive)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '2'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Heavy Pistol/SMG Ammo  (Flechette)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1.5'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '1'
+---
+name: Heavy Pistol/SMG Ammo  (Gel)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1.5'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Heavy Pistol/SMG Ammo  (Stick-n-Shock)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '2'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Heavy Pistol/SMG Ammo  (Caseless)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '2'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Rifle Ammo (Regular)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '2'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+---
+name: Rifle Ammo (APDS)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '6'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '2'
+---
+name: Rifle Ammo (Explosive)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '4'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Rifle Ammo (Flechette)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '3'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '1'
+---
+name: Rifle Ammo (Gel)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '3'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Rifle Ammo (Stick-n-Shock)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '4'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Rifle Ammo (Caseless)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '4'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Shotgun Ammo (Regular)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '1.5'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+---
+name: Shotgun Ammo (APDS)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '4.5'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '2'
+---
+name: Shotgun Ammo (Explosive)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '3'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Shotgun Ammo (Flechette)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '2.25'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '1'
+---
+name: Shotgun Ammo (Gel)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '2.25'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Shotgun Ammo (Stick-n-Shock)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '3'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Shotgun Ammo (Caseless)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: '3'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Machine Gun Ammo (Regular)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+---
+name: Machine Gun Ammo (APDS)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '2'
+---
+name: Machine Gun Ammo (Explosive)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Machine Gun Ammo (Flechette)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '1'
+---
+name: Machine Gun Ammo (Gel)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Machine Gun Ammo (Stick-n-Shock)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Machine Gun Ammo (Caseless)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Taser Ammo (Regular)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+---
+name: Taser Ammo (APDS)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '2'
+---
+name: Taser Ammo (Explosive)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Taser Ammo (Flechette)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '-1'
+  attackRatingModifierFormula: '1'
+---
+name: Taser Ammo (Gel)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'
+---
+name: Taser Ammo (Stick-n-Shock)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  # Change damage to stun
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '1'
+---
+name: Taser Ammo (Caseless)
+type: ammo
+img: systems/sr6/assets/items/ammo.webp
+effects: []
+system:
+  description: ''
+  costFormula: ''
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  damageModifierFormula: '0'
+  attackRatingModifierFormula: '0'

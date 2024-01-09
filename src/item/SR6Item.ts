@@ -4,13 +4,13 @@
  * @file Base SR6 Item
  */
 import BaseDataModel from '@/data/BaseDataModel';
-import IHasPostCreate from '@/data/IHasPostCreate';
+import { IHasPostCreate } from '@/data/interfaces';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import IHasPreCreate from '@/data/IHasPreCreate';
-import IHasOnDelete from '@/data/IHasOnDelete';
+import { IHasPreCreate } from '@/data/interfaces';
+import { IHasOnDelete } from '@/data/interfaces';
 
 /**
  * Item class used as a base for all SR6 items.

@@ -10,9 +10,9 @@ import { RollType, ROLL_TEMPLATES } from '@/roll';
 import { Distance, FireMode, InitiativeType } from '@/data';
 import RollPrompt from '@/app/RollPrompt';
 
-import IHasPools from '@/data/IHasPools';
-import IHasMatrixPersona from '@/data/IHasMatrixPersona';
-import IHasInitiative from '@/data/IHasInitiative';
+import { IHasPools } from '@/data/interfaces';
+import { IHasMatrixPersona } from '@/data/interfaces';
+import { IHasInitiative } from '@/data/interfaces';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { getItemSync, getTargetActorIds } from '@/util';
@@ -74,6 +74,19 @@ export interface SpellCastRollData extends SR6RollData {
 	drain: number;
 }
 
+export interface SpellResistDrainRollData extends SR6RollData {
+	previous: SpellCastRollData;
+	attack: SpellAttackData;
+}
+
+async function finishRoll<T extends SR6RollData>(data: Record<string, unknown>, options: T) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const roll = new SR6Roll(`${options.pool}d6`, data, options as any);
+	const evaluated = await roll.evaluate({ async: true });
+	//await evaluated.finish();
+	await evaluated.toMessage();
+}
+
 export function getInitiativeRoll(systemData: IHasInitiative, formula: string): SR6Roll {
 	const poolModifier = systemData.getPool(RollType.Initiative);
 	return new SR6Roll(
@@ -95,9 +108,7 @@ export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribut
 		attribute: attribute,
 	});
 	if (rollData) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...actor.getRollData(), actor: actor }, rollData);
 	}
 }
 
@@ -113,9 +124,7 @@ export async function rollSkill(actor: SR6Actor, skillId: string, special: strin
 		skillId: skillId,
 	});
 	if (rollData) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...actor.getRollData(), actor: actor }, rollData);
 	}
 }
 
@@ -147,13 +156,7 @@ export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<We
 		attack: attackData,
 	});
 	if (rollData) {
-		const roll = new SR6Roll(
-			`${rollData.pool}d6`,
-			{ ...systemData.actor!.getRollData(), item: weapon, actor: systemData.actor! },
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			rollData as any
-		);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -177,13 +180,7 @@ export async function rollWeaponDefend(
 		previous: previous,
 	});
 	if (rollData) {
-		const roll = new SR6Roll(
-			`${rollData.pool}d6`,
-			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			rollData as any
-		);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -207,13 +204,7 @@ export async function rollWeaponSoak(
 		previous: previous,
 	});
 	if (rollData) {
-		const roll = new SR6Roll(
-			`${rollData.pool}d6`,
-			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			rollData as any
-		);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -250,13 +241,7 @@ export async function rollMatrixAction(
 	});
 
 	if (rollData) {
-		const roll = new SR6Roll(
-			`${rollData.pool}d6`,
-			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			rollData as any
-		);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -283,13 +268,7 @@ export async function rollMatrixDefense(
 		previous: previous,
 	});
 	if (rollData) {
-		const roll = new SR6Roll(
-			`${rollData.pool}d6`,
-			{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			rollData as any
-		);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -303,17 +282,11 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	const rollType = RollType.SpellCast;
 	const pool = spell.systemData.pool;
 
-	console.log(
-		'formula',
-		actor.systemData.magicTradition,
-		`@magic + @${MAGIC_TRADITION_ATTRIBUTE[actor.systemData.magicTradition]}`
-	);
-
 	const attackData = {
 		attackerId: actor.uuid,
 		targetIds: getTargetActorIds(),
 		itemId: spell.uuid,
-		attackRating: actor.solveFormula(`@magic + @${MAGIC_TRADITION_ATTRIBUTE[actor.systemData.magicTradition]}`),
+		attackRating: actor.systemData.spellAttackRating,
 		damage: spell.systemData.baseDamage,
 	};
 
@@ -328,8 +301,30 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	});
 
 	if (rollData) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const roll = new SR6Roll(`${rollData.pool}d6`, { ...actor.getRollData(), actor: actor }, rollData as any);
-		await (await roll.evaluate({ async: true })).toMessage();
+		await finishRoll({ ...actor.getRollData(), actor: actor }, rollData);
+	}
+}
+
+export async function rollSpellResistDrain<TDataModel extends LifeformDataModel = LifeformDataModel>(
+	systemData: TDataModel,
+	hits: number,
+	previous: SpellCastRollData
+): Promise<void> {
+	const rollType = RollType.SpellDrain;
+
+	const pool = systemData.actor!.systemData.getPool(rollType) + systemData.spellResistDrain;
+	const attack = { ...previous.attack, damage: previous.drain };
+
+	const rollData = await RollPrompt.promptForRoll<SpellResistDrainRollData>(systemData.actor!, {
+		...SR6Roll.defaultOptions(),
+		pool: pool,
+		threshold: previous.drain,
+		template: ROLL_TEMPLATES.get(rollType)!,
+		type: rollType,
+		attack: attack,
+		previous: previous,
+	});
+	if (rollData) {
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }

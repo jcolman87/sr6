@@ -4,12 +4,12 @@ import MonitorsDataModel, { MonitorType, WoundModifierData } from '@/actor/data/
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { InitiativeType } from '@/data';
-import AttributeDataModel from '@/data/AttributeDataModel';
+import AttributeDataModel from '@/actor/data/AttributeDataModel';
 import MonitorDataModel from '@/actor/data/MonitorsDataModel';
-import IHasInitiative, { AvailableActions } from '@/data/IHasInitiative';
-import IHasPostCreate from '@/data/IHasPostCreate';
+import { IHasInitiative, AvailableActions, IHasEdge } from '@/data/interfaces';
+import { IHasPostCreate } from '@/data/interfaces';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
-import { MagicAwakenedType, MagicTradition } from '@/data/magic';
+import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import { RollType } from '@/roll';
 
 /** s
@@ -44,7 +44,7 @@ export type Initiatives = {
 	matrix: null | InitiativeDataModel;
 };
 
-export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasPostCreate, IHasInitiative {
+export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasInitiative, IHasEdge {
 	abstract attributes: Attributes;
 
 	abstract initiatives: Initiatives;
@@ -59,6 +59,17 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		};
 	}
 
+	get spellAttackRating(): number {
+		return this.solveFormula(`@magic + @${MAGIC_TRADITION_ATTRIBUTE[this.magicTradition]}`);
+	}
+
+	get spellResistDrain(): number {
+		return this.solveFormula(`@willpower + @${MAGIC_TRADITION_ATTRIBUTE[this.magicTradition]}`);
+	}
+
+	//
+	// IHasInitiative
+	//
 	getInitiativeFormula(type: InitiativeType): null | string {
 		const modifier = super.getPool(RollType.Initiative);
 		switch (type) {
@@ -88,6 +99,9 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 		};
 	}
 
+	//
+	// IHasPool
+	//
 	override getPool(type: RollType): number {
 		const pool = super.getPool(type) + this.woundModifier;
 
@@ -105,12 +119,100 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 			case RollType.Skill:
 			case RollType.MatrixAction:
 			case RollType.MatrixActionDefend:
+			case RollType.SpellCast:
+				``;
+			case RollType.SpellDrain:
 				break;
 			default:
 				ui.notifications.error('Unimplemented pool type');
 		}
 
 		return pool;
+	}
+
+	//
+	// IHasEdge
+	//
+	gainEdge(count: number): boolean {
+		return this.monitors.gainEdge(count);
+	}
+	spendEdge(count: number): boolean {
+		return this.monitors.spendEdge(count);
+	}
+
+	attribute(id: EnumAttribute): AttributeDataModel {
+		switch (id) {
+			case EnumAttribute.body:
+				return this.attributes.body;
+			case EnumAttribute.agility:
+				return this.attributes.agility;
+			case EnumAttribute.reaction:
+				return this.attributes.reaction;
+			case EnumAttribute.strength:
+				return this.attributes.strength;
+			case EnumAttribute.willpower:
+				return this.attributes.willpower;
+			case EnumAttribute.logic:
+				return this.attributes.logic;
+			case EnumAttribute.intuition:
+				return this.attributes.intuition;
+			case EnumAttribute.charisma:
+				return this.attributes.charisma;
+			case EnumAttribute.magic:
+				return this.attributes.magic;
+			case EnumAttribute.resonance:
+				return this.attributes.resonance;
+		}
+	}
+
+	override prepareBaseData(): void {
+		super.prepareBaseData();
+
+		// if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
+		// if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
+
+		this._prepareAttributes();
+		this.monitors.prepareBaseData();
+	}
+
+	override prepareData(): void {
+		super.prepareData();
+		this.monitors.prepareData();
+	}
+
+	override prepareDerivedData(): void {
+		super.prepareDerivedData();
+		this.monitors.prepareDerivedData();
+	}
+
+	override getRollData(): Record<string, unknown> {
+		return {
+			...super.getRollData(),
+			body: this.attributes.body.value,
+			agility: this.attributes.agility.value,
+			reaction: this.attributes.reaction.value,
+			strength: this.attributes.strength.value,
+			willpower: this.attributes.willpower.value,
+			logic: this.attributes.logic.value,
+			intuition: this.attributes.intuition.value,
+			charisma: this.attributes.charisma.value,
+			magic: this.attributes.magic.value,
+			resonance: this.attributes.resonance.value,
+			initiatives: this.initiatives,
+		};
+	}
+
+	_prepareAttributes(): void {
+		this.attributes.body.prepareData();
+		this.attributes.agility.prepareData();
+		this.attributes.reaction.prepareData();
+		this.attributes.strength.prepareData();
+		this.attributes.willpower.prepareData();
+		this.attributes.logic.prepareData();
+		this.attributes.intuition.prepareData();
+		this.attributes.charisma.prepareData();
+		this.attributes.magic.prepareData();
+		this.attributes.resonance.prepareData();
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -196,81 +298,4 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 			}),
 		};
 	}
-
-	attribute(id: EnumAttribute): AttributeDataModel {
-		switch (id) {
-			case EnumAttribute.body:
-				return this.attributes.body;
-			case EnumAttribute.agility:
-				return this.attributes.agility;
-			case EnumAttribute.reaction:
-				return this.attributes.reaction;
-			case EnumAttribute.strength:
-				return this.attributes.strength;
-			case EnumAttribute.willpower:
-				return this.attributes.willpower;
-			case EnumAttribute.logic:
-				return this.attributes.logic;
-			case EnumAttribute.intuition:
-				return this.attributes.intuition;
-			case EnumAttribute.charisma:
-				return this.attributes.charisma;
-			case EnumAttribute.magic:
-				return this.attributes.magic;
-			case EnumAttribute.resonance:
-				return this.attributes.resonance;
-		}
-	}
-
-	override prepareBaseData(): void {
-		super.prepareBaseData();
-
-		// if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
-		// if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
-
-		this._prepareAttributes();
-		this.monitors.prepareBaseData();
-	}
-
-	override prepareData(): void {
-		super.prepareData();
-		this.monitors.prepareData();
-	}
-
-	override prepareDerivedData(): void {
-		super.prepareDerivedData();
-		this.monitors.prepareDerivedData();
-	}
-
-	override getRollData(): Record<string, unknown> {
-		return {
-			...super.getRollData(),
-			body: this.attributes.body.value,
-			agility: this.attributes.agility.value,
-			reaction: this.attributes.reaction.value,
-			strength: this.attributes.strength.value,
-			willpower: this.attributes.willpower.value,
-			logic: this.attributes.logic.value,
-			intuition: this.attributes.intuition.value,
-			charisma: this.attributes.charisma.value,
-			magic: this.attributes.magic.value,
-			resonance: this.attributes.resonance.value,
-			initiatives: this.initiatives,
-		};
-	}
-
-	_prepareAttributes(): void {
-		this.attributes.body.prepareData();
-		this.attributes.agility.prepareData();
-		this.attributes.reaction.prepareData();
-		this.attributes.strength.prepareData();
-		this.attributes.willpower.prepareData();
-		this.attributes.logic.prepareData();
-		this.attributes.intuition.prepareData();
-		this.attributes.charisma.prepareData();
-		this.attributes.magic.prepareData();
-		this.attributes.resonance.prepareData();
-	}
-
-	async onPostCreate(): Promise<void> {}
 }

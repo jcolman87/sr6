@@ -1,3 +1,15 @@
+<hr/>
+{{#if (gt roll.options.attack.targetIds.length 0)}}
+	{{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
+	<i style="font-weight: bold; font-style: italic"><a class="chat-expand-target-box">Targets:</a></i><br/>
+	<div class="chat-target-box" style="display: none">
+		{{#each targets }}
+			<div><a class="click-actor" data-actor-id="{{this.uuid}}">{{this.name}}</a></div>
+		{{/each}}
+	</div>
+	<hr/>
+{{/if}}
+
 <div class="chat-tooltip chat-dice-collapsible" style="display: none">
 	<section>
 		<div class="roll">

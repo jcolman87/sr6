@@ -6,7 +6,7 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import * as rollers from '@/roll/Rollers';
 import { SR6RollData } from '@/roll/SR6Roll';
 import { FireMode, Distance } from '@/data';
-import { getActor, getItemSync } from '@/util';
+import { getActorSync, getItemSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
@@ -28,7 +28,7 @@ const original_pool = roll.value.pool;
 const targets = computed(
 	() =>
 		roll.value.attack.targetIds.map((id) =>
-			getActor(SR6Actor<BaseActorDataModel>, id)
+			getActorSync(SR6Actor<BaseActorDataModel>, id)
 		) as SR6Actor<BaseActorDataModel>[]
 );
 

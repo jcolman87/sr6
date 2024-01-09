@@ -5,9 +5,6 @@ export default abstract class EdgeActionDataModel extends BaseItemDataModel {
 	abstract edgeCostFormula: string;
 	abstract activationPeriod: ActivationPeriod;
 
-	abstract rollDataScript: string | null;
-	abstract finishRollScript: string | null;
-
 	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {
@@ -20,9 +17,6 @@ export default abstract class EdgeActionDataModel extends BaseItemDataModel {
 				blank: false,
 				choices: Object.values(ActivationPeriod),
 			}),
-
-			rollDataScript: new fields.StringField({ initial: null, nullable: true, blank: false }),
-			finishRollScript: new fields.StringField({ initial: null, nullable: true, blank: false }),
 		};
 	}
 }

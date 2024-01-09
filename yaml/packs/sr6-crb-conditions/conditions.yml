@@ -1,0 +1,63 @@
+name: Blinded I
+type: condition
+img: systems/sr6/assets/status/blind1.svg
+effects: []
+system:
+  statusEffectId: sr6.condition.blind1
+  description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
+  name: Blinded I
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.Vision
+      value: -3
+---
+name: Blinded II
+type: condition
+img: systems/sr6/assets/status/blind2.svg
+effects: []
+system:
+  statusEffectId: sr6.condition.blind2
+  description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
+  name: Blinded II
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.Vision
+      value: -6
+---
+name: Blinded III
+type: condition
+img: systems/sr6/assets/status/blind3.svg
+effects: []
+system:
+  statusEffectId: sr6.condition.blind3
+  description: Whether it’s flashing lights, some specialized chemical, or the pure force of magic, there are plenty of ways to make it impossible for shadow- runners to see. For the first two levels of this status, characters take a –3 penalty per level to all tests involving visibility. At the third level, characters automatically fail any tests involving visibility.
+  name: Blinded III
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.Vision
+      value: -99
+---
+name: Chilled
+type: condition
+img: systems/sr6/assets/status/chilled.svg
+effects: []
+system:
+  statusEffectId: sr6.condition.chilled
+  description: When you are truly, damagingly cold, it seeps into your bones and won’t let go, and you can’t move as smoothly and nimbly as you would like. When you are Chilled, you get –4 to your Initiative Score and –1 to all dice pools besides Damage Resistance tests. This status cancels and is canceled by the Burning status.
+  name: Chilled
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: Initiative
+      value: -4
+    - type: pool
+      situation: roll
+      key: category.AllPoolButSoak
+      value: -1

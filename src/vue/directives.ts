@@ -40,7 +40,7 @@ export function getElementValue(src: HTMLElement): null | string | number | bool
 
 	if (src instanceof HTMLSelectElement) {
 		const target = src as HTMLSelectElement;
-		if (target.value !== '') {
+		if (target.value !== '' && target.value !== 'null') {
 			value = target.value;
 		}
 	} else {

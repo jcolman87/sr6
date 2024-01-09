@@ -13,6 +13,7 @@ import SR6Combatant from '@/combat/SR6Combatant';
 import SR6CombatTracker from '@/combat/SR6CombatTracker';
 import { SR6_CONFIG } from '@/config';
 import { Logger } from 'tslog';
+import { DataModelValidationError, ElementValidationFailure } from '../types/foundry/common/data/validation-failure';
 
 declare global {
 	declare let log: Logger;

@@ -1,5 +1,5 @@
 import BaseDataModel from '@/data/BaseDataModel';
-import { AvailableActions } from '@/data/IHasInitiative';
+import { AvailableActions } from '@/data/interfaces';
 
 export default abstract class InitiativeDataModel extends BaseDataModel {
 	abstract dice: number;

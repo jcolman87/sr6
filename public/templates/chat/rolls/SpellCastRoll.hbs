@@ -1,9 +1,27 @@
 {{ var "spell" (getItemById roll.options.attack.itemId) }}
-{{ log spell }}
-{{ var "title" (concat "Spell Cast (" spell.name ")") }}
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Cast Spell" item=spell }}
 
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title=title }}
 <div class="roll">
-
+	<div>Drain: <i class="data-value">{{roll.options.drain}}</i></div>
+	<div>Attack Rating: <i class="data-value">{{ roll.options.attack.attackRating }}</i><br/></div>
+	<div>Damage <i class="data-value">{{ localize (concat "SR6.Magic.Spell.CombatTypes." spell.systemData.damage.combat) }}
+		{{ localize (concat "SR6.Combat.DamageTypes." spell.systemData.damage.type) }}
+		{{ localize (concat "SR6.Magic.Spell.DamageForms." spell.systemData.damage.form) }}
+	</i></div>
+	<hr/>
+	{{#if (or actor.isOwner user.isGM) }}
+		<input id="roll-spell-resist-drain" type="button" value="Resist Drain"/>
+	{{/if}}
+	<div class="chat-0-collapsible" style="display: none">
+		<section>
+			<div>
+				<div>Type <i class="data-value">{{ localize (concat "SR6.Magic.Spell.Types." spell.systemData.type) }}</i></div>
+				<div>Range <i class="data-value">{{ localize (concat "SR6.Magic.Spell.Ranges." spell.systemData.range.type) }}</i></div>
+				<div>Duration <i class="data-value">{{ localize (concat "SR6.Magic.Spell.Durations." spell.systemData.duration.type) }}</i></div>
+				<div style="font-size: 10px">{{ spell.systemData.description }}</div>
+			</div>
+			<hr/>
+		</section>
+	</div>
 </div>
 {{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

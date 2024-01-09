@@ -10,7 +10,10 @@ declare global {
 			 * @param delay An amount of time in milliseconds to delay
 			 * @return A wrapped function which can be called to debounce execution
 			 */
-			function debounce<T extends unknown[]>(callback: (...args: T) => unknown, delay: number): (...args: T) => void;
+			function debounce<T extends unknown[]>(
+				callback: (...args: T) => unknown,
+				delay: number
+			): (...args: T) => void;
 
 			/**
 			 * Quickly clone a simple piece of data, returning a copy which can be mutated safely.
@@ -20,6 +23,8 @@ declare global {
 			 * @return The clone of that data
 			 */
 			function deepClone<T>(original: T): T;
+
+			function isSubclass<TA, TB>(A: TA, B: TB): boolean;
 
 			/**
 			 * A cheap data duplication trick which is relatively robust.
@@ -63,7 +68,12 @@ declare global {
 			 * @example <caption>Deleting an existing object key</caption>
 			 * mergeObject({k1: "v1", k2: "v2"}, {"-=k1": null});   // {k2: "v2"}
 			 */
-			function mergeObject<T extends object, U extends object = T>(original: T, other?: U, { insertKeys, insertValues, overwrite, inplace, enforceTypes, performDeletions }?: MergeObjectOptions, _d?: number): T & U;
+			function mergeObject<T extends object, U extends object = T>(
+				original: T,
+				other?: U,
+				{ insertKeys, insertValues, overwrite, inplace, enforceTypes, performDeletions }?: MergeObjectOptions,
+				_d?: number
+			): T & U;
 
 			/**
 			 * Learn the named type of a token - extending the functionality of typeof to recognize some core Object types
@@ -94,7 +104,12 @@ declare global {
 			 * filterObject(source, template); // {foo: {number: 1, name: "Tim"}};
 			 * filterObject(source, template, {templateValues: true}); // {foo: {number: 0, name: "Mit"}};
 			 */
-			function filterObject(source: object, template: object, keepSpecial?: boolean, templateValues?: boolean): object;
+			function filterObject(
+				source: object,
+				template: object,
+				keepSpecial?: boolean,
+				templateValues?: boolean
+			): object;
 
 			/**
 			 * Flatten a possibly multi-dimensional object to a one-dimensional one by converting all nested keys to dot notation
@@ -127,7 +142,10 @@ declare global {
 			 * @param other
 			 * @return
 			 */
-			function diffObject<T extends Record<string, unknown> = Record<string, unknown>>(original: object, other: object): T;
+			function diffObject<T extends Record<string, unknown> = Record<string, unknown>>(
+				original: object,
+				other: object
+			): T;
 
 			/**
 			 * A helper function which tests whether an object has a property or nested property given a string key.
@@ -269,7 +287,7 @@ declare global {
 					until?: number | string;
 					details?: string;
 					stack?: boolean;
-				},
+				}
 			): void;
 		}
 	}

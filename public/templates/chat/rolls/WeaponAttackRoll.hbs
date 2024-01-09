@@ -1,48 +1,40 @@
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Weapon Attack" }}
 {{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
 {{ var "weapon" (getItemById roll.options.attack.itemId) }}
 {{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Attack" item=weapon }}
+
 <div class="roll">
-	<i style="font-weight: bold">{{ localize (concat "SR6.Combat.Distances." roll.options.attack.distance) }}</i> distance
-	<i style="font-weight: bold">{{ localize (concat (concat "SR6.Combat.FireModes." roll.options.attack.firemode) ".Name") }}</i>
-	with <a class="chat-1-expand click-item" data-item-id="{{weapon.uuid}}" style="font-style: italic; font-weight: bold">{{ weapon.name }}</a><br/>
+	<i class="data-value">{{ localize (concat "SR6.Combat.Distances." roll.options.attack.distance) }}</i> distance
+	<i class="data-value">{{ localize (concat (concat "SR6.Combat.FireModes." roll.options.attack.firemode) ".Name") }}</i>
+	with <a class="chat-0-expand click-item" data-item-id="{{weapon.uuid}}" class="data-value">{{ weapon.name }}</a><br/>
 
-	<a class="chat-2-expand" style="font-style: italic">
-		Damage: <i class="dv">{{ net_damage }}</i></a>
-	<br/>
-	<div class="formula chat-2-collapsible" style="display: none">
-		DV({{roll.options.attack.damage}}) + Hits({{roll.net_hits}}) = {{ net_damage }}
+	<div>
+		<a class="chat-2-expand" style="font-style: italic">Damage: <i class="data-value dv">{{ net_damage }}</i></a>
 	</div>
-
-	Attack Rating: <i style="font-weight: bold">{{ roll.options.attack.attackRating }}</i><br/>
+	<div class="formula chat-2-collapsible" style="display: none">
+		DV(<i class="data-value">{{roll.options.attack.damage}}</i>) + Hits(<i class="data-value">{{roll.net_hits}}</i>) = <i class="dv">{{ net_damage }}</i>
+	</div>
+	<div>
+		Attack Rating: <i class="data-value">{{ roll.options.attack.attackRating }}</i>
+	</div>
 	<hr/>
-
-	{{#if (gt roll.options.attack.targetIds.length 0)}}
-		<i style="font-weight: bold; font-style: italic">Targets:</i><br/>
-		<div class="chat-target-box">
-		{{#each targets }}
-			<div><a class="click-actor" data-actor-id="{{this.uuid}}">{{this.name}}</a></div>
-		{{/each}}
-		</div>
-	{{/if}}
-
-	<div class="chat-1-collapsible" style="display: none">
+	<div class="chat-0-collapsible" style="display: none">
 		<section>
-			<div>
-				<div>DV <i style="font-weight: bold">{{weapon.systemData.damage}}</i></div>
-				<div>AR
-					{{weapon.systemData.attackRatings.close }} /
-					{{weapon.systemData.attackRatings.near }} /
-					{{weapon.systemData.attackRatings.medium }} /
-					{{weapon.systemData.attackRatings.far }} /
-					{{weapon.systemData.attackRatings.extreme }}
-				</div>
-				<div style="font-size: 10px">{{weapon.systemData.description}}</div>
+			<div>DV <i class="data-value">{{weapon.systemData.damage}}</i></div>
+			<div>AR
+				{{weapon.systemData.attackRatings.close }} /
+				{{weapon.systemData.attackRatings.near }} /
+				{{weapon.systemData.attackRatings.medium }} /
+				{{weapon.systemData.attackRatings.far }} /
+				{{weapon.systemData.attackRatings.extreme }}
 			</div>
+			<div class="formula">{{weapon.systemData.description}}</div>
 			<hr/>
 		</section>
 	</div>
-	<input id="roll-weapon-defense" type="button" value="Roll Defense"/>
+	{{#unless (and user.isGM actor.isOwner) }}
+		<input id="roll-weapon-defense" type="button" value="Roll Defense"/>
+	{{/unless}}
 {{!---#unless roll.isUserOwner }}
 
 {{!---/unless ---}}

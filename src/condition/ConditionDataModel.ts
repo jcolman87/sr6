@@ -20,6 +20,7 @@ export enum ConditionTarget {
 export enum ConditionSituation {
 	Always = 'always',
 	Roll = 'roll',
+	AttackRating = 'ar',
 	Combat = 'combat',
 }
 

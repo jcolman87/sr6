@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import { getEventValue } from '@/vue/directives';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
 import { RollPromptContext } from '@/app/RollPrompt';
 import { RootContext } from '@/vue/SheetContext';
@@ -22,31 +24,13 @@ import { Collapse } from 'vue-collapsed';
 const context = inject<RollPromptContext>(RootContext)!;
 const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
 
-let pool_modifier = ref(0);
-let original_pool = context.rollData.pool;
-
-function roll() {
-	context.resolvePromise(toRaw(context.rollData));
-}
-
-let text = ref({
+const text = ref({
 	title: 'Roll',
 	hint: '',
 });
-function setText(value: { title: string; hint: string }) {
-	text.value = value;
-}
-
-function onUpdatePool() {
-	context.rollData.pool = original_pool + pool_modifier.value;
-}
-
-function onChangeEdgeBoost(ev: Event) {
-	// Reset first
-}
-
-const woundModifiers = computed(() => Object.entries(toRaw(context.actor.systemData).woundModifiers));
-const conditions = computed(() => baseSystem.value.getRollConditions(context.rollData.type));
+const edgeBoost = ref<string | null>(null);
+const poolModifier = ref(0);
+const originalPool = context.rollData.pool;
 
 const totalModifier = computed(
 	() =>
@@ -56,9 +40,12 @@ const totalModifier = computed(
 		toRaw(context.actor).systemData.woundModifier
 );
 
-let isDisplayConditions = ref(false);
+const finishRollButton = ref();
+const isDisplayConditions = ref(false);
+const woundModifiers = computed(() => Object.entries(toRaw(context.actor.systemData).woundModifiers));
+const conditions = computed(() => baseSystem.value.getRollConditions(context.rollData.type));
 
-const conditionsDescriptionsVisible = ref(
+const conditionsDescriptionsVisible = computed(() =>
 	conditions.value
 		.map((condition) => {
 			return {
@@ -76,6 +63,28 @@ const conditionsDescriptionsVisible = ref(
 		)
 );
 
+function roll() {
+	// Apply edge action to the roll
+	switch (edgeBoost.value) {
+		case 'buy_one':
+			context.rollData.auto_hits = 1;
+			break;
+		case 'add_edge_pool':
+			context.rollData.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
+			context.rollData.explode = true;
+			break;
+	}
+	console.log('rollData', context.rollData);
+	context.resolvePromise(toRaw(context.rollData));
+}
+function setText(value: { title: string; hint: string }) {
+	text.value = value;
+}
+
+function onUpdatePool() {
+	context.rollData.pool = originalPool + poolModifier.value;
+}
+
 function toggleConditions() {
 	isDisplayConditions.value = !isDisplayConditions.value;
 }
@@ -83,7 +92,6 @@ function asModifierString(modifier: number): string {
 	return modifier > 0 ? `+${modifier}` : modifier.toString();
 }
 
-const finishRollButton = ref();
 onMounted(() => {
 	setTimeout(() => {
 		finishRollButton.value.focus();
@@ -237,24 +245,36 @@ onMounted(() => {
 				@setText="setText"
 			/>
 
-			<div class="section">
-				<label><Localized label="SR6.RollPrompt.PoolModifier" /></label>
-				<input name="pool_modifier" type="number" v-model="pool_modifier" @change.prevent="onUpdatePool" />
+			<div class="section" style="width: 100%; display: flex; justify-content: space-between">
+				<div>
+					<label><Localized label="SR6.RollPrompt.PoolModifier" /></label>
+					<input name="pool_modifier" type="number" v-model="poolModifier" @change.prevent="onUpdatePool" />
+				</div>
+				<div>
+					<label><Localized label="SR6.RollPrompt.ConsumeAction" /></label>
+					<label class="switch">
+						<input type="checkbox" checked />
+						<span class="slider round"></span>
+					</label>
+				</div>
 			</div>
 
 			<div class="section">
+				`
 				<label><Localized label="SR6.Edge.EdgeBoost" /></label>
-				<select @change.prevent="onChangeEdgeBoost">
-					<option>-</option>
-					<option value="action">Perform Edge Action</option>
+				<select @change="(ev) => edgeBoost = getEventValue(ev) as string">
+					<option value="null">-</option>
+					<!-- TODO  -->
+					<!--These are post roll actions
 					<option value="add_one">+1 to Roll</option>
 					<option value="reroll_one">Reroll 1</option>
+					<option value="reroll_fail">Reroll failures</option> -->
+					<option value="action">Perform Edge Action</option>
 					<option value="buy_one">Buy 1 Hit</option>
 					<option value="add_edge_pool">Add Edge + Explode</option>
-					<option value="reroll_fail">Reroll failures</option>
 				</select>
 				<label><Localized label="SR6.Edge.EdgeAction" /></label>
-				<select>
+				<select :disabled="edgeBoost != 'action'">
 					<option>-</option>
 					<option>Balls</option>
 				</select>

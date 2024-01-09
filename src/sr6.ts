@@ -22,7 +22,7 @@ import { register as registerEffects } from '@/effects';
 
 import { register as registerDisplayHelpers } from '@/display';
 
-import ImportPrompt from '@/app/ImportPrompt';
+import { ImportPrompt } from '@/app/ImportPrompt';
 
 import './scss/index.scss';
 

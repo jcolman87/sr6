@@ -5,10 +5,10 @@
  */
 import BaseDataModel from '@/data/BaseDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import IHasOnUpdate from '@/data/IHasOnUpdate';
-import IHasPreCreate from '@/data/IHasPreCreate';
-import IHasOnDelete from '@/data/IHasOnDelete';
-import IHasPostCreate from '@/data/IHasPostCreate';
+import { IHasOnUpdate } from '@/data/interfaces';
+import { IHasPreCreate } from '@/data/interfaces';
+import { IHasOnDelete } from '@/data/interfaces';
+import { IHasPostCreate } from '@/data/interfaces';
 import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';

@@ -1,0 +1,1912 @@
+name: Fichetti Tiffani Needler
+type: weapon
+img: systems/sr6/assets/items/holdouts.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: HOLDOUTS
+  skillUse:
+    skill: firearms
+    specialization: holdouts
+    attribute: agility
+  costFormula: '435'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '6'
+    mediumFormula: '2'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+  description: '4(c)
+
+    Pretty and deadly are not mutually exclusive. Fichetti gunsmithing combined with
+    Tiffani style makes the Needler the single most popular designer handgun in the
+    world. The base model is matte grey, but its special color-changing coating can
+    be manipulated via wireless signal with an infinite number of patterns and designs.
+    The coating allows your gun to match your shoes, your handbag, or the camo pattern
+    of your fatigues. The Needler only chambers caseless flechette rounds, which are
+    already factored into its damage code. Wireless bonus: You can change the color
+    of the Fichetti Tiffani Needler with a Minor Action. Applying a camouflage pattern
+    to the Needler increases the concealability threshold by 1 for visual Perception
+    tests.'
+---
+name: Streetline Special
+type: weapon
+img: systems/sr6/assets/items/holdouts.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: HOLDOUTS
+  skillUse:
+    skill: firearms
+    specialization: holdouts
+    attribute: agility
+  costFormula: '200'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  matrix: null
+  attackRatings:
+    closeFormula: '8'
+    nearFormula: '8'
+    mediumFormula: '0'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+  description: '6(c)
+
+    Designed for cheap 3D nanoprinting, the Streetline Special is made of composite
+    materials, making it harder to detect with MAD scanners (increasing the threshold
+    to detect it by 1).'
+---
+name: Walther Palm Pistol
+type: weapon
+img: systems/sr6/assets/items/holdouts.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: HOLDOUTS
+  skillUse:
+    skill: firearms
+    specialization: holdouts
+    attribute: agility
+  costFormula: '345'
+  availability:
+    illegal: false
+    license: null
+    rating: 1
+  matrix: null
+  attackRatings:
+    closeFormula: '12'
+    nearFormula: '7'
+    mediumFormula: '0'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - BF_narrow
+    - BF_wide
+  description: '6(b)\n\nWalther keeps the double-barreled derringer with the classic\
+    \ over-under design alive in the latter half of the twenty-first century with\
+    \ the Palm Pistol. Capable of Burst Fire by firing from both bar- // GEAR 251SHADOWRUN:\
+    \ SIXTH WORLD rels at once, the limited ammo supply only offers a six-shot capacity\u2014\
+    so tread carefully how often you go with a burst.'
+---
+name: Ares Light Fire 70
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '350'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '7'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '16(c)\n\nThe Light Fire Series is designed for special operators.\
+    \ The 70 is a street standard, while the 75 is not commonly available through\
+    \ regular dealers and standard legal channels. But what runner uses those? The\
+    \ integration of a barrel-mounted silencer in both designs makes the Light Fire\
+    \ series nearly trid-flick silent. The 75 comes preloaded with smartlink hardware\
+    \ and software, and both come with a laser sight. The silencer for these models\
+    \ increases the threshold for audio Perception tests by 3 for the Light Fire Series\
+    \ when equipped and costs 750\xA5.'
+---
+name: Ares Light Fire 75
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '400'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '7'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '16(c)\n\nThe Light Fire Series is designed for special operators.\
+    \ The 70 is a street standard, while the 75 is not commonly available through\
+    \ regular dealers and standard legal channels. But what runner uses those? The\
+    \ integration of a barrel-mounted silencer in both designs makes the Light Fire\
+    \ series nearly trid-flick silent. The 75 comes preloaded with smartlink hardware\
+    \ and software, and both come with a laser sight. The silencer for these models\
+    \ increases the threshold for audio Perception tests by 3 for the Light Fire Series\
+    \ when equipped and costs 750\xA5.'
+---
+name: Baretta 101T
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '260'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '21(c)\n\nThe preferred sidearm of many security forces around the\
+    \ world, the T-series is classified as a light pistol, even though the 201 design\
+    \ offers automatic fire capability, making it popular in nations that limit heavy\
+    \ and machine pistols. Since the frame is the same, it\u2019s easier to disguise\
+    \ as a 101. The 201 also comes with a detachable shoulder stock, though it is\
+    \ often lost before the gun reaches the street market.'
+---
+name: Baretta 201T
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '460'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - FA
+  description: '21(c)\n\nThe preferred sidearm of many security forces around the\
+    \ world, the T-series is classified as a light pistol, even though the 201 design\
+    \ offers automatic fire capability, making it popular in nations that limit heavy\
+    \ and machine pistols. Since the frame is the same, it\u2019s easier to disguise\
+    \ as a 101. The 201 also comes with a detachable shoulder stock, though it is\
+    \ often lost before the gun reaches the street market.'
+---
+name: Colt America L36
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '230'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '8'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '11(c)\n\nA tribute to Colt\u2019s world-class reputation, the L36\
+    \ is cheaPhysical, easily concealed, and abundant on the streets. In order to\
+    \ be easily transferred between corporate security rookies, the weapon feature\
+    \ an ownership swap feature that has been abused by cops and crooks alike. A perfect\
+    \ throwaway weapon. Wireless Bonus: The user can alter ownership data with a Minor\
+    \ Action.'
+---
+name: Fichetti Security 600
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '390'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '9'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '30(c)
+
+    Designed as a light sidearm for security forces, the thirty-round magazine allows
+    them to miss a ton and not worry about running out of ammo. This also makes it
+    great for deckers. The Security 600 comes with a detachable folding stock and
+    laser sight.'
+---
+name: Ruger Redhawk
+type: weapon
+img: systems/sr6/assets/items/pistols_light.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_LIGHT
+  skillUse:
+    skill: firearms
+    specialization: pistols_light
+    attribute: agility
+  costFormula: '250'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '7'
+    nearFormula: '10'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '8(cy)\n\nThis rugged revolver is the kid brother of the legendary\
+    \ Super Warhawk. Designed with precision and fun shooting in mind, the Redhawk\
+    \ has a revolutionary single/double firing selector. Classic double action allows\
+    \ a shot with each trigger pull (Semi-Auto Fire), while the single setting lets\
+    \ you play old-west gunslinger and \u201Cfan\u201D the hammer (Burst Fire). Wireless\
+    \ Bonus: You get an extra Minor Action in a turn where you change the action selection.'
+---
+name: Ares Crusader II
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: MACHINE_PISTOLS
+  skillUse:
+    skill: firearms
+    specialization: machine_pistols
+    attribute: agility
+  costFormula: '520'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '9'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '40(c)
+
+    High capacity and comfortable styling make the Ares Crusader II a standout in
+    its class. The Ares brand is synonymous with functionality, and the Crusader II
+    integrates a gas-vent recoil compensation system and comes standard with smartgun
+    systems and software preloaded.'
+---
+name: Ceska Black Scorpion
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: MACHINE_PISTOLS
+  skillUse:
+    skill: firearms
+    specialization: machine_pistols
+    attribute: agility
+  costFormula: '510'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '9'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '35(c)
+
+    Small and lethal, but not designed for beauty. Burst Fire capable from the get-go,
+    it also comes equipped with an integral folding stock.'
+---
+name: Steyr TMPhysical
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: MACHINE_PISTOLS
+  skillUse:
+    skill: firearms
+    specialization: machine_pistols
+    attribute: agility
+  costFormula: '690'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '2'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - FA
+  description: '30(c)\n\nA lightweight polymer-frame and full autofire capability\
+    \ are not an ideal design combo, but spraying enough lead to make everyone duck\
+    \ for cover is the goal with the TMP. A top-mounted laser sight comes standard\
+    \ to make users think they\u2019ll be aiming.'
+---
+name: Ares Predator VI
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_HEAVY
+  skillUse:
+    skill: firearms
+    specialization: pistols_heavy
+    attribute: agility
+  costFormula: '750'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '10'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '15(c)\n\nThe Predator V rode on the laurels of its name. The Predator\
+    \ VI is genuine innovation built into some classic styling. Built on the framing\
+    \ of the original Predator, the VI comes with the standard smartgun operations\
+    \ but adds Burst Fire capability and a new variable ammunition system that will\
+    \ make it king of the streets and warzones once again, even if it comes with a\
+    \ price tag to match that innovation. The variable ammunition system allows a\
+    \ single specially designed magazine (30\xA5 per spare) to be loaded with different\
+    \ ammo types. The smartgun is used to select ammo types and cycles them to the\
+    \ chamber in whatever quantity is necessary and available. If there aren\u2019\
+    t enough rounds of a particular kind, the ammo counter reads empty and the weapon\
+    \ stops firing.'
+---
+name: Ares Viper Slivergun
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_HEAVY
+  skillUse:
+    skill: firearms
+    specialization: pistols_heavy
+    attribute: agility
+  costFormula: '610'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '12'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '30(c)\n\nThe unique Slivergun hangs out in the Heavy Pistol class,\
+    \ but it\u2019s a creature all its own. The Slivergun fires metal slivers that\
+    \ count as flechette ammunition and are bought as such, but they aren\u2019t interchangeable\
+    \ with any other flechette weapon. The weapon remains capable of Burst Fire and\
+    \ has a silencer integrated into the barrel, and the large ammo capacity makes\
+    \ it a terror on the streets.'
+---
+name: Browning Ultra Power
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_HEAVY
+  skillUse:
+    skill: firearms
+    specialization: pistols_heavy
+    attribute: agility
+  costFormula: '315'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '9'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '10(c)\n\nOnce the Predator\u2019s primary competition as the world\u2019\
+    s best heavy pistol, the Ultra Power has ceded its claim to the title since it\
+    \ has not kept pace with the tech advances in the Pred-VI. The Browning is cheaper,\
+    \ though, and offers a built-in top-mounted laser sight.'
+---
+name: 'Colt Government 2076 '
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_HEAVY
+  skillUse:
+    skill: firearms
+    specialization: pistols_heavy
+    attribute: agility
+  costFormula: '275'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '14(c)\n\nGovernments need new weapons contracts for bribe purposes,\
+    \ so having a new standard issue after only ten years seems about par for the\
+    \ course. The years of technomancer and hacker fear since the \u201960s have left\
+    \ the electronic firing 2066 in a lot of storage cabinets for fear of hacking.\
+    \ The 2076 takes a jump back to the style of the classic Manhunter (in fact, the\
+    \ model with an integrated smartgun system has that denotation) and comes with\
+    \ an integral laser sight.'
+---
+name: Colt Government 2076 Manhunter
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_HEAVY
+  skillUse:
+    skill: firearms
+    specialization: pistols_heavy
+    attribute: agility
+  costFormula: '500'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '8'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '14(c)\n\nGovernments need new weapons contracts for bribe purposes,\
+    \ so having a new standard issue after only ten years seems about par for the\
+    \ course. The years of technomancer and hacker fear since the \u201960s have left\
+    \ the electronic firing 2066 in a lot of storage cabinets for fear of hacking.\
+    \ The 2076 takes a jump back to the style of the classic Manhunter (in fact, the\
+    \ model with an integrated smartgun system has that denotation) and comes with\
+    \ an integral laser sight.'
+---
+name: Ruger Super Warhawk
+type: weapon
+img: systems/sr6/assets/items/pistols_heavy.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: PISTOLS_HEAVY
+  skillUse:
+    skill: firearms
+    specialization: pistols_heavy
+    attribute: agility
+  costFormula: '400'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '8'
+    nearFormula: '11'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '6(cy)\n\nBoom and glitz! That\u2019s the standard street tag for the\
+    \ Super Warhawk. This revolver is shiny and chrome and makes holes the size of\
+    \ a troll\u2019s fist straight out of the box. Upgrade the ammo or the feature\
+    \ and those holes get real precise.'
+---
+name: Colt Cobra TZ-100
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '730'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '9'
+    mediumFormula: '0'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '32(c)
+
+    Colt loves variety, and the Cobra TZ series highlights the options they offer
+    with this line. The 100 is the base model with an integral folding stock, the
+    110 adds a top-mounted laser sight, the 120 feature the folding stock, top-mounted
+    laser sight, and a barrel-mounted gas-vent system, making it a hit with security
+    forces all over the world and with trid shows that love all the fancy feature.'
+---
+name: Colt Cobra TZ-110
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '785'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '10'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '32(c)
+
+    Colt loves variety, and the Cobra TZ series highlights the options they offer
+    with this line. The 100 is the base model with an integral folding stock, the
+    110 adds a top-mounted laser sight, the 120 feature the folding stock, top-mounted
+    laser sight, and a barrel-mounted gas-vent system, making it a hit with security
+    forces all over the world and with trid shows that love all the fancy feature.'
+---
+name: Colt Cobra TZ-120
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '840'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '11'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '32(c)
+
+    Colt loves variety, and the Cobra TZ series highlights the options they offer
+    with this line. The 100 is the base model with an integral folding stock, the
+    110 adds a top-mounted laser sight, the 120 feature the folding stock, top-mounted
+    laser sight, and a barrel-mounted gas-vent system, making it a hit with security
+    forces all over the world and with trid shows that love all the fancy feature.'
+---
+name: FN P93 Praetor
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '925'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '12'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '50(c)
+
+    An unmistakable bullpup design offers a builtin fear response from anyone who
+    sees these guns in the hand of corpsec forces. The Praetor offers an integrated
+    rigid stock, a laser sight, and a flashlight with three settings to benefit low-light,
+    thermographic, or regular vision.'
+---
+name: HK-227
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '825'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '11'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '28(c)\n\nHeckler & Koch know how to design an SMG, since the 227 has\
+    \ been built off the same frame (the venerable MP5) for over a century. A top\
+    \ choice for corporate and military security forces, the HK\u2013227 offers a\
+    \ retractable stock, integrated smartgun system, and an integral barrel-mounted\
+    \ silencer.'
+---
+name: Ingram Smartgun XI
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '750'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '11'
+    nearFormula: '9'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '32(c)\n\nStreet samurai create legendary reputations that they don\u2019\
+    t always deserve, but the Smartgun has maintained its street rep as a grade-A\
+    \ bang bang for decades. Famous as the weapon of choice for many legendary street\
+    \ samurai since the 2050s, the Ingram Smartgun comes tricked out with a gasvent\
+    \ system, a smartgun system, and an integral silencer.'
+---
+name: SCK Model 100
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '725'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '10'
+    nearFormula: '10'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '30(c)
+
+    Shin Chou Kyogo has made the Model 100 the corp-suit equivalent of the Smartgun
+    with the help of the elite Red Samurai. Across the Japanacorps, their security
+    forces are issued the SCK 100. The Model 100 feature an internal smartgun system
+    and a folding stock.'
+---
+name: Uzi V
+type: weapon
+img: systems/sr6/assets/items/smg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SUBMACHINE_GUNS
+  skillUse:
+    skill: firearms
+    specialization: submachine_guns
+    attribute: agility
+  costFormula: '455'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '8'
+    nearFormula: '8'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '3'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '24(c)
+
+    A new design for a new world. The latest model Uzi is a big market entry for Spinrad
+    Global. The V model feature an integral folding stock and builtin top-mounted
+    laser sight.'
+---
+name: Defiance T-250
+type: weapon
+img: systems/sr6/assets/items/shotguns.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SHOTGUNS
+  skillUse:
+    skill: firearms
+    specialization: shotguns
+    attribute: agility
+  costFormula: '330'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '7'
+    nearFormula: '10'
+    mediumFormula: '6'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '5(m)\n\nA solid street howitzer, this semi-automatic shotgun is available\
+    \ in either a normal-length or short-barreled version. It is gas operated and\
+    \ feature a secondary pump action for situations where preventing jams is more\
+    \ important than quickly firing a second shot (clear glitch jams with a Minor\
+    \ Action). The short-barreled version has a Concealability threshold of 3, DV\
+    \ 3, Attack Ratings 8/8/4/\u2014/\u2014.'
+---
+name: Mossberg CMDT
+type: weapon
+img: systems/sr6/assets/items/shotguns.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SHOTGUNS
+  skillUse:
+    skill: firearms
+    specialization: shotguns
+    attribute: agility
+  costFormula: '700'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '4'
+    nearFormula: '11'
+    mediumFormula: '7'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '10(c)
+
+    This assault shotgun provides classic bang for the buck. It can either be loaded
+    with ten-round ammo clips or a big boy twenty-four-round drum. The best feature
+    are burst fire mode and a top-mounted laser sight.'
+---
+name: PJSS Model 55
+type: weapon
+img: systems/sr6/assets/items/shotguns.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SHOTGUNS
+  skillUse:
+    skill: firearms
+    specialization: shotguns
+    attribute: agility
+  costFormula: '325'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '3'
+    nearFormula: '12'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '2(b)
+
+    Rich people own shotguns too. Small production runs, usually purchased by rich
+    European hunters and trap shooters, make this a status symbol made for killing.
+    The Model 55 comes with a rigid stock equipped with an integrated shock pad. Both
+    barrels can be shot at once as a short burst (see Not Enough Rounds, p. 109).'
+---
+name: Remington Roomsweeper
+type: weapon
+img: systems/sr6/assets/items/shotguns.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: SHOTGUNS
+  skillUse:
+    skill: firearms
+    specialization: shotguns
+    attribute: agility
+  costFormula: '325'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '9'
+    nearFormula: '8'
+    mediumFormula: '4'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '8(m)\n\nDouble-barreled and pistol gripped makes this little beast\
+    \ bad news when it slips out of a pocket. ingram smartgun xI heavy pistols WEAPON\
+    \ DV MODES ATTACK RATINGS AMMO AVAILABILITY COST Ares Predator VI 3P SA/BF 10/10/8/\u2014\
+    /\u2014 15(c) 2(L) 750\xA5 Ares Viper Slivergun 4P(fl) SA/BF 12/8/6/\u2014/\u2014\
+    \ 30(c) 4(L) 610\xA5 Browning Ultra Power 3P SA 10/9/6/\u2014/\u2014 10(c) 2(L)\
+    \ 315\xA5 Colt Government 2076/Manhunter 3P SA 10/8/6/\u2014/\u2014 14(c) 3(L)\
+    \ 275\xA5/500\xA5 Ruger Super Warhawk 4P SA 8/11/8/\u2014/\u2014 6(cy) 3(L) 400\xA5\
+    \ submachine guns WEAPON DV MODES ATTACK RATINGS AMMO AVAILABILITY COST Colt Cobra\
+    \ TZ-100 3P SA/BF 9/9/6/\u2014/\u2014 32(c) 2(L) 730\xA5 Colt Cobra TZ-110 3P\
+    \ SA/BF 10/10/7/\u2014/\u2014 32(c) 2(L) 785\xA5 Colt Cobra TZ-120 3P SA/BF 10/11/8/\u2014\
+    /\u2014 32(c) 3(L) 840\xA5 FN P93 Praetor 4P SA/BF/FA 9/12/7/\u2014/\u2014 50(c)\
+    \ 4(L) 925\xA5 HK-227 3P SA/BF 10/11/8/\u2014/\u2014 28(c) 3(L) 825\xA5 Ingram\
+    \ Smartgun XI 3P SA/BF 11/9/6/\u2014/\u2014 32(c) 3(L) 750\xA5 SCK Model 100 3P\
+    \ SA/BF 10/10/7/\u2014/\u2014 30(c) 3(L) 725\xA5 Uzi V 3P SA/BF/FA 8/8/7/\u2014\
+    /\u2014 24(c) 2(L) 455\xA5 // GEAR 255SHADOWRUN: SIXTH WORLD If you\u2019re not\
+    \ a fan of flechette shooters, load some Heavy Pistol rounds into a Roomsweeper\
+    \ and she shoots like a really inaccurate hand cannon.'
+---
+name: AK-97
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '2100'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '4'
+    nearFormula: '11'
+    mediumFormula: '9'
+    farFormula: '7'
+    extremeFormula: '1'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '38(c)\n\nThe AK-97 will never go out of style, especially since it\
+    \ still looks like its mid-twentieth-century predecessor. Built for reliability\
+    \ and endurance, it\u2019s not the prettiest girl at the dance, but it can sure\
+    \ shake a tailfeather.'
+---
+name: Ares Alpha
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '3400'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '4'
+    nearFormula: '10'
+    mediumFormula: '9'
+    farFormula: '7'
+    extremeFormula: '2'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '42(c)
+
+    Made famous in the hands of Ares Firewatch teams, the Alpha quickly became a worldwide
+    success with UCAS and CAS special operators along with a myriad of Desert Wars
+    teams. The integrated underbarrel grenade launcher, smartgun system, and an innovative
+    design for superior handling make it special.'
+---
+name: Ares Alpha (Grenade Launcher)
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '0'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '4'
+    nearFormula: '10'
+    mediumFormula: '6'
+    farFormula: '2'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '0'
+    damageType: ''
+  firemodes:
+    - SS
+  description: '6(c)
+
+    '
+---
+name: Colt M23
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '2100'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '5'
+    nearFormula: '8'
+    mediumFormula: '8'
+    farFormula: '8'
+    extremeFormula: '1'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '40(c)
+
+    CheaPhysical, mass-produced, and infinitely adaptable, the M23 finds its ways
+    to the hands of everyone from gangbangers to pirates to delta-level government
+    operators. The M23 can accept two additional underbarrel accessories for a total
+    of three.'
+---
+name: FN-HAR
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '2100'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '3'
+    nearFormula: '11'
+    mediumFormula: '10'
+    farFormula: '6'
+    extremeFormula: '1'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '35(c)
+
+    Fabrique Nationale is the name to fear when facing private security forces and
+    corporate highthreat-response teams around the world. They made this weapon, which
+    feature a laser sight and a gas-vent system.'
+---
+name: Yamaha Raiden
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '3200'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '4'
+    nearFormula: '11'
+    mediumFormula: '10'
+    farFormula: '7'
+    extremeFormula: '2'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '60(c)
+
+    While Ares made the Alpha, the Japanacorps, through Yamaha, developed the Raiden.
+    Electronic firing and exceptional accuracy are integral to the design. Japanacorp
+    security forces and the Japanese Imperial Marines now swear by the Raiden. It
+    feature an integral silencer, smartgun system, and underbarrel shotgun/grenade
+    launcher.'
+---
+name: Yamaha Raiden (Grenade Launcher)
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '0'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '4'
+    nearFormula: '11'
+    mediumFormula: '7'
+    farFormula: '1'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '0'
+    damageType: ''
+  firemodes:
+    - SS
+  description: '4(c)
+
+    '
+---
+name: Yamaha Raiden (Shotgun)
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '0'
+  availability:
+    illegal: false
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '7'
+    nearFormula: '9'
+    mediumFormula: '8'
+    farFormula: '0'
+    extremeFormula: '0'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '2(b)
+
+    '
+---
+name: Ares Desert Strike
+type: weapon
+img: systems/sr6/assets/items/rifle_assault.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_ASSAULT
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '11000'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '3'
+    nearFormula: '10'
+    mediumFormula: '10'
+    farFormula: '10'
+    extremeFormula: '10'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '14(c)\n\n\u201CThe Desert Strike for the Desert Wars\u201D is the\
+    \ tagline today. Built to fight in the harshest conditions, the Desert Strike\
+    \ comes equipped with a rigid stock with shock pad and a detachable imaging scope.'
+---
+name: Cavalier Arms Crockett EBR
+type: weapon
+img: systems/sr6/assets/items/rifle_sniper.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_SNIPER
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '9050'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '3'
+    nearFormula: '8'
+    mediumFormula: '11'
+    farFormula: '8'
+    extremeFormula: '8'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+  description: '20(c)\n\nCavalier played a dangerous game by offering a sniper rifle\
+    \ capable of burst fire. The Crockett EBR can stay accurate at long range, but\
+    \ those bursts don\u2019t allow repeated accuracy. The Crockett comes standard\
+    \ with a rigid stock with shock pad and a detachable imaging scope.'
+---
+name: Ranger Arms SM-5
+type: weapon
+img: systems/sr6/assets/items/rifle_sniper.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_SNIPER
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '13200'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '3'
+    nearFormula: '6'
+    mediumFormula: '9'
+    farFormula: '11'
+    extremeFormula: '12'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '15(c)\n\nRanger Arms knows what the SM line has always been about\u2014\
+    silently neutralizing targets. This sniper rifle feature a silencer, an imaging\
+    \ scope, a smartgun system, and a rigid stock with shock pad. The SM\u20136 carries\
+    \ on the line\u2019s ability to quickly get into the action and then get out just\
+    \ as fast. It can fit into a standard briefcase; setting it up or breaking it\
+    \ down takes a Firearms + Logic (6, Major Action) Extended test. The SM-6 has\
+    \ dealt with the line\u2019s fragility issues, and once put tog'
+---
+name: Remington 900
+type: weapon
+img: systems/sr6/assets/items/rifle_sniper.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_HUNTING
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '12000'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 3
+  matrix: null
+  attackRatings:
+    closeFormula: '2'
+    nearFormula: '7'
+    mediumFormula: '10'
+    farFormula: '12'
+    extremeFormula: '11'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+  description: '5(m)
+
+    A high-powered bolt-action hunting rifle with a classic wooden body. The base
+    model is sold with a top-mounted imaging scope, but it cannot mount underbarrel
+    accessories.'
+---
+name: Ruger 101
+type: weapon
+img: systems/sr6/assets/items/rifle_sniper.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_HUNTING
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '11100'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 2
+  matrix: null
+  attackRatings:
+    closeFormula: '2'
+    nearFormula: '6'
+    mediumFormula: '10'
+    farFormula: '12'
+    extremeFormula: '11'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '8(m)
+
+    Like futuretech in a hunting-rifle format, this gas-operated favorite sits in
+    the hands of many professional hunters and hobbyists. It feature a builtin imaging
+    scope and a rigid stock with shock pad.'
+---
+name: Barret Model 122
+type: weapon
+img: systems/sr6/assets/items/rifle_sniper.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: RIFLE_SNIPER
+  skillUse:
+    skill: firearms
+    specialization: rifles
+    attribute: agility
+  costFormula: '15200'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 6
+  matrix: null
+  attackRatings:
+    closeFormula: '1'
+    nearFormula: '8'
+    mediumFormula: '11'
+    farFormula: '16'
+    extremeFormula: '14'
+  damageData:
+    damageFormula: '6'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '10(c)
+
+    Sometimes you need to shoot an enemy; sometimes you need to shoot an enemy through
+    the side of an APC. The Barret Model 122 excels at tearing through metal and getting
+    to the things it attempts to protect, ripping apart machines and vehicles with
+    horrible tearing sounds that are music to the ears of the shooter. It has a silencer,
+    smartgun system, and folding bipod.'
+---
+name: Ingram Valiant
+type: weapon
+img: systems/sr6/assets/items/mmg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: LMG
+  skillUse:
+    skill: firearms
+    specialization: assault_cannons
+    attribute: agility
+  costFormula: '4175'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '2'
+    nearFormula: '11'
+    mediumFormula: '12'
+    farFormula: '7'
+    extremeFormula: '3'
+  damageData:
+    damageFormula: '4'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '50(c) or 100(belt)
+
+    The Valiant light machine gun sits in the hands of mercenary units the world over.
+    Basic equipment includes a rigid stock with shock pad, a laser sight, and a barrel-mounted
+    gas-vent system.'
+---
+name: Stoner-Ares M202
+type: weapon
+img: systems/sr6/assets/items/mmg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: LMG
+  skillUse:
+    skill: firearms
+    specialization: assault_cannons
+    attribute: agility
+  costFormula: '6900'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 4
+  matrix: null
+  attackRatings:
+    closeFormula: '1'
+    nearFormula: '10'
+    mediumFormula: '11'
+    farFormula: '7'
+    extremeFormula: '6'
+  damageData:
+    damageFormula: '5'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '50(c) or 100(belt)\n\nThis medium machine gun packs a tremendous punch\
+    \ and is often found in the hands of trolls with no concept of subtlety. It\u2019\
+    s a brutally simple weapon, but accessorizing is always an option for those with\
+    \ a taste for more complexity.'
+---
+name: RPK HMG
+type: weapon
+img: systems/sr6/assets/items/mmg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: LMG
+  skillUse:
+    skill: firearms
+    specialization: assault_cannons
+    attribute: agility
+  costFormula: '8000'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 5
+  matrix: null
+  attackRatings:
+    closeFormula: '1'
+    nearFormula: '10'
+    mediumFormula: '12'
+    farFormula: '8'
+    extremeFormula: '7'
+  damageData:
+    damageFormula: '6'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+    - BF_narrow
+    - BF_wide
+    - FA
+  description: '50(c) or 100(belt)
+
+    This heavy machine gun is used by militaries across eastern Europe and Asia. Usually
+    set up as a vehicle-mounted weapon, it comes standard with a detachable tripod,
+    as the RPK is best fired from a prone, sitting, or kneeling position when not
+    mounted on a vehicle.'
+---
+name: Panther XXL
+type: weapon
+img: systems/sr6/assets/items/mmg.webp
+effects: []
+system:
+  rating: 1
+  category:
+    type: WEAPON_FIREARMS
+    subtype: LMG
+  skillUse:
+    skill: firearms
+    specialization: assault_cannons
+    attribute: agility
+  costFormula: '10000'
+  availability:
+    illegal: true
+    license: firearm
+    rating: 6
+  matrix: null
+  attackRatings:
+    closeFormula: '1'
+    nearFormula: '9'
+    mediumFormula: '12'
+    farFormula: '8'
+    extremeFormula: '6'
+  damageData:
+    damageFormula: '7'
+    damageType: P
+  firemodes:
+    - SS
+    - SA
+  description: '15(c)\n\nBulky, ugly, deadly, and as destructive as they come. Panther\u2019\
+    s XXL model of assault cannon is the thing of nightmares on the street. To make\
+    \ sure every shot counts, it comes with a built-in smartgun system.'

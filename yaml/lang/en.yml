@@ -87,6 +87,22 @@ SR6:
     Skill: Skill
     Information: Information
     Drain: Drain
+    Rating: Rating
+    Size: Size
+
+  Gear:
+    Sizes:
+      Large: Large
+      Bulky: Bulky
+      Tuckable: Tuckable
+      Pocket: Pocket
+      Hand: Hand
+      Slim: Slim
+      Palmable: Palmable
+      Small: Small
+      Mini: Mini
+      Fine: Fine
+      Microscopic: Microscopic
 
   Combat:
     Damage: Damage
@@ -115,6 +131,9 @@ SR6:
       medium: Medium
       far: Far
       extreme: Extreme
+    DamageTypes:
+      P: Physical
+      S: Stun
 
   Edge:
     EdgeBoost: Edge Boost
@@ -124,6 +143,7 @@ SR6:
     Title: Configure Roll
     PoolModifier: Pool Modifier
     Conditions: Conditions Modifying
+    ConsumeAction: Consume Action
     WoundModifiers:
       physical:
         Name: Wound Modifier (Physical)
@@ -212,3 +232,28 @@ SR6:
       ShiftArea:
         Name: Shift Area
         Description: This can only be done with certain area-effect spells. The caster can shift the area a sustained spell is affecting to another area within spell range. Spells that can have the area shifted are noted in the spell description. This requires a Minor Action and can be done any time. It does not cause drain.
+    Spell:
+      Types:
+        M: Mana
+        P: Physical
+      CombatTypes:
+        direct: Direct
+        indirect: Indirect
+      DamageForms:
+        force: Force
+        stun: Stun
+        fire: Fire
+        acid: Acid
+        electrical: Electrical
+        air: Air
+        cold: Cold
+      Durations:
+        I: Instantaneous
+        S: Sustained
+        P: Permanent
+        L: Limited
+      Ranges:
+        touch: Touch
+        los: Line of Sight
+        losa: Line of Sight (Area)
+        perceived: Perceived

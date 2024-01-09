@@ -11,7 +11,7 @@ import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { ActivationType } from '@/data';
 
-import { MagicAwakenedType, MagicTradition, SpellDuration, SpellRangeType } from '@/data/magic';
+import { MagicAwakenedType, MagicTradition } from '@/data/magic';
 import {
 	getCoreAdeptPowers,
 	getCoreQualities,
@@ -48,7 +48,7 @@ function convertActivation(value: string): ActivationType {
 	}
 }
 
-export default class ImportPrompt extends VueSheet(Application) {
+export class ImportPrompt extends VueSheet(Application) {
 	async _onImportGenesisActor(file: string): Promise<void> {
 		const response = await fetch(file);
 		const json = await response.json();

@@ -1,4 +1,5 @@
 import BaseDataModel from '@/data/BaseDataModel';
+import { IHasEdge } from '@/data/interfaces';
 
 export enum MonitorType {
 	Physical = 'physical',
@@ -10,7 +11,7 @@ export enum MonitorType {
 
 export type WoundModifierData = Partial<Record<MonitorType, number>>;
 
-export default abstract class MonitorsDataModel extends BaseDataModel {
+export default abstract class MonitorsDataModel extends BaseDataModel implements IHasEdge {
 	abstract physical: MonitorDataModel;
 	abstract stun: MonitorDataModel;
 	abstract overflow: MonitorDataModel;
@@ -88,11 +89,19 @@ export default abstract class MonitorsDataModel extends BaseDataModel {
 		}
 	}
 
-	// Returns true if they edge got spent
-	async spendEdge(count: number): Promise<boolean> {
+	gainEdge(count: number): boolean {
+		this.edge.damage = Math.max(0, (this.edge.damage -= count));
+
+		return true;
+	}
+
+	spendEdge(count: number): boolean {
 		if (this.edge.value < count) {
 			return false;
 		}
+
+		this.edge.damage += count;
+
 		return true;
 	}
 

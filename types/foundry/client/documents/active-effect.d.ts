@@ -1,6 +1,8 @@
 import { ActiveEffectConstructor } from './constructors';
 
 declare global {
+	import EffectChangeData = foundry.data.EffectChangeData;
+
 	/**
 	 * The ActiveEffect embedded document within an Actor or Item document which extends the BaseRollTable abstraction.
 	 * Each ActiveEffect belongs to the effects collection of its parent Document.
@@ -84,7 +86,7 @@ declare global {
 		 * @return The resulting applied value
 		 */
 		protected _applyAdd(
-			actor: Actor,
+			target: Actor | Item,
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
@@ -99,7 +101,7 @@ declare global {
 		 * @return The resulting applied value
 		 */
 		protected _applyMultiply(
-			actor: Actor,
+			target: Actor | Item,
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
@@ -114,7 +116,7 @@ declare global {
 		 * @return The resulting applied value
 		 */
 		protected _applyOverride(
-			actor: Actor,
+			target: Actor | Item,
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
@@ -129,7 +131,7 @@ declare global {
 		 * @return The resulting applied value
 		 */
 		protected _applyUpgrade(
-			actor: Actor,
+			target: Actor | Item,
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
@@ -143,7 +145,7 @@ declare global {
 		 * @return The resulting applied value
 		 */
 		protected _applyCustom(
-			actor: Actor,
+			target: Actor | Item,
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
@@ -169,17 +171,20 @@ declare global {
 
 	interface ActiveEffect {
 		readonly parent: Actor | Item;
-
+		transfer: boolean;
 		disabled: boolean;
 		icon: ImageFilePath;
 		tint?: string;
+		changes: EffectChangeSource[];
 	}
 
 	interface TemporaryEffect {
 		disabled: boolean;
+		transfer: boolean;
 		isTemporary: boolean;
 		icon: ImageFilePath;
 		tint?: string;
+		changes: EffectChangeSource[];
 	}
 
 	interface ApplicableChangeData<T extends ActiveEffect> extends foundry.data.EffectChangeSource {

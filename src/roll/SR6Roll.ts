@@ -11,6 +11,7 @@ export type SR6RollData = {
 	parameters: { glitch: number[]; success: number[] };
 	threshold: null | number;
 	template: string;
+	edgeUsed: boolean;
 };
 
 export class SR6Roll extends Roll {
@@ -26,6 +27,7 @@ export class SR6Roll extends Roll {
 			threshold: null,
 			parameters: { glitch: [1], success: [5, 6] },
 			template: this.CHAT_TEMPLATE,
+			edgeUsed: false,
 		};
 	}
 
@@ -89,7 +91,7 @@ export class SR6Roll extends Roll {
 
 	async finish(): Promise<void> {
 		if (this.options.explode) {
-			await this.explode();
+			return this.explode();
 		}
 	}
 
@@ -148,7 +150,6 @@ export class SR6Roll extends Roll {
 			active: true,
 			result: 5,
 		});
-		this._termsUpdated();
 
 		return true;
 	}
@@ -181,7 +182,7 @@ export class SR6Roll extends Roll {
 	async showVisual(): Promise<void> {
 		if (game.dice3d) {
 			// DICE-SO-NICE show the roll
-			await game.dice3d.showForRoll(this, (game as Game).user, true);
+			void game.dice3d.showForRoll(this, (game as Game).user, false);
 		}
 	}
 
@@ -199,13 +200,7 @@ export class SR6Roll extends Roll {
 
 			// Add the results to our results
 			(this.terms[0] as DiceTerm).results = (this.terms[0] as DiceTerm).results.concat(explode_results);
-			this._termsUpdated();
 		}
-	}
-
-	_termsUpdated(): void {
-		// TODO: make sure we dont need this? what kind of rollterm do we have? do we need to simplify?
-		// (this.terms[0] as DiceTerm).number = (this.terms[0] as DiceTerm).results.length;
 	}
 
 	_getLowestRollIndex(): number {
@@ -225,7 +220,7 @@ export class SR6Roll extends Roll {
 			user: game.user!.id,
 			tooltip: options.isPrivate ? '' : await this.getTooltip(),
 			roll: this,
-			actor: this.options.actorId ? util.getActor(SR6Actor, this.options.actorId!) : undefined,
+			actor: this.options.actorId ? util.getActorSync(SR6Actor, this.options.actorId!) : undefined,
 			config: CONFIG,
 		});
 	}
@@ -238,6 +233,24 @@ export class SR6Roll extends Roll {
 		}
 
 		this.options = foundry.utils.mergeObject(SR6Roll.defaultOptions(), this.options);
+	}
+
+	override toMessage(
+		messageData: PreCreate<foundry.data.ChatMessageSource> | undefined,
+		options: { rollMode?: RollMode | 'roll'; create: false }
+	): Promise<foundry.data.ChatMessageSource>;
+	override toMessage(
+		messageData?: PreCreate<foundry.data.ChatMessageSource>,
+		options?: { rollMode?: RollMode | 'roll'; create?: true }
+	): Promise<ChatMessage>;
+	override toMessage(
+		messageData?: PreCreate<foundry.data.ChatMessageSource>,
+		options?: { rollMode?: RollMode | 'roll'; create?: boolean }
+	): Promise<ChatMessage | foundry.data.ChatMessageSource> {
+		return new Promise(async (resolve) => {
+			await this.finish();
+			resolve(super.toMessage(messageData, options));
+		});
 	}
 }
 

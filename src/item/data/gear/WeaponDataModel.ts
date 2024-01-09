@@ -5,8 +5,13 @@
  */
 
 import BaseDataModel from '@/data/BaseDataModel';
+import { DocumentUUIDField } from '@/data/fields';
+import SR6Effect from '@/effects/SR6Effect';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import { DamageType, FireMode, Distance } from '@/data';
+import SR6Item from '@/item/SR6Item';
+
+import { getItemSync } from '@/util';
 
 export abstract class AttackRatingDataModel extends BaseDataModel {
 	abstract closeFormula: string;
@@ -14,6 +19,26 @@ export abstract class AttackRatingDataModel extends BaseDataModel {
 	abstract mediumFormula: string;
 	abstract farFormula: string;
 	abstract extremeFormula: string;
+
+	get close(): number {
+		return this.solveFormula(this.closeFormula);
+	}
+
+	get near(): number {
+		return this.solveFormula(this.nearFormula);
+	}
+
+	get medium(): number {
+		return this.solveFormula(this.mediumFormula);
+	}
+
+	get far(): number {
+		return this.solveFormula(this.farFormula);
+	}
+
+	get extreme(): number {
+		return this.solveFormula(this.extremeFormula);
+	}
 
 	atDistance(distance: Distance): number {
 		switch (distance) {
@@ -36,26 +61,6 @@ export abstract class AttackRatingDataModel extends BaseDataModel {
 		return 0;
 	}
 
-	get close(): number {
-		return this.solveFormula(this.closeFormula);
-	}
-
-	get near(): number {
-		return this.solveFormula(this.nearFormula);
-	}
-
-	get medium(): number {
-		return this.solveFormula(this.mediumFormula);
-	}
-
-	get far(): number {
-		return this.solveFormula(this.farFormula);
-	}
-
-	get extreme(): number {
-		return this.solveFormula(this.extremeFormula);
-	}
-
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
@@ -69,18 +74,21 @@ export abstract class AttackRatingDataModel extends BaseDataModel {
 	}
 }
 
-type WeaponDamage = {
+export type WeaponDamage = {
 	damageFormula: string;
 	damageType: DamageType;
 };
 
-type WeaponCategory = {
+export type WeaponCategory = {
 	type: string;
 	subtype: string;
 };
 
+export type WeaponAttachmentEffectData = {
+	sourceAttachmentId: ItemUUID;
+};
+
 export default abstract class WeaponDataModel extends GearDataModel {
-	abstract isMelee: boolean;
 	abstract attackRatings: AttackRatingDataModel;
 
 	abstract category: WeaponCategory;
@@ -88,12 +96,167 @@ export default abstract class WeaponDataModel extends GearDataModel {
 
 	abstract firemodes: null | FireMode[];
 
+	abstract _accessories: ItemUUID[];
+
+	override prepareBaseData(): void {
+		super.prepareBaseData();
+		this.attackRatings.prepareBaseData();
+		void this.cleanAccessories();
+	}
+
+	override prepareData(): void {
+		super.prepareData();
+		this.attackRatings.prepareData();
+		void this.cleanAccessories();
+	}
+
+	override prepareEmbeddedDocuments(): void {
+		super.prepareEmbeddedDocuments();
+		this.attackRatings.prepareEmbeddedDocuments();
+		this.applyAttachmentEffects();
+	}
+
+	override prepareDerivedData(): void {
+		super.prepareDerivedData();
+		this.attackRatings.prepareDerivedData();
+	}
+
+	async cleanAccessories(): Promise<void> {
+		const toRemove: string[] = [];
+		this._accessories.forEach((uuid) => {
+			if (getItemSync(SR6Item<GearDataModel>, uuid) == null) {
+				toRemove.push(uuid);
+			}
+		});
+		if (toRemove.length > 0) {
+			this._accessories = this._accessories.filter((uuid) => toRemove.includes(uuid) == false);
+			await this.item!.update({ ['system._accessories']: this._accessories });
+		}
+	}
+
+	get accessories(): SR6Item<GearDataModel>[] {
+		return this._accessories.map((uuid) => getItemSync(SR6Item<GearDataModel>, uuid)! as SR6Item<GearDataModel>);
+	}
+
 	get damage(): number {
 		return this.solveFormula(this.damageData.damageFormula);
 	}
 
 	get pool(): number {
 		return this.skillUse ? this.skillUse!.pool : 0;
+	}
+
+	applyAttachmentEffects(): void {
+		for (const accessory of this.accessories) {
+			for (const effectData of accessory.effects) {
+				const effect = effectData as SR6Effect;
+				for (const change of effect.changes) {
+					effect._apply(this.item!, change);
+				}
+			}
+		}
+	}
+
+	// Transfer effects off of attachments onto us
+	async _syncAttachmentEffects(): Promise<void> {
+		/*
+		const toRemove = [];
+		// Remove local effects that the attachment no longer exists for
+		for (const effect of this.item!.effects) {
+			const effectData = effect.getFlag('sr6', 'WeaponAttachmentEffectData') as
+				| undefined
+				| WeaponAttachmentEffectData;
+			if (effectData) {
+				if (!this._accessories.includes(effectData.sourceAttachmentId)) {
+					toRemove.push(effect.id);
+				}
+			}
+		}
+		await this.item!.deleteEmbeddedDocuments('ActiveEffect', toRemove);
+
+		// Add new effects from new attachments
+		const toCreate = [];
+		for (const accessory of this.accessories) {
+			if (
+				!this.item!.effects.find((effect) => {
+					const effectData = effect.getFlag('sr6', 'WeaponAttachmentEffectData') as
+						| undefined
+						| WeaponAttachmentEffectData;
+					if (!effectData) {
+						return false;
+					}
+					if (effectData.sourceAttachmentId == accessory.uuid) {
+						return true;
+					}
+					return false;
+				})
+			) {
+				for (const effect of accessory.effects) {
+					toCreate.push({
+						...effect,
+						disabled: false,
+						flags: {
+							['WeaponAttachmentEffectData']: {
+								sourceAttachmentId: accessory.uuid,
+							},
+						},
+					});
+				}
+			}
+		}
+		await this.item!.createEmbeddedDocuments('ActiveEffect', toCreate);
+		*/
+	}
+
+	async attach(accessory: SR6Item<GearDataModel>): Promise<boolean> {
+		if (!this.isOwner || !accessory.isOwner) {
+			console.error(`User does not have permission:  Child(${accessory.uuid}) Parent(${this.item!.uuid})`);
+			return false;
+		}
+
+		if (accessory.systemData.attachedTo != null) {
+			console.error(
+				`Cannot attach (${accessory.uuid})->(${this.item!.uuid}): Child was alread attached to something!`
+			);
+			return false;
+		}
+		if (accessory.systemData.attachedTo == this.item!.uuid) {
+			console.warn(`Item was already attached (${accessory.uuid})->(${this.item!.uuid}), returning true`);
+			return true;
+		}
+
+		// TODO: check that we can attach
+		this._accessories = [...this._accessories, accessory.uuid];
+		await this.item!.update({ ['system._accessories']: this._accessories });
+
+		// Update the child
+		await accessory.update({ ['system._attachedTo']: this.item!.uuid });
+
+		await this._syncAttachmentEffects();
+
+		return true;
+	}
+	async detach(accessory: SR6Item<GearDataModel>): Promise<boolean> {
+		if (!this.isOwner || !accessory.isOwner) {
+			console.error(`User does not have permission:  Child(${accessory.uuid}) Parent(${this.item!.uuid})`);
+			return false;
+		}
+
+		if (!this._accessories.includes(accessory.uuid) || accessory.systemData.attachedTo?.uuid != this.item!.uuid) {
+			console.error(`Item (${accessory.uuid}) was not attached to ${this.item!.uuid}`);
+			return false;
+		}
+
+		await this.item!.update({
+			['system._accessories']: this._accessories.filter((uuid) => uuid != accessory.uuid),
+		});
+
+		// Update the child
+		await accessory.update({ ['system._attachedTo']: null });
+
+		await this._syncAttachmentEffects();
+
+		return true;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -126,6 +289,11 @@ export default abstract class WeaponDataModel extends GearDataModel {
 				new fields.StringField({ blank: false, choices: Object.values(FireMode) }),
 				{ initial: [FireMode.SS], required: true, nullable: true }
 			),
+			_accessories: new fields.ArrayField(new DocumentUUIDField(), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
 		};
 	}
 }

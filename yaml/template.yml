@@ -9,6 +9,7 @@ Item:
     # Items
     - gear
     - weapon
+    - ammo
     - credstick
     # Character Building
     - skill
@@ -31,6 +32,7 @@ Item:
     - condition
   gear:
   weapon:
+  ammo:
   skill:
   contact:
   sin:

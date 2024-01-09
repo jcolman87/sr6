@@ -1,0 +1,179 @@
+name: Ambidextrous
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Ambidextrous
+      description: No penalty for off-hand weapon use (see p. 110).
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: pool
+          situation: roll
+          key: removePenalty
+          value: offhand
+---
+name: Analytical Mind
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - description: You gain a bonus Edge when you make any Logic-based test.
+      name: Analytical Mind
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: addEdge
+          situation: roll
+          key: attribute.logic
+          value: 1
+---
+name: Aptitude
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Aptitude
+      description: Your skill maximum for the selected skill is 10, instead of 9, and your maximum starting rank is 7, instead of 6.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+---
+name: Astral Chameleon
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Astral Chameleon
+      description: Characters receive –2 dice on tests to recognize your aura or astral signature. Your astral signature fades in half the normal time (see p. 159).
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+---
+name: Blandness
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Blandness
+      description: Characters take a –2 penalty on Memory tests (p. 67) to remember if they have seen you before, and the threshold on tests to notice if you are following or observing them is increased by 1. If the character acquires something permanent and distinctive—obvious, unusual cyberware, a unique tattoo, that sort of thing—they lose this quality. If they acquire something temporarily distinctive, such as an extreme hairdo, the effects are negated until those changes are reversed.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+---
+name: Built Tough I
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Built Tough I
+      description: You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: activeEffect
+          situation: always
+          key: monitors.physical.max
+          value: 1
+---
+name: Built Tough II
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Built Tough II
+      description: You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: activeEffect
+          situation: always
+          key: monitors.physical.max
+          value: 2
+---
+name: Built Tough III
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Built Tough III
+      description: You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: activeEffect
+          situation: always
+          key: monitors.physical.max
+          value: 3
+---
+name: Built Tough IV
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Built Tough IV
+      description: You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers:
+        - type: activeEffect
+          situation: always
+          key: monitors.physical.max
+          value: 4
+---
+name: Exceptional
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Exceptional
+      description: Select a Physical or Mental attribute. That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+---
+name: First Impression
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: First Impression
+      description: You gain 2 Edge for Social Tests during your first meeting with anyone, and both your Heat and Reputation are ignored for this first encounter.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
+---
+name: Focused Concentration I
+type: quality
+img: icons/svg/item-bag.svg
+effects: []
+system:
+  conditions:
+    - name: Aptitude
+      description: You can sustain multiple spells or complex forms without penalty. For each level, you can sustain 1 additional spell or complex form without suffering the associated penalty. The spell cannot have a modi- fied Drain Value of 7 or greater.
+      activation: always
+      activationSituation: always
+      target: self
+      modifiers: []
