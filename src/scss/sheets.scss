@@ -1,3 +1,5 @@
+@use 'vars/colors';
+
 .roll-button {
 	font-size: 16px;
 	background: url(/systems/sr6/assets/dice/die_6.png) no-repeat;
@@ -131,4 +133,15 @@ input:checked + .slider:before {
 
 .slider.round:before {
 	border-radius: 50%;
+}
+
+button.attack {
+	height: 1.5em;
+	margin: 0;
+	width: auto !important;
+	line-height: 1em;
+	padding: 2px;
+
+	background: colors.$purple;
+	color: white;
 }

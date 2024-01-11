@@ -1,4 +1,5 @@
 import SR6Actor from '@/actor/SR6Actor';
+import { getActorSync } from '@/util';
 import * as util from '@/util';
 import { RollType } from '@/roll';
 
@@ -9,7 +10,7 @@ export type SR6RollData = {
 	explode: boolean;
 	pool: number;
 	parameters: { glitch: number[]; success: number[] };
-	threshold: null | number;
+	threshold: undefined | number;
 	template: string;
 	edgeUsed: boolean;
 };
@@ -24,7 +25,7 @@ export class SR6Roll extends Roll {
 			auto_hits: 0,
 			pool: 0,
 			explode: false,
-			threshold: null,
+			threshold: undefined,
 			parameters: { glitch: [1], success: [5, 6] },
 			template: this.CHAT_TEMPLATE,
 			edgeUsed: false,
@@ -41,7 +42,7 @@ export class SR6Roll extends Roll {
 
 	get net_hits(): number {
 		if (this.options.threshold) {
-			return Math.max(0, (this.options.threshold ? this.options.threshold : 0) - this.hits);
+			return Math.max(0, this.hits - (this.options.threshold ? this.options.threshold : 0));
 		}
 		return this.hits;
 	}
@@ -87,6 +88,22 @@ export class SR6Roll extends Roll {
 
 	get is_critical_glitch(): boolean {
 		return this.is_glitch && this.hits === 0;
+	}
+
+	get isOwner(): boolean {
+		const actor = this.actor;
+		if (actor) {
+			return actor.isOwner;
+		} else {
+			return true;
+		}
+	}
+
+	get actor(): null | SR6Actor {
+		if (!this.options.actorId) {
+			return null;
+		}
+		return getActorSync(SR6Actor, this.options.actorId!);
 	}
 
 	async finish(): Promise<void> {

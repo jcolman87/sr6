@@ -108,9 +108,9 @@ export function getTargetTokens(): Token[] {
 	return Array.from(game.user.targets);
 }
 
-export function getTargetActors(): Actor[] {
+export function getTargetActors(): SR6Actor[] {
 	return Array.from(game.user.targets).map((token) => {
-		return token.actor!;
+		return token.actor! as SR6Actor;
 	});
 }
 export function getTargetActorIds(): ActorUUID[] {

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { MagicAwakenedType } from '@/data/magic';
-import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel, { GearMatrixDataModel } from '@/item/data/gear/GearDataModel';
@@ -10,11 +9,10 @@ import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
 import { deleteItem } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import MatrixPersonaView from '@/vue/views/MatrixPersonaView.vue';
 import MatrixProgramSlotsView from '@/vue/views/MatrixProgramSlotsView.vue';
 import MonitorView from '@/vue/views/MonitorView.vue';
-import { computed, inject, toRaw, ref, onUpdated } from 'vue';
+import { computed, inject, toRaw, ref, onBeforeUpdate } from 'vue';
 import { Collapse } from 'vue-collapsed';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
@@ -35,7 +33,7 @@ const matrixDevices = computed(() =>
 		.sort((a, b) => a.name.localeCompare(b.name))
 );
 
-const deviceVisible = computed(() =>
+const deviceVisible = ref(
 	matrixDevices.value.map((device) => {
 		return {
 			id: device.id,
@@ -46,6 +44,19 @@ const deviceVisible = computed(() =>
 	})
 );
 
+onBeforeUpdate(() => {
+	if (deviceVisible.value.length != matrixDevices.value.length) {
+		deviceVisible.value = matrixDevices.value.map((device) => {
+			return {
+				id: device.id,
+				visible: false,
+				descriptionVisible: false,
+				wirelessBonusVisible: false,
+			};
+		});
+	}
+});
+
 const persona = computed(() => {
 	let persona = toRaw(context.data.actor).items.find((i) => i.type === 'matrix_persona');
 	if (persona) {
@@ -55,6 +66,14 @@ const persona = computed(() => {
 	}
 });
 const hasPersona = computed(() => persona.value !== null);
+
+function getPersona(): null | MatrixPersonaDataModel {
+	return persona.value ? persona.value!.systemData : null;
+}
+
+function getMatrixModel(gear: GearDataModel): GearMatrixDataModel {
+	return gear.matrix!;
+}
 
 async function rollMatrixAction(action: SR6Item<MatrixActionDataModel>) {
 	if (action.systemData.pool > 0) {
@@ -161,11 +180,7 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 			</table>
 		</div>
 		<div class="section wireless-section">
-			<MatrixPersonaView
-				:persona="(persona) ? persona!.systemData : null"
-				@change="onPersonaUpdated"
-				@togglePersona="togglePersona"
-			/>
+			<MatrixPersonaView :persona="getPersona()" @change="onPersonaUpdated" @togglePersona="togglePersona" />
 			<div class="section wireless-devices">
 				<div class="section-head">Wireless Devices</div>
 				<table>
@@ -240,7 +255,7 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 												device.systemData.matrix !== null &&
 												device.systemData.matrix!.totalProgramSlots > 0
 											"
-											:model="device.systemData.matrix!"
+											:model="getMatrixModel(device.systemData)"
 											@change="onProgramSlotsUpdated"
 										/>
 										<div

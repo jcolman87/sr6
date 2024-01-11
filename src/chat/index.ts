@@ -26,3 +26,5 @@ export async function renderChatLog(
 		}
 	});
 }
+
+export function onChatLogEntryContext(html: JQuery, data: ContextMenuEntry[]) {}

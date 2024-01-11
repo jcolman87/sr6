@@ -33,6 +33,11 @@ export function register(): void {
 	Handlebars.registerHelper('gte', (lhs, rhs) => lhs >= rhs);
 	Handlebars.registerHelper('lte', (lhs, rhs) => lhs <= rhs);
 
+	Handlebars.registerHelper('ceil', (lhs) => Math.ceil(lhs));
+	Handlebars.registerHelper('floor', (lhs) => Math.floor(lhs));
+	Handlebars.registerHelper('min', (lhs, rhs) => Math.min(lhs, rhs));
+	Handlebars.registerHelper('max', (lhs, rhs) => Math.max(lhs, rhs));
+
 	Handlebars.registerHelper('add', (lhs, rhs) => lhs + rhs);
 	Handlebars.registerHelper('sub', (lhs, rhs) => lhs - rhs);
 	Handlebars.registerHelper('mul', (lhs, rhs) => lhs * rhs);
@@ -50,6 +55,29 @@ export function register(): void {
 
 	Handlebars.registerHelper('var', function (this: Record<string, unknown>, varName, varValue, options) {
 		this[varName] = varValue;
+	});
+
+	Handlebars.registerHelper('includes', function (collection, value) {
+		if (!collection) {
+			return false;
+		}
+		return collection.includes(value);
+	});
+
+	Handlebars.registerHelper('showRollDefense', function (roller: SR6Actor, targets: SR6Actor[] | undefined | null) {
+		if (roller.isOwner && !game.user.isGM) {
+			return false;
+		}
+
+		if (!targets || targets.length === 0 || game.user.isGM) {
+			return true;
+		}
+
+		return targets.find((a) => a.isOwner) != undefined;
+	});
+
+	Handlebars.registerHelper('getUserById', function (userId: string) {
+		return game.users.find((user) => user.id === userId);
 	});
 
 	Handlebars.registerHelper('getActorById', function (actorId: ActorUUID) {

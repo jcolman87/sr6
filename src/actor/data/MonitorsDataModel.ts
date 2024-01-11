@@ -11,6 +11,36 @@ export enum MonitorType {
 
 export type WoundModifierData = Partial<Record<MonitorType, number>>;
 
+export abstract class MonitorDataModel extends BaseDataModel {
+	abstract damage: number;
+	abstract max: number;
+	abstract formula: string | null;
+
+	get woundModifier(): number {
+		return -Math.floor(this.damage / 3);
+	}
+
+	get value(): number {
+		return Math.max(0, this.max - this.damage);
+	}
+
+	static defineSchema(): foundry.data.fields.DataSchema {
+		const fields = foundry.data.fields;
+
+		return {
+			damage: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
+			max: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
+			formula: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
+		};
+	}
+
+	override prepareData(): void {
+		if (this.formula) {
+			this.max = this.solveFormula(this.formula);
+		}
+	}
+}
+
 export default abstract class MonitorsDataModel extends BaseDataModel implements IHasEdge {
 	abstract physical: MonitorDataModel;
 	abstract stun: MonitorDataModel;
@@ -151,35 +181,5 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 				nullable: false,
 			}),
 		};
-	}
-}
-
-export abstract class MonitorDataModel extends BaseDataModel {
-	abstract damage: number;
-	abstract max: number;
-	abstract formula: string | null;
-
-	get woundModifier(): number {
-		return -Math.floor(this.damage / 3);
-	}
-
-	get value(): number {
-		return Math.max(0, this.max - this.damage);
-	}
-
-	static defineSchema(): foundry.data.fields.DataSchema {
-		const fields = foundry.data.fields;
-
-		return {
-			damage: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
-			max: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
-			formula: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
-		};
-	}
-
-	override prepareBaseData(): void {
-		if (this.formula) {
-			this.max = this.solveFormula(this.formula);
-		}
 	}
 }

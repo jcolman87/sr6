@@ -23,7 +23,7 @@ const skills = computed(
 			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SkillDataModel>[]
 );
 
-const skillsVisible = computed(() =>
+const skillsVisible = ref(
 	skills.value.map((skill) => {
 		return {
 			id: skill.id,
@@ -38,7 +38,6 @@ async function updateSkill(skill: SR6Item<SkillDataModel>) {
 }
 
 async function roll(skill: SR6Item<SkillDataModel>, special: null | string = null) {
-	console.log('rolling: ', special, skill.systemData.getPool(special));
 	await rollSkill(toRaw(context.data.actor), skill.id, special);
 }
 

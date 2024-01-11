@@ -1,20 +1,24 @@
-{{ var "net_damage" (add roll.options.attack.damage roll.net_hits) }}
+{{ var "net_damage" (sub roll.options.attack.damage roll.net_hits) }}
 {{ var "spell" (getItemById roll.options.attack.itemId) }}
-{{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
-
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Cast Spell" item=spell }}
+{{ var "attacker" (getActorById roll.options.attack.attackerId) }}
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Spell Defend" item=spell }}
 
 <div class="roll">
-	<div>Drain: <i class="data-value">{{roll.options.drain}}</i></div>
-	<div>Attack Rating: <i class="data-value">{{ roll.options.attack.attackRating }}</i><br/></div>
-	<div><a class="chat-1-expand">Damage:  <i class="dv">{{ net_damage }}</i></a></div>
+	Defending against  <a class="chat-0-expand" style="font-style: italic; font-weight: bold">{{ spell.name }}</a>
+	cast by <i style="font-weight: bold; font-style: italic">{{attacker.name}}</i><br/>
+	<br/>
+
+{{#unless roll.success }}
+	<div><a  class="chat-1-expand">Damage:  <i class="dv">{{ net_damage }}</i></a></div>
 	<div class="formula chat-1-collapsible" style="display: none">
-		<div>{{ roll.options.attack.damage }} + {{roll.net_hits}} = {{ net_damage }}</i></div>
+		<div>{{ roll.options.attack.damage }} + {{ roll.options.threshold }} - {{roll.net_hits}} = {{ net_damage }}</i></div>
 	</div>
 	<div><i class="data-value">{{ localize (concat "SR6.Magic.Spell.CombatTypes." spell.systemData.damage.combat) }}
 		{{ localize (concat "SR6.Combat.DamageTypes." spell.systemData.damage.type) }}
 		{{ localize (concat "SR6.Magic.Spell.DamageForms." spell.systemData.damage.form) }}
 	</i></div>
+{{/unless}}
+
 	<hr/>
 	<div class="chat-0-collapsible" style="display: none">
 		<section>
@@ -27,13 +31,9 @@
 			<hr/>
 		</section>
 	</div>
-	<!--Only show drain for self or GM -->
-	{{#if actor.isOwner }}
-		<input id="roll-spell-resist-drain" type="button" value="Resist Drain"/>
-	{{/if}}
-	{{#if (and spell.systemData.canDefend (showRollDefense actor targets)) }}
-		<input id="roll-spell-defense" type="button" value="Roll Defense"/>
-	{{/if}}
 
+	{{#if (and roll.isOwner spell.systemData.canSoak) }}
+		<input id="roll-spell-soak" type="button" value="Soak Damage"/>
+	{{/if}}
 </div>
 {{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

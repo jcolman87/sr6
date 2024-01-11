@@ -47,9 +47,7 @@ async function setDamage(monitor: MonitorDataModel, field: string, amount: numbe
 					</div>
 					<div class="text-atop">
 						<img src="/systems/sr6/assets/edge.webp" alt="" />
-						<label class="text-atop-value"
-							><input type="number" name="system.monitors.edge.max" :value="system.monitors.edge.max"
-						/></label>
+						<label class="text-atop-value"><input type="number" :value="system.monitors.edge.max" /></label>
 					</div>
 					<div class="text-atop">
 						<img src="/systems/sr6/assets/yen.webp" alt="" />

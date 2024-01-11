@@ -10,6 +10,7 @@ export enum ConditionActivation {
 	Always = 'always',
 	OnUse = 'onuse',
 	OnHit = 'onhit',
+	Once = 'once',
 }
 
 export enum ConditionTarget {
@@ -20,13 +21,15 @@ export enum ConditionTarget {
 export enum ConditionSituation {
 	Always = 'always',
 	Roll = 'roll',
-	AttackRating = 'ar',
 	Combat = 'combat',
 }
 
 export enum ConditionModifierType {
 	AddEdge = 'addEdge',
 	Pool = 'pool',
+	AttackRating = 'ar',
+	Damage = 'damage',
+	MatrixAttributes = 'matrixAttributes',
 	ActiveEffect = 'activeEffect',
 	Opposed = 'opposed',
 	PreventActions = 'prevent',
@@ -83,22 +86,16 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		return null;
 	}
 
-	get activeEffectModifiers(): ConditionEffectChangeData[] {
-		return this.modifiers.filter((modifier) => modifier.type === ConditionModifierType.ActiveEffect);
-	}
-
-	get poolModifiers(): ConditionEffectChangeData[] {
-		return this.modifiers.filter((modifier) => modifier.type === ConditionModifierType.Pool);
-	}
-
-	getModifiersForSituation(
-		situation: ConditionSituation,
+	getModifiers(
+		type: ConditionModifierType,
+		situation: ConditionSituation = ConditionSituation.Always,
 		activation: ConditionActivation = ConditionActivation.Always
 	): ConditionEffectChangeData[] {
 		return this.modifiers.filter(
 			(modifier) =>
-				modifier.situation === situation &&
-				(modifier.activation === ConditionActivation.Always || modifier.activation === activation)
+				modifier.situation === situation ||
+				(modifier.situation == ConditionSituation.Always &&
+					(modifier.activation === ConditionActivation.Always || modifier.activation === activation))
 		);
 	}
 
@@ -106,11 +103,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		type: RollType,
 		situation: ConditionSituation = ConditionSituation.Roll
 	): ConditionEffectChangeData[] {
-		return this.poolModifiers.filter((modifier) => {
-			if (modifier.type !== ConditionModifierType.Pool || modifier.situation !== situation) {
-				return false;
-			}
-
+		return this.getModifiers(ConditionModifierType.Pool, situation).filter((modifier) => {
 			const path = modifier.key.split('.');
 			if (path.length === 1) {
 				if (modifier.key === RollType[type]) {
@@ -142,7 +135,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 	}
 
 	async applyActiveEffects(actor: SR6Actor, item: SR6Item<ConditionDataModel>): Promise<boolean> {
-		const changes: EffectChangeSource[] = this.activeEffectModifiers.map((effect) => {
+		const changes: EffectChangeSource[] = this.getModifiers(ConditionModifierType.ActiveEffect).map((effect) => {
 			return {
 				key: effect.key,
 				value: effect.value,

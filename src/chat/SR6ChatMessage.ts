@@ -1,3 +1,4 @@
+import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { IHasMatrixPersona } from '@/data/interfaces';
@@ -15,6 +16,30 @@ export class SR6ChatMessage extends ChatMessage {
 
 	override async getHTML(): Promise<JQuery> {
 		const html = await super.getHTML();
+		/*
+		todo: alignMENT FUCKED
+		html.hover(
+			async (event: JQuery.MouseEnterEvent) => {
+				const tip = html.find('.chat-roll-menu');
+				tip.slideDown(200);
+			},
+			async (event: JQuery.MouseLeaveEvent) => {
+				const tip = html.find('.chat-roll-menu');
+				tip.slideUp(200);
+			}
+		);
+
+		 */
+		html.find('.heal').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
+			event.preventDefault();
+			for (const actor of util
+				.getSelfOrSelectedActors()
+				.filter((actor) => actor.systemData instanceof CharacterDataModel)) {
+			}
+		});
+		html.find('.damage').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
+			event.preventDefault();
+		});
 
 		html.find('.click-actor').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 			event.preventDefault();
@@ -122,6 +147,30 @@ export class SR6ChatMessage extends ChatMessage {
 					actor.systemData as LifeformDataModel,
 					(this.rolls[0] as SR6Roll).hits,
 					this.rolls[0].options as unknown as rollers.SpellCastRollData
+				);
+			}
+		});
+
+		html.on('click', '#roll-spell-defense', async (event) => {
+			event.preventDefault();
+
+			for (const actor of util.getSelfOrSelectedActors()) {
+				await rollers.rollSpellDefend(
+					actor.systemData as LifeformDataModel,
+					(this.rolls[0] as SR6Roll).hits,
+					this.rolls[0].options as unknown as rollers.SpellCastRollData
+				);
+			}
+		});
+
+		html.on('click', '#roll-spell-soak', async (event) => {
+			event.preventDefault();
+
+			for (const actor of util.getSelfOrSelectedActors()) {
+				await rollers.rollSpellSoak(
+					actor.systemData as LifeformDataModel,
+					(this.rolls[0] as SR6Roll).hits,
+					this.rolls[0].options as unknown as rollers.SpellDefendRollData
 				);
 			}
 		});

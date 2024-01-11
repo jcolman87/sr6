@@ -1,12 +1,21 @@
-{{ log this }}
 
 <div class="item-card">
+	{{#unless (undefined actor) }}
+	<h3>
+		<div>
+			{{#unless (undefined actor.img)}}
+				<a class="click-actor" data-actor-id="{{actor.uuid}}">
+					<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="24" width="24" />
+				</a>
+			{{/unless}}
+			<a class="click-actor" data-actor-id="{{actor.uuid}}">{{actor.name}}</a>
+		</div>
+	</h3>
 	<div class="imageAndName">
-		<img src="{{img}}" />
+		<img src="{{img}}" style="width: 32px; height: 32px" />
 		<span>{{ name }}</span>
 	</div>
-	<label>{{ localize (concat "TYPES.Item." type) }}</label>
-
+	{{/unless}}
 	{{#if (eq type "gear") }}
 		<div class="data-table">
 			<div><label class="balls1">Rating:</label> {{ system.rating }}</div>

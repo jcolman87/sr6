@@ -57,8 +57,6 @@ function removeAdjustment(value: SpellAdjustmentType) {
 		}
 	}
 }
-
-console.log('drain', drainFromAdjustments(adjustments.value), data.drain);
 </script>
 
 <template>
@@ -120,7 +118,7 @@ console.log('drain', drainFromAdjustments(adjustments.value), data.drain);
 			<input
 				class="counter"
 				type="number"
-				:value="damageFromAdjustments(adjustments) + data.attack.damage"
+				:value="damageFromAdjustments(adjustments) + data.attack.damage!"
 				disabled
 			/>
 		</div>

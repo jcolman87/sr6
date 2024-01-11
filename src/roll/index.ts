@@ -61,9 +61,12 @@ export const ROLL_TEMPLATES = new Map([
 	[RollType.WeaponSoak, 'systems/sr6/templates/chat/rolls/WeaponSoakRoll.hbs'],
 
 	[RollType.MatrixAction, 'systems/sr6/templates/chat/rolls/MatrixActionRoll.hbs'],
+	[RollType.MatrixActionDefend, 'systems/sr6/templates/chat/rolls/MatrixActionDefend.hbs'],
 
 	[RollType.SpellCast, 'systems/sr6/templates/chat/rolls/SpellCastRoll.hbs'],
 	[RollType.SpellDrain, 'systems/sr6/templates/chat/rolls/SpellResistDrainRoll.hbs'],
+	[RollType.SpellDefend, 'systems/sr6/templates/chat/rolls/SpellDefendRoll.hbs'],
+	[RollType.SpellSoak, 'systems/sr6/templates/chat/rolls/SpellSoakRoll.hbs'],
 ]);
 
 export function register(): void {

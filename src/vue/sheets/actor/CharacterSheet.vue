@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, toRaw, inject } from 'vue';
+import { computed, toRaw, inject, onUpdated } from 'vue';
 
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';

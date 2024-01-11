@@ -34,10 +34,6 @@ function drop(event: DragEvent) {}
 function openItem() {
 	void toRaw(props.item).sheet.render(true);
 }
-
-function rollWeapon(item: SR6Item<WeaponDataModel>) {
-	void rollWeaponAttack(toRaw(props.actor).systemData, toRaw(item));
-}
 </script>
 
 <template>
@@ -64,7 +60,14 @@ function rollWeapon(item: SR6Item<WeaponDataModel>) {
 		<div v-else class="details" @dragenter="dragEnter" @dragleave="dragLeave">
 			<span class="name">
 				<div v-if="item.type === 'weapon'">
-					<button class="attack" @click.prevent="rollWeapon(item as SR6Item<WeaponDataModel>)">Attack</button>
+					<button
+						class="attack"
+						@click.prevent="
+							rollWeaponAttack(toRaw(props.actor).systemData, toRaw(item) as SR6Item<WeaponDataModel>)
+						"
+					>
+						Attack
+					</button>
 				</div>
 				<a @click="openItem"
 					><i class="name-text">{{ item.name }}</i></a
@@ -198,17 +201,6 @@ function rollWeapon(item: SR6Item<WeaponDataModel>) {
 		.name-text {
 			font-style: italic;
 			font-weight: bold;
-		}
-
-		button.attack {
-			height: 1.5em;
-			margin: 0;
-			width: auto !important;
-			line-height: 1em;
-			padding: 2px;
-
-			background: colors.$purple;
-			color: white;
 		}
 	}
 

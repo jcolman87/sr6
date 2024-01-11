@@ -12,6 +12,7 @@ import { register as registerItems, setOptGroups as registerItemOptGroups, onCre
 import { register as registerRolls } from '@/roll';
 import { register as registerConditions } from '@/condition';
 import { register as registerToken } from '@/token';
+import { onChatLogEntryContext } from '@/chat';
 
 import { NAMESPACE as SETTINGS_NAMESPACE, register as registerSettings } from '@/settings';
 
@@ -101,4 +102,8 @@ Hooks.on('renderActorDirectory', async (_app: ActorDirectory<Actor>, html: JQuer
 
 	// Render Button
 	$(html).find('.header-actions').append(button);
+});
+
+Hooks.on('getChatLogEntryContext', function (html: JQuery, data: ContextMenuEntry[]) {
+	onChatLogEntryContext(html, data);
 });

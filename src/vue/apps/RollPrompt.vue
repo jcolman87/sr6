@@ -74,7 +74,6 @@ function roll() {
 			context.rollData.explode = true;
 			break;
 	}
-	console.log('rollData', context.rollData);
 	context.resolvePromise(toRaw(context.rollData));
 }
 function setText(value: { title: string; hint: string }) {

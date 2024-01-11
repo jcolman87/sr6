@@ -1,14 +1,12 @@
 import { EnumAttribute } from '@/actor/data';
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import MonitorsDataModel, { MonitorType, WoundModifierData } from '@/actor/data/MonitorsDataModel';
-import ConditionDataModel from '@/condition/ConditionDataModel';
-import SR6Actor from '@/actor/SR6Actor';
-import { InitiativeType } from '@/data';
 import AttributeDataModel from '@/actor/data/AttributeDataModel';
-import MonitorDataModel from '@/actor/data/MonitorsDataModel';
-import { IHasInitiative, AvailableActions, IHasEdge } from '@/data/interfaces';
-import { IHasPostCreate } from '@/data/interfaces';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import MonitorsDataModel from '@/actor/data/MonitorsDataModel';
+import MonitorDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
+import { InitiativeType } from '@/data';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
+
+import { AvailableActions, IHasEdge, IHasInitiative, IHasPools } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import { RollType } from '@/roll';
 
@@ -44,7 +42,10 @@ export type Initiatives = {
 	matrix: null | InitiativeDataModel;
 };
 
-export default abstract class LifeformDataModel extends BaseActorDataModel implements IHasInitiative, IHasEdge {
+export default abstract class LifeformDataModel
+	extends BaseActorDataModel
+	implements IHasInitiative, IHasEdge, IHasPools
+{
 	abstract attributes: Attributes;
 
 	abstract initiatives: Initiatives;
@@ -71,7 +72,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 	// IHasInitiative
 	//
 	getInitiativeFormula(type: InitiativeType): null | string {
-		const modifier = super.getPool(RollType.Initiative);
+		const modifier = this.getPoolModifier(RollType.Initiative);
 		switch (type) {
 			case InitiativeType.Physical:
 				return `${this.initiatives.physical.formula} + ${modifier}`;
@@ -102,8 +103,11 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 	//
 	// IHasPool
 	//
+	override get defenseRating(): number {
+		return this.attribute(EnumAttribute.body).value;
+	}
 	override getPool(type: RollType): number {
-		const pool = super.getPool(type) + this.woundModifier;
+		const pool = this.getPoolModifier(type) + this.woundModifier;
 
 		switch (type) {
 			case RollType.WeaponAttack:
@@ -112,6 +116,8 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 				return (
 					pool + this.attribute(EnumAttribute.agility).value + this.attribute(EnumAttribute.intuition).value
 				);
+			// Damage Soaks are the same here
+			case RollType.SpellSoak:
 			case RollType.WeaponSoak:
 				return pool + this.attribute(EnumAttribute.body).value;
 			case RollType.Initiative:
@@ -121,6 +127,7 @@ export default abstract class LifeformDataModel extends BaseActorDataModel imple
 			case RollType.MatrixActionDefend:
 			case RollType.SpellCast:
 			case RollType.SpellDrain:
+			case RollType.SpellDefend:
 				break;
 			default:
 				ui.notifications.error('Unimplemented pool type');

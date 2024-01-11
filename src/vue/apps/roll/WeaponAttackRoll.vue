@@ -1,16 +1,17 @@
 <script lang="ts" setup>
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import SR6Item from '@/item/SR6Item';
+import { FireMode } from '@/data';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
+import { EdgeGainedTarget } from '@/roll/Rollers';
 import { SR6RollData } from '@/roll/SR6Roll';
-import { FireMode, Distance } from '@/data';
 import { getActorSync, getItemSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { toRaw, computed, ref } from 'vue';
+import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -27,9 +28,15 @@ const original_pool = roll.value.pool;
 
 const targets = computed(
 	() =>
-		roll.value.attack.targetIds.map((id) =>
+		roll.value.attack.targetIds?.map((id) =>
 			getActorSync(SR6Actor<BaseActorDataModel>, id)
 		) as SR6Actor<BaseActorDataModel>[]
+);
+const targetDefenseRating = computed(() =>
+	targets.value.reduce(
+		(acc, target) => (target.systemData.defenseRating > acc ? (acc = target.systemData.defenseRating) : acc),
+		0
+	)
 );
 
 emit('setText', {
@@ -82,27 +89,42 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 		await canvas.ping(target.token.object.center);
 	}
 }
+
+function updateEdgeGain() {
+	if (targets.value.length == 0) {
+		roll.value.attack.edgeGained = EdgeGainedTarget.None;
+	} else {
+		if (roll.value.attack.attackRating! >= targetDefenseRating.value + 4) {
+			roll.value.attack.edgeGained = EdgeGainedTarget.Attacker;
+		} else if (targetDefenseRating.value >= roll.value.attack.attackRating! + 4) {
+			roll.value.attack.edgeGained = EdgeGainedTarget.Defender;
+		}
+	}
+}
+onMounted(updateEdgeGain);
+onBeforeUpdate(updateEdgeGain);
 </script>
 
 <template>
 	<div class="roll-prompt" style="display: flex; flex-flow: wrap">
-		<div class="section warning-box" v-if="roll.attack.targetIds.length == 0">
+		<div class="section warning-box" v-if="roll.attack.targetIds?.length == 0">
 			<div class="section-head warning-title">Warning: No targets selected</div>
 			You did not have any targets selected for this roll. Automatic damage, conditions and effects will not be
 			applied.
 		</div>
 		<div class="section" style="width: 100%" v-else>
 			<div class="section-head">Targets</div>
+
 			<div class="target-box">
 				<template v-for="target in targets" :key="target.id"
 					><div @click.prevent="focusTarget(target)" @dblclick.prevent="target.sheet?.render(true)">
-						{{ target.name }}
+						{{ target.name }} ({{ target.systemData.defenseRating }})
 					</div></template
 				>
 			</div>
 		</div>
-		<div class="section">
-			<div class="section-title" style="width: 400px"><Localized label="SR6.Labels.Information" /></div>
+		<div class="section" style="width: 70%">
+			<div class="section-title"><Localized label="SR6.Labels.Information" /></div>
 			<table>
 				<tr>
 					<td>
@@ -110,6 +132,54 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 						}}{{ system.damageData.damageType }}
 					</td>
 					<td><Localized label="SR6.Combat.AttackRating" />: {{ roll.attack.attackRating }}</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<Localized label="SR6.Combat.DefenseRating" />:
+						<template v-if="targets.length > 0">{{ targetDefenseRating }}</template>
+						<template v-else>N/A</template>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="section" style="width: 25%">
+			<div class="section-title">
+				<label><Localized label="SR6.RollPrompt.EdgeGained" /></label>
+			</div>
+			<table style="border: 0; padding: 0; margin: 0">
+				<tr>
+					<td>
+						<input
+							name="edgeGained"
+							type="radio"
+							:value="EdgeGainedTarget.None"
+							:checked="roll.attack.edgeGained === EdgeGainedTarget.None"
+						/>
+					</td>
+					<td><label for="edgeGainedTarget">None</label></td>
+				</tr>
+				<tr :class="roll.attack.edgeGained === EdgeGainedTarget.Attacker ? '.good' : ''">
+					<td>
+						<input
+							name="edgeGained"
+							type="radio"
+							:value="EdgeGainedTarget.Attacker"
+							:checked="roll.attack.edgeGained === EdgeGainedTarget.Attacker"
+						/>
+					</td>
+					<td><label for="edgeGained">You</label></td>
+				</tr>
+				<tr :class="roll.attack.edgeGained === EdgeGainedTarget.Defender ? '.bad' : ''">
+					<td>
+						<input
+							name="edgeGained"
+							type="radio"
+							:value="EdgeGainedTarget.Defender"
+							:checked="roll.attack.edgeGained == EdgeGainedTarget.Defender"
+						/>
+					</td>
+					<td><label for="edgeGainedTarget">Target(s)</label></td>
 				</tr>
 			</table>
 		</div>
@@ -149,6 +219,13 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 		.warning-title {
 			font-weight: bold;
 		}
+	}
+
+	.good {
+		background-color: colors.$green-bg;
+	}
+	.bad {
+		background-color: colors.$red-bg;
 	}
 
 	.target-box {

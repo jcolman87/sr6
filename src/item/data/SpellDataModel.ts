@@ -1,7 +1,9 @@
+import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import SR6Actor from '@/actor/SR6Actor';
 import { DamageType } from '@/data';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
-import { SpellDuration, SpellRangeType, SpellCombatType, SpellDamageForm, SpellType } from '@/data/magic';
+import { SpellCombatType, SpellDamageForm, SpellDuration, SpellRangeType, SpellType } from '@/data/magic';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 export type SpellRangeData = {
 	type: SpellRangeType;
@@ -69,17 +71,83 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 	abstract type: SpellType;
 	abstract range: SpellRangeData;
 	abstract duration: SpellDurationData;
+	abstract damage: SpellDamageData;
 
 	get pool(): number {
 		return this.solveFormula('@magic + @spellcasting');
 	}
 
 	get drain(): number {
-		return this.solveFormula(this.formulas.drainFormula);
+		if (this.formulas.drainFormula) {
+			return this.solveFormula(this.formulas.drainFormula);
+		}
+		return 0;
 	}
 
 	get baseDamage(): number {
-		return this.solveFormula(this.formulas.damageFormula);
+		if (this.formulas.damageFormula) {
+			return this.solveFormula(this.formulas.damageFormula);
+		} else {
+			switch (this.damage.combat) {
+				case SpellCombatType.Direct:
+					return 0;
+				case SpellCombatType.Indirect:
+					return this.solveFormula('ceil(@magic / 2)');
+			}
+		}
+	}
+
+	get canDefend(): boolean {
+		return this.damage != null;
+	}
+
+	get canSoak(): boolean {
+		if (!this.damage) {
+			return false;
+		}
+		switch (this.damage.combat) {
+			case SpellCombatType.Direct:
+				return false;
+			case SpellCombatType.Indirect:
+				return true;
+		}
+	}
+
+	getSoakPool(actor: SR6Actor<LifeformDataModel>): number {
+		if (!this.formulas.soakFormula && !this.damage) {
+			ui.notifications.error('Called getSoakPool on a spell without a combat type and no formula?');
+			return 0;
+		}
+
+		if (this.formulas.soakFormula) {
+			return this.item!.solveFormula(this.formulas.soakFormula!, actor);
+		} else {
+			switch (this.damage.combat) {
+				case SpellCombatType.Direct:
+					ui.notifications.error('Called getSoakPool on a direct combat spell, cant soak');
+					return 0;
+				case SpellCombatType.Indirect:
+					return this.item!.solveFormula('@body', actor);
+			}
+		}
+	}
+
+	getDefensePool(actor: SR6Actor<LifeformDataModel>): number {
+		if (!this.formulas.defenseFormula && !this.damage) {
+			ui.notifications.error('Called getDefensePool on a spell without a combat type and no formula?');
+			return 0;
+		}
+
+		if (this.formulas.defenseFormula) {
+			return this.item!.solveFormula(this.formulas.defenseFormula!, actor);
+		} else {
+			switch (this.damage.combat) {
+				case SpellCombatType.Direct:
+					return this.item!.solveFormula('@willpower + @intuition', actor);
+				case SpellCombatType.Indirect:
+					return this.item!.solveFormula('@willpower + @reaction', actor);
+			}
+		}
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -96,15 +164,15 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 			formulas: new fields.SchemaField(
 				{
 					damageFormula: new fields.StringField({
-						initial: '0',
+						initial: null,
 						required: true,
-						nullable: false,
+						nullable: true,
 						blank: false,
 					}),
 					drainFormula: new fields.StringField({
-						initial: '0',
+						initial: null,
 						required: true,
-						nullable: false,
+						nullable: true,
 						blank: false,
 					}),
 					defenseFormula: new fields.StringField({

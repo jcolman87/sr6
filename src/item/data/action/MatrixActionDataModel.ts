@@ -40,10 +40,6 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 
 	abstract conditions: ConditionDataModel[];
 
-	async getHitConditions(): Promise<ConditionDataModel[]> {
-		return this.conditions.filter((condition) => (condition.activation = ConditionActivation.OnHit));
-	}
-
 	get pool(): number {
 		if (this.skillUse) {
 			return this.solveFormula(`@${this.skillUse!.attribute} + @${this.skillUse!.skill.toLowerCase()}`);

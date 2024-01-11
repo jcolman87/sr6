@@ -1,3 +1,4 @@
+
 <hr/>
 {{#if (gt roll.options.attack.targetIds.length 0)}}
 	{{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
@@ -20,9 +21,8 @@
 	</section>
 </div>
 {{#if roll.isOwner }}
-<input id="chat-9-expand" type="button" class="chat-edge" value="Edge"/>
+<input id="chat-9-expand" type="button" class="chat-edge" value="Spend Edge"/>
 {{/if}}
-
 <div class="chat-9-collapsible" style="display: none">
 	<section>
 		<div>
@@ -33,3 +33,12 @@
 		<input id="spend-edge" type="button" class="chat-edge" value="Spend"/>
 	</section>
 </div>
+{{ log final_damage }}
+{{#unless (undefined final_damage) }}
+<div class="chat-roll-menu">
+	<a class="fas fa-minus fa-2xl damage" title="Damage ({{final_damage}})">&nbsp;</a>
+	<a class="fas fa-plus fa-2xl heal" title="Heal ({{final_damage}})">&nbsp;</a>
+	<a class="fas fa-minus fa-2xl damage" title="Damage ({{final_damage}})">&nbsp;</a>
+	<a class="fas fa-plus fa-2xl heal" title="Heal ({{final_damage}})">&nbsp;</a>
+</div>
+{{/unless}}

@@ -60,12 +60,8 @@ function drop(event: DragEvent, target: string) {
 
 	emit('change', newAttributes);
 }
-function dragOver(_event: DragEvent) {
-	// console.log('wtf', event.toElement);
-}
-function dragLeave(_event: DragEvent) {
-	// console.log('wtf', event.toElement);
-}
+function dragOver(_event: DragEvent) {}
+function dragLeave(_event: DragEvent) {}
 
 function reset() {
 	props.attributes.reset();

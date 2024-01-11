@@ -3,6 +3,7 @@
 {{ var "targets" (getActorsByIds roll.options.attack.targetIds) }}
 {{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Attack" item=weapon }}
 
+
 <div class="roll">
 	<i class="data-value">{{ localize (concat "SR6.Combat.Distances." roll.options.attack.distance) }}</i> distance
 	<i class="data-value">{{ localize (concat (concat "SR6.Combat.FireModes." roll.options.attack.firemode) ".Name") }}</i>
@@ -32,11 +33,8 @@
 			<hr/>
 		</section>
 	</div>
-	{{#unless (and user.isGM actor.isOwner) }}
+	{{#if (showRollDefense actor targets) }}
 		<input id="roll-weapon-defense" type="button" value="Roll Defense"/>
-	{{/unless}}
-{{!---#unless roll.isUserOwner }}
-
-{{!---/unless ---}}
+	{{/if}}
 </div>
 {{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}

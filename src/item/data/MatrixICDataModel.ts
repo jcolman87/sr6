@@ -12,24 +12,6 @@ export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 	abstract _onHitConditions: string[];
 	protected abstract _host: SR6Actor<MatrixHostDataModel> | null;
 
-	override async getHitConditions(): Promise<ConditionDataModel[]> {
-		// Find the onHit conditions to apply either in the compendium or global items
-		let conditions = (await getCoreConditions())
-			.filter((item) => this._onHitConditions.includes(item.name))
-			.map((item) => item.systemData);
-		if (conditions.length < this._onHitConditions.length) {
-			conditions = conditions.concat(
-				game.items
-					.filter((item) => item.type === 'condition')
-					.filter((item) => this._onHitConditions.includes(item.name))
-					.map((item) => (item as SR6Item<ConditionDataModel>).systemData)
-			);
-		}
-		conditions = conditions.concat(await super.getHitConditions());
-
-		return conditions as ConditionDataModel[];
-	}
-
 	get rating(): number {
 		return this.host.systemData.rating;
 	}

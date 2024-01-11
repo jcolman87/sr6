@@ -107,6 +107,7 @@ SR6:
   Combat:
     Damage: Damage
     AttackRating: Attack Rating
+    DefenseRating: Defense Rating
     FireMode: Fire Mode
     FireModes:
       SS:
@@ -144,6 +145,7 @@ SR6:
     PoolModifier: Pool Modifier
     Conditions: Conditions Modifying
     ConsumeAction: Consume Action
+    EdgeGained: Edge Gained?
     WoundModifiers:
       physical:
         Name: Wound Modifier (Physical)
@@ -244,7 +246,7 @@ SR6:
         stun: Stun
         fire: Fire
         acid: Acid
-        electrical: Electrical
+        electric: Electric
         air: Air
         cold: Cold
       Durations:

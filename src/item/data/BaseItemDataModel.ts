@@ -40,8 +40,17 @@ export default abstract class BaseItemDataModel extends BaseDataModel {
 		return BaseItemDataModel.CHAT_TEMPLATE;
 	}
 
-	async toMessage(): Promise<void> {
+	async toMessage(actor: SR6Actor | null = null): Promise<void> {
 		const enrichedDescription = await TextEditor.enrichHTML(this.description, { async: true });
+
+		let actorData = undefined;
+		if (actor) {
+			actorData = {
+				name: actor?.name,
+				img: actor?.img,
+				uuid: actor?.uuid,
+			};
+		}
 
 		const chatTemplate = await renderTemplate(this.chatTemplate, {
 			name: this.item!.name,
@@ -49,6 +58,7 @@ export default abstract class BaseItemDataModel extends BaseDataModel {
 			description: enrichedDescription,
 			img: this.item!.img,
 			system: this.item!.systemData,
+			actor: actorData,
 		});
 		await ChatMessage.create({
 			user: game.user.id,

@@ -16,6 +16,8 @@ export interface IHasActor {
 
 export interface IHasPools extends IHasActor {
 	getPool(type: RollType): number;
+	getPoolModifier(type: RollType): number;
+	get defenseRating(): number;
 }
 
 export interface IHasInitiative extends IHasActor, IHasPools {

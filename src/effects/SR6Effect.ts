@@ -55,7 +55,6 @@ export default class SR6Effect extends ActiveEffect {
 	}
 
 	_apply(document: Actor | Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
-		console.log('SR6Effect::apply', this.name, this, document, change);
 		change = this._parseChanges(document, change);
 
 		// Determine the data type of the target field

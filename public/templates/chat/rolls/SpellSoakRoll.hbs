@@ -1,6 +1,6 @@
-{{ var "weapon" (getItemById roll.options.previous.attack.itemId) }}
+{{ var "spell" (getItemById roll.options.previous.attack.itemId) }}
 {{ var "final_damage" (sub roll.options.threshold roll.hits) }}
-{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Soak Damage" item=weapon }}
+{{> "systems/sr6/templates/chat/rolls/shared/header.hbs" title="Soak Damage" item=spell }}
 <div class="roll">
 	{{#if roll.success }}
 		<i style="color: #006400">Soaked Successfully!</i>

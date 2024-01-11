@@ -25,6 +25,17 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		return <ActorDataModel>this.system;
 	}
 
+	get inCombat(): boolean {
+		if (!game.combat) {
+			return false;
+		}
+		if (game.combat!.combatants.find((c) => c.actor?.uuid === this.uuid)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected override async _onUpdate(
 		changed: DeepPartial<this['_source']>,
 		options: DocumentUpdateContext<this>,
@@ -124,9 +135,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 
 	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
 		const finalData = { ...this.getRollData(), ...data, actor: this };
-		// console.log('SR6Actor::solveFormula', formula, finalData);
 		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
-
 		roll = roll.evaluate({ async: false });
 		return roll.total!;
 	}

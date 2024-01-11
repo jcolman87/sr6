@@ -34,11 +34,13 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		const availableActions = this.actorSystemData.getAvailableActions(InitiativeType.Physical);
 
 		if (this.isOwner) {
-			void this._setSystemData({
-				initiativeType: InitiativeType.Physical,
-				availableActions: availableActions,
-				roundActions: availableActions,
-			});
+			if (!this.getFlag('sr6', 'CombatantFlagData')) {
+				void this._setSystemData({
+					initiativeType: InitiativeType.Physical,
+					availableActions: availableActions,
+					roundActions: availableActions,
+				});
+			}
 		}
 	}
 
@@ -73,8 +75,6 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 			await this.actor.items.get(itemId)!.delete();
 		}
 	}
-
-	async nextRound(): Promise<void> {}
 
 	async beginTurn(): Promise<void> {
 		await this._resetActions();

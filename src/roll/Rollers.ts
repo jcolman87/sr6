@@ -15,17 +15,25 @@ import { IHasMatrixPersona } from '@/data/interfaces';
 import { IHasInitiative } from '@/data/interfaces';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
-import { getItemSync, getTargetActorIds } from '@/util';
+import { getActor, getActorSync, getItem, getItemSync, getTargetActorIds, getTargetActors } from '@/util';
 import * as util from '@/util';
+import { create } from 'tinymce';
 
 export const BUGFIX = '';
 
+export enum EdgeGainedTarget {
+	None = 0,
+	Attacker = 'attacker',
+	Defender = 'defender',
+}
+
 export type BaseAttackData = {
 	attackerId: ActorUUID;
-	targetIds: ActorUUID[];
 	itemId: ItemUUID;
-	damage: number;
-	attackRating: number;
+	targetIds?: ActorUUID[];
+	damage?: number;
+	attackRating?: number;
+	edgeGained?: EdgeGainedTarget;
 };
 
 export type WeaponAttackData = {
@@ -78,12 +86,58 @@ export interface SpellResistDrainRollData extends SR6RollData {
 	previous: SpellCastRollData;
 	attack: SpellAttackData;
 }
+export interface SpellDefendRollData extends SR6RollData {
+	previous: SpellCastRollData;
+	attack: SpellAttackData;
+}
+export interface SpellSoakRollData extends SR6RollData {
+	previous: SpellDefendRollData;
+	attack: SpellAttackData;
+}
+
+export function createBaseAttackData({
+	attackerId,
+	itemId,
+	targetIds = [],
+	damage = 0,
+	attackRating = 0,
+	edgeGained = EdgeGainedTarget.None,
+}: BaseAttackData) {
+	return {
+		attackerId: attackerId,
+		itemId: itemId,
+		targetIds: targetIds,
+		damage: damage,
+		attackRating: attackRating,
+		edgeGained: edgeGained,
+	};
+}
 
 async function finishRoll<T extends SR6RollData>(data: Record<string, unknown>, options: T) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const roll = new SR6Roll(`${options.pool}d6`, data, options as any);
 	const evaluated = await roll.evaluate({ async: true });
 	// await evaluated.finish();
+
+	// Apply edge gain to target if any
+	if (options.hasOwnProperty('attack')) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const attack = (options as any)['attack'] as BaseAttackData;
+		if (attack.edgeGained != EdgeGainedTarget.None) {
+			const attacker = (await getActor(SR6Actor<LifeformDataModel>, attack.attackerId))!;
+			const targets = attack.targetIds
+				? attack.targetIds!.map((target) => getActorSync(SR6Actor<LifeformDataModel>, target)!)
+				: [];
+			switch (attack.edgeGained) {
+				case EdgeGainedTarget.Attacker:
+					attacker.systemData.gainEdge(1);
+					break;
+				case EdgeGainedTarget.Defender:
+					targets.forEach((defender) => defender.systemData.gainEdge(1));
+			}
+		}
+	}
+
 	await evaluated.toMessage();
 }
 
@@ -139,11 +193,14 @@ export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<We
 	const pool = weapon.systemData.pool + systemData.actor!.systemData.getPool(rollType);
 
 	const attackData = {
-		attackerId: systemData.actor!.uuid,
-		targetIds: getTargetActorIds(),
-		itemId: weapon.uuid,
-		damage: weapon.systemData.damage,
-		attackRating: weapon.systemData.attackRatings.near,
+		...createBaseAttackData({
+			attackerId: systemData.actor!.uuid,
+			targetIds: getTargetActorIds(),
+			itemId: weapon.uuid,
+			damage: weapon.systemData.damage,
+			attackRating: weapon.systemData.attackRatings.near,
+		}),
+
 		firemode: weapon.systemData.firemodes ? FireMode.SS : null,
 		distance: weapon.systemData.firemodes ? Distance.Close : Distance.Near,
 	};
@@ -168,7 +225,7 @@ export async function rollWeaponDefend(
 	const rollType = RollType.WeaponDefend;
 
 	const pool = systemData.actor!.systemData.getPool(rollType);
-	const attack = { ...previous.attack, damage: (previous.attack.damage += hits) };
+	const attack = { ...previous.attack, damage: (previous.attack.damage! += hits) };
 
 	const rollData = await RollPrompt.promptForRoll<WeaponDefendRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
@@ -192,12 +249,12 @@ export async function rollWeaponSoak(
 	const rollType = RollType.WeaponSoak;
 
 	const pool = systemData.actor!.systemData.getPool(rollType);
-	const attack = { ...previous.attack, damage: previous.attack.damage - hits };
+	const attack = { ...previous.attack, damage: previous.attack.damage! - hits };
 
 	const rollData = await RollPrompt.promptForRoll<WeaponSoakRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
-		threshold: previous.attack.damage,
+		threshold: attack.damage,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
 		attack: attack,
@@ -224,13 +281,13 @@ export async function rollMatrixAction(
 
 	const pool = systemData.actor!.systemData.getPool(rollType) + action.systemData.pool;
 
-	const attackData = {
+	const attackData = createBaseAttackData({
 		attackerId: systemData.actor!.uuid,
 		targetIds: getTargetActorIds(),
 		itemId: action.uuid,
-		attackRating: systemData.matrixPersona!.attackRating,
 		damage: action.systemData.damage,
-	};
+		attackRating: systemData.matrixPersona!.attackRating,
+	});
 
 	const rollData = await RollPrompt.promptForRoll<MatrixActionRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
@@ -256,7 +313,7 @@ export async function rollMatrixDefense(
 	const defendPool = action.systemData.defendAgainstPool(systemData.actor!);
 
 	const pool = systemData.actor!.systemData.getPool(rollType) + defendPool;
-	const attack = { ...previous.attack, damage: (previous.attack.damage += hits) };
+	const attack = { ...previous.attack, damage: (previous.attack.damage! += hits) };
 
 	const rollData = await RollPrompt.promptForRoll<MatrixDefenseRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
@@ -282,13 +339,13 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	const rollType = RollType.SpellCast;
 	const pool = spell.systemData.pool;
 
-	const attackData = {
+	const attackData = createBaseAttackData({
 		attackerId: actor.uuid,
 		targetIds: getTargetActorIds(),
 		itemId: spell.uuid,
 		attackRating: actor.systemData.spellAttackRating,
 		damage: spell.systemData.baseDamage,
-	};
+	});
 
 	const rollData = await RollPrompt.promptForRoll<SpellCastRollData>(actor, {
 		...SR6Roll.defaultOptions(),
@@ -314,11 +371,59 @@ export async function rollSpellResistDrain<TDataModel extends LifeformDataModel 
 
 	const pool = systemData.actor!.systemData.getPool(rollType) + systemData.spellResistDrain;
 	const attack = { ...previous.attack, damage: previous.drain };
-
+	console.log('resist drain attack', attack);
 	const rollData = await RollPrompt.promptForRoll<SpellResistDrainRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
 		threshold: previous.drain,
+		template: ROLL_TEMPLATES.get(rollType)!,
+		type: rollType,
+		attack: attack,
+		previous: previous,
+	});
+	if (rollData) {
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+	}
+}
+
+export async function rollSpellDefend<TDataModel extends LifeformDataModel = LifeformDataModel>(
+	systemData: TDataModel,
+	hits: number,
+	previous: SpellCastRollData
+): Promise<void> {
+	const rollType = RollType.SpellDefend;
+
+	const attacker = await getActor(SR6Actor<LifeformDataModel>, previous.attack.attackerId);
+	const defender = systemData.actor! as SR6Actor<LifeformDataModel>;
+	const spell = (await getItem(SR6Item<SpellDataModel>, previous.attack.itemId))!;
+
+	const pool = defender.systemData.getPool(rollType) + spell.systemData.getDefensePool(defender);
+	const attack = { ...previous.attack, damage: previous.attack.damage! + hits };
+
+	const rollData = await RollPrompt.promptForRoll<SpellDefendRollData>(systemData.actor!, {
+		...SR6Roll.defaultOptions(),
+		pool: pool,
+		threshold: hits,
+		template: ROLL_TEMPLATES.get(rollType)!,
+		type: rollType,
+		attack: attack,
+		previous: previous,
+	});
+	if (rollData) {
+		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+	}
+}
+
+export async function rollSpellSoak(systemData: IHasPools, hits: number, previous: SpellDefendRollData): Promise<void> {
+	const rollType = RollType.SpellSoak;
+
+	const pool = systemData.actor!.systemData.getPool(rollType);
+	const attack = { ...previous.attack, damage: previous.attack.damage! - hits };
+
+	const rollData = await RollPrompt.promptForRoll<SpellSoakRollData>(systemData.actor!, {
+		...SR6Roll.defaultOptions(),
+		pool: pool,
+		threshold: previous.attack.damage,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
 		attack: attack,

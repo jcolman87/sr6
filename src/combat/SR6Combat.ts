@@ -4,7 +4,9 @@
  * @file
  */
 
-import SR6Combatant from '@/combat/SR6Combatant';
+import SR6Actor from '@/actor/SR6Actor';
+import SR6Combatant, { CombatantFlagData } from '@/combat/SR6Combatant';
+import { emit as socketEmit, SOCKET_NAME, SocketPayload, SocketOperation, CombatSocketBaseData } from '@/socket';
 
 export default class SR6Combat extends Combat {
 	constructor(data: PreCreate<foundry.data.CombatSource>, context?: DocumentConstructionContext<Combat>) {
@@ -31,55 +33,93 @@ export default class SR6Combat extends Combat {
 		return super.startCombat();
 	}
 
-	override async nextTurn(): Promise<this> {
+	getCombatantData(actor: SR6Actor): null | CombatantFlagData {
+		let entry = this.combatants.find((c) => c.actor!.uuid == actor.uuid);
+		if (entry) {
+			return (entry as SR6Combatant).systemData;
+		}
+
+		return null;
+	}
+	async setCombatantData(actor: SR6Actor, data: CombatantFlagData) {
+		let entry = this.combatants.find((c) => c.actor!.uuid == actor.uuid);
+		if (entry) {
+			await (entry as SR6Combatant)._setSystemData(data);
+		}
+	}
+
+	override nextTurn(): Promise<this> {
 		if (this.nextCombatant) {
 			const next = this.nextCombatant! as SR6Combatant;
-			await next.beginTurn();
+			void next.beginTurn();
 		}
 		if (this.combatant) {
 			const current = this.combatant! as SR6Combatant;
-			await current.endTurn();
+			void current.endTurn();
 		}
+
+		socketEmit(SocketOperation.UpdateCombatTracker, { combatId: this.id });
 
 		return super.nextTurn();
 	}
 
-	override async previousTurn(): Promise<this> {
+	override previousTurn(): Promise<this> {
 		if (this.previous && this.previous.combatantId && this.turn > 0) {
 			const next = this.combatants.get(this.previous!.combatantId!) as SR6Combatant;
-			await next.beginTurn();
+			void next.beginTurn();
 		}
 
 		if (this.combatant) {
 			const current = this.combatant! as SR6Combatant;
-			await current.endTurn();
+			void current.endTurn();
 		}
+
+		socketEmit(SocketOperation.UpdateCombatTracker, { combatId: this.id });
 
 		return super.previousTurn();
 	}
 
-	override async nextRound(): Promise<this> {
-		for (const c in this.combatants) {
-			const combatant = this.combatants[c] as SR6Combatant;
-			await combatant.nextRound();
-		}
+	override nextRound(): Promise<this> {
 		return super.nextRound();
 	}
 
 	override previousRound(): Promise<this> {
 		return super.previousRound();
 	}
+
+	debounceRender = foundry.utils.debounce(() => {
+		if (ui.combat.viewed === this) {
+			ui.combat.render();
+		}
+	}, 50);
 }
 
 /**
  * Register socket listener for SR6 Combats
  */
 export function register(): void {
-	// Helper function to determine if the code is being executed by only one GM.
-	const isGmHub = () => {
-		return (
-			game.user.isGM &&
-			game.users.filter((user) => user.isGM && user.active).every((candidate) => candidate.id >= game.user.id)
-		);
-	};
+	game.socket.on(SOCKET_NAME, async (payload: SocketPayload<CombatSocketBaseData>) => {
+		if (!payload.data) {
+			return;
+		}
+
+		const combat = game.combats.get(payload.data.combatId) as SR6Combat | undefined;
+		if (!combat) {
+			console.error(
+				`Socket received ${SocketOperation[payload.operation]} payload with invalid combat ID ${
+					payload.data.combatId
+				}`
+			);
+			return;
+		}
+
+		switch (payload.operation) {
+			case SocketOperation.UpdateCombatTracker:
+				combat.debounceRender();
+
+				// Debounce any visible actor sheets as well
+
+				break;
+		}
+	});
 }

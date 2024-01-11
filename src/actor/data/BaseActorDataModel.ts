@@ -1,6 +1,7 @@
 import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
+import { IHasPools } from '@/data/interfaces';
 import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
@@ -16,8 +17,6 @@ import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
-import { IHasPools } from '@/data/interfaces';
-
 import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
 
@@ -25,6 +24,23 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	abstract monitors: MonitorsDataModel;
 	abstract description: string;
 	abstract source: string;
+
+	// IHasPools
+	get defenseRating(): number {
+		return 0;
+	}
+	getPoolModifier(type: RollType): number {
+		let pool = 0;
+
+		this.getRollConditions(type).forEach((condition) => {
+			pool += condition.getPoolModifier(type);
+		});
+
+		return pool;
+	}
+	getPool(type: RollType): number {
+		return 0;
+	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	is<I>(): this is I {
@@ -100,7 +116,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	get weapons(): WeaponDataModel[] {
-		return this.actor!.items.filter((i) => i.type === 'weapons').map(
+		return this.actor!.items.filter((i) => i.type === 'weapon').map(
 			(i) => (i as SR6Item<WeaponDataModel>).systemData
 		);
 	}
@@ -111,16 +127,6 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 	get woundModifier(): number {
 		return Object.entries(this.woundModifiers).reduce((acc, [key, value]) => (acc += value), 0);
-	}
-
-	getPool(type: RollType): number {
-		let pool = 0;
-
-		this.getRollConditions(type).forEach((condition) => {
-			pool += condition.getPoolModifier(type);
-		});
-
-		return pool;
 	}
 
 	get totalNuyen(): number {

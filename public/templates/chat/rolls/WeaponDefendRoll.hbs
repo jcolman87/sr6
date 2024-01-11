@@ -13,8 +13,8 @@
 		</a>
 		<br/>
 		<div class="formula chat-2-collapsible" style="display: none">
-			<div>DV: DV(<i class="data-value">{{weapon.systemData.damage}}</i>) + Hits(<i class="data-value">{{roll.options.threshold}}</i>) = <i class="dv">{{ roll.options.threshold }}</i></div>
-			<div>Final: DV(<i class="data-value">{{ roll.options.threshold}}</i>) - Hits(<i class="data-value">{{ roll.hits }}</i>) = <i class="dv">{{ net_damage }}</i></div>
+			<div>DV: DV(<i class="data-value">{{weapon.systemData.damage}}</i>) + Hits(<i class="data-value">{{roll.options.threshold}}</i>) = <i class="dv">{{ roll.options.attack.damage }}</i></div>
+			<div>Final: DV(<i class="data-value">{{ roll.options.attack.damage}}</i>) - Hits(<i class="data-value">{{ roll.hits }}</i>) = <i class="dv">{{ net_damage }}</i></div>
 		</div>
 		<div class="chat-1-collapsible" style="display: none">
 			<section>
@@ -31,9 +31,9 @@
 			</section>
 		</div>
 		<hr/>
-		{{!--#if roll.isUserOwner --}}
+		{{#if roll.isOwner }}
 			<input id="roll-weapon-soak" type="button" value="Soak Damage"/>
-		{{!--/if--}}
+		{{/if}}
 	{{/unless }}
-</>
+</div>
 {{> "systems/sr6/templates/chat/rolls/shared/footer.hbs" }}
