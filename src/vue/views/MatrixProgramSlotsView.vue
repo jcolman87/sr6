@@ -94,6 +94,7 @@ function nameStyle(name: string, index: number): string {
 	<div class="section matrix-program-slots">
 		<div class="section-head">
 			<a @click="isCollapsed = !isCollapsed"> <i class="fa-solid fa-down-from-line"></i> Active Programs</a>
+			&nbsp;
 			<div class="slot-text">
 				Available Slots:
 				<i style="font-weight: bold"

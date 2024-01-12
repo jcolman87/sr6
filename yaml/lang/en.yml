@@ -214,6 +214,10 @@ SR6:
       PostRoll: Post-roll
 
   Effect:
+    Cover1: Cover I
+    Cover2: Cover II
+    Cover3: Cover III
+    Cover4: Cover IV
     Blind1: Blind I
     Blind2: Blind II
     Blind3: Blind III
@@ -259,3 +263,15 @@ SR6:
         los: Line of Sight
         losa: Line of Sight (Area)
         perceived: Perceived
+
+  Items:
+    Credstick:
+      Name: Credstick
+      Plural: Credsticks
+      Ratings:
+        Standard: Standard
+        Silver: Silver
+        Gold: Gold
+        Platinum: Platinum
+        Ebony: Ebony
+        BankAccount: Bank Account

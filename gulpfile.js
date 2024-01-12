@@ -25,6 +25,7 @@ function compilePacks() {
 		const filename = path.resolve('dist', 'packs', `${folder}.db`);
 		fs.unlink(filename, function (err) {});
 		const db = new Datastore({ filename: filename, autoload: true });
+
 		return gulp.src(path.join(PACK_SRC, folder, '/**/*.yml')).pipe(
 			through2.obj((file, enc, cb) => {
 				let json = yaml.loadAll(file.contents.toString());
@@ -33,6 +34,7 @@ function compilePacks() {
 			})
 		);
 	});
+
 	return mergeStream.call(null, packs);
 }
 

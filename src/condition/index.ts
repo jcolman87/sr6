@@ -24,19 +24,24 @@ function registerStatusEffects() {
 			icon: 'systems/sr6/assets/status/chilled.svg',
 		},
 		{
-			id: 'sr6.condition.blind1',
-			label: 'SR6.Effect.Blind1',
-			icon: 'systems/sr6/assets/status/blind1.svg',
+			id: 'sr6.condition.cover1',
+			label: 'SR6.Effect.Cover1',
+			icon: 'systems/sr6/assets/status/cover1.webp',
 		},
 		{
-			id: 'sr6.condition.blind2',
-			label: 'SR6.Effect.Blind2',
-			icon: 'systems/sr6/assets/status/blind2.svg',
+			id: 'sr6.condition.cover2',
+			label: 'SR6.Effect.Cover2',
+			icon: 'systems/sr6/assets/status/cover2.webp',
 		},
 		{
-			id: 'sr6.condition.blind3',
-			label: 'SR6.Effect.Blind3',
-			icon: 'systems/sr6/assets/status/blind3.svg',
+			id: 'sr6.condition.cover3',
+			label: 'SR6.Effect.Cover3',
+			icon: 'systems/sr6/assets/status/cover3.webp',
+		},
+		{
+			id: 'sr6.condition.cover4',
+			label: 'SR6.Effect.Cover4',
+			icon: 'systems/sr6/assets/status/cover4.webp',
 		},
 	];
 }

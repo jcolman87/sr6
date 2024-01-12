@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { EnumAttribute } from '@/actor/data';
 import { MagicTradition } from '@/data/magic';
+import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
 import Localized from '@/vue/components/Localized.vue';
@@ -95,6 +96,36 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 				</select>
 			</div>
 		</div>
+		<div class="section" style="width: 300px">
+			<div class="section-head">
+				<h2 class="section-title">Spells</h2>
+			</div>
+			<table
+				class="field-table"
+				style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 100%"
+			>
+				<thead>
+					<tr class="field-table">
+						<td>Name</td>
+						<td style="text-align: center">
+							<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'spell')" />
+						</td>
+					</tr>
+				</thead>
+				<tr v-for="spell in spells" :key="spell.id" :title="spell.systemData.description">
+					<td style="width: 100%">{{ spell.name }}</td>
+					<td class="actions">
+						<a @click="rollSpell(spell)" data-die="A"
+							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+						>
+						<a class="fas fa-edit" @click.prevent="spell.sheet?.render(true)" /><a
+							class="fas fa-minus"
+							@click.prevent="deleteItem(spell)"
+						/>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<div class="section" style="width: 40%">
 			<div class="section-head">
 				<h2 class="section-title">Adept Powers</h2>
@@ -119,33 +150,6 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 							class="fas fa-minus"
 							@click.prevent="deleteItem(item)"
-						/>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="section" style="width: 300px">
-			<table
-				class="field-table"
-				style="align-self: start; border-collapse: collapse; margin: 0; padding: 0; width: 100%"
-			>
-				<thead>
-					<tr class="field-table">
-						<td>Spells</td>
-						<td style="text-align: center">
-							<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'spell')" />
-						</td>
-					</tr>
-				</thead>
-				<tr v-for="spell in spells" :key="spell.id" :title="spell.systemData.description">
-					<td style="width: 100%">{{ spell.name }}</td>
-					<td class="actions">
-						<a @click="rollSpell(spell)" data-die="A"
-							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
-						>
-						<a class="fas fa-edit" @click.prevent="spell.sheet?.render(true)" /><a
-							class="fas fa-minus"
-							@click.prevent="deleteItem(spell)"
 						/>
 					</td>
 				</tr>

@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
+import { SelectListDialog } from '@/app';
 import { ActivationPeriod, ActivationType } from '@/data';
 import GeneralActionDataModel, { GeneralActionCategory } from '@/item/data/action/GeneralActionDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { rollWeaponAttack } from '@/roll/Rollers';
 import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
 import Weapons from '@/vue/components/combat/Weapons.vue';
+import Wearing from '@/vue/components/combat/Wearing.vue';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import { computed, inject, toRaw, onUpdated, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
@@ -18,6 +21,9 @@ const colorStatus = ref(true);
 
 function getWeapons(): WeaponDataModel[] {
 	return toRaw(context.data.actor).systemData.weapons;
+}
+function getWearables(): WearableDataModel[] {
+	return toRaw(context.data.actor).systemData.wearables;
 }
 
 function sortActions(a: SR6Item<GeneralActionDataModel>, b: SR6Item<GeneralActionDataModel>) {
@@ -88,7 +94,6 @@ async function addCoreActions() {
 }
 
 async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
-	// TODO: better dialog
 	const consume = await Dialog.confirm({
 		title: 'Consume action with use?',
 		content: 'Do you want to consume an action with this use?',
@@ -96,7 +101,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 		no: () => false,
 	});
 
-	// Special case for Attack
+	// Special case for Attacks
 	if (action.name == 'Attack') {
 		const actor = toRaw(context.data.actor);
 		const weapon = actor.systemData.equipped.weapon;
@@ -106,7 +111,11 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 		}
 		await action.systemData.use(consume, false);
 		await rollWeaponAttack(actor.systemData, weapon);
-	} else {
+	} /*else if (action.name == 'Cast Spell') {
+		const actor = toRaw(context.data.actor);
+		const pickSpell = new SelectListDialog();
+		const spell = pickSpell.selection();
+	} */ else {
 		await action.systemData.use(consume);
 	}
 }
@@ -138,6 +147,7 @@ function minimizeCategory(actions: SR6Item<GeneralActionDataModel>[]) {
 			<div class="section-head">Active Combat</div>
 			<CombatInfo ref="combatInfo" />
 			<Weapons :actor="context.data.actor" :weapons="getWeapons()" />
+			<Wearing :actor="context.data.actor" :wearables="getWearables()" />
 		</div>
 		<div class="actions">
 			<div></div>

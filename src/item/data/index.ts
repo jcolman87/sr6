@@ -3,6 +3,7 @@ import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
@@ -65,6 +66,16 @@ export async function getCoreWeapons(): Promise<SR6Item<WeaponDataModel>[]> {
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'weapon')
 			.map((i) => i as SR6Item<WeaponDataModel>)
+	);
+}
+
+export async function getCoreGear(): Promise<SR6Item<GearDataModel>[]> {
+	const pack = game.packs.get('sr6.sr6-crb-gear')!;
+
+	return Array.from(
+		(await pack.getDocuments())
+			.filter((i) => (i as SR6Item).type === 'gear')
+			.map((i) => i as SR6Item<GearDataModel>)
 	);
 }
 

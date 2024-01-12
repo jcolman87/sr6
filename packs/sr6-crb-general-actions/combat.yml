@@ -44,7 +44,23 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
+  conditions:
+    - name: Calling a shot
+      activation: onuse
+      activationSituation: combat
+      target: self
+      duration:
+        turns: 1
+      modifiers:
+        - type: damage
+          situation: roll
+          key: WeaponAttack
+          value: 2
+        - type: pool
+          situation: roll
+          key: WeaponAttack
+          value: -4
+      icon: icons/svg/item-bag.svg
 ---
 name: Change Device Mode
 type: general_action

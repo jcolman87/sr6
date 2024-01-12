@@ -13,11 +13,12 @@ const _EQUIPMENT_TYPES = ['gear', 'weapon'];
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const _system = computed(() => context.data.actor.systemData);
 
-const gear = computed(
-	() => toRaw(context.data.actor).items.filter((i) => i.type === 'gear') as SR6Item<GearDataModel>[]
-);
 const weapons = computed(
 	() => toRaw(context.data.actor).items.filter((i) => i.type === 'weapon') as SR6Item<WeaponDataModel>[]
+);
+
+const gear = computed(
+	() => toRaw(context.data.actor).items.filter((i) => i.type === 'gear') as SR6Item<GearDataModel>[]
 );
 
 const draggingItem = ref(false);

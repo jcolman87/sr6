@@ -1,3 +1,4 @@
+import SR6Actor from '@/actor/SR6Actor';
 import { EnumAttribute } from '@/actor/data';
 import AttributeDataModel from '@/actor/data/AttributeDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
@@ -6,7 +7,7 @@ import MonitorDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataMo
 import { InitiativeType } from '@/data';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
 
-import { AvailableActions, IHasEdge, IHasInitiative, IHasPools } from '@/data/interfaces';
+import { AvailableActions, IHasEdge, IHasInitiative, IHasPools, IHasPreCreate } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import { RollType } from '@/roll';
 
@@ -44,7 +45,7 @@ export type Initiatives = {
 
 export default abstract class LifeformDataModel
 	extends BaseActorDataModel
-	implements IHasInitiative, IHasEdge, IHasPools
+	implements IHasPreCreate<SR6Actor<LifeformDataModel>>, IHasInitiative, IHasEdge, IHasPools
 {
 	abstract attributes: Attributes;
 
@@ -106,6 +107,7 @@ export default abstract class LifeformDataModel
 	override get defenseRating(): number {
 		return this.attribute(EnumAttribute.body).value;
 	}
+
 	override getPool(type: RollType): number {
 		const pool = this.getPoolModifier(type) + this.woundModifier;
 
@@ -220,6 +222,23 @@ export default abstract class LifeformDataModel
 		this.attributes.charisma.prepareData();
 		this.attributes.magic.prepareData();
 		this.attributes.resonance.prepareData();
+	}
+
+	async preCreate?(
+		actor: SR6Actor<LifeformDataModel>,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		data: PreDocumentId<any>,
+		options: DocumentModificationContext<SR6Actor<LifeformDataModel>>,
+		user: foundry.documents.BaseUser
+	): Promise<void> {
+		await actor.updateSource({
+			['prototypeToken']: {
+				bar1: { attribute: 'monitors.physical' },
+				bar2: { attribute: 'monitors.stun' },
+				disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+				actorLink: true,
+			},
+		});
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

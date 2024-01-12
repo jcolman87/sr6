@@ -1,11 +1,14 @@
-import ConditionDataModel from '@/condition/ConditionDataModel';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import { DocumentUUIDField } from '@/data/fields';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
+import GearDataModel from '@/item/data/gear/GearDataModel';
 
 export default abstract class AugmentationDataModel extends QualityDataModel {
 	abstract rating: number;
 	abstract quality: number;
 	abstract essenseCost: number;
+
+	abstract sourceGearIds: ItemUUID[];
+	abstract _attachedGearIds: ItemUUID[];
 
 	override getRollData(): Record<string, unknown> {
 		return {
@@ -43,6 +46,17 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 				integer: false,
 				min: 0,
 				max: 6,
+			}),
+
+			sourceGearIds: new fields.ArrayField(new DocumentUUIDField(), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
+			_attachedGearIds: new fields.ArrayField(new DocumentUUIDField(), {
+				initial: [],
+				required: true,
+				nullable: false,
 			}),
 		};
 	}

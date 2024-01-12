@@ -72,7 +72,7 @@ export function register(): void {
 	});
 
 	Items.registerSheet('sr6', basicSheet(BasicGearSheet), {
-		types: ['gear', 'weapon'],
+		types: ['gear', 'weapon', 'wearable'],
 		makeDefault: true,
 	});
 

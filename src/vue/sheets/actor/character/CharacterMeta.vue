@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import * as images from '@/vue/images';
 import MonitorView from '@/vue/views/MonitorView.vue';
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import { inject, toRaw, computed } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import { vLocalize } from '@/vue/directives';
+import { getEventValue, vLocalize } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 
@@ -23,6 +24,17 @@ async function setDamage(monitor: MonitorDataModel, field: string, amount: numbe
 		await toRaw(context.data.actor).update({ [field]: amount });
 	}
 }
+
+function setEdge(ev: Event) {
+	const actor = toRaw(context.data.actor);
+
+	let value = getEventValue(ev)!;
+
+	if (value > actor.systemData.monitors.edge.max) {
+		value = actor.systemData.monitors.edge.max;
+	}
+	actor.update({ ['system.monitors.edge.damage']: actor.systemData.monitors.edge.max - (value as number) });
+}
 </script>
 
 <template>
@@ -40,17 +52,27 @@ async function setDamage(monitor: MonitorDataModel, field: string, amount: numbe
 				</div>
 				<div class="section" style="display: flex; flex-flow: row nowrap">
 					<div class="text-atop">
-						<img src="/systems/sr6/assets/karma.webp" alt="" />
+						<img :src="images.karma" alt="" />
 						<label class="text-atop-value"
 							><input type="number" name="system.karma" :value="system.karma"
 						/></label>
 					</div>
 					<div class="text-atop">
-						<img src="/systems/sr6/assets/edge.webp" alt="" />
-						<label class="text-atop-value"><input type="number" :value="system.monitors.edge.max" /></label>
+						<img :src="images.edge" alt="" />
+						<label class="text-atop-value" style="white-space: nowrap"
+							><input
+								type="number"
+								@change="setEdge"
+								:value="system.monitors.edge.value"
+								style="width: 1em" />/<input
+								type="number"
+								name="system.monitors.edge.max"
+								:value="system.monitors.edge.max"
+								style="width: 1em"
+						/></label>
 					</div>
 					<div class="text-atop">
-						<img src="/systems/sr6/assets/yen.webp" alt="" />
+						<img :src="images.yen" alt="" />
 						<label class="text-atop-value">{{ system.totalNuyen }}</label>
 					</div>
 				</div>

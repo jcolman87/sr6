@@ -3,6 +3,12 @@
  * @author jaynus
  * @file Base SR6 Actor
  */
+import ConditionDataModel, {
+	ConditionActivation,
+	ConditionEffectChangeData,
+	ConditionModifierType,
+	ConditionSituation,
+} from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import { IHasOnUpdate } from '@/data/interfaces';

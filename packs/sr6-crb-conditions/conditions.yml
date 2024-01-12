@@ -61,3 +61,67 @@ system:
       situation: roll
       key: category.AllPoolButSoak
       value: -1
+---
+name: Cover I
+type: condition
+img: systems/sr6/assets/status/cover1.webp
+effects: []
+system:
+  name: Cover I
+  statusEffectId: sr6.condition.cover1
+  description: Whether you hide behind a wall, a dumpster, or a body, Cover is protection from hostile fire. It comes at four levels, indicating how much of a character’s body is protected (one-quarter, one- half, three quarters, or all). A character in Cover gets a +1 bonus per Cover level to their Defense Rating and dice pool to Defense tests. Attacking from Cover requires an extra Minor Action in or- der to get clear enough to take a shot, imposes a –2 dice pool penalty to your attack at Cover IV, and you cannot gain Edge while attacking from Cover (you can gain it from defending).
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.PhysicalDefend
+      value: 1
+---
+name: Cover II
+type: condition
+img: systems/sr6/assets/status/cover2.webp
+effects: []
+system:
+  name: Cover II
+  statusEffectId: sr6.condition.cover2
+  description: Whether you hide behind a wall, a dumpster, or a body, Cover is protection from hostile fire. It comes at four levels, indicating how much of a character’s body is protected (one-quarter, one- half, three quarters, or all). A character in Cover gets a +1 bonus per Cover level to their Defense Rating and dice pool to Defense tests. Attacking from Cover requires an extra Minor Action in or- der to get clear enough to take a shot, imposes a –2 dice pool penalty to your attack at Cover IV, and you cannot gain Edge while attacking from Cover (you can gain it from defending).
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.PhysicalDefend
+      value: 2
+---
+name: Cover III
+type: condition
+img: systems/sr6/assets/status/cover3.webp
+effects: []
+system:
+  name: Cover III
+  statusEffectId: sr6.condition.cover3
+  description: Whether you hide behind a wall, a dumpster, or a body, Cover is protection from hostile fire. It comes at four levels, indicating how much of a character’s body is protected (one-quarter, one- half, three quarters, or all). A character in Cover gets a +1 bonus per Cover level to their Defense Rating and dice pool to Defense tests. Attacking from Cover requires an extra Minor Action in or- der to get clear enough to take a shot, imposes a –2 dice pool penalty to your attack at Cover IV, and you cannot gain Edge while attacking from Cover (you can gain it from defending).
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.PhysicalDefend
+      value: 3
+---
+name: Cover IV
+type: condition
+img: systems/sr6/assets/status/cover4.webp
+effects: []
+system:
+  name: Cover IV
+  statusEffectId: sr6.condition.cover4
+  description: Whether you hide behind a wall, a dumpster, or a body, Cover is protection from hostile fire. It comes at four levels, indicating how much of a character’s body is protected (one-quarter, one- half, three quarters, or all). A character in Cover gets a +1 bonus per Cover level to their Defense Rating and dice pool to Defense tests. Attacking from Cover requires an extra Minor Action in or- der to get clear enough to take a shot, imposes a –2 dice pool penalty to your attack at Cover IV, and you cannot gain Edge while attacking from Cover (you can gain it from defending).
+  target: self
+  modifiers:
+    - type: pool
+      situation: roll
+      key: category.PhysicalDefend
+      value: 4
+    - type: pool
+      situation: roll
+      key: category.PhysicalAttack
+      value: -2

@@ -16,14 +16,19 @@
 		<span>{{ name }}</span>
 	</div>
 	{{/unless}}
-	{{#if (eq type "gear") }}
+	{{#if (or (eq type "weapon") (eq type "gear")) }}
 		<div class="data-table">
 			<div><label class="balls1">Rating:</label> {{ system.rating }}</div>
 			<div><label class="balls1">Size:</label> {{ GearSizeToString system.size }}</div>
 			<div><label class="balls1">Cost:</label> {{ solveFormula system system.costFormula }}</div>
 			<div><label class="balls1">Availability:</label> {{ GearAvailabilityToString system.availability }}</div>
-			{{#unless (undefined system.matrix) }}
-				<div><label class="balls1">Sim Modes:</label> {{ GearAvailabilityToString system.availability }}</div>
+			{{#unless (null system.matrix) }}
+				{{#unless (eq system.matrix.simModes.length 0) }}<div><label class="balls1">Sim Modes:</label>
+				{{#each system.matrix.simModes }}
+					{{ localize (concat "SR6.Matrix.SimType." this) }}
+				{{/each}}
+				</div>{{/unless}}
+				<div><label class="balls1">Program Slots:</label> </div>
 			{{/unless}}
 		</div>
 	{{/if}}

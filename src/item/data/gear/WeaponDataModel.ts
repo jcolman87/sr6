@@ -79,11 +79,6 @@ export type WeaponDamage = {
 	damageType: DamageType;
 };
 
-export type WeaponCategory = {
-	type: string;
-	subtype: string;
-};
-
 export type WeaponAttachmentEffectData = {
 	sourceAttachmentId: ItemUUID;
 };
@@ -91,7 +86,6 @@ export type WeaponAttachmentEffectData = {
 export default abstract class WeaponDataModel extends GearDataModel {
 	abstract attackRatings: AttackRatingDataModel;
 
-	abstract category: WeaponCategory;
 	abstract damageData: WeaponDamage;
 
 	abstract firemodes: null | FireMode[];
@@ -266,13 +260,6 @@ export default abstract class WeaponDataModel extends GearDataModel {
 		return {
 			...super.defineSchema(),
 			attackRatings: new fields.EmbeddedDataField(AttackRatingDataModel, { required: true, nullable: false }),
-			category: new fields.SchemaField(
-				{
-					type: new fields.StringField({ initial: '', required: false, nullable: false }),
-					subtype: new fields.StringField({ initial: '', required: false, nullable: false }),
-				},
-				{ required: true, nullable: false }
-			),
 			damageData: new fields.SchemaField(
 				{
 					damageFormula: new fields.StringField({ initial: '0', required: true, nullable: false }),

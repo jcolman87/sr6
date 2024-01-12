@@ -12,6 +12,7 @@ import { IHasMatrixPersona } from '@/data/interfaces';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import WearableDataModel, { WearableSlot } from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getCoreSkills, getCoreMatrixActions, getCoreGeneralActions } from '@/item/data';
 import { getItemSync } from '@/util';
@@ -31,31 +32,49 @@ export abstract class CharacterEquippedDataModel extends BaseDataModel {
 		void this.actor!.update({ ['system.equipped._weapon']: value?.uuid });
 	}
 
-	get clothes(): null | SR6Item<GearDataModel> {
-		return this._clothes ? getItemSync(SR6Item<GearDataModel>, this._clothes!) : null;
+	get clothes(): null | SR6Item<WearableDataModel> {
+		return this._clothes ? getItemSync(SR6Item<WearableDataModel>, this._clothes!) : null;
 	}
 
-	set clothes(value: null | SR6Item<GearDataModel>) {
+	set clothes(value: null | SR6Item<WearableDataModel>) {
 		this._clothes = value?.uuid;
 		void this.actor!.update({ ['system.equipped._clothes']: value?.uuid });
 	}
 
-	get armor(): null | SR6Item<GearDataModel> {
-		return this._armor ? getItemSync(SR6Item<GearDataModel>, this._armor!) : null;
+	get armor(): null | SR6Item<WearableDataModel> {
+		return this._armor ? getItemSync(SR6Item<WearableDataModel>, this._armor!) : null;
 	}
 
-	set armor(value: null | SR6Item<GearDataModel>) {
+	set armor(value: null | SR6Item<WearableDataModel>) {
 		this._armor = value?.uuid;
 		void this.actor!.update({ ['system.equipped._armor']: value?.uuid });
 	}
 
-	get head(): null | SR6Item<GearDataModel> {
-		return this._head ? getItemSync(SR6Item<GearDataModel>, this._head!) : null;
+	get head(): null | SR6Item<WearableDataModel> {
+		return this._head ? getItemSync(SR6Item<WearableDataModel>, this._head!) : null;
 	}
 
-	set head(value: null | SR6Item<GearDataModel>) {
+	set head(value: null | SR6Item<WearableDataModel>) {
 		this._head = value?.uuid;
 		void this.actor!.update({ ['system.equipped._head']: value?.uuid });
+	}
+
+	get defenseRating(): number {
+		let rating = 0;
+		const armor = this.armor;
+		const head = this.head;
+		const weapon = this.weapon;
+		if (armor) {
+			rating += armor.systemData.defenseRating;
+		}
+		if (head) {
+			rating += head.systemData.defenseRating;
+		}
+		if (weapon) {
+			rating += weapon.systemData.defenseRating;
+		}
+
+		return rating;
 	}
 
 	isEquipped(item: SR6Item<GearDataModel>): boolean {
@@ -89,6 +108,10 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		}
 
 		return modifiers;
+	}
+
+	override get defenseRating(): number {
+		return super.defenseRating + this.equipped.defenseRating;
 	}
 
 	//

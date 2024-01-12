@@ -1,3 +1,4 @@
+import { DocumentUUIDField } from '@/data/fields';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { LifestyleRating } from '@/item/data/feature/LifestyleDataModel';
 
@@ -7,22 +8,32 @@ export enum CredstickRating {
 	Gold = 3,
 	Platinum = 4,
 	Ebony = 5,
+	BankAccount = 6,
 }
 
 export enum CredstickCapacity {
+	Zero = 0,
 	Standard = 5000,
 	Silver = 20000,
 	Gold = 100000,
 	Platinum = 500000,
 	Ebony = 1000000,
+	BankAccount = 0,
 }
 
 export default abstract class CredstickDataModel extends BaseItemDataModel {
 	abstract rating: number;
 	abstract nuyen: number;
 
+	abstract sin: ItemUUID | null;
+
 	get capacity(): number {
-		return Object.values(CredstickCapacity).at(this.rating - 1) as number;
+		return CredstickCapacity[CredstickRating[this.rating as number] as keyof typeof CredstickCapacity];
+	}
+
+	validate(options?: foundry.abstract.DataModelValidationOptions): boolean {
+		// TODO:
+		return true;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -35,9 +46,10 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 				nullable: false,
 				integer: true,
 				min: CredstickRating.Standard,
-				max: CredstickRating.Ebony,
+				max: CredstickRating.BankAccount,
 			}),
 			nuyen: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
+			sin: new DocumentUUIDField({ initial: null, required: true, nullable: true }),
 		};
 	}
 }

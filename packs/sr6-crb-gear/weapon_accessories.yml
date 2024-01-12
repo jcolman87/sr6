@@ -6,7 +6,7 @@ system:
   rating: 1
   size: 5
   category:
-    type: WEAPON_ACCESSORY
+    type: accessory
     subtype:
   skillUse: null
   costFormula: '125'

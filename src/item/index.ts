@@ -4,6 +4,7 @@
  * @file SR6 Items Root.
  */
 
+import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
 import { register as registerData } from '@/item/data';
@@ -50,7 +51,7 @@ export const CharacterItemTypes = [
 	'complexform',
 ];
 
-export const GearItemTypes = ['weapon', 'gear', 'credstick'];
+export const GearItemTypes = ['weapon', 'gear', 'credstick', 'wearable'];
 
 export const MatrixItemTypes = ['matrix_action', 'matrix_persona', 'matrix_ic'];
 
@@ -59,6 +60,7 @@ export const GameplayItemTypes = ['condition'];
 function registerDataModels(): void {
 	// Gear
 	CONFIG.Item.dataModels.weapon = WeaponDataModel;
+	CONFIG.Item.dataModels.wearable = WearableDataModel;
 	CONFIG.Item.dataModels.ammo = AmmoDataModel;
 	CONFIG.Item.dataModels.gear = GearDataModel;
 	CONFIG.Item.dataModels.credstick = CredstickDataModel;

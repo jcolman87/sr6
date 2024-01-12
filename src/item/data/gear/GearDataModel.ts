@@ -36,18 +36,42 @@ export enum LicenseType {
 	Firearm = 'firearm',
 }
 
+export enum GearType {
+	Accessory = 'accessory',
+	Armor = 'armor',
+	Clothing = 'clothing',
+	Bioware = 'bioware',
+	Cyberware = 'cyberware',
+	Tools = 'tools',
+	Electronics = 'electronics',
+	Nanoware = 'nanoware',
+	Genetics = 'genetics',
+	Weapon = 'weapon',
+	Ammunition = 'ammunition',
+	Chemicals = 'chemicals',
+	Software = 'software',
+	Survival = 'survival',
+	Biology = 'biology',
+	Magical = 'magical',
+}
+
 export type GearMonitors = {
 	matrix: MonitorDataModel | null;
 	physical: MonitorDataModel;
 };
 
-type ProgramSlotsData = {
+export type GearCategory = {
+	type: GearType;
+	subtype: string;
+};
+
+export type ProgramSlotsData = {
 	total: number;
 	available: number;
 	programs: SR6Item<MatrixProgramDataModel>[];
 };
 
-export abstract class WirelessBonusDataModel extends BaseDataModel {
+export abstract class GearWirelessBonusDataModel extends BaseDataModel {
 	abstract description: string;
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
@@ -65,8 +89,8 @@ export abstract class WirelessBonusDataModel extends BaseDataModel {
 
 export abstract class GearMatrixDataModel extends BaseDataModel {
 	abstract active: boolean;
-	abstract wirelessBonus: WirelessBonusDataModel | null;
-	abstract supportsModes: MatrixSimType[];
+	abstract wirelessBonus: GearWirelessBonusDataModel | null;
+	abstract simModes: MatrixSimType[];
 	abstract attributes: MatrixAttributesDataModel | null;
 	abstract availableSlotsFormula: string;
 
@@ -115,12 +139,12 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 
 		return {
 			active: new fields.BooleanField({ initial: true, required: true, nullable: false }),
-			wirelessBonus: new fields.EmbeddedDataField(WirelessBonusDataModel, {
+			wirelessBonus: new fields.EmbeddedDataField(GearWirelessBonusDataModel, {
 				initial: null,
 				required: true,
 				nullable: true,
 			}),
-			supportsModes: new fields.ArrayField(
+			simModes: new fields.ArrayField(
 				new fields.StringField({
 					blank: false,
 					nullable: false,
@@ -172,6 +196,8 @@ export abstract class GearAvailabilityDataModel extends BaseDataModel {
 }
 
 export default abstract class GearDataModel extends BaseItemDataModel {
+	abstract category: GearCategory;
+
 	abstract rating: number;
 	abstract size: GearSize;
 	abstract costFormula: string;
@@ -217,6 +243,14 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 		return this.solveFormula(this.costFormula);
 	}
 
+	get defenseRating(): number {
+		return 0;
+	}
+
+	get socialRating(): number {
+		return 0;
+	}
+
 	override getRollData(): Record<string, unknown> {
 		return {
 			...super.getRollData(),
@@ -229,6 +263,18 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 
 		return {
 			...super.defineSchema(),
+			category: new fields.SchemaField(
+				{
+					type: new fields.StringField({
+						blank: true,
+						nullable: true,
+						required: false,
+						choices: Object.values(GearType),
+					}),
+					subtype: new fields.StringField({ initial: '', required: false, nullable: false }),
+				},
+				{ required: true, nullable: false }
+			),
 			rating: new fields.NumberField({ initial: 1, nullable: false, required: true, min: 1, max: 6 }),
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
 			availability: new fields.EmbeddedDataField(GearAvailabilityDataModel, { required: true, nullable: false }),

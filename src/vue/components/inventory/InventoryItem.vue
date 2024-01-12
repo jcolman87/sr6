@@ -1,10 +1,14 @@
 <script lang="ts" setup>
+import { deleteItem } from '@/vue/directives';
 import { ref, computed, toRaw } from 'vue';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import { rollWeaponAttack } from '@/roll/Rollers';
+
+import ContextMenu from '@/vue/components/ContextMenu.vue';
+import MenuItem from '@/vue/components/ContextMenu.vue';
 
 const props = withDefaults(
 	defineProps<{
@@ -34,6 +38,10 @@ function drop(event: DragEvent) {}
 function openItem() {
 	void toRaw(props.item).sheet.render(true);
 }
+
+async function rollAttack() {
+	await rollWeaponAttack(toRaw(props.actor).systemData, toRaw(props.item) as SR6Item<WeaponDataModel>);
+}
 </script>
 
 <template>
@@ -60,14 +68,7 @@ function openItem() {
 		<div v-else class="details" @dragenter="dragEnter" @dragleave="dragLeave">
 			<span class="name">
 				<div v-if="item.type === 'weapon'">
-					<button
-						class="attack"
-						@click.prevent="
-							rollWeaponAttack(toRaw(props.actor).systemData, toRaw(item) as SR6Item<WeaponDataModel>)
-						"
-					>
-						Attack
-					</button>
+					<button class="attack" @click.prevent="rollAttack">Attack</button>
 				</div>
 				<a @click="openItem"
 					><i class="name-text">{{ item.name }}</i></a
@@ -83,8 +84,33 @@ function openItem() {
 			</span>
 			<div :data-item-type="item.type">
 				<template v-if="item.type === 'weapon'">{{ item.systemData.description }}</template>
+				<template v-else>{{ item.systemData.description }}</template>
 			</div>
 		</div>
+
+		<ContextMenu class="actions" orientation="left" use-primary-click
+			><!--:disable-menu="!context.data.editable" -->
+			<template v-slot:menu-items>
+				<MenuItem @click="item.systemData.toMessage()">
+					<template v-slot:icon><i class="fas fa-comment"></i></template>
+					To Chat
+				</MenuItem>
+
+				<MenuItem @click="item.sheet?.render(true)">
+					<template v-slot:icon><i class="fas fa-edit"></i></template>
+					Edit
+				</MenuItem>
+
+				<MenuItem @click="deleteItem(item)">
+					<template v-slot:icon><i class="fas fa-trash"></i></template>
+					Delete
+				</MenuItem>
+			</template>
+
+			<a>
+				<i class="fas fa-ellipsis-vertical"></i>
+			</a>
+		</ContextMenu>
 	</div>
 </template>
 

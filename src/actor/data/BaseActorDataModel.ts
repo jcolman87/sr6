@@ -1,5 +1,10 @@
 import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
-import ConditionDataModel, { ConditionSituation } from '@/condition/ConditionDataModel';
+import ConditionDataModel, {
+	ConditionActivation,
+	ConditionEffectChangeData,
+	ConditionModifierType,
+	ConditionSituation,
+} from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import { IHasPools } from '@/data/interfaces';
 import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
@@ -15,6 +20,7 @@ import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
+import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
@@ -29,6 +35,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	get defenseRating(): number {
 		return 0;
 	}
+
 	getPoolModifier(type: RollType): number {
 		let pool = 0;
 
@@ -38,6 +45,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 		return pool;
 	}
+
 	getPool(type: RollType): number {
 		return 0;
 	}
@@ -121,6 +129,12 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		);
 	}
 
+	get wearables(): WearableDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'wearable').map(
+			(i) => (i as SR6Item<WearableDataModel>).systemData
+		);
+	}
+
 	get woundModifiers(): WoundModifierData {
 		return {};
 	}
@@ -151,6 +165,15 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		});
 		 */
 		return this.conditions;
+	}
+
+	getModifiers(
+		type: ConditionModifierType,
+		situation: ConditionSituation = ConditionSituation.Always,
+		activation: ConditionActivation = ConditionActivation.Always
+	): ConditionEffectChangeData[] {
+		return [];
+		//return this.conditions.flatMap((condition) => condition.getModifiers(type, situation, activation));
 	}
 
 	protected get _matrixPersona(): null | MatrixPersonaDataModel {

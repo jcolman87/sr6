@@ -11,6 +11,7 @@ Item:
     - weapon
     - ammo
     - credstick
+    - wearable
     # Character Building
     - skill
     - contact
@@ -33,6 +34,7 @@ Item:
   gear:
   weapon:
   ammo:
+  wearable:
   skill:
   contact:
   sin:

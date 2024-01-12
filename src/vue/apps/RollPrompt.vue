@@ -20,6 +20,7 @@ import MatrixActionRoll from '@/vue/apps/roll/MatrixActionRoll.vue';
 
 import SpellCastRoll from '@/vue/apps/roll/SpellCastRoll.vue';
 import { Collapse } from 'vue-collapsed';
+import * as images from '@/vue/images';
 
 const context = inject<RollPromptContext>(RootContext)!;
 const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
@@ -105,7 +106,7 @@ onMounted(() => {
 				<td>
 					<div class="edge-roll" style="flex: 0.48; margin-right: 10px">
 						<img
-							src="/systems/sr6/assets/blank_dice.webp"
+							:src="images.edge"
 							style="
 								border: 0;
 								height: auto;

@@ -112,9 +112,7 @@ async function togglePersona(checked: boolean, cb?: (checked: boolean) => void):
 			newPersona.systemData.attributes.reset();
 		} else {
 			const activeDevice = matrixDevices.value.find((i) =>
-				i.systemData.matrix
-					? i.systemData.matrix!.active && i.systemData.matrix!.supportsModes.length > 0
-					: false
+				i.systemData.matrix ? i.systemData.matrix!.active && i.systemData.matrix!.simModes.length > 0 : false
 			);
 			if (!activeDevice) {
 				ui.notifications.error('You do not have an active matrix device to enter the matrix with!');

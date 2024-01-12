@@ -29,22 +29,21 @@ export enum RollType {
 }
 
 export const ROLL_CATEGORIES = new Map([
-	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],
 	[
 		'AllPoolButSoak',
 		Array.from(
 			Object.keys(RollType)
-				.filter(
-					(t) =>
-						![
-							RollType[RollType.Initiative],
-							RollType[RollType.SpellSoak],
-							RollType[RollType.SpellSoak],
-						].includes(t)
-				)
+				.filter((t) => ![RollType[RollType.Initiative], RollType[RollType.SpellSoak]].includes(t))
 				.map((t) => RollType[t as keyof typeof RollType])
 		),
 	],
+	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],
+	['Magic', [RollType.SpellCast, RollType.SpellDefend, RollType.SpellDrain, RollType.SpellSoak]],
+	['Matrix', [RollType.MatrixAction, RollType.MatrixActionDefend]],
+	['Attack', [RollType.WeaponAttack, RollType.SpellCast]],
+	['PhysicalAttack', [RollType.WeaponAttack, RollType.SpellCast]],
+	['PhysicalDefend', [RollType.WeaponDefend, RollType.SpellDefend]],
+	['Defend', [RollType.WeaponDefend, RollType.SpellDefend, RollType.MatrixActionDefend]],
 ]);
 
 export function getRollCategory(key: string): RollType[] {

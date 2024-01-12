@@ -5,8 +5,8 @@ effects: []
 system:
   rating: 1
   category:
-    type: ELECTRONICS
-    subtype: MATRIX_DEVICE
+    type: electronics
+    subtype: matrixDevice
   skillUse: null
   costFormula: '24750'
   availability:
@@ -19,7 +19,7 @@ system:
   matrix:
     active: false
     availableSlotsFormula: '2'
-    supportsModes:
+    simModes:
       - ar
       - vrcold
       - vrhot
@@ -35,8 +35,8 @@ effects: []
 system:
   rating: 2
   category:
-    type: ELECTRONICS
-    subtype: MATRIX_DEVICE
+    type: electronics
+    subtype: matrixDevice
   skillUse: null
   costFormula: '61500'
   availability:
@@ -49,7 +49,7 @@ system:
   matrix:
     active: false
     availableSlotsFormula: '4'
-    supportsModes:
+    simModes:
       - ar
       - vrcold
       - vrhot
@@ -65,8 +65,8 @@ effects: []
 system:
   rating: 3
   category:
-    type: ELECTRONICS
-    subtype: MATRIX_DEVICE
+    type: electronics
+    subtype: matrixDevice
   skillUse: null
   costFormula: '95000'
   availability:
@@ -79,7 +79,7 @@ system:
   matrix:
     active: false
     availableSlotsFormula: '6'
-    supportsModes:
+    simModes:
       - ar
       - vrcold
       - vrhot
@@ -95,8 +95,8 @@ effects: []
 system:
   rating: 4
   category:
-    type: ELECTRONICS
-    subtype: MATRIX_DEVICE
+    type: electronics
+    subtype: matrixDevice
   skillUse: null
   costFormula: '107000'
   availability:
@@ -109,7 +109,7 @@ system:
   matrix:
     active: false
     availableSlotsFormula: '8'
-    supportsModes:
+    simModes:
       - ar
       - vrcold
       - vrhot
@@ -125,8 +125,8 @@ effects: []
 system:
   rating: 5
   category:
-    type: ELECTRONICS
-    subtype: MATRIX_DEVICE
+    type: electronics
+    subtype: matrixDevice
   skillUse: null
   costFormula: '172500'
   availability:
@@ -139,7 +139,7 @@ system:
   matrix:
     active: false
     availableSlotsFormula: '10'
-    supportsModes:
+    simModes:
       - ar
       - vrcold
       - vrhot
@@ -155,8 +155,8 @@ effects: []
 system:
   rating: 6
   category:
-    type: ELECTRONICS
-    subtype: MATRIX_DEVICE
+    type: electronics
+    subtype: matrixDevice
   skillUse: null
   costFormula: '410600'
   availability:
@@ -169,7 +169,7 @@ system:
   matrix:
     active: false
     availableSlotsFormula: '12'
-    supportsModes:
+    simModes:
       - ar
       - vrcold
       - vrhot

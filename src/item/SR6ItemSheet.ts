@@ -26,7 +26,7 @@ export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = Base
 			...super.defaultOptions,
 			classes: ['sr6', 'sheet', 'item'],
 			width: 480,
-			height: 300,
+			height: 600,
 			dragDrop: [
 				{
 					dragSelector: '.item-list .item',

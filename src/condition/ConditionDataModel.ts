@@ -104,22 +104,28 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 		situation: ConditionSituation = ConditionSituation.Roll
 	): ConditionEffectChangeData[] {
 		return this.getModifiers(ConditionModifierType.Pool, situation).filter((modifier) => {
-			const path = modifier.key.split('.');
-			if (path.length === 1) {
-				if (modifier.key === RollType[type]) {
-					return true;
+			if (modifier.type == 'pool') {
+				const path = modifier.key.split('.');
+				if (path.length === 1) {
+					if (modifier.key === RollType[type]) {
+						return true;
+					}
+				} else {
+					switch (path[0]) {
+						case 'category':
+							if (getRollCategory(path[1]).includes(type)) {
+								return true;
+							}
+							break;
+						default:
+							ui.notifications.error(
+								`Invalid category for modification ${type}: ${modifier.key} - ${path}`
+							);
+							throw 'ERR';
+					}
 				}
 			} else {
-				switch (path[0]) {
-					case 'category':
-						if (getRollCategory(path[1]).includes(type)) {
-							return true;
-						}
-						break;
-					default:
-						ui.notifications.error(`Invalid category for modification ${path[0]}`);
-						throw 'ERR';
-				}
+				return false;
 			}
 		});
 	}
