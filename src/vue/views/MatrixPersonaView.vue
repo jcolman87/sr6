@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
-import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
-import GearDataModel from '@/item/data/gear/GearDataModel';
-import SR6Item from '@/item/SR6Item';
+import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
 import Localized from '@/vue/components/Localized.vue';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import MonitorView from '@/vue/views/MonitorView.vue';
@@ -39,15 +37,27 @@ async function setDeviceDamage(value: number) {
 		await toRaw(props.persona!).sourceDevice?.update({ ['system.monitors.matrix.damage']: value });
 	}
 }
+
+function getPersonaName(): string {
+	switch (props.persona!.type) {
+		case PersonaType.Living: {
+			return 'Living Persona';
+		}
+		case PersonaType.Device: {
+			return props.persona!.sourceDevice!.name;
+		}
+		case PersonaType.IC: {
+			return 'IC';
+		}
+	}
+}
 </script>
 
 <template>
 	<div class="section matrix-persona">
 		<div class="section-head">
 			Persona
-			<i style="font-style: italic; margin-left: 20px" v-if="props.persona"
-				>({{ props.persona.sourceDevice!.name }})</i
-			>
+			<i style="font-style: italic; margin-left: 20px" v-if="props.persona">({{ getPersonaName() }})</i>
 			<span style="margin-left: auto; margin-right: 0"
 				><label class="switch">
 					<input type="checkbox" @change.prevent="togglePersona" :checked="props.persona != null" />

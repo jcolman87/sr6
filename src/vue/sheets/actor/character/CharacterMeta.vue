@@ -25,15 +25,18 @@ async function setDamage(monitor: MonitorDataModel, field: string, amount: numbe
 	}
 }
 
-function setEdge(ev: Event) {
+async function setEdge(ev: Event) {
 	const actor = toRaw(context.data.actor);
 
 	let value = getEventValue(ev)!;
-
+	if (typeof value !== 'number') {
+		console.error('Didnt get a number for the event?');
+		return;
+	}
 	if (value > actor.systemData.monitors.edge.max) {
 		value = actor.systemData.monitors.edge.max;
 	}
-	actor.update({ ['system.monitors.edge.damage']: actor.systemData.monitors.edge.max - (value as number) });
+	await actor.update({ ['system.monitors.edge.damage']: actor.systemData.monitors.edge.max - (value as number) });
 }
 </script>
 

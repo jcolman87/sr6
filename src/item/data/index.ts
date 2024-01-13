@@ -15,7 +15,7 @@ export async function getCoreSkills(): Promise<SR6Item<SkillDataModel>[]> {
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'skill')
-			.map((i) => i as SR6Item<SkillDataModel>)
+			.map((i) => i as SR6Item<SkillDataModel>),
 	);
 }
 
@@ -25,7 +25,7 @@ export async function getCoreMatrixActions(): Promise<SR6Item<MatrixActionDataMo
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'matrix_action')
-			.map((i) => i as SR6Item<MatrixActionDataModel>)
+			.map((i) => i as SR6Item<MatrixActionDataModel>),
 	);
 }
 
@@ -35,7 +35,7 @@ export async function getCoreGeneralActions(): Promise<SR6Item<GeneralActionData
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'general_action')
-			.map((i) => i as SR6Item<GeneralActionDataModel>)
+			.map((i) => i as SR6Item<GeneralActionDataModel>),
 	);
 }
 
@@ -45,7 +45,7 @@ export async function getCoreQualities(): Promise<SR6Item<QualityDataModel>[]> {
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'quality')
-			.map((i) => i as SR6Item<QualityDataModel>)
+			.map((i) => i as SR6Item<QualityDataModel>),
 	);
 }
 
@@ -55,7 +55,7 @@ export async function getCoreAdeptPowers(): Promise<SR6Item<AdeptPowerDataModel>
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'adeptpower')
-			.map((i) => i as SR6Item<AdeptPowerDataModel>)
+			.map((i) => i as SR6Item<AdeptPowerDataModel>),
 	);
 }
 
@@ -65,18 +65,14 @@ export async function getCoreWeapons(): Promise<SR6Item<WeaponDataModel>[]> {
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'weapon')
-			.map((i) => i as SR6Item<WeaponDataModel>)
+			.map((i) => i as SR6Item<WeaponDataModel>),
 	);
 }
 
 export async function getCoreGear(): Promise<SR6Item<GearDataModel>[]> {
 	const pack = game.packs.get('sr6.sr6-crb-gear')!;
 
-	return Array.from(
-		(await pack.getDocuments())
-			.filter((i) => (i as SR6Item).type === 'gear')
-			.map((i) => i as SR6Item<GearDataModel>)
-	);
+	return Array.from((await pack.getDocuments()).map((i) => i as SR6Item<GearDataModel>));
 }
 
 export async function getCoreSpells(): Promise<SR6Item<SpellDataModel>[]> {
@@ -85,7 +81,7 @@ export async function getCoreSpells(): Promise<SR6Item<SpellDataModel>[]> {
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'spell')
-			.map((i) => i as SR6Item<SpellDataModel>)
+			.map((i) => i as SR6Item<SpellDataModel>),
 	);
 }
 
@@ -95,7 +91,7 @@ export async function getCoreMatrixPrograms(): Promise<SR6Item<MatrixProgramData
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'matrix_program')
-			.map((i) => i as SR6Item<MatrixProgramDataModel>)
+			.map((i) => i as SR6Item<MatrixProgramDataModel>),
 	);
 }
 
@@ -104,7 +100,7 @@ export async function getCoreAugmentations(): Promise<SR6Item<GeneralActionDataM
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'augmentation')
-			.map((i) => i as SR6Item<GeneralActionDataModel>)
+			.map((i) => i as SR6Item<GeneralActionDataModel>),
 	);
 }
 
@@ -117,4 +113,7 @@ export function register(): void {
 	(window as any).getCoreGeneralActions = getCoreGeneralActions;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(window as any).getCoreQualities = getCoreQualities;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(window as any).getCoreAugmentations = getCoreAugmentations;
 }

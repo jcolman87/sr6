@@ -34,15 +34,16 @@ export default class SR6Combat extends Combat {
 	}
 
 	getCombatantData(actor: SR6Actor): null | CombatantFlagData {
-		let entry = this.combatants.find((c) => c.actor!.uuid == actor.uuid);
+		const entry = this.combatants.find((c) => c.actor!.uuid === actor.uuid);
 		if (entry) {
 			return (entry as SR6Combatant).systemData;
 		}
 
 		return null;
 	}
-	async setCombatantData(actor: SR6Actor, data: CombatantFlagData) {
-		let entry = this.combatants.find((c) => c.actor!.uuid == actor.uuid);
+
+	async setCombatantData(actor: SR6Actor, data: CombatantFlagData): Promise<void> {
+		const entry = this.combatants.find((c) => c.actor!.uuid === actor.uuid);
 		if (entry) {
 			await (entry as SR6Combatant)._setSystemData(data);
 		}
@@ -108,7 +109,7 @@ export function register(): void {
 			console.error(
 				`Socket received ${SocketOperation[payload.operation]} payload with invalid combat ID ${
 					payload.data.combatId
-				}`
+				}`,
 			);
 			return;
 		}

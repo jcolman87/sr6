@@ -18,7 +18,7 @@ const props = withDefaults(
 	}>(),
 	{
 		dragging: false,
-	}
+	},
 );
 
 const weaponData = computed(() => props.item.systemData as WeaponDataModel);
@@ -28,12 +28,12 @@ const dragCounter = ref(0);
 const isBeingDragged = ref(false);
 const dimForDrag = computed(() => props.dragging && props.item.type !== 'container');
 
-function dragEnter(event: DragEvent) {}
-function dragLeave(event: DragEvent) {}
-function dragStart(event: DragEvent) {}
-function dragEnd(event: DragEvent) {}
+function dragEnter(_ev: DragEvent) {}
+function dragLeave(_ev: DragEvent) {}
+function dragStart(_ev: DragEvent) {}
+function dragEnd(_ev: DragEvent) {}
 
-function drop(event: DragEvent) {}
+function drop(_ev: DragEvent) {}
 
 function openItem() {
 	void toRaw(props.item).sheet.render(true);

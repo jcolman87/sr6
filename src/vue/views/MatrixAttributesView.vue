@@ -60,7 +60,7 @@ function drop(event: DragEvent, target: string) {
 
 	emit('change', newAttributes);
 }
-function dragOver(_event: DragEvent) {}
+function dragEnter(_event: DragEvent) {}
 function dragLeave(_event: DragEvent) {}
 
 function reset() {
@@ -108,8 +108,8 @@ function reset() {
 					<td
 						draggable="true"
 						@dragstart="(ev) => dragStart(ev, 'attack', attributes.current.attack)"
-						@dragenter.prevent
-						@dragleave.prevent
+						@dragenter.prevent="dragEnter"
+						@dragleave.prevent="dragLeave"
 						@drop="(ev) => drop(ev, 'attack')"
 					>
 						{{ attributes.current.attack }}
@@ -117,8 +117,8 @@ function reset() {
 					<td
 						draggable="true"
 						@dragstart="(ev) => dragStart(ev, 'sleaze', attributes.current.sleaze)"
-						@dragenter.prevent
-						@dragleave.prevent
+						@dragenter.prevent="dragEnter"
+						@dragleave.prevent="dragLeave"
 						@drop="(ev) => drop(ev, 'sleaze')"
 					>
 						{{ attributes.current.sleaze }}
@@ -126,8 +126,8 @@ function reset() {
 					<td
 						draggable="true"
 						@dragstart="(ev) => dragStart(ev, 'dataProcessing', attributes.current.dataProcessing)"
-						@dragenter.prevent
-						@dragleave.prevent
+						@dragenter.prevent="dragEnter"
+						@dragleave.prevent="dragLeave"
 						@drop="(ev) => drop(ev, 'dataProcessing')"
 					>
 						{{ attributes.current.dataProcessing }}
@@ -135,8 +135,8 @@ function reset() {
 					<td
 						draggable="true"
 						@dragstart="(ev) => dragStart(ev, 'firewall', attributes.current.firewall)"
-						@dragenter.prevent
-						@dragleave.prevent
+						@dragenter.prevent="dragEnter"
+						@dragleave.prevent="dragLeave"
 						@drop="(ev) => drop(ev, 'firewall')"
 					>
 						{{ attributes.current.firewall }}

@@ -55,7 +55,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 	}
 
 	get woundModifier(): number {
-		return Object.entries(this.woundModifier).reduce((acc, [key, value]) => (acc += value), 0);
+		return Object.entries(this.woundModifier).reduce((acc, [_key, value]) => (acc += value), 0);
 	}
 
 	get(type: MonitorType): MonitorDataModel {

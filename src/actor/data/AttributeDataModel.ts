@@ -1,4 +1,3 @@
-import { EnumAttribute } from '@/actor/data/index';
 import BaseDataModel from '@/data/BaseDataModel';
 
 export default abstract class AttributeDataModel extends BaseDataModel {
@@ -19,7 +18,7 @@ export default abstract class AttributeDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareData(): void {
+	override prepareDerivedData(): void {
 		this.value = this.base + this.mod;
 	}
 }

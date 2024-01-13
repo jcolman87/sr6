@@ -1,9 +1,7 @@
-import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { IHasMatrixPersona } from '@/data/interfaces';
 import SR6Item from '@/item/SR6Item';
-import { rollSpellResistDrain } from '@/roll/Rollers';
 import { SR6Roll } from '@/roll/SR6Roll';
 import { getActorSync, getItemSync } from '@/util';
 import * as util from '@/util';
@@ -32,10 +30,10 @@ export class SR6ChatMessage extends ChatMessage {
 		 */
 		html.find('.heal').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 			event.preventDefault();
-			for (const actor of util
-				.getSelfOrSelectedActors()
-				.filter((actor) => actor.systemData instanceof CharacterDataModel)) {
-			}
+			// for (const actor of util
+			//	.getSelfOrSelectedActors()
+			//	.filter((actor) => actor.systemData instanceof CharacterDataModel)) {
+			// }
 		});
 		html.find('.damage').click(async (event: JQuery.ClickEvent<HTMLElement>) => {
 			event.preventDefault();
@@ -105,7 +103,7 @@ export class SR6ChatMessage extends ChatMessage {
 				await rollers.rollWeaponDefend(
 					actor.systemData,
 					(this.rolls[0] as SR6Roll).hits,
-					this.rolls[0].options as unknown as rollers.WeaponAttackRollData
+					this.rolls[0].options as unknown as rollers.WeaponAttackRollData,
 				);
 			}
 		});
@@ -117,7 +115,7 @@ export class SR6ChatMessage extends ChatMessage {
 				await rollers.rollWeaponSoak(
 					actor.systemData,
 					(this.rolls[0] as SR6Roll).hits,
-					this.rolls[0].options as unknown as rollers.WeaponSoakRollData
+					this.rolls[0].options as unknown as rollers.WeaponSoakRollData,
 				);
 			}
 		});
@@ -133,7 +131,7 @@ export class SR6ChatMessage extends ChatMessage {
 				await rollers.rollMatrixDefense(
 					actor.systemData as unknown as IHasMatrixPersona,
 					(this.rolls[0] as SR6Roll).hits,
-					this.rolls[0].options as unknown as rollers.MatrixActionRollData
+					this.rolls[0].options as unknown as rollers.MatrixActionRollData,
 				);
 			}
 		});
@@ -146,7 +144,7 @@ export class SR6ChatMessage extends ChatMessage {
 				await rollers.rollSpellResistDrain(
 					actor.systemData as LifeformDataModel,
 					(this.rolls[0] as SR6Roll).hits,
-					this.rolls[0].options as unknown as rollers.SpellCastRollData
+					this.rolls[0].options as unknown as rollers.SpellCastRollData,
 				);
 			}
 		});
@@ -158,7 +156,7 @@ export class SR6ChatMessage extends ChatMessage {
 				await rollers.rollSpellDefend(
 					actor.systemData as LifeformDataModel,
 					(this.rolls[0] as SR6Roll).hits,
-					this.rolls[0].options as unknown as rollers.SpellCastRollData
+					this.rolls[0].options as unknown as rollers.SpellCastRollData,
 				);
 			}
 		});
@@ -170,7 +168,7 @@ export class SR6ChatMessage extends ChatMessage {
 				await rollers.rollSpellSoak(
 					actor.systemData as LifeformDataModel,
 					(this.rolls[0] as SR6Roll).hits,
-					this.rolls[0].options as unknown as rollers.SpellDefendRollData
+					this.rolls[0].options as unknown as rollers.SpellDefendRollData,
 				);
 			}
 		});

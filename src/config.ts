@@ -4,32 +4,6 @@
  * @file
  */
 
-import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import MatrixHostDataModel from '@/actor/data/MatrixHostDataModel';
-import MatrixICDataModel from '@/item/data/MatrixICDataModel';
-import SR6Actor from '@/actor/SR6Actor';
-import ConditionDataModel from '@/condition/ConditionDataModel';
-import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
-import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
-
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
-import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
-import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
-import ContactDataModel from '@/item/data/feature/ContactDataModel';
-import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
-import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
-import QualityDataModel from '@/item/data/feature/QualityDataModel';
-import SINDataModel from '@/item/data/feature/SINDataModel';
-import SkillDataModel from '@/item/data/feature/SkillDataModel';
-import GearDataModel from '@/item/data/gear/GearDataModel';
-import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
-import SpellDataModel from '@/item/data/SpellDataModel';
-import SR6Item from '@/item/SR6Item';
-
-import { NAMESPACE as SETTINGS_NAMESPACE } from '@/settings';
-import { KEY_USE_MAGICAL_GIRL_SYMBOLS } from '@/settings/user';
-
 export const SR6_CONFIG = {
 	/**
 	 * Whether to use the Magical Girl symbols where possible in the system.

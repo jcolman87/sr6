@@ -25,8 +25,9 @@ export default abstract class MatrixHostDataModel
 		this._matrixPersona = persona;
 	}
 
+	// TODO: why did I have device here?
 	async activateMatrixPersona(
-		device: SR6Item<GearDataModel> | null = null
+		_device: SR6Item<GearDataModel> | null = null,
 	): Promise<SR6Item<MatrixPersonaDataModel>> {
 		return this.actor!.items.find((item) => item.type === 'matrix_persona')! as SR6Item<MatrixPersonaDataModel>;
 	}
@@ -37,7 +38,7 @@ export default abstract class MatrixHostDataModel
 
 	get programs(): SR6Item<MatrixICDataModel>[] {
 		return this.actor!.items.filter((item) => item.type === 'matrix_ic').map(
-			(item) => item as SR6Item<MatrixICDataModel>
+			(item) => item as SR6Item<MatrixICDataModel>,
 		);
 	}
 

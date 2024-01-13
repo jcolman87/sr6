@@ -47,7 +47,7 @@ export interface IHasPreCreate<TDocumentType extends foundry.abstract.Document> 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		data: PreDocumentId<any>,
 		options: DocumentModificationContext<TDocumentType>,
-		user: foundry.documents.BaseUser
+		user: foundry.documents.BaseUser,
 	): Promise<void>;
 }
 
@@ -63,6 +63,6 @@ export interface IHasOnUpdate<TDocumentType extends foundry.abstract.Document> {
 	onUpdate?(
 		changed: DeepPartial<TDocumentType['_source']>,
 		options: DocumentUpdateContext<TDocumentType>,
-		userId: string
+		userId: string,
 	): Promise<void>;
 }

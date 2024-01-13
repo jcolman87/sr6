@@ -26,4 +26,4 @@ function registerDataModels(): void {
 	CONFIG.Actor.dataModels.matrix_host = MatrixHostDataModel;
 }
 
-export function setOptGroups(select: HTMLSelectElement): void {}
+export function setOptGroups(_select: HTMLSelectElement): void {}

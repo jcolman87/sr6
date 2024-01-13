@@ -27,7 +27,7 @@ const props = withDefaults(
 	{
 		button: true,
 		collaborate: false,
-	}
+	},
 );
 
 /**
@@ -87,7 +87,7 @@ onUpdated(async () => {
 		// If we've still got a key to find, but it isn't present, something's messed up.
 		if (obj[key] === undefined) {
 			console.warn(
-				`Attempting to update ${rootContext.sheet.document.name} editor field but '${props.name}' is undefined!`
+				`Attempting to update ${rootContext.sheet.document.name} editor field but '${props.name}' is undefined!`,
 			);
 			obj = undefined;
 			break;
@@ -122,7 +122,7 @@ async function activate() {
 	// Again, this shouldn't happen - but just in case.
 	if (editing.value) {
 		console.error(
-			`Attempted to activate an editor for ${props.name} in ${rootContext.sheet.document.name}, but the editor is already active!`
+			`Attempted to activate an editor for ${props.name} in ${rootContext.sheet.document.name}, but the editor is already active!`,
 		);
 		return;
 	}

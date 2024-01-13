@@ -37,8 +37,6 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	abstract type: PersonaType;
 	abstract simType: MatrixSimType;
 
-	abstract _preparedOnce: boolean;
-
 	get initiativeBasis(): number {
 		switch (this.simType) {
 			case MatrixSimType.AR:
@@ -121,12 +119,19 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 		};
 	}
 
+	override prepareBaseData(): void {
+		super.prepareBaseData();
+		this.attributes.prepareBaseData();
+	}
+
+	override prepareData(): void {
+		super.prepareData();
+		this.attributes.prepareData();
+	}
+
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
-		if (!this._preparedOnce) {
-			this._preparedOnce = true;
-			// this.item!.update({ ['system._preparedOnce']: true, ['system.attributes.current']: this.attributes.base });
-		}
+		this.attributes.prepareDerivedData();
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -157,7 +162,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 						nullable: false,
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			simType: new fields.StringField({
 				initial: MatrixSimType.AR,

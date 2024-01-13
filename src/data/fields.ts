@@ -1,15 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ConstructorOf<T> = new (...args: any[]) => T;
+type _ConstructorOf<T> = new (...args: any[]) => T;
 
 export class EnumNumberField<
-	TEnum extends object,
+	_TEnum extends object,
 	TRequired extends boolean = true,
 	TNullable extends boolean = false,
-	THasInitial extends boolean = true
+	THasInitial extends boolean = true,
 > extends foundry.data.fields.NumberField<number, number, TRequired, TNullable, THasInitial> {
 	override validate(
 		value: unknown,
-		options?: foundry.data.fields.DataFieldValidationOptions
+		options?: foundry.data.fields.DataFieldValidationOptions,
 	): foundry.data.fields.DataModelValidationFailure | void {
 		return super.validate(value, options);
 	}
@@ -18,11 +18,11 @@ export class EnumNumberField<
 export class DocumentUUIDField<
 	TRequired extends boolean = true,
 	TNullable extends boolean = true,
-	THasInitial extends boolean = true
+	THasInitial extends boolean = true,
 > extends foundry.data.fields.StringField<string, string, TRequired, TNullable, THasInitial> {
 	override validate(
 		value: unknown,
-		options?: foundry.data.fields.DataFieldValidationOptions
+		options?: foundry.data.fields.DataFieldValidationOptions,
 	): foundry.data.fields.DataModelValidationFailure | void {
 		// let parsed = parseUuid(value as string);
 		// if (!parsed.uuid || !(parsed.collection && parsed.documentId)) {

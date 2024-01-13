@@ -1,6 +1,7 @@
 import { DocumentUUIDField } from '@/data/fields';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
-import GearDataModel from '@/item/data/gear/GearDataModel';
+import SR6Item from '@/item/SR6Item';
+import { getItem, getItemSync } from '@/util';
 
 export default abstract class AugmentationDataModel extends QualityDataModel {
 	abstract rating: number;
@@ -17,6 +18,36 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 			quality: this.quality,
 			essenseCost: this.essenseCost,
 		};
+	}
+
+	override async onPostCreate(): Promise<void> {
+		await super.onPostCreate();
+
+		for (const gearId of this.sourceGearIds) {
+			const item = await getItem(SR6Item, gearId);
+			if (!item) {
+				ui.notifications.error(`Failed to find proxy item for ${this.item!.name} (${gearId})`);
+				return;
+			}
+
+			const attachedGear = (await this.actor!.createEmbeddedDocuments('Item', [item])) as SR6Item[];
+			this._attachedGearIds.push(attachedGear[0].uuid);
+		}
+		await this.item!.update({ ['system._attachedGearIds']: this._attachedGearIds });
+	}
+
+	override onDelete(
+		document: SR6Item<QualityDataModel>,
+		options: DocumentModificationContext<SR6Item<QualityDataModel>>,
+		userId: string,
+	): void {
+		super.onDelete(document, options, userId);
+		this._attachedGearIds.forEach((uuid) => {
+			const item = getItemSync(SR6Item, uuid);
+			if (item) {
+				void item.delete();
+			}
+		});
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

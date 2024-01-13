@@ -19,7 +19,7 @@ const skills: Ref<SR6Item<SkillDataModel>[]> = computedAsync(async () => {
 	return skills;
 });
 
-function getSkill(name: string): undefined | SR6Item<SkillDataModel> {
+function _getSkill(name: string): undefined | SR6Item<SkillDataModel> {
 	return skills.value.find((s) => s.name === name);
 }
 </script>

@@ -20,6 +20,12 @@ export enum ActivationPeriod {
 	TenMinute = '10minute',
 }
 
+export enum ActivationMode {
+	Always = 'always',
+	Manual = 'manual',
+	Automatic = 'automatic',
+}
+
 export enum DamageType {
 	Physical = 'P',
 	Stun = 'S',

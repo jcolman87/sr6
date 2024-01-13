@@ -14,7 +14,7 @@ import { register as registerConditions } from '@/condition';
 import { register as registerToken } from '@/token';
 import { onChatLogEntryContext } from '@/chat';
 
-import { NAMESPACE as SETTINGS_NAMESPACE, register as registerSettings } from '@/settings';
+import { register as registerSettings } from '@/settings';
 
 import { register as registerChat, renderChatLog } from '@/chat';
 
@@ -35,7 +35,7 @@ Hooks.once('init', async () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(globalThis as any).log = new Logger({
 		overwrite: {
-			transportFormatted: (logMetaMarkup: string, logArgs: unknown[], logErrors: string[]): void => {},
+			transportFormatted: (_logMetaMarkup: string, _logArgs: unknown[], _logErrors: string[]): void => {},
 		},
 	});
 
@@ -63,7 +63,7 @@ Hooks.once('ready', async () => {
 	readyConfigs();
 });
 
-Hooks.on('createActor', async (actor: Actor, controlled: boolean): Promise<void> => {
+Hooks.on('createActor', async (actor: Actor, _controlled: boolean): Promise<void> => {
 	return onCreateActor(actor);
 });
 

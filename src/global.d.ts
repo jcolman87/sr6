@@ -13,7 +13,6 @@ import SR6Combatant from '@/combat/SR6Combatant';
 import SR6CombatTracker from '@/combat/SR6CombatTracker';
 import { SR6_CONFIG } from '@/config';
 import { Logger } from 'tslog';
-import { DataModelValidationError, ElementValidationFailure } from '../types/foundry/common/data/validation-failure';
 
 declare global {
 	declare let log: Logger;
@@ -69,16 +68,16 @@ declare global {
 	function fromUuid(uuid: CompendiumUUID, relative?: Maybe<ClientDocument>): Promise<CompendiumDocument | null>;
 	function fromUuid(
 		uuid: ActorUUID,
-		relative?: Maybe<ClientDocument>
+		relative?: Maybe<ClientDocument>,
 	): Promise<Actor<TokenDocument<Scene> | null> | null>;
 	function fromUuid(
 		uuid: ItemUUID,
-		relative?: Maybe<ClientDocument>
+		relative?: Maybe<ClientDocument>,
 	): Promise<Item<Actor<TokenDocument<Scene> | null>> | null>;
 	function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<TokenDocument<Scene> | null>;
 	function fromUuid<TDocument extends ClientDocument>(
 		uuid: string,
-		relative?: Maybe<ClientDocument>
+		relative?: Maybe<ClientDocument>,
 	): Promise<TDocument | null>;
 
 	type DeepPartial<T> = {

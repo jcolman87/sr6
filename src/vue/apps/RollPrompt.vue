@@ -38,15 +38,14 @@ const totalModifier = computed(
 		baseSystem.value
 			.getRollConditions(context.rollData.type)
 			.reduce((total, condition) => (total += condition.getPoolModifier(context.rollData.type)), 0) +
-		toRaw(context.actor).systemData.woundModifier
+		toRaw(context.actor).systemData.woundModifier,
 );
 
 const finishRollButton = ref();
 const isDisplayConditions = ref(false);
 const woundModifiers = computed(() => Object.entries(toRaw(context.actor.systemData).woundModifiers));
 const conditions = computed(() => baseSystem.value.getRollConditions(context.rollData.type));
-
-const conditionsDescriptionsVisible = computed(() =>
+const conditionsDescriptionsVisible = ref(
 	conditions.value
 		.map((condition) => {
 			return {
@@ -55,13 +54,13 @@ const conditionsDescriptionsVisible = computed(() =>
 			};
 		})
 		.concat(
-			woundModifiers.value.map(([key, value]) => {
+			woundModifiers.value.map(([key, _value]) => {
 				return {
 					id: key,
 					visible: false,
 				};
-			})
-		)
+			}),
+		),
 );
 
 function roll() {
@@ -262,7 +261,7 @@ onMounted(() => {
 			<div class="section">
 				`
 				<label><Localized label="SR6.Edge.EdgeBoost" /></label>
-				<select @change="(ev) => edgeBoost = getEventValue(ev) as string">
+				<select @change="(ev) => (edgeBoost = getEventValue(ev) as string)">
 					<option value="null">-</option>
 					<!-- TODO  -->
 					<!--These are post roll actions

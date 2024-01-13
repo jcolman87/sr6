@@ -6,7 +6,7 @@
 import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import SR6Item from '@/item/SR6Item';
-import { ref, computed, toRaw, DirectiveBinding } from 'vue';
+import { toRaw, DirectiveBinding } from 'vue';
 
 function doLocalize(el: HTMLInputElement, binding: DirectiveBinding): void {
 	if (typeof binding.arg !== 'string') {
@@ -74,7 +74,7 @@ export async function updateItem(actor: SR6Actor, id: string, field: string, eve
 
 export async function deleteItem<TDataModel extends BaseDataModel = BaseDataModel>(
 	item: SR6Item<TDataModel>,
-	bypass_confirmation: boolean = false
+	bypass_confirmation: boolean = false,
 ): Promise<boolean> {
 	let confirmed = bypass_confirmation;
 	if (!confirmed) {

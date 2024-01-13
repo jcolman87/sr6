@@ -4,7 +4,6 @@ import ConditionDataModel from '@/condition/ConditionDataModel';
 import { basicSheet } from '@/item/sheets';
 import SR6Item from '@/item/SR6Item';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
-import BaseActor = foundry.documents.BaseActor;
 
 function registerStatusEffects() {
 	CONFIG.statusEffects = [
@@ -72,14 +71,14 @@ export function register(): void {
 export async function getCoreConditions(): Promise<SR6Item<ConditionDataModel>[]> {
 	return Array.from(
 		(await game.packs.get('sr6.sr6-crb-conditions')!.getDocuments()).map(
-			(i) => i as unknown as SR6Item<ConditionDataModel>
-		)
+			(i) => i as unknown as SR6Item<ConditionDataModel>,
+		),
 	);
 }
 
 export async function toggleStatusEffectCondition(
 	statusEffectId: string,
-	actor: SR6Actor<BaseActorDataModel>
+	actor: SR6Actor<BaseActorDataModel>,
 ): Promise<boolean> {
 	const conditions = await getCoreConditions();
 	const condition = conditions
@@ -88,7 +87,7 @@ export async function toggleStatusEffectCondition(
 	if (condition) {
 		// Does the actor already have the condition?
 		const existing = actor.systemData.conditions.find(
-			(c) => c.statusEffectId === condition!.systemData.statusEffectId
+			(c) => c.statusEffectId === condition!.systemData.statusEffectId,
 		);
 		if (existing) {
 			// Toggle is a remove

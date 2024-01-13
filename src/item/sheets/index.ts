@@ -17,11 +17,12 @@ import SkillSheet from '@/vue/sheets/item/SkillSheet.vue';
 
 import { SR6ItemSheetData, ItemSheetContext } from '@/vue/SheetContext';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/*
 type VueSheetConstructor = new (...args: any[]) => {
 	get vueComponent(): Component;
 	getVueContext(): Promise<ItemSheetContext | undefined>;
 };
+ */
 
 /**
  * Constructs a vue-based ItemSheet subclass with little extra processing.

@@ -98,7 +98,7 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 	}
 
 	get canDefend(): boolean {
-		return this.damage != null;
+		return this.damage !== null;
 	}
 
 	get canSoak(): boolean {
@@ -188,7 +188,7 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 						blank: false,
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			range: new fields.SchemaField(
 				{
@@ -201,7 +201,7 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 					}),
 					value: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			duration: new fields.SchemaField(
 				{
@@ -214,7 +214,7 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 					}),
 					value: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			damage: new fields.SchemaField(
 				{
@@ -240,7 +240,7 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 						choices: Object.values(SpellDamageForm),
 					}),
 				},
-				{ required: true, nullable: true }
+				{ required: true, nullable: true },
 			),
 		};
 	}

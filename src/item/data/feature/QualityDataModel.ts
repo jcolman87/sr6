@@ -1,11 +1,12 @@
 import SR6Actor from '@/actor/SR6Actor';
+import { ActivationMode } from '@/data';
 import { IHasOnDelete } from '@/data/interfaces';
 import { IHasPostCreate } from '@/data/interfaces';
 import ConditionDataModel from '@/condition/ConditionDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
 
-type AppliedConditionEntry = {
+export type AppliedConditionEntry = {
 	idx: number;
 	itemId: string;
 };
@@ -14,6 +15,7 @@ export default abstract class QualityDataModel
 	extends BaseItemDataModel
 	implements IHasOnDelete<SR6Item<QualityDataModel>>, IHasPostCreate
 {
+	abstract activation: ActivationMode;
 	abstract conditions: ConditionDataModel[];
 
 	abstract appliedConditions: AppliedConditionEntry[];
@@ -62,6 +64,13 @@ export default abstract class QualityDataModel
 		const fields = foundry.data.fields;
 		return {
 			...super.defineSchema(),
+			activation: new fields.StringField({
+				initial: ActivationMode.Always,
+				required: true,
+				nullable: false,
+				blank: false,
+				choices: Object.values(ActivationMode),
+			}),
 			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
 				initial: [],
 				required: true,
@@ -76,7 +85,7 @@ export default abstract class QualityDataModel
 					initial: [],
 					required: true,
 					nullable: false,
-				}
+				},
 			),
 		};
 	}
@@ -86,9 +95,9 @@ export default abstract class QualityDataModel
 	}
 
 	onDelete(
-		document: SR6Item<QualityDataModel>,
-		options: DocumentModificationContext<SR6Item<QualityDataModel>>,
-		userId: string
+		_document: SR6Item<QualityDataModel>,
+		_options: DocumentModificationContext<SR6Item<QualityDataModel>>,
+		_userId: string,
 	): void {
 		// Clear our conditions before deletion
 		// TODO: make this async?

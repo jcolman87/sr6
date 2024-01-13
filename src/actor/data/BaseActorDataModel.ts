@@ -46,7 +46,8 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		return pool;
 	}
 
-	getPool(type: RollType): number {
+	// TODO:
+	getPool(_type: RollType): number {
 		return 0;
 	}
 
@@ -57,13 +58,13 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 	get conditions(): ConditionDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'condition').map(
-			(i) => (i as SR6Item<ConditionDataModel>).systemData
+			(i) => (i as SR6Item<ConditionDataModel>).systemData,
 		);
 	}
 
 	get skills(): SkillDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'skill').map(
-			(i) => (i as SR6Item<SkillDataModel>).systemData
+			(i) => (i as SR6Item<SkillDataModel>).systemData,
 		);
 	}
 
@@ -73,19 +74,19 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 	get augmentations(): AugmentationDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'augmentation').map(
-			(i) => (i as SR6Item<AugmentationDataModel>).systemData
+			(i) => (i as SR6Item<AugmentationDataModel>).systemData,
 		);
 	}
 
 	get contacts(): ContactDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'contact').map(
-			(i) => (i as SR6Item<ContactDataModel>).systemData
+			(i) => (i as SR6Item<ContactDataModel>).systemData,
 		);
 	}
 
 	get lifestyles(): LifestyleDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'lifestyle').map(
-			(i) => (i as SR6Item<LifestyleDataModel>).systemData
+			(i) => (i as SR6Item<LifestyleDataModel>).systemData,
 		);
 	}
 
@@ -95,43 +96,43 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 
 	get qualities(): QualityDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'quality').map(
-			(i) => (i as SR6Item<QualityDataModel>).systemData
+			(i) => (i as SR6Item<QualityDataModel>).systemData,
 		);
 	}
 
 	get credsticks(): CredstickDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'credstick').map(
-			(i) => (i as SR6Item<CredstickDataModel>).systemData
+			(i) => (i as SR6Item<CredstickDataModel>).systemData,
 		);
 	}
 
 	get adeptPowers(): AdeptPowerDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'adeptpower').map(
-			(i) => (i as SR6Item<AdeptPowerDataModel>).systemData
+			(i) => (i as SR6Item<AdeptPowerDataModel>).systemData,
 		);
 	}
 
 	get complexForms(): ComplexFormDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'complexform').map(
-			(i) => (i as SR6Item<ComplexFormDataModel>).systemData
+			(i) => (i as SR6Item<ComplexFormDataModel>).systemData,
 		);
 	}
 
 	get matrixPrograms(): MatrixProgramDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'matrix_program').map(
-			(i) => (i as SR6Item<MatrixProgramDataModel>).systemData
+			(i) => (i as SR6Item<MatrixProgramDataModel>).systemData,
 		);
 	}
 
 	get weapons(): WeaponDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'weapon').map(
-			(i) => (i as SR6Item<WeaponDataModel>).systemData
+			(i) => (i as SR6Item<WeaponDataModel>).systemData,
 		);
 	}
 
 	get wearables(): WearableDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'wearable').map(
-			(i) => (i as SR6Item<WearableDataModel>).systemData
+			(i) => (i as SR6Item<WearableDataModel>).systemData,
 		);
 	}
 
@@ -140,22 +141,22 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	get woundModifier(): number {
-		return Object.entries(this.woundModifiers).reduce((acc, [key, value]) => (acc += value), 0);
+		return Object.entries(this.woundModifiers).reduce((acc, [_key, value]) => (acc += value), 0);
 	}
 
 	get totalNuyen(): number {
 		return [...this.actor!.credsticks.map((item: SR6Item<CredstickDataModel>) => item.systemData.nuyen), 0].reduce(
-			(total, nuyen) => total + nuyen
+			(total, nuyen) => total + nuyen,
 		);
 	}
 
-	getRollConditions(type: RollType): ConditionDataModel[] {
-		return this.getSituationalConditions(ConditionSituation.Roll).filter((condition) => {
-			return condition.getModifiersForRoll(type).length > 0;
-		});
+	// TODO:
+	getRollConditions(_type: RollType): ConditionDataModel[] {
+		return this.getSituationalConditions(ConditionSituation.Roll);
 	}
 
-	getSituationalConditions(situation: ConditionSituation): ConditionDataModel[] {
+	// TODO:
+	getSituationalConditions(_situation: ConditionSituation): ConditionDataModel[] {
 		/*
 		return this.conditions.filter((condition) => {
 			return (
@@ -164,16 +165,18 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 			);
 		});
 		 */
+		console.log('getSituationalConditions', this.conditions);
 		return this.conditions;
 	}
 
+	// TODO:
 	getModifiers(
-		type: ConditionModifierType,
-		situation: ConditionSituation = ConditionSituation.Always,
-		activation: ConditionActivation = ConditionActivation.Always
+		_type: ConditionModifierType,
+		_situation: ConditionSituation = ConditionSituation.Always,
+		_activation: ConditionActivation = ConditionActivation.Always,
 	): ConditionEffectChangeData[] {
 		return [];
-		//return this.conditions.flatMap((condition) => condition.getModifiers(type, situation, activation));
+		// return this.conditions.flatMap((condition) => condition.getModifiers(type, situation, activation));
 	}
 
 	protected get _matrixPersona(): null | MatrixPersonaDataModel {
@@ -207,7 +210,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	protected async _activateMatrixPersona(
-		device: SR6Item<GearDataModel> | null = null
+		device: SR6Item<GearDataModel> | null = null,
 	): Promise<SR6Item<MatrixPersonaDataModel>> {
 		// Remove any existing persona
 		this.actor!.items.filter((i) => i.type === 'matrix_persona').forEach((i) => i.delete());
@@ -224,7 +227,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 							dataProcessing: '@logic',
 							firewall: '@willpower',
 						},
-				  };
+					};
 
 		// create it
 		const persona = (

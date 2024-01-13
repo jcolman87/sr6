@@ -26,28 +26,37 @@ const wearablesVisible = ref(
 			id: wearable.item!.id,
 			visible: false,
 		};
-	})
+	}),
 );
 
 function toggleWearableVisible(wearable: WearableDataModel) {
-	const isVisible = wearablesVisible.value.find((v) => v.id == wearable.item!.id)!.visible;
-	wearablesVisible.value.find((v) => v.id == wearable.item!.id)!.visible = !isVisible;
+	const isVisible = wearablesVisible.value.find((v) => v.id === wearable.item!.id)!.visible;
+	wearablesVisible.value.find((v) => v.id === wearable.item!.id)!.visible = !isVisible;
 }
 
 function toggleEquipWearable(wearable: WearableDataModel) {
 	switch (wearable.slots[0]) {
 		case WearableSlot.Armor: {
 			const equipped = toRaw(props.actor).systemData.equipped;
-			if (equipped._armor == wearable.item!.uuid) {
+			if (equipped._armor === wearable.item!.uuid) {
 				equipped.armor = null;
 			} else {
 				equipped.armor = wearable.item! as unknown as SR6Item<WearableDataModel>;
 			}
 			break;
 		}
+		case WearableSlot.Head: {
+			const equipped = toRaw(props.actor).systemData.equipped;
+			if (equipped._head === wearable.item!.uuid) {
+				equipped.head = null;
+			} else {
+				equipped.head = wearable.item! as unknown as SR6Item<WearableDataModel>;
+			}
+			break;
+		}
 		case WearableSlot.Clothes: {
 			const equipped = toRaw(props.actor).systemData.equipped;
-			if (equipped._clothes == wearable.item!.uuid) {
+			if (equipped._clothes === wearable.item!.uuid) {
 				equipped.clothes = null;
 			} else {
 				equipped.clothes = wearable.item! as unknown as SR6Item<WearableDataModel>;
@@ -68,7 +77,9 @@ function toggleEquipWearable(wearable: WearableDataModel) {
 						<label class="switch">
 							<input
 								type="checkbox"
-								:checked="actor.systemData.equipped.isEquipped(wearable.item! as SR6Item<WearableDataModel>)"
+								:checked="
+									actor.systemData.equipped.isEquipped(wearable.item! as SR6Item<WearableDataModel>)
+								"
 								@change="toggleEquipWearable(wearable)"
 							/>
 							<span class="slider round"></span>

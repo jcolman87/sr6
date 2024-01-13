@@ -4,7 +4,6 @@
  * @file Player Character Sheet
  */
 
-import SR6Combat from '@/combat/SR6Combat';
 import { Component } from 'vue';
 import VueCharacterSheet from '@/vue/sheets/actor/CharacterSheet.vue';
 
@@ -50,7 +49,7 @@ export default class CharacterSheet extends VueSheet(SR6ActorSheet<CharacterData
 
 	protected override async _onDropItem(
 		event: DragEvent,
-		data: DropCanvasData<'Item', SR6Item<BaseItemDataModel>>
+		data: DropCanvasData<'Item', SR6Item<BaseItemDataModel>>,
 	): Promise<SR6Item<BaseItemDataModel>[] | boolean> {
 		return await super._onDropItem(event, data);
 	}

@@ -4,7 +4,6 @@ import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
-import Localized from '@/vue/components/Localized.vue';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import { computed, toRaw, inject } from 'vue';
 import { deleteItem, getEventValue } from '@/vue/directives';

@@ -1,9 +1,4 @@
 <script lang="ts" setup>
-import { computed, toRaw, inject, onUpdated } from 'vue';
-
-import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import CharacterDataModel from '@/actor/data/CharacterDataModel';
-
 import Localized from '@/vue/components/Localized.vue';
 import CharacterMeta from '@/vue/sheets/actor/character/CharacterMeta.vue';
 
@@ -15,9 +10,6 @@ import MatrixTab from '@/vue/sheets/actor/character/MatrixTab.vue';
 import MagicTab from '@/vue/sheets/actor/character/MagicTab.vue';
 import PersonalTab from '@/vue/sheets/actor/character/PersonalTab.vue';
 import EffectsTab from '@/vue/sheets/actor/character/EffectsTab.vue';
-
-const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
-const system = computed(() => toRaw(context.data.actor).systemData);
 </script>
 
 <template>

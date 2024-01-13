@@ -3,7 +3,7 @@
  * @author jaynus
  * @file SR6 Items Root.
  */
-import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
+import { SR6Roll } from '@/roll/SR6Roll';
 
 export enum RollType {
 	Other = 0,
@@ -34,7 +34,7 @@ export const ROLL_CATEGORIES = new Map([
 		Array.from(
 			Object.keys(RollType)
 				.filter((t) => ![RollType[RollType.Initiative], RollType[RollType.SpellSoak]].includes(t))
-				.map((t) => RollType[t as keyof typeof RollType])
+				.map((t) => RollType[t as keyof typeof RollType]),
 		),
 	],
 	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],

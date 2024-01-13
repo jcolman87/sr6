@@ -3,11 +3,7 @@
  * @author jaynus
  * @file ActiveEffects Customizations
  */
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import SR6Actor from '@/actor/SR6Actor';
 import ConditionDataModel, { ConditionActiveEffectData } from '@/condition/ConditionDataModel';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getItemSync } from '@/util';
 
@@ -27,7 +23,7 @@ export default class SR6Effect extends ActiveEffect {
 	}
 
 	get isCondition(): boolean {
-		return this.parent instanceof SR6Item<ConditionDataModel>;
+		return this.parent instanceof SR6Item && (this.parent as SR6Item).systemData instanceof ConditionDataModel;
 	}
 
 	get condition(): ConditionDataModel | null {
@@ -83,7 +79,7 @@ export default class SR6Effect extends ActiveEffect {
 			} else delta = this._castDelta(change.value, targetType);
 		} catch (err) {
 			console.warn(
-				`Actor [${document.id}] | Unable to parse active effect change for ${change.key}: "${change.value}"`
+				`Actor [${document.id}] | Unable to parse active effect change for ${change.key}: "${change.value}"`,
 			);
 			return undefined;
 		}
@@ -149,17 +145,20 @@ export default class SR6Effect extends ActiveEffect {
 
 	_parseChanges(document: Actor | Item, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
 		if (change.value.includes('@')) {
-			/*
-			// BUG: we cant use get by UUID here because it causes an infinite loop from preparing data.
-			const origin = actor.items.find((i) => i.uuid === (this.origin as ItemUUID)) as SR6Item<BaseItemDataModel>;
-			// getItem(SR6Item<BaseItemDataModel>, this.origin as ItemUUID);
-
-			if (origin) {
-				change.value = origin.solveFormula(change.value, actor as SR6Actor<BaseActorDataModel>).toString();
-			} else {
-				change.value = (actor as SR6Actor<BaseActorDataModel>).solveFormula(change.value).toString();
+			const uuid = parseUuid(this.origin);
+			console.log(this, uuid);
+			if (uuid) {
+				if (Object.keys(uuid.embedded).length === 0) {
+					console.error('TODO');
+				} else {
+					const item = getItemSync(SR6Item, this.origin as ItemUUID);
+					if (item) {
+						change.value = item.solveFormula(change.value).toString();
+					}
+				}
 			}
-			 */
+
+			// change.value = item.solveFormula(change.value, document).toString();
 		}
 
 		return change;

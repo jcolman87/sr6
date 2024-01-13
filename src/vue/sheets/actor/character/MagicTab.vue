@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { EnumAttribute } from '@/actor/data';
 import { MagicTradition } from '@/data/magic';
-import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
 import Localized from '@/vue/components/Localized.vue';
@@ -21,13 +20,13 @@ const spells = computed(
 	() =>
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'spell')
-			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SpellDataModel>[]
+			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SpellDataModel>[],
 );
 
 const adeptpowers = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'adeptpower')
-		.map((i) => i as SR6Item<AdeptPowerDataModel>)
+		.map((i) => i as SR6Item<AdeptPowerDataModel>),
 );
 
 async function rollSpell(spell: SR6Item<SpellDataModel>) {

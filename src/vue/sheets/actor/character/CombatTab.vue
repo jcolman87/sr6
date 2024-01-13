@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import { SelectListDialog } from '@/app';
 import { ActivationPeriod, ActivationType } from '@/data';
 import GeneralActionDataModel, { GeneralActionCategory } from '@/item/data/action/GeneralActionDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
@@ -11,7 +10,7 @@ import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
 import Weapons from '@/vue/components/combat/Weapons.vue';
 import Wearing from '@/vue/components/combat/Wearing.vue';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import { computed, inject, toRaw, onUpdated, ref } from 'vue';
+import { computed, inject, toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
@@ -42,7 +41,7 @@ const generalActions = computed(
 			.items.filter((i) => i.type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>)
 			.filter((i) => i.systemData.category === GeneralActionCategory.General)
-			.sort(sortActions) as SR6Item<GeneralActionDataModel>[]
+			.sort(sortActions) as SR6Item<GeneralActionDataModel>[],
 );
 const combatActions = computed(
 	() =>
@@ -50,7 +49,7 @@ const combatActions = computed(
 			.items.filter((i) => i.type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>)
 			.filter((i) => i.systemData.category === GeneralActionCategory.Combat)
-			.sort(sortActions) as SR6Item<GeneralActionDataModel>[]
+			.sort(sortActions) as SR6Item<GeneralActionDataModel>[],
 );
 const magicActions = computed(
 	() =>
@@ -58,7 +57,7 @@ const magicActions = computed(
 			.items.filter((i) => i.type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>)
 			.filter((i) => i.systemData.category === GeneralActionCategory.Magic)
-			.sort(sortActions) as SR6Item<GeneralActionDataModel>[]
+			.sort(sortActions) as SR6Item<GeneralActionDataModel>[],
 );
 
 const actionsDescriptionVisible = ref(
@@ -75,7 +74,7 @@ const actionsDescriptionVisible = ref(
 					id: c.id,
 					visible: false,
 				};
-			})
+			}),
 		)
 		.concat(
 			magicActions.value.map((c) => {
@@ -83,8 +82,8 @@ const actionsDescriptionVisible = ref(
 					id: c.id,
 					visible: false,
 				};
-			})
-		)
+			}),
+		),
 );
 
 function addGeneralAction() {}
@@ -102,7 +101,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 	});
 
 	// Special case for Attacks
-	if (action.name == 'Attack') {
+	if (action.name === 'Attack') {
 		const actor = toRaw(context.data.actor);
 		const weapon = actor.systemData.equipped.weapon;
 		if (!weapon) {
@@ -111,7 +110,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 		}
 		await action.systemData.use(consume, false);
 		await rollWeaponAttack(actor.systemData, weapon);
-	} /*else if (action.name == 'Cast Spell') {
+	} /* else if (action.name == 'Cast Spell') {
 		const actor = toRaw(context.data.actor);
 		const pickSpell = new SelectListDialog();
 		const spell = pickSpell.selection();
@@ -120,8 +119,8 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 	}
 }
 
-function isActorTurn(): boolean {
-	return context.data.combat?.combatant?.actor.uuid == context.data.actor.uuid;
+function _isActorTurn(): boolean {
+	return context.data.combat?.combatant?.actor.uuid === context.data.actor.uuid;
 }
 
 function getActiveClass(action: SR6Item<GeneralActionDataModel>): string {
@@ -137,7 +136,7 @@ function getActiveClass(action: SR6Item<GeneralActionDataModel>): string {
 }
 
 function minimizeCategory(actions: SR6Item<GeneralActionDataModel>[]) {
-	actions.forEach((a) => (actionsDescriptionVisible.value.find((c) => c.id == a.id)!.visible = false));
+	actions.forEach((a) => (actionsDescriptionVisible.value.find((c) => c.id === a.id)!.visible = false));
 }
 </script>
 
@@ -206,8 +205,8 @@ function minimizeCategory(actions: SR6Item<GeneralActionDataModel>[]) {
 										id="aboutDescription"
 										style="max-height: 100px; min-height: 50px; resize: none; font-size: 10px"
 										disabled
-										>{{ action.systemData.description }}</textarea
-									>
+										v-model="action.systemData.description"
+									></textarea>
 								</Collapse>
 							</td>
 						</tr>

@@ -3,19 +3,12 @@
  * @author jaynus
  * @file Base SR6 Actor
  */
-import ConditionDataModel, {
-	ConditionActivation,
-	ConditionEffectChangeData,
-	ConditionModifierType,
-	ConditionSituation,
-} from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import { IHasOnUpdate } from '@/data/interfaces';
 import { IHasPreCreate } from '@/data/interfaces';
 import { IHasOnDelete } from '@/data/interfaces';
 import { IHasPostCreate } from '@/data/interfaces';
-import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
@@ -45,7 +38,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	protected override async _onUpdate(
 		changed: DeepPartial<this['_source']>,
 		options: DocumentUpdateContext<this>,
-		userId: string
+		userId: string,
 	): Promise<void> {
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
 		return super._onUpdate(changed, options, userId);
@@ -173,10 +166,9 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	protected override async _preCreate(
 		data: PreDocumentId<this['_source']>,
 		options: DocumentModificationContext<this>,
-		user: User
+		user: User,
 	): Promise<void> {
 		await (<IHasPreCreate<this>>this.systemData).preCreate?.(this, data, options, user);
-
 		return super._preCreate(data, options, user);
 	}
 
@@ -200,7 +192,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	 */
 	static override createDialog(
 		data?: { folder?: string | undefined } | undefined,
-		options?: Partial<FormApplicationOptions> | undefined
+		options?: Partial<FormApplicationOptions> | undefined,
 	): Promise<ClientDocument<foundry.documents.BaseActor> | undefined> {
 		// The 'dialog' class needs to be added explicitly, otherwise it won't be added by the super call.
 		const touchedOptions = {

@@ -38,7 +38,7 @@ export default abstract class WearableDataModel extends GearDataModel {
 					blank: false,
 					choices: Object.values(WearableSlot),
 				}),
-				{ initial: [], nullable: false, required: true }
+				{ initial: [], nullable: false, required: true },
 			),
 			formulas: new fields.SchemaField(
 				{
@@ -55,7 +55,7 @@ export default abstract class WearableDataModel extends GearDataModel {
 						blank: false,
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 		};
 	}

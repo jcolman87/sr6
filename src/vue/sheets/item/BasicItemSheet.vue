@@ -21,7 +21,7 @@ const props = withDefaults(
 		 */
 		showEffectsTab?: boolean;
 	}>(),
-	{ hasDecoration: false, showEffectsTab: true }
+	{ hasDecoration: false, showEffectsTab: true },
 );
 
 const context = inject<ItemSheetContext>(RootContext)!;
@@ -103,7 +103,7 @@ onBeforeUpdate(updateEffects);
 			</div>
 
 			<div v-if="props.showEffectsTab" class="tab" data-group="primary" data-tab="effects">
-				<EffectsView :effects="[...effects as any]" @add-effect="addEffect" />
+				<EffectsView :effects="[...(effects as any)]" @add-effect="addEffect" />
 			</div>
 		</section>
 	</div>

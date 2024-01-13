@@ -1,5 +1,4 @@
 import { EnumAttribute } from '@/actor/data';
-import { MAGIC_TRADITION_ATTRIBUTE } from '@/data/magic';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SpellDataModel, { SpellAdjustmentType } from '@/item/data/SpellDataModel';
@@ -7,7 +6,7 @@ import SR6Item from '@/item/SR6Item';
 import SR6Actor from '@/actor/SR6Actor';
 import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
 import { RollType, ROLL_TEMPLATES } from '@/roll';
-import { Distance, FireMode, InitiativeType } from '@/data';
+import { Distance, FireMode } from '@/data';
 import RollPrompt from '@/app/RollPrompt';
 
 import { IHasPools } from '@/data/interfaces';
@@ -15,9 +14,7 @@ import { IHasMatrixPersona } from '@/data/interfaces';
 import { IHasInitiative } from '@/data/interfaces';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
-import { getActor, getActorSync, getItem, getItemSync, getTargetActorIds, getTargetActors } from '@/util';
-import * as util from '@/util';
-import { create } from 'tinymce';
+import { getActor, getActorSync, getItem, getItemSync, getTargetActorIds } from '@/util';
 
 export const BUGFIX = '';
 
@@ -102,7 +99,7 @@ export function createBaseAttackData({
 	damage = 0,
 	attackRating = 0,
 	edgeGained = EdgeGainedTarget.None,
-}: BaseAttackData) {
+}: BaseAttackData): BaseAttackData {
 	return {
 		attackerId: attackerId,
 		itemId: itemId,
@@ -120,10 +117,10 @@ async function finishRoll<T extends SR6RollData>(data: Record<string, unknown>, 
 	// await evaluated.finish();
 
 	// Apply edge gain to target if any
-	if (options.hasOwnProperty('attack')) {
+	if (Object.hasOwnProperty.call(options, 'attack')) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const attack = (options as any)['attack'] as BaseAttackData;
-		if (attack.edgeGained != EdgeGainedTarget.None) {
+		if (attack.edgeGained !== EdgeGainedTarget.None) {
 			const attacker = (await getActor(SR6Actor<LifeformDataModel>, attack.attackerId))!;
 			const targets = attack.targetIds
 				? attack.targetIds!.map((target) => getActorSync(SR6Actor<LifeformDataModel>, target)!)
@@ -146,7 +143,7 @@ export function getInitiativeRoll(systemData: IHasInitiative, formula: string): 
 	return new SR6Roll(
 		`(${formula}) + ${poolModifier}`,
 		{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
-		{ ...SR6Roll.defaultOptions(), template: ROLL_TEMPLATES.get(RollType.Initiative)! }
+		{ ...SR6Roll.defaultOptions(), template: ROLL_TEMPLATES.get(RollType.Initiative)! },
 	);
 }
 
@@ -220,7 +217,7 @@ export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<We
 export async function rollWeaponDefend(
 	systemData: IHasPools,
 	hits: number,
-	previous: WeaponAttackRollData
+	previous: WeaponAttackRollData,
 ): Promise<void> {
 	const rollType = RollType.WeaponDefend;
 
@@ -244,7 +241,7 @@ export async function rollWeaponDefend(
 export async function rollWeaponSoak(
 	systemData: IHasPools,
 	hits: number,
-	previous: WeaponDefendRollData
+	previous: WeaponDefendRollData,
 ): Promise<void> {
 	const rollType = RollType.WeaponSoak;
 
@@ -270,7 +267,7 @@ export async function rollWeaponSoak(
 //
 export async function rollMatrixAction(
 	systemData: IHasMatrixPersona,
-	action: SR6Item<MatrixActionDataModel>
+	action: SR6Item<MatrixActionDataModel>,
 ): Promise<void> {
 	if (!systemData.matrixPersona) {
 		ui.notifications.error('You cannot roll a matrix action without activating your persona');
@@ -305,7 +302,7 @@ export async function rollMatrixAction(
 export async function rollMatrixDefense(
 	systemData: IHasMatrixPersona,
 	hits: number,
-	previous: MatrixActionRollData
+	previous: MatrixActionRollData,
 ): Promise<void> {
 	const rollType = RollType.MatrixActionDefend;
 
@@ -334,7 +331,7 @@ export async function rollMatrixDefense(
 //
 export async function rollSpellCast<TDataModel extends LifeformDataModel = LifeformDataModel>(
 	actor: SR6Actor<TDataModel>,
-	spell: SR6Item<SpellDataModel>
+	spell: SR6Item<SpellDataModel>,
 ): Promise<void> {
 	const rollType = RollType.SpellCast;
 	const pool = spell.systemData.pool;
@@ -365,13 +362,13 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 export async function rollSpellResistDrain<TDataModel extends LifeformDataModel = LifeformDataModel>(
 	systemData: TDataModel,
 	hits: number,
-	previous: SpellCastRollData
+	previous: SpellCastRollData,
 ): Promise<void> {
 	const rollType = RollType.SpellDrain;
 
 	const pool = systemData.actor!.systemData.getPool(rollType) + systemData.spellResistDrain;
 	const attack = { ...previous.attack, damage: previous.drain };
-	console.log('resist drain attack', attack);
+
 	const rollData = await RollPrompt.promptForRoll<SpellResistDrainRollData>(systemData.actor!, {
 		...SR6Roll.defaultOptions(),
 		pool: pool,
@@ -389,11 +386,11 @@ export async function rollSpellResistDrain<TDataModel extends LifeformDataModel 
 export async function rollSpellDefend<TDataModel extends LifeformDataModel = LifeformDataModel>(
 	systemData: TDataModel,
 	hits: number,
-	previous: SpellCastRollData
+	previous: SpellCastRollData,
 ): Promise<void> {
 	const rollType = RollType.SpellDefend;
 
-	const attacker = await getActor(SR6Actor<LifeformDataModel>, previous.attack.attackerId);
+	// const attacker = await getActor(SR6Actor<LifeformDataModel>, previous.attack.attackerId);
 	const defender = systemData.actor! as SR6Actor<LifeformDataModel>;
 	const spell = (await getItem(SR6Item<SpellDataModel>, previous.attack.itemId))!;
 

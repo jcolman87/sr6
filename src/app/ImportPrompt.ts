@@ -24,7 +24,6 @@ import {
 	getCoreAugmentations,
 	getCoreMatrixPrograms,
 } from '@/item/data';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import LifestyleType from '@/item/data/feature/LifestyleDataModel';
 import SINDataModel from '@/item/data/feature/SINDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
@@ -180,7 +179,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							rating: value.quality,
 						},
 					};
-				})
+				}),
 			)) as SR6Item<SINDataModel>[];
 		}
 
@@ -207,7 +206,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							sin: sin_id,
 						},
 					};
-				})
+				}),
 			);
 		}
 
@@ -226,7 +225,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							type: value.type,
 						},
 					};
-				})
+				}),
 			);
 		}
 
@@ -253,7 +252,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							},
 						};
 					}
-				})
+				}),
 			);
 		}
 
@@ -298,7 +297,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							}
 						}
 					})
-					.filter((p: any) => p !== null)
+					.filter((p: any) => p !== null),
 			);
 		}
 
@@ -309,7 +308,7 @@ export class ImportPrompt extends VueSheet(Application) {
 					.map((value: any) => {
 						let name = value.name;
 						let rating = 1;
-						var arr = /(.*)Rating ([0-9])/g.exec(value.name);
+						const arr = /(.*)Rating ([0-9])/g.exec(value.name);
 
 						if (arr) {
 							name = arr[1].trim();
@@ -348,7 +347,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							};
 						}
 					})
-					.filter((p: any) => p !== null)
+					.filter((p: any) => p !== null),
 			);
 		}
 
@@ -365,7 +364,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							return null;
 						}
 					})
-					.filter((p: any) => p !== null)
+					.filter((p: any) => p !== null),
 			);
 		}
 
@@ -381,7 +380,7 @@ export class ImportPrompt extends VueSheet(Application) {
 						}
 						return true;
 					})
-					.map((value: any) => coreWeapons.find((w) => w.name === value.name))
+					.map((value: any) => coreWeapons.find((w) => w.name === value.name)),
 			);
 		}
 		if (Object.prototype.hasOwnProperty.call(json, 'closeCombatWeapons') && json.closeCombatWeapons.length > 0) {
@@ -395,7 +394,7 @@ export class ImportPrompt extends VueSheet(Application) {
 						}
 						return true;
 					})
-					.map((value: any) => coreWeapons.find((w) => w.name === value.name))
+					.map((value: any) => coreWeapons.find((w) => w.name === value.name)),
 			);
 		}
 
@@ -415,7 +414,7 @@ export class ImportPrompt extends VueSheet(Application) {
 						}
 						return true;
 					})
-					.map((value: any) => allGear.find((w) => w.name === value.name))
+					.map((value: any) => allGear.find((w) => w.name === value.name)),
 			);
 		}
 
@@ -443,14 +442,16 @@ export class ImportPrompt extends VueSheet(Application) {
 							},
 						};
 					}
-				})
+				}),
 			);
 		}
 
 		if (json.armors.length > 0) {
 			items = items.concat(
 				json.armors.map((value: any) => {
-					const item = allGear.find((w) => w.name.toLowerCase() === value.name.toLowerCase());
+					const item = allGear.find((w) => {
+						return w.name.toLowerCase() === value.name.toLowerCase();
+					});
 					if (item) {
 						return item;
 					} else {
@@ -482,7 +483,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							},
 						};
 					}
-				})
+				}),
 			);
 		}
 

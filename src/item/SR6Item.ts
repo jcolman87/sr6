@@ -8,7 +8,6 @@ import { IHasPostCreate } from '@/data/interfaces';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { IHasPreCreate } from '@/data/interfaces';
 import { IHasOnDelete } from '@/data/interfaces';
 
@@ -32,6 +31,7 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 			...this.getRollData(),
 			...actor?.getRollData(),
 			...data,
+			item: this.getRollData(),
 			actor: actor,
 		};
 
@@ -74,10 +74,9 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	protected override async _preCreate(
 		data: PreDocumentId<this['_source']>,
 		options: DocumentModificationContext<this>,
-		user: foundry.documents.BaseUser
+		user: foundry.documents.BaseUser,
 	): Promise<void> {
 		await (<IHasPreCreate<this>>this.systemData).preCreate?.(this, data, options, user);
-
 		return super._preCreate(data, options, user);
 	}
 
@@ -97,7 +96,7 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	 */
 	static override createDialog(
 		data?: { folder?: string | undefined } | undefined,
-		options?: Partial<FormApplicationOptions> | undefined
+		options?: Partial<FormApplicationOptions> | undefined,
 	): Promise<ClientDocument<foundry.documents.BaseItem> | undefined> {
 		// The 'dialog' class needs to be added explicitly, otherwise it won't be added by the super call.
 		const touchedOptions = {

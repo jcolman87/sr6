@@ -11,7 +11,7 @@ import { getActorSync, getItemSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref, toRaw } from 'vue';
+import { computed, onBeforeUpdate, onMounted, ref, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -29,14 +29,14 @@ const original_pool = roll.value.pool;
 const targets = computed(
 	() =>
 		roll.value.attack.targetIds?.map((id) =>
-			getActorSync(SR6Actor<BaseActorDataModel>, id)
-		) as SR6Actor<BaseActorDataModel>[]
+			getActorSync(SR6Actor<BaseActorDataModel>, id),
+		) as SR6Actor<BaseActorDataModel>[],
 );
 const targetDefenseRating = computed(() =>
 	targets.value.reduce(
 		(acc, target) => (target.systemData.defenseRating > acc ? (acc = target.systemData.defenseRating) : acc),
-		0
-	)
+		0,
+	),
 );
 
 emit('setText', {
@@ -91,7 +91,7 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 }
 
 function updateEdgeGain() {
-	if (targets.value.length == 0) {
+	if (targets.value.length === 0) {
 		roll.value.attack.edgeGained = EdgeGainedTarget.None;
 	} else {
 		if (roll.value.attack.attackRating! >= targetDefenseRating.value + 4) {

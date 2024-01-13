@@ -5,8 +5,6 @@
  */
 
 import MatrixHostDataModel from '@/actor/data/MatrixHostDataModel';
-import MatrixICDataModel from '@/item/data/MatrixICDataModel';
-import SR6Actor from '@/actor/SR6Actor';
 import { Component } from 'vue';
 import VueMatrixHostSheet from '@/vue/sheets/actor/MatrixHostSheet.vue';
 

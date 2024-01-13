@@ -1,5 +1,4 @@
 import SR6Actor from '@/actor/SR6Actor';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConstructorOf<T> = new (...args: any[]) => T;
@@ -7,7 +6,7 @@ type ConstructorOf<T> = new (...args: any[]) => T;
 export function constructOptGroup(
 	select: HTMLSelectElement,
 	groupLabel: string,
-	optValues?: string[]
+	optValues?: string[],
 ): HTMLOptGroupElement {
 	const options = select.querySelectorAll<HTMLOptionElement>(':scope > option');
 	const optgroup = document.createElement('optgroup');
@@ -28,7 +27,7 @@ export function toSnakeCase(string: string): string {
 
 export async function getActor<TActor extends Actor>(
 	documentClass: ConstructorOf<TActor>,
-	id: ActorUUID
+	id: ActorUUID,
 ): Promise<null | TActor> {
 	const actor = await fromUuid(id);
 	if (actor instanceof documentClass) {
@@ -56,7 +55,7 @@ export function getItemSync<TItem extends Item>(documentClass: ConstructorOf<TIt
 
 export async function getItem<TItem extends Item>(
 	documentClass: ConstructorOf<TItem>,
-	id: ItemUUID
+	id: ItemUUID,
 ): Promise<null | TItem> {
 	const item = fromUuid(id);
 

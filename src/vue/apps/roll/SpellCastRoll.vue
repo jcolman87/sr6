@@ -28,8 +28,8 @@ const showAdjustments = ref(false);
 const maxAdjustments = computed(() =>
 	Math.max(
 		toRaw(props.actor).systemData.attribute(EnumAttribute.magic).value,
-		toRaw(props.actor).skill('Sorcery')!.systemData.points
-	)
+		toRaw(props.actor).skill('Sorcery')!.systemData.points,
+	),
 );
 
 const adjustments = ref(data.adjustments);

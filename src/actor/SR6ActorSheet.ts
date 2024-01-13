@@ -12,7 +12,7 @@ import './SR6ActorSheet.scss';
 
 export default class SR6ActorSheet<
 	TActorDataModel extends BaseActorDataModel = BaseActorDataModel,
-	TItemDataModel extends BaseItemDataModel = BaseItemDataModel
+	TItemDataModel extends BaseItemDataModel = BaseItemDataModel,
 > extends ActorSheet<SR6Actor<TActorDataModel>, SR6Item<TItemDataModel>> {
 	constructor(object: SR6Actor<TActorDataModel>, options?: Partial<ActorSheetOptions>) {
 		super(object, options);

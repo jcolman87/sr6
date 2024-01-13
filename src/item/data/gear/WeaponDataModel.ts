@@ -210,7 +210,7 @@ export default abstract class WeaponDataModel extends GearDataModel {
 
 		if (accessory.systemData.attachedTo !== null) {
 			console.error(
-				`Cannot attach (${accessory.uuid})->(${this.item!.uuid}): Child was alread attached to something!`
+				`Cannot attach (${accessory.uuid})->(${this.item!.uuid}): Child was alread attached to something!`,
 			);
 			return false;
 		}
@@ -271,11 +271,11 @@ export default abstract class WeaponDataModel extends GearDataModel {
 						choices: Object.values(DamageType),
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			firemodes: new fields.ArrayField(
 				new fields.StringField({ blank: false, choices: Object.values(FireMode) }),
-				{ initial: [FireMode.SS], required: true, nullable: true }
+				{ initial: [FireMode.SS], required: true, nullable: true },
 			),
 			_accessories: new fields.ArrayField(new DocumentUUIDField(), {
 				initial: [],

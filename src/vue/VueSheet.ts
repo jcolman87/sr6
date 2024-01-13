@@ -14,7 +14,7 @@ type Constructor = new (...args: any[]) => {
 };
 
 export default function VueSheet<TBase extends Constructor, ContextType extends ContextBase | undefined = ContextBase>(
-	base: TBase
+	base: TBase,
 ): TBase {
 	return class extends base {
 		form?: HTMLFormElement;

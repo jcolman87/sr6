@@ -22,7 +22,7 @@ const props = withDefaults(
 		 */
 		showEffectsTab?: boolean;
 	}>(),
-	{ hasDecoration: false, showEffectsTab: true }
+	{ hasDecoration: false, showEffectsTab: true },
 );
 
 const context = inject<ActorSheetContext<BaseActorDataModel>>(RootContext)!;
@@ -45,7 +45,7 @@ async function addEffect(category: string) {
 }
 
 function updateEffects() {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	1;
 	effects.value = [...(toRaw(context.data.actor).effects as any)];
 }
 
@@ -55,7 +55,7 @@ onBeforeUpdate(updateEffects);
 
 <template>
 	<div class="actor-sheet-basic">
-		<header :class="hasDecoration ? 'with-decoration' : ''">
+		<header :class="props.hasDecoration ? 'with-decoration' : ''">
 			<img
 				:src="context.data.actor.img"
 				data-edit="img"
@@ -69,7 +69,7 @@ onBeforeUpdate(updateEffects);
 				v-localize:placeholder="'SR6.Labels.Name'"
 			/>
 			<!-- Decoration -->
-			<slot v-if="hasDecoration" name="decoration"></slot>
+			<slot v-if="props.hasDecoration" name="decoration"></slot>
 		</header>
 
 		<nav class="sheet-tabs" data-group="primary">
@@ -84,7 +84,7 @@ onBeforeUpdate(updateEffects);
 					<Localized label="SR6.Tabs.Data" />
 				</a>
 
-				<a v-if="showEffectsTab" class="actor" data-tab="effects">
+				<a v-if="props.showEffectsTab" class="actor" data-tab="effects">
 					<Localized label="SR6.Tabs.Effects" />
 				</a>
 			</slot>
@@ -108,8 +108,8 @@ onBeforeUpdate(updateEffects);
 				<slot name="data"> DATA </slot>
 			</div>
 
-			<div v-if="showEffectsTab" class="tab" data-group="primary" data-tab="effects">
-				<EffectsView :effects="[...effects as any]" @add-effect="addEffect" />
+			<div v-if="props.showEffectsTab" class="tab" data-group="primary" data-tab="effects">
+				<EffectsView :effects="[...(effects as any)]" @add-effect="addEffect" />
 			</div>
 		</section>
 	</div>

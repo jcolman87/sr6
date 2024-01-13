@@ -20,7 +20,7 @@ const skills = computed(
 	() =>
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'skill')
-			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SkillDataModel>[]
+			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SkillDataModel>[],
 );
 
 const skillsVisible = ref(
@@ -29,7 +29,7 @@ const skillsVisible = ref(
 			id: skill.id,
 			visible: skill.systemData.specialization !== null,
 		};
-	})
+	}),
 );
 const isMaximized = ref(false);
 
@@ -86,7 +86,7 @@ function maximize() {
 						<a
 							@click="
 								skillsVisible.find((v) => v.id == skill.id)!.visible = !skillsVisible.find(
-									(v) => v.id == skill.id
+									(v) => v.id == skill.id,
 								)!.visible
 							"
 							><i class="fa-solid fa-down-from-line"></i> {{ skill.name }}</a

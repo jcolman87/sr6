@@ -27,7 +27,7 @@ export interface BaseSheetContext<
 	DocumentType extends foundry.abstract.Document = foundry.abstract.Document,
 	SheetOptionsType extends DocumentSheetOptions = DocumentSheetOptions,
 	TSheetType extends DocumentSheet<DocumentType, SheetOptionsType> = DocumentSheet<DocumentType, SheetOptionsType>,
-	TSheetDataType extends DocumentSheetData<DocumentType> = DocumentSheetData<DocumentType>
+	TSheetDataType extends DocumentSheetData<DocumentType> = DocumentSheetData<DocumentType>,
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.
@@ -52,7 +52,7 @@ export interface SR6ActorSheetData<TActorDataModel extends BaseActorDataModel = 
 export interface ActorSheetContext<
 	TActorDataModel extends BaseActorDataModel = BaseActorDataModel,
 	TSheetType extends SR6ActorSheet<TActorDataModel> = SR6ActorSheet<TActorDataModel>,
-	TSheetDataType extends SR6ActorSheetData<TActorDataModel> = SR6ActorSheetData<TActorDataModel>
+	TSheetDataType extends SR6ActorSheetData<TActorDataModel> = SR6ActorSheetData<TActorDataModel>,
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.
@@ -78,7 +78,7 @@ export interface SR6ItemSheetData<TItemDataModel extends BaseItemDataModel = Bas
 export interface ItemSheetContext<
 	TItemDataModel extends BaseItemDataModel = BaseItemDataModel,
 	TSheetType extends SR6ItemSheet<TItemDataModel> = SR6ItemSheet<TItemDataModel>,
-	TSheetDataType extends SR6ItemSheetData<TItemDataModel> = SR6ItemSheetData<TItemDataModel>
+	TSheetDataType extends SR6ItemSheetData<TItemDataModel> = SR6ItemSheetData<TItemDataModel>,
 > extends ContextBase {
 	/**
 	 * A reference to the Sheet instance the vue app is rendering.

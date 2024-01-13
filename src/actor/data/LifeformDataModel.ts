@@ -1,4 +1,3 @@
-import SR6Actor from '@/actor/SR6Actor';
 import { EnumAttribute } from '@/actor/data';
 import AttributeDataModel from '@/actor/data/AttributeDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
@@ -7,7 +6,7 @@ import MonitorDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataMo
 import { InitiativeType } from '@/data';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
 
-import { AvailableActions, IHasEdge, IHasInitiative, IHasPools, IHasPreCreate } from '@/data/interfaces';
+import { AvailableActions, IHasEdge, IHasInitiative, IHasPools, IHasPostCreate } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import { RollType } from '@/roll';
 
@@ -45,7 +44,7 @@ export type Initiatives = {
 
 export default abstract class LifeformDataModel
 	extends BaseActorDataModel
-	implements IHasPreCreate<SR6Actor<LifeformDataModel>>, IHasInitiative, IHasEdge, IHasPools
+	implements IHasPostCreate, IHasInitiative, IHasEdge, IHasPools
 {
 	abstract attributes: Attributes;
 
@@ -180,7 +179,6 @@ export default abstract class LifeformDataModel
 		// if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
 		// if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
 
-		this._prepareAttributes();
 		this.monitors.prepareBaseData();
 	}
 
@@ -191,6 +189,7 @@ export default abstract class LifeformDataModel
 
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
+		this._prepareAttributes();
 		this.monitors.prepareDerivedData();
 	}
 
@@ -212,30 +211,25 @@ export default abstract class LifeformDataModel
 	}
 
 	_prepareAttributes(): void {
-		this.attributes.body.prepareData();
-		this.attributes.agility.prepareData();
-		this.attributes.reaction.prepareData();
-		this.attributes.strength.prepareData();
-		this.attributes.willpower.prepareData();
-		this.attributes.logic.prepareData();
-		this.attributes.intuition.prepareData();
-		this.attributes.charisma.prepareData();
-		this.attributes.magic.prepareData();
-		this.attributes.resonance.prepareData();
+		this.attributes.body.prepareDerivedData();
+		this.attributes.agility.prepareDerivedData();
+		this.attributes.reaction.prepareDerivedData();
+		this.attributes.strength.prepareDerivedData();
+		this.attributes.willpower.prepareDerivedData();
+		this.attributes.logic.prepareDerivedData();
+		this.attributes.intuition.prepareDerivedData();
+		this.attributes.charisma.prepareDerivedData();
+		this.attributes.magic.prepareDerivedData();
+		this.attributes.resonance.prepareDerivedData();
 	}
 
-	async preCreate?(
-		actor: SR6Actor<LifeformDataModel>,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		data: PreDocumentId<any>,
-		options: DocumentModificationContext<SR6Actor<LifeformDataModel>>,
-		user: foundry.documents.BaseUser
-	): Promise<void> {
-		await actor.updateSource({
+	async onPostCreate(): Promise<void> {
+		await this.actor!.update({
 			['prototypeToken']: {
 				bar1: { attribute: 'monitors.physical' },
 				bar2: { attribute: 'monitors.stun' },
-				disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+				// displayName: CONST.TOKEN_DISPLAY_MODES.HOVER,
+				// displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
 				actorLink: true,
 			},
 		});
@@ -252,7 +246,7 @@ export default abstract class LifeformDataModel
 					astral: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: true }), // TODO initial
 					matrix: new fields.EmbeddedDataField(InitiativeDataModel, { required: true, nullable: true }), // TODO: initial
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 
 			attributes: new fields.SchemaField({

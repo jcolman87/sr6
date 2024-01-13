@@ -20,14 +20,14 @@ const basicPrograms = computed(() =>
 		.actor!.items.filter((i) => i.type === 'matrix_program')
 		.map((i) => i as SR6Item<MatrixProgramDataModel>)
 		.filter((i) => i.systemData.type === MatrixProgramType.Basic)
-		.sort((a, b) => a.name.localeCompare(b.name))
+		.sort((a, b) => a.name.localeCompare(b.name)),
 );
 const hackingPrograms = computed(() =>
 	toRaw(props.model)
 		.actor!.items.filter((i) => i.type === 'matrix_program')
 		.map((i) => i as SR6Item<MatrixProgramDataModel>)
 		.filter((i) => i.systemData.type === MatrixProgramType.Hacking)
-		.sort((a, b) => a.name.localeCompare(b.name))
+		.sort((a, b) => a.name.localeCompare(b.name)),
 );
 
 const programRows = computed(() => Math.max(basicPrograms.value.length, hackingPrograms.value.length));

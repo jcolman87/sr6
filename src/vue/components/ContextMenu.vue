@@ -13,7 +13,7 @@ const props = withDefaults(
 		usePrimaryClick: false,
 		orientation: 'right',
 		position: 'below',
-	}
+	},
 );
 
 const showMenu = ref(false);

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { EnumAttribute } from '@/actor/data';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
-import CredstickDataModel, { CredstickCapacity, CredstickRating } from '@/item/data/gear/CredstickDataModel';
+import CredstickDataModel, { CredstickRating } from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import Localized from '@/vue/components/Localized.vue';
 import { computed, inject, toRaw } from 'vue';
@@ -12,22 +11,21 @@ import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import { createNewItem, deleteItem, updateItem } from '@/vue/directives';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
-const system = context.data.actor.systemData;
 
 const credsticks = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'credstick')
-		.map((i) => i as SR6Item<CredstickDataModel>)
+		.map((i) => i as SR6Item<CredstickDataModel>),
 );
 const qualities = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'quality')
-		.map((i) => i as SR6Item<QualityDataModel>)
+		.map((i) => i as SR6Item<QualityDataModel>),
 );
 const augmentations = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'augmentation')
-		.map((i) => i as SR6Item<QualityDataModel>)
+		.map((i) => i as SR6Item<QualityDataModel>),
 );
 </script>
 

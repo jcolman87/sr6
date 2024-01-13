@@ -14,17 +14,17 @@ const _system = computed(() => context.data.actor.systemData);
 const lifestyles = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'lifestyle')
-		.map((i) => i as SR6Item<LifestyleDataModel>)
+		.map((i) => i as SR6Item<LifestyleDataModel>),
 );
 const sins = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'sin')
-		.map((i) => i as SR6Item<SINDataModel>)
+		.map((i) => i as SR6Item<SINDataModel>),
 );
 const contacts = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'contact')
-		.map((i) => i as SR6Item<ContactDataModel>)
+		.map((i) => i as SR6Item<ContactDataModel>),
 );
 </script>
 

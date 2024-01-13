@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import GearDataModel, { GearSize } from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
-import { computed, inject, ref, toRaw, onBeforeMount, onBeforeUpdate } from 'vue';
+import { computed, inject, toRaw } from 'vue';
 
 import { vLocalize } from '@/vue/directives';
 import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
@@ -23,7 +23,7 @@ const props = withDefaults(
 		 */
 		showEffectsTab?: boolean;
 	}>(),
-	{ hasDecoration: false, showEffectsTab: true }
+	{ hasDecoration: false, showEffectsTab: true },
 );
 
 const context = inject<ItemSheetContext>(RootContext)!;
@@ -113,7 +113,7 @@ async function addEffect(category: string) {
 			</div>
 
 			<div v-if="props.showEffectsTab" class="tab" data-group="primary" data-tab="effects">
-				<EffectsView :effects="[...effects as any]" @add-effect="addEffect" />
+				<EffectsView :effects="[...(effects as any)]" @add-effect="addEffect" />
 			</div>
 		</section>
 	</div>

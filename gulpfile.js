@@ -1,10 +1,11 @@
 import fs from 'fs';
 import gulp from 'gulp';
+import child_process from 'child_process';
 
 import through2 from 'through2';
 import mergeStream from 'merge-stream';
 import yaml from 'js-yaml';
-import Datastore from 'nedb';
+import Datastore from '@seald-io/nedb';
 import path from 'path';
 
 const { dest, series, src } = gulp;
@@ -61,14 +62,16 @@ export function data() {
 	return src('yaml/**/*.yml').pipe(gulpYaml()).pipe(dest('public/'));
 }
 
-export function packs() {
-	return compilePacks();
+function postprocessPacks() {
+	return child_process.exec('node build/postprocessPacks.js');
 }
 
 function watchDirs() {
 	gulp.watch('yaml/**/*.yml', data);
 	gulp.watch('packs/**/*.yml', packs);
 }
+
+export const packs = series(compilePacks, postprocessPacks);
 
 export const watch = series(clean, data, packs, watchDirs);
 export default series(clean, packs, data);

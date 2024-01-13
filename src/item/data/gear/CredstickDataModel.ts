@@ -1,6 +1,5 @@
 import { DocumentUUIDField } from '@/data/fields';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import { LifestyleRating } from '@/item/data/feature/LifestyleDataModel';
 
 export enum CredstickRating {
 	Standard = 1,
@@ -31,7 +30,7 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 		return CredstickCapacity[CredstickRating[this.rating as number] as keyof typeof CredstickCapacity];
 	}
 
-	validate(options?: foundry.abstract.DataModelValidationOptions): boolean {
+	validate(_options?: foundry.abstract.DataModelValidationOptions): boolean {
 		// TODO:
 		return true;
 	}

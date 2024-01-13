@@ -12,7 +12,7 @@ import { IHasMatrixPersona } from '@/data/interfaces';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
-import WearableDataModel, { WearableSlot } from '@/item/data/gear/WearableDataModel';
+import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getCoreSkills, getCoreMatrixActions, getCoreGeneralActions } from '@/item/data';
 import { getItemSync } from '@/util';
@@ -79,15 +79,14 @@ export abstract class CharacterEquippedDataModel extends BaseDataModel {
 
 	isEquipped(item: SR6Item<GearDataModel>): boolean {
 		return (
-			item.uuid == this._weapon ||
-			item.uuid == this._clothes ||
-			item.uuid == this._armor ||
-			item.uuid == this._head
+			item.uuid === this._weapon ||
+			item.uuid === this._clothes ||
+			item.uuid === this._armor ||
+			item.uuid === this._head
 		);
 	}
 
 	static defineSchema(): foundry.data.fields.DataSchema {
-		const fields = foundry.data.fields;
 		return {
 			_weapon: new DocumentUUIDField({ nullable: true }),
 			_clothes: new DocumentUUIDField({ nullable: true }),
@@ -126,7 +125,7 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	}
 
 	async activateMatrixPersona(
-		device: SR6Item<GearDataModel> | null = null
+		device: SR6Item<GearDataModel> | null = null,
 	): Promise<SR6Item<MatrixPersonaDataModel>> {
 		return this._activateMatrixPersona(device);
 	}

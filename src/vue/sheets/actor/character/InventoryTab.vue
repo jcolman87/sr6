@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, inject, toRaw, ref } from 'vue';
 import SR6Item from '@/item/SR6Item';
-import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
@@ -13,12 +12,18 @@ const _EQUIPMENT_TYPES = ['gear', 'weapon'];
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const _system = computed(() => context.data.actor.systemData);
 
-const weapons = computed(
-	() => toRaw(context.data.actor).items.filter((i) => i.type === 'weapon') as SR6Item<WeaponDataModel>[]
+const weapons = computed(() =>
+	toRaw(context.data.actor)
+		.items.filter((i) => i.type === 'weapon')
+		.map((i) => i as SR6Item<WeaponDataModel>)
+		.filter((i) => !i.systemData.isProxy),
 );
 
-const gear = computed(
-	() => toRaw(context.data.actor).items.filter((i) => i.type === 'gear') as SR6Item<GearDataModel>[]
+const gear = computed(() =>
+	toRaw(context.data.actor)
+		.items.filter((i) => i.type === 'gear')
+		.map((i) => i as SR6Item<WeaponDataModel>)
+		.filter((i) => !i.systemData.isProxy),
 );
 
 const draggingItem = ref(false);

@@ -3,10 +3,9 @@ import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Combat from '@/combat/SR6Combat';
 import { CombatantFlagData } from '@/combat/SR6Combatant';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import { computed, inject, toRaw, ref } from 'vue';
+import { inject, toRaw } from 'vue';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
-const system = computed(() => context.data.actor.systemData);
 
 function getCombatData(): null | CombatantFlagData {
 	if (context.data.combat) {

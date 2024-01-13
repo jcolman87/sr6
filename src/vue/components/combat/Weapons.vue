@@ -3,8 +3,7 @@ import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SR6Item from '@/item/SR6Item';
-import { rollWeaponAttack } from '@/roll/Rollers';
-import { toRaw, ref, onUpdated, watch } from 'vue';
+import { toRaw, ref, watch } from 'vue';
 import { Collapse } from 'vue-collapsed';
 
 const props = defineProps<{
@@ -27,17 +26,17 @@ const weaponsVisible = ref(
 			id: weapon.item!.id,
 			visible: false,
 		};
-	})
+	}),
 );
 
 function toggleWeaponVisible(weapon: WeaponDataModel) {
-	const isVisible = weaponsVisible.value.find((v) => v.id == weapon.item!.id)!.visible;
-	weaponsVisible.value.find((v) => v.id == weapon.item!.id)!.visible = !isVisible;
+	const isVisible = weaponsVisible.value.find((v) => v.id === weapon.item!.id)!.visible;
+	weaponsVisible.value.find((v) => v.id === weapon.item!.id)!.visible = !isVisible;
 }
 
 function toggleEquipWeapon(weapon: WeaponDataModel) {
 	const equipped = toRaw(props.actor).systemData.equipped;
-	if (equipped._weapon == weapon.item!.uuid) {
+	if (equipped._weapon === weapon.item!.uuid) {
 		equipped.weapon = null;
 	} else {
 		equipped.weapon = weapon.item! as unknown as SR6Item<WeaponDataModel>;
@@ -55,7 +54,9 @@ function toggleEquipWeapon(weapon: WeaponDataModel) {
 						<label class="switch">
 							<input
 								type="checkbox"
-								:checked="actor.systemData.equipped.isEquipped(weapon.item! as SR6Item<WeaponDataModel>)"
+								:checked="
+									actor.systemData.equipped.isEquipped(weapon.item! as SR6Item<WeaponDataModel>)
+								"
 								@change="toggleEquipWeapon(weapon)"
 							/>
 							<span class="slider round"></span>

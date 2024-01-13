@@ -22,7 +22,7 @@ const matrixActions = computed(
 	() =>
 		toRaw(context.data.actor)
 			.items.filter((i) => i.type === 'matrix_action')
-			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<MatrixActionDataModel>[]
+			.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<MatrixActionDataModel>[],
 );
 
 const matrixDevices = computed(() =>
@@ -30,7 +30,7 @@ const matrixDevices = computed(() =>
 		.items.filter((i) => i.type === 'gear')
 		.map((i) => i as SR6Item<GearDataModel>)
 		.filter((i) => i.systemData.matrix)
-		.sort((a, b) => a.name.localeCompare(b.name))
+		.sort((a, b) => a.name.localeCompare(b.name)),
 );
 
 const deviceVisible = ref(
@@ -41,11 +41,11 @@ const deviceVisible = ref(
 			descriptionVisible: false,
 			wirelessBonusVisible: false,
 		};
-	})
+	}),
 );
 
 onBeforeUpdate(() => {
-	if (deviceVisible.value.length != matrixDevices.value.length) {
+	if (deviceVisible.value.length !== matrixDevices.value.length) {
 		deviceVisible.value = matrixDevices.value.map((device) => {
 			return {
 				id: device.id,
@@ -65,7 +65,6 @@ const persona = computed(() => {
 		return null;
 	}
 });
-const hasPersona = computed(() => persona.value !== null);
 
 function getPersona(): null | MatrixPersonaDataModel {
 	return persona.value ? persona.value!.systemData : null;
@@ -112,7 +111,7 @@ async function togglePersona(checked: boolean, cb?: (checked: boolean) => void):
 			newPersona.systemData.attributes.reset();
 		} else {
 			const activeDevice = matrixDevices.value.find((i) =>
-				i.systemData.matrix ? i.systemData.matrix!.active && i.systemData.matrix!.simModes.length > 0 : false
+				i.systemData.matrix ? i.systemData.matrix!.active && i.systemData.matrix!.simModes.length > 0 : false,
 			);
 			if (!activeDevice) {
 				ui.notifications.error('You do not have an active matrix device to enter the matrix with!');
@@ -207,7 +206,7 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 								<a
 									@click="
 										deviceVisible.find((v) => v.id == device.id)!.visible = !deviceVisible.find(
-											(v) => v.id == device.id
+											(v) => v.id == device.id,
 										)!.visible
 									"
 									@dblclick.prevent="device.sheet?.render(true)"
@@ -224,7 +223,10 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 							</td>
 							<td>
 								<template
-									v-if="device.systemData.matrix !== null && device.systemData.matrix!.totalProgramSlots > 0"
+									v-if="
+										device.systemData.matrix !== null &&
+										device.systemData.matrix!.totalProgramSlots > 0
+									"
 								>
 									{{ device.systemData.matrix!.programSlots.available }}/{{
 										device.systemData.matrix!.programSlots.total
@@ -265,9 +267,9 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 												<a
 													@click="
 														deviceVisible.find(
-															(v) => v.id == device.id
+															(v) => v.id == device.id,
 														)!.wirelessBonusVisible = !deviceVisible.find(
-															(v) => v.id == device.id
+															(v) => v.id == device.id,
 														)!.wirelessBonusVisible
 													"
 													@dblclick.prevent="device.sheet?.render(true)"
@@ -275,7 +277,9 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 												>
 											</div>
 											<Collapse
-												:when="deviceVisible.find((v) => v.id == device.id)!.wirelessBonusVisible"
+												:when="
+													deviceVisible.find((v) => v.id == device.id)!.wirelessBonusVisible
+												"
 											>
 												{{ device.systemData.matrix!.wirelessBonus!.description }}
 											</Collapse>
@@ -285,9 +289,9 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 												<a
 													@click="
 														deviceVisible.find(
-															(v) => v.id == device.id
+															(v) => v.id == device.id,
 														)!.descriptionVisible = !deviceVisible.find(
-															(v) => v.id == device.id
+															(v) => v.id == device.id,
 														)!.descriptionVisible
 													"
 													@dblclick.prevent="device.sheet?.render(true)"

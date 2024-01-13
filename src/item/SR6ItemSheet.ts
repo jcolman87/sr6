@@ -55,7 +55,7 @@ export default class SR6ItemSheet<ItemDataModel extends BaseItemDataModel = Base
 	protected override _onDrop(event: ElementDragEvent): void {
 		const data: DragEventData = TextEditor.getDragEventData(event) as DragEventData;
 		if (data.type === 'Item') {
-			const item = getItemSync(SR6Item<BaseItemDataModel>, data.uuid as ItemUUID)!;
+			const _item = getItemSync(SR6Item<BaseItemDataModel>, data.uuid as ItemUUID)!;
 		}
 
 		return super._onDrop(event);

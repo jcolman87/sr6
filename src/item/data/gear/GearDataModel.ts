@@ -11,7 +11,7 @@ import { DocumentUUIDField, EnumNumberField } from '@/data/fields';
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import { AdjustableMatrixAttributesDataModel, MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
+import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import { MatrixSimType } from '@/data/matrix';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -151,7 +151,7 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 					required: true,
 					choices: Object.values(MatrixSimType),
 				}),
-				{ initial: [], required: true, nullable: false }
+				{ initial: [], required: true, nullable: false },
 			),
 			attributes: new fields.EmbeddedDataField(MatrixAttributesDataModel, {
 				initial: null,
@@ -196,6 +196,8 @@ export abstract class GearAvailabilityDataModel extends BaseDataModel {
 }
 
 export default abstract class GearDataModel extends BaseItemDataModel {
+	abstract isProxy: boolean;
+
 	abstract category: GearCategory;
 
 	abstract rating: number;
@@ -263,6 +265,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 
 		return {
 			...super.defineSchema(),
+			isProxy: new fields.BooleanField({ initial: false, required: true, nullable: false }),
 			category: new fields.SchemaField(
 				{
 					type: new fields.StringField({
@@ -273,7 +276,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 					}),
 					subtype: new fields.StringField({ initial: '', required: false, nullable: false }),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			rating: new fields.NumberField({ initial: 1, nullable: false, required: true, min: 1, max: 6 }),
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
@@ -292,7 +295,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 						nullable: false,
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			matrix: new fields.EmbeddedDataField(GearMatrixDataModel, {
 				initial: null,
@@ -311,15 +314,20 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 	override prepareBaseData(): void {
 		this.monitors.physical.prepareBaseData();
 		this.monitors.matrix?.prepareBaseData();
+		this.matrix?.attributes?.prepareBaseData();
 	}
 
 	override prepareData(): void {
 		this.monitors.physical.prepareData();
 		this.monitors.matrix?.prepareData();
+		this.matrix?.attributes?.prepareData();
 	}
 
 	override prepareDerivedData(): void {
 		this.monitors.physical.prepareDerivedData();
+
 		this.monitors.matrix?.prepareDerivedData();
+
+		this.matrix?.attributes?.prepareDerivedData();
 	}
 }

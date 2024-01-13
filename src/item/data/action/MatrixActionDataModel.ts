@@ -7,7 +7,7 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import ConditionDataModel, { ConditionActivation } from '@/condition/ConditionDataModel';
+import ConditionDataModel from '@/condition/ConditionDataModel';
 import { ActivationPeriod, ActivationType } from '@/data';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
@@ -51,10 +51,10 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 	}
 
 	defendAgainstPool<TDataModel extends BaseActorDataModel = BaseActorDataModel>(
-		defender: SR6Actor<TDataModel>
+		defender: SR6Actor<TDataModel>,
 	): number {
 		const fuckme = defender;
-		if (defender instanceof SR6Actor<CharacterDataModel>) {
+		if (defender.systemData instanceof CharacterDataModel) {
 			return this.formulas.defend ? defender.solveFormula(this.formulas.defend!) : 0;
 		}
 		return this.formulas.deviceDefend ? fuckme.solveFormula(this.formulas.deviceDefend!) : 0;
@@ -105,7 +105,7 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 						{
 							required: true,
 							nullable: false,
-						}
+						},
 					),
 					activationType: new fields.StringField({
 						initial: ActivationType.Major,
@@ -122,7 +122,7 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 						choices: Object.values(ActivationPeriod),
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
 				initial: [],
@@ -148,7 +148,7 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 					damage: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 					soak: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 		};
 	}

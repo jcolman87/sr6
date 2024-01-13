@@ -11,7 +11,7 @@ import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const conditions = computed(
-	() => toRaw(context.data.actor).items.filter((i) => i.type === 'condition') as SR6Item<ConditionDataModel>[]
+	() => toRaw(context.data.actor).items.filter((i) => i.type === 'condition') as SR6Item<ConditionDataModel>[],
 );
 // We have to:
 //   1. Use an 'any' typing to skirt around TypeScript's complaints.
@@ -68,7 +68,7 @@ onBeforeUpdate(updateEffects);
 	<section v-if="context.user.isGM" class="tab-effects">
 		<EffectsView
 			ref="effectsView"
-			:effects="[...effects as any]"
+			:effects="[...(effects as any)]"
 			@add-effect="addEffect"
 			@delete-effect="deleteEffect"
 		/>

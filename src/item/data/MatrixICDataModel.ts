@@ -1,11 +1,8 @@
 import MatrixHostDataModel from '@/actor/data/MatrixHostDataModel';
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { getCoreConditions } from '@/condition';
-import ConditionDataModel, { ConditionActivation } from '@/condition/ConditionDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
-import SR6Item from '@/item/SR6Item';
 
 export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 	abstract monitor: MonitorDataModel;

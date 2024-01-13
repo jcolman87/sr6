@@ -31,8 +31,8 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 			}
 			// Is it our turn?
 			if (
-				this.limits.activationPeriod == ActivationPeriod.Initiative &&
-				combat.combatant!.actor.uuid != this.actor!.uuid
+				this.limits.activationPeriod === ActivationPeriod.Initiative &&
+				combat.combatant!.actor.uuid !== this.actor!.uuid
 			) {
 				return false;
 			}
@@ -136,7 +136,7 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 						choices: Object.values(ActivationPeriod),
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
 				initial: [],

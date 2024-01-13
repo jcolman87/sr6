@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
-import { inject, toRaw, computed } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setDamage', value: number): void;
@@ -15,7 +14,7 @@ const props = withDefaults(
 	{
 		icon: '/systems/sr6/assets/heart.webp',
 		showModifiers: true,
-	}
+	},
 );
 
 function setDamage(amount: number) {

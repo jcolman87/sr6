@@ -7,7 +7,7 @@ import { SR6RollData } from '@/roll/SR6Roll';
 import { getItemSync } from '@/util';
 import Localized from '@/vue/components/Localized.vue';
 
-import { toRaw, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
 	actor: SR6Actor;

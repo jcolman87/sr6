@@ -7,7 +7,6 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Combat from '@/combat/SR6Combat';
-import { ConditionActiveEffectData } from '@/condition/ConditionDataModel';
 import { InitiativeType } from '@/data';
 import { IHasInitiative, AvailableActions } from '@/data/interfaces';
 import SR6Effect from '@/effects/SR6Effect';
@@ -45,7 +44,7 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 	}
 
 	async _setSystemData(data: CombatantFlagData): Promise<void> {
-		if (!this.isOwner && !game.user!.isGM) {
+		if (!this.isOwner) {
 			ui.notifications.error('Cannot set combat data for unowned combatant');
 		}
 
@@ -93,7 +92,7 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		}
 	}
 
-	override getInitiativeRoll(f: string): Roll {
+	override getInitiativeRoll(_f: string): Roll {
 		return getInitiativeRoll(this.actorSystemData, this._getInitiativeFormula());
 	}
 }

@@ -66,7 +66,7 @@ export class SR6Roll extends Roll {
 	get hits(): number {
 		const hits: number = this.sides.reduce(
 			(hits, result) => (this.options.parameters.success.includes(result) ? hits + 1 : hits),
-			0
+			0,
 		);
 		if (this.options.auto_hits !== undefined) {
 			return hits + this.options.auto_hits;
@@ -78,7 +78,7 @@ export class SR6Roll extends Roll {
 	get glitches(): number {
 		return this.sides.reduce(
 			(glitches, result) => (this.options.parameters.glitch.includes(result) ? glitches + 1 : glitches),
-			0
+			0,
 		);
 	}
 
@@ -146,7 +146,7 @@ export class SR6Roll extends Roll {
 			}
 
 			ui.notifications!.warn(
-				'You are adding +1 to a roll with no glitches and no near-successes, this was worthless'
+				'You are adding +1 to a roll with no glitches and no near-successes, this was worthless',
 			);
 			return false;
 		}
@@ -165,7 +165,7 @@ export class SR6Roll extends Roll {
 	async addHitToPool(die: null | number = null): Promise<boolean> {
 		(this.terms[0] as DiceTerm).results.push({
 			active: true,
-			result: 5,
+			result: die ? die : 5,
 		});
 
 		return true;
@@ -254,15 +254,15 @@ export class SR6Roll extends Roll {
 
 	override toMessage(
 		messageData: PreCreate<foundry.data.ChatMessageSource> | undefined,
-		options: { rollMode?: RollMode | 'roll'; create: false }
+		options: { rollMode?: RollMode | 'roll'; create: false },
 	): Promise<foundry.data.ChatMessageSource>;
 	override toMessage(
 		messageData?: PreCreate<foundry.data.ChatMessageSource>,
-		options?: { rollMode?: RollMode | 'roll'; create?: true }
+		options?: { rollMode?: RollMode | 'roll'; create?: true },
 	): Promise<ChatMessage>;
 	override toMessage(
 		messageData?: PreCreate<foundry.data.ChatMessageSource>,
-		options?: { rollMode?: RollMode | 'roll'; create?: boolean }
+		options?: { rollMode?: RollMode | 'roll'; create?: boolean },
 	): Promise<ChatMessage | foundry.data.ChatMessageSource> {
 		return this.finish().then(() => super.toMessage(messageData, options));
 	}

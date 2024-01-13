@@ -93,7 +93,7 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 			expertise: new fields.StringField({ initial: null, required: true, nullable: true, blank: false }),
 
 			specializations: new fields.ArrayField(
-				new fields.StringField({ required: true, nullable: false, blank: false })
+				new fields.StringField({ required: true, nullable: false, blank: false }),
 			),
 
 			canUntrained: new fields.BooleanField({ initial: true, nullable: false, required: true }),

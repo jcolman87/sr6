@@ -43,7 +43,7 @@ export default abstract class InitiativeDataModel extends BaseDataModel {
 						blank: false,
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 		};
 	}

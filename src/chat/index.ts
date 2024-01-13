@@ -10,9 +10,9 @@ export function register(): void {
 }
 
 export async function renderChatLog(
-	chatlog: ChatLog,
+	_chatlog: ChatLog,
 	html: JQuery<HTMLElement>,
-	data: Record<string, unknown>
+	_data: Record<string, unknown>,
 ): Promise<void> {
 	html.on('drop', async (ev: JQuery.Event) => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,4 +27,4 @@ export async function renderChatLog(
 	});
 }
 
-export function onChatLogEntryContext(html: JQuery, data: ContextMenuEntry[]) {}
+export function onChatLogEntryContext(_html: JQuery, _data: ContextMenuEntry[]): void {}

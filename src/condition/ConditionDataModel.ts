@@ -2,7 +2,8 @@ import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import SR6Effect from '@/effects/SR6Effect';
 import SR6Item from '@/item/SR6Item';
-import { getRollCategory, ROLL_CATEGORIES, RollType } from '@/roll';
+import { getRollCategory, RollType } from '@/roll';
+import { SR6RollData } from '@/roll/SR6Roll';
 import fields = foundry.data.fields;
 import EffectChangeSource = foundry.data.EffectChangeSource;
 
@@ -41,13 +42,37 @@ export type ConditionDuration = {
 	rolls: number | null;
 };
 
-export type ConditionEffectChangeData = {
-	type: ConditionModifierType;
-	situation: ConditionSituation;
-	activation: ConditionActivation;
-	key: string;
-	value: string;
-};
+export class ConditionEffectChangeData {
+	type: ConditionModifierType = ConditionModifierType.Pool;
+	situation: ConditionSituation = ConditionSituation.Always;
+	activation: ConditionActivation = ConditionActivation.Always;
+	key: string = '';
+	value: string = '';
+
+	toString(): string {
+		console.log('toString');
+		return 'balls';
+	}
+
+	async use(_target: SR6Actor | SR6Item | null = null, _roll: SR6RollData | null = null): Promise<boolean> {
+		switch (this.type) {
+			// none use cases, these are extracted elsewhere
+			case ConditionModifierType.Pool:
+			default:
+				break;
+		}
+
+		return true;
+	}
+
+	constructor(rhv: ConditionEffectChangeData) {
+		this.type = rhv.type;
+		this.situation = rhv.situation;
+		this.activation = rhv.activation;
+		this.key = rhv.key;
+		this.value = rhv.value;
+	}
+}
 
 export type ConditionActiveEffectData = {
 	turnCreated: number | null;
@@ -89,43 +114,38 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 	getModifiers(
 		type: ConditionModifierType,
 		situation: ConditionSituation = ConditionSituation.Always,
-		activation: ConditionActivation = ConditionActivation.Always
+		activation: ConditionActivation = ConditionActivation.Always,
 	): ConditionEffectChangeData[] {
 		return this.modifiers.filter(
 			(modifier) =>
-				modifier.situation === situation ||
-				(modifier.situation == ConditionSituation.Always &&
-					(modifier.activation === ConditionActivation.Always || modifier.activation === activation))
+				(modifier.situation === situation ||
+					(modifier.situation === ConditionSituation.Always &&
+						(modifier.activation === ConditionActivation.Always || modifier.activation === activation))) &&
+				modifier.type === type,
 		);
 	}
 
 	getModifiersForRoll(
 		type: RollType,
-		situation: ConditionSituation = ConditionSituation.Roll
+		situation: ConditionSituation = ConditionSituation.Roll,
 	): ConditionEffectChangeData[] {
 		return this.getModifiers(ConditionModifierType.Pool, situation).filter((modifier) => {
-			if (modifier.type == 'pool') {
-				const path = modifier.key.split('.');
-				if (path.length === 1) {
-					if (modifier.key === RollType[type]) {
-						return true;
-					}
-				} else {
-					switch (path[0]) {
-						case 'category':
-							if (getRollCategory(path[1]).includes(type)) {
-								return true;
-							}
-							break;
-						default:
-							ui.notifications.error(
-								`Invalid category for modification ${type}: ${modifier.key} - ${path}`
-							);
-							throw 'ERR';
-					}
+			const path = modifier.key.split('.');
+			if (path.length === 1) {
+				if (modifier.key === RollType[type]) {
+					return true;
 				}
 			} else {
-				return false;
+				switch (path[0]) {
+					case 'category':
+						if (getRollCategory(path[1]).includes(type)) {
+							return true;
+						}
+						break;
+					default:
+						ui.notifications.error(`Invalid category for modification ${type}: ${modifier.key} - ${path}`);
+						throw 'ERR';
+				}
 			}
 		});
 	}
@@ -146,7 +166,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 				key: effect.key,
 				value: effect.value,
 				priority: 0,
-				mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM,
+				mode: CONST.ACTIVE_EFFECT_MODES.ADD,
 			};
 		});
 
@@ -205,6 +225,9 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 				this.icon = this.item!.img;
 			}
 		}
+
+		// Instantiate modifier class
+		this.modifiers = this.modifiers.map((modifier) => new ConditionEffectChangeData(modifier));
 	}
 
 	static defineSchema(): foundry.data.fields.DataSchema {
@@ -260,7 +283,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 						min: 1,
 					}),
 				},
-				{ required: true, nullable: false }
+				{ required: true, nullable: false },
 			),
 			icon: new fields.StringField({
 				initial: 'icons/svg/item-bag.svg',
@@ -302,7 +325,7 @@ export default abstract class ConditionDataModel extends BaseDataModel {
 					}),
 					value: new fields.StringField({ required: true, nullable: false, blank: false }),
 				}),
-				{ initial: [], required: true, nullable: true }
+				{ initial: [], required: true, nullable: true },
 			),
 		};
 	}
