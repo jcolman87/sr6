@@ -24,26 +24,32 @@ export enum RollType {
 	SpellDrain,
 	SpellDefend,
 	SpellSoak,
-
-	Any = 9999,
 }
 
 export const ROLL_CATEGORIES = new Map([
 	[
-		'AllPoolButSoak',
+		'allPool',
+		Array.from(
+			Object.keys(RollType)
+				.filter((t) => ![RollType[RollType.Initiative]].includes(t))
+				.map((t) => RollType[t as keyof typeof RollType]),
+		),
+	],
+	[
+		'allPoolButSoak',
 		Array.from(
 			Object.keys(RollType)
 				.filter((t) => ![RollType[RollType.Initiative], RollType[RollType.SpellSoak]].includes(t))
 				.map((t) => RollType[t as keyof typeof RollType]),
 		),
 	],
-	['Vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],
-	['Magic', [RollType.SpellCast, RollType.SpellDefend, RollType.SpellDrain, RollType.SpellSoak]],
-	['Matrix', [RollType.MatrixAction, RollType.MatrixActionDefend]],
-	['Attack', [RollType.WeaponAttack, RollType.SpellCast]],
-	['PhysicalAttack', [RollType.WeaponAttack, RollType.SpellCast]],
-	['PhysicalDefend', [RollType.WeaponDefend, RollType.SpellDefend]],
-	['Defend', [RollType.WeaponDefend, RollType.SpellDefend, RollType.MatrixActionDefend]],
+	['vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],
+	['magic', [RollType.SpellCast, RollType.SpellDefend, RollType.SpellDrain, RollType.SpellSoak]],
+	['matrix', [RollType.MatrixAction, RollType.MatrixActionDefend]],
+	['attack', [RollType.WeaponAttack, RollType.SpellCast]],
+	['physicalAttack', [RollType.WeaponAttack, RollType.SpellCast]],
+	['physicalDefend', [RollType.WeaponDefend, RollType.SpellDefend]],
+	['defend', [RollType.WeaponDefend, RollType.SpellDefend, RollType.MatrixActionDefend]],
 ]);
 
 export function getRollCategory(key: string): RollType[] {

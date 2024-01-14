@@ -1,10 +1,4 @@
 import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
-import ConditionDataModel, {
-	ConditionActivation,
-	ConditionEffectChangeData,
-	ConditionModifierType,
-	ConditionSituation,
-} from '@/condition/ConditionDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import { IHasPools } from '@/data/interfaces';
 import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
@@ -36,18 +30,8 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		return 0;
 	}
 
-	getPoolModifier(type: RollType): number {
-		let pool = 0;
-
-		this.getRollConditions(type).forEach((condition) => {
-			pool += condition.getPoolModifier(type);
-		});
-
-		return pool;
-	}
-
-	// TODO:
 	getPool(_type: RollType): number {
+		// TODO:
 		return 0;
 	}
 
@@ -55,13 +39,6 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	is<I>(): this is I {
 		return true;
 	}
-
-	get conditions(): ConditionDataModel[] {
-		return this.actor!.items.filter((i) => i.type === 'condition').map(
-			(i) => (i as SR6Item<ConditionDataModel>).systemData,
-		);
-	}
-
 	get skills(): SkillDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'skill').map(
 			(i) => (i as SR6Item<SkillDataModel>).systemData,
@@ -148,35 +125,6 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		return [...this.actor!.credsticks.map((item: SR6Item<CredstickDataModel>) => item.systemData.nuyen), 0].reduce(
 			(total, nuyen) => total + nuyen,
 		);
-	}
-
-	// TODO:
-	getRollConditions(_type: RollType): ConditionDataModel[] {
-		return this.getSituationalConditions(ConditionSituation.Roll);
-	}
-
-	// TODO:
-	getSituationalConditions(_situation: ConditionSituation): ConditionDataModel[] {
-		/*
-		return this.conditions.filter((condition) => {
-			return (
-				condition.activationSituation === ConditionSituation.Always ||
-				condition.activationSituation === situation
-			);
-		});
-		 */
-		console.log('getSituationalConditions', this.conditions);
-		return this.conditions;
-	}
-
-	// TODO:
-	getModifiers(
-		_type: ConditionModifierType,
-		_situation: ConditionSituation = ConditionSituation.Always,
-		_activation: ConditionActivation = ConditionActivation.Always,
-	): ConditionEffectChangeData[] {
-		return [];
-		// return this.conditions.flatMap((condition) => condition.getModifiers(type, situation, activation));
 	}
 
 	protected get _matrixPersona(): null | MatrixPersonaDataModel {

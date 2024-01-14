@@ -72,7 +72,7 @@ export default abstract class LifeformDataModel
 	// IHasInitiative
 	//
 	getInitiativeFormula(type: InitiativeType): null | string {
-		const modifier = this.getPoolModifier(RollType.Initiative);
+		const modifier = 0; // TODO:
 		switch (type) {
 			case InitiativeType.Physical:
 				return `${this.initiatives.physical.formula} + ${modifier}`;
@@ -108,7 +108,7 @@ export default abstract class LifeformDataModel
 	}
 
 	override getPool(type: RollType): number {
-		const pool = this.getPoolModifier(type) + this.woundModifier;
+		const pool = this.woundModifier;
 
 		switch (type) {
 			case RollType.WeaponAttack:

@@ -55,7 +55,7 @@ export const GearItemTypes = ['weapon', 'gear', 'credstick', 'wearable'];
 
 export const MatrixItemTypes = ['matrix_action', 'matrix_persona', 'matrix_ic'];
 
-export const GameplayItemTypes = ['condition'];
+export const GameplayItemTypes = [];
 
 function registerDataModels(): void {
 	// Gear

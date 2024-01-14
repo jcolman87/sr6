@@ -7,7 +7,6 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import ConditionDataModel from '@/condition/ConditionDataModel';
 import { ActivationPeriod, ActivationType } from '@/data';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
@@ -37,8 +36,6 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 	abstract limits: MatrixActionLimits;
 
 	abstract formulas: MatrixActionFormulas;
-
-	abstract conditions: ConditionDataModel[];
 
 	get pool(): number {
 		if (this.skillUse) {
@@ -124,11 +121,6 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 				},
 				{ required: true, nullable: false },
 			),
-			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
-				initial: [],
-				required: true,
-				nullable: false,
-			}),
 			formulas: new fields.SchemaField(
 				{
 					attackRating: new fields.StringField({

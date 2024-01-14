@@ -1,4 +1,3 @@
-import ConditionDataModel from '@/condition/ConditionDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { GearAvailabilityDataModel } from '@/item/data/gear/GearDataModel';
 
@@ -24,12 +23,6 @@ export default abstract class AmmoDataModel extends BaseItemDataModel {
 				nullable: false,
 				required: true,
 				blank: false,
-			}),
-
-			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
-				initial: [],
-				nullable: false,
-				required: true,
 			}),
 		};
 	}

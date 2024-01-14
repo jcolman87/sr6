@@ -9,8 +9,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  onHitConditions: ['Link-Locked']
-  conditions: []
   formulas:
     attack: '@rating * 2'
     defend: '@logic + @persona.f'

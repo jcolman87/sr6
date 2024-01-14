@@ -33,35 +33,22 @@ const edgeBoost = ref<string | null>(null);
 const poolModifier = ref(0);
 const originalPool = context.rollData.pool;
 
-const totalModifier = computed(
-	() =>
-		baseSystem.value
-			.getRollConditions(context.rollData.type)
-			.reduce((total, condition) => (total += condition.getPoolModifier(context.rollData.type)), 0) +
-		toRaw(context.actor).systemData.woundModifier,
-);
+// TODO: conditions
+const totalModifier = computed(() => toRaw(context.actor).systemData.woundModifier);
 
 const finishRollButton = ref();
 const isDisplayConditions = ref(false);
 const woundModifiers = computed(() => Object.entries(toRaw(context.actor.systemData).woundModifiers));
-const conditions = computed(() => baseSystem.value.getRollConditions(context.rollData.type));
 const conditionsDescriptionsVisible = ref(
-	conditions.value
-		.map((condition) => {
-			return {
-				id: condition.name,
-				visible: false,
-			};
-		})
-		.concat(
-			woundModifiers.value.map(([key, _value]) => {
-				return {
-					id: key,
-					visible: false,
-				};
-			}),
-		),
+	woundModifiers.value.map(([key, _value]) => {
+		return {
+			id: key,
+			visible: false,
+		};
+	}),
 );
+
+const modifiers = ref();
 
 function roll() {
 	// Apply edge action to the roll
@@ -126,7 +113,7 @@ onMounted(() => {
 				</td>
 			</tr>
 		</table>
-		<div v-if="conditions.length > 0 || woundModifiers.length > 0" class="section" style="width: 100%">
+		<div v-if="woundModifiers.length > 0" class="section" style="width: 100%">
 			<div class="section-title" style="width: 100%">
 				<a @click.prevent="toggleConditions"
 					><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;<Localized
@@ -156,33 +143,6 @@ onMounted(() => {
 								<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == key)!.visible">
 									<Localized :label="`SR6.RollPrompt.WoundModifiers.${key}.Description`" />
 								</Collapse>
-							</td>
-						</tr>
-					</table>
-				</tr>
-				<tr v-for="condition in conditions" :key="condition.name">
-					<table>
-						<tr>
-							<td style="width: 3em">
-								{{ asModifierString(condition.getPoolModifier(context.rollData.type)) }}
-							</td>
-							<td>
-								<a
-									@click="
-										conditionsDescriptionsVisible.find((v) => v.id == condition.name)!.visible =
-											!conditionsDescriptionsVisible.find((v) => v.id == condition.name)!.visible
-									"
-									><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;{{ condition.name }}</a
-								>
-							</td>
-						</tr>
-						<tr>
-							<td class="hint" colspan="2">
-								<Collapse
-									:when="conditionsDescriptionsVisible.find((v) => v.id == condition.name)!.visible"
-								>
-									{{ condition.description }}</Collapse
-								>
 							</td>
 						</tr>
 					</table>

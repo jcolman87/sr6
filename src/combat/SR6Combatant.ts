@@ -57,8 +57,9 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		await this._setSystemData(data);
 	}
 
-	async _cycleConditions(): Promise<void> {
+	async _cycleEffects(): Promise<void> {
 		// Cycle conditions
+		/*
 		const toDelete: string[] = [];
 		this.actor.items
 			.filter((i) => i.type === 'condition')
@@ -73,11 +74,12 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 		for (const itemId of toDelete) {
 			await this.actor.items.get(itemId)!.delete();
 		}
+		*/
 	}
 
 	async beginTurn(): Promise<void> {
 		await this._resetActions();
-		await this._cycleConditions();
+		await this._cycleEffects();
 	}
 
 	async endTurn(): Promise<void> {}

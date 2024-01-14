@@ -1,5 +1,4 @@
 import SR6Combat from '@/combat/SR6Combat';
-import ConditionDataModel, { ConditionActivation, ConditionTarget } from '@/condition/ConditionDataModel';
 import { ActivationPeriod, ActivationType } from '@/data';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
@@ -18,8 +17,6 @@ export type GeneralActionLimits = {
 export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 	abstract category: GeneralActionCategory;
 	abstract limits: GeneralActionLimits;
-
-	abstract conditions: ConditionDataModel[];
 
 	get available(): boolean {
 		if (!game.combat) {
@@ -94,13 +91,6 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 			}
 		}
 
-		// Apply the conditions
-		for (const condition of this.conditions) {
-			if (condition.activation === ConditionActivation.OnUse && condition.target === ConditionTarget.Self) {
-				await condition.applyToActor(this.actor!);
-			}
-		}
-
 		// Send action to chat
 		if (sendToChat) {
 			await this.toMessage(this.actor!);
@@ -138,11 +128,6 @@ export default abstract class GeneralActionDataModel extends BaseItemDataModel {
 				},
 				{ required: true, nullable: false },
 			),
-			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionDataModel), {
-				initial: [],
-				required: true,
-				nullable: false,
-			}),
 		};
 	}
 }

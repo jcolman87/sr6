@@ -14,8 +14,6 @@ export enum ActivationType {
 export enum ActivationPeriod {
 	Any = 'any',
 	Initiative = 'initiative',
-	PreRoll = 'pre',
-	PostRoll = 'post',
 	OneMinute = '1minute',
 	TenMinute = '10minute',
 }
@@ -23,8 +21,13 @@ export enum ActivationPeriod {
 export enum ActivationMode {
 	Always = 'always',
 	Manual = 'manual',
-	Automatic = 'automatic',
 }
+
+export type ActivationData = {
+	type: ActivationType;
+	period: ActivationPeriod;
+	mode: ActivationMode;
+};
 
 export enum DamageType {
 	Physical = 'P',

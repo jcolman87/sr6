@@ -34,7 +34,7 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareData(): void {
+	override prepareBaseData(): void {
 		if (this.formula) {
 			this.max = this.solveFormula(this.formula);
 		}

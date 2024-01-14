@@ -23,9 +23,9 @@ export default class SR6EffectSheet extends ActiveEffectConfig {
 		};
 	}
 
-	override get template(): string {
-		return 'systems/sr6/templates/sheets/effect-config.hbs';
-	}
+	// override get template(): string {
+	//	return 'systems/sr6/templates/sheets/effect-config.hbs';
+	// }
 
 	override activateListeners(html: JQuery): void {
 		super.activateListeners(html);

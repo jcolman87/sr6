@@ -3,52 +3,88 @@
  * @author jaynus
  * @file ActiveEffects Customizations
  */
-import ConditionDataModel, { ConditionActiveEffectData } from '@/condition/ConditionDataModel';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
+import { RollType } from '@/roll';
 import { getItemSync } from '@/util';
 
+export enum ModifierType {
+	Pool = 'pool',
+	BonusEdge = 'bonusEdge',
+	BlockEdge = 'blockEdge',
+}
+
+export enum EffectType {
+	Standard = 'standard',
+	Roll = 'roll',
+}
+
+export interface RollEffectData {
+	rollType: RollType[];
+	modifierType: ModifierType;
+	value: string;
+}
+
+type EffectFlags = {
+	sr6?: {
+		type: EffectType;
+		rollEffect?: RollEffectData;
+	};
+};
+
 export default class SR6Effect extends ActiveEffect {
+	declare flags: EffectFlags;
+
+	get type(): EffectType {
+		return this.flags.sr6!.type;
+	}
+
+	static defaultFlags(): Record<string, unknown> {
+		return {
+			type: EffectType.Standard,
+		};
+	}
+
+	protected override _preCreate(
+		data: PreDocumentId<this['_source']>,
+		options: DocumentModificationContext,
+		user: User,
+	): Promise<void> {
+		if (!data.flags?.sr6) {
+			this.updateSource({ ['flags.sr6']: SR6Effect.defaultFlags() });
+		}
+		return super._preCreate(data, options, user);
+	}
+
 	constructor(data: PreCreate<foundry.data.ActiveEffectSource>, context?: DocumentConstructionContext<ActiveEffect>) {
 		super(data, context);
-	}
 
-	// Ghetto hack, determine if we are a condition by our name
-	get isStatusEffectCondition(): boolean {
-		const parent = this.parent as SR6Item<ConditionDataModel>;
-		if (parent.systemData.statusEffectId) {
-			return true;
+		if (context?.parent) {
+			const originDescription =
+				context?.parent instanceof SR6Item
+					? (context?.parent as SR6Item<BaseItemDataModel>).systemData.description
+					: '';
+			if (!this.description || this.description === '') {
+				this.description = originDescription;
+			}
 		}
-
-		return false;
-	}
-
-	get isCondition(): boolean {
-		return this.parent instanceof SR6Item && (this.parent as SR6Item).systemData instanceof ConditionDataModel;
-	}
-
-	get condition(): ConditionDataModel | null {
-		if (this.isCondition) {
-			return (this.parent as SR6Item<ConditionDataModel>).systemData;
-		}
-		return null;
 	}
 
 	override get isSuppressed(): boolean {
 		return this.disabled;
 	}
 
-	async getConditionData(): Promise<ConditionActiveEffectData | null> {
-		const data = this.getFlag('sr6', 'ConditionActiveEffectData');
-		return data ? (data as ConditionActiveEffectData) : null;
-	}
-
-	async setConditionData(data: ConditionActiveEffectData | null): Promise<void> {
-		await this.setFlag('sr6', 'ConditionActiveEffectData', data);
-	}
-
 	override apply(actor: Actor, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
 		return this._apply(actor, change);
 	}
+
+	override _applyCustom(
+		target: Actor | Item,
+		change: ApplicableChangeData<this>,
+		current: any,
+		delta: any,
+		changes: any,
+	): void {}
 
 	_apply(document: Actor | Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
 		change = this._parseChanges(document, change);
@@ -105,35 +141,8 @@ export default class SR6Effect extends ActiveEffect {
 			case modes.DOWNGRADE:
 				this._applyUpgrade(document, change, current, delta, changes);
 				break;
-			default: // CUSTOM CASE
-			/*
-				if (path.length > 1) {
-					switch (path[0]) {
-						case 'matrixPersona': {
-							const persona = (actor as SR6Actor<CharacterDataModel>).systemData.matrixPersona;
-							if (persona) {
-								const value = parseInt(change.value);
-								// eslint-disable-next-line @typescript-eslint/no-explicit-any
-								if (value > (persona.attributes.base as any)[path[1]]) {
-									// eslint-disable-next-line @typescript-eslint/no-explicit-any
-									(persona.attributes.base as any)[path[1]] = value;
-								}
-							}
-							break;
-						}
-						default: {
-							change.key = path[1];
-							change.mode = CONST.ACTIVE_EFFECT_MODES.OVERRIDE;
-							this._applyOverride(actor, change, current, delta, changes);
-						}
-					}
-				} else {
-					change.mode = CONST.ACTIVE_EFFECT_MODES.ADD;
-					this._applyAdd(actor, change, current, delta, changes);
-				}
-				break;
-
-				 */
+			case modes.CUSTOM:
+				this._applyCustom(document, change, current, delta, changes);
 		}
 
 		// Apply all changes to the Actor data
@@ -146,11 +155,12 @@ export default class SR6Effect extends ActiveEffect {
 	_parseChanges(document: Actor | Item, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
 		if (change.value.includes('@')) {
 			const uuid = parseUuid(this.origin);
-			console.log(this, uuid);
+
 			if (uuid) {
 				if (Object.keys(uuid.embedded).length === 0) {
 					console.error('TODO');
 				} else {
+					console.log('solve');
 					const item = getItemSync(SR6Item, this.origin as ItemUUID);
 					if (item) {
 						change.value = item.solveFormula(change.value).toString();

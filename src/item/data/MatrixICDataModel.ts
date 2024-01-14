@@ -6,7 +6,6 @@ import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 
 export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 	abstract monitor: MonitorDataModel;
-	abstract _onHitConditions: string[];
 	protected abstract _host: SR6Actor<MatrixHostDataModel> | null;
 
 	get rating(): number {
@@ -41,11 +40,6 @@ export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 
 		return {
 			...super.defineSchema(),
-			_onHitConditions: new fields.ArrayField(new fields.StringField({ blank: false, nullable: false }), {
-				initial: [],
-				nullable: false,
-				required: true,
-			}),
 			monitor: new fields.EmbeddedDataField(MonitorDataModel, {
 				initial: { damage: 0, max: 0, formula: '@rating * 2' },
 				required: true,

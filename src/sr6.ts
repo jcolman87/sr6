@@ -10,7 +10,6 @@ import { register as registerEnrichers } from '@/enrichers';
 import { register as registerHandlebarsHelpers, preload as preloadHandlebarsTemplates } from '@/handlebars';
 import { register as registerItems, setOptGroups as registerItemOptGroups, onCreate as onCreateItem } from '@/item';
 import { register as registerRolls } from '@/roll';
-import { register as registerConditions } from '@/condition';
 import { register as registerToken } from '@/token';
 import { onChatLogEntryContext } from '@/chat';
 
@@ -42,7 +41,6 @@ Hooks.once('init', async () => {
 	// System Documents
 	registerActors();
 	registerItems();
-	registerConditions();
 	registerEffects();
 	registerRolls();
 

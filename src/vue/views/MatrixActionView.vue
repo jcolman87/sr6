@@ -12,23 +12,7 @@ const props = defineProps<{
 		<div class="section-head">
 			{{ props.name }}
 		</div>
-		<div class="section">
-			<div class="section-head">Conditions</div>
-			<table>
-				<template v-for="condition in props.action.conditions" :key="condition.name">
-					<tr>
-						<a><img :src="condition.icon" :alt="condition.name" /></a>
-						<td class="title">{{ condition.name }}</td>
-						<td>When: {{ condition.activation }}</td>
-					</tr>
-					<tr>
-						<td colspan="99">
-							{{ condition.description }}
-						</td>
-					</tr>
-				</template>
-			</table>
-		</div>
+		<div class="section"></div>
 	</div>
 </template>
 

@@ -6,7 +6,6 @@ system:
   essenseCost: 1.0
   rating: 1
   sourceGearIds: ['@@sr6-crb-gear:Cyberjack']
-  conditions: []
 ---
 name: Cerebral Booster
 type: augmentation
@@ -16,13 +15,3 @@ system:
   description: 'The convolutions and gyri of your cerebrum are augmented and amplified with additional nervous tissue, improving overall brain function. Your cerebral booster increases your Logic attribute by its rating.'
   essenseCost: 1.0
   rating: 1
-  conditions:
-    - name: Cerebral Booster
-      activation: always
-      activationSituation: always
-      target: self
-      modifiers:
-        - type: activeEffect
-          situation: always
-          key: system.attributes.logic.mod
-          value: '@item.rating'

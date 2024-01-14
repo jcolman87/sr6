@@ -1,4 +1,5 @@
 import { EnumAttribute } from '@/actor/data';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SpellDataModel, { SpellAdjustmentType } from '@/item/data/SpellDataModel';
@@ -110,11 +111,13 @@ export function createBaseAttackData({
 	};
 }
 
-async function finishRoll<T extends SR6RollData>(data: Record<string, unknown>, options: T) {
+async function finishRoll<T extends SR6RollData>(roller: SR6Actor, data: Record<string, unknown>, options: T) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const roll = new SR6Roll(`${options.pool}d6`, data, options as any);
 	const evaluated = await roll.evaluate({ async: true });
 	// await evaluated.finish();
+
+	// Apply post-roll effects
 
 	// Apply edge gain to target if any
 	if (Object.hasOwnProperty.call(options, 'attack')) {
@@ -138,6 +141,13 @@ async function finishRoll<T extends SR6RollData>(data: Record<string, unknown>, 
 	await evaluated.toMessage();
 }
 
+export function preRoll<TRollData extends SR6RollData>(
+	roller: SR6Actor<BaseActorDataModel>,
+	rollData: TRollData,
+): TRollData {
+	return rollData;
+}
+
 export function getInitiativeRoll(systemData: IHasInitiative, formula: string): SR6Roll {
 	const poolModifier = systemData.getPool(RollType.Initiative);
 	return new SR6Roll(
@@ -149,17 +159,19 @@ export function getInitiativeRoll(systemData: IHasInitiative, formula: string): 
 
 export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribute: EnumAttribute): Promise<void> {
 	const rollType = RollType.Attribute;
-	const pool = actor.systemData.attribute(attribute).pool + actor.systemData.getPool(rollType);
 
-	const rollData = await RollPrompt.promptForRoll<AttributeRollData>(actor, {
-		...SR6Roll.defaultOptions(),
-		pool: pool,
-		template: ROLL_TEMPLATES.get(rollType)!,
-		type: rollType,
-		attribute: attribute,
-	});
-	if (rollData) {
-		await finishRoll({ ...actor.getRollData(), actor: actor }, rollData);
+	const configuredData = await RollPrompt.promptForRoll<AttributeRollData>(
+		actor,
+		preRoll(actor, {
+			...SR6Roll.defaultOptions(),
+			pool: actor.systemData.attribute(attribute).pool + actor.systemData.getPool(rollType),
+			template: ROLL_TEMPLATES.get(rollType)!,
+			type: rollType,
+			attribute: attribute,
+		}),
+	);
+	if (configuredData) {
+		await finishRoll(actor, { ...actor.getRollData(), actor: actor }, configuredData);
 	}
 }
 
@@ -175,7 +187,7 @@ export async function rollSkill(actor: SR6Actor, skillId: string, special: strin
 		skillId: skillId,
 	});
 	if (rollData) {
-		await finishRoll({ ...actor.getRollData(), actor: actor }, rollData);
+		await finishRoll(actor, { ...actor.getRollData(), actor: actor }, rollData);
 	}
 }
 
@@ -210,7 +222,7 @@ export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<We
 		attack: attackData,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -234,7 +246,7 @@ export async function rollWeaponDefend(
 		previous: previous,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -258,7 +270,7 @@ export async function rollWeaponSoak(
 		previous: previous,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -295,7 +307,7 @@ export async function rollMatrixAction(
 	});
 
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -322,7 +334,7 @@ export async function rollMatrixDefense(
 		previous: previous,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -355,7 +367,7 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	});
 
 	if (rollData) {
-		await finishRoll({ ...actor.getRollData(), actor: actor }, rollData);
+		await finishRoll(actor, { ...actor.getRollData(), actor: actor }, rollData);
 	}
 }
 
@@ -379,7 +391,7 @@ export async function rollSpellResistDrain<TDataModel extends LifeformDataModel 
 		previous: previous,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -407,7 +419,7 @@ export async function rollSpellDefend<TDataModel extends LifeformDataModel = Lif
 		previous: previous,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }
 
@@ -427,6 +439,6 @@ export async function rollSpellSoak(systemData: IHasPools, hits: number, previou
 		previous: previous,
 	});
 	if (rollData) {
-		await finishRoll({ ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
+		await finishRoll(systemData.actor!, { ...systemData.actor!.getRollData(), actor: systemData.actor! }, rollData);
 	}
 }

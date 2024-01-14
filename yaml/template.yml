@@ -29,8 +29,6 @@ Item:
     - matrix_ic
     # Combat
     - general_action
-    #Functionality
-    - condition
   gear:
   weapon:
   ammo:
@@ -48,4 +46,3 @@ Item:
   matrix_persona:
   matrix_ic:
   general_action:
-  condition:

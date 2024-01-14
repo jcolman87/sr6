@@ -11,7 +11,7 @@ declare global {
 	class ActiveEffect extends ActiveEffectConstructor implements TemporaryEffect {
 		constructor(
 			data: PreCreate<foundry.data.ActiveEffectSource>,
-			context?: DocumentConstructionContext<ActiveEffect>
+			context?: DocumentConstructionContext<ActiveEffect>,
 		);
 
 		/** A cached reference to the source name to avoid recurring database lookups */
@@ -90,7 +90,7 @@ declare global {
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
-			changes: any
+			changes: any,
 		): void;
 
 		/**
@@ -105,7 +105,7 @@ declare global {
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
-			changes: any
+			changes: any,
 		): void;
 
 		/**
@@ -120,7 +120,7 @@ declare global {
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
-			changes: any
+			changes: any,
 		): void;
 
 		/**
@@ -135,7 +135,7 @@ declare global {
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
-			changes: any
+			changes: any,
 		): void;
 
 		/**
@@ -149,7 +149,7 @@ declare global {
 			change: ApplicableChangeData<this>,
 			current: any,
 			delta: any,
-			changes: any
+			changes: any,
 		): void;
 
 		/** Get the name of the source of the Active Effect */
@@ -162,7 +162,7 @@ declare global {
 		protected override _preCreate(
 			data: PreDocumentId<this['_source']>,
 			options: DocumentModificationContext,
-			user: User
+			user: User,
 		): Promise<void>;
 
 		protected _castDelta(string: raw, string: type): any;
@@ -170,6 +170,8 @@ declare global {
 	}
 
 	interface ActiveEffect {
+		name: string;
+		description: string;
 		readonly parent: Actor | Item;
 		transfer: boolean;
 		disabled: boolean;

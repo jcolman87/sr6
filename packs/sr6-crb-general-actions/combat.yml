@@ -8,7 +8,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Avoid Incoming
 type: general_action
@@ -20,7 +19,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Block
 type: general_action
@@ -32,7 +30,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Call a Shot
 type: general_action
@@ -44,23 +41,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions:
-    - name: Calling a shot
-      activation: onuse
-      activationSituation: combat
-      target: self
-      duration:
-        turns: 1
-      modifiers:
-        - type: damage
-          situation: roll
-          key: WeaponAttack
-          value: 2
-        - type: pool
-          situation: roll
-          key: WeaponAttack
-          value: -4
-      icon: icons/svg/item-bag.svg
 ---
 name: Change Device Mode
 type: general_action
@@ -72,7 +52,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Command Drone
 type: general_action
@@ -84,7 +63,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Command Spirit
 type: general_action
@@ -96,7 +74,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Dodge
 type: general_action
@@ -108,7 +85,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Drop Object
 type: general_action
@@ -120,7 +96,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Drop Prone
 type: general_action
@@ -132,7 +107,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Hit the Dirt
 type: general_action
@@ -144,7 +118,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Intercept
 type: general_action
@@ -156,7 +129,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: any
-  conditions: []
 ---
 name: Move
 type: general_action
@@ -168,7 +140,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Multiple Attacks
 type: general_action
@@ -180,7 +151,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Quick Draw
 type: general_action
@@ -192,7 +162,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Reload Smartgun
 type: general_action
@@ -204,7 +173,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Shift Perception
 type: general_action
@@ -216,7 +184,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Stand Up
 type: general_action
@@ -228,7 +195,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Take Aim
 type: general_action
@@ -240,19 +206,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions:
-    - name: Taking Aim
-      activation: onuse
-      activationSituation: combat
-      target: self
-      duration:
-        turns: 1
-      modifiers:
-        - type: pool
-          situation: roll
-          key: WeaponAttack
-          value: 1
-      icon: icons/svg/item-bag.svg
 ---
 name: Take Cover
 type: general_action
@@ -264,7 +217,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Trip
 type: general_action
@@ -276,7 +228,6 @@ system:
   limits:
     activationType: minor
     activationPeriod: initiative
-  conditions: []
 ---
 name: Assist
 type: general_action
@@ -288,7 +239,6 @@ system:
   limits:
     activationType: major
     activationPeriod: any
-  conditions: []
 ---
 name: Astral Projection
 type: general_action
@@ -300,7 +250,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Attack
 type: general_action
@@ -312,7 +261,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Banish Spirit
 type: general_action
@@ -324,7 +272,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Cast Spell
 type: general_action
@@ -336,7 +283,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Cleanse
 type: general_action
@@ -348,7 +294,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Counterspell
 type: general_action
@@ -366,7 +311,6 @@ system:
   limits:
     activationType: major
     activationPeriod: any
-  conditions: []
 ---
 name: Full Defense
 type: general_action
@@ -378,7 +322,6 @@ system:
   limits:
     activationType: major
     activationPeriod: any
-  conditions: []
 ---
 name: Manifest
 type: general_action
@@ -390,7 +333,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Observe in Detail
 type: general_action
@@ -402,7 +344,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Manipulate Object
 type: general_action
@@ -414,7 +355,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Ready Weapon
 type: general_action
@@ -426,7 +366,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Reload Weapon
 type: general_action
@@ -438,7 +377,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Rigger Jump In
 type: general_action
@@ -450,7 +388,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Sprint
 type: general_action
@@ -462,7 +399,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Summon Spirit
 type: general_action
@@ -474,7 +410,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Use Simple Device
 type: general_action
@@ -486,7 +421,6 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []
 ---
 name: Use Skill
 type: general_action
@@ -498,4 +432,3 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
-  conditions: []

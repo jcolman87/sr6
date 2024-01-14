@@ -74,7 +74,7 @@ export function register(): void {
 			pattern: /@sym(bols?)?\[(?<symbols>\w+)]/gim,
 			enricher: async (match, _) => {
 				const span = document.createElement('span');
-				span.className = `font-sr6-symbols nolig ${CONFIG.sr6.useMagicalGirlSymbols ? 'mg' : ''}`;
+				span.className = `font-sr6-symbols nolig`;
 
 				span.innerText = match.groups?.['symbols']?.toLowerCase() ?? '';
 

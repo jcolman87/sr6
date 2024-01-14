@@ -290,7 +290,6 @@ export class ImportPrompt extends VueSheet(Application) {
 											name: value.name,
 											description: value.choice ? value.choice : '',
 											source: value.page,
-											conditions: [],
 										},
 									};
 								}

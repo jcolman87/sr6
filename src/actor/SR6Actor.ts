@@ -9,11 +9,12 @@ import { IHasOnUpdate } from '@/data/interfaces';
 import { IHasPreCreate } from '@/data/interfaces';
 import { IHasOnDelete } from '@/data/interfaces';
 import { IHasPostCreate } from '@/data/interfaces';
+import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
-import { SR6Roll } from '@/roll/SR6Roll';
+import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
 import * as util from '@/util';
 
 export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = BaseActorDataModel> extends Actor {
@@ -23,7 +24,6 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	get systemData(): ActorDataModel {
 		return <ActorDataModel>this.system;
 	}
-
 	get inCombat(): boolean {
 		if (!game.combat) {
 			return false;
@@ -42,40 +42,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	): Promise<void> {
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
 		return super._onUpdate(changed, options, userId);
-
-		// Check the update for anything that requires another change to the actor such as status effects
-
-		/*
-		if (changed.system!.monitors!.physical!) {
-
-			if (this.systemData.monitors.physical.value === 0 && this.systemData.monitors.overflow.damage === 0) {
-				const already = this.effects.find((a) => a.label === 'Unconscious');
-				if (!already) {
-					this.createEmbeddedDocuments('ActiveEffect', [
-						{
-							label: 'Unconscious',
-							icon: 'icons/svg/unconscious.svg',
-							statuses: ['unconscious'],
-						},
-					]);
-				}
-			}
-		}
-		*/
 	}
-
-	// This is a fix needed for handling active effects from items showing as icon effects.
-	/*
-		override get temporaryEffects(): TemporaryEffect[] {
-		// Only return actual temporary effects and then condition transferred effects
-		return [
-			...Array.from(this.allApplicableEffects()).filter(
-				(effect) => (effect as SR6Effect).isStatusEffectCondition
-			),
-			...super.temporaryEffects,
-		];
-	}
-	*/
 
 	skill(skillId_or_name: string): SR6Item<SkillDataModel> | null {
 		let skill = this.items.get(skillId_or_name);
