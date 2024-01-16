@@ -52,10 +52,6 @@ export const ROLL_CATEGORIES = new Map([
 	['defend', [RollType.WeaponDefend, RollType.SpellDefend, RollType.MatrixActionDefend]],
 ]);
 
-export function getRollCategory(key: string): RollType[] {
-	return ROLL_CATEGORIES.has(key) ? ROLL_CATEGORIES.get(key)! : [];
-}
-
 export const ROLL_TEMPLATES = new Map([
 	[RollType.Initiative, 'systems/sr6/templates/chat/rolls/InitiativeRoll.hbs'],
 	[RollType.Attribute, 'systems/sr6/templates/chat/rolls/SR6Roll.hbs'],
@@ -79,4 +75,26 @@ export function register(): void {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(window as any).SR6Roll = SR6Roll;
+}
+
+// WeaponRoll,vision,SpellDefendRoll
+export function parseRollTypesList(list: string): RollType[] {
+	const rollTypes = new Set<RollType>();
+
+	list.split(',').forEach((value: string) => {
+		if (Object.keys(RollType).includes(value)) {
+			rollTypes.add(RollType[value as keyof typeof RollType]);
+		} else {
+			const categoryList = ROLL_CATEGORIES.get(value);
+			if (!categoryList) {
+				ui.notifications.error(
+					'invalid key value for Pool Modifier. Must be a valid roll type or roll category name',
+				);
+			} else {
+				categoryList.forEach(rollTypes.add, rollTypes);
+			}
+		}
+	});
+
+	return Array.from(rollTypes);
 }

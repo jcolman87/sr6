@@ -4,19 +4,37 @@
  * @file Base SR6 Item
  */
 import BaseDataModel from '@/data/BaseDataModel';
-import { IHasPostCreate } from '@/data/interfaces';
+import { IHasOnUpdate, IHasPostCreate, IHasSystemData } from '@/data/interfaces';
+import { Modifiers, ModifiersData } from '@/modifier';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 import { IHasPreCreate } from '@/data/interfaces';
 import { IHasOnDelete } from '@/data/interfaces';
 
+export interface SR6ItemFlags {
+	modifiers?: ModifiersData;
+}
+
 /**
  * Item class used as a base for all SR6 items.
  */
-export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel> extends Item<SR6Actor> {
+export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel>
+	extends Item<SR6Actor>
+	implements IHasSystemData
+{
+	modifiers: Modifiers = new Modifiers();
+
+	get systemFlags(): undefined | SR6ItemFlags {
+		return this.flags['sr6'] as SR6ItemFlags;
+	}
+
 	get safe_name(): string {
 		return util.toSnakeCase(this.name);
+	}
+
+	getSystemData(): BaseDataModel {
+		return this.systemData;
 	}
 
 	/**
@@ -88,6 +106,19 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 
 	async _onPostCreate(): Promise<void> {
 		await (<IHasPostCreate>this.systemData).onPostCreate?.();
+	}
+
+	override async _onUpdate(
+		changed: DeepPartial<this['_source']>,
+		options: DocumentUpdateContext<this>,
+		userId: string,
+	): Promise<void> {
+		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
+		super._onUpdate(changed, options, userId);
+
+		if (changed.flags?.sr6?.modifiers) {
+			this.modifiers.updateSource(this.systemFlags!.modifiers!);
+		}
 	}
 
 	/**

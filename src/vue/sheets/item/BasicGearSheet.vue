@@ -8,7 +8,7 @@ import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 import Editor from '@/vue/components/Editor.vue';
 import EffectsView from '@/vue/views/EffectsView.vue';
-import SR6Effect from '@/effects/SR6Effect';
+import SR6Effect from '@/effect/SR6Effect';
 
 const props = withDefaults(
 	defineProps<{

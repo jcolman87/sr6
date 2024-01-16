@@ -11,6 +11,7 @@ import { register as registerHandlebarsHelpers, preload as preloadHandlebarsTemp
 import { register as registerItems, setOptGroups as registerItemOptGroups, onCreate as onCreateItem } from '@/item';
 import { register as registerRolls } from '@/roll';
 import { register as registerToken } from '@/token';
+import { register as registerModifiers } from '@/modifier';
 import { onChatLogEntryContext } from '@/chat';
 
 import { register as registerSettings } from '@/settings';
@@ -18,7 +19,7 @@ import { register as registerSettings } from '@/settings';
 import { register as registerChat, renderChatLog } from '@/chat';
 
 import { register as registerActors, onCreate as onCreateActor, setOptGroups as registerActorOptGroups } from '@/actor';
-import { register as registerEffects } from '@/effects';
+import { register as registerEffects } from 'src/effect';
 
 import { register as registerDisplayHelpers } from '@/display';
 
@@ -27,6 +28,20 @@ import { ImportPrompt } from '@/app/ImportPrompt';
 import './scss/index.scss';
 
 import { Logger } from 'tslog';
+
+globalThis.Ok = function Ok<T, E = Error>(value: T): Result<T, E> {
+	return {
+		ok: true,
+		value: value,
+	};
+};
+
+globalThis.Err = function Err<T, E = Error>(error: E): Result<T, E> {
+	return {
+		ok: false,
+		error: error,
+	};
+};
 
 Hooks.on('renderChatLog', renderChatLog);
 
@@ -52,13 +67,13 @@ Hooks.once('init', async () => {
 	registerConfig();
 	registerChat();
 	registerToken();
-
-	registerDisplayHelpers();
-	await preloadHandlebarsTemplates();
+	registerModifiers();
 });
 
 Hooks.once('ready', async () => {
 	readyConfigs();
+	registerDisplayHelpers();
+	await preloadHandlebarsTemplates();
 });
 
 Hooks.on('createActor', async (actor: Actor, _controlled: boolean): Promise<void> => {

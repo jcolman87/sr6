@@ -48,8 +48,6 @@ const conditionsDescriptionsVisible = ref(
 	}),
 );
 
-const modifiers = ref();
-
 function roll() {
 	// Apply edge action to the roll
 	switch (edgeBoost.value) {

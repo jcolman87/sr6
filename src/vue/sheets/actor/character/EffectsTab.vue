@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import SR6Item from '@/item/SR6Item';
-import SR6Effect from '@/effects/SR6Effect';
+import SR6Effect from '@/effect/SR6Effect';
 import EffectsView from '@/vue/views/EffectsView.vue';
 
-import { computed, inject, toRaw, ref, onBeforeMount, onBeforeUpdate } from 'vue';
+import { inject, toRaw, ref, onBeforeMount, onBeforeUpdate } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';

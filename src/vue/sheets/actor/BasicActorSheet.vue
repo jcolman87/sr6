@@ -7,7 +7,7 @@ import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 import Editor from '@/vue/components/Editor.vue';
 import EffectsView from '@/vue/views/EffectsView.vue';
-import SR6Effect from '@/effects/SR6Effect';
+import SR6Effect from '@/effect/SR6Effect';
 
 const props = withDefaults(
 	defineProps<{
@@ -44,9 +44,8 @@ async function addEffect(category: string) {
 	]);
 }
 
-function updateEffects() {
-	1;
-	effects.value = [...(toRaw(context.data.actor).effects as any)];
+function updateEffects(): void {
+	effects.value = [...toRaw(context.data.actor).effects.map((e) => e as SR6Effect)];
 }
 
 onBeforeMount(updateEffects);

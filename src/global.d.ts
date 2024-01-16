@@ -6,7 +6,7 @@
 
 import SR6Actor from '@/actor/SR6Actor';
 import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
-import SR6Effect from '@/effects/SR6Effect';
+import SR6Effect from '@/effect/SR6Effect';
 import SR6Item from '@/item/SR6Item';
 import SR6Combat from '@/combat/SR6Combat';
 import SR6Combatant from '@/combat/SR6Combatant';
@@ -15,6 +15,12 @@ import { SR6_CONFIG } from '@/config';
 import { Logger } from 'tslog';
 
 declare global {
+	export type Result<T, E = Error> = { ok: true; value: T } | { ok: false; error: E };
+
+	function Ok<T, E = Error>(value: T): Result<T, E>;
+
+	function Err<T, E = Error>(error: E): Result<T, E>;
+
 	declare let log: Logger;
 
 	const ui: FoundryUI;

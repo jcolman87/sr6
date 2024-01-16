@@ -170,6 +170,8 @@ SR6:
     resonance: Resonance
 
   ActiveEffects:
+    Modes:
+      POOL_MODIFIER: Pool Modifier
     Passive: Passive Effects
     Temporary: Temporary Effects
     Suppressed: Inactive Effects

@@ -123,23 +123,17 @@ export abstract class MatrixAttributesDataModel extends BaseDataModel {
 
 	override prepareDerivedData(): void {
 		if (this.formulas) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const updates: Record<string, any> = {};
 			if (this.formulas.attack) {
 				this.attack = this.solveFormula(this.formulas!.attack!);
-				updates['system.attributes.base.attack'] = this.attack;
 			}
 			if (this.formulas.sleaze) {
 				this.sleaze = this.solveFormula(this.formulas!.sleaze!);
-				updates['system.attributes.base.sleaze'] = this.attack;
 			}
 			if (this.formulas.dataProcessing) {
 				this.dataProcessing = this.solveFormula(this.formulas!.dataProcessing!);
-				updates['system.attributes.base.dataProcessing'] = this.attack;
 			}
 			if (this.formulas.firewall) {
 				this.firewall = this.solveFormula(this.formulas!.firewall!);
-				updates['system.attributes.base.firewall'] = this.attack;
 			}
 		}
 	}

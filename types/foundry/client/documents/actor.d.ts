@@ -21,7 +21,7 @@ declare global {
 	 */
 	class Actor<
 		TParent extends TokenDocument = TokenDocument,
-		TItemTypeMap extends ItemTypeMap = ItemTypeMap
+		TItemTypeMap extends ItemTypeMap = ItemTypeMap,
 	> extends ActorConstructor {
 		constructor(data: PreCreate<foundry.data.ActorSource>, context?: DocumentConstructionContext<Actor>);
 
@@ -74,7 +74,7 @@ declare global {
 		getActiveTokens(linked?: undefined, document?: undefined): NonNullable<TParent['object']>[];
 		getActiveTokens(
 			linked?: boolean,
-			document?: boolean
+			document?: boolean,
 		): Embedded<NonNullable<TParent>>[] | NonNullable<TParent['object']>[];
 
 		/**
@@ -139,13 +139,13 @@ declare global {
 		protected override _preCreate(
 			data: PreDocumentId<this['_source']>,
 			options: DocumentModificationContext<this>,
-			user: User
+			user: User,
 		): Promise<void>;
 
 		protected override _onUpdate(
 			changed: DeepPartial<this['_source']>,
 			options: DocumentUpdateContext<this>,
-			userId: string
+			userId: string,
 		): void;
 
 		protected override _onCreateDescendantDocuments(
@@ -154,7 +154,7 @@ declare global {
 			documents: ActiveEffect<this>[] | Item<this>[],
 			result: ActiveEffect<this>['_source'][] | Item<this>['_source'][],
 			options: DocumentModificationContext<this>,
-			userId: string
+			userId: string,
 		): void;
 
 		protected override _onUpdateDescendantDocuments(
@@ -163,7 +163,7 @@ declare global {
 			documents: ActiveEffect<this>[] | Item<this>[],
 			changes: ActiveEffect<this>['_source'][] | Item<this>['_source'][],
 			options: DocumentModificationContext<this>,
-			userId: string
+			userId: string,
 		): void;
 
 		/**
@@ -195,17 +195,17 @@ declare global {
 		deleteEmbeddedDocuments(
 			embeddedName: 'ActiveEffect',
 			dataId: string[],
-			context?: DocumentModificationContext
+			context?: DocumentModificationContext,
 		): Promise<ActiveEffect[]>;
 		deleteEmbeddedDocuments(
 			embeddedName: 'Item',
 			dataId: string[],
-			context?: DocumentModificationContext
+			context?: DocumentModificationContext,
 		): Promise<Item[]>;
 		deleteEmbeddedDocuments(
 			embeddedName: 'ActiveEffect' | 'Item',
 			dataId: string[],
-			context?: DocumentModificationContext
+			context?: DocumentModificationContext,
 		): Promise<ActiveEffect[] | Item[]>;
 	}
 
@@ -213,21 +213,22 @@ declare global {
 		function create<A extends Actor>(
 			this: ConstructorOf<A>,
 			data: PreCreate<A['_source']>,
-			context?: DocumentModificationContext
+			context?: DocumentModificationContext,
 		): Promise<A | undefined>;
 		function create<A extends Actor>(
 			this: ConstructorOf<A>,
 			data: PreCreate<A['_source']>[],
-			context?: DocumentModificationContext
+			context?: DocumentModificationContext,
 		): Promise<A[]>;
 		function create<A extends Actor>(
 			this: ConstructorOf<A>,
 			data: PreCreate<A['_source']>[] | PreCreate<A['_source']>,
-			context?: DocumentModificationContext
+			context?: DocumentModificationContext,
 		): Promise<A[] | A | undefined>;
 	}
 
-	type ActorUUID = `Actor.${string}` | CompendiumUUID | TokenDocumentUUID;
+	type ActorDocumentUUID = `Actor.${string}`;
+	type ActorUUID = ActorDocumentUUID | CompendiumUUID | TokenDocumentUUID;
 }
 
 type ItemTypeMap = Record<string, Item>;

@@ -178,18 +178,19 @@ export default abstract class LifeformDataModel
 
 		// if (this.actor!.isOwner) this.actor!.update({ ['system.attributes']: this.attributes });
 		// if (this.actor!.isOwner) this.actor!.update({ ['system.monitors']: this.monitors });
-
+		this._prepareAttributes(AttributeDataModel.prototype.prepareBaseData);
 		this.monitors.prepareBaseData();
 	}
 
 	override prepareData(): void {
 		super.prepareData();
+		this._prepareAttributes(AttributeDataModel.prototype.prepareData);
 		this.monitors.prepareData();
 	}
 
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
-		this._prepareAttributes();
+		this._prepareAttributes(AttributeDataModel.prototype.prepareDerivedData);
 		this.monitors.prepareDerivedData();
 	}
 
@@ -210,17 +211,17 @@ export default abstract class LifeformDataModel
 		};
 	}
 
-	_prepareAttributes(): void {
-		this.attributes.body.prepareDerivedData();
-		this.attributes.agility.prepareDerivedData();
-		this.attributes.reaction.prepareDerivedData();
-		this.attributes.strength.prepareDerivedData();
-		this.attributes.willpower.prepareDerivedData();
-		this.attributes.logic.prepareDerivedData();
-		this.attributes.intuition.prepareDerivedData();
-		this.attributes.charisma.prepareDerivedData();
-		this.attributes.magic.prepareDerivedData();
-		this.attributes.resonance.prepareDerivedData();
+	_prepareAttributes(fn: () => void): void {
+		fn.call(this.attributes.body);
+		fn.call(this.attributes.agility);
+		fn.call(this.attributes.reaction);
+		fn.call(this.attributes.strength);
+		fn.call(this.attributes.willpower);
+		fn.call(this.attributes.logic);
+		fn.call(this.attributes.intuition);
+		fn.call(this.attributes.charisma);
+		fn.call(this.attributes.magic);
+		fn.call(this.attributes.resonance);
 	}
 
 	async onPostCreate(): Promise<void> {

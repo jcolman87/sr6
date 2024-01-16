@@ -12,7 +12,7 @@ declare global {
 			 */
 			function debounce<T extends unknown[]>(
 				callback: (...args: T) => unknown,
-				delay: number
+				delay: number,
 			): (...args: T) => void;
 
 			/**
@@ -72,7 +72,7 @@ declare global {
 				original: T,
 				other?: U,
 				{ insertKeys, insertValues, overwrite, inplace, enforceTypes, performDeletions }?: MergeObjectOptions,
-				_d?: number
+				_d?: number,
 			): T & U;
 
 			/**
@@ -108,8 +108,10 @@ declare global {
 				source: object,
 				template: object,
 				keepSpecial?: boolean,
-				templateValues?: boolean
+				templateValues?: boolean,
 			): object;
+
+			function objectsEqual(rhv: object, lhv: object): boolean;
 
 			/**
 			 * Flatten a possibly multi-dimensional object to a one-dimensional one by converting all nested keys to dot notation
@@ -144,7 +146,7 @@ declare global {
 			 */
 			function diffObject<T extends Record<string, unknown> = Record<string, unknown>>(
 				original: object,
-				other: object
+				other: object,
 			): T;
 
 			/**
@@ -287,7 +289,7 @@ declare global {
 					until?: number | string;
 					details?: string;
 					stack?: boolean;
-				}
+				},
 			): void;
 		}
 	}

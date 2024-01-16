@@ -10,7 +10,8 @@ declare global {
 		tabs: { navSelector: string; contentSelector: string; initial: string }[];
 	}
 
-	interface ActiveEffectConfigData<TDocument extends ActiveEffect = ActiveEffect> extends DocumentSheetData<TDocument> {
+	interface ActiveEffectConfigData<TDocument extends ActiveEffect = ActiveEffect>
+		extends DocumentSheetData<TDocument> {
 		effect: TDocument;
 		isActorEffect: boolean;
 		isItemEffect: boolean;
@@ -23,7 +24,7 @@ declare global {
 		static get defaultOptions(): ActiveEffectConfigOptions;
 
 		/** @override */
-		getData(options?: DocumentSheetOptions): ActiveEffectConfigData<TDocument>;
+		getData(options?: DocumentSheetOptions): Promise<ActiveEffectConfigData<TDocument>>;
 
 		/**
 		 * Provide centralized handling of mouse clicks on control buttons.
@@ -39,6 +40,9 @@ declare global {
 		private _addEffectChange(button: HTMLElement): HTMLElement;
 
 		/** @override */
-		protected _updateObject(event: Event, formData: Record<string, unknown> & { changes?: foundry.data.EffectChangeData[] }): Promise<void>;
+		protected _updateObject(
+			event: Event,
+			formData: Record<string, unknown> & { changes?: foundry.data.EffectChangeData[] },
+		): Promise<void>;
 	}
 }

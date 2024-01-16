@@ -9,13 +9,13 @@ export default abstract class QualityDataModel
 	async onPostCreate(): Promise<void> {}
 
 	onDelete(
-		document: SR6Item<QualityDataModel>,
-		options: DocumentModificationContext<SR6Item<QualityDataModel>>,
-		userId: string,
+		_document: SR6Item<QualityDataModel>,
+		_options: DocumentModificationContext<SR6Item<QualityDataModel>>,
+		_userId: string,
 	): void {}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
-		const fields = foundry.data.fields;
+		const _fields = foundry.data.fields;
 
 		return {
 			...super.defineSchema(),

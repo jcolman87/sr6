@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import SR6Effect from '@/effects/SR6Effect';
+import SR6Effect from '@/effect/SR6Effect';
 import { inject, toRaw, ref } from 'vue';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';

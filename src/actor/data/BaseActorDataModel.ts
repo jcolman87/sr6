@@ -39,6 +39,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	is<I>(): this is I {
 		return true;
 	}
+
 	get skills(): SkillDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'skill').map(
 			(i) => (i as SR6Item<SkillDataModel>).systemData,
@@ -186,13 +187,17 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 					system: {
 						sourceDeviceId: device ? device.uuid : null,
 						type: personaType,
+						attributes: {
+							base: attributes,
+							current: attributes,
+						},
 					},
 				},
 			])
 		)[0] as SR6Item<MatrixPersonaDataModel>;
 
 		// Bugfix, because of the differeing types of data the creation fails, we need to update the partials instead
-		await persona.update({ ['system.attributes.base']: attributes, ['system.attributes.current']: attributes });
+		//await persona.update({ ['system.attributes.base']: attributes, ['system.attributes.current']: attributes });
 
 		return persona;
 	}

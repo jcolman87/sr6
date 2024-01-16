@@ -3,40 +3,64 @@
  * @author jaynus
  * @file ActiveEffects Customizations
  */
+import BaseDataModel from '@/data/BaseDataModel';
+import { ConditionalData, conditionsCheck } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { RollType } from '@/roll';
+import { PoolModifierData } from '@/modifier';
+import { parseRollTypesList, RollType } from '@/roll';
 import { getItemSync } from '@/util';
 
-export enum ModifierType {
-	Pool = 'pool',
-	BonusEdge = 'bonusEdge',
-	BlockEdge = 'blockEdge',
-}
+export const EFFECT_MODES = {
+	POOL_MODIFIER: 900,
+	...CONST.ACTIVE_EFFECT_MODES,
+};
 
 export enum EffectType {
 	Standard = 'standard',
-	Roll = 'roll',
+	OnHit = 'onhit',
+	OnUse = 'onuse',
 }
 
-export interface RollEffectData {
-	rollType: RollType[];
-	modifierType: ModifierType;
-	value: string;
+interface EffectFlags {
+	type: EffectType;
+	conditions?: ConditionalData[];
 }
-
-type EffectFlags = {
-	sr6?: {
-		type: EffectType;
-		rollEffect?: RollEffectData;
-	};
-};
 
 export default class SR6Effect extends ActiveEffect {
-	declare flags: EffectFlags;
+	declare flags: {
+		sr6?: EffectFlags;
+	};
 
-	get type(): EffectType {
-		return this.flags.sr6!.type;
+	failedCondition?: ConditionalData;
+
+	get systemData(): EffectFlags {
+		return this.flags.sr6!;
+	}
+
+	get isConditional(): boolean {
+		return this.systemData.conditions !== undefined;
+	}
+
+	get conditions(): ConditionalData[] | undefined {
+		return this.systemData.conditions;
+	}
+
+	override prepareData(): void {
+		super.prepareData();
+
+		if (!this.flags.sr6) {
+			return;
+		}
+		this.failedCondition = undefined;
+		if (this.conditions) {
+			const origin = fromUuidSync(this.origin) as ClientDocument | null;
+			const result = conditionsCheck(origin!, this.parent, this.conditions);
+			if (!result.ok) {
+				this.failedCondition = result.error;
+				this.disabled = true;
+			}
+		}
 	}
 
 	static defaultFlags(): Record<string, unknown> {
@@ -50,9 +74,18 @@ export default class SR6Effect extends ActiveEffect {
 		options: DocumentModificationContext,
 		user: User,
 	): Promise<void> {
-		if (!data.flags?.sr6) {
-			this.updateSource({ ['flags.sr6']: SR6Effect.defaultFlags() });
+		if (data.flags?.sr6) {
+			this.updateSource({
+				['flags.sr6']: foundry.utils.mergeObject(data.flags.sr6, SR6Effect.defaultFlags(), {
+					overwrite: false,
+				}),
+			});
+		} else {
+			this.updateSource({
+				['flags.sr6']: SR6Effect.defaultFlags(),
+			});
 		}
+
 		return super._preCreate(data, options, user);
 	}
 
@@ -79,12 +112,24 @@ export default class SR6Effect extends ActiveEffect {
 	}
 
 	override _applyCustom(
+		_target: Actor | Item,
+		_change: ApplicableChangeData<this>,
+		_current: Record<string, unknown>,
+		_delta: Record<string, unknown>,
+		_changes: Record<string, unknown>,
+	): void {}
+
+	_applyPoolModifier(
 		target: Actor | Item,
 		change: ApplicableChangeData<this>,
-		current: any,
-		delta: any,
-		changes: any,
-	): void {}
+		_current: Record<string, unknown>,
+		_delta: Record<string, unknown>,
+		_changes: Record<string, unknown>,
+	): void {
+		const rollTypes: RollType[] = parseRollTypesList(change.key);
+		if (rollTypes.length > 0) {
+		}
+	}
 
 	_apply(document: Actor | Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
 		change = this._parseChanges(document, change);
@@ -125,24 +170,27 @@ export default class SR6Effect extends ActiveEffect {
 		// const path = change.key.split(':');
 
 		// Apply the change depending on the application mode
-		const modes = CONST.ACTIVE_EFFECT_MODES;
 		const changes = {};
 		switch (change.mode) {
-			case modes.ADD:
+			case EFFECT_MODES.ADD:
 				this._applyAdd(document, change, current, delta, changes);
 				break;
-			case modes.MULTIPLY:
+			case EFFECT_MODES.MULTIPLY:
 				this._applyMultiply(document, change, current, delta, changes);
 				break;
-			case modes.OVERRIDE:
+			case EFFECT_MODES.OVERRIDE:
 				this._applyOverride(document, change, current, delta, changes);
 				break;
-			case modes.UPGRADE:
-			case modes.DOWNGRADE:
+			case EFFECT_MODES.UPGRADE:
+			case EFFECT_MODES.DOWNGRADE:
 				this._applyUpgrade(document, change, current, delta, changes);
 				break;
-			case modes.CUSTOM:
+			case EFFECT_MODES.CUSTOM:
 				this._applyCustom(document, change, current, delta, changes);
+				break;
+			case EFFECT_MODES.POOL_MODIFIER:
+				this._applyPoolModifier(document, change, current, delta, changes);
+				break;
 		}
 
 		// Apply all changes to the Actor data

@@ -6,7 +6,7 @@
 
 import BaseDataModel from '@/data/BaseDataModel';
 import { DocumentUUIDField } from '@/data/fields';
-import SR6Effect from '@/effects/SR6Effect';
+import SR6Effect from '@/effect/SR6Effect';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import { DamageType, FireMode, Distance } from '@/data';
 import SR6Item from '@/item/SR6Item';

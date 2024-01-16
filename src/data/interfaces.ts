@@ -1,4 +1,5 @@
 import SR6Actor from '@/actor/SR6Actor';
+import BaseDataModel from '@/data/BaseDataModel';
 import { InitiativeType } from '@/data/index';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
@@ -12,6 +13,10 @@ export type AvailableActions = {
 
 export interface IHasActor {
 	get actor(): SR6Actor | null;
+}
+
+export interface IHasSystemData<T extends BaseDataModel = BaseDataModel> {
+	getSystemData?(): T;
 }
 
 export interface IHasPools extends IHasActor {

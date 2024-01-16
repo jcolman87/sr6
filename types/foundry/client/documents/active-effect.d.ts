@@ -192,4 +192,8 @@ declare global {
 	interface ApplicableChangeData<T extends ActiveEffect> extends foundry.data.EffectChangeSource {
 		effect: T;
 	}
+
+	type ActorActiveEffectUUID = `Actor.${string}.ActiveEffect.${string}`;
+	type EmbeddedItemActiveEffectUUID = `Actor.${string}.Item.${string}.ActiveEffect.${string}`;
+	type ActiveEffectUUID = ActorActiveEffectUUID | EmbeddedItemActiveEffectUUID;
 }

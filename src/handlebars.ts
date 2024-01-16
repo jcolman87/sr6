@@ -6,7 +6,6 @@
 import { getActorSync, getItemSync } from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
-import Handlebars from 'handlebars';
 
 export async function preload(): Promise<void> {
 	const templatePaths = [
@@ -24,7 +23,11 @@ export function register(): void {
 	Handlebars.registerHelper('capitalize', /** @param {string} value */ (value: string) => value.capitalize());
 	Handlebars.registerHelper('toLowerCase', /** @param {string} value */ (value: string) => value.toLowerCase());
 	Handlebars.registerHelper('toUpperCase', /** @param {string} value */ (value: string) => value.toUpperCase());
-	Handlebars.registerHelper('concat', ((...values: string[]) => values.filter((v) => v).join('')) as any);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	Handlebars.registerHelper('concat', ((...values: any) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		values.filter((v: any) => typeof v === 'string').join('');
+	}) as any);
 	Handlebars.registerHelper('split', /** @param {string} value */ (value: string) => value.split(' '));
 
 	/** Math Utilities */

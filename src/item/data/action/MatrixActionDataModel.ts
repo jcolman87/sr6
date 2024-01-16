@@ -77,7 +77,7 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 				choices: Object.values(MatrixActionType),
 			}),
 			skillUse: new fields.EmbeddedDataField(SkillUseDataModel, {
-				initial: { skill: 'Cracking', specialization: 'Hacking' },
+				initial: null,
 				required: true,
 				nullable: true,
 			}),

@@ -5,25 +5,32 @@
  */
 import BaseDataModel from '@/data/BaseDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import { IHasOnUpdate } from '@/data/interfaces';
+import { IHasOnUpdate, IHasSystemData } from '@/data/interfaces';
 import { IHasPreCreate } from '@/data/interfaces';
 import { IHasOnDelete } from '@/data/interfaces';
 import { IHasPostCreate } from '@/data/interfaces';
-import SR6Effect from '@/effects/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
-import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
+import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 
-export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = BaseActorDataModel> extends Actor {
+export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = BaseActorDataModel>
+	extends Actor
+	implements IHasSystemData
+{
 	/**
 	 * Specialized property for accessing `actor.system` in a typed manner.
 	 */
 	get systemData(): ActorDataModel {
 		return <ActorDataModel>this.system;
 	}
+
+	getSystemData(): BaseDataModel {
+		return this.systemData;
+	}
+
 	get inCombat(): boolean {
 		if (!game.combat) {
 			return false;
@@ -103,6 +110,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		const finalData = { ...this.getRollData(), ...data, actor: this };
 		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
 		roll = roll.evaluate({ async: false });
+		console.log(`Solved: ${formula}`, finalData, roll);
 		return roll.total!;
 	}
 
