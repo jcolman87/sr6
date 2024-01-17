@@ -3,12 +3,10 @@
  * @author jaynus
  * @file ActiveEffects Customizations
  */
-import BaseDataModel from '@/data/BaseDataModel';
+import SR6Actor from '@/actor/SR6Actor';
 import { ConditionalData, conditionsCheck } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { PoolModifierData } from '@/modifier';
-import { parseRollTypesList, RollType } from '@/roll';
 import { getItemSync } from '@/util';
 
 export const EFFECT_MODES = {
@@ -107,12 +105,12 @@ export default class SR6Effect extends ActiveEffect {
 		return this.disabled;
 	}
 
-	override apply(actor: Actor, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
+	override apply(actor: SR6Actor, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
 		return this._apply(actor, change);
 	}
 
 	override _applyCustom(
-		_target: Actor | Item,
+		_target: SR6Actor | SR6Item,
 		_change: ApplicableChangeData<this>,
 		_current: Record<string, unknown>,
 		_delta: Record<string, unknown>,
@@ -120,18 +118,14 @@ export default class SR6Effect extends ActiveEffect {
 	): void {}
 
 	_applyPoolModifier(
-		target: Actor | Item,
-		change: ApplicableChangeData<this>,
+		_target: SR6Actor | SR6Item,
+		_change: ApplicableChangeData<this>,
 		_current: Record<string, unknown>,
 		_delta: Record<string, unknown>,
 		_changes: Record<string, unknown>,
-	): void {
-		const rollTypes: RollType[] = parseRollTypesList(change.key);
-		if (rollTypes.length > 0) {
-		}
-	}
+	): void {}
 
-	_apply(document: Actor | Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
+	_apply(document: SR6Actor | SR6Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
 		change = this._parseChanges(document, change);
 
 		// Determine the data type of the target field
@@ -200,7 +194,7 @@ export default class SR6Effect extends ActiveEffect {
 		return changes as any;
 	}
 
-	_parseChanges(document: Actor | Item, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
+	_parseChanges(document: SR6Actor | SR6Item, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
 		if (change.value.includes('@')) {
 			const uuid = parseUuid(this.origin);
 

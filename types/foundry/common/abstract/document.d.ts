@@ -71,6 +71,8 @@ declare global {
 				/** The canonical identifier for this Document */
 				get id(): string;
 
+				get uuid(): string;
+
 				/** Test whether this Document is embedded within a parent Document */
 				get isEmbedded(): boolean;
 
@@ -105,7 +107,10 @@ declare global {
 				 * @param [options={}] Options which determine how the new data is merged
 				 * @returns An object containing the changed keys and values
 				 */
-				updateSource(data?: DocumentUpdateData, options?: DocumentModificationContext): DeepPartial<this['_source']>;
+				updateSource(
+					data?: DocumentUpdateData,
+					options?: DocumentModificationContext,
+				): DeepPartial<this['_source']>;
 
 				/**
 				 * Clone a document, creating a new document by combining current data with provided overrides.
@@ -116,9 +121,15 @@ declare global {
 				 * @param [options.keepId=false]  Keep the original Document ID? Otherwise the ID will become undefined
 				 * @returns The cloned Document instance
 				 */
-				clone<T extends this>(data: DocumentUpdateData<this> | undefined, options: { save: true; keepId?: boolean }): Promise<T>;
+				clone<T extends this>(
+					data: DocumentUpdateData<this> | undefined,
+					options: { save: true; keepId?: boolean },
+				): Promise<T>;
 				clone<T extends this>(data?: DocumentUpdateData<this>, options?: { save?: false; keepId?: boolean }): T;
-				clone<T extends this>(data?: DocumentUpdateData<this>, options?: { save?: boolean; keepId?: boolean }): T | Promise<T>;
+				clone<T extends this>(
+					data?: DocumentUpdateData<this>,
+					options?: { save?: boolean; keepId?: boolean },
+				): T | Promise<T>;
 
 				/**
 				 * Get the permission level that a specific User has over this Document, a value in CONST.ENTITY_PERMISSIONS.
@@ -135,7 +146,11 @@ declare global {
 				 * @param [options.exact=false] Require the exact permission level requested?
 				 * @return Does the user have this permission level over the Document?
 				 */
-				testUserPermission(user: documents.BaseUser, permission: DocumentOwnershipString | DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
+				testUserPermission(
+					user: documents.BaseUser,
+					permission: DocumentOwnershipString | DocumentOwnershipLevel,
+					{ exact }?: { exact?: boolean },
+				): boolean;
 
 				/**
 				 * Test whether a given User has permission to perform some action on this Document
@@ -175,7 +190,11 @@ declare global {
 				 * const data = [{name: "Compendium Actor", type: "character", img: "path/to/profile.jpg"}];
 				 * const created = await Actor.createDocuments(data, {pack: "mymodule.mypack"});
 				 */
-				static createDocuments<T extends Document>(this: ConstructorOf<T>, data?: PreCreate<T['_source']>[], context?: DocumentModificationContext<T>): Promise<T[]>;
+				static createDocuments<T extends Document>(
+					this: ConstructorOf<T>,
+					data?: PreCreate<T['_source']>[],
+					context?: DocumentModificationContext<T>,
+				): Promise<T[]>;
 
 				/**
 				 * Update multiple Document instances using provided differential data.
@@ -203,7 +222,11 @@ declare global {
 				 * const updated = await Actor.updateDocuments([{_id: actor.id, name: "New Name"}], {pack: "mymodule.mypack"});
 				 */
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				static updateDocuments<T extends Document>(this: ConstructorOf<T>, updates?: DocumentUpdateData<T>[], context?: DocumentModificationContext): Promise<T[]>;
+				static updateDocuments<T extends Document>(
+					this: ConstructorOf<T>,
+					updates?: DocumentUpdateData<T>[],
+					context?: DocumentModificationContext,
+				): Promise<T[]>;
 
 				/**
 				 * Delete one or multiple existing Documents using an array of provided ids.
@@ -233,7 +256,11 @@ declare global {
 				 * const deleted = await Actor.deleteDocuments([actor.id], {pack: "mymodule.mypack"});
 				 */
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				static deleteDocuments<T extends ConstructorOf<any>>(this: T, ids?: string[], context?: DocumentModificationContext): Promise<InstanceType<T>[]>;
+				static deleteDocuments<T extends ConstructorOf<any>>(
+					this: T,
+					ids?: string[],
+					context?: DocumentModificationContext,
+				): Promise<InstanceType<T>[]>;
 
 				/**
 				 * Create a new Document using provided input data, saving it to the database.
@@ -255,9 +282,21 @@ declare global {
 				 * const data = [{name: "Special Sword", type: "weapon"}];
 				 * const created = await Item.create(data, {pack: "mymodule.mypack"});
 				 */
-				static create<T extends Document>(this: ConstructorOf<T>, data: PreCreate<T['_source']>, context?: DocumentModificationContext): Promise<T | undefined>;
-				static create<T extends Document>(this: ConstructorOf<T>, data: PreCreate<T['_source']>[], context?: DocumentModificationContext): Promise<T[]>;
-				static create<T extends Document>(this: ConstructorOf<T>, data: PreCreate<T['_source']> | PreCreate<T['_source']>[], context?: DocumentModificationContext): Promise<T[] | T | undefined>;
+				static create<T extends Document>(
+					this: ConstructorOf<T>,
+					data: PreCreate<T['_source']>,
+					context?: DocumentModificationContext,
+				): Promise<T | undefined>;
+				static create<T extends Document>(
+					this: ConstructorOf<T>,
+					data: PreCreate<T['_source']>[],
+					context?: DocumentModificationContext,
+				): Promise<T[]>;
+				static create<T extends Document>(
+					this: ConstructorOf<T>,
+					data: PreCreate<T['_source']> | PreCreate<T['_source']>[],
+					context?: DocumentModificationContext,
+				): Promise<T[] | T | undefined>;
 
 				/**
 				 * Update one or multiple existing entities using provided input data.
@@ -310,8 +349,16 @@ declare global {
 				 * @return The retrieved embedded Document instance, or undefined
 				 */
 				getEmbeddedDocument(embeddedName: string, id: string, { strict }: { strict: true }): Document;
-				getEmbeddedDocument(embeddedName: string, id: string, { strict }: { strict: false }): Document | undefined;
-				getEmbeddedDocument(embeddedName: string, id: string, { strict }?: { strict?: boolean }): Document | undefined;
+				getEmbeddedDocument(
+					embeddedName: string,
+					id: string,
+					{ strict }: { strict: false },
+				): Document | undefined;
+				getEmbeddedDocument(
+					embeddedName: string,
+					id: string,
+					{ strict }?: { strict?: boolean },
+				): Document | undefined;
 
 				/**
 				 * Create multiple embedded Document instances within this parent Document using provided input data.
@@ -321,7 +368,11 @@ declare global {
 				 * @param [context={}] Additional context which customizes the creation workflow
 				 * @return An array of created Document instances
 				 */
-				createEmbeddedDocuments(embeddedName: string, data: PreCreate<DocumentSource>[], context?: DocumentModificationContext): Promise<Document[]>;
+				createEmbeddedDocuments(
+					embeddedName: string,
+					data: PreCreate<DocumentSource>[],
+					context?: DocumentModificationContext,
+				): Promise<Document[]>;
 
 				/**
                  * Update one or multiple existing entities using provided input data.
@@ -334,7 +385,11 @@ declare global {
                  * @param [context={}] Additional context which customizes the update workflow
                  * @return An array of updated Document instances
                  */
-				updateEmbeddedDocuments(embeddedName: string, updateData: EmbeddedDocumentUpdateData<Document>[], context?: DocumentModificationContext): Promise<Document[]>;
+				updateEmbeddedDocuments(
+					embeddedName: string,
+					updateData: EmbeddedDocumentUpdateData<Document>[],
+					context?: DocumentModificationContext,
+				): Promise<Document[]>;
 
 				/**
 				 * Delete multiple embedded Document instances within a parent Document using provided string ids.
@@ -344,7 +399,11 @@ declare global {
 				 * @param [context={}] Additional context which customizes the deletion workflow
 				 * @return An array of deleted Document instances
 				 */
-				deleteEmbeddedDocuments(embeddedName: string, dataId: string[], context?: DocumentModificationContext): Promise<Document[]>;
+				deleteEmbeddedDocuments(
+					embeddedName: string,
+					dataId: string[],
+					context?: DocumentModificationContext,
+				): Promise<Document[]>;
 
 				/* -------------------------------------------- */
 				/*  Flag Operations                             */
@@ -399,7 +458,11 @@ declare global {
 				 * @param options Additional options which modify the creation request
 				 * @param user    The User requesting the document creation
 				 */
-				protected _preCreate(data: PreDocumentId<this['_source']>, options: DocumentModificationContext<this>, user: documents.BaseUser): Promise<void>;
+				protected _preCreate(
+					data: PreDocumentId<this['_source']>,
+					options: DocumentModificationContext<this>,
+					user: documents.BaseUser,
+				): Promise<void>;
 
 				/**
 				 * Perform preliminary operations before a Document of this type is updated.
@@ -408,7 +471,11 @@ declare global {
 				 * @param options Additional options which modify the update request
 				 * @param user    The User requesting the document update
 				 */
-				protected _preUpdate(changed: DeepPartial<this['_source']>, options: DocumentUpdateContext<this>, user: documents.BaseUser): Promise<void>;
+				protected _preUpdate(
+					changed: DeepPartial<this['_source']>,
+					options: DocumentUpdateContext<this>,
+					user: documents.BaseUser,
+				): Promise<void>;
 
 				/**
 				 * Perform preliminary operations before a Document of this type is deleted.
@@ -416,7 +483,10 @@ declare global {
 				 * @param options Additional options which modify the deletion request
 				 * @param user    The User requesting the document deletion
 				 */
-				protected _preDelete(options: DocumentModificationContext<this>, user: documents.BaseUser): Promise<void>;
+				protected _preDelete(
+					options: DocumentModificationContext<this>,
+					user: documents.BaseUser,
+				): Promise<void>;
 
 				/**
 				 * Perform follow-up operations after a Document of this type is created.
@@ -424,7 +494,11 @@ declare global {
 				 * @param data    The initial data object provided to the document creation request
 				 * @param options Additional options which modify the creation request
 				 */
-				protected _onCreate(data: this['_source'], options: DocumentModificationContext<this>, userId: string): void;
+				protected _onCreate(
+					data: this['_source'],
+					options: DocumentModificationContext<this>,
+					userId: string,
+				): void;
 
 				/**
 				 * Perform follow-up operations after a Document of this type is updated.
@@ -433,7 +507,11 @@ declare global {
 				 * @param options Additional options which modify the update request
 				 * @param userId  The ID of the User requesting the document update
 				 */
-				protected _onUpdate(changed: DeepPartial<this['_source']>, options: DocumentUpdateContext<this>, userId: string): void;
+				protected _onUpdate(
+					changed: DeepPartial<this['_source']>,
+					options: DocumentUpdateContext<this>,
+					userId: string,
+				): void;
 
 				/**
 				 * Perform follow-up operations after a Document of this type is deleted.
@@ -491,7 +569,10 @@ declare global {
 				toJSON(): RawObject<this['data']>;
 			}
 
-			type MetadataPermission = keyof typeof CONST.USER_ROLES | keyof typeof CONST.USER_PERMISSIONS | ((...args: any[]) => boolean);
+			type MetadataPermission =
+				| keyof typeof CONST.USER_ROLES
+				| keyof typeof CONST.USER_PERMISSIONS
+				| ((...args: any[]) => boolean);
 
 			interface DocumentMetadata {
 				collection: string;
@@ -544,17 +625,24 @@ declare global {
 		deleteAll?: boolean;
 	}
 
-	type DocumentUpdateContext<T extends foundry.abstract.Document> = Omit<DocumentModificationContext<T>, 'deleteAll' | 'index' | 'keepId' | 'keepEmbeddedIds' | 'temporary'>;
+	type DocumentUpdateContext<T extends foundry.abstract.Document> = Omit<
+		DocumentModificationContext<T>,
+		'deleteAll' | 'index' | 'keepId' | 'keepEmbeddedIds' | 'temporary'
+	>;
 
 	type Embedded<T extends foundry.abstract.Document> = T & {
 		readonly parent: NonNullable<T['parent']>;
 	};
 
-	type PreCreate<T extends foundry.abstract.DocumentSource> = T extends { name: string; type: string } ? Omit<DeepPartial<T>, 'name' | 'type'> & { name: string; type: T['type'] } : DeepPartial<T>;
+	type PreCreate<T extends foundry.abstract.DocumentSource> = T extends { name: string; type: string }
+		? Omit<DeepPartial<T>, 'name' | 'type'> & { name: string; type: T['type'] }
+		: DeepPartial<T>;
 
 	type PreDocumentId<T extends foundry.abstract.DocumentSource> = Omit<T, '_id'> & { _id: null };
 
-	type DocumentUpdateData<T extends foundry.abstract.Document = foundry.abstract.Document> = Partial<T['_source']> | Record<string, unknown>;
+	type DocumentUpdateData<T extends foundry.abstract.Document = foundry.abstract.Document> =
+		| Partial<T['_source']>
+		| Record<string, unknown>;
 
 	type EmbeddedDocumentUpdateData<T extends foundry.abstract.Document> = DocumentUpdateData<T> & { _id: string };
 

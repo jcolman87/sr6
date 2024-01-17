@@ -38,7 +38,7 @@ export default class MatrixHostSheet extends VueSheet(SR6ActorSheet<MatrixHostDa
 				{
 					navSelector: '.sheet-tabs',
 					contentSelector: '.sheet-body',
-					initial: 'basics',
+					initial: 'data',
 				},
 			],
 		};

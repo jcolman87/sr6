@@ -197,7 +197,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 		)[0] as SR6Item<MatrixPersonaDataModel>;
 
 		// Bugfix, because of the differeing types of data the creation fails, we need to update the partials instead
-		//await persona.update({ ['system.attributes.base']: attributes, ['system.attributes.current']: attributes });
+		// await persona.update({ ['system.attributes.base']: attributes, ['system.attributes.current']: attributes });
 
 		return persona;
 	}

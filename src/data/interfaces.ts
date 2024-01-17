@@ -4,6 +4,7 @@ import { InitiativeType } from '@/data/index';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
+import { Modifiers } from '@/modifier';
 import { RollType } from '@/roll';
 
 export type AvailableActions = {
@@ -15,6 +16,9 @@ export interface IHasActor {
 	get actor(): SR6Actor | null;
 }
 
+export interface IHasModifiers {
+	modifiers: Modifiers;
+}
 export interface IHasSystemData<T extends BaseDataModel = BaseDataModel> {
 	getSystemData?(): T;
 }

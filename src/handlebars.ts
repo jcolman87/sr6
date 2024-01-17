@@ -27,6 +27,7 @@ export function register(): void {
 	Handlebars.registerHelper('concat', ((...values: any) => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		values.filter((v: any) => typeof v === 'string').join('');
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	}) as any);
 	Handlebars.registerHelper('split', /** @param {string} value */ (value: string) => value.split(' '));
 

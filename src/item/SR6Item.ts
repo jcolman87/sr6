@@ -4,13 +4,18 @@
  * @file Base SR6 Item
  */
 import BaseDataModel from '@/data/BaseDataModel';
-import { IHasOnUpdate, IHasPostCreate, IHasSystemData } from '@/data/interfaces';
+import {
+	IHasOnUpdate,
+	IHasPostCreate,
+	IHasSystemData,
+	IHasPreCreate,
+	IHasModifiers,
+	IHasOnDelete,
+} from '@/data/interfaces';
 import { Modifiers, ModifiersData } from '@/modifier';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
-import { IHasPreCreate } from '@/data/interfaces';
-import { IHasOnDelete } from '@/data/interfaces';
 
 export interface SR6ItemFlags {
 	modifiers?: ModifiersData;
@@ -21,9 +26,9 @@ export interface SR6ItemFlags {
  */
 export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel>
 	extends Item<SR6Actor>
-	implements IHasSystemData
+	implements IHasSystemData, IHasModifiers
 {
-	modifiers: Modifiers = new Modifiers();
+	modifiers: Modifiers<SR6Item<ItemDataModel>> = new Modifiers(this);
 
 	get systemFlags(): undefined | SR6ItemFlags {
 		return this.flags['sr6'] as SR6ItemFlags;

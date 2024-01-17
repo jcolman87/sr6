@@ -5,26 +5,45 @@
  */
 import BaseDataModel from '@/data/BaseDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import { IHasOnUpdate, IHasSystemData } from '@/data/interfaces';
-import { IHasPreCreate } from '@/data/interfaces';
-import { IHasOnDelete } from '@/data/interfaces';
-import { IHasPostCreate } from '@/data/interfaces';
+import {
+	IHasPostCreate,
+	IHasOnDelete,
+	IHasPreCreate,
+	IHasModifiers,
+	IHasOnUpdate,
+	IHasSystemData,
+} from '@/data/interfaces';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
+import { Modifiers, ModifiersData } from '@/modifier';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 
+export interface SR6ActorFlags {
+	modifiers?: ModifiersData;
+}
+
 export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = BaseActorDataModel>
 	extends Actor
-	implements IHasSystemData
+	implements IHasSystemData, IHasModifiers
 {
+	declare flags: {
+		sr6?: SR6ActorFlags;
+	};
+
+	modifiers: Modifiers<SR6Actor<ActorDataModel>> = new Modifiers(this);
+
 	/**
 	 * Specialized property for accessing `actor.system` in a typed manner.
 	 */
 	get systemData(): ActorDataModel {
 		return <ActorDataModel>this.system;
+	}
+
+	get systemFlags(): undefined | SR6ActorFlags {
+		return this.flags['sr6'] as SR6ActorFlags;
 	}
 
 	getSystemData(): BaseDataModel {
@@ -48,7 +67,11 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		userId: string,
 	): Promise<void> {
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
-		return super._onUpdate(changed, options, userId);
+		super._onUpdate(changed, options, userId);
+
+		if (changed.flags?.sr6?.modifiers) {
+			this.modifiers.updateSource(this.systemFlags?.modifiers!);
+		}
 	}
 
 	skill(skillId_or_name: string): SR6Item<SkillDataModel> | null {
@@ -110,7 +133,6 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		const finalData = { ...this.getRollData(), ...data, actor: this };
 		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
 		roll = roll.evaluate({ async: false });
-		console.log(`Solved: ${formula}`, finalData, roll);
 		return roll.total!;
 	}
 

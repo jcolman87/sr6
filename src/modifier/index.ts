@@ -13,56 +13,61 @@ type ModifierSourceUUID =
 	| EmbeddedItemUUID
 	| WorldDocumentUUID<Scene>;
 
-export type PoolModifierData = {
-	sourceId: ModifierSourceUUID;
-	value: number;
-};
-export class PoolModifier {
-	source: foundry.abstract.Document;
-	value: number;
-
-	constructor(source: foundry.abstract.Document, value: number) {
-		this.source = source;
-		this.value = value;
-	}
+export class ModifierData<TValue> {
+	sourceId?: ModifierSourceUUID;
+	parentId?: ModifierSourceUUID;
+	value: TValue | undefined = undefined;
 }
 
-export type ModifiersData = {
-	pools: Partial<Record<keyof typeof RollType, PoolModifierData[]>>;
-};
+export interface ModifiersData {
+	pools?: Partial<Record<keyof typeof RollType, ModifierData<number>[]>>;
+	bonusEdge?: Partial<Record<keyof typeof RollType, ModifierData<number>[]>>;
+	blockEdge?: Partial<Record<keyof typeof RollType, ModifierData<boolean>[]>>;
+}
 
-export class Modifiers {
+export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abstract.Document> {
+	parent: TDocument;
 	source: ModifiersData;
 
-	pools: Partial<Record<keyof typeof RollType, PoolModifier[]>>;
+	/*
+	getPoolModifiers(rollType: RollType, options: { recursive?: true } = {}): ModifierData<number>[] {
+		const type = RollType[rollType] as keyof typeof RollType;
+		let result: ModifierData<number>[] = [];
+		if (this.source.pools && this.source.pools[type]) {
+			result = mergeModifierRollEntries(this.source.pools, {}, this.parent.uuid as ModifierSourceUUID)[type]!;
+		}
+
+		// TODO: handle tokens and parents?
+
+		// recursively merge parent modifiers until we reach the top
+		if (options?.recursive && this.parent.parent) {
+			let modifiersData = this.parent.parent.getFlag('sr6', 'modifiers');
+			if (modifiersData) {
+				let parentModifiers = new Modifiers(this.parent.parent, modifiersData);
+				return result.concat(parentModifiers.getPoolModifiers(rollType, options));
+			}
+		}
+
+		return result;
+	}
+	*/
 
 	updateSource(data: ModifiersData): void {
+		console.log('Modifiers::updateSource', this, data);
 		this.source = data;
-		this.pools = {};
-
-		Object.keys(this.source.pools).forEach((key) => {
-			const rollType = key as keyof typeof RollType;
-			if (!rollType) {
-				ui.notifications.error!(`Invalid RollType in pools`);
-				return;
-			}
-			this.pools[rollType] = [];
-
-			this.source.pools[rollType]!.forEach((modifierData, _idx) => {
-				const sourceDocument = fromUuidSync(modifierData.sourceId);
-				if (sourceDocument) {
-					this.pools[rollType]!.push(new PoolModifier(sourceDocument, modifierData.value));
-				} else {
-					ui.notifications.error!(`Invalid source ID for modifier: ${modifierData.sourceId}`);
-					// invalid.push(idx);
-				}
-			});
-		});
 	}
 
-	constructor() {
-		this.source = { pools: {} };
-		this.pools = {};
+	async update(_data: Partial<ModifiersData>): Promise<void> {
+		// await this.parent.update(['flags.sr6.modifiers', data]);
+	}
+
+	async save(): Promise<void> {
+		// await this.parent.update({ ['flags.sr6.modifiers']: this.source }, { diff: false });
+	}
+
+	constructor(parent: TDocument, source: ModifiersData = {}) {
+		this.parent = parent;
+		this.source = source;
 		this.updateSource(this.source);
 	}
 }

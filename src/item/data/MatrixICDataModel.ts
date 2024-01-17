@@ -31,6 +31,14 @@ export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 		};
 	}
 
+	override prepareBaseData(): void {
+		this.monitor.prepareBaseData();
+	}
+
+	override prepareData(): void {
+		this.monitor.prepareData();
+	}
+
 	override prepareDerivedData(): void {
 		this.monitor.prepareDerivedData();
 	}

@@ -5,6 +5,7 @@ import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
+import MonitorView from '@/vue/views/MonitorView.vue';
 import { computed, toRaw, inject } from 'vue';
 import { deleteItem, getEventValue } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
@@ -27,6 +28,13 @@ async function attributesUpdated(attributes: AdjustableMatrixAttributesDataModel
 async function rollIC(ic: SR6Item<MatrixICDataModel>) {
 	await rollers.rollMatrixAction(toRaw(system.value), toRaw(ic) as SR6Item<MatrixActionDataModel>);
 }
+async function setICDamage(ic: SR6Item<MatrixICDataModel>, amount: number) {
+	if (ic.systemData.monitor.damage === amount) {
+		await toRaw(ic).update({ ['system.monitor.damage']: 0 });
+	} else {
+		await toRaw(ic).update({ ['system.monitor.damage']: amount });
+	}
+}
 </script>
 
 <template>
@@ -41,16 +49,24 @@ async function rollIC(ic: SR6Item<MatrixICDataModel>) {
 				<div class="section">
 					<div class="section-head">Running IC</div>
 					<table>
-						<tr v-for="ic in system.programs" :key="ic.id">
-							<td style="width: 30%">1 {{ ic.name }}</td>
-							<td>
-								<a @click="rollIC(ic)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
-							</td>
-							<td>
-								<a class="fas fa-edit" @click.prevent="ic.sheet?.render(true)" />
-								<a @click.prevent="deleteItem(ic)"><i class="fa-solid fa-minus"></i></a>
-							</td>
-						</tr>
+						<template v-for="ic in system.programs" :key="ic.id">
+							<tr>
+								<td style="width: 10%">1 {{ ic.name }}</td>
+								<td style="width: 100%">
+									<MonitorView
+										:monitor="ic.systemData.monitor"
+										@setDamage="(idx) => setICDamage(ic, idx)"
+									/>
+								</td>
+								<td>
+									<a @click="rollIC(ic)"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+								</td>
+								<td>
+									<a class="fas fa-edit" @click.prevent="ic.sheet?.render(true)" />
+									<a @click.prevent="deleteItem(ic)"><i class="fa-solid fa-minus"></i></a>
+								</td>
+							</tr>
+						</template>
 					</table>
 				</div>
 			</div>
