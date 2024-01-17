@@ -1,4 +1,3 @@
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { IModifier } from '@/modifier';
 import { BaseRollData, SR6Roll } from '@/roll/SR6Roll';
@@ -16,7 +15,7 @@ export abstract class BaseTest<TRollData extends BaseRollData = BaseRollData> im
 	roll: TRollData;
 	actor: SR6Actor;
 
-	get type() {
+	get type(): string {
 		return 'BaseTest';
 	}
 

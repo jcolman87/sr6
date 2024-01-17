@@ -1,14 +1,13 @@
 import { ConditionalData, checkConditions } from '@/effect/conditional';
-import { BaseRollData } from '@/roll/SR6Roll';
 import { ITest } from '@/roll/tests';
 
-export enum ModifierType {
+export enum _ModifierType {
 	Pool = 'pool',
 	BonusEdge = 'bonusEdge',
 	BlockEdge = 'blockEdge',
 }
 
-type ModifierSourceUUID =
+type _ModifierSourceUUID =
 	| ActorDocumentUUID
 	| TokenDocumentUUID
 	| ActiveEffectUUID
@@ -36,6 +35,7 @@ export class BaseModifier<
 	get parent(): foundry.abstract.Document {
 		return this.parent;
 	}
+
 	get source(): foundry.abstract.Document {
 		return this.source;
 	}
@@ -55,7 +55,8 @@ export class BaseModifier<
 	prepareTest<TTest extends ITest>(test: TTest): void {
 		test.modifiers.push(this);
 	}
-	finishTest<TTest extends ITest>(test: TTest): void {}
+
+	finishTest<TTest extends ITest>(_test: TTest): void {}
 
 	constructor({
 		parent,

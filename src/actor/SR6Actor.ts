@@ -69,9 +69,9 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
 		super._onUpdate(changed, options, userId);
 
-		//if (changed.flags?.sr6?.modifiers) {
+		// if (changed.flags?.sr6?.modifiers) {
 		//	this.modifiers.updateSource(this.systemFlags?.modifiers!);
-		//}
+		// }
 	}
 
 	skill(skillId_or_name: string): SR6Item<SkillDataModel> | null {

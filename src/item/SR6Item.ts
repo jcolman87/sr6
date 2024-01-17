@@ -121,9 +121,9 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
 		super._onUpdate(changed, options, userId);
 
-		//if (changed.flags?.sr6?.modifiers) {
+		// if (changed.flags?.sr6?.modifiers) {
 		//	this.modifiers.updateSource(this.systemFlags!.modifiers!);
-		//}
+		// }
 	}
 
 	/**
