@@ -5,7 +5,7 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SpellDataModel, { SpellAdjustmentType } from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 import SR6Actor from '@/actor/SR6Actor';
-import { SR6Roll, SR6RollData } from '@/roll/SR6Roll';
+import { SR6Roll, BaseRollData } from '@/roll/SR6Roll';
 import { RollType, ROLL_TEMPLATES } from '@/roll';
 import { Distance, FireMode } from '@/data';
 import RollPrompt from '@/app/RollPrompt';
@@ -16,8 +16,6 @@ import { IHasInitiative } from '@/data/interfaces';
 
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { getActor, getActorSync, getItem, getItemSync, getTargetActorIds } from '@/util';
-
-export const BUGFIX = '';
 
 export enum EdgeGainedTarget {
 	None = 0,
@@ -43,52 +41,52 @@ export type MatrixAttackData = {} & BaseAttackData;
 
 export type SpellAttackData = {} & BaseAttackData;
 
-export interface AttributeRollData extends SR6RollData {
+export interface AttributeRollData extends BaseRollData {
 	attribute: EnumAttribute;
 }
 
-export interface SkillRollData extends SR6RollData {
+export interface SkillRollData extends BaseRollData {
 	skillId: string;
 }
 
-export interface WeaponAttackRollData extends SR6RollData {
+export interface WeaponAttackRollData extends BaseRollData {
 	attack: WeaponAttackData;
 }
 
-export interface WeaponDefendRollData extends SR6RollData {
+export interface WeaponDefendRollData extends BaseRollData {
 	previous: WeaponAttackRollData;
 	attack: WeaponAttackData;
 }
 
-export interface WeaponSoakRollData extends SR6RollData {
+export interface WeaponSoakRollData extends BaseRollData {
 	previous: WeaponDefendRollData;
 	attack: WeaponAttackData;
 }
 
-export interface MatrixActionRollData extends SR6RollData {
+export interface MatrixActionRollData extends BaseRollData {
 	attack: MatrixAttackData;
 }
 
-export interface MatrixDefenseRollData extends SR6RollData {
+export interface MatrixDefenseRollData extends BaseRollData {
 	previous: MatrixActionRollData;
 	attack: MatrixAttackData;
 }
 
-export interface SpellCastRollData extends SR6RollData {
+export interface SpellCastRollData extends BaseRollData {
 	attack: SpellAttackData;
 	adjustments: SpellAdjustmentType[];
 	drain: number;
 }
 
-export interface SpellResistDrainRollData extends SR6RollData {
+export interface SpellResistDrainRollData extends BaseRollData {
 	previous: SpellCastRollData;
 	attack: SpellAttackData;
 }
-export interface SpellDefendRollData extends SR6RollData {
+export interface SpellDefendRollData extends BaseRollData {
 	previous: SpellCastRollData;
 	attack: SpellAttackData;
 }
-export interface SpellSoakRollData extends SR6RollData {
+export interface SpellSoakRollData extends BaseRollData {
 	previous: SpellDefendRollData;
 	attack: SpellAttackData;
 }
@@ -111,7 +109,7 @@ export function createBaseAttackData({
 	};
 }
 
-async function finishRoll<T extends SR6RollData>(roller: SR6Actor, data: Record<string, unknown>, options: T) {
+async function finishRoll<T extends BaseRollData>(roller: SR6Actor, data: Record<string, unknown>, options: T) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const roll = new SR6Roll(`${options.pool}d6`, data, options as any);
 	const evaluated = await roll.evaluate({ async: true });
@@ -141,7 +139,7 @@ async function finishRoll<T extends SR6RollData>(roller: SR6Actor, data: Record<
 	await evaluated.toMessage();
 }
 
-export function preRoll<TRollData extends SR6RollData>(
+export function preRoll<TRollData extends BaseRollData>(
 	roller: SR6Actor<BaseActorDataModel>,
 	rollData: TRollData,
 ): TRollData {
@@ -153,7 +151,7 @@ export function getInitiativeRoll(systemData: IHasInitiative, formula: string): 
 	return new SR6Roll(
 		`(${formula}) + ${poolModifier}`,
 		{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
-		{ ...SR6Roll.defaultOptions(), template: ROLL_TEMPLATES.get(RollType.Initiative)! },
+		{ ...SR6Roll.defaultRollData(), template: ROLL_TEMPLATES.get(RollType.Initiative)! },
 	);
 }
 
@@ -163,7 +161,7 @@ export async function rollAttribute(actor: SR6Actor<LifeformDataModel>, attribut
 	const configuredData = await RollPrompt.promptForRoll<AttributeRollData>(
 		actor,
 		preRoll(actor, {
-			...SR6Roll.defaultOptions(),
+			...SR6Roll.defaultRollData(),
 			pool: actor.systemData.attribute(attribute).pool + actor.systemData.getPool(rollType),
 			template: ROLL_TEMPLATES.get(rollType)!,
 			type: rollType,
@@ -180,7 +178,7 @@ export async function rollSkill(actor: SR6Actor, skillId: string, special: strin
 	const pool = actor.skill(skillId)!.systemData.getPool(special) + actor.systemData.getPool(rollType);
 
 	const rollData = await RollPrompt.promptForRoll<SkillRollData>(actor, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
@@ -215,7 +213,7 @@ export async function rollWeaponAttack(systemData: IHasPools, weapon: SR6Item<We
 	};
 
 	const rollData = await RollPrompt.promptForRoll<WeaponAttackRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
@@ -237,7 +235,7 @@ export async function rollWeaponDefend(
 	const attack = { ...previous.attack, damage: (previous.attack.damage! += hits) };
 
 	const rollData = await RollPrompt.promptForRoll<WeaponDefendRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		threshold: hits,
 		template: ROLL_TEMPLATES.get(rollType)!,
@@ -261,7 +259,7 @@ export async function rollWeaponSoak(
 	const attack = { ...previous.attack, damage: previous.attack.damage! - hits };
 
 	const rollData = await RollPrompt.promptForRoll<WeaponSoakRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		threshold: attack.damage,
 		template: ROLL_TEMPLATES.get(rollType)!,
@@ -299,7 +297,7 @@ export async function rollMatrixAction(
 	});
 
 	const rollData = await RollPrompt.promptForRoll<MatrixActionRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
@@ -325,7 +323,7 @@ export async function rollMatrixDefense(
 	const attack = { ...previous.attack, damage: (previous.attack.damage! += hits) };
 
 	const rollData = await RollPrompt.promptForRoll<MatrixDefenseRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		threshold: hits,
 		template: ROLL_TEMPLATES.get(rollType)!,
@@ -357,7 +355,7 @@ export async function rollSpellCast<TDataModel extends LifeformDataModel = Lifef
 	});
 
 	const rollData = await RollPrompt.promptForRoll<SpellCastRollData>(actor, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		template: ROLL_TEMPLATES.get(rollType)!,
 		type: rollType,
@@ -382,7 +380,7 @@ export async function rollSpellResistDrain<TDataModel extends LifeformDataModel 
 	const attack = { ...previous.attack, damage: previous.drain };
 
 	const rollData = await RollPrompt.promptForRoll<SpellResistDrainRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		threshold: previous.drain,
 		template: ROLL_TEMPLATES.get(rollType)!,
@@ -410,7 +408,7 @@ export async function rollSpellDefend<TDataModel extends LifeformDataModel = Lif
 	const attack = { ...previous.attack, damage: previous.attack.damage! + hits };
 
 	const rollData = await RollPrompt.promptForRoll<SpellDefendRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		threshold: hits,
 		template: ROLL_TEMPLATES.get(rollType)!,
@@ -430,7 +428,7 @@ export async function rollSpellSoak(systemData: IHasPools, hits: number, previou
 	const attack = { ...previous.attack, damage: previous.attack.damage! - hits };
 
 	const rollData = await RollPrompt.promptForRoll<SpellSoakRollData>(systemData.actor!, {
-		...SR6Roll.defaultOptions(),
+		...SR6Roll.defaultRollData(),
 		pool: pool,
 		threshold: previous.attack.damage,
 		template: ROLL_TEMPLATES.get(rollType)!,

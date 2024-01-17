@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import SR6Actor from '@/actor/SR6Actor';
 import * as rollers from '@/roll/Rollers';
-import { SR6RollData } from '@/roll/SR6Roll';
+import { BaseRollData } from '@/roll/SR6Roll';
 
 import { toRaw, computed } from 'vue';
 
 const props = defineProps<{
 	actor: SR6Actor;
-	roll: SR6RollData;
+	roll: BaseRollData;
 }>();
 
 const data = props.roll as rollers.SkillRollData;

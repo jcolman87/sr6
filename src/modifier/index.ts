@@ -1,4 +1,6 @@
-import { RollType } from '@/roll';
+import { ConditionalData, checkConditions } from '@/effect/conditional';
+import { BaseRollData } from '@/roll/SR6Roll';
+import { ITest } from '@/roll/tests';
 
 export enum ModifierType {
 	Pool = 'pool',
@@ -13,59 +15,79 @@ type ModifierSourceUUID =
 	| EmbeddedItemUUID
 	| WorldDocumentUUID<Scene>;
 
-export class ModifierData<TValue> {
-	sourceId?: ModifierSourceUUID;
-	parentId?: ModifierSourceUUID;
-	value: TValue | undefined = undefined;
+export interface IModifier {
+	get isApplicable(): boolean;
+
+	get parent(): foundry.abstract.Document;
+	get source(): foundry.abstract.Document;
+
+	prepareTest<TTest extends ITest>(test: TTest): void;
+	finishTest<TTest extends ITest>(test: TTest): void;
 }
 
-export interface ModifiersData {
-	pools?: Partial<Record<keyof typeof RollType, ModifierData<number>[]>>;
-	bonusEdge?: Partial<Record<keyof typeof RollType, ModifierData<number>[]>>;
-	blockEdge?: Partial<Record<keyof typeof RollType, ModifierData<boolean>[]>>;
+export class BaseModifier<
+	TParent extends foundry.abstract.Document = foundry.abstract.Document,
+	TSource extends foundry.abstract.Document = foundry.abstract.Document,
+> {
+	_parent: TParent;
+	_source: TSource;
+	conditions: ConditionalData[];
+
+	get parent(): foundry.abstract.Document {
+		return this.parent;
+	}
+	get source(): foundry.abstract.Document {
+		return this.source;
+	}
+
+	get isApplicable(): boolean {
+		if (this.conditions.length < 1) {
+			return true;
+		}
+
+		return checkConditions(this.source, this.parent, this.conditions).ok;
+	}
+
+	checkConditions(): Result<null, ConditionalData[]> {
+		return checkConditions(this.source, this.parent, this.conditions);
+	}
+
+	prepareTest<TTest extends ITest>(test: TTest): void {
+		test.modifiers.push(this);
+	}
+	finishTest<TTest extends ITest>(test: TTest): void {}
+
+	constructor({
+		parent,
+		source,
+		conditions = [],
+	}: {
+		parent: TParent;
+		source: TSource;
+		conditions?: ConditionalData[];
+	}) {
+		this._parent = parent;
+		this._source = source;
+		this.conditions = conditions;
+	}
 }
+
+export interface ModifiersSource {}
 
 export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abstract.Document> {
 	parent: TDocument;
-	source: ModifiersData;
+	source: ModifiersSource;
 
-	/*
-	getPoolModifiers(rollType: RollType, options: { recursive?: true } = {}): ModifierData<number>[] {
-		const type = RollType[rollType] as keyof typeof RollType;
-		let result: ModifierData<number>[] = [];
-		if (this.source.pools && this.source.pools[type]) {
-			result = mergeModifierRollEntries(this.source.pools, {}, this.parent.uuid as ModifierSourceUUID)[type]!;
-		}
-
-		// TODO: handle tokens and parents?
-
-		// recursively merge parent modifiers until we reach the top
-		if (options?.recursive && this.parent.parent) {
-			let modifiersData = this.parent.parent.getFlag('sr6', 'modifiers');
-			if (modifiersData) {
-				let parentModifiers = new Modifiers(this.parent.parent, modifiersData);
-				return result.concat(parentModifiers.getPoolModifiers(rollType, options));
-			}
-		}
-
-		return result;
-	}
-	*/
-
-	updateSource(data: ModifiersData): void {
+	updateSource(data: ModifiersSource): void {
 		console.log('Modifiers::updateSource', this, data);
 		this.source = data;
-	}
-
-	async update(_data: Partial<ModifiersData>): Promise<void> {
-		// await this.parent.update(['flags.sr6.modifiers', data]);
 	}
 
 	async save(): Promise<void> {
 		// await this.parent.update({ ['flags.sr6.modifiers']: this.source }, { diff: false });
 	}
 
-	constructor(parent: TDocument, source: ModifiersData = {}) {
+	constructor(parent: TDocument, source: ModifiersSource = {}) {
 		this.parent = parent;
 		this.source = source;
 		this.updateSource(this.source);

@@ -17,12 +17,12 @@ import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
-import { Modifiers, ModifiersData } from '@/modifier';
+import { Modifiers, ModifiersSource } from '@/modifier';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 
 export interface SR6ActorFlags {
-	modifiers?: ModifiersData;
+	modifiers?: ModifiersSource;
 }
 
 export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel = BaseActorDataModel>
@@ -69,9 +69,9 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
 		super._onUpdate(changed, options, userId);
 
-		if (changed.flags?.sr6?.modifiers) {
-			this.modifiers.updateSource(this.systemFlags?.modifiers!);
-		}
+		//if (changed.flags?.sr6?.modifiers) {
+		//	this.modifiers.updateSource(this.systemFlags?.modifiers!);
+		//}
 	}
 
 	skill(skillId_or_name: string): SR6Item<SkillDataModel> | null {
@@ -131,7 +131,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 
 	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
 		const finalData = { ...this.getRollData(), ...data, actor: this };
-		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultOptions());
+		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultRollData());
 		roll = roll.evaluate({ async: false });
 		return roll.total!;
 	}

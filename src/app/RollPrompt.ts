@@ -12,19 +12,19 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 
-import { SR6RollData } from '@/roll/SR6Roll';
+import { BaseRollData } from '@/roll/SR6Roll';
 import { ContextBase } from '@/vue/SheetContext';
 import VueRollPrompt from '@/vue/apps/RollPrompt.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
-export interface RollPromptContext<TRollData extends SR6RollData = SR6RollData> extends ContextBase {
+export interface RollPromptContext<TRollData extends BaseRollData = BaseRollData> extends ContextBase {
 	actor: SR6Actor;
 	rollData: TRollData;
 	resolvePromise: (value: TRollData) => void;
 }
 
-export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> extends VueSheet(
+export default class RollPrompt<TRollData extends BaseRollData = BaseRollData> extends VueSheet(
 	ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>,
 ) {
 	get vueComponent(): Component {
@@ -41,7 +41,7 @@ export default class RollPrompt<TRollData extends SR6RollData = SR6RollData> ext
 		};
 	}
 
-	static async promptForRoll<TRollData extends SR6RollData = SR6RollData>(
+	static async promptForRoll<TRollData extends BaseRollData = BaseRollData>(
 		actor: SR6Actor,
 		rollData: TRollData,
 	): Promise<TRollData | null> {

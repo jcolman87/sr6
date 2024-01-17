@@ -6,7 +6,7 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
 import { EdgeGainedTarget } from '@/roll/Rollers';
-import { SR6RollData } from '@/roll/SR6Roll';
+import { BaseRollData } from '@/roll/SR6Roll';
 import { getActorSync, getItemSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
@@ -19,7 +19,7 @@ const emit = defineEmits<{
 
 const props = defineProps<{
 	actor: SR6Actor;
-	roll: SR6RollData;
+	roll: BaseRollData;
 }>();
 const roll = ref(props.roll as rollers.WeaponAttackRollData);
 const weapon = computed(() => getItemSync(SR6Item<WeaponDataModel>, roll.value.attack.itemId)!);

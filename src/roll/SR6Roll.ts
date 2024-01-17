@@ -3,7 +3,7 @@ import { getActorSync } from '@/util';
 import * as util from '@/util';
 import { RollType } from '@/roll';
 
-export type SR6RollData = {
+export type BaseRollData = {
 	type: RollType;
 	actorId: ActorUUID | null;
 	auto_hits: number;
@@ -12,13 +12,12 @@ export type SR6RollData = {
 	parameters: { glitch: number[]; success: number[] };
 	threshold: undefined | number;
 	template: string;
-	edgeUsed: boolean;
 };
 
 export class SR6Roll extends Roll {
 	static override CHAT_TEMPLATE = 'systems/sr6/templates/chat/rolls/SR6Roll.hbs';
 
-	static defaultOptions(): SR6RollData {
+	static defaultRollData(): BaseRollData {
 		return {
 			actorId: null,
 			type: RollType.Other,
@@ -28,7 +27,6 @@ export class SR6Roll extends Roll {
 			threshold: undefined,
 			parameters: { glitch: [1], success: [5, 6] },
 			template: this.CHAT_TEMPLATE,
-			edgeUsed: false,
 		};
 	}
 
@@ -249,7 +247,7 @@ export class SR6Roll extends Roll {
 			this.options.actorId = (data['actor'] as SR6Actor).uuid;
 		}
 
-		this.options = foundry.utils.mergeObject(SR6Roll.defaultOptions(), this.options);
+		this.options = foundry.utils.mergeObject(SR6Roll.defaultRollData(), this.options);
 	}
 
 	override toMessage(
@@ -269,5 +267,5 @@ export class SR6Roll extends Roll {
 }
 
 export interface SR6Roll extends Roll {
-	options: SR6RollData;
+	options: BaseRollData;
 }

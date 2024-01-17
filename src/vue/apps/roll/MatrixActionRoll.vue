@@ -3,14 +3,14 @@ import SR6Actor from '@/actor/SR6Actor';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
-import { SR6RollData } from '@/roll/SR6Roll';
+import { BaseRollData } from '@/roll/SR6Roll';
 import { getItemSync } from '@/util';
 
 import { computed } from 'vue';
 
 const props = defineProps<{
 	actor: SR6Actor;
-	roll: SR6RollData;
+	roll: BaseRollData;
 }>();
 
 const data = props.roll as rollers.MatrixActionRollData;

@@ -34,18 +34,26 @@ export abstract class ConditionalDataModel extends BaseDataModel implements Cond
 	}
 }
 
-export function conditionsCheck(
+export function checkCondition(
+	origin: foundry.abstract.Document | null,
+	target: foundry.abstract.Document,
+	condition: ConditionalData,
+): boolean {
+	switch (condition.type) {
+		case ConditionalType.Document: {
+			return DocumentConditional.check(origin, target, condition.data);
+		}
+	}
+}
+
+export function checkConditions(
 	origin: foundry.abstract.Document | null,
 	target: foundry.abstract.Document,
 	conditions: ConditionalData[],
-): Result<null, ConditionalData> {
+): Result<null, ConditionalData[]> {
 	// return true here will make a failure, as we are finding conditions NOT met.
-	const failure = conditions.find((condition) => {
-		switch (condition.type) {
-			case ConditionalType.Document: {
-				return !DocumentConditional.check(origin, target, condition.data);
-			}
-		}
+	const failure = conditions.filter((condition) => {
+		return !checkCondition(origin, target, condition);
 	});
 	if (failure) {
 		return Err(failure!);

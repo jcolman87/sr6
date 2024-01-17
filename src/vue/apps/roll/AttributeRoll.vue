@@ -4,12 +4,12 @@ import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { EnumAttribute } from '@/actor/data';
 import * as rollers from '@/roll/Rollers';
 
-import { SR6RollData } from '@/roll/SR6Roll';
+import { BaseRollData } from '@/roll/SR6Roll';
 import Localized from '@/vue/components/Localized.vue';
 
 const props = defineProps<{
 	actor: SR6Actor<LifeformDataModel>;
-	roll: SR6RollData;
+	roll: BaseRollData;
 }>();
 
 const data = props.roll as rollers.AttributeRollData;

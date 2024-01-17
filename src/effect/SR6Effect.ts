@@ -4,7 +4,7 @@
  * @file ActiveEffects Customizations
  */
 import SR6Actor from '@/actor/SR6Actor';
-import { ConditionalData, conditionsCheck } from '@/effect/conditional';
+import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getItemSync } from '@/util';
@@ -30,7 +30,7 @@ export default class SR6Effect extends ActiveEffect {
 		sr6?: EffectFlags;
 	};
 
-	failedCondition?: ConditionalData;
+	failedConditions?: ConditionalData[];
 
 	get systemData(): EffectFlags {
 		return this.flags.sr6!;
@@ -50,12 +50,12 @@ export default class SR6Effect extends ActiveEffect {
 		if (!this.flags.sr6) {
 			return;
 		}
-		this.failedCondition = undefined;
+		this.failedConditions = undefined;
 		if (this.conditions) {
 			const origin = fromUuidSync(this.origin) as ClientDocument | null;
-			const result = conditionsCheck(origin!, this.parent, this.conditions);
+			const result = checkConditions(origin!, this.parent, this.conditions);
 			if (!result.ok) {
-				this.failedCondition = result.error;
+				this.failedConditions = result.error;
 				this.disabled = true;
 			}
 		}
@@ -123,7 +123,9 @@ export default class SR6Effect extends ActiveEffect {
 		_current: Record<string, unknown>,
 		_delta: Record<string, unknown>,
 		_changes: Record<string, unknown>,
-	): void {}
+	): void {
+		console.log('SR6Effect::_applyPoolModifier');
+	}
 
 	_apply(document: SR6Actor | SR6Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {
 		change = this._parseChanges(document, change);

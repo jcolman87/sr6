@@ -9,7 +9,7 @@ import SpellDataModel, {
 } from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
-import { SR6RollData } from '@/roll/SR6Roll';
+import { BaseRollData } from '@/roll/SR6Roll';
 import { getItemSync } from '@/util';
 import Localized from '@/vue/components/Localized.vue';
 
@@ -18,7 +18,7 @@ import { Collapse } from 'vue-collapsed';
 
 const props = defineProps<{
 	actor: SR6Actor<CharacterDataModel>;
-	roll: SR6RollData;
+	roll: BaseRollData;
 }>();
 
 const data = props.roll as rollers.SpellCastRollData;
