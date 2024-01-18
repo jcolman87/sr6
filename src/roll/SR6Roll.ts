@@ -6,7 +6,7 @@ import { RollType } from '@/roll';
 export type BaseRollData = {
 	type: RollType;
 	actorId: ActorUUID | null;
-	auto_hits: number;
+	autoHits: number;
 	explode: boolean;
 	pool: number;
 	parameters: { glitch: number[]; success: number[] };
@@ -21,7 +21,7 @@ export class SR6Roll extends Roll {
 		return {
 			actorId: null,
 			type: RollType.Other,
-			auto_hits: 0,
+			autoHits: 0,
 			pool: 0,
 			explode: false,
 			threshold: undefined,
@@ -66,8 +66,8 @@ export class SR6Roll extends Roll {
 			(hits, result) => (this.options.parameters.success.includes(result) ? hits + 1 : hits),
 			0,
 		);
-		if (this.options.auto_hits !== undefined) {
-			return hits + this.options.auto_hits;
+		if (this.options.autoHits !== undefined) {
+			return hits + this.options.autoHits;
 		} else {
 			return hits;
 		}
@@ -154,7 +154,7 @@ export class SR6Roll extends Roll {
 
 	// return false if there are no hits to buy
 	async addHit(): Promise<boolean> {
-		this.options.auto_hits! += 1;
+		this.options.autoHits! += 1;
 
 		return true;
 	}

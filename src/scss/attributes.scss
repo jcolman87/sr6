@@ -20,14 +20,16 @@
 	--aug-b-width: 33%;
 	--aug-b-height: 10px;
 	position: relative;
-	background-color: var(--section-background);
+	background: var(--section-background);
 }
 .attributes .attribute p {
 	text-align: center;
 	margin: 0;
 }
+
 .attributes .attribute span {
-	font-size: 1.125rem;
+	font-size: 1.4rem;
+	font-weight: bold;
 	margin-top: 0.25rem;
 	color: var(--highlight-color);
 }

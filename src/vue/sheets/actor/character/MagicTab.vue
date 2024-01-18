@@ -158,7 +158,7 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 </template>
 
 <style lang="scss" scoped>
-@use '@scss/vars/colors.scss';
-@use '@scss/sheets.scss';
-@use '@scss/attributes.scss';
+@use '@scss/vars/colors';
+@use '@scss/sheets';
+@use '@scss/attributes';
 </style>

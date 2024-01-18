@@ -69,7 +69,6 @@ function maximize() {
 		>
 			<thead>
 				<tr class="field-table">
-					<td>Skill</td>
 					<td colspan="3" style="text-align: right; margin-left: auto; margin-right: 0">
 						<a v-if="isGM" class="fas fa-plus" @click.prevent="addSkill" /><a
 							v-if="isGM && skills.length == 0"

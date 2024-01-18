@@ -40,12 +40,6 @@ const augmentations = computed(() =>
 					<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'quality')" />
 				</div>
 				<table>
-					<thead>
-						<tr>
-							<td>Qualities</td>
-							<td></td>
-						</tr>
-					</thead>
 					<tr v-for="item in qualities" :key="item.id" :title="item.systemData.description">
 						<td class="entry">
 							<input
@@ -70,13 +64,6 @@ const augmentations = computed(() =>
 						<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'credstick')" />
 					</div>
 					<table>
-						<thead>
-							<tr>
-								<td>Rating</td>
-								<td>Value</td>
-								<td></td>
-							</tr>
-						</thead>
 						<tr v-for="item in credsticks" :key="item.id" :title="item.systemData.description">
 							<td class="entry">
 								<Localized
@@ -107,12 +94,6 @@ const augmentations = computed(() =>
 						<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'augmentation')" />
 					</div>
 					<table>
-						<thead>
-							<tr>
-								<td>Augmentations</td>
-								<td></td>
-							</tr>
-						</thead>
 						<tr v-for="item in augmentations" :key="item.id" :title="item.systemData.description">
 							<td class="entry">
 								<input

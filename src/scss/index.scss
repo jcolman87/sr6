@@ -11,3 +11,36 @@
   flex-basis: 100%;
   height: 0
 }
+
+.window-app {
+  .window-content {
+    background: var(--window-background);
+  }
+}
+
+.app {
+  background: var(--sidebar-background);
+}
+
+select {
+  color: #ffffff;
+  background: transparent;
+}
+option, optgroup {
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  background: var(--input-background);
+}
+
+#chat-form textarea {
+  background: var(--input-background);
+}
+
+#chat-controls .roll-type-select {
+  background: var(--input-background);
+}
+
+table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+

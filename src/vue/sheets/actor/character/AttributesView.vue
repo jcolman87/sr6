@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import { EnumAttribute } from '@/actor/data';
 import { computed, inject, toRaw } from 'vue';
-
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
-
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
-import { rollAttribute } from '@/roll/Rollers';
+
+import AttributeTest from '@/roll/test/AttributeTest';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);
 
 async function roll(attribute: EnumAttribute) {
-	await rollAttribute(toRaw(context.data.actor), attribute);
+	await new AttributeTest({ actor: toRaw(context.data.actor), data: { attribute } }).execute();
 }
 </script>
 

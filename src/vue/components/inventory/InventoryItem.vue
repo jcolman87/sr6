@@ -241,7 +241,7 @@ async function rollAttack() {
 			display: flex;
 			flex-wrap: wrap;
 			font-size: 0.9em;
-			color: colors.$dark-blue;
+
 			gap: 0.25em;
 
 			&:not([data-item-type='container']) {
@@ -259,40 +259,6 @@ async function rollAttack() {
 				}
 			}
 		}
-	}
-
-	.weight,
-	.quantity,
-	.damage {
-		grid-row: 1 / span 1;
-		display: flex;
-		align-items: center;
-		column-gap: 0.25em;
-		font-family: 'Bebas Neue', sans-serif;
-		font-size: 1.25em;
-		text-align: center;
-		color: colors.$dark-blue;
-		width: 100%;
-		justify-content: flex-end;
-
-		i {
-			position: relative;
-			top: -1px;
-			font-size: 0.75em;
-		}
-	}
-
-	.weight {
-		grid-column: weight / span 1;
-	}
-
-	.quantity {
-		grid-column: quantity / span 1;
-	}
-
-	.damage {
-		grid-column: damage / span 1;
-		font-size: 1.5em;
 	}
 
 	.actions {

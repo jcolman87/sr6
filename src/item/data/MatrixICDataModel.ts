@@ -9,7 +9,7 @@ export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 	protected abstract _host: SR6Actor<MatrixHostDataModel> | null;
 
 	get rating(): number {
-		return this.host.systemData.rating;
+		return this.host ? this.host.systemData.rating : 0;
 	}
 
 	get attributes(): null | MatrixAttributesDataModel {
@@ -19,8 +19,8 @@ export default abstract class MatrixICDataModel extends MatrixActionDataModel {
 		return null;
 	}
 
-	get host(): SR6Actor<MatrixHostDataModel> {
-		return this.actor! as SR6Actor<MatrixHostDataModel>;
+	get host(): null | SR6Actor<MatrixHostDataModel> {
+		return this.actor ? (this.actor as SR6Actor<MatrixHostDataModel>) : null;
 	}
 
 	override getRollData(): Record<string, unknown> {

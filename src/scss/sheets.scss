@@ -25,10 +25,10 @@
 
 .section {
 	display: inline-block;
-	background-color: var(--section-background);
+	background: var(--section-background);
 	color: var(--section-foreground);
 	vertical-align: top;
-	border: solid black 1px;
+	border: solid var(--section-border) 1px;
 	border-radius: 6px;
 	padding: 4px;
 	margin: 5px;
@@ -95,7 +95,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #ccc;
+	background: #ccc;
 	-webkit-transition: .4s;
 	transition: .4s;
 }
@@ -107,13 +107,13 @@
 	width: 12px;
 	left: 4px;
 	bottom: 1px;
-	background-color: white;
+	background: white;
 	-webkit-transition: .4s;
 	transition: .4s;
 }
 
 input:checked + .slider {
-	background-color: #2196F3;
+	background: #2196F3;
 }
 
 input:focus + .slider {
@@ -143,5 +143,4 @@ button.attack {
 	padding: 2px;
 
 	background: colors.$purple;
-	color: white;
 }

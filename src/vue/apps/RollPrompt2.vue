@@ -3,7 +3,7 @@ import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { getEventValue } from '@/vue/directives';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
-import { RollPromptContext } from '@/app/RollPrompt';
+import { RollPromptContext } from '@/app/RollPrompt2';
 import { RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 
@@ -31,7 +31,7 @@ const text = ref({
 });
 const edgeBoost = ref<string | null>(null);
 const poolModifier = ref(0);
-const originalPool = context.rollData.pool;
+const originalPool = context.data.pool;
 
 // TODO: conditions
 const totalModifier = computed(() => toRaw(context.actor).systemData.woundModifier);
@@ -52,21 +52,21 @@ function roll() {
 	// Apply edge action to the roll
 	switch (edgeBoost.value) {
 		case 'buy_one':
-			context.rollData.autoHits = 1;
+			context.data.autoHits = 1;
 			break;
 		case 'add_edge_pool':
-			context.rollData.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
-			context.rollData.explode = true;
+			context.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
+			context.data.explode = true;
 			break;
 	}
-	context.resolvePromise(toRaw(context.rollData));
+	context.resolvePromise(toRaw(context.data));
 }
 function setText(value: { title: string; hint: string }) {
 	text.value = value;
 }
 
 function onUpdatePool() {
-	context.rollData.pool = originalPool + poolModifier.value;
+	context.data.pool = originalPool + poolModifier.value;
 }
 
 function toggleConditions() {
@@ -100,7 +100,7 @@ onMounted(() => {
 								filter: drop-shadow(0 0 4px #000000);
 							"
 						/>
-						<label name="pool" class="edge-value">{{ context.rollData.pool }}</label>
+						<label name="pool" class="edge-value">{{ context.data.pool }}</label>
 					</div>
 				</td>
 				<td>
@@ -151,53 +151,53 @@ onMounted(() => {
 		<section class="data-grid">
 			<AttributeRoll
 				ref="inner_roll"
-				v-if="context.rollData.type == RollType.Attribute"
-				:roll="context.rollData"
+				v-if="context.data.type == RollType.Attribute"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
 			<SkillRoll
 				ref="inner_roll"
-				v-else-if="context.rollData.type == RollType.Skill"
-				:roll="context.rollData"
+				v-else-if="context.data.type == RollType.Skill"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
 
 			<WeaponAttackRoll
 				ref="inner_roll"
-				v-else-if="context.rollData.type == RollType.WeaponAttack"
-				:roll="context.rollData"
+				v-else-if="context.data.type == RollType.WeaponAttack"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
 			<WeaponDefendRoll
 				ref="inner_roll"
-				v-else-if="context.rollData.type == RollType.WeaponDefend"
-				:roll="context.rollData"
+				v-else-if="context.data.type == RollType.WeaponDefend"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
 			<WeaponSoakRoll
 				ref="inner_roll"
-				v-else-if="context.rollData.type == RollType.WeaponSoak"
-				:roll="context.rollData"
+				v-else-if="context.data.type == RollType.WeaponSoak"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
 
 			<MatrixActionRoll
 				ref="inner_roll"
-				v-else-if="context.rollData.type == RollType.MatrixAction"
-				:roll="context.rollData"
+				v-else-if="context.data.type == RollType.MatrixAction"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
 
 			<SpellCastRoll
 				ref="inner_roll"
-				v-else-if="context.rollData.type == RollType.SpellCast"
-				:roll="context.rollData"
+				v-else-if="context.data.type == RollType.SpellCast"
+				:roll="context.data"
 				:actor="context.actor as any"
 				@setText="setText"
 			/>
@@ -248,13 +248,17 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@use '@scss/mixins/backgrounds.scss';
-@use '@scss/vars/colors.scss';
-@use '@scss/vars/sheet.scss';
+@use '@/scss/mixins/backgrounds';
+@use '@/scss/vars/colors';
+@use '@/scss/vars/sheet';
 
 .app-roll-prompt {
 	min-width: 500px;
 	min-height: 500px;
+	background-color: black;
+	.window-content {
+		background-color: black;
+	}
 }
 
 .roll-prompt {

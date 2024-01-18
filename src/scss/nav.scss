@@ -22,7 +22,7 @@
 		color: white;
 
 		// Create a decorative border effect to reuse on the tabs.
-		$decoration-color: colors.$gold;
+		$decoration-color: colors.$purple;
 		$decorative-lines-top-bottom: linear-gradient(
 			to bottom,
 			transparent 2px,
@@ -38,16 +38,16 @@
 			// Decorative lines on the top & bottom
 			$decorative-lines-top-bottom,
 			// Radial gradient to mask some of the repeating vertical line.
-			radial-gradient(colors.$blue 70%, transparent 100%),
+			radial-gradient(colors.$dark-blue 70%, transparent 100%),
 			// A vertical line at the left that will repeat and give a nice pattern along with the radial bit.
 			linear-gradient(to right, transparent 2px, $decoration-color 2px, $decoration-color 3px, transparent 3px);
-		background-color: colors.$blue;
+		background: colors.$dark-blue;
 		background-size: 40px auto;
 
 		// A spacer is used to prevent the vertical decorations from appearing too close to the edges of the actual nav items.
 		.spacer {
 			background: $decorative-lines-top-bottom;
-			background-color: colors.$blue;
+			background: colors.$dark-blue;
 			width: 30px;
 			height: 100%;
 		}
@@ -61,7 +61,7 @@
 				// Decorative lines on the top & bottom
 				$decorative-lines-top-bottom,
 				// Radial gradient to mask some of the repeating vertical line.
-				radial-gradient(colors.$blue 60%, transparent 100%),
+				radial-gradient(colors.$dark-blue 60%, transparent 100%),
 				// Vertical bar on the left.
 				linear-gradient(
 						to right,
@@ -70,7 +70,7 @@
 						$decoration-color 3px,
 						transparent 3px
 					);
-			background-color: colors.$blue;
+			background: colors.$dark-blue;
 
 			&:not(.active) {
 				// Add some extra space for the vertical bar.
@@ -87,7 +87,7 @@
 					width: 5px;
 					background: $decorative-lines-top-bottom,
 						// Radial gradient to mask some of the repeating vertical line.
-						radial-gradient(colors.$blue 0%, transparent 100%),
+						radial-gradient(colors.$dark-blue 0%, transparent 100%),
 						// Vertical line
 						linear-gradient(
 								to right,
@@ -96,7 +96,7 @@
 								$decoration-color 3px,
 								transparent 3px
 							);
-					background-color: colors.$blue;
+					background: colors.$dark-blue;
 				}
 			}
 		}
@@ -115,14 +115,14 @@
 				top: 100%;
 				height: 0.25rem;
 				width: 100%;
-				background-color: colors.$purple;
+				background: colors.$purple;
 				clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 25%, 0% 100%);
 			}
 
 			// Get rid of the next item's left bar & padding.
 			& + .item {
 				background: $decorative-lines-top-bottom;
-				background-color: colors.$blue;
+				background: colors.$dark-blue;
 				padding-left: 4px;
 			}
 		}

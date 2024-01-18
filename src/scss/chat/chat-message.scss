@@ -9,7 +9,7 @@
 	}
 
 	.message-sender {
-		color: colors.$dark-blue;
+		color: colors.$purple;
 		font-family: 'Bebas Neue', sans-serif;
 		font-size: 1.5em;
 	}
@@ -78,90 +78,6 @@
 		&.weapon .description,
 		&.armor .description {
 			border-bottom: 1px dashed colors.$gold;
-		}
-	}
-
-	.formula {
-		font-style: italic;
-		font-size: 11px;
-	}
-
-	.dv {
-		font-weight: bold;
-		color: colors.$red;
-	}
-
-	%result-text {
-		font-weight: bold;
-		font-size: 14px;
-		white-space: nowrap;
-	}
-
-	.failure {
-		@extend %result-text;
-		color: colors.$red;
-	}
-
-	.success {
-		@extend %result-text;
-		color: colors.$green;
-	}
-
-	.glitch {
-		@extend %result-text;
-		font-size: 20px;
-		color: colors.$glitch;
-	}
-
-	.critical-glitch {
-		@extend %result-text;
-		font-size: 20px;
-		color: colors.$critical-glitch;
-	}
-
-	.data-value {
-		font-weight: bold;
-		font-style: italic;
-	}
-
-	.chat-target-box {
-		//background-color: colors.$light-green;
-		display: grid;
-
-		grid-template-columns: minmax(90px, 10px) minmax(90px, 10px) minmax(90px, 10px);
-
-		//gap: 1rem;
-
-		div {
-			text-align: center;
-			background: colors.$lighter-blue;
-			padding: 0.2rem;
-			border-radius: 1rem;
-
-
-			&:hover {
-				background: colors.$light-blue;
-				font-weight: bold;
-				text-shadow: 0 0 5px #ff0000;
-			}
-		}
-	}
-
-	.chat-roll-menu {
-		float: initial;
-		position: absolute;
-		display: none;
-		margin-top: -16px;
-
-		a {
-			width: 32px;
-			height: 16px;
-		}
-		.heal {
-			background-color: green;
-		}
-		.damage {
-			background-color: red;
 		}
 	}
 

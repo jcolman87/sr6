@@ -1,5 +1,5 @@
 import { ConditionalData, checkConditions } from '@/effect/conditional';
-import { ITest } from '@/roll/tests';
+import { ITest } from 'src/roll/test';
 
 export enum _ModifierType {
 	Pool = 'pool',
@@ -33,11 +33,11 @@ export class BaseModifier<
 	conditions: ConditionalData[];
 
 	get parent(): foundry.abstract.Document {
-		return this.parent;
+		return this._parent;
 	}
 
 	get source(): foundry.abstract.Document {
-		return this.source;
+		return this._source;
 	}
 
 	get isApplicable(): boolean {

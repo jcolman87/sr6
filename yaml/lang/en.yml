@@ -67,6 +67,10 @@ SR6:
     Delete: Delete
     Attribute: Attribute
     Roll: Roll
+    Success: Success
+    Failure: Failure
+    Glitch: Glitch
+    CriticalGlitch: Critical Glitch
     Source: Rulebook Source
     Description: Description
     Specialization: Specialization
@@ -277,3 +281,8 @@ SR6:
         Platinum: Platinum
         Ebony: Ebony
         BankAccount: Bank Account
+
+  Tests:
+    AttributeTest:
+      Name:
+        Attribute Test

@@ -11,6 +11,10 @@ export async function preload(): Promise<void> {
 	const templatePaths = [
 		'systems/sr6/templates/chat/rolls/shared/header.hbs',
 		'systems/sr6/templates/chat/rolls/shared/footer.hbs',
+
+		//
+		'systems/sr6/templates/chat/tests/shared/header.hbs',
+		'systems/sr6/templates/chat/tests/shared/footer.hbs',
 	];
 
 	return loadTemplates(templatePaths);

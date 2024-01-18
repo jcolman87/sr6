@@ -27,7 +27,7 @@ function setDamage(amount: number) {
 
 function boxStyle(idx: number) {
 	if (idx <= props.monitor.damage) {
-		return 'width: 32px; background: #FFCCCB';
+		return 'width: 32px; background: var(--monitor-damaged)';
 	} else {
 		return 'width: 32px';
 	}
@@ -63,16 +63,14 @@ function boxStyle(idx: number) {
 		height: 24px;
 		background-repeat: no-repeat;
 		background-size: 24px;
-		border-left: solid black 1px;
+		background-color: var(--monitor-background);
+		border-right: solid var(--section-border) 1px;
 	}
 	.monitor-bar-box {
 		text-align: center;
 		font-size: 12px;
-		border-left: solid black 1px;
-
-		.damaged {
-			background: #ffcccb;
-		}
+		border-left: solid var(--section-border) 1px;
+		background-color: var(--monitor-background);
 	}
 }
 </style>
