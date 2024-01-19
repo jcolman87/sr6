@@ -17,6 +17,7 @@ const props = defineProps<{
 }>();
 
 async function onAttributesUpdated(attributes: AdjustableMatrixAttributesDataModel) {
+	console.log('onAttributesUpdated', attributes);
 	if (props.persona) {
 		props.persona.attributes = attributes;
 		emit('change', props.persona);

@@ -13,6 +13,7 @@ import { register as registerRolls } from '@/roll';
 import { register as registerToken } from '@/token';
 import { register as registerModifiers } from '@/modifier';
 import { register as registerTests } from '@/roll/test';
+import { register as registerFonts } from '@/fonts';
 import { onChatLogEntryContext } from '@/chat';
 
 import { register as registerSettings } from '@/settings';
@@ -55,6 +56,7 @@ Hooks.once('init', async () => {
 	});
 
 	// System Documents
+	registerFonts();
 	registerActors();
 	registerItems();
 	registerEffects();

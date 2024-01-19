@@ -38,6 +38,20 @@ const system = computed(() => context.data.item.systemData);
 								{{ system.attributes ? system.attributes.firewall : '-' }}
 							</td>
 						</tr>
+						<tr>
+							<td>
+								Attack:
+								<input type="text" name="system.formulas.attack" :value="system.formulas.attack" />
+							</td>
+							<td>
+								Defend:
+								<input type="text" name="system.formulas.defend" :value="system.formulas.defend" />
+							</td>
+							<td>
+								Damage:
+								<input type="text" name="system.formulas.attack" :value="system.formulas.damage" />
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>

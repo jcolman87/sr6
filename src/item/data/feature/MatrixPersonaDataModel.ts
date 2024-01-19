@@ -178,7 +178,6 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 				blank: false,
 				choices: Object.values(PersonaType),
 			}),
-			_preparedOnce: new fields.BooleanField({ required: true, initial: false }),
 		};
 	}
 }

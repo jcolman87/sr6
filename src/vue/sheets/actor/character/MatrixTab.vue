@@ -7,6 +7,7 @@ import GearDataModel, { GearMatrixDataModel } from '@/item/data/gear/GearDataMod
 
 import SR6Item from '@/item/SR6Item';
 import * as rollers from '@/roll/Rollers';
+import MatrixActionTest from '@/roll/test/MatrixActionTest';
 import { deleteItem } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import MatrixPersonaView from '@/vue/views/MatrixPersonaView.vue';
@@ -76,7 +77,8 @@ function getMatrixModel(gear: GearDataModel): GearMatrixDataModel {
 
 async function rollMatrixAction(action: SR6Item<MatrixActionDataModel>) {
 	if (action.systemData.pool > 0) {
-		await rollers.rollMatrixAction(toRaw(context.data.actor).systemData, toRaw(action));
+		//await rollers.rollMatrixAction(toRaw(context.data.actor).systemData, toRaw(action));
+		await new MatrixActionTest({ actor: toRaw(context.data.actor), item: toRaw(action), data: {} }).execute();
 	} else {
 		await action.systemData.toMessage();
 	}

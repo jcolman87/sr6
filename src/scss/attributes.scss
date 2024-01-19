@@ -12,6 +12,7 @@
 	display: flex;
 	flex-flow: column nowrap;
 	justify-items: flex-start;
+	font-family: var(--font-header);
 	// TODO: why did this break?
 	--aug-border: 1px;
 	--aug-inset: 2px;

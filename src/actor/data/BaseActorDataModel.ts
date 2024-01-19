@@ -1,7 +1,7 @@
 import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import { IHasPools } from '@/data/interfaces';
-import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
+import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
@@ -19,6 +19,7 @@ import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
+import { MatrixAttributesData } from '../../../lib/data/MatrixAttributesDataModel';
 
 export default abstract class BaseActorDataModel extends BaseDataModel implements IHasPools {
 	abstract monitors: MonitorsDataModel;
@@ -145,17 +146,24 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 	}
 
 	getHighestMatrixAttributes(): MatrixAttributesData {
-		return this.actor!.items.filter((i) => i.type === 'gear')
+		const highest: MatrixAttributesData = {
+			attack: 0,
+			sleaze: 0,
+			dataProcessing: 0,
+			firewall: 0,
+		};
+		this.actor!.items.filter((i) => i.type === 'gear')
 			.map((i) => i as SR6Item<GearDataModel>)
 			.filter((i) => i.systemData.matrix?.attributes)
 			.map((i) => i.systemData.matrix!.attributes!)
-			.reduce((acc, i, _idx, _arr) => {
-				acc.attack = Math.max(acc.attack, i.attack);
-				acc.sleaze = Math.max(acc.sleaze, i.sleaze);
-				acc.dataProcessing = Math.max(acc.dataProcessing, i.dataProcessing);
-				acc.firewall = Math.max(acc.firewall, i.firewall);
-				return acc;
+			.forEach((i) => {
+				highest.attack = Math.max(highest.attack, i.attack);
+				highest.sleaze = Math.max(highest.sleaze, i.sleaze);
+				highest.dataProcessing = Math.max(highest.dataProcessing, i.dataProcessing);
+				highest.firewall = Math.max(highest.firewall, i.firewall);
 			});
+
+		return highest;
 	}
 
 	protected async _activateMatrixPersona(

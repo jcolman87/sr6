@@ -22,7 +22,7 @@ interface ConfirmDialogParameters<Y = true, N = false> {
 	render?: () => void | Promise<void>;
 	defaultYes?: boolean;
 	rejectClose?: () => void | Promise<void>;
-	options?: ApplicationOptions;
+	options?: Partial<ApplicationOptions>;
 }
 
 /**
@@ -95,5 +95,14 @@ declare class Dialog extends Application {
 	 *  defaultYes: false
 	 * });
 	 */
-	static confirm<Y = true, N = false>({ title, content, yes, no, render, defaultYes, rejectClose, options }?: ConfirmDialogParameters<Y, N>): Promise<Y | N>;
+	static confirm<Y = true, N = false>({
+		title,
+		content,
+		yes,
+		no,
+		render,
+		defaultYes,
+		rejectClose,
+		options,
+	}?: ConfirmDialogParameters<Y, N>): Promise<Y | N>;
 }

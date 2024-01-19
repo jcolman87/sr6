@@ -38,6 +38,7 @@
 		flex-direction: row;
 		//justify-content: space-between;
 		align-items: center;
+		font-family: var(--font-header);
 		border-bottom: 1px solid var(--highlight-color);
 		margin: 0 0 0.5rem 0;
 		font-weight: bold;
@@ -47,6 +48,8 @@
 		margin: 0;
 	}
 	.section-title {
+		font-weight: bold;
+		font-family: var(--font-header);
 		color: var(--highlight-color);
 	}
 

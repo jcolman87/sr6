@@ -119,16 +119,16 @@ SR6:
         Description: You fire a single bullet. There are no changes to a weapon’s attributes with a single shot.
       SA:
         Name: Semi Auto
-        Description:
+        Description: You fire a single bullet. There are no changes to a weapon’s attributes with a single shot.
       BFNarrow:
         Name: Burst Fire (Narrow)
-        Description:
+        Description: You can fire four rounds in an attack, which decreases the Attack Rating by 4 and increases damage by 2. Not Enough Rounds! If you don’t have enough rounds to complete the full four-round narrow burst, reduce the effects accordingly, with Attack Rating adjustment matching the number of rounds fired and the Damage Value dropping to a +1 as long as at least 2 rounds were fired.
       BFWide:
         Name: Burst Fire (Wide)
-        Description:
+        Description: You can fire four rounds in an attack, which make a wide burst and split your dice pool between two targets and count each as a SA-mode shot. You may use Anticipation (p. 47) with a wide burst without spending Multiple Attacks action (p. 42). Not Enough Rounds! If you don’t have enough rounds to complete the full four-round narrow burst, reduce the effects accordingly, with Attack Rating adjustment matching the number of rounds fired and the Damage Value dropping to a +1 as long as at least 2 rounds were fired.
       FA:
         Name: Full Auto
-        Description:
+        Description: This mode allows making an attack against every valid target within a 1-meter-radius area. One attack roll is made, but each defender rolls individually. This attack decreases the Attack Rating by 6 and consumes ten rounds. The area can be expanded multiple times by 1 meter by reducing an additional 2 from the Attack Rating, but only if this modification would result in an Attack Rating above 0.
     Distance: Distance
     Distances:
       close: Close
@@ -136,6 +136,12 @@ SR6:
       medium: Medium
       far: Far
       extreme: Extreme
+    DistanceDescriptions:
+      close: 0-3 meters
+      near: 4-50 meters
+      medium: 51-250 meters
+      far: 251-500 meters
+      extreme: 500+ meters
     DamageTypes:
       P: Physical
       S: Stun
@@ -284,5 +290,8 @@ SR6:
 
   Tests:
     AttributeTest:
-      Name:
-        Attribute Test
+      Name: Attribute
+    RangedAttackTest:
+      Name: Ranged Attack
+    OpposedTest:
+      Name: Defense

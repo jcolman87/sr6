@@ -5,7 +5,7 @@ import GeneralActionDataModel, { GeneralActionCategory } from '@/item/data/actio
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
-import { rollWeaponAttack } from '@/roll/Rollers';
+import RangedAttackTest from '@/roll/test/RangedAttackTest';
 import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
 import Weapons from '@/vue/components/combat/Weapons.vue';
 import Wearing from '@/vue/components/combat/Wearing.vue';
@@ -93,23 +93,33 @@ async function addCoreActions() {
 }
 
 async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
-	const consume = await Dialog.confirm({
-		title: 'Consume action with use?',
-		content: 'Do you want to consume an action with this use?',
-		yes: () => true,
-		no: () => false,
-	});
+	const actor = toRaw(context.data.actor);
+	let consume = false;
+	if (actor.inCombat) {
+		consume = await Dialog.confirm({
+			title: 'Consume action with use?',
+			content: 'Do you want to consume an action with this use?',
+			yes: () => true,
+			no: () => false,
+			options: {
+				classes: ['prompt-dialog'],
+			},
+		});
+	}
 
 	// Special case for Attacks
 	if (action.name === 'Attack') {
-		const actor = toRaw(context.data.actor);
 		const weapon = actor.systemData.equipped.weapon;
 		if (!weapon) {
 			ui.notifications.error('You have no equipped weapon. No action was consumed');
 			return;
 		}
 		await action.systemData.use(consume, false);
-		await rollWeaponAttack(actor.systemData, weapon);
+		if (weapon.systemData.firemodes) {
+			await new RangedAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
+		} else {
+			// TODO: MeleeAttackTest
+		}
 	} /* else if (action.name == 'Cast Spell') {
 		const actor = toRaw(context.data.actor);
 		const pickSpell = new SelectListDialog();

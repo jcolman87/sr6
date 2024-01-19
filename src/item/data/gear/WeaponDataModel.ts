@@ -76,6 +76,8 @@ export abstract class AttackRatingDataModel extends BaseDataModel {
 
 export type WeaponDamage = {
 	damageFormula: string;
+	defenseFormula: string;
+	soakFormula: string;
 	damageType: DamageType;
 };
 
@@ -263,6 +265,16 @@ export default abstract class WeaponDataModel extends GearDataModel {
 			damageData: new fields.SchemaField(
 				{
 					damageFormula: new fields.StringField({ initial: '0', required: true, nullable: false }),
+					defenseFormula: new fields.StringField({
+						initial: '@agility + @intuition',
+						required: true,
+						nullable: false,
+					}),
+					soakFormula: new fields.StringField({
+						initial: '@body',
+						required: true,
+						nullable: false,
+					}),
 					damageType: new fields.StringField({
 						initial: DamageType.Physical,
 						required: true,

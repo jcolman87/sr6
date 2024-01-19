@@ -130,7 +130,7 @@ onBeforeUpdate(updateEffects);
 	margin: -1 * sheet.$padding;
 
 	.editor-content {
-		font-family: 'Roboto Serif', serif;
+		font-family: var(--font-primary);
 		text-align: justify;
 	}
 
@@ -159,7 +159,7 @@ onBeforeUpdate(updateEffects);
 		@include reset.input;
 		input {
 			width: 100%;
-			font-family: 'Bebas Neue', sans-serif;
+			font-family: var(--font-header);
 			font-size: 2rem;
 			color: colors.$blue;
 

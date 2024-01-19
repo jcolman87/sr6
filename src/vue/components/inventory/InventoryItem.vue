@@ -5,7 +5,6 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
-import { rollWeaponAttack } from '@/roll/Rollers';
 
 import ContextMenu from '@/vue/components/ContextMenu.vue';
 import MenuItem from '@/vue/components/ContextMenu.vue';
@@ -38,10 +37,6 @@ function drop(_ev: DragEvent) {}
 function openItem() {
 	void toRaw(props.item).sheet.render(true);
 }
-
-async function rollAttack() {
-	await rollWeaponAttack(toRaw(props.actor).systemData, toRaw(props.item) as SR6Item<WeaponDataModel>);
-}
 </script>
 
 <template>
@@ -67,9 +62,6 @@ async function rollAttack() {
 		<!-- Complex item with additional details row -->
 		<div v-else class="details" @dragenter="dragEnter" @dragleave="dragLeave">
 			<span class="name">
-				<div v-if="item.type === 'weapon'">
-					<button class="attack" @click.prevent="rollAttack">Attack</button>
-				</div>
 				<a @click="openItem"
 					><i class="name-text">{{ item.name }}</i></a
 				>
@@ -218,7 +210,7 @@ async function rollAttack() {
 	}
 
 	.name {
-		font-family: 'Roboto Serif', serif;
+		font-family: var(--font-primary);
 		font-size: 1.15em;
 		display: flex;
 		align-items: center;
@@ -234,7 +226,7 @@ async function rollAttack() {
 		display: grid;
 		grid-template-rows: auto auto;
 		grid-column: name / span 2;
-		font-family: 'Roboto Serif', serif;
+		font-family: var(--font-primary);
 
 		& > div {
 			grid-row: 2 / span 1;

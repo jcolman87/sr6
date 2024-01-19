@@ -18,7 +18,7 @@
 		align-items: center;
 
 		// Make it look pretty!
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-header);
 		color: white;
 
 		// Create a decorative border effect to reuse on the tabs.

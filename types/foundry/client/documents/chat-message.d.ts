@@ -92,7 +92,7 @@ declare global {
 		}): foundry.data.ChatSpeakerSource;
 
 		/** A helper to prepare the speaker object based on a target Token */
-		protected static _getSpeakerFromToken({ token, alias }: { token: Token; alias?: string }): {
+		static _getSpeakerFromToken({ token, alias }: { token: Token; alias?: string }): {
 			scene: string;
 			token: string;
 			actor: string | null;
@@ -102,15 +102,7 @@ declare global {
 		 * A helper to prepare the speaker object based on a target Actor
 		 * @private
 		 */
-		protected static _getSpeakerFromActor({
-			scene,
-			actor,
-			alias,
-		}: {
-			scene?: Scene;
-			actor: Actor;
-			alias?: string;
-		}): {
+		static _getSpeakerFromActor({ scene, actor, alias }: { scene?: Scene; actor: Actor; alias?: string }): {
 			scene: string | null;
 			actor: string;
 			token: null;
@@ -118,15 +110,7 @@ declare global {
 		};
 
 		/** A helper to prepare the speaker object based on a target User */
-		protected static _getSpeakerFromUser({
-			scene,
-			user,
-			alias,
-		}: {
-			scene?: Scene | null;
-			user: User;
-			alias?: string;
-		}): {
+		static _getSpeakerFromUser({ scene, user, alias }: { scene?: Scene | null; user: User; alias?: string }): {
 			scene: string | null;
 			actor: null;
 			token: null;

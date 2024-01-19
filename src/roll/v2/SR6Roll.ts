@@ -12,7 +12,7 @@ export class SR6Roll extends Roll {
 		if (this.options.threshold!) {
 			return this.hits >= this.options.threshold!;
 		} else {
-			return true;
+			return this.hits > 0;
 		}
 	}
 

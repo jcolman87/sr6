@@ -3,12 +3,12 @@ import RollPrompt from '@/app/RollPrompt2';
 import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
-import { ITest, RollDataDelta } from '@/roll/test/index';
+import { ITest, RollDataDelta, TestType } from '@/roll/test/index';
 import { SR6Roll } from '@/roll/v2/SR6Roll';
 
 export interface BaseTestData {
-	pool: number;
-	actorId: ActorUUID;
+	pool?: number;
+	actorId?: ActorUUID;
 	itemId?: ItemUUID;
 
 	threshold?: number;
@@ -22,9 +22,11 @@ export interface BaseTestMessageData {
 	type: string;
 	modifiers: IModifier[];
 	baseData: BaseTestData;
-	delta: null | RollDataDelta;
 	actor: SR6Actor;
-	item: SR6Item | undefined;
+
+	delta?: RollDataDelta;
+	item?: SR6Item;
+	roll?: RollJSON;
 }
 
 export default abstract class BaseTest<
@@ -32,19 +34,19 @@ export default abstract class BaseTest<
 	TModifier extends IModifier = IModifier,
 > implements ITest<TData, TModifier>
 {
-	type: string = 'BaseTest';
+	type: TestType = TestType.Unknown;
 
 	protected baseData: TData;
-	protected delta: null | RollDataDelta;
+	protected delta: undefined | RollDataDelta;
 
 	modifiers: TModifier[];
 	actor: SR6Actor;
-	item: SR6Item | undefined;
 
-	roll: null | SR6Roll;
+	item?: SR6Item;
+	roll?: SR6Roll;
 
-	get template(): string {
-		return 'systems/sr6/templates/chat/tests/BaseTest.hbs';
+	get isOwner(): boolean {
+		return this.actor.isOwner;
 	}
 
 	get data(): TData {
@@ -106,7 +108,7 @@ export default abstract class BaseTest<
 	}
 
 	reset(): void {
-		this.delta = null;
+		this.delta = undefined;
 	}
 
 	prepareModifiers(): void {
@@ -122,25 +124,17 @@ export default abstract class BaseTest<
 	}
 
 	async toMessage(): Promise<SR6ChatMessage | undefined> {
-		/*
-		const content = await renderTemplate(this.template, {
-			test: this,
-			roll: this.roll,
-			item: this.item,
-			actor: this.actor,
-			speaker: {
-				actor: this.actor,
-			},
-		});
-		*/
+		let speaker = undefined;
+		if (this.actor.isToken) {
+			speaker = ChatMessage._getSpeakerFromToken({ token: this.actor.getActiveTokens()[0] });
+		} else {
+			speaker = ChatMessage._getSpeakerFromActor({ actor: this.actor });
+		}
 
 		return await SR6ChatMessage.create({
 			user: game.user?.id,
 			type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-			speaker: {
-				actor: this.actor.id,
-				alias: game.user?.name,
-			},
+			speaker,
 			roll: this.roll,
 			content: '',
 			flags: {
@@ -161,14 +155,28 @@ export default abstract class BaseTest<
 		};
 	}
 
-	protected constructor({ actor, item, data }: { actor: SR6Actor; item?: SR6Item; data: TData }) {
+	protected constructor({
+		actor,
+		item,
+		data,
+		delta,
+		roll,
+	}: {
+		actor: SR6Actor;
+		item?: SR6Item;
+		data: TData;
+		delta?: RollDataDelta;
+		roll?: SR6Roll;
+	}) {
+		console.log('BaseTest::constructor', roll);
 		this.modifiers = [];
-		this.delta = null;
+		this.delta = delta;
 		this.baseData = data;
 		this.actor = actor;
 		this.item = item;
-		this.roll = null;
+		this.roll = roll;
 
 		this.baseData.actorId = actor.uuid;
+		this.baseData.itemId = item ? item.uuid : undefined;
 	}
 }

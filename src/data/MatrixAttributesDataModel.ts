@@ -90,13 +90,6 @@ export type MatrixAttributesFormulaData = {
 	firewall: string | null;
 };
 
-export type MatrixAttributesData = {
-	attack: number;
-	sleaze: number;
-	dataProcessing: number;
-	firewall: number;
-};
-
 export abstract class MatrixAttributesDataModel extends BaseDataModel {
 	abstract attack: number;
 	abstract sleaze: number;

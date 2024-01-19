@@ -15,7 +15,7 @@ import SR6Item from '@/item/SR6Item';
 import { ITest } from '@/roll/test';
 import BaseTest, { BaseTestData } from '@/roll/test/BaseTest';
 import { ContextBase } from '@/vue/SheetContext';
-import VueRollPrompt2 from '@/vue/apps/RollPrompt2.vue';
+import VueRollPrompt2 from '@/roll/RollPrompt2.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 

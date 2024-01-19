@@ -59,7 +59,7 @@
 		// Name Input
 		input {
 			width: 100%;
-			font-family: 'Bebas Neue', sans-serif;
+			font-family: var(--font-header);
 			font-size: 2rem;
 			color: colors.$blue;
 
@@ -100,7 +100,7 @@
 		}
 
 		.header {
-			font-family: 'Bebas Neue', sans-serif;
+			font-family: var(--font-header);
 		}
 
 		.row {

@@ -63,10 +63,9 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 		if (this.flags?.sr6?.testData) {
 			const testObj = testFromData(this.flags!.sr6!.testData!);
 			this.vueContext.test = testObj;
-			if (this.rolls.length > 0) {
-				this.vueContext.roll = SR6Roll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
-				console.log('fuckme', this, this.rolls[0], this.vueContext.roll);
-			}
+		}
+		if (this.rolls.length > 0) {
+			this.vueContext.roll = SR6Roll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
 		}
 	}
 
@@ -77,6 +76,28 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 			await util.waitForCanvasTokens();
 			this.vueApp.provide(ChatContext, this.vueContext);
 			this.vueApp.mount(this.form);
+		}
+
+		console.log(
+			'checking border:',
+			this.vueContext.test,
+			this.vueContext.test?.roll,
+			this.vueContext.test?.roll?.threshold,
+			this.vueContext.test?.roll?.success,
+		);
+
+		if (this.vueContext.test?.roll?.is_critical_glitch) {
+			html.css({ borderColor: 'rgb(215, 14, 233)' });
+		} else if (this.vueContext.test?.roll?.is_glitch) {
+			html.css({ borderColor: 'rgb(194, 76, 29)' });
+		} else {
+			if (this.vueContext.test?.roll?.threshold != undefined) {
+				if (this.vueContext.test?.roll?.success) {
+					html.css({ borderColor: 'rgba(38, 194, 129, 1.0)' });
+				} else {
+					html.css({ borderColor: '#90231e' });
+				}
+			}
 		}
 
 		html.find('.message-content').empty().append(this.form);

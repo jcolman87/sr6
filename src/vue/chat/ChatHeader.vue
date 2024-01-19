@@ -2,30 +2,31 @@
 <script lang="ts" setup>
 import SR6Actor from '@/actor/SR6Actor';
 import { SR6Token } from '@/token/SR6Token';
-import { toRaw } from 'vue';
+import { pingActor } from '@/vue/directives';
+import { toRaw, ref } from 'vue';
+import { Collapse } from 'vue-collapsed';
 
 const props = defineProps<{
 	actor: SR6Actor | null;
 	token: SR6Token | null;
-	title: string;
+	text: { title: string; hint: string };
 }>();
-
-async function pingActor() {
-	if (props.token) {
-		void canvas.ping(props.token.object.center);
-		return canvas.animatePan(props.token.object.center);
-	}
-}
 
 function openActorSheet() {
 	void toRaw(props.actor).sheet.render(true);
 }
+
+const expandHint = ref(false);
 </script>
 
 <template>
-	<div class="flexrow chat-message-header">
+	<div
+		class="flexrow chat-message-header"
+		@mouseenter.prevent="expandHint = true"
+		@mouseleave.prevent="expandHint = false"
+	>
 		<div class="actor-image" v-if="props.actor">
-			<a @click.prevent="pingActor()" @dblclick.prevent="openActorSheet()">
+			<a @click.prevent="pingActor(props.actor)" @dblclick.prevent="openActorSheet()">
 				<img
 					class="profile-img"
 					:src="props.actor.img"
@@ -36,23 +37,29 @@ function openActorSheet() {
 				/>
 			</a>
 		</div>
-		<div class="title">{{ props.title }}</div>
+		<div class="title">{{ props.text.title }}</div>
 	</div>
-	<div>
-		<a @click.prevent="pingActor()" @dblclick.prevent="openActorSheet()">{{ props.actor.name }}</a>
-	</div>
+	<Collapse :when="expandHint" as="section" class="formula hint">
+		{{ props.text.hint }}
+	</Collapse>
 </template>
 
 <style lang="scss" scoped>
 .chat-message-header {
+	min-width: 100%;
 	.actor-image {
 		flex: 0 0 auto;
 		min-width: 25px;
 		width: min-content;
 	}
 
+	.hint {
+		min-width: 100%;
+	}
+
 	.title {
 		font-size: 16px;
+		font-family: var(--font-header);
 		width: max-content;
 		flex-wrap: nowrap;
 		text-align: center;

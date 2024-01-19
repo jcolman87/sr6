@@ -2,20 +2,135 @@
 @use '@scss/vars/colors.scss';
 
 .chat-message {
-	@include backgrounds.crossboxes();
+	color: white;
+	background: var(--section-background);
+
+
+	.chat-message-body {
+		.dice-details {
+			min-width: 100%;
+			height: 24px;
+		}
+
+		.roll-information:hover,
+		.roll-information:active {
+			box-shadow: inset 0 0 10px colors.$red;
+		}
+
+		.roll-information {
+			border-top: 1px solid;
+			border-bottom: 1px solid;
+
+			%result-text {
+				font-weight: bold;
+				font-size: 14px;
+				white-space: nowrap;
+			}
+
+			.hits {
+
+			}
+
+			.failure {
+				@extend %result-text;
+				color: colors.$failure;
+			}
+
+			.success {
+				@extend %result-text;
+				color: colors.$success;
+			}
+
+			.glitch {
+				@extend %result-text;
+				color: colors.$glitch;
+			}
+
+			.critical-glitch {
+				@extend %result-text;
+				font-size: 20px;
+				color: colors.$critical-glitch;
+			}
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
+		.formula {
+			font-style: italic;
+			font-size: 11px;
+		}
+
+		.dv {
+			font-size: 16px;
+			font-weight: bold;
+			color: colors.$failure;
+		}
+
+		.data-value {
+			font-weight: bold;
+			font-style: italic;
+		}
+
+		.chat-target-box {
+			//background-color: colors.$light-green;
+			display: grid;
+
+			grid-template-columns: minmax(90px, 10px) minmax(90px, 10px) minmax(90px, 10px);
+
+			//gap: 1rem;
+
+			div {
+				text-align: center;
+				background: rgba(100, 100, 100, 0.3);
+				padding: 0.2rem;
+				border: white solid 1px;
+				border-radius: 1rem;
+
+				&:hover {
+					background: colors.$red;
+					font-weight: bold;
+					text-shadow: 0 0 5px colors.$red;
+				}
+			}
+		}
+
+		.chat-roll-menu {
+			float: initial;
+			position: absolute;
+			display: none;
+			margin-top: -16px;
+
+			a {
+				width: 32px;
+				height: 16px;
+			}
+			.heal {
+				background-color: green;
+			}
+			.damage {
+				background-color: red;
+			}
+		}
+	}
 
 	.message-header {
 		border-bottom: 1px dashed colors.$blue !important;
+		background: var(--section-background);
 	}
 
 	.message-sender {
 		color: colors.$purple;
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-header);
 		font-size: 1.5em;
+		background: var(--section-background);
+
 	}
 
 	.message-content {
 		padding: 0.25em;
+		background: var(--section-background);
 	}
 
 	%details-card {
@@ -29,7 +144,7 @@
 			grid-template-columns: 1.25em 1fr;
 			gap: 0.25em;
 
-			font-family: 'Bebas Neue', sans-serif;
+			font-family: var(--font-primary);
 			font-size: 1.5em;
 			color: colors.$blue;
 
@@ -46,7 +161,7 @@
 		}
 
 		label {
-			font-family: 'Bebas Neue', sans-serif;
+			font-family: var(--font-header);
 			color: colors.$blue;
 		}
 

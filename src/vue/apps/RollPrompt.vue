@@ -274,7 +274,7 @@ onMounted(() => {
 
 	header {
 		color: colors.$blue;
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-header);
 		font-size: 2em;
 	}
 
@@ -282,7 +282,7 @@ onMounted(() => {
 		grid-column: 3 / span 1;
 		grid-row: 4 / span 1;
 		color: colors.$blue;
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-header);
 		font-size: 1.25em;
 	}
 

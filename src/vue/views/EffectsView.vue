@@ -133,7 +133,7 @@ const dummy = ref(0);
 	}
 
 	.effects-header {
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-header);
 		text-transform: uppercase;
 		margin-top: 1em;
 
