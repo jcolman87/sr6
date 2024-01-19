@@ -1,5 +1,5 @@
 $red: #90231e;
-$light-red: #FFCCCB;
+$light-red: #ffcccb;
 
 $purple: #b4107f;
 
@@ -11,36 +11,35 @@ $dark-blue: #384455;
 $gold: #efaf61;
 $orange: #f36c21;
 
-$green:  #006400;
-$light-green: #E0FFE0;
-$bright-green: rgba(38, 194, 129, 1.0);
+$green: #006400;
+$light-green: #e0ffe0;
+$bright-green: rgba(38, 194, 129, 1);
 
 $success: $bright-green;
-$failure: rgb(255, 0, 102 );
+$failure: rgb(255, 0, 102);
 $glitch: rgb(194, 76, 29);
 $critical-glitch: rgb(215, 14, 233);
-
 
 $green-bg: rgba(152, 251, 152, 0.1);
 $red-bg: rgba(240, 128, 128, 0.1);
 
 :root {
 	/* fonts */
-	--font-header: "Amplitude Bold", sans-sarif;
-	--font-primary: "Helvetica", sans-sarif;
+	--font-header: 'Amplitude Bold', sans-sarif;
+	--font-primary: 'Helvetica', sans-sarif;
 
 	/* my colors */
 	--monitor-background: #080808;
-	--monitor-damaged: rgba(230,0,38, 0.3);
+	--monitor-damaged: rgba(230, 0, 38, 0.3);
 
-	--sidebar-background:  rgba(25,25,25, 0.4);
-	--section-background: rgba(8,8,8, 0.8);
-	--section-foreground: #FFFFFF;
+	--sidebar-background: rgba(25, 25, 25, 0.4);
+	--section-background: rgba(8, 8, 8, 0.8);
+	--section-foreground: #ffffff;
 
 	--highlight-color: #892378;
 	--accent-color: #00a8ff;
 
-	--section-border:  rgb(253,245,230, 0.2);
+	--section-border: rgb(253, 245, 230, 0.2);
 	--tablehead-background: #e0e0d9;
 
 	--window-background: var(--sidebar-background);
@@ -80,7 +79,7 @@ $red-bg: rgba(240, 128, 128, 0.1);
 	--color-shadow-highlight: #ff6400;
 	--color-shadow-dark: #000;
 	--color-underline-inactive: #7a7971;
-	--color-underline-active: #44191A;
+	--color-underline-active: #44191a;
 	--color-underline-header: #782e22;
 	--color-border-light-highlight: #f0f0e0;
 	--color-border-light-primary: #b5b3a4;
@@ -113,7 +112,7 @@ $red-bg: rgba(240, 128, 128, 0.1);
 	--players-width: 200px;
 	--form-field-height: 26px;
 	--font-mono: monospace;
-	--font-awesome: "Font Awesome 6 Pro";
+	--font-awesome: 'Font Awesome 6 Pro';
 	--font-size-11: 0.6875rem;
 	--font-size-12: 0.75rem;
 	--font-size-13: 0.8125rem;
@@ -141,4 +140,3 @@ $red-bg: rgba(240, 128, 128, 0.1);
 	glitch: $glitch;
 	criticalGlitch: $critical-glitch;
 }
-

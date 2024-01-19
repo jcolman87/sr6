@@ -7,7 +7,7 @@ function buildDefinition(path: string, style: 'normal' | 'italic' = 'normal', we
 		weight,
 	};
 }
-export function register() {
+export function register(): void {
 	CONFIG.fontDefinitions['Amplitude Bold'] = {
 		editor: true,
 		fonts: [buildDefinition('amplitude-32.ttf')],

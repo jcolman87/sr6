@@ -54,10 +54,11 @@ export interface ITest<TData extends BaseTestData = BaseTestData, TModifier exte
 
 	damage?(opposedHits: number): number;
 	baseDamage?(): number;
+
+	execute(): Promise<Result<null, null>>;
 }
 
 export function testFromData(msgData: BaseTestMessageData): BaseTest {
-	console.log('testFromData', msgData);
 	const actor = getActorSync(SR6Actor, msgData.baseData.actorId!);
 	const item = msgData.baseData.itemId ? getItemSync(SR6Item, msgData.baseData.itemId) : null;
 

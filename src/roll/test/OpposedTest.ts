@@ -1,4 +1,3 @@
-import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import BaseTest, { BaseTestData, BaseTestMessageData } from '@/roll/test/BaseTest';
@@ -40,6 +39,7 @@ export default class OpposedTest<TOpposedData extends BaseTestData = BaseTestDat
 
 		super({ actor, item, data, roll, delta });
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		this.opposedTest = opposedTest as any;
 	}
 }

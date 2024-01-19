@@ -14,7 +14,6 @@ export class SR6ChatMessage extends ChatMessage {
 
 	override async getHTML(): Promise<JQuery> {
 		const html = await super.getHTML();
-		console.log('html', html);
 
 		/*
 		todo: alignMENT FUCKED

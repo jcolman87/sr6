@@ -2,7 +2,6 @@
 @use 'vars/sheet';
 
 .sheet {
-
 	nav.sheet-tabs {
 		// Stretch the tabs container across the full sheet width.
 		margin-left: -1 * sheet.$padding;
@@ -85,7 +84,8 @@
 					content: ' ';
 					height: 100%;
 					width: 5px;
-					background: $decorative-lines-top-bottom,
+					background:
+						$decorative-lines-top-bottom,
 						// Radial gradient to mask some of the repeating vertical line.
 						radial-gradient(colors.$dark-blue 0%, transparent 100%),
 						// Vertical line

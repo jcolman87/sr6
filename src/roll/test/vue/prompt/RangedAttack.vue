@@ -8,7 +8,7 @@ import { getActorSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { computed, onBeforeUpdate, onMounted, ref, toRaw } from 'vue';
+import { computed, onBeforeUpdate, onMounted, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -22,7 +22,7 @@ const data = computed(() => props.test.data);
 const weapon = computed(() => props.test.weapon);
 const system = computed(() => toRaw(weapon.value).systemData);
 
-const original_pool = data.value.pool;
+const original_pool = data.value.pool!;
 
 const targets = computed(
 	() =>
@@ -49,31 +49,31 @@ function onChangeDistance() {
 function onChangeFiremode() {
 	switch (data.value.firemode) {
 		case FireMode.SS: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance);
+			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!);
 			data.value.damage = system.value.damage;
 			data.value.pool = original_pool;
 			break;
 		}
 		case FireMode.SA: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance) - 2;
+			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 2;
 			data.value.damage = system.value.damage + 1;
 			data.value.pool = original_pool;
 			break;
 		}
 		case FireMode.BF_narrow: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance) - 4;
+			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 4;
 			data.value.damage = system.value.damage + 2;
 			data.value.pool = original_pool;
 			break;
 		}
 		case FireMode.BF_wide: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance) - 2;
+			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 2;
 			data.value.damage = system.value.damage + 1;
 			data.value.pool = Math.ceil(original_pool / 2);
 			break;
 		}
 		case FireMode.FA: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance) - 6;
+			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 6;
 			data.value.damage = system.value.damage;
 			data.value.pool = original_pool;
 			break;
@@ -88,6 +88,7 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 	}
 }
 
+/*
 function updateEdgeGain() {
 	if (targets.value.length === 0) {
 		data.value.edgeGained = EdgeGainedTarget.None;
@@ -101,6 +102,7 @@ function updateEdgeGain() {
 }
 onMounted(updateEdgeGain);
 onBeforeUpdate(updateEdgeGain);
+*/
 </script>
 
 <template>
@@ -140,6 +142,7 @@ onBeforeUpdate(updateEdgeGain);
 				</tr>
 			</table>
 		</div>
+		<!--
 		<div class="section" style="width: 25%">
 			<div class="section-title">
 				<label><Localized label="SR6.RollPrompt.EdgeGained" /></label>
@@ -180,6 +183,7 @@ onBeforeUpdate(updateEdgeGain);
 				</tr>
 			</table>
 		</div>
+		-->
 		<div class="section">
 			<div class="section-title">
 				<label><Localized label="SR6.Combat.Distance" /></label>

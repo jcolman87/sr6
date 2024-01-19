@@ -18,12 +18,14 @@ export default class SR6CombatTracker extends CombatTracker<SR6Combat> {
 	}
 
 	override async getData(options: CombatTrackerOptions): Promise<CombatTrackerData> {
-		let data = await super.getData(options);
-		if (data != undefined) {
+		const data = await super.getData(options);
+		if (data !== undefined) {
 			data.turns.forEach((turn) => {
 				const sr6turn = turn as SR6Turn;
-				let combatant: SR6Combatant | undefined = data.combat?.combatants.get(turn.id) as SR6Combatant;
-				sr6turn.initiativeType = combatant!.systemData.initiativeType;
+				const combatant: SR6Combatant | undefined = data.combat?.combatants.get(turn.id) as SR6Combatant;
+				if (combatant) {
+					sr6turn.initiativeType = combatant!.systemData.initiativeType;
+				}
 			});
 		}
 
@@ -33,7 +35,6 @@ export default class SR6CombatTracker extends CombatTracker<SR6Combat> {
 	protected override async _onCombatantControl(
 		event: JQuery.ClickEvent<HTMLElement, HTMLElement, HTMLElement>,
 	): Promise<void> {
-		console.log('tracker event', event.currentTarget.dataset);
 		if (event.currentTarget.dataset['combatantId']) {
 			const combatant: SR6Combatant = (game.combat!.combatants.get(
 				event.currentTarget.dataset['combatantId'],

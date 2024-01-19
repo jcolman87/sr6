@@ -31,10 +31,10 @@ const visibility = ref({
 });
 
 function isTargetOwner(): boolean {
-	if (props.test.targets.length == 0) {
+	if (props.test.targets.length === 0) {
 		return true;
 	}
-	return props.test.targets.find((target: SR6Actor) => target.isOwner) != undefined;
+	return props.test.targets.find((target: SR6Actor) => target.isOwner) !== undefined;
 }
 
 emit('setText', {
@@ -59,7 +59,7 @@ emit('setText', {
 					&nbsp;
 				</a>
 				<Collapse class="formula" :when="visibility.description.damage">
-					{{ toRaw(test).baseDamage() }} + {{ test.roll.hits }} = {{ toRaw(test).damage() }}
+					{{ toRaw(test).baseDamage() }} + {{ test.roll?.hits }} = {{ toRaw(test).damage() }}
 				</Collapse>
 			</div>
 			<div class="distance">
@@ -71,14 +71,14 @@ emit('setText', {
 					<Localized
 						class="data-value"
 						label="SR6.Combat.Distances.{key}"
-						:args="{ key: test.data.distance }"
+						:args="{ key: test.data.distance! }"
 					/>
 				</a>
 				<Collapse :when="visibility.description.distance">
 					<Localized
 						class="formula"
 						label="SR6.Combat.DistanceDescriptions.{key}"
-						:args="{ key: test.data.distance }"
+						:args="{ key: test.data.distance! }"
 					/>
 				</Collapse>
 			</div>
@@ -91,14 +91,14 @@ emit('setText', {
 					<Localized
 						class="data-value"
 						label="SR6.Combat.FireModes.{key}.Name"
-						:args="{ key: test.data.firemode }"
+						:args="{ key: test.data.firemode! }"
 					/>
 				</a>
 				<Collapse :when="visibility.description.firemode">
 					<Localized
 						class="formula"
 						label="SR6.Combat.FireModes.{key}.Description"
-						:args="{ key: test.data.firemode }"
+						:args="{ key: test.data.firemode! }"
 					/>
 				</Collapse>
 			</div>

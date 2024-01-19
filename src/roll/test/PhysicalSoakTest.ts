@@ -30,6 +30,7 @@ export default class PhysicalSoakTest extends BaseTest<PhysicalSoakTestData> {
 	chatComponent(): Component {
 		return ChatComponent;
 	}
+
 	constructor({
 		actor,
 		item,

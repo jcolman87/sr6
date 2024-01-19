@@ -13,7 +13,9 @@ const props = defineProps<{
 }>();
 
 function openActorSheet() {
-	void toRaw(props.actor).sheet.render(true);
+	if (props.actor) {
+		void toRaw(props.actor).sheet.render(true);
+	}
 }
 
 const expandHint = ref(false);

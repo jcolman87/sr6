@@ -83,6 +83,14 @@ export abstract class AdjustableMatrixAttributesDataModel extends BaseDataModel 
 	}
 }
 
+export type MatrixAttributesData = {
+	attack: number;
+	sleaze: number;
+	dataProcessing: number;
+	firewall: number;
+	formulas: MatrixAttributesFormulaData | null;
+};
+
 export type MatrixAttributesFormulaData = {
 	attack: string | null;
 	sleaze: string | null;

@@ -6,7 +6,7 @@ import SR6Item from '@/item/SR6Item';
 import PhysicalSoakTest from '@/roll/test/PhysicalSoakTest';
 import { SR6Roll } from '@/roll/v2/SR6Roll';
 import AttackTestData from '@/roll/test/AttackTestData';
-import BaseTest, { BaseTestMessageData } from '@/roll/test/BaseTest';
+import BaseTest from '@/roll/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/roll/test/index';
 import OpposedTest from '@/roll/test/OpposedTest';
 import { getActorSync, getTargetActorIds } from '@/util';
@@ -30,7 +30,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 		}
 		return this.data.targetIds
 			.map((id) => getActorSync(SR6Actor, id))
-			.filter((actor) => actor != null)
+			.filter((actor) => actor !== null)
 			.map((actor) => actor!);
 	}
 
@@ -46,12 +46,13 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 		return this.weapon.systemData.damage;
 	}
 
-	opposed(actor: SR6Actor, item: undefined | SR6Item): OpposedTest<RangedAttackTestData> {
+	opposed(actor: SR6Actor, item: undefined | SR6Item = undefined): OpposedTest<RangedAttackTestData> {
 		return new OpposedTest<RangedAttackTestData>({
 			actor,
 			item,
 			data: {
 				pool: actor.solveFormula(this.weapon.systemData.damageData?.defenseFormula),
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				oppposedData: this.toJSON() as any,
 			},
 		});
@@ -63,6 +64,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			data: {
 				pool: defenseTest.actor.solveFormula(this.weapon.systemData.damageData?.soakFormula),
 				threshold: this.damage(defenseTest.roll?.hits),
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				defenseTest: defenseTest.toJSON() as any,
 			},
 		});

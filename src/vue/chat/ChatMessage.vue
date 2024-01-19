@@ -3,7 +3,7 @@
 import { ChatContext, ChatMessageContext } from '@/chat/SR6ChatMessage';
 import ChatHeader from '@/vue/chat/ChatHeader.vue';
 import Localized from '@/vue/components/Localized.vue';
-import { inject, onBeforeMount, onUpdated, ref, toRaw } from 'vue';
+import { inject, onBeforeMount, onUpdated, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
 
 const context = inject<ChatMessageContext>(ChatContext)!;
@@ -12,10 +12,6 @@ const text = ref({
 	title: context.test ? game.i18n.localize(`SR6.Tests.${context.test.type}.Name`) : 'Roll',
 	hint: '',
 });
-
-function testClick() {
-	console.log('Hello world!', context);
-}
 
 function setText(value: { title: string; hint: string }) {
 	text.value = value;
@@ -32,7 +28,6 @@ function update() {
 
 onUpdated(update);
 onBeforeMount(update);
-console.log('wtf', toRaw(context.roll));
 </script>
 
 <template>
@@ -46,7 +41,6 @@ console.log('wtf', toRaw(context.roll));
 					class="flexrow roll-information"
 					@mouseenter.prevent="expandDice = true"
 					@mouseleave.prevent="expandDice = false"
-					@click.prevent="testClick"
 				>
 					<div class="roll-formula">{{ context.roll?.pool }}d6</div>
 					<div class="hits">

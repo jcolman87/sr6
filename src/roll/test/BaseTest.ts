@@ -62,15 +62,11 @@ export default abstract class BaseTest<
 	}
 
 	async execute(): Promise<Result<null, null>> {
-		console.log('BaseTest::execute', this);
-
 		// Add our modifiers to the roll delta
 		this.prepareModifiers();
 
 		const configuredData = await this.prompt();
 		if (configuredData.ok) {
-			console.log('BaseTest::configuredData', this.data, this);
-
 			this.roll = new SR6Roll(
 				this.data.pool!,
 				{
@@ -85,19 +81,17 @@ export default abstract class BaseTest<
 
 			this.roll = await this.roll.evaluate({ async: true });
 			this.finishModifiers();
-			// TODO: await this.roll.explode();
+			if (this.roll.options.explode) {
+				await this.roll.explode();
+			}
 
-			console.log('BaseTest::Rolled', this);
-
-			const message = await this.toMessage();
-			console.log('BaseTest::toMessage', message!.id, message);
+			const _message = await this.toMessage();
 		}
 
 		return Ok(null);
 	}
 
 	async prompt(): Promise<Result<RollDataDelta, null>> {
-		console.log('BaseTest::prompt', this);
 		const configuredRoll = await RollPrompt.prompt<TData, this>(this.actor, this);
 		if (!configuredRoll) {
 			return Err(null);
@@ -168,7 +162,6 @@ export default abstract class BaseTest<
 		delta?: RollDataDelta;
 		roll?: SR6Roll;
 	}) {
-		console.log('BaseTest::constructor', roll);
 		this.modifiers = [];
 		this.delta = delta;
 		this.baseData = data;

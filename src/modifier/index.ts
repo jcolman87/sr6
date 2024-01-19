@@ -80,7 +80,6 @@ export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abs
 	source: ModifiersSource;
 
 	updateSource(data: ModifiersSource): void {
-		console.log('Modifiers::updateSource', this, data);
 		this.source = data;
 	}
 

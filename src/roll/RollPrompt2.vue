@@ -19,7 +19,7 @@ const text = ref({
 });
 const edgeBoost = ref<string | null>(null);
 const poolModifier = ref(0);
-const originalPool = context.data.pool;
+const originalPool = context.data.pool!;
 
 // TODO: conditions
 const totalModifier = computed(() => toRaw(context.actor).systemData.woundModifier);
@@ -43,7 +43,9 @@ function roll() {
 			context.data.autoHits = 1;
 			break;
 		case 'add_edge_pool':
-			context.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
+			context.data.pool
+				? (context.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max)
+				: (context.data.pool = (baseSystem.value as LifeformDataModel).monitors.edge.max);
 			context.data.explode = true;
 			break;
 	}
@@ -109,7 +111,7 @@ onMounted(() => {
 			<tr v-for="[key, value] in woundModifiers" v-bind:key="key">
 				<table v-if="value != 0">
 					<tr>
-						<td style="width: 3em">{{ asModifierString(value) }}</td>
+						<td style="width: 3em">{{ asModifierString(value as number) }}</td>
 						<td>
 							<a
 								@click="

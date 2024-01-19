@@ -3,7 +3,7 @@
 import SR6Actor from '@/actor/SR6Actor';
 import { pingActor } from '@/vue/directives';
 
-const props = defineProps<{
+defineProps<{
 	targets: SR6Actor[];
 }>();
 </script>

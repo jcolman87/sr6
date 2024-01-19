@@ -1,13 +1,13 @@
 import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
 import { IHasPools } from '@/data/interfaces';
-import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
+import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import SINDataModel from '@/item/data/feature/SINDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
@@ -19,7 +19,6 @@ import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import { RollType } from '@/roll';
-import { MatrixAttributesData } from '../../../lib/data/MatrixAttributesDataModel';
 
 export default abstract class BaseActorDataModel extends BaseDataModel implements IHasPools {
 	abstract monitors: MonitorsDataModel;
@@ -151,6 +150,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel implement
 			sleaze: 0,
 			dataProcessing: 0,
 			firewall: 0,
+			formulas: null,
 		};
 		this.actor!.items.filter((i) => i.type === 'gear')
 			.map((i) => i as SR6Item<GearDataModel>)

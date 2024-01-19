@@ -4,6 +4,8 @@ import OpposedTest from '@/roll/test/OpposedTest';
 import Localized from '@/vue/components/Localized.vue';
 import { toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
+import SR6Item from '@/item/SR6Item';
+import WeaponDataModel from "@/item/data/gear/WeaponDataModel";
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -16,7 +18,7 @@ const visibility = ref({
 	damageFormula: false,
 });
 
-const damageValue = ref(toRaw(props.test.opposedTest).damage?.(props.test.roll.hits));
+const damageValue = ref(toRaw(props.test.opposedTest).damage?.(props.test.roll!.hits));
 
 async function executeSoakTest() {
 	showRoll.value = false;
@@ -33,8 +35,8 @@ const showRoll = ref(true);
 
 <template>
 	<div class="flexrow chat-opposed-test">
-		<div class="line">Defending against {{ test.opposedTest.actor.name }} {{ test.opposedTest.item.name }}</div>
-		<div v-if="!test.roll.success">
+		<div class="line">Defending against {{ test.opposedTest.actor.name }} {{ test.opposedTest.item?.name }}</div>
+		<div v-if="!test.roll?.success">
 			<hr />
 			<div v-if="test.opposedTest.damage" class="line">
 				<a
@@ -44,17 +46,17 @@ const showRoll = ref(true);
 					<Localized label="SR6.Combat.Damage" />:
 
 					<i class="dv"
-						>{{ damageValue }} {{ toRaw(test.opposedTest.item).systemData.damageData.damageType }}</i
+						>{{ damageValue }} {{ toRaw(test.opposedTest.item! as SR6Item<WeaponDataModel>).systemData.damageData.damageType }}</i
 					>
 				</a>
 				<Collapse class="formula" :when="visibility.damageFormula">
-					{{ toRaw(test.opposedTest).damage?.(0) }} - {{ test.roll.hits }} =
+					{{ toRaw(test.opposedTest).damage?.(0) }} - {{ test.roll?.hits }} =
 					{{ damageValue }}
 				</Collapse>
 			</div>
 		</div>
 		<input
-			v-if="showRoll && test.isOwner && !test.roll.success && test.opposedTest.damage && test.opposedTest.soak"
+			v-if="showRoll && test.isOwner && !test.roll?.success && test.opposedTest.damage && test.opposedTest.soak"
 			class="dialog-button line"
 			type="button"
 			value="Soak Damage"

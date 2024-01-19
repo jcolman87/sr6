@@ -1,5 +1,5 @@
 import { IHasInitiative } from '@/data/interfaces';
-import { ROLL_TEMPLATES, RollType } from '@/roll';
+import { RollType } from '@/roll';
 import { SR6Roll as SR6Roll2 } from '@/roll/v2/SR6Roll';
 
 export function register(): void {

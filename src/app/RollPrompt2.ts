@@ -19,10 +19,8 @@ import VueRollPrompt2 from '@/roll/RollPrompt2.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
-export interface RollPromptContext<
-	TData extends BaseTestData = BaseTestData,
-	TTest extends ITest<TData> = BaseTest<TData>,
-> extends ContextBase {
+export interface RollPromptContext<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = ITest<TData>>
+	extends ContextBase {
 	test: TTest;
 	data: TData;
 	resolvePromise: (value: TData) => void;

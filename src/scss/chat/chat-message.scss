@@ -5,7 +5,6 @@
 	color: white;
 	background: var(--section-background);
 
-
 	.chat-message-body {
 		.dice-details {
 			min-width: 100%;
@@ -28,7 +27,6 @@
 			}
 
 			.hits {
-
 			}
 
 			.failure {
@@ -125,7 +123,6 @@
 		font-family: var(--font-header);
 		font-size: 1.5em;
 		background: var(--section-background);
-
 	}
 
 	.message-content {
@@ -195,5 +192,4 @@
 			border-bottom: 1px dashed colors.$gold;
 		}
 	}
-
 }

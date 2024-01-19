@@ -92,10 +92,10 @@ export async function deleteItem<TDataModel extends BaseDataModel = BaseDataMode
 	return false;
 }
 
-export async function pingActor(actor: SR6Actor) {
+export async function pingActor(actor: SR6Actor): Promise<void> {
 	const tokens = toRaw(actor).getActiveTokens();
 	if (tokens.length > 0) {
 		void canvas.ping(tokens[0].center);
-		return canvas.animatePan(tokens[0].center);
+		await canvas.animatePan(tokens[0].center);
 	}
 }

@@ -3,7 +3,6 @@ import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SR6Item from '@/item/SR6Item';
 import BaseTest, { BaseTestData } from '@/roll/test/BaseTest';
 import { RollDataDelta, TestType } from '@/roll/test/index';
-import { OpposedTestData } from '@/roll/test/OpposedTest';
 import { SR6Roll } from '@/roll/v2/SR6Roll';
 
 import { Component } from 'vue';
@@ -19,6 +18,7 @@ export default class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 	chatComponent(): Component {
 		return ChatComponent;
 	}
+
 	constructor({
 		actor,
 		item,
