@@ -86,6 +86,21 @@
                 </div>
             </div>
 
+			{{#if this.owner}}
+				<div class="token-name flexcol">
+					<h4>&nbsp;</h4>
+					{{log "tracker" this}}
+					<div class="combatant-controls flexrow">
+						<a class="combatant-control {{#if (eq this.initiativeType 'physical') }}active{{/if}}" data-tooltip="{{localize 'shadowrun6.combat.togglePhysical'}}" data-control="togglePhysical" data-combatant-id="{{this.id}}">
+							<i class="fas fa-walking"></i></a>
+						<a class="combatant-control {{#if (eq this.initiativeType 'matrix') }}active{{/if}}" data-tooltip="{{localize 'shadowrun6.combat.toggleMatrix'}}" data-control="toggleMatrix" data-combatant-id="{{this.id}}">
+							<i class="fas fa-globe"></i></a>
+						<a class="combatant-control {{#if (eq this.initiativeType 'astral') }}active{{/if}}" data-tooltip="{{localize 'shadowrun6.combat.toggleMatrix'}}" data-control="toggleAstral" data-combatant-id="{{this.id}}">
+							<i class="fas fa-magic"></i></a>
+					</div>
+				</div>
+			{{/if}}
+
             {{#if this.hasResource}}
             <div class="token-resource">
                 <span class="resource">{{this.resource}}</span>

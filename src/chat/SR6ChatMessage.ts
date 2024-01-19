@@ -65,7 +65,21 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 			this.vueContext.test = testObj;
 		}
 		if (this.rolls.length > 0) {
-			this.vueContext.roll = SR6Roll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
+			console.log('cast roll', this.rolls);
+			if ((this.rolls[0] as any).class) {
+				switch ((this.rolls[0] as any).class) {
+					case 'Roll': {
+						this.vueContext.roll = Roll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
+						break;
+					}
+					case 'SR6Roll': {
+						this.vueContext.roll = SR6Roll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
+						break;
+					}
+				}
+			} else {
+				this.vueContext.roll = this.rolls[0] as SR6Roll;
+			}
 		}
 	}
 

@@ -116,13 +116,6 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	//
 	// IHasMatrixPersona
 	//
-	get matrixPersona(): null | MatrixPersonaDataModel {
-		return this._matrixPersona;
-	}
-
-	set matrixPersona(persona: null | MatrixPersonaDataModel) {
-		this._matrixPersona = persona;
-	}
 
 	async activateMatrixPersona(
 		device: SR6Item<GearDataModel> | null = null,

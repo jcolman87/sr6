@@ -8,6 +8,7 @@ import InitiativeDataModel from '@/data/InitiativeDataModel';
 
 import { AvailableActions, IHasEdge, IHasInitiative, IHasPools, IHasPostCreate } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
+import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import { RollType } from '@/roll';
 
 /** s
@@ -68,6 +69,14 @@ export default abstract class LifeformDataModel
 		return this.solveFormula(`@willpower + @${MAGIC_TRADITION_ATTRIBUTE[this.magicTradition]}`);
 	}
 
+	get matrixPersona(): null | MatrixPersonaDataModel {
+		return this._matrixPersona;
+	}
+
+	set matrixPersona(persona: null | MatrixPersonaDataModel) {
+		this._matrixPersona = persona;
+	}
+
 	//
 	// IHasInitiative
 	//
@@ -78,8 +87,12 @@ export default abstract class LifeformDataModel
 				return `${this.initiatives.physical.formula} + ${modifier}`;
 			case InitiativeType.Astral:
 				return this.initiatives.astral ? `${this.initiatives.astral!.formula} + ${modifier}` : null;
-			case InitiativeType.Matrix:
-				return this.initiatives.matrix ? `${this.initiatives.matrix!.formula} + ${modifier}` : null;
+			case InitiativeType.Matrix: {
+				if (!this.matrixPersona) {
+					ui.notifications.error('No matrix persona activated for rolling initiative');
+				}
+				return this.matrixPersona ? this.matrixPersona.initiativeFormula : null;
+			}
 		}
 	}
 
