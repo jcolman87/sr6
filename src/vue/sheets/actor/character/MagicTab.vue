@@ -5,7 +5,6 @@ import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
 import Localized from '@/vue/components/Localized.vue';
 import { createNewItem, updateItem, deleteItem } from '@/vue/directives';
-import { rollAttribute, rollSpellCast } from '@/roll/Rollers';
 import { computed, inject, toRaw } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -29,8 +28,14 @@ const adeptpowers = computed(() =>
 		.map((i) => i as SR6Item<AdeptPowerDataModel>),
 );
 
-async function rollSpell(spell: SR6Item<SpellDataModel>) {
-	await rollSpellCast(toRaw(context.data.actor), spell);
+async function rollSpell(_spell: SR6Item<SpellDataModel>) {
+	// TODO:
+	// await rollers.rollSpellCast(toRaw(context.data.actor), spell);
+}
+
+async function rollAttribute(_attr: EnumAttribute) {
+	// TODO:
+	// await rollers.rollAttribute(toRaw(context.data.actor), EnumAttribute.magic)
 }
 </script>
 
@@ -43,7 +48,7 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 						<p><Localized label="SR6.Attributes.magic.Name" /></p>
 						<span
 							>{{ system.attributes.magic.value }}<br />
-							<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.magic)"
+							<a @click="rollAttribute(EnumAttribute.magic)"
 								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 							></span
 						>
@@ -68,7 +73,7 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 						<p><Localized label="SR6.Attributes.resonance.Name" /></p>
 						<span
 							>{{ system.attributes.resonance.value }}<br />
-							<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.resonance)"
+							<a @click="rollAttribute(EnumAttribute.resonance)"
 								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 							></span
 						>
@@ -93,7 +98,7 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 						<p><Localized label="SR6.Attributes.essence.Name" /></p>
 						<span
 							>{{ system.attributes.essence.value }}<br />
-							<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.essence)"
+							<a @click="rollAttribute(EnumAttribute.essence)"
 								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 							></span
 						>

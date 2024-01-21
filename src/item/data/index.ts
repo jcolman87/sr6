@@ -104,16 +104,4 @@ export async function getCoreAugmentations(): Promise<SR6Item<GeneralActionDataM
 	);
 }
 
-export function register(): void {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(window as any).getCoreSkills = getCoreSkills;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(window as any).getCoreMatrixActions = getCoreMatrixActions;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(window as any).getCoreGeneralActions = getCoreGeneralActions;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(window as any).getCoreQualities = getCoreQualities;
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(window as any).getCoreAugmentations = getCoreAugmentations;
-}
+export function register(): void {}

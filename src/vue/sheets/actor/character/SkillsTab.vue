@@ -8,7 +8,6 @@ import SR6Item from '@/item/SR6Item';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
-import { rollSkill } from '@/roll/Rollers';
 import { Collapse } from 'vue-collapsed';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
@@ -37,8 +36,9 @@ async function updateSkill(skill: SR6Item<SkillDataModel>) {
 	await skill.update({ ['system']: skill.systemData });
 }
 
-async function roll(skill: SR6Item<SkillDataModel>, special: null | string = null) {
-	await rollSkill(toRaw(context.data.actor), skill.id, special);
+async function roll(_skill: SR6Item<SkillDataModel>, _special: null | string = null) {
+	// TODO:
+	// await rollers.rollSkill(toRaw(context.data.actor), skill.id, special);
 }
 
 function addSkill() {}

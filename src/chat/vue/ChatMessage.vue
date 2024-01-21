@@ -1,0 +1,103 @@
+/* eslint-disable vue/multi-word-component-names */
+<script lang="ts" setup>
+import { ChatContext, ChatMessageContext } from '@/chat/SR6ChatMessage';
+import ChatHeader from '@/chat/vue/ChatHeader.vue';
+import FloatCollapse from '@/vue/components/FloatCollapse.vue';
+import Localized from '@/vue/components/Localized.vue';
+import { inject, onBeforeMount, onUpdated, ref } from 'vue';
+
+const context = inject<ChatMessageContext>(ChatContext)!;
+
+const text = ref({
+	title: context.test ? game.i18n.localize(`SR6.Tests.${context.test.type}.Name`) : 'Roll',
+	hint: '',
+});
+
+function setText(value: { title: string; hint: string }) {
+	text.value = value;
+}
+
+const expandDice = ref(false);
+
+function update() {
+	if (context.message.isRoll) {
+		if (context.roll?.options?.initiativeRoll) {
+			text.value.title = 'Initiative';
+			text.value.hint = '';
+		}
+	} else {
+		text.value.title = '';
+		text.value.hint = '';
+	}
+}
+
+onUpdated(update);
+onBeforeMount(update);
+</script>
+
+<template>
+	<ChatHeader :actor="context.actor" :token="context.token" :text="text" />
+	<div class="chat-message-body">
+		<template v-if="context.message.isRoll">
+			<template v-if="context.roll?.options?.initiativeRoll">
+				<div style="text-align: center; font-weight: bold">{{ context.roll?.total }}</div></template
+			><template v-else>
+				<section
+					class="flexrow roll-information"
+					@mouseenter.prevent="expandDice = true"
+					@mouseleave.prevent="expandDice = false"
+				>
+					<div class="roll-formula">{{ context.roll?.pool }}d6</div>
+					<div class="hits">
+						<i class="bold">{{ context.roll?.hits }}</i> hits
+					</div>
+
+					<!-- Glitch/Critical Glitch -->
+
+					<div class="glitches">
+						<div class="critical-glitch" v-if="context.roll?.is_critical_glitch">
+							<Localized label="SR6.Labels.CriticalGlitch" />
+						</div>
+						<div class="glitch" v-else-if="context.roll?.is_glitch">
+							<Localized label="SR6.Labels.Glitch" />
+						</div>
+					</div>
+
+					<!-- Success/Fail -->
+					<div class="result">
+						<div class="success" v-if="context.roll?.threshold && context.roll?.success">
+							<Localized label="SR6.Labels.Success" />
+						</div>
+						<div class="failure" v-else-if="!context.roll?.success">
+							<Localized label="SR6.Labels.Failure" />
+						</div>
+					</div>
+				</section>
+
+				<!-- Dice -->
+				<FloatCollapse :when="expandDice" class="dice-details">
+					<i class="dice" v-for="num in context.roll!.sides" v-bind:key="num" :data-die="num">&nbsp; </i>
+				</FloatCollapse>
+
+				<!-- Test Information -->
+				<section v-if="context.test" style="min-width: 100%">
+					<component
+						v-if="context.test.chatComponent"
+						:is="context.test.chatComponent?.()"
+						:test="context.test"
+						:message="context.message"
+						@setText="setText"
+					/>
+				</section>
+			</template>
+		</template>
+		<!-- Normal chat message -->
+		<div v-else>
+			<div class="plain-message" v-html="context.message.content"></div>
+		</div>
+	</div>
+</template>
+
+<style lang="scss" scoped>
+@use '@/scss/vars/colors';
+</style>

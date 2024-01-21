@@ -9,7 +9,7 @@ import InitiativeDataModel from '@/data/InitiativeDataModel';
 import { AvailableActions, IHasEdge, IHasInitiative, IHasPools, IHasPostCreate } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
-import { RollType } from '@/roll';
+import { RollType } from '@/roll/legacy';
 
 /** s
  *

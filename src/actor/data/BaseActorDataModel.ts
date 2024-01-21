@@ -18,7 +18,7 @@ import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
-import { RollType } from '@/roll';
+import { RollType } from '@/roll/legacy';
 
 export default abstract class BaseActorDataModel extends BaseDataModel implements IHasPools {
 	abstract monitors: MonitorsDataModel;

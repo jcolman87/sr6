@@ -5,7 +5,7 @@ import GeneralActionDataModel, { GeneralActionCategory } from '@/item/data/actio
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
-import RangedAttackTest from '@/roll/test/RangedAttackTest';
+import RangedAttackTest from '@/test/RangedAttackTest';
 import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
 import Weapons from '@/vue/components/combat/Weapons.vue';
 import Wearing from '@/vue/components/combat/Wearing.vue';

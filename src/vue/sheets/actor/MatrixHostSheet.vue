@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
-import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 import SR6Item from '@/item/SR6Item';
-import * as rollers from '@/roll/Rollers';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import MonitorView from '@/vue/views/MonitorView.vue';
 import { computed, toRaw, inject } from 'vue';
@@ -25,8 +23,9 @@ async function attributesUpdated(attributes: AdjustableMatrixAttributesDataModel
 	await toRaw(context.data.actor).update({ ['system.attributes']: attributes });
 }
 
-async function rollIC(ic: SR6Item<MatrixICDataModel>) {
-	await rollers.rollMatrixAction(toRaw(system.value), toRaw(ic) as SR6Item<MatrixActionDataModel>);
+async function rollIC(_ic: SR6Item<MatrixICDataModel>) {
+	// TODO:
+	// await rollers.rollMatrixAction(toRaw(system.value), toRaw(ic) as SR6Item<MatrixActionDataModel>);
 }
 async function setICDamage(ic: SR6Item<MatrixICDataModel>, amount: number) {
 	if (ic.systemData.monitor.damage === amount) {

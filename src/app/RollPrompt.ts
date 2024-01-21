@@ -12,21 +12,24 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 
-import { BaseRollData } from '@/roll/SR6Roll';
+import { ITest } from 'src/test';
+import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { ContextBase } from '@/vue/SheetContext';
-import VueRollPrompt from '@/vue/apps/RollPrompt.vue';
+import VueRollPrompt from '@/roll/RollPrompt.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
-export interface RollPromptContext<TRollData extends BaseRollData = BaseRollData> extends ContextBase {
-	actor: SR6Actor;
-	rollData: TRollData;
-	resolvePromise: (value: TRollData) => void;
+export interface RollPromptContext<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = ITest<TData>>
+	extends ContextBase {
+	test: TTest;
+	data: TData;
+	resolvePromise: (value: TData) => void;
 }
 
-export default class RollPrompt<TRollData extends BaseRollData = BaseRollData> extends VueSheet(
-	ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>,
-) {
+export default class RollPrompt<
+	TData extends BaseTestData = BaseTestData,
+	TTest extends ITest<TData> = BaseTest<TData>,
+> extends VueSheet(ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>) {
 	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
@@ -41,25 +44,27 @@ export default class RollPrompt<TRollData extends BaseRollData = BaseRollData> e
 		};
 	}
 
-	static async promptForRoll<TRollData extends BaseRollData = BaseRollData>(
+	static async prompt<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = BaseTest<TData>>(
 		actor: SR6Actor,
-		rollData: TRollData,
-	): Promise<TRollData | null> {
-		const sheet = new RollPrompt<TRollData>(actor, rollData);
+		test: TTest,
+	): Promise<TData | null> {
+		const sheet = new RollPrompt<TData, TTest>(actor, test);
 		await sheet.render(true);
 
-		return new Promise<TRollData | null>((resolve) => {
+		return new Promise<TData | null>((resolve) => {
 			sheet.#resolvePromise = resolve;
 		});
 	}
 
-	#resolvePromise?: (value: TRollData | null) => void;
+	#resolvePromise?: (value: TData | null) => void;
 
-	rollData: TRollData;
+	test: TTest;
+	data: TData;
 
-	constructor(actor: SR6Actor, rollData: TRollData) {
+	constructor(actor: SR6Actor, test: TTest) {
 		super(actor);
-		this.rollData = rollData;
+		this.test = test;
+		this.data = foundry.utils.deepClone(test.data);
 	}
 
 	override async close(options = {}): Promise<void> {
@@ -67,7 +72,7 @@ export default class RollPrompt<TRollData extends BaseRollData = BaseRollData> e
 		return super.close(options);
 	}
 
-	async getVueContext(): Promise<RollPromptContext<TRollData>> {
+	async getVueContext(): Promise<RollPromptContext<TData, TTest>> {
 		return {
 			resolvePromise: async (data) => {
 				this.#resolvePromise?.(data);
@@ -77,7 +82,8 @@ export default class RollPrompt<TRollData extends BaseRollData = BaseRollData> e
 			},
 			actor: this.actor,
 			app: this,
-			rollData: this.rollData,
+			test: this.test,
+			data: this.data,
 		};
 	}
 }

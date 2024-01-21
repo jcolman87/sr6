@@ -1,100 +1,16 @@
-/**
- *
- * @author jaynus
- * @file SR6 Items Root.
- */
-import { SR6Roll } from '@/roll/SR6Roll';
-
-export enum RollType {
-	Other = 0,
-	Initiative,
-
-	Attribute,
-	Skill,
-
-	WeaponAttack,
-	WeaponDefend,
-	WeaponSoak,
-
-	MatrixAction,
-	MatrixActionDefend,
-	MatrixActionSoak,
-
-	SpellCast,
-	SpellDrain,
-	SpellDefend,
-	SpellSoak,
-}
-
-export const ROLL_CATEGORIES = new Map([
-	[
-		'allPool',
-		Array.from(
-			Object.keys(RollType)
-				.filter((t) => ![RollType[RollType.Initiative]].includes(t))
-				.map((t) => RollType[t as keyof typeof RollType]),
-		),
-	],
-	[
-		'allPoolButSoak',
-		Array.from(
-			Object.keys(RollType)
-				.filter((t) => ![RollType[RollType.Initiative], RollType[RollType.SpellSoak]].includes(t))
-				.map((t) => RollType[t as keyof typeof RollType]),
-		),
-	],
-	['vision', [RollType.WeaponAttack, RollType.WeaponDefend, RollType.SpellCast, RollType.SpellDefend]],
-	['magic', [RollType.SpellCast, RollType.SpellDefend, RollType.SpellDrain, RollType.SpellSoak]],
-	['matrix', [RollType.MatrixAction, RollType.MatrixActionDefend]],
-	['attack', [RollType.WeaponAttack, RollType.SpellCast]],
-	['physicalAttack', [RollType.WeaponAttack, RollType.SpellCast]],
-	['physicalDefend', [RollType.WeaponDefend, RollType.SpellDefend]],
-	['defend', [RollType.WeaponDefend, RollType.SpellDefend, RollType.MatrixActionDefend]],
-]);
-
-export const ROLL_TEMPLATES = new Map([
-	[RollType.Initiative, 'systems/sr6/templates/chat/rolls/InitiativeRoll.hbs'],
-	[RollType.Attribute, 'systems/sr6/templates/chat/rolls/SR6Roll.hbs'],
-	[RollType.Skill, 'systems/sr6/templates/chat/rolls/SR6Roll.hbs'],
-
-	[RollType.WeaponAttack, 'systems/sr6/templates/chat/rolls/WeaponAttackRoll.hbs'],
-	[RollType.WeaponDefend, 'systems/sr6/templates/chat/rolls/WeaponDefendRoll.hbs'],
-	[RollType.WeaponSoak, 'systems/sr6/templates/chat/rolls/WeaponSoakRoll.hbs'],
-
-	[RollType.MatrixAction, 'systems/sr6/templates/chat/rolls/MatrixActionRoll.hbs'],
-	[RollType.MatrixActionDefend, 'systems/sr6/templates/chat/rolls/MatrixActionDefend.hbs'],
-
-	[RollType.SpellCast, 'systems/sr6/templates/chat/rolls/SpellCastRoll.hbs'],
-	[RollType.SpellDrain, 'systems/sr6/templates/chat/rolls/SpellResistDrainRoll.hbs'],
-	[RollType.SpellDefend, 'systems/sr6/templates/chat/rolls/SpellDefendRoll.hbs'],
-	[RollType.SpellSoak, 'systems/sr6/templates/chat/rolls/SpellSoakRoll.hbs'],
-]);
+import { IHasInitiative } from '@/data/interfaces';
+import SR6Roll from '@/roll/SR6Roll';
+import { RollType } from '@/roll/legacy';
 
 export function register(): void {
-	CONFIG.Dice.rolls = [SR6Roll];
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(window as any).SR6Roll = SR6Roll;
+	CONFIG.Dice.rolls = [SR6Roll, Roll];
 }
 
-// WeaponRoll,vision,SpellDefendRoll
-export function parseRollTypesList(list: string): RollType[] {
-	const rollTypes = new Set<RollType>();
-
-	list.split(',').forEach((value: string) => {
-		if (Object.keys(RollType).includes(value)) {
-			rollTypes.add(RollType[value as keyof typeof RollType]);
-		} else {
-			const categoryList = ROLL_CATEGORIES.get(value);
-			if (!categoryList) {
-				ui.notifications.error(
-					'invalid key value for Pool Modifier. Must be a valid roll type or roll category name',
-				);
-			} else {
-				categoryList.forEach(rollTypes.add, rollTypes);
-			}
-		}
-	});
-
-	return Array.from(rollTypes);
+export function getInitiativeRoll(systemData: IHasInitiative, formula: string): Roll {
+	const poolModifier = systemData.getPool(RollType.Initiative);
+	return new Roll(
+		`(${formula}) + ${poolModifier}`,
+		{ ...systemData.actor!.getRollData(), actor: systemData.actor! },
+		{ initiativeRoll: true },
+	);
 }

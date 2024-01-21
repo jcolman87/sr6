@@ -12,7 +12,7 @@ import { register as registerItems, setOptGroups as registerItemOptGroups, onCre
 import { register as registerRolls } from '@/roll';
 import { register as registerToken } from '@/token';
 import { register as registerModifiers } from '@/modifier';
-import { register as registerTests } from '@/roll/test';
+import { register as registerTests } from 'src/test';
 import { register as registerFonts } from '@/fonts';
 import { onChatLogEntryContext } from '@/chat';
 

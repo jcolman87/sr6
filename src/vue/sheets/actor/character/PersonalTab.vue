@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ContactTest from '@/roll/test/ContactTest';
+import ContactTest from '@/test/ContactTest';
 import { computed, inject, toRaw } from 'vue';
 
 import SR6Item from '@/item/SR6Item';

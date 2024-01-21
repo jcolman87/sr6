@@ -6,7 +6,7 @@ import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel, { GearMatrixDataModel } from '@/item/data/gear/GearDataModel';
 
 import SR6Item from '@/item/SR6Item';
-import MatrixActionTest from '@/roll/test/MatrixActionTest';
+import MatrixActionTest from '@/test/MatrixActionTest';
 import { deleteItem } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import MatrixPersonaView from '@/vue/views/MatrixPersonaView.vue';

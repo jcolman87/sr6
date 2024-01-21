@@ -4,7 +4,7 @@ import { computed, inject, toRaw } from 'vue';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 
-import AttributeTest from '@/roll/test/AttributeTest';
+import AttributeTest from '@/test/AttributeTest';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => context.data.actor.systemData);

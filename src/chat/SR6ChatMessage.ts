@@ -1,10 +1,10 @@
 import SR6Actor from '@/actor/SR6Actor';
-import { ITest, testFromData } from '@/roll/test';
-import { BaseTestMessageData } from '@/roll/test/BaseTest';
-import { SR6Roll } from '@/roll/v2/SR6Roll';
+import { ITest, testFromData } from 'src/test';
+import { BaseTestMessageData } from '@/test/BaseTest';
+import SR6Roll from '@/roll/SR6Roll';
 import { SR6Token } from '@/token/SR6Token';
 import * as util from '@/util';
-import VueChatMessage from '@/vue/chat/ChatMessage.vue';
+import VueChatMessage from '@/chat/vue/ChatMessage.vue';
 
 import { App, createApp, reactive, UnwrapNestedRefs } from 'vue';
 

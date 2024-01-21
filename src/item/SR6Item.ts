@@ -13,7 +13,6 @@ import {
 	IHasOnDelete,
 } from '@/data/interfaces';
 import { Modifiers, ModifiersSourceData } from '@/modifier';
-import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 
@@ -50,15 +49,13 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	}
 
 	solveFormula(formula: string, actor: SR6Actor | null = null, data: Record<string, unknown> = {}): number {
-		const finalData = {
+		const roll = new Roll(formula, {
 			...this.getRollData(),
 			...actor?.getRollData(),
 			...data,
 			item: this.getRollData(),
 			actor: actor,
-		};
-
-		const roll = new SR6Roll(formula, finalData, SR6Roll.defaultRollData());
+		});
 
 		return roll.evaluate({ async: false }).total;
 	}

@@ -1,52 +1,34 @@
-import SR6Actor from '@/actor/SR6Actor';
-import { getActorSync } from '@/util';
-import * as util from '@/util';
-import { RollType } from '@/roll';
+export type SR6RollOptions = {
+	parameters?: { glitch: number[]; success: number[] };
+	threshold?: number;
+} & RollOptions;
 
-export type BaseRollData = {
-	type: RollType;
-	actorId: ActorUUID | null;
-	autoHits: number;
-	explode: boolean;
-	pool: number;
-	parameters: { glitch: number[]; success: number[] };
-	threshold: undefined | number;
-	template: string;
-};
+export default class SR6Roll extends Roll {
+	declare options: SR6RollOptions;
 
-export class SR6Roll extends Roll {
 	static override CHAT_TEMPLATE = 'systems/sr6/templates/chat/rolls/SR6Roll.hbs';
 
-	static defaultRollData(): BaseRollData {
-		return {
-			actorId: null,
-			type: RollType.Other,
-			autoHits: 0,
-			pool: 0,
-			explode: false,
-			threshold: undefined,
-			parameters: { glitch: [1], success: [5, 6] },
-			template: this.CHAT_TEMPLATE,
-		};
-	}
-
 	get success(): boolean {
-		if (this.options.threshold) {
-			return this.hits >= this.options.threshold;
+		if (this.options.threshold!) {
+			return this.hits >= this.options.threshold!;
 		} else {
-			return true;
+			return this.hits > 0;
 		}
 	}
 
 	get net_hits(): number {
-		if (this.options.threshold) {
-			return Math.max(0, this.hits - (this.options.threshold ? this.options.threshold : 0));
+		if (this.options.threshold!) {
+			return Math.max(0, this.hits - (this.options.threshold! ? this.options.threshold! : 0));
 		}
 		return this.hits;
 	}
 
 	override get formula(): string {
-		return this._formula;
+		return `${this.pool}d6`;
+	}
+
+	get threshold(): number | undefined {
+		return this.options.threshold;
 	}
 
 	get pool(): number {
@@ -62,20 +44,15 @@ export class SR6Roll extends Roll {
 	}
 
 	get hits(): number {
-		const hits: number = this.sides.reduce(
-			(hits, result) => (this.options.parameters.success.includes(result) ? hits + 1 : hits),
+		return this.sides.reduce(
+			(hits, result) => (this.options.parameters!.success.includes(result) ? hits + 1 : hits),
 			0,
 		);
-		if (this.options.autoHits !== undefined) {
-			return hits + this.options.autoHits;
-		} else {
-			return hits;
-		}
 	}
 
 	get glitches(): number {
 		return this.sides.reduce(
-			(glitches, result) => (this.options.parameters.glitch.includes(result) ? glitches + 1 : glitches),
+			(glitches, result) => (this.options.parameters!.glitch.includes(result) ? glitches + 1 : glitches),
 			0,
 		);
 	}
@@ -88,33 +65,11 @@ export class SR6Roll extends Roll {
 		return this.is_glitch && this.hits === 0;
 	}
 
-	get isOwner(): boolean {
-		const actor = this.actor;
-		if (actor) {
-			return actor.isOwner;
-		} else {
-			return true;
-		}
-	}
-
-	get actor(): null | SR6Actor {
-		if (!this.options.actorId) {
-			return null;
-		}
-		return getActorSync(SR6Actor, this.options.actorId!);
-	}
-
-	async finish(): Promise<void> {
-		if (this.options.explode) {
-			return this.explode();
-		}
-	}
-
 	async rerollOne(die: null | number = null): Promise<boolean> {
 		if (die === null) {
 			die = this._getLowestRollIndex();
 		}
-		const reroll = new SR6Roll(`1d6`);
+		const reroll = new SR6Roll(1);
 		reroll.evaluate({ async: false });
 		await reroll.showVisual();
 
@@ -152,28 +107,18 @@ export class SR6Roll extends Roll {
 		return false;
 	}
 
-	// return false if there are no hits to buy
-	async addHit(): Promise<boolean> {
-		this.options.autoHits! += 1;
-
-		return true;
-	}
-
-	// return false if there are no hits to buy
-	async addHitToPool(die: null | number = null): Promise<boolean> {
+	addDie(die: null | number = null): void {
 		(this.terms[0] as DiceTerm).results.push({
 			active: true,
-			result: die ? die : 5,
+			result: die ? die : 6,
 		});
-
-		return true;
 	}
 
 	// return false if theres no glitches to reroll
 	async rerollFailed(): Promise<boolean> {
 		const failedList: number[] = [];
 		for (let i = 0; i < this.sides.length; i++) {
-			if (!this.options.parameters.success.includes(this.sides[i])) {
+			if (!this.options.parameters!.success.includes(this.sides[i])) {
 				failedList.push(i);
 			}
 		}
@@ -182,7 +127,7 @@ export class SR6Roll extends Roll {
 			return false;
 		}
 
-		const reroll = new SR6Roll(`${failedList.length}d6`);
+		const reroll = new SR6Roll(failedList.length);
 		reroll.evaluate({ async: false });
 		await reroll.showVisual();
 
@@ -197,13 +142,13 @@ export class SR6Roll extends Roll {
 	async showVisual(): Promise<void> {
 		if (game.dice3d) {
 			// DICE-SO-NICE show the roll
-			void game.dice3d.showForRoll(this, (game as Game).user, false);
+			void game.dice3d.showForRoll(this, (game as Game).user, true);
 		}
 	}
 
 	async explode(): Promise<void> {
 		if (this.sixes > 0) {
-			const explode_roll = new SR6Roll(`${this.sixes}d6`);
+			const explode_roll = new SR6Roll(this.sixes);
 			explode_roll.evaluate({ async: false });
 			await explode_roll.showVisual();
 
@@ -226,46 +171,11 @@ export class SR6Roll extends Roll {
 		(this.terms[0] as DiceTerm).results[idx].result = value;
 	}
 
-	override async render(options: Record<string, unknown> = {}): Promise<string> {
-		if (!this._evaluated) await this.evaluate({ async: true });
-
-		await util.waitForCanvasTokens();
-
-		return renderTemplate(this.options.template, {
-			user: game.user!.id,
-			tooltip: options.isPrivate ? '' : await this.getTooltip(),
-			roll: this,
-			actor: this.options.actorId ? util.getActorSync(SR6Actor, this.options.actorId!) : undefined,
-			config: CONFIG,
+	constructor(pool: number, data?: Record<string, unknown>, options?: SR6RollOptions) {
+		const configuredOptions = foundry.utils.mergeObject(options ? options : {}, {
+			parameters: { glitch: [1, 2], success: [5, 6] },
+			pool: pool,
 		});
+		super(`${pool}d6`, data, configuredOptions);
 	}
-
-	constructor(formula: string, data?: Record<string, unknown>, options?: Record<string, unknown>) {
-		super(formula, data, options);
-
-		if (data && Object.prototype.hasOwnProperty.call(data, 'actor') && data['actor']) {
-			this.options.actorId = (data['actor'] as SR6Actor).uuid;
-		}
-
-		this.options = foundry.utils.mergeObject(SR6Roll.defaultRollData(), this.options);
-	}
-
-	override toMessage(
-		messageData: PreCreate<foundry.data.ChatMessageSource> | undefined,
-		options: { rollMode?: RollMode | 'roll'; create: false },
-	): Promise<foundry.data.ChatMessageSource>;
-	override toMessage(
-		messageData?: PreCreate<foundry.data.ChatMessageSource>,
-		options?: { rollMode?: RollMode | 'roll'; create?: true },
-	): Promise<ChatMessage>;
-	override toMessage(
-		messageData?: PreCreate<foundry.data.ChatMessageSource>,
-		options?: { rollMode?: RollMode | 'roll'; create?: boolean },
-	): Promise<ChatMessage | foundry.data.ChatMessageSource> {
-		return this.finish().then(() => super.toMessage(messageData, options));
-	}
-}
-
-export interface SR6Roll extends Roll {
-	options: BaseRollData;
 }

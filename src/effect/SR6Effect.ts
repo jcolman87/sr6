@@ -7,7 +7,8 @@ import SR6Actor from '@/actor/SR6Actor';
 import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { IModifier, Modifiers, TestPoolModifier } from '@/modifier';
+import { IModifier, Modifiers } from '@/modifier';
+import TestPoolModifier from '@/modifier/TestPoolModifier';
 import { getItemSync } from '@/util';
 
 export const EFFECT_MODES = {

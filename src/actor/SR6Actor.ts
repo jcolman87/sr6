@@ -18,7 +18,6 @@ import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import { Modifiers, ModifiersSourceData } from '@/modifier';
-import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 
 export interface SR6ActorFlags {
@@ -134,8 +133,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	}
 
 	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
-		const finalData = { ...this.getRollData(), ...data, actor: this };
-		let roll = new SR6Roll(formula, finalData, SR6Roll.defaultRollData());
+		let roll = new Roll(formula, { ...this.getRollData(), ...data, actor: this });
 		roll = roll.evaluate({ async: false });
 		return roll.total!;
 	}
