@@ -6,7 +6,7 @@ import { OpposedTestData } from '@/roll/test/OpposedTest';
 import { SR6Roll } from '@/roll/v2/SR6Roll';
 
 import { Component } from 'vue';
-import ChatComponent from '@/roll/test/vue/chat/PhysicalSoak.vue';
+import ChatComponent from '@/roll/test/vue/chat/PhysicalSoakTest.vue';
 
 export interface PhysicalSoakTestData extends BaseTestData {
 	defenseTest: OpposedTestData;

@@ -2,9 +2,9 @@
 <script lang="ts" setup>
 import { ChatContext, ChatMessageContext } from '@/chat/SR6ChatMessage';
 import ChatHeader from '@/vue/chat/ChatHeader.vue';
+import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { inject, onBeforeMount, onUpdated, ref } from 'vue';
-import { Collapse } from 'vue-collapsed';
 
 const context = inject<ChatMessageContext>(ChatContext)!;
 
@@ -20,9 +20,14 @@ function setText(value: { title: string; hint: string }) {
 const expandDice = ref(false);
 
 function update() {
-	if (context.roll?.options?.initiativeRoll) {
-		text.value.title = 'Initiative';
-		text.value.hint = 'balls";';
+	if (context.message.isRoll) {
+		if (context.roll?.options?.initiativeRoll) {
+			text.value.title = 'Initiative';
+			text.value.hint = '';
+		}
+	} else {
+		text.value.title = '';
+		text.value.hint = '';
 	}
 }
 
@@ -70,9 +75,9 @@ onBeforeMount(update);
 				</section>
 
 				<!-- Dice -->
-				<Collapse :when="expandDice" class="dice-details">
+				<FloatCollapse :when="expandDice" class="dice-details">
 					<i class="dice" v-for="num in context.roll!.sides" v-bind:key="num" :data-die="num">&nbsp; </i>
-				</Collapse>
+				</FloatCollapse>
 
 				<!-- Test Information -->
 				<section v-if="context.test" style="min-width: 100%">
@@ -80,6 +85,7 @@ onBeforeMount(update);
 						v-if="context.test.chatComponent"
 						:is="context.test.chatComponent?.()"
 						:test="context.test"
+						:message="context.message"
 						@setText="setText"
 					/>
 				</section>

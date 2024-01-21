@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import ContactTest from '@/roll/test/ContactTest';
 import { computed, inject, toRaw } from 'vue';
 
 import SR6Item from '@/item/SR6Item';
@@ -26,6 +27,11 @@ const contacts = computed(() =>
 		.items.filter((i) => i.type === 'contact')
 		.map((i) => i as SR6Item<ContactDataModel>),
 );
+
+async function rollContact(contact: SR6Item<ContactDataModel>) {
+	console.log('roll contact', contact);
+	await new ContactTest({ actor: toRaw(context.data.actor), item: contact, data: {} }).execute();
+}
 </script>
 
 <template>
@@ -130,7 +136,9 @@ const contacts = computed(() =>
 						/>
 					</td>
 					<td class="actions">
-						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
+						<a @click="rollContact(item)" title="Roll Contact"
+							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+						>&nbsp;&nbsp; <a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
 							class="fas fa-minus"
 							@click.prevent="deleteItem(item)"
 						/>

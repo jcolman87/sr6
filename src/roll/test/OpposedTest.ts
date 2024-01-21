@@ -35,11 +35,13 @@ export default class OpposedTest<TOpposedData extends BaseTestData = BaseTestDat
 	}) {
 		// Set the threshold automatically from the opposed data
 		const opposedTest = testFromData(data.oppposedData);
-		data.threshold = opposedTest.roll?.hits;
+		if (opposedTest.ok) {
+			data.threshold = opposedTest.val.roll?.hits;
+		}
 
 		super({ actor, item, data, roll, delta });
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		this.opposedTest = opposedTest as any;
+		this.opposedTest = opposedTest.val as unknown as ITest<TOpposedData>;
 	}
 }

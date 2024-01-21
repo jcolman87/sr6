@@ -12,8 +12,8 @@ import OpposedTest from '@/roll/test/OpposedTest';
 import { getActorSync, getTargetActorIds } from '@/util';
 import { Component } from 'vue';
 
-import PromptComponent from '@/roll/test/vue/prompt/RangedAttack.vue';
-import ChatComponent from '@/roll/test/vue/chat/RangedAttack.vue';
+import PromptComponent from '@/roll/test/vue/prompt/RangedAttackTest.vue';
+import ChatComponent from '@/roll/test/vue/chat/RangedAttackTest.vue';
 
 export interface RangedAttackTestData extends AttackTestData {
 	firemode?: FireMode;

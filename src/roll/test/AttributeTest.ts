@@ -4,6 +4,8 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import BaseTest, { BaseTestData } from '@/roll/test/BaseTest';
 import { TestType } from '@/roll/test/index';
+import ChatComponent from '@/roll/test/vue/chat/AttributeTest.vue';
+import { Component } from 'vue';
 
 export interface AttributeTestData extends BaseTestData {
 	attribute: EnumAttribute;
@@ -11,6 +13,10 @@ export interface AttributeTestData extends BaseTestData {
 
 export default class AttributeTest extends BaseTest<AttributeTestData> {
 	override type: TestType = TestType.Attribute;
+
+	chatComponent(): Component {
+		return ChatComponent;
+	}
 
 	constructor({
 		actor,

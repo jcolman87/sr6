@@ -6,7 +6,7 @@ import { getItem, getItemSync } from '@/util';
 export default abstract class AugmentationDataModel extends QualityDataModel {
 	abstract rating: number;
 	abstract quality: number;
-	abstract essenseCost: number;
+	abstract essenceCost: number;
 
 	abstract sourceGearIds: ItemUUID[];
 	abstract _attachedGearIds: ItemUUID[];
@@ -16,7 +16,7 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 			...super.getRollData(),
 			rating: this.rating,
 			quality: this.quality,
-			essenseCost: this.essenseCost,
+			essenceCost: this.essenceCost,
 		};
 	}
 
@@ -70,7 +70,7 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 				min: 1,
 				max: 6,
 			}),
-			essenseCost: new fields.NumberField({
+			essenceCost: new fields.NumberField({
 				initial: 1,
 				required: true,
 				nullable: false,

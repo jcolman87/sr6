@@ -5,6 +5,7 @@ import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
 import { ITest, RollDataDelta, TestType } from '@/roll/test/index';
 import { SR6Roll } from '@/roll/v2/SR6Roll';
+import { Result, Ok, Err } from 'ts-results';
 
 export interface BaseTestData {
 	pool?: number;
@@ -29,17 +30,13 @@ export interface BaseTestMessageData {
 	roll?: RollJSON;
 }
 
-export default abstract class BaseTest<
-	TData extends BaseTestData = BaseTestData,
-	TModifier extends IModifier = IModifier,
-> implements ITest<TData, TModifier>
-{
+export default abstract class BaseTest<TData extends BaseTestData = BaseTestData> implements ITest<TData, IModifier> {
 	type: TestType = TestType.Unknown;
 
 	protected baseData: TData;
-	protected delta: undefined | RollDataDelta;
+	protected delta: RollDataDelta;
 
-	modifiers: TModifier[];
+	modifiers: IModifier[];
 	actor: SR6Actor;
 
 	item?: SR6Item;
@@ -49,19 +46,32 @@ export default abstract class BaseTest<
 		return this.actor.isOwner;
 	}
 
+	// We use a proxy here for any changes to be applied to the delta
 	get data(): TData {
-		if (this.delta) {
-			return foundry.utils.mergeObject(this.baseData, this.delta, { inplace: false });
-		} else {
-			return this.baseData;
-		}
+		return new Proxy(foundry.utils.mergeObject(this.baseData, this.delta, { inplace: false }), {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			set: (diff: any, property: string, value: any) => {
+				this.delta[property] = value;
+				return true;
+			},
+		});
 	}
 
-	set data(roll: TData) {
-		this.delta = foundry.utils.diffObject(this.baseData, roll);
+	async performRoll(): Promise<Result<null, string>> {
+		if (this.roll) {
+			this.roll = await this.roll?.evaluate({ async: true });
+			if (this.roll.options.explode) {
+				await this.roll.explode();
+			}
+
+			return Ok(null);
+		}
+
+		return Err('Roll was undefined');
 	}
 
 	async execute(): Promise<Result<null, null>> {
+		console.log('BaseTest::execute', this);
 		// Add our modifiers to the roll delta
 		this.prepareModifiers();
 
@@ -79,16 +89,16 @@ export default abstract class BaseTest<
 				},
 			);
 
-			this.roll = await this.roll.evaluate({ async: true });
-			this.finishModifiers();
-			if (this.roll.options.explode) {
-				await this.roll.explode();
-			}
+			const res = await this.performRoll();
+			if (res.ok) {
+				this.finishModifiers();
 
-			const _message = await this.toMessage();
+				await this.toMessage();
+				return Ok(null);
+			}
 		}
 
-		return Ok(null);
+		return Err(null);
 	}
 
 	async prompt(): Promise<Result<RollDataDelta, null>> {
@@ -102,18 +112,18 @@ export default abstract class BaseTest<
 	}
 
 	reset(): void {
-		this.delta = undefined;
+		this.delta = {};
 	}
 
 	prepareModifiers(): void {
 		this.modifiers.forEach((modifier) => {
-			modifier.prepareTest(this);
+			modifier.prepareTest?.(this);
 		});
 	}
 
 	finishModifiers(): void {
 		this.modifiers.forEach((modifier) => {
-			modifier.finishTest(this);
+			modifier.finishTest?.(this);
 		});
 	}
 
@@ -129,7 +139,7 @@ export default abstract class BaseTest<
 			user: game.user?.id,
 			type: CONST.CHAT_MESSAGE_TYPES.ROLL,
 			speaker,
-			roll: this.roll,
+			roll: this.roll?.toJSON(),
 			content: '',
 			flags: {
 				['sr6']: { testData: this.toJSON() },
@@ -162,8 +172,7 @@ export default abstract class BaseTest<
 		delta?: RollDataDelta;
 		roll?: SR6Roll;
 	}) {
-		this.modifiers = [];
-		this.delta = delta;
+		this.delta = delta ? delta : {};
 		this.baseData = data;
 		this.actor = actor;
 		this.item = item;
@@ -171,5 +180,8 @@ export default abstract class BaseTest<
 
 		this.baseData.actorId = actor.uuid;
 		this.baseData.itemId = item ? item.uuid : undefined;
+
+		// copy applicable modifiers off the actor
+		this.modifiers = actor.modifiers.applicable;
 	}
 }

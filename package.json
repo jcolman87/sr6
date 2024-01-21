@@ -60,6 +60,8 @@
 		"yarn": "^1.22.21"
 	},
 	"dependencies": {
-		"tslog": "^4.9.2"
+		"ts-results": "^3.3.0",
+		"tslog": "^4.9.2",
+		"typia": "^5.3.11"
 	}
 }

@@ -1,5 +1,6 @@
 import BaseDataModel from '@/data/BaseDataModel';
 import * as DocumentConditional from '@/effect/DocumentConditional';
+import { Err, Ok, Result } from 'ts-results';
 
 export enum ConditionalType {
 	Document = 'document',

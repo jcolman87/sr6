@@ -135,8 +135,6 @@ export class ImportPrompt extends VueSheet(Application) {
 			}
 		});
 
-		data.monitors.edge.max = json.attr('edge').points;
-
 		const coreSkills = await getCoreSkills();
 		await actor.createEmbeddedDocuments('Item', coreSkills);
 		const filtered = actor.items.filter((i) => i.type === 'skill');
@@ -337,7 +335,7 @@ export class ImportPrompt extends VueSheet(Application) {
 								img: 'icons/svg/item-bag.svg',
 								system: {
 									name: value.name,
-									essenseCost: value.essense,
+									essenceCost: value.essence,
 									quality: quality,
 									rating: rating,
 									description: value.choice ? value.choice : '',

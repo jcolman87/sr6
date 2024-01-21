@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type _ConstructorOf<T> = new (...args: any[]) => T;
-
 export class EnumNumberField<
 	_TEnum extends object,
 	TRequired extends boolean = true,

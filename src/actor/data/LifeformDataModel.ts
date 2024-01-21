@@ -28,6 +28,8 @@ export type Attributes = {
 	charisma: AttributeDataModel;
 	magic: AttributeDataModel;
 	resonance: AttributeDataModel;
+	essence: AttributeDataModel;
+	edge: AttributeDataModel;
 };
 
 export type Monitors = {
@@ -183,6 +185,10 @@ export default abstract class LifeformDataModel
 				return this.attributes.magic;
 			case EnumAttribute.resonance:
 				return this.attributes.resonance;
+			case EnumAttribute.edge:
+				return this.attributes.edge;
+			case EnumAttribute.essence:
+				return this.attributes.essence;
 		}
 	}
 
@@ -210,6 +216,7 @@ export default abstract class LifeformDataModel
 	override getRollData(): Record<string, unknown> {
 		return {
 			...super.getRollData(),
+			monitors: this.monitors.getRollData(),
 			body: this.attributes.body.value,
 			agility: this.attributes.agility.value,
 			reaction: this.attributes.reaction.value,
@@ -220,7 +227,8 @@ export default abstract class LifeformDataModel
 			charisma: this.attributes.charisma.value,
 			magic: this.attributes.magic.value,
 			resonance: this.attributes.resonance.value,
-			initiatives: this.initiatives,
+			edge: this.attributes.edge.value,
+			essence: this.attributes.essence.value,
 		};
 	}
 
@@ -235,6 +243,8 @@ export default abstract class LifeformDataModel
 		fn.call(this.attributes.charisma);
 		fn.call(this.attributes.magic);
 		fn.call(this.attributes.resonance);
+		fn.call(this.attributes.edge);
+		fn.call(this.attributes.essence);
 	}
 
 	async onPostCreate(): Promise<void> {
@@ -311,6 +321,16 @@ export default abstract class LifeformDataModel
 				}),
 				resonance: new fields.EmbeddedDataField(AttributeDataModel, {
 					initial: { base: 0, value: 0, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				essence: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 6, value: 0, mod: 0 },
+					required: true,
+					nullable: false,
+				}),
+				edge: new fields.EmbeddedDataField(AttributeDataModel, {
+					initial: { base: 1, value: 0, mod: 0 },
 					required: true,
 					nullable: false,
 				}),

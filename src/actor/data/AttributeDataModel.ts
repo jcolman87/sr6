@@ -11,10 +11,11 @@ export default abstract class AttributeDataModel extends BaseDataModel {
 
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
+
 		return {
-			base: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
-			mod: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
-			value: new fields.NumberField({ initial: 2, required: true, nullable: false, integer: true, min: 0 }),
+			base: new fields.NumberField({ initial: 0, required: true, nullable: false, min: 0 }),
+			mod: new fields.NumberField({ initial: 0, required: true, nullable: false, min: 0 }),
+			value: new fields.NumberField({ initial: 2, required: true, nullable: false, min: 0 }),
 		};
 	}
 

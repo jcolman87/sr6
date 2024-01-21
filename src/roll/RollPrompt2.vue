@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import { IModifier, TestPoolModifier } from '@/modifier';
 import { getEventValue } from '@/vue/directives';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
 import { RollPromptContext } from '@/app/RollPrompt2';
@@ -21,16 +22,12 @@ const edgeBoost = ref<string | null>(null);
 const poolModifier = ref(0);
 const originalPool = context.data.pool!;
 
-// TODO: conditions
-const totalModifier = computed(() => toRaw(context.actor).systemData.woundModifier);
-
 const finishRollButton = ref();
 const isDisplayConditions = ref(false);
-const woundModifiers = computed(() => Object.entries(toRaw(context.actor.systemData).woundModifiers));
 const conditionsDescriptionsVisible = ref(
-	woundModifiers.value.map(([key, _value]) => {
+	context.test.modifiers.map((_modifier: IModifier, idx: number) => {
 		return {
-			id: key,
+			id: idx,
 			visible: false,
 		};
 	}),
@@ -43,9 +40,11 @@ function roll() {
 			context.data.autoHits = 1;
 			break;
 		case 'add_edge_pool':
-			context.data.pool
-				? (context.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max)
-				: (context.data.pool = (baseSystem.value as LifeformDataModel).monitors.edge.max);
+			if (context.data.pool) {
+				context.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
+			} else {
+				context.data.pool = (baseSystem.value as LifeformDataModel).monitors.edge.max;
+			}
 			context.data.explode = true;
 			break;
 	}
@@ -100,33 +99,36 @@ onMounted(() => {
 			</td>
 		</tr>
 	</table>
-	<div v-if="woundModifiers.length > 0" class="section" style="width: 100%">
+	<div v-if="context.test.modifiers.length > 0" class="section" style="width: 100%">
 		<div class="section-title" style="width: 100%">
 			<a @click.prevent="toggleConditions"
 				><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;<Localized label="SR6.RollPrompt.Conditions" />
-				({{ totalModifier }})</a
+				({{ context.test.modifiers.length }})</a
 			>
 		</div>
 		<table v-if="isDisplayConditions" style="width: 100%">
-			<tr v-for="[key, value] in woundModifiers" v-bind:key="key">
-				<table v-if="value != 0">
+			<tr v-for="(modifier, idx) in context.test.modifiers" v-bind:key="idx">
+				<table>
 					<tr>
-						<td style="width: 3em">{{ asModifierString(value as number) }}</td>
+						<td style="width: 3em">
+							<template v-if="modifier.class == 'TestPoolModifier'">{{
+								asModifierString((modifier as TestPoolModifier).value)
+							}}</template>
+						</td>
 						<td>
 							<a
 								@click="
-									conditionsDescriptionsVisible.find((v) => v.id == key)!.visible =
-										!conditionsDescriptionsVisible.find((v) => v.id == key)!.visible
+									conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible =
+										!conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible
 								"
-								><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;<Localized
-									:label="`SR6.RollPrompt.WoundModifiers.${key}.Name`"
-							/></a>
+								>{{ modifier.name }}</a
+							>
 						</td>
 					</tr>
 					<tr>
 						<td class="hint" colspan="2">
-							<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == key)!.visible">
-								<Localized :label="`SR6.RollPrompt.WoundModifiers.${key}.Description`" />
+							<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible">
+								<div v-html="modifier.description"></div>
 							</Collapse>
 						</td>
 					</tr>

@@ -4,6 +4,14 @@ export default abstract class ContactDataModel extends BaseItemDataModel {
 	abstract rating: number;
 	abstract loyalty: number;
 
+	get pool(): number {
+		return this.actor!.solveFormula(`@charisma + @influence + ${this.loyalty}`);
+	}
+
+	get connectionPool(): number {
+		return this.rating + this.rating;
+	}
+
 	static override defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 		return {

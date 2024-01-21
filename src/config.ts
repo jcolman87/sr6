@@ -1,7 +1,11 @@
 import { config as configTests } from '@/roll/test/index';
+import { config as configModifiers } from '@/modifier';
 
 export const SR6_CONFIG = {
-	tests: configTests(),
+	types: {
+		tests: configTests(),
+		modifiers: configModifiers(),
+	},
 };
 
 export function register(): void {

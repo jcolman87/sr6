@@ -2,13 +2,12 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { FireMode } from '@/data';
-import { EdgeGainedTarget } from '@/roll/Rollers';
 import RangedAttackTest from '@/roll/test/RangedAttackTest';
 import { getActorSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { computed, onBeforeUpdate, onMounted, toRaw } from 'vue';
+import { computed, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;

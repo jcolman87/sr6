@@ -7,6 +7,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
+import { IModifier, Modifiers, TestPoolModifier } from '@/modifier';
 import { getItemSync } from '@/util';
 
 export const EFFECT_MODES = {
@@ -23,9 +24,12 @@ export enum EffectType {
 interface EffectFlags {
 	type: EffectType;
 	conditions?: ConditionalData[];
+	modifiers?: IModifier[];
 }
 
 export default class SR6Effect extends ActiveEffect {
+	modifiers: Modifiers<SR6Effect> = new Modifiers(this);
+
 	declare flags: {
 		sr6?: EffectFlags;
 	};
@@ -44,6 +48,10 @@ export default class SR6Effect extends ActiveEffect {
 		return this.systemData.conditions;
 	}
 
+	override prepareBaseData(): void {
+		this.modifiers = new Modifiers<SR6Effect>(this);
+	}
+
 	override prepareData(): void {
 		super.prepareData();
 
@@ -55,7 +63,7 @@ export default class SR6Effect extends ActiveEffect {
 			const origin = fromUuidSync(this.origin) as ClientDocument | null;
 			const result = checkConditions(origin!, this.parent, this.conditions);
 			if (!result.ok) {
-				this.failedConditions = result.error;
+				this.failedConditions = result.val;
 				this.disabled = true;
 			}
 		}
@@ -118,13 +126,30 @@ export default class SR6Effect extends ActiveEffect {
 	): void {}
 
 	_applyPoolModifier(
-		_target: SR6Actor | SR6Item,
-		_change: ApplicableChangeData<this>,
+		target: SR6Actor | SR6Item,
+		change: ApplicableChangeData<this>,
 		_current: Record<string, unknown>,
 		_delta: Record<string, unknown>,
 		_changes: Record<string, unknown>,
 	): void {
 		console.log('SR6Effect::_applyPoolModifier');
+
+		const testClasses = change.key.split(',');
+		const value = parseInt(change.value);
+
+		// Get modifier class
+		target.modifiers.all.push(
+			new TestPoolModifier({
+				parent: target,
+				source: this,
+				data: {
+					name: this.name,
+					description: this.description,
+					testClasses,
+					value,
+				},
+			}),
+		);
 	}
 
 	_apply(document: SR6Actor | SR6Item, change: ApplicableChangeData<this>): undefined | ApplicableChangeData<this> {

@@ -9,4 +9,6 @@ export enum EnumAttribute {
 	charisma = 'charisma',
 	magic = 'magic',
 	resonance = 'resonance',
+	essence = 'essence',
+	edge = 'edge',
 }

@@ -4,8 +4,8 @@ import SR6Actor from '@/actor/SR6Actor';
 import RangedAttackTest from '@/roll/test/RangedAttackTest';
 import { getSelfOrSelectedActors } from '@/util';
 import Targets from '@/vue/chat/Targets.vue';
+import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
-import { Collapse } from 'vue-collapsed';
 import { toRaw, ref } from 'vue';
 
 const emit = defineEmits<{
@@ -39,7 +39,7 @@ function isTargetOwner(): boolean {
 
 emit('setText', {
 	title: `Roll Attack (${props.test.weapon.name})`,
-	hint: ``,
+	hint: `asdfasdfasdf`,
 });
 </script>
 
@@ -58,9 +58,9 @@ emit('setText', {
 					>
 					&nbsp;
 				</a>
-				<Collapse class="formula" :when="visibility.description.damage">
+				<FloatCollapse class="formula" :when="visibility.description.damage">
 					{{ toRaw(test).baseDamage() }} + {{ test.roll?.hits }} = {{ toRaw(test).damage() }}
-				</Collapse>
+				</FloatCollapse>
 			</div>
 			<div class="distance">
 				<a
@@ -74,13 +74,13 @@ emit('setText', {
 						:args="{ key: test.data.distance! }"
 					/>
 				</a>
-				<Collapse :when="visibility.description.distance">
+				<FloatCollapse :when="visibility.description.distance">
 					<Localized
 						class="formula"
 						label="SR6.Combat.DistanceDescriptions.{key}"
 						:args="{ key: test.data.distance! }"
 					/>
-				</Collapse>
+				</FloatCollapse>
 			</div>
 			<div class="firemode">
 				<a
@@ -94,13 +94,13 @@ emit('setText', {
 						:args="{ key: test.data.firemode! }"
 					/>
 				</a>
-				<Collapse :when="visibility.description.firemode">
+				<FloatCollapse :when="visibility.description.firemode">
 					<Localized
 						class="formula"
 						label="SR6.Combat.FireModes.{key}.Description"
 						:args="{ key: test.data.firemode! }"
 					/>
-				</Collapse>
+				</FloatCollapse>
 			</div>
 		</div>
 		<Targets v-if="test.targets.length > 0" :targets="test.targets" />

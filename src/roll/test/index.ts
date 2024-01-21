@@ -1,18 +1,21 @@
 import SR6Actor from '@/actor/SR6Actor';
+import { getClass } from '@/data/serialize';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
 import MatrixActionTest from '@/roll/test/MatrixActionTest';
 import OpposedTest from '@/roll/test/OpposedTest';
 import PhysicalSoakTest from '@/roll/test/PhysicalSoakTest';
+import ContactTest from '@/roll/test/ContactTest';
 
 import { SR6Roll } from '@/roll/v2/SR6Roll';
-import { getActorSync, getItemSync } from '@/util';
+import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 
 import BaseTest, { BaseTestData, BaseTestMessageData } from '@/roll/test/BaseTest';
 import AttributeTest from '@/roll/test/AttributeTest';
 import RangedAttackTest from '@/roll/test/RangedAttackTest';
 import MeleeAttackTest from '@/roll/test/MeleeAttackTest';
 import { Component } from 'vue';
+import { Result, Err, Ok } from 'ts-results';
 
 export type RollDataDelta = Record<string, unknown>;
 
@@ -31,6 +34,9 @@ export enum TestType {
 	///
 	Unknown = 'BaseTest',
 	OpposedTest = 'OpposedTest',
+
+	///
+	ContactTest = 'ContactTest',
 }
 
 export interface ITest<TData extends BaseTestData = BaseTestData, TModifier extends IModifier = IModifier> {
@@ -44,6 +50,8 @@ export interface ITest<TData extends BaseTestData = BaseTestData, TModifier exte
 	get isOwner(): boolean;
 
 	get data(): TData;
+	set data(data: TData);
+
 	reset(): void;
 
 	opposed?(actor: SR6Actor, item: undefined | SR6Item): OpposedTest<TData>;
@@ -56,36 +64,27 @@ export interface ITest<TData extends BaseTestData = BaseTestData, TModifier exte
 	baseDamage?(): number;
 
 	execute(): Promise<Result<null, null>>;
+
+	toJSON(): Record<string, unknown>;
 }
 
-export function testFromData(msgData: BaseTestMessageData): BaseTest {
+export function testFromData(msgData: BaseTestMessageData): Result<BaseTest, string> {
 	const actor = getActorSync(SR6Actor, msgData.baseData.actorId!);
 	const item = msgData.baseData.itemId ? getItemSync(SR6Item, msgData.baseData.itemId) : null;
 
-	const cls = _getTestClass(msgData.type);
-	const instance = new cls({
-		actor,
-		item,
-		data: msgData.baseData,
-		delta: msgData.delta,
-		roll: msgData.roll ? SR6Roll.fromData(msgData.roll) : undefined,
-	});
-	return instance;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function _getTestClass(testName: string): any | undefined {
-	if (!testName) return undefined;
-
-	if (!Object.prototype.hasOwnProperty.call(CONFIG.sr6.tests, testName)) {
-		console.error(
-			`Shadowrun 6e | Tried getting a Test Class ${testName}, which isn't registered in: `,
-			CONFIG.sr6.tests,
+	const cls = getClass<ConstructorOf<BaseTest>>(CONFIG.sr6.types.tests, { class: msgData.type });
+	if (cls.ok) {
+		return Ok(
+			new cls.val({
+				actor,
+				item,
+				data: msgData.baseData,
+				delta: msgData.delta,
+				roll: msgData.roll ? SR6Roll.fromData(msgData.roll) : undefined,
+			}),
 		);
-		return undefined;
 	}
-
-	return CONFIG.sr6.tests[testName];
+	return Err(cls.val);
 }
 
 export function register(): void {}
@@ -100,5 +99,7 @@ export function config(): Record<string, unknown> {
 		PhysicalSoakTest: PhysicalSoakTest,
 
 		MatrixActionTest: MatrixActionTest,
+
+		ContactTest: ContactTest,
 	};
 }

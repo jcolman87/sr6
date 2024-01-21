@@ -5,7 +5,7 @@ import Localized from '@/vue/components/Localized.vue';
 import { toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
 import SR6Item from '@/item/SR6Item';
-import WeaponDataModel from "@/item/data/gear/WeaponDataModel";
+import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -30,6 +30,8 @@ emit('setText', {
 	hint: ``,
 });
 
+const damageType = ref(toRaw(test.opposedTest.item! as SR6Item<WeaponDataModel>).systemData.damageData.damageType);
+
 const showRoll = ref(true);
 </script>
 
@@ -45,9 +47,7 @@ const showRoll = ref(true);
 				>
 					<Localized label="SR6.Combat.Damage" />:
 
-					<i class="dv"
-						>{{ damageValue }} {{ toRaw(test.opposedTest.item! as SR6Item<WeaponDataModel>).systemData.damageData.damageType }}</i
-					>
+					<i class="dv">{{ damageValue }} {{ damageType }}</i>
 				</a>
 				<Collapse class="formula" :when="visibility.damageFormula">
 					{{ toRaw(test.opposedTest).damage?.(0) }} - {{ test.roll?.hits }} =

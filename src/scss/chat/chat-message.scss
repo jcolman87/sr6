@@ -6,8 +6,18 @@
 	background: var(--section-background);
 
 	.chat-message-body {
-		.dice-details {
+		.float-collapse {
 			min-width: 100%;
+			position: absolute;
+			background-color: rgba(0,0,0, 0.75);
+		}
+
+		.collapse-container {
+			position: relative;
+		}
+
+		.dice-details {
+			@extend .float-collapse;
 			height: 24px;
 		}
 

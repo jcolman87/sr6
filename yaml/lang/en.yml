@@ -59,6 +59,7 @@ SR6:
     Personal: Personal
 
   Labels:
+    Tradition: Tradition
     Skills: Skills
     CharacterName: Name
     Edit: Edit
@@ -168,16 +169,42 @@ SR6:
         Description: This modifier is a calculated total of penalty modifiers from damage to your devices Matrix monitor.
 
   Attributes:
-    body: Body
-    agility: Agility
-    reaction: Reaction
-    strength: Strength
-    willpower: Willpower
-    logic: Logic
-    intuition: Intuition
-    charisma: Charisma
-    magic: Magic
-    resonance: Resonance
+    body:
+      Name: Body
+      Description: This represents the general sturdiness, integrity, and health of the individual. It sometimes is correlated to size- trolls (see p. 56) tend to have high Body ratings—but this is not a perfect correlation, as dwarfs tend to have higher Body ratings than humans. Body’s uses include resisting damage and toxins.
+    agility:
+      Name: Agility
+      Description: This represents nimbleness, speed, flexibility, and hand-eye coordination. It is the key attribute for combat, as well as many athletic activities.
+    reaction:
+      Name: Reaction
+      Description: While Agility may be speed, Reaction is quickness, the ability to respond with alacrity. Reaction is one of the key defensive attributes, and it is also used in piloting and controlling vehicles and drones.
+    strength:
+      Name: Strength
+      Description: This is raw muscle power, the ability to lift, carry, and punch with great force. It comes up in some Athletics tests and is important in unarmed combat.
+    willpower:
+      Name: Willpower
+      Description: This represents the character’s ability to persevere through hardship, pushing through pain, deception, and many other obstacles the Sixth World throws at them. It is very important for magic-based characters, who use it to maintain their energy through the work of channeling mana, and it also is important for resisting some attacks and illusions.
+    logic:
+      Name: Logic
+      Description: This is the coldly calculating part of the mind, the rational, analytical, puzzle-solving aspect. Deckers and technomancers use it frequently, and it can be useful to anyone in pattern recognition and other tasks.
+    intuition:
+      Name: Intuition
+      Description: The yin to Logic’s yang (or, probably, the other way around), Intuition is your gut instinct, your sudden inspiration, your flash of insight that doesn’t seem to make any sense but still works. Intuition helps characters react to danger, perceive threats, and resist some magic threats.
+    charisma:
+      Name: Charisma
+      Description: This is the pull you exert on other people. Whether you are using your looks, your speaking ability, your fashion sense, your sheer power, or some combination of any of the above, Charisma shows how powerful you can be in persuading others to a course of action. Faces thrive on Charisma.
+    magic:
+      Name: Magic
+      Description: Not all characters have this attribute; it is only for magic-using characters, who are generally referred to as Awakened characters. It measures their strength in channeling mana into spectacular effects.
+    resonance:
+      Name: Resonance
+      Description: Like Magic, not all characters have this attribute—it is exclusive to technomancers, characters who access and interact with the Matrix through the power of their mind only. This attribute measures their strength in manipulating the Matrix.
+    essence:
+      Name: Essence
+      Description: All characters have this attribute, starting at 6. It is a measure of how many augmentations characters can hold. The metahuman body can only contain so much ’ware before it loses the small spark that separates a living being from a machine. This attribute primarily exists due to the degrees of difference between biology and technology—it simply does not flow well through technology and becomes limited as your Essence declines (specifically, anytime your Essence goes below any whole integer, you lose a corresponding point of Magic or Resonance). Also, some magic, particularly healing magic, has less of an effect on you as you gain more augmentations. Finally, if your Essence ever reaches 0, you die.
+    edge:
+      Name: Edge
+      Description: This critical statistic measures the undefinable, putting it on tricky ground right at the outset. It is that combination of guts, risk, and heedless ignorance of danger and good sense that lets shadowrunners survive where others do not. Edge is detailed and important enough to have its own section (p. 44).
 
   ActiveEffects:
     Modes:

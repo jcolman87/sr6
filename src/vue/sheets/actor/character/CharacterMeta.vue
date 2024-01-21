@@ -69,8 +69,8 @@ async function setEdge(ev: Event) {
 								:value="system.monitors.edge.value"
 								style="width: 1em" />/<input
 								type="number"
-								name="system.monitors.edge.max"
-								:value="system.monitors.edge.max"
+								name="system.attributes.edge.base"
+								:value="system.attributes.edge.base"
 								style="width: 1em"
 						/></label>
 					</div>

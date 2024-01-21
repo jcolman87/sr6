@@ -142,7 +142,7 @@ export class SR6Roll extends Roll {
 	async showVisual(): Promise<void> {
 		if (game.dice3d) {
 			// DICE-SO-NICE show the roll
-			void game.dice3d.showForRoll(this, (game as Game).user, false);
+			void game.dice3d.showForRoll(this, (game as Game).user, true);
 		}
 	}
 

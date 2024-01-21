@@ -36,68 +36,122 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 
 <template>
 	<section class="tab-skills">
-		<div class="section" style="width: 180px">
-			<div class="attributes">
-				<div class="attribute" augmented-ui="b-clip-x exe">
-					<p>Magic</p>
-					<span
-						>{{ system.attributes.magic.value }}<br />
-						<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.magic)"
-							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
-						></span
-					>
-					<div class="field">
-						<label>Base</label>
-						<input
-							type="number"
-							name="system.attributes.magic.base"
-							:value="system.attributes.magic.base"
-						/>
+		<div class="section section-attr-and-powers">
+			<div class="section section-magic-attributes">
+				<div class="attributes">
+					<div class="attribute" augmented-ui="b-clip-x exe">
+						<p><Localized label="SR6.Attributes.magic.Name" /></p>
+						<span
+							>{{ system.attributes.magic.value }}<br />
+							<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.magic)"
+								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+							></span
+						>
+						<div class="field">
+							<label>Base</label>
+							<input
+								type="number"
+								name="system.attributes.magic.base"
+								:value="system.attributes.magic.base"
+							/>
+						</div>
+						<div class="field">
+							<label>Mod</label>
+							<input
+								type="number"
+								name="system.attributes.magic.mod"
+								:value="system.attributes.magic.mod"
+							/>
+						</div>
 					</div>
-					<div class="field">
-						<label>Mod</label>
-						<input type="number" name="system.attributes.magic.mod" :value="system.attributes.magic.mod" />
+					<div class="attribute" augmented-ui="b-clip-x exe">
+						<p><Localized label="SR6.Attributes.resonance.Name" /></p>
+						<span
+							>{{ system.attributes.resonance.value }}<br />
+							<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.resonance)"
+								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+							></span
+						>
+						<div class="field">
+							<label>Base</label>
+							<input
+								type="number"
+								name="system.attributes.resonance.base"
+								:value="system.attributes.resonance.base"
+							/>
+						</div>
+						<div class="field">
+							<label>Mod</label>
+							<input
+								type="number"
+								name="system.attributes.resonance.mod"
+								:value="system.attributes.resonance.mod"
+							/>
+						</div>
+					</div>
+					<div class="attribute" augmented-ui="b-clip-x exe">
+						<p><Localized label="SR6.Attributes.essence.Name" /></p>
+						<span
+							>{{ system.attributes.essence.value }}<br />
+							<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.essence)"
+								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+							></span
+						>
+						<div class="field">
+							<label>Base</label>
+							<input
+								type="number"
+								name="system.attributes.essence.base"
+								:value="system.attributes.essence.base"
+							/>
+						</div>
+						<div class="field">
+							<label>Mod</label>
+							<input
+								type="number"
+								name="system.attributes.essence.mod"
+								:value="system.attributes.essence.mod"
+							/>
+						</div>
 					</div>
 				</div>
-				<div class="attribute" augmented-ui="b-clip-x exe">
-					<p>Resonance</p>
-					<span
-						>{{ system.attributes.resonance.value }}<br />
-						<a @click="rollAttribute(toRaw(context.data.actor), EnumAttribute.resonance)"
-							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
-						></span
-					>
-					<div class="field">
-						<label>Base</label>
-						<input
-							type="number"
-							name="system.attributes.resonance.base"
-							:value="system.attributes.resonance.base"
-						/>
-					</div>
-					<div class="field">
-						<label>Mod</label>
-						<input
-							type="number"
-							name="system.attributes.resonance.mod"
-							:value="system.attributes.resonance.mod"
-						/>
-					</div>
+				<div style="padding-top: 5px">
+					<label><Localized label="SR6.Labels.Tradition" /></label>
+					<select name="system.magicTradition" :value="system.magicTradition">
+						<option value="">Mundane</option>
+						<option v-for="[key, value] in Object.entries(MagicTradition)" v-bind:key="key" :value="value">
+							<Localized :label="`SR6.Magic.Traditions.${key}`" />
+						</option>
+					</select>
 				</div>
 			</div>
-			<div>
-				<label>Tradition</label>
-				<select name="system.magicTradition" :value="system.magicTradition">
-					<option value="">Mundane</option>
-					<option v-for="[key, value] in Object.entries(MagicTradition)" v-bind:key="key" :value="value">
-						<Localized :label="`SR6.Magic.Traditions.${key}`" />
-					</option>
-				</select>
+			<div class="section section-adeptpowers">
+				<div class="section-head">
+					<h2 class="section-title"><Localized label="TYPES.Item.adeptpower" /></h2>
+					<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'adeptpower')" />
+				</div>
+				<table>
+					<tr v-for="item in adeptpowers" :key="item.id" :title="item.systemData.description">
+						<td class="entry">
+							<input
+								type="text"
+								:value="item.name"
+								@change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)"
+							/>
+						</td>
+						<td class="actions">
+							<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
+								class="fas fa-minus"
+								@click.prevent="deleteItem(item)"
+							/>
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
-		<div class="section" style="width: 300px">
+		<div class="section section-spells">
 			<div class="section-head">
-				<h2 class="section-title">Spells</h2>
+				<h2 class="section-title"><Localized label="TYPES.Item.spell" /></h2>
 			</div>
 			<table
 				class="field-table"
@@ -125,35 +179,6 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 				</tr>
 			</table>
 		</div>
-		<div class="section" style="width: 40%">
-			<div class="section-head">
-				<h2 class="section-title">Adept Powers</h2>
-				<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'adeptpower')" />
-			</div>
-			<table>
-				<thead>
-					<tr>
-						<td>Adept Powers</td>
-						<td></td>
-					</tr>
-				</thead>
-				<tr v-for="item in adeptpowers" :key="item.id" :title="item.systemData.description">
-					<td class="entry">
-						<input
-							type="text"
-							:value="item.name"
-							@change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)"
-						/>
-					</td>
-					<td class="actions">
-						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-							class="fas fa-minus"
-							@click.prevent="deleteItem(item)"
-						/>
-					</td>
-				</tr>
-			</table>
-		</div>
 	</section>
 </template>
 
@@ -161,4 +186,24 @@ async function rollSpell(spell: SR6Item<SpellDataModel>) {
 @use '@scss/vars/colors';
 @use '@scss/sheets';
 @use '@scss/attributes';
+
+.attributes {
+	height: auto;
+}
+
+.section-attr-and-powers {
+	width: 40%;
+	height: auto;
+}
+
+.section-magic-attributes {
+	height: auto;
+}
+
+.section-adeptpowers {
+	width: 100%;
+}
+.section-spells {
+	width: 55%;
+}
 </style>

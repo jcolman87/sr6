@@ -24,6 +24,15 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		return Math.max(0, this.max - this.damage);
 	}
 
+	override getRollData(): Record<string, unknown> {
+		return {
+			damage: this.damage,
+			max: this.max,
+			value: this.value,
+			woundModifier: this.woundModifier,
+		};
+	}
+
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
@@ -156,6 +165,15 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		this.edge.prepareDerivedData();
 	}
 
+	override getRollData(): Record<string, unknown> {
+		return {
+			stun: this.stun.getRollData(),
+			physical: this.physical.getRollData(),
+			overflow: this.overflow.getRollData(),
+			edge: this.edge.getRollData(),
+		};
+	}
+
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
@@ -176,7 +194,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 				nullable: false,
 			}),
 			edge: new fields.EmbeddedDataField(MonitorDataModel, {
-				initial: { damage: 0, max: 5, formula: null },
+				initial: { damage: 0, max: 5, formula: '@edge' },
 				required: true,
 				nullable: false,
 			}),

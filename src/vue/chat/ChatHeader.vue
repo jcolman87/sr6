@@ -3,8 +3,8 @@
 import SR6Actor from '@/actor/SR6Actor';
 import { SR6Token } from '@/token/SR6Token';
 import { pingActor } from '@/vue/directives';
-import { toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
+import { toRaw, ref } from 'vue';
 
 const props = defineProps<{
 	actor: SR6Actor | null;
@@ -41,9 +41,11 @@ const expandHint = ref(false);
 		</div>
 		<div class="title">{{ props.text.title }}</div>
 	</div>
-	<Collapse :when="expandHint" as="section" class="formula hint">
-		{{ props.text.hint }}
-	</Collapse>
+	<div style="min-width: 100%">
+		<Collapse :when="expandHint" class="formula">
+			{{ props.text.hint }}
+		</Collapse>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -53,10 +55,6 @@ const expandHint = ref(false);
 		flex: 0 0 auto;
 		min-width: 25px;
 		width: min-content;
-	}
-
-	.hint {
-		min-width: 100%;
 	}
 
 	.title {

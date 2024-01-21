@@ -21,7 +21,7 @@ import { register as registerSettings } from '@/settings';
 import { register as registerChat, renderChatLog } from '@/chat';
 
 import { register as registerActors, onCreate as onCreateActor, setOptGroups as registerActorOptGroups } from '@/actor';
-import { register as registerEffects } from 'src/effect';
+import { register as registerEffects } from '@/effect';
 
 import { register as registerDisplayHelpers } from '@/display';
 
@@ -30,20 +30,6 @@ import { ImportPrompt } from '@/app/ImportPrompt';
 import './scss/index.scss';
 
 import { Logger } from 'tslog';
-
-globalThis.Ok = function Ok<T, E = Error>(value: T): Result<T, E> {
-	return {
-		ok: true,
-		value: value,
-	};
-};
-
-globalThis.Err = function Err<T, E = Error>(error: E): Result<T, E> {
-	return {
-		ok: false,
-		error: error,
-	};
-};
 
 Hooks.on('renderChatLog', renderChatLog);
 

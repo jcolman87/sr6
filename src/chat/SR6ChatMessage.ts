@@ -62,7 +62,9 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 
 		if (this.flags?.sr6?.testData) {
 			const testObj = testFromData(this.flags!.sr6!.testData!);
-			this.vueContext.test = testObj;
+			if (testObj.ok) {
+				this.vueContext.test = testObj.val;
+			}
 		}
 		if (this.rolls.length > 0) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any

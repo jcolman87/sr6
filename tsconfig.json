@@ -25,22 +25,32 @@
 		"noImplicitOverride": true,
 
 		"paths": {
-			"@/*": ["src/*"],
+			"@/*": ["src/*"]
 		},
 		"lib": [
 			"ES2021",
 			"DOM"
 		],
 		"typeRoots": [
+			"node_modules",
 			"node_modules/@types",
 			"types"
 		],
+		"types": [
+			"foundry",
+			"handlebars",
+			"jquery",
+			"node",
+			"dice-so-nice",
+			"typia",
+			"ts-results"
+		]
 	},
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.d.ts",
 		"src/**/*.tsx",
-		"src/**/*.vue",
+		"src/**/*.vue"
 	],
 	"exclude": [
 		"node_modules"

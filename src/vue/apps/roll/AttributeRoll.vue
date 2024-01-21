@@ -26,5 +26,5 @@ emit('setText', {
 
 <template>
 	<label><Localized label="SR6.Labels.Attribute" /></label>
-	<Localized :label="`SR6.Attributes.${attribute_name}`" />
+	<Localized :label="`SR6.Attributes.${attribute_name}.Name`" />
 </template>

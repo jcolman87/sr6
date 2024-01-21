@@ -12,13 +12,13 @@ import {
 	IHasModifiers,
 	IHasOnDelete,
 } from '@/data/interfaces';
-import { Modifiers, ModifiersSource } from '@/modifier';
+import { Modifiers, ModifiersSourceData } from '@/modifier';
 import { SR6Roll } from '@/roll/SR6Roll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 
 export interface SR6ItemFlags {
-	modifiers?: ModifiersSource;
+	modifiers?: ModifiersSourceData;
 }
 
 /**
@@ -121,9 +121,9 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 		await (<IHasOnUpdate<this>>this.systemData).onUpdate?.(changed, options, userId);
 		super._onUpdate(changed, options, userId);
 
-		// if (changed.flags?.sr6?.modifiers) {
-		//	this.modifiers.updateSource(this.systemFlags!.modifiers!);
-		// }
+		if (changed.flags?.sr6?.modifiers) {
+			this.modifiers.updateSource(this.systemFlags!.modifiers!);
+		}
 	}
 
 	/**

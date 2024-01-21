@@ -51,16 +51,16 @@ const skillSpecialization = computed({
 				<div class="row">
 					<label><Localized label="SR6.Labels.Attribute" /></label>
 					<select name="system.attribute" :value="system.attribute">
-						<option value="body"><Localized label="SR6.Attributes.body" /></option>
-						<option value="agility"><Localized label="SR6.Attributes.agility" /></option>
-						<option value="reaction"><Localized label="SR6.Attributes.reaction" /></option>
-						<option value="strength"><Localized label="SR6.Attributes.strength" /></option>
-						<option value="willpower"><Localized label="SR6.Attributes.willpower" /></option>
-						<option value="logic"><Localized label="SR6.Attributes.logic" /></option>
-						<option value="intuition"><Localized label="SR6.Attributes.intuition" /></option>
-						<option value="charisma"><Localized label="SR6.Attributes.charisma" /></option>
-						<option value="magic"><Localized label="SR6.Attributes.magic" /></option>
-						<option value="resonance"><Localized label="SR6.Attributes.resonance" /></option>
+						<option value="body"><Localized label="SR6.Attributes.body.Name" /></option>
+						<option value="agility"><Localized label="SR6.Attributes.agility.Name" /></option>
+						<option value="reaction"><Localized label="SR6.Attributes.reaction.Name" /></option>
+						<option value="strength"><Localized label="SR6.Attributes.strength.Name" /></option>
+						<option value="willpower"><Localized label="SR6.Attributes.willpower.Name" /></option>
+						<option value="logic"><Localized label="SR6.Attributes.logic.Name" /></option>
+						<option value="intuition"><Localized label="SR6.Attributes.intuition.Name" /></option>
+						<option value="charisma"><Localized label="SR6.Attributes.charisma.Name" /></option>
+						<option value="magic"><Localized label="SR6.Attributes.magic.Name" /></option>
+						<option value="resonance"><Localized label="SR6.Attributes.resonance.Name" /></option>
 					</select>
 				</div>
 				<div class="row">
