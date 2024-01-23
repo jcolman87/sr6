@@ -1,13 +1,13 @@
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
-import BaseTest, { BaseTestData } from '@/test/BaseTest';
+import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import { RollDataDelta, testFromData } from '@/test/index';
 
 export interface OpposedTestData<TAttackTestData extends BaseTestData, TDefenseTestData extends BaseTestData>
 	extends BaseTestData {
-	attackTestData: TAttackTestData;
-	defenseTestData: TDefenseTestData[];
+	attackTestData: TestConstructorData<TAttackTestData>;
+	defenseTestData: TestConstructorData<TDefenseTestData>[];
 }
 
 export default abstract class OpposedTest<
@@ -16,8 +16,8 @@ export default abstract class OpposedTest<
 	TDefenseTest extends BaseTest<TDefenseTestData>,
 	TDefenseTestData extends BaseTestData,
 > extends BaseTest<OpposedTestData<TAttackTestData, TDefenseTestData>> {
-	// attackTest: TAttackTest;
-	// defenseTests: TDefenseTest[];
+	attackTest: TAttackTest;
+	defenseTests: TDefenseTest[];
 
 	constructor({
 		actor,
@@ -32,16 +32,23 @@ export default abstract class OpposedTest<
 		delta?: RollDataDelta;
 		roll?: SR6Roll;
 	}) {
-		// Set the threshold automatically from the opposed data
-		// const opposedTest = testFromData(data.oppposedData);
-		// if (opposedTest.ok) {
-		//	data.threshold = opposedTest.val.roll?.hits;
-		// }
-
 		super({ actor, item, data, roll, delta });
 
-		//this.opposedTests = [];
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// this.opposedTest = opposedTest.val;
+		const attackTest = testFromData<TAttackTest, TAttackTestData>(this.baseData.attackTestData);
+		if (attackTest.ok) {
+			this.attackTest = attackTest.val;
+		} else {
+			throw `Failed to deserialize attack test ${this.baseData.attackTestData.type}`;
+		}
+
+		this.defenseTests = [];
+		this.baseData.defenseTestData.forEach((data) => {
+			const defenseTest = testFromData<TDefenseTest, TDefenseTestData>(data);
+			if (defenseTest.ok) {
+				this.defenseTests.push(defenseTest.val);
+			} else {
+				throw `Failed to deserialize defense test ${data.type}`;
+			}
+		});
 	}
 }

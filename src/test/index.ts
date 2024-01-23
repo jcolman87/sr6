@@ -21,11 +21,11 @@ export type RollDataDelta = Record<string, unknown>;
 export enum TestType {
 	Attribute = 'AttributeTest',
 
-	MeleeAttack = 'MeleeAttackTest',
-	MeleeDefense = 'MeleeDefenseTest',
-
 	RangedAttack = 'RangedAttackTest',
 	RangedDefense = 'RangedDefenseTest',
+
+	MeleeAttack = 'MeleeAttackTest',
+	MeleeDefense = 'MeleeDefenseTest',
 
 	PhysicalSoak = 'PhysicalSoakTest',
 
@@ -54,14 +54,8 @@ export interface ITest<TData extends BaseTestData = BaseTestData, TModifier exte
 
 	reset(): void;
 
-	opposed?(actor: SR6Actor, item: undefined | SR6Item): RangedDefenseTest<TData>;
-	soak?(defense: RangedDefenseTest<TData>): ITest;
-
 	promptComponent?(): Component;
 	chatComponent?(): Component;
-
-	damage?(opposedHits: number): number;
-	baseDamage?(): number;
 
 	execute(): Promise<Result<null, null>>;
 
