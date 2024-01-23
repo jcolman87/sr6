@@ -3,17 +3,16 @@ import { getClass } from '@/data/serialize';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
 import MatrixActionTest from '@/test/MatrixActionTest';
-import OpposedDefenseTest from '@/test/OpposedDefenseTest';
+import RangedDefenseTest from '@/test/RangedDefenseTest';
 import PhysicalSoakTest from '@/test/PhysicalSoakTest';
 import ContactTest from '@/test/ContactTest';
 
 import SR6Roll from '@/roll/SR6Roll';
 import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 
-import BaseTest, { BaseTestData, BaseTestMessageData } from '@/test/BaseTest';
+import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import AttributeTest from '@/test/AttributeTest';
 import RangedAttackTest from '@/test/RangedAttackTest';
-import MeleeAttackTest from '@/test/MeleeAttackTest';
 import { Component } from 'vue';
 import { Result, Err, Ok } from 'ts-results';
 
@@ -23,8 +22,10 @@ export enum TestType {
 	Attribute = 'AttributeTest',
 
 	MeleeAttack = 'MeleeAttackTest',
+	MeleeDefense = 'MeleeDefenseTest',
 
 	RangedAttack = 'RangedAttackTest',
+	RangedDefense = 'RangedDefenseTest',
 
 	PhysicalSoak = 'PhysicalSoakTest',
 
@@ -33,7 +34,6 @@ export enum TestType {
 
 	///
 	Unknown = 'BaseTest',
-	OpposedTest = 'OpposedTest',
 
 	///
 	ContactTest = 'ContactTest',
@@ -54,8 +54,8 @@ export interface ITest<TData extends BaseTestData = BaseTestData, TModifier exte
 
 	reset(): void;
 
-	opposed?(actor: SR6Actor, item: undefined | SR6Item): OpposedDefenseTest<TData>;
-	soak?(defense: OpposedDefenseTest<TData>): ITest;
+	opposed?(actor: SR6Actor, item: undefined | SR6Item): RangedDefenseTest<TData>;
+	soak?(defense: RangedDefenseTest<TData>): ITest;
 
 	promptComponent?(): Component;
 	chatComponent?(): Component;
@@ -68,7 +68,9 @@ export interface ITest<TData extends BaseTestData = BaseTestData, TModifier exte
 	toJSON(): Record<string, unknown>;
 }
 
-export function testFromData(msgData: BaseTestMessageData): Result<BaseTest, string> {
+export function testFromData<TTest extends BaseTest = BaseTest, TData extends BaseTestData = BaseTestData>(
+	msgData: TestConstructorData<TData>,
+): Result<TTest, string> {
 	const actor = getActorSync(SR6Actor, msgData.baseData.actorId!);
 	const item = msgData.baseData.itemId ? getItemSync(SR6Item, msgData.baseData.itemId) : null;
 
@@ -81,7 +83,7 @@ export function testFromData(msgData: BaseTestMessageData): Result<BaseTest, str
 				data: msgData.baseData,
 				delta: msgData.delta,
 				roll: msgData.roll ? SR6Roll.fromData(msgData.roll) : undefined,
-			}),
+			}) as TTest,
 		);
 	}
 	return Err(cls.val);
@@ -93,8 +95,7 @@ export function config(): Record<string, unknown> {
 	return {
 		AttributeTest: AttributeTest,
 		RangedAttackTest: RangedAttackTest,
-		MeleeAttackTest: MeleeAttackTest,
-		OpposedTest: OpposedDefenseTest,
+		RangedDefenseTest: RangedDefenseTest,
 
 		PhysicalSoakTest: PhysicalSoakTest,
 

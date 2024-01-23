@@ -26,8 +26,6 @@ system:
   damageData:
     damageFormula: '2'
     damageType: S
-  firemodes:
-    - SS
   description: Unarmed Attack
 ---
 name: Combat Axe
@@ -58,8 +56,6 @@ system:
   damageData:
     damageFormula: '5'
     damageType: P
-  firemodes:
-    - SS
   description: 'Whether you\u2019re Neal the Firefighter or Neil the Ork Barbarian,
     you can swing an axe for both utility and violence. The combat axe come with
     a single or double blade and a hardened spring-loaded thrusting point for breaking
@@ -94,8 +90,6 @@ system:
   damageData:
     damageFormula: '3'
     damageType: P
-  firemodes:
-    - SS
   description: 'A simple, elegant, efficient killing device with a chisel point to
     make light work of armor. It\u2019s also carbon-coated black, so no reflections
     give away your approach.'
@@ -128,8 +122,6 @@ system:
   damageData:
     damageFormula: '3'
     damageType: P
-  firemodes:
-    - SS
   description: 'Specifically designed with a cutting edge on one side and a serrated
     sawing edge on the other, the true \u201Csurvival\u201D piece of this knife
     is in the handle and its collection of accessories. In the handle you\u2019
@@ -168,8 +160,6 @@ system:
   damageData:
     damageFormula: '3'
     damageType: P
-  firemodes:
-    - SS
   description: 'Don\u2019t like getting implants but still want three razor sharp
     blades to pop out of your forearm? This is the weapon for you. The blades extend
     and retract through either a forearm muscle command or a wireless signal. Either
@@ -204,8 +194,6 @@ system:
   damageData:
     damageFormula: '2'
     damageType: P
-  firemodes:
-    - SS
   description: 'Max Range 20m. A catchall term for a variety of different deadly fighting
     blades. The style is up to you, but the stats are all the same.'
 ---
@@ -237,8 +225,6 @@ system:
   damageData:
     damageFormula: '4'
     damageType: P
-  firemodes:
-    - SS
   description: 'The iconic two-handed sword of the samurai is standard issue for trid-series
     shadowrunners. Out on the street, the deadly blade teaches lessons to those who
     think the trope is solely about looks.'
@@ -271,8 +257,6 @@ system:
   damageData:
     damageFormula: '4'
     damageType: P
-  firemodes:
-    - SS
   description: 'Take a long stick, add any of a dozen varieties of blades to the head,
     and you\u2019ve got a polearm. // GEAR 247SHADOWRUN: SIXTH WORLD Designed to
     keep distance between attacker and defender or strike at a mounted target, they\u2019
@@ -307,8 +291,6 @@ system:
   damageData:
     damageFormula: '3'
     damageType: P
-  firemodes:
-    - SS
   description: 'A heavy blade on a one-handed grip that comes in a variety of styles.
     The world\u2019s dominant combat weapon for thousands of years until the firearm
     came along.'
@@ -341,8 +323,6 @@ system:
   damageData:
     damageFormula: '3'
     damageType: S
-  firemodes:
-    - SS
   description: 'The stats listed can be used for a range of objects, including an axe
     handle, baseball bat, crowbar, tire iron, wrench, or even a two-by-four with a
     couple nails in it. The price listed is for a professionally made, old-style police
@@ -376,8 +356,6 @@ system:
   damageData:
     damageFormula: '2'
     damageType: S
-  firemodes:
-    - SS
   description: 'This telescoping club can be extended with a wrist flick or a wireless
     signal. In its retracted form, it\u2019s easier to conceal (Concealability threshold
     4 when retracted, 2 when extended). Retracting or extending it is a Minor Action.
@@ -412,8 +390,6 @@ system:
   damageData:
     damageFormula: '2'
     damageType: S
-  firemodes:
-    - SS
   description: 'Also known as a blackjack, this is a short, flexible club or a leather-wrapped
     iron, lead, or sand filled sack for thumping heads. It\u2019s designed to be
     concealable, often fitting in the palm of the hand (Concealability threshold
@@ -447,8 +423,6 @@ system:
   damageData:
     damageFormula: '4'
     damageType: S
-  firemodes:
-    - SS
   description: 'Speak softly and carry a big stick. This is that big stick. Available in composite, hardwood, high-carbon steel, and other materials.'
 ---
 name: Stun Baton
@@ -479,8 +453,6 @@ system:
   damageData:
     damageFormula: '5'
     damageType: S
-  firemodes:
-    - SS
   description: 'A riot-control staple and viewed as a symbol of corporate-government
     oppression, this handy electrical prod is still useful for everyone in the shadows.
     The stun baton holds ten charges and regains one charge per ten seconds when plugged
@@ -515,8 +487,6 @@ system:
   damageData:
     damageFormula: '4'
     damageType: S
-  firemodes:
-    - SS
   description: 'A big stick that starts out as a small stick. This metal and composite
     staff can telescope down to the size of a stun baton or a sword. It can be extended
     and locked in place by spinning or snapping it out in each direction and giving
@@ -553,8 +523,6 @@ system:
   damageData:
     damageFormula: '2'
     damageType: S
-  firemodes:
-    - SS
   description: 'Go-gangs love to pull the old equipment off their scrap bikes and smack
     other people with it. These heavy metal chains are brutal weapons, especially
     when backed by the speed of a motorcycle. You gain a bonus Minor Action on a turn
@@ -588,8 +556,6 @@ system:
   damageData:
     damageFormula: '1'
     damageType: P
-  firemodes:
-    - SS
   description: 'The classic leather cord used for centuries to keep cattle, and other
     types of \u201Clivestock\u201D in check. Brutal on bare flesh, these things
     are mainly a tripping hazard for anyone with armor. You gain a bonus Minor Action
@@ -624,8 +590,6 @@ system:
   damageData:
     damageFormula: '3'
     damageType: P
-  firemodes:
-    - SS
   description: 'Everything from a roll of quarters in the palm (though who has that
     lying around?) to brass knuckles to Ares Hardliner Gloves, these weapons move
     a fist from potentially deadly to a probably deadly by augmenting the structure
@@ -659,8 +623,6 @@ system:
   damageData:
     damageFormula: '4'
     damageType: S
-  firemodes:
-    - SS
   description: 'Insulated gloves with an integrated system that discharges electric
     current with any contact after they\u2019ve been activated. The gloves inflict
     the Zapped status (p. 53) and are good for ten charges before they need to be
@@ -698,8 +660,6 @@ system:
   damageData:
     damageFormula: '6'
     damageType: P
-  firemodes:
-    - SS
   description: 'Striking fear in the hearts of those who have warily watched its serpentine
     glow since the 2050s. In the hands of a trained user, this terrifying weapon
     can cut through armor, flesh, and bone as easy as butter with every millimeter

@@ -12,17 +12,16 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 
-import { ITest } from 'src/test';
+import { ITest } from '@/test/index';
 import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { ContextBase } from '@/vue/SheetContext';
-import VueRollPrompt from '@/roll/RollPrompt.vue';
+import VueRollPrompt from '@/test/vue/RollPrompt.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
 export interface RollPromptContext<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = ITest<TData>>
 	extends ContextBase {
 	test: TTest;
-	data: TData;
 	resolvePromise: (value: TData) => void;
 }
 
@@ -59,12 +58,10 @@ export default class RollPrompt<
 	#resolvePromise?: (value: TData | null) => void;
 
 	test: TTest;
-	data: TData;
 
 	constructor(actor: SR6Actor, test: TTest) {
 		super(actor);
 		this.test = test;
-		this.data = foundry.utils.deepClone(test.data);
 	}
 
 	override async close(options = {}): Promise<void> {
@@ -83,7 +80,6 @@ export default class RollPrompt<
 			actor: this.actor,
 			app: this,
 			test: this.test,
-			data: this.data,
 		};
 	}
 }

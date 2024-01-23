@@ -1,7 +1,7 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import { DamageType } from '@/data';
-import OpposedDefenseTest from '@/test/OpposedDefenseTest';
+import RangedDefenseTest from '@/test/RangedDefenseTest';
 import Localized from '@/vue/components/Localized.vue';
 import { toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
@@ -12,7 +12,7 @@ const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
 }>();
 const props = defineProps<{
-	test: OpposedDefenseTest;
+	test: RangedDefenseTest;
 }>();
 
 const visibility = ref({
@@ -31,7 +31,7 @@ emit('setText', {
 	hint: ``,
 });
 
-function getDamageTypeForTest(test: OpposedDefenseTest): DamageType {
+function getDamageTypeForTest(test: RangedDefenseTest): DamageType {
 	return toRaw(test.opposedTest.item! as SR6Item<WeaponDataModel>).systemData.damageData.damageType;
 }
 

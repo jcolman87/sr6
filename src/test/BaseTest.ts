@@ -1,5 +1,5 @@
 import SR6Actor from '@/actor/SR6Actor';
-import RollPrompt from '@/app/RollPrompt';
+import RollPrompt from '@/test/RollPrompt';
 import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
@@ -19,10 +19,10 @@ export interface BaseTestData {
 	parameters?: { glitch: number[]; success: number[] };
 }
 
-export interface BaseTestMessageData {
+export interface TestConstructorData<TData extends BaseTestData> {
 	type: string;
 	modifiers: IModifier[];
-	baseData: BaseTestData;
+	baseData: TData;
 	actor: SR6Actor;
 
 	delta?: RollDataDelta;
@@ -31,7 +31,7 @@ export interface BaseTestMessageData {
 }
 
 export default abstract class BaseTest<TData extends BaseTestData = BaseTestData> implements ITest<TData, IModifier> {
-	type: TestType = TestType.Unknown;
+	abstract type: TestType;
 
 	protected baseData: TData;
 	protected delta: RollDataDelta;
@@ -70,6 +70,20 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		return Err('Roll was undefined');
 	}
 
+	createRoll(): SR6Roll {
+		return new SR6Roll(
+			this.data.pool!,
+			{
+				actor: this.actor.getRollData(),
+				item: this.item?.getRollData(),
+			},
+			{
+				threshold: this.data.threshold,
+				parameters: this.data.parameters,
+			},
+		);
+	}
+
 	async execute(): Promise<Result<null, null>> {
 		console.log('BaseTest::execute', this);
 		// Add our modifiers to the roll delta
@@ -77,17 +91,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 		const configuredData = await this.prompt();
 		if (configuredData.ok) {
-			this.roll = new SR6Roll(
-				this.data.pool!,
-				{
-					actor: this.actor.getRollData(),
-					item: this.item?.getRollData(),
-				},
-				{
-					threshold: this.data.threshold,
-					parameters: this.data.parameters,
-				},
-			);
+			this.roll = this.createRoll();
 
 			const res = await this.performRoll();
 			if (res.ok) {
@@ -106,7 +110,6 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		if (!configuredRoll) {
 			return Err(null);
 		}
-		this.delta = foundry.utils.diffObject(this.baseData, configuredRoll);
 
 		return Ok(this.delta);
 	}

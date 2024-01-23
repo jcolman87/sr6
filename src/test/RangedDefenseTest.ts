@@ -1,22 +1,24 @@
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
-import BaseTest, { BaseTestData, BaseTestMessageData } from '@/test/BaseTest';
+import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, testFromData, TestType } from '@/test/index';
 import SR6Roll from '@/roll/SR6Roll';
+import { RangedAttackTestData } from '@/test/RangedAttackTest';
 import { Component } from 'vue';
 
-import ChatComponent from '@/test/vue/chat/OpposedDefenseTest.vue';
+import ChatComponent from '@/test/vue/chat/RangedDefenseTest.vue';
 
-export interface OpposedTestData extends BaseTestData {
-	oppposedData: BaseTestMessageData;
+export interface RangedDefenseTestData extends BaseTestData {
+	oppposedData: TestConstructorData<RangedAttackTestData>;
 }
 
-export default class OpposedDefenseTest<
+export default class RangedDefenseTest<
 	TOpposedData extends BaseTestData = BaseTestData,
-> extends BaseTest<OpposedTestData> {
-	override type: TestType = TestType.OpposedTest;
+> extends BaseTest<RangedDefenseTestData> {
+	override type: TestType = TestType.RangedDefense;
 
 	opposedTest: ITest<TOpposedData>;
+
 	chatComponent(): Component {
 		return ChatComponent;
 	}
@@ -30,7 +32,7 @@ export default class OpposedDefenseTest<
 	}: {
 		actor: SR6Actor;
 		item?: SR6Item;
-		data: OpposedTestData;
+		data: RangedDefenseTestData;
 		delta?: RollDataDelta;
 		roll?: SR6Roll;
 	}) {

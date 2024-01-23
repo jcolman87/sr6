@@ -90,9 +90,13 @@ export default abstract class WeaponDataModel extends GearDataModel {
 
 	abstract damageData: WeaponDamage;
 
-	abstract firemodes: null | FireMode[];
+	abstract firemodes: FireMode[];
 
 	abstract _accessories: ItemUUID[];
+
+	get isMelee(): boolean {
+		return this.firemodes.length < 1 || this.attackRatings.near == 0;
+	}
 
 	override prepareBaseData(): void {
 		super.prepareBaseData();
@@ -287,7 +291,7 @@ export default abstract class WeaponDataModel extends GearDataModel {
 			),
 			firemodes: new fields.ArrayField(
 				new fields.StringField({ blank: false, choices: Object.values(FireMode) }),
-				{ initial: [FireMode.SS], required: true, nullable: true },
+				{ initial: [], required: true, nullable: true },
 			),
 			_accessories: new fields.ArrayField(new DocumentUUIDField(), {
 				initial: [],

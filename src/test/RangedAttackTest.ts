@@ -8,7 +8,7 @@ import SR6Roll from '@/roll/SR6Roll';
 import AttackTestData from '@/test/AttackTestData';
 import BaseTest from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import OpposedDefenseTest from '@/test/OpposedDefenseTest';
+import RangedDefenseTest from '@/test/RangedDefenseTest';
 import { getActorSync, getTargetActorIds } from '@/util';
 import { Component } from 'vue';
 
@@ -46,8 +46,8 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 		return this.weapon.systemData.damage;
 	}
 
-	opposed(actor: SR6Actor, item: undefined | SR6Item = undefined): OpposedDefenseTest<RangedAttackTestData> {
-		return new OpposedDefenseTest<RangedAttackTestData>({
+	opposed(actor: SR6Actor, item: undefined | SR6Item = undefined): RangedDefenseTest<RangedAttackTestData> {
+		return new RangedDefenseTest<RangedAttackTestData>({
 			actor,
 			item,
 			data: {
@@ -58,7 +58,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 		});
 	}
 
-	soak(defenseTest: OpposedDefenseTest<RangedAttackTestData>): ITest {
+	soak(defenseTest: RangedDefenseTest<RangedAttackTestData>): ITest {
 		return new PhysicalSoakTest({
 			actor: defenseTest.actor,
 			data: {

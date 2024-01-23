@@ -16,16 +16,15 @@ const emit = defineEmits<{
 const props = defineProps<{
 	test: RangedAttackTest;
 }>();
-const data = computed(() => props.test.data);
 
 const weapon = computed(() => props.test.weapon);
 const system = computed(() => toRaw(weapon.value).systemData);
 
-const original_pool = data.value.pool!;
+const original_pool = props.test.data.pool!;
 
 const targets = computed(
 	() =>
-		data.value.targetIds?.map((id) =>
+		props.test.data.targetIds?.map((id) =>
 			getActorSync(SR6Actor<BaseActorDataModel>, id),
 		) as SR6Actor<BaseActorDataModel>[],
 );
@@ -42,39 +41,39 @@ emit('setText', {
 });
 
 function onChangeDistance() {
-	data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!);
+	props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!);
 }
 
 function onChangeFiremode() {
-	switch (data.value.firemode) {
+	switch (props.test.data.firemode) {
 		case FireMode.SS: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!);
-			data.value.damage = system.value.damage;
-			data.value.pool = original_pool;
+			props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!);
+			props.test.data.damage = system.value.damage;
+			props.test.data.pool = original_pool;
 			break;
 		}
 		case FireMode.SA: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 2;
-			data.value.damage = system.value.damage + 1;
-			data.value.pool = original_pool;
+			props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!) - 2;
+			props.test.data.damage = system.value.damage + 1;
+			props.test.data.pool = original_pool;
 			break;
 		}
 		case FireMode.BF_narrow: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 4;
-			data.value.damage = system.value.damage + 2;
-			data.value.pool = original_pool;
+			props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!) - 4;
+			props.test.data.damage = system.value.damage + 2;
+			props.test.data.pool = original_pool;
 			break;
 		}
 		case FireMode.BF_wide: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 2;
-			data.value.damage = system.value.damage + 1;
-			data.value.pool = Math.ceil(original_pool / 2);
+			props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!) - 2;
+			props.test.data.damage = system.value.damage + 1;
+			props.test.data.pool = Math.ceil(original_pool / 2);
 			break;
 		}
 		case FireMode.FA: {
-			data.value.attackRating = system.value.attackRatings.atDistance(data.value.distance!) - 6;
-			data.value.damage = system.value.damage;
-			data.value.pool = original_pool;
+			props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!) - 6;
+			props.test.data.damage = system.value.damage;
+			props.test.data.pool = original_pool;
 			break;
 		}
 	}
@@ -90,12 +89,12 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 /*
 function updateEdgeGain() {
 	if (targets.value.length === 0) {
-		data.value.edgeGained = EdgeGainedTarget.None;
+		props.test.data.edgeGained = EdgeGainedTarget.None;
 	} else {
-		if (data.value.attackRating! >= targetDefenseRating.value + 4) {
-			data.value.edgeGained = EdgeGainedTarget.Attacker;
-		} else if (targetDefenseRating.value >= data.value.attackRating! + 4) {
-			data.value.edgeGained = EdgeGainedTarget.Defender;
+		if (props.test.data.attackRating! >= targetDefenseRating.value + 4) {
+			props.test.data.edgeGained = EdgeGainedTarget.Attacker;
+		} else if (targetDefenseRating.value >= props.test.data.attackRating! + 4) {
+			props.test.data.edgeGained = EdgeGainedTarget.Defender;
 		}
 	}
 }
@@ -106,7 +105,7 @@ onBeforeUpdate(updateEdgeGain);
 
 <template>
 	<div class="roll-prompt" style="display: flex; flex-flow: wrap">
-		<div class="section warning-box" v-if="data.targetIds?.length == 0">
+		<div class="section warning-box" v-if="test.data.targetIds?.length == 0">
 			<div class="section-head warning-title">Warning: No targets selected</div>
 			You did not have any targets selected for this roll. Automatic damage, conditions and effects will not be
 			applied.
@@ -127,9 +126,10 @@ onBeforeUpdate(updateEdgeGain);
 			<table>
 				<tr>
 					<td>
-						<Localized label="SR6.Combat.Damage" />: {{ data.damage }}{{ system.damageData.damageType }}
+						<Localized label="SR6.Combat.Damage" />: {{ test.data.damage
+						}}{{ system.damageData.damageType }}
 					</td>
-					<td><Localized label="SR6.Combat.AttackRating" />: {{ data.attackRating }}</td>
+					<td><Localized label="SR6.Combat.AttackRating" />: {{ test.data.attackRating }}</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -187,7 +187,7 @@ onBeforeUpdate(updateEdgeGain);
 			<div class="section-title">
 				<label><Localized label="SR6.Combat.Distance" /></label>
 			</div>
-			<select v-model="data.distance" @change.prevent="onChangeDistance">
+			<select v-model="test.data.distance" @change.prevent="onChangeDistance">
 				<option value="close"><Localized label="SR6.Combat.Distances.close" /></option>
 				<option value="near"><Localized label="SR6.Combat.Distances.near" /></option>
 				<option value="far"><Localized label="SR6.Combat.Distances.far" /></option>
@@ -198,7 +198,7 @@ onBeforeUpdate(updateEdgeGain);
 			<div class="section-title">
 				<label><Localized label="SR6.Combat.FireMode" /></label>
 			</div>
-			<select v-if="system.firemodes" v-model="data.firemode" @change.prevent="onChangeFiremode">
+			<select v-if="system.firemodes" v-model="test.data.firemode" @change.prevent="onChangeFiremode">
 				<option value="SS"><Localized label="SR6.Combat.FireModes.SS.Name" /></option>
 				<option value="SA"><Localized label="SR6.Combat.FireModes.SA.Name" /></option>
 				<option value="BF_narrow"><Localized label="SR6.Combat.FireModes.BFNarrow.Name" /></option>

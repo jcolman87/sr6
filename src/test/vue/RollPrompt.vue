@@ -4,7 +4,7 @@ import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { IModifier, TestPoolModifier } from '@/modifier';
 import { getEventValue } from '@/vue/directives';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
-import { RollPromptContext } from '@/app/RollPrompt';
+import { RollPromptContext } from '@/test/RollPrompt';
 import { RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 
@@ -20,7 +20,7 @@ const text = ref({
 });
 const edgeBoost = ref<string | null>(null);
 const poolModifier = ref(0);
-const originalPool = context.data.pool!;
+const originalPool = context.test.data.pool!;
 
 const finishRollButton = ref();
 const isDisplayConditions = ref(false);
@@ -33,29 +33,32 @@ const conditionsDescriptionsVisible = ref(
 	}),
 );
 
-function roll() {
+async function roll() {
 	// Apply edge action to the roll
 	switch (edgeBoost.value) {
 		case 'buy_one':
-			context.data.autoHits = 1;
+			context.test.data.autoHits = 1;
 			break;
 		case 'add_edge_pool':
-			if (context.data.pool) {
-				context.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
+			if (context.test.data.pool) {
+				context.test.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
 			} else {
-				context.data.pool = (baseSystem.value as LifeformDataModel).monitors.edge.max;
+				context.test.data.pool = (baseSystem.value as LifeformDataModel).monitors.edge.max;
 			}
-			context.data.explode = true;
+			context.test.data.explode = true;
 			break;
 	}
-	context.resolvePromise(toRaw(context.data));
+
+	context.resolvePromise(toRaw(context.test.data));
 }
 function setText(value: { title: string; hint: string }) {
 	text.value = value;
 }
 
 function onUpdatePool() {
-	context.data.pool = originalPool + poolModifier.value;
+	console.log('onUpdatePool1', toRaw(context.test.data));
+	context.test.data.pool = originalPool + poolModifier.value;
+	console.log('onUpdatePool2', toRaw(context.test.data));
 }
 
 function toggleConditions() {
@@ -88,7 +91,7 @@ onMounted(() => {
 							filter: drop-shadow(0 0 4px #000000);
 						"
 					/>
-					<label name="pool" class="edge-value">{{ context.data.pool }}</label>
+					<label name="pool" class="edge-value">{{ context.test.data.pool }}</label>
 				</div>
 			</td>
 			<td>
@@ -191,7 +194,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@use '@/scss/mixins/backgrounds';
 @use '@/scss/vars/colors';
 @use '@/scss/sheets';
 

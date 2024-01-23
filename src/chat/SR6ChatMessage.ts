@@ -1,6 +1,6 @@
 import SR6Actor from '@/actor/SR6Actor';
 import { ITest, testFromData } from 'src/test';
-import { BaseTestMessageData } from '@/test/BaseTest';
+import { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import SR6Roll from '@/roll/SR6Roll';
 import { SR6Token } from '@/token/SR6Token';
 import * as util from '@/util';
@@ -34,7 +34,7 @@ export class ChatMessageContext {
 
 export type ChatMessageFlags = {
 	sr6?: {
-		testData?: BaseTestMessageData;
+		testData?: TestConstructorData<BaseTestData>;
 	};
 };
 

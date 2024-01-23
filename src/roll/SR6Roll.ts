@@ -6,8 +6,6 @@ export type SR6RollOptions = {
 export default class SR6Roll extends Roll {
 	declare options: SR6RollOptions;
 
-	static override CHAT_TEMPLATE = 'systems/sr6/templates/chat/rolls/SR6Roll.hbs';
-
 	get success(): boolean {
 		if (this.options.threshold!) {
 			return this.hits >= this.options.threshold!;

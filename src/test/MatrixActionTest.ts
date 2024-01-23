@@ -4,7 +4,7 @@ import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SR6Item from '@/item/SR6Item';
 import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { RollDataDelta, TestType } from '@/test/index';
-import OpposedDefenseTest from '@/test/OpposedDefenseTest';
+import RangedDefenseTest from '@/test/RangedDefenseTest';
 import SR6Roll from '@/roll/SR6Roll';
 
 import { Component } from 'vue';
@@ -21,7 +21,7 @@ export default class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 		return ChatComponent;
 	}
 
-	opposed(actor: SR6Actor, item: undefined | SR6Item): OpposedDefenseTest<MatrixActionTestData> {
+	opposed(actor: SR6Actor, item: undefined | SR6Item): RangedDefenseTest<MatrixActionTestData> {
 		let pool = 0;
 		if (actor.systemData instanceof LifeformDataModel) {
 			pool = actor.solveFormula(this.matrixAction.systemData.formulas!.defend!);
@@ -29,7 +29,7 @@ export default class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 			pool = actor.solveFormula(this.matrixAction.systemData.formulas!.deviceDefend!);
 		}
 
-		return new OpposedDefenseTest<MatrixActionTestData>({
+		return new RangedDefenseTest<MatrixActionTestData>({
 			actor,
 			item,
 			data: {

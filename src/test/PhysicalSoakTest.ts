@@ -2,14 +2,14 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { RollDataDelta, TestType } from '@/test/index';
-import { OpposedTestData } from '@/test/OpposedDefenseTest';
+import { RangedDefenseTestData } from '@/test/RangedDefenseTest';
 import SR6Roll from '@/roll/SR6Roll';
 
 import { Component } from 'vue';
 import ChatComponent from '@/test/vue/chat/PhysicalSoakTest.vue';
 
 export interface PhysicalSoakTestData extends BaseTestData {
-	defenseTest: OpposedTestData;
+	defenseTest: RangedDefenseTestData;
 }
 
 export default class PhysicalSoakTest extends BaseTest<PhysicalSoakTestData> {
