@@ -1,3 +1,4 @@
+import BaseDataModel from '@/data/BaseDataModel';
 import { ConditionalData } from '@/effect/conditional';
 import { ITest } from 'src/test';
 import { ClassData } from '@/data/serialize';

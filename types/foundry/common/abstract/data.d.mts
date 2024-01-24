@@ -9,6 +9,24 @@ export default abstract class DataModel<
 	TParent extends DataModel | null = _DataModel | null,
 	TSchema extends fields.DataSchema = fields.DataSchema,
 > {
+	/**
+	 * @typedef {Object} DataValidationOptions
+	 * @property {boolean} [strict=true]     Throw an error if validation fails.
+	 * @property {boolean} [fallback=false]  Attempt to replace invalid values with valid defaults?
+	 * @property {boolean} [partial=false]   Allow partial source data, ignoring absent fields?
+	 * @property {boolean} [dropInvalidEmbedded=false]  If true, invalid embedded documents will emit a warning and be
+	 *                                                  placed in the invalidDocuments collection rather than causing the
+	 *                                                  parent to be considered invalid.
+	 */
+
+	/**
+	 * The abstract base class which defines the data schema contained within a Document.
+	 * @param {object} [data={}]                    Initial data used to construct the data object. The provided object
+	 *                                              will be owned by the constructed model instance and may be mutated.
+	 * @param {DataValidationOptions} [options={}]  Options which affect DataModel construction
+	 * @param {Document} [options.parent]           A parent DataModel instance to which this DataModel belongs
+	 * @abstract
+	 */
 	constructor(
 		data?: DeepPartial<SourceFromSchema<fields.DataSchema>>,
 		options?: DataModelConstructionOptions<TParent>,
