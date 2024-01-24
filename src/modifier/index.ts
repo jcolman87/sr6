@@ -46,6 +46,13 @@ export interface ModifiersSourceData {
 	modifiers?: ModifierSourceData[];
 }
 
+export type ModifierConstructorData<TSourceData extends ModifierSourceData> = {
+	parent: foundry.abstract.Document;
+	source: foundry.abstract.Document;
+	conditions?: ConditionalData[];
+	data: TSourceData;
+};
+
 export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abstract.Document> {
 	parent: TDocument;
 	sourceData: ModifiersSourceData;
