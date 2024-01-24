@@ -1,13 +1,13 @@
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
-import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
-import { RollDataDelta, testFromData } from '@/test/index';
+import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
+import { RollDataDelta } from '@/test/index';
 
 export interface OpposedTestData<TAttackTestData extends BaseTestData, TDefenseTestData extends BaseTestData>
 	extends BaseTestData {
-	attackTestData: TestConstructorData<TAttackTestData>;
-	defenseTestData: TestConstructorData<TDefenseTestData>[];
+	attackTestData: TestSourceData<TAttackTestData>;
+	defenseTestData: TestSourceData<TDefenseTestData>[];
 }
 
 export default abstract class OpposedTest<
@@ -34,7 +34,7 @@ export default abstract class OpposedTest<
 	}) {
 		super({ actor, item, data, roll, delta });
 
-		const attackTest = testFromData<TAttackTest, TAttackTestData>(this.baseData.attackTestData);
+		const attackTest = BaseTest.fromData<TAttackTest, TAttackTestData>(this.baseData.attackTestData);
 		if (attackTest.ok) {
 			this.attackTest = attackTest.val;
 		} else {
@@ -43,7 +43,7 @@ export default abstract class OpposedTest<
 
 		this.defenseTests = [];
 		this.baseData.defenseTestData.forEach((data) => {
-			const defenseTest = testFromData<TDefenseTest, TDefenseTestData>(data);
+			const defenseTest = BaseTest.fromData<TDefenseTest, TDefenseTestData>(data);
 			if (defenseTest.ok) {
 				this.defenseTests.push(defenseTest.val);
 			} else {

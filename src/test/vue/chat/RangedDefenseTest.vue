@@ -19,11 +19,11 @@ const visibility = ref({
 	damageFormula: false,
 });
 
-const damageValue = ref(toRaw(props.test.opposedTest).damage?.(props.test.roll!.hits));
+const damageValue = ref(toRaw(props.test.opposedTest).damage(props.test.roll!.hits));
 
 async function executeSoakTest() {
 	showRoll.value = false;
-	await toRaw(props.test.opposedTest).soak?.(toRaw(props.test)).execute();
+	await toRaw(props.test.opposedTest).soak(toRaw(props.test)).execute();
 }
 
 emit('setText', {
@@ -59,7 +59,7 @@ const showRoll = ref(true);
 			</div>
 		</div>
 		<input
-			v-if="showRoll && test.isOwner && !test.roll?.success && test.opposedTest.damage && test.opposedTest.soak"
+			v-if="showRoll && test.isOwner && !test.roll?.success"
 			class="dialog-button line"
 			type="button"
 			value="Soak Damage"

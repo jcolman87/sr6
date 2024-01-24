@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
-import { IModifier, TestPoolModifier } from '@/modifier';
+import { IModifier } from '@/modifier';
+import TestPoolModifier from '@/modifier/TestPoolModifier';
 import { getEventValue } from '@/vue/directives';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
 import { RollPromptContext } from '@/test/RollPrompt';

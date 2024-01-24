@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import ContactTest from '@/test/ContactTest';
 import { computed, inject, toRaw } from 'vue';
 
 import SR6Item from '@/item/SR6Item';
@@ -30,7 +29,7 @@ const contacts = computed(() =>
 
 async function rollContact(contact: SR6Item<ContactDataModel>) {
 	console.log('roll contact', contact);
-	await new ContactTest({ actor: toRaw(context.data.actor), item: contact, data: {} }).execute();
+	// await new ContactTest({ actor: toRaw(context.data.actor), item: contact, data: {} }).execute();
 }
 </script>
 

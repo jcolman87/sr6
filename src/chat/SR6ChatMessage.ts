@@ -1,6 +1,6 @@
 import SR6Actor from '@/actor/SR6Actor';
-import { ITest, testFromData } from 'src/test';
-import { BaseTestData, TestConstructorData } from '@/test/BaseTest';
+import { ITest } from 'src/test';
+import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
 import SR6Roll from '@/roll/SR6Roll';
 import { SR6Token } from '@/token/SR6Token';
 import * as util from '@/util';
@@ -34,7 +34,7 @@ export class ChatMessageContext {
 
 export type ChatMessageFlags = {
 	sr6?: {
-		testData?: TestConstructorData<BaseTestData>;
+		testData?: TestSourceData<BaseTestData>;
 	};
 };
 
@@ -61,7 +61,7 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 		this.vueApp = createApp(VueChatMessage);
 
 		if (this.flags?.sr6?.testData) {
-			const testObj = testFromData(this.flags!.sr6!.testData!);
+			const testObj = BaseTest.fromData(this.flags!.sr6!.testData!);
 			if (testObj.ok) {
 				this.vueContext.test = testObj.val;
 			}

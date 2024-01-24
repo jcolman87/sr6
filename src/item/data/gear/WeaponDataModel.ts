@@ -95,7 +95,7 @@ export default abstract class WeaponDataModel extends GearDataModel {
 	abstract _accessories: ItemUUID[];
 
 	get isMelee(): boolean {
-		return this.firemodes.length < 1 || this.attackRatings.near == 0;
+		return this.firemodes.length < 1 || this.attackRatings.near === 0;
 	}
 
 	override prepareBaseData(): void {

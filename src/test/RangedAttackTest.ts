@@ -46,8 +46,8 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 		return this.weapon.systemData.damage;
 	}
 
-	opposed(actor: SR6Actor, item: undefined | SR6Item = undefined): RangedDefenseTest<RangedAttackTestData> {
-		return new RangedDefenseTest<RangedAttackTestData>({
+	opposed(actor: SR6Actor, item: undefined | SR6Item = undefined): RangedDefenseTest {
+		return new RangedDefenseTest({
 			actor,
 			item,
 			data: {
@@ -58,7 +58,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 		});
 	}
 
-	soak(defenseTest: RangedDefenseTest<RangedAttackTestData>): ITest {
+	soak(defenseTest: RangedDefenseTest): ITest {
 		return new PhysicalSoakTest({
 			actor: defenseTest.actor,
 			data: {

@@ -118,7 +118,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 		if (!weapon.systemData.isMelee) {
 			await new RangedAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 		} else {
-			//await new MeleeTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
+			// await new MeleeTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 			// TODO: MeleeAttackTest
 		}
 	} /* else if (action.name == 'Cast Spell') {

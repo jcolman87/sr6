@@ -1,10 +1,12 @@
 import SR6Actor from '@/actor/SR6Actor';
+import { getClass } from '@/data/serialize';
 import RollPrompt from '@/test/RollPrompt';
 import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
 import SR6Roll from '@/roll/SR6Roll';
+import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 import { Result, Ok, Err } from 'ts-results';
 
 export interface BaseTestData {
@@ -20,6 +22,14 @@ export interface BaseTestData {
 }
 
 export interface TestConstructorData<TData extends BaseTestData> {
+	actor: SR6Actor;
+	item?: SR6Item;
+	data: TData;
+	delta?: RollDataDelta;
+	roll?: SR6Roll;
+}
+
+export interface TestSourceData<TData extends BaseTestData> {
 	type: string;
 	modifiers: IModifier[];
 	baseData: TData;
@@ -186,5 +196,26 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 		// copy applicable modifiers off the actor
 		this.modifiers = actor.modifiers.applicable;
+	}
+
+	static fromData<TTest extends BaseTest = BaseTest, TData extends BaseTestData = BaseTestData>(
+		msgData: TestSourceData<TData>,
+	): Result<TTest, string> {
+		const actor = getActorSync(SR6Actor, msgData.baseData.actorId!);
+		const item = msgData.baseData.itemId ? getItemSync(SR6Item, msgData.baseData.itemId) : null;
+
+		const cls = getClass<ConstructorOf<BaseTest>>(CONFIG.sr6.types.tests, { class: msgData.type });
+		if (cls.ok) {
+			return Ok(
+				new cls.val({
+					actor,
+					item,
+					data: msgData.baseData,
+					delta: msgData.delta,
+					roll: msgData.roll ? SR6Roll.fromData(msgData.roll) : undefined,
+				}) as TTest,
+			);
+		}
+		return Err(cls.val);
 	}
 }
