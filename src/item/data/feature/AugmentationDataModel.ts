@@ -1,22 +1,39 @@
 import { DocumentUUIDField } from '@/data/fields';
+import { IHasOnDelete } from '@/data/interfaces';
+import { ItemActivationDataModel } from '@/item/data/BaseItemDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
+import { GearAvailabilityDataModel } from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getItem, getItemSync } from '@/util';
 
-export default abstract class AugmentationDataModel extends QualityDataModel {
+export default abstract class AugmentationDataModel
+	extends QualityDataModel
+	implements IHasOnDelete<SR6Item<QualityDataModel>>
+{
 	abstract rating: number;
 	abstract quality: number;
-	abstract essenceCost: number;
+
+	abstract costFormula: string;
+	abstract availability: GearAvailabilityDataModel;
+
+	abstract essenceCostFormula: string;
 
 	abstract sourceGearIds: ItemUUID[];
 	abstract _attachedGearIds: ItemUUID[];
+
+	get cost(): number {
+		return this.solveFormula(this.costFormula);
+	}
+
+	get essenceCost(): number {
+		return this.solveFormula(this.essenceCostFormula);
+	}
 
 	override getRollData(): Record<string, unknown> {
 		return {
 			...super.getRollData(),
 			rating: this.rating,
 			quality: this.quality,
-			essenceCost: this.essenceCost,
 		};
 	}
 
@@ -36,12 +53,11 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 		await this.item!.update({ ['system._attachedGearIds']: this._attachedGearIds });
 	}
 
-	override onDelete(
+	onDelete(
 		document: SR6Item<QualityDataModel>,
 		options: DocumentModificationContext<SR6Item<QualityDataModel>>,
 		userId: string,
 	): void {
-		super.onDelete(document, options, userId);
 		this._attachedGearIds.forEach((uuid) => {
 			const item = getItemSync(SR6Item, uuid);
 			if (item) {
@@ -60,7 +76,7 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 				nullable: false,
 				integer: true,
 				min: 1,
-				max: 6,
+				max: 12,
 			}),
 			quality: new fields.NumberField({
 				initial: 1,
@@ -70,14 +86,10 @@ export default abstract class AugmentationDataModel extends QualityDataModel {
 				min: 1,
 				max: 6,
 			}),
-			essenceCost: new fields.NumberField({
-				initial: 1,
-				required: true,
-				nullable: false,
-				integer: false,
-				min: 0,
-				max: 6,
-			}),
+			essenceCostFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
+
+			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
+			availability: new fields.EmbeddedDataField(GearAvailabilityDataModel, { required: true, nullable: false }),
 
 			sourceGearIds: new fields.ArrayField(new DocumentUUIDField(), {
 				initial: [],

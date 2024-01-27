@@ -5,7 +5,7 @@ import GeneralActionDataModel, { GeneralActionCategory } from '@/item/data/actio
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
-import RangedAttackTest from '@/test/RangedAttackTest';
+import { RangedAttackTest } from '@/test/RangedTests';
 import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
 import Weapons from '@/vue/components/combat/Weapons.vue';
 import Wearing from '@/vue/components/combat/Wearing.vue';
@@ -94,18 +94,6 @@ async function addCoreActions() {
 
 async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 	const actor = toRaw(context.data.actor);
-	let consume = false;
-	if (actor.inCombat) {
-		consume = await Dialog.confirm({
-			title: 'Consume action with use?',
-			content: 'Do you want to consume an action with this use?',
-			yes: () => true,
-			no: () => false,
-			options: {
-				classes: ['prompt-dialog'],
-			},
-		});
-	}
 
 	// Special case for Attacks
 	if (action.name === 'Attack') {
@@ -114,18 +102,28 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 			ui.notifications.error('You have no equipped weapon. No action was consumed');
 			return;
 		}
-		await action.systemData.use(consume, false);
-		if (!weapon.systemData.isMelee) {
-			await new RangedAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
+		if (weapon.systemData.isMelee) {
+			// await new MeleeAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 		} else {
-			// await new MeleeTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
-			// TODO: MeleeAttackTest
+			await new RangedAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 		}
 	} /* else if (action.name == 'Cast Spell') {
 		const actor = toRaw(context.data.actor);
 		const pickSpell = new SelectListDialog();
 		const spell = pickSpell.selection();
 	} */ else {
+		let consume = false;
+		if (actor.inCombat) {
+			consume = await Dialog.confirm({
+				title: 'Consume action with use?',
+				content: 'Do you want to consume an action with this use?',
+				yes: () => true,
+				no: () => false,
+				options: {
+					classes: ['prompt-dialog'],
+				},
+			});
+		}
 		await action.systemData.use(consume);
 	}
 }

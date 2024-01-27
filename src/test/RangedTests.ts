@@ -5,22 +5,24 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SR6Item from '@/item/SR6Item';
 import PhysicalSoakTest from '@/test/PhysicalSoakTest';
 import SR6Roll from '@/roll/SR6Roll';
-import AttackTestData from '@/test/AttackTestData';
-import BaseTest from '@/test/BaseTest';
+import { PhysicalAttackTestData } from '@/test/AttackTestData';
+import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import RangedDefenseTest from '@/test/RangedDefenseTest';
 import { getActorSync, getTargetActorIds } from '@/util';
 import { Component } from 'vue';
 
-import PromptComponent from '@/test/vue/prompt/RangedAttackTest.vue';
-import ChatComponent from '@/test/vue/chat/RangedAttackTest.vue';
+import AttackPromptComponent from '@/test/vue/prompt/RangedAttackTest.vue';
+import AttackChatComponent from '@/test/vue/chat/RangedAttackTest.vue';
+import DefenseChatComponent from '@/test/vue/chat/RangedDefenseTest.vue';
 
-export interface RangedAttackTestData extends AttackTestData {
+export interface RangedAttackTestData extends PhysicalAttackTestData {
 	firemode?: FireMode;
 }
 
-export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
-	override type: TestType = TestType.RangedAttack;
+export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
+	override get type(): TestType {
+		return TestType.RangedAttack;
+	}
 
 	weapon: SR6Item<WeaponDataModel>;
 
@@ -53,7 +55,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			data: {
 				pool: actor.solveFormula(this.weapon.systemData.damageData?.defenseFormula),
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				oppposedData: this.toJSON() as any,
+				opposedData: this.toJSON() as any,
 			},
 		});
 	}
@@ -63,7 +65,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			actor: defenseTest.actor,
 			data: {
 				pool: defenseTest.actor.solveFormula(this.weapon.systemData.damageData?.soakFormula),
-				threshold: this.damage(defenseTest.roll?.hits),
+				threshold: this.damage(defenseTest.roll?.net_hits),
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				defenseTest: defenseTest.toJSON() as any,
 			},
@@ -71,11 +73,11 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 	}
 
 	chatComponent(): Component {
-		return ChatComponent;
+		return AttackChatComponent;
 	}
 
 	promptComponent(): Component {
-		return PromptComponent;
+		return AttackPromptComponent;
 	}
 
 	constructor({
@@ -87,7 +89,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 	}: {
 		actor: SR6Actor<LifeformDataModel>;
 		item: SR6Item;
-		data?: RangedAttackTest;
+		data?: RangedAttackTestData;
 		roll?: SR6Roll;
 		delta?: RollDataDelta;
 	}) {
@@ -97,7 +99,7 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			damage: weapon.systemData.damage,
 			attackRating: weapon.systemData.attackRatings.near,
 			firemode: FireMode.SS,
-			distance: weapon.systemData.firemodes ? Distance.Close : Distance.Near,
+			distance: Distance.Near,
 			pool: weapon.systemData.pool,
 		};
 
@@ -111,5 +113,48 @@ export default class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			delta,
 		});
 		this.weapon = weapon;
+	}
+}
+
+export interface RangedDefenseTestData extends BaseTestData {
+	opposedData: TestSourceData<RangedAttackTestData>;
+}
+
+export class RangedDefenseTest extends BaseTest<RangedDefenseTestData> {
+	override get type(): TestType {
+		return TestType.RangedDefense;
+	}
+
+	opposedTest: RangedAttackTest;
+
+	chatComponent(): Component {
+		return DefenseChatComponent;
+	}
+
+	constructor({
+		actor,
+		item,
+		data,
+		delta,
+		roll,
+	}: {
+		actor: SR6Actor;
+		item?: SR6Item;
+		data: RangedDefenseTestData;
+		delta?: RollDataDelta;
+		roll?: SR6Roll;
+	}) {
+		// Set the threshold automatically from the opposed data
+		const opposedTest = BaseTest.fromData<RangedAttackTest>(data.opposedData);
+		if (opposedTest.ok) {
+			data.threshold = opposedTest.val.roll?.hits;
+		} else {
+			throw opposedTest.val;
+		}
+
+		super({ actor, item, data, roll, delta });
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		this.opposedTest = opposedTest.val;
 	}
 }

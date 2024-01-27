@@ -1,7 +1,8 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import SR6Actor from '@/actor/SR6Actor';
-import RangedAttackTest from '@/test/RangedAttackTest';
+import { isTargetOwner } from '@/test/AttackTestData';
+import { RangedAttackTest } from '@/test/RangedTests';
 import { getSelfOrSelectedActors } from '@/util';
 import Targets from '@/chat/vue/Targets.vue';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
@@ -13,6 +14,7 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
+	src: foundry.abstract.Document;
 	test: RangedAttackTest;
 }>();
 
@@ -29,13 +31,6 @@ const visibility = ref({
 		firemode: false,
 	},
 });
-
-function isTargetOwner(): boolean {
-	if (props.test.targets.length === 0) {
-		return true;
-	}
-	return props.test.targets.find((target: SR6Actor) => target.isOwner) !== undefined;
-}
 
 emit('setText', {
 	title: `Roll Attack (${props.test.weapon.name})`,
@@ -105,7 +100,7 @@ emit('setText', {
 		</div>
 		<Targets v-if="test.targets.length > 0" :targets="test.targets" />
 		<input
-			v-if="isTargetOwner()"
+			v-if="isTargetOwner(test.data)"
 			class="dialog-button"
 			type="button"
 			value="Roll Defense"

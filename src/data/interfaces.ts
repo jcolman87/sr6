@@ -1,11 +1,11 @@
 import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import { InitiativeType } from '@/data/index';
+import InitiativeDataModel from '@/data/InitiativeDataModel';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
 import { Modifiers } from '@/modifier';
-import { RollType } from '@/roll/legacy';
 
 export type AvailableActions = {
 	major: number;
@@ -23,13 +23,8 @@ export interface IHasSystemData<T extends BaseDataModel = BaseDataModel> {
 	getSystemData?(): T;
 }
 
-export interface IHasPools extends IHasActor {
-	getPool(type: RollType): number;
-	get defenseRating(): number;
-}
-
-export interface IHasInitiative extends IHasActor, IHasPools {
-	getInitiativeFormula(type: InitiativeType): null | string;
+export interface IHasInitiative extends IHasActor {
+	getInitiative(type: InitiativeType): null | InitiativeDataModel;
 
 	getAvailableActions(type: InitiativeType): AvailableActions;
 }

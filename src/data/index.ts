@@ -18,6 +18,13 @@ export enum ActivationPeriod {
 	TenMinute = '10minute',
 }
 
+export enum ActivationPhase {
+	Initiative = 'initiative',
+	PreRoll = 'pre',
+	PostRoll = 'post',
+	Any = 'any',
+}
+
 export enum ActivationMode {
 	Always = 'always',
 	Manual = 'manual',
@@ -33,6 +40,7 @@ export enum DamageType {
 	Physical = 'P',
 	Stun = 'S',
 	Matrix = 'M',
+	Biofeedback = 'B',
 	Astral = 'A',
 }
 

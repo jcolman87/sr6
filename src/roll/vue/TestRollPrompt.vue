@@ -1,25 +1,27 @@
 <script lang="ts" setup>
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import { ActivationPhase } from '@/data';
+import { IEdgeBoost } from '@/edge';
 import { IModifier } from '@/modifier';
-import TestPoolModifier from '@/modifier/TestPoolModifier';
-import { getEventValue } from '@/vue/directives';
+import { TestPoolModifier } from '@/modifier/TestModifiers';
+import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
 import { inject, toRaw, ref, onMounted, computed } from 'vue';
-import { RollPromptContext } from '@/test/RollPrompt';
+import { TestRollPromptContext } from '@/roll/TestRollPrompt';
 import { RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
 
 import { Collapse } from 'vue-collapsed';
 import * as images from '@/vue/images';
 
-const context = inject<RollPromptContext>(RootContext)!;
+const context = inject<TestRollPromptContext>(RootContext)!;
 const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
+const edgeBoost = ref<IEdgeBoost | null>(null);
 
 const text = ref({
 	title: 'Roll',
 	hint: '',
 });
-const edgeBoost = ref<string | null>(null);
+
 const poolModifier = ref(0);
 const originalPool = context.test.data.pool!;
 
@@ -35,21 +37,9 @@ const conditionsDescriptionsVisible = ref(
 );
 
 async function roll() {
-	// Apply edge action to the roll
-	switch (edgeBoost.value) {
-		case 'buy_one':
-			context.test.data.autoHits = 1;
-			break;
-		case 'add_edge_pool':
-			if (context.test.data.pool) {
-				context.test.data.pool += (baseSystem.value as LifeformDataModel).monitors.edge.max;
-			} else {
-				context.test.data.pool = (baseSystem.value as LifeformDataModel).monitors.edge.max;
-			}
-			context.test.data.explode = true;
-			break;
+	if (edgeBoost.value) {
+		toRaw(context.test).applyEdgeBoost(toRaw(edgeBoost.value));
 	}
-
 	context.resolvePromise(toRaw(context.test.data));
 }
 function setText(value: { title: string; hint: string }) {
@@ -57,9 +47,7 @@ function setText(value: { title: string; hint: string }) {
 }
 
 function onUpdatePool() {
-	console.log('onUpdatePool1', toRaw(context.test.data));
 	context.test.data.pool = originalPool + poolModifier.value;
-	console.log('onUpdatePool2', toRaw(context.test.data));
 }
 
 function toggleConditions() {
@@ -164,26 +152,11 @@ onMounted(() => {
 			</div>
 		</div>
 
-		<div class="section">
-			`
-			<label><Localized label="SR6.Edge.EdgeBoost" /></label>
-			<select @change="(ev) => (edgeBoost = getEventValue(ev) as string)">
-				<option value="null">-</option>
-				<!-- TODO  -->
-				<!--These are post roll actions
-					<option value="add_one">+1 to Roll</option>
-					<option value="reroll_one">Reroll 1</option>
-					<option value="reroll_fail">Reroll failures</option> -->
-				<option value="action">Perform Edge Action</option>
-				<option value="buy_one">Buy 1 Hit</option>
-				<option value="add_edge_pool">Add Edge + Explode</option>
-			</select>
-			<label><Localized label="SR6.Edge.EdgeAction" /></label>
-			<select :disabled="edgeBoost != 'action'">
-				<option>-</option>
-				<option>Balls</option>
-			</select>
-		</div>
+		<EdgeMenu
+			@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
+			:actor="context.test.actor"
+			:phase="ActivationPhase.PreRoll"
+		/>
 
 		<!-- Roll Button -->
 		<div class="row">

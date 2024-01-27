@@ -11,6 +11,11 @@ effects:
   - name: Analytical Mind
     transfer: true
 system:
+  modifiers:
+    - name: Analytical Mind
+      description: Grant Edge for Logic Tests
+      class: EdgeModifier
+      data: { testClasses: ['SkillTest', 'AttributeTest', 'MatrixActionTest'], attribute: 'logic' }
 ---
 name: Aptitude
 type: quality

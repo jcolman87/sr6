@@ -1,9 +1,14 @@
-import BaseDataModel from '@/data/BaseDataModel';
 import { ConditionalData } from '@/effect/conditional';
+
 import { ITest } from 'src/test';
 import { ClassData } from '@/data/serialize';
 import BaseModifier from '@/modifier/BaseModifier';
-import TestPoolModifier from '@/modifier/TestPoolModifier';
+import { TestPoolModifier, TestFunctionModifier } from '@/modifier/TestModifiers';
+
+// Specialized impls
+import { WoundModifier } from '@/modifier/impl/WoundModifier';
+import { PainEditorModifier } from '@/modifier/impl/PainEditorModifier';
+import { EdgeModifier } from '@/modifier/impl/EdgeModifier';
 
 export type ModifierSourceUUID =
 	| ActorDocumentUUID
@@ -15,7 +20,7 @@ export type ModifierSourceUUID =
 export interface IModifier {
 	get class(): string;
 
-	get isApplicable(): boolean;
+	isApplicable(test: Maybe<ITest>): boolean;
 
 	get name(): undefined | string;
 	get description(): undefined | string;
@@ -23,11 +28,10 @@ export interface IModifier {
 	get parent(): foundry.abstract.Document;
 	get source(): foundry.abstract.Document;
 
-	forTest?(test: ITest): boolean;
-	prepareTest?<TTest extends ITest>(test: TTest): void;
-	finishTest?<TTest extends ITest>(test: TTest): void;
+	prepareTest?<TTest extends ITest>(test: TTest): Promise<void>;
+	finishTest?<TTest extends ITest>(test: TTest): Promise<void>;
 
-	prepareDocument?(document: foundry.abstract.Document): void;
+	prepareDocument?(document: foundry.abstract.Document): Promise<void>;
 
 	toJSON(): ModifierSourceData;
 }
@@ -36,8 +40,8 @@ export type ModifierSourceData = {
 	parent?: ModifierSourceUUID;
 	source?: ModifierSourceUUID;
 
-	name: string;
-	description: string;
+	name?: string;
+	description?: string;
 	conditions?: ConditionalData[];
 } & ClassData &
 	Record<string, unknown>;
@@ -58,17 +62,8 @@ export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abs
 	sourceData: ModifiersSourceData;
 	all: IModifier[];
 
-	get applicable(): IModifier[] {
-		return this.all.filter((mod) => mod.isApplicable);
-	}
-
-	forTest(test: ITest): IModifier[] {
-		return this.applicable.filter((mod) => {
-			if (mod.forTest) {
-				return mod.forTest?.(test);
-			}
-			return false;
-		});
+	getApplicable(test: Maybe<ITest> = null): IModifier[] {
+		return this.all.filter((mod) => mod.isApplicable(test));
 	}
 
 	updateSource(data: ModifiersSourceData): void {
@@ -81,6 +76,11 @@ export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abs
 				this.all.push(mod.val);
 			}
 		});
+	}
+
+	async pushSave(newModifier: IModifier): Promise<void> {
+		this.all.push(newModifier);
+		await this.save();
 	}
 
 	async save(): Promise<void> {
@@ -103,5 +103,10 @@ export function register(): void {}
 export function config(): Record<string, unknown> {
 	return {
 		TestPoolModifier: TestPoolModifier,
+		TestFunctionModifier: TestFunctionModifier,
+		PainEditorModifier: PainEditorModifier,
+		WoundModifier: WoundModifier,
+
+		EdgeModifier: EdgeModifier,
 	};
 }

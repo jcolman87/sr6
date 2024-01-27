@@ -85,10 +85,8 @@ function getPersonaName(): string {
 						<td class="title">Initiative</td>
 						<td>
 							<i class="bold-value"
-								>{{ props.persona.initiativeBasis }}
-								<span v-if="props.persona.initiativeDice"
-									>+ {{ props.persona.initiativeDice }}d6</span
-								></i
+								>{{ props.persona.initiative.score }}
+								<span>+ {{ props.persona.initiative.dice }}d6</span></i
 							>
 						</td>
 					</tr>

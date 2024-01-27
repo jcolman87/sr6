@@ -12,7 +12,9 @@ import {
 	IHasModifiers,
 	IHasOnDelete,
 } from '@/data/interfaces';
+import SR6Effect from '@/effect/SR6Effect';
 import { Modifiers, ModifiersSourceData } from '@/modifier';
+import FormulaRoll from '@/roll/FormulaRoll';
 import * as util from '@/util';
 import SR6Actor from '@/actor/SR6Actor';
 
@@ -41,6 +43,19 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 		return this.systemData;
 	}
 
+	async toggleAllEffects(enabled: boolean): Promise<void> {
+		await this.updateEmbeddedDocuments(
+			'ActiveEffect',
+			Array.from(
+				this.effects
+					.map((effect) => effect as SR6Effect)
+					.map((effect) => {
+						return { _id: effect.id, disabled: !enabled };
+					}),
+			),
+		);
+	}
+
 	/**
 	 * Specialized property for accessing `item.system` in a typed manner.
 	 */
@@ -49,7 +64,7 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	}
 
 	solveFormula(formula: string, actor: SR6Actor | null = null, data: Record<string, unknown> = {}): number {
-		const roll = new Roll(formula, {
+		const roll = new FormulaRoll(formula, {
 			...this.getRollData(),
 			...actor?.getRollData(),
 			...data,

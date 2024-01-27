@@ -192,11 +192,13 @@ system:
       - admin
     activationType: major
     activationPeriod: initiative
+  damage:
+    type: 'M'
   formulas:
     attack: null
     defend: '@persona.d + @persona.f'
     deviceDefend: '@persona.d + @persona.f'
-    damage: 'ceil(@persona.a/2) + @hits'
+    damage: 'ceil(@persona.a/2) + @net_hits'
     soak: '@persona.f'
 ---
 name: Disarm Data Bomb

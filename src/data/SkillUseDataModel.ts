@@ -1,14 +1,26 @@
 import { EnumAttribute } from '@/actor/data';
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
+import SR6Item from '@/item/SR6Item';
+import { toSnakeCase } from '@/util';
 
-export default abstract class SkillUseDataModel extends BaseDataModel {
-	abstract skill: string;
-	abstract attribute: EnumAttribute;
-	abstract specialization: null | string;
+export default class SkillUseDataModel extends BaseDataModel {
+	declare parent: SR6Item | SR6Actor | BaseDataModel;
+
+	declare skill: string;
+	declare attribute: EnumAttribute;
+	declare specialization: null | string;
 
 	get pool(): number {
-		// TODO: specialization bonus
-		return this.solveFormula(`@${EnumAttribute[this.attribute]} + @${this.skill}`);
+		return this.solveFormula(
+			`@${EnumAttribute[this.attribute]} + @${toSnakeCase(this.specialization || this.skill)}`,
+		);
+	}
+
+	get(actor: SR6Actor<BaseActorDataModel> | null): null | SR6Item<SkillDataModel> {
+		return actor ? actor.skill(this.skill) : this.actor!.skill(this.skill);
 	}
 
 	static defineSchema(): foundry.data.fields.DataSchema {
@@ -23,7 +35,14 @@ export default abstract class SkillUseDataModel extends BaseDataModel {
 				required: true,
 				choices: () => Object.keys(EnumAttribute),
 			}),
-			specialization: new fields.StringField({ nullable: false, blank: false, required: true }),
+			specialization: new fields.StringField({ nullable: true, blank: false, required: true }),
 		};
+	}
+
+	constructor(
+		data?: DeepPartial<SourceFromSchema<foundry.data.fields.DataSchema>>,
+		options?: DataModelConstructionOptions<any>,
+	) {
+		super(data, options);
 	}
 }

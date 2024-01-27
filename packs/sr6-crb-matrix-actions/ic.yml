@@ -9,6 +9,8 @@ system:
   limits:
     activationType: major
     activationPeriod: initiative
+  damage:
+    type: 'M'
   formulas:
     attack: '@rating * 2'
     defend: '@logic + @persona.f'

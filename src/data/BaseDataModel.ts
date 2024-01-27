@@ -70,4 +70,11 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 	getRollData(): Record<string, unknown> {
 		return {};
 	}
+
+	constructor(
+		data?: DeepPartial<SourceFromSchema<foundry.data.fields.DataSchema>>,
+		options?: DataModelConstructionOptions<any>,
+	) {
+		super(data, options);
+	}
 }

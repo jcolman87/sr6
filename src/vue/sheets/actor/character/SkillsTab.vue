@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import SkillUseDataModel from '@/data/SkillUseDataModel';
+import SkillTest from '@/test/SkillTest';
 import { getEventValue } from '@/vue/directives';
 import { computed, inject, ref, toRaw } from 'vue';
 
@@ -36,9 +38,12 @@ async function updateSkill(skill: SR6Item<SkillDataModel>) {
 	await skill.update({ ['system']: skill.systemData });
 }
 
-async function roll(_skill: SR6Item<SkillDataModel>, _special: null | string = null) {
-	// TODO:
-	// await rollers.rollSkill(toRaw(context.data.actor), skill.id, special);
+async function roll(skill: SR6Item<SkillDataModel>, specialization: null | string = null) {
+	const skillUse = new SkillUseDataModel(
+		{ skill: skill.name, specialization, attribute: skill.systemData.attribute },
+		{ parent: toRaw(context.data.actor) },
+	);
+	await new SkillTest({ actor: toRaw(context.data.actor), data: { skillUse } }).execute();
 }
 
 function addSkill() {}

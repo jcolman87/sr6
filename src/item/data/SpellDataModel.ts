@@ -22,10 +22,10 @@ export type SpellDamageData = {
 };
 
 export type SpellFormulaData = {
-	drainFormula: string;
-	damageFormula: string;
-	defenseFormula: string;
-	soakFormula: string;
+	drain: string;
+	damage: string;
+	defend: string;
+	soak: string;
 };
 
 export enum SpellAdjustmentType {
@@ -34,36 +34,18 @@ export enum SpellAdjustmentType {
 	ShiftArea = 'shift',
 }
 
-export function drainFromAdjustments(adjustments: SpellAdjustmentType[]): number {
-	return adjustments.reduce((acc, adjustment) => {
-		switch (adjustment) {
-			case SpellAdjustmentType.AmpUp:
-				acc += 2;
-				break;
-			case SpellAdjustmentType.IncreaseArea:
-				acc += 1;
-				break;
-			case SpellAdjustmentType.ShiftArea:
-				acc += 0;
-				break;
-		}
-		return acc;
-	}, 0);
+export type SpellAdjustments = {
+	[SpellAdjustmentType.AmpUp]: number;
+	[SpellAdjustmentType.IncreaseArea]: number;
+	[SpellAdjustmentType.ShiftArea]: number;
+};
+
+export function drainFromSpellAdjustments(adjustments: SpellAdjustments): number {
+	return adjustments[SpellAdjustmentType.AmpUp] * 2 + adjustments[SpellAdjustmentType.IncreaseArea];
 }
 
-export function damageFromAdjustments(adjustments: SpellAdjustmentType[]): number {
-	return adjustments.reduce((acc, adjustment) => {
-		switch (adjustment) {
-			case SpellAdjustmentType.AmpUp:
-				acc += 1;
-				break;
-			case SpellAdjustmentType.IncreaseArea:
-			case SpellAdjustmentType.ShiftArea:
-				acc += 0;
-				break;
-		}
-		return acc;
-	}, 0);
+export function damageFromSpellAdjustments(adjustments: SpellAdjustments): number {
+	return adjustments[SpellAdjustmentType.AmpUp];
 }
 
 export default abstract class SpellDataModel extends BaseItemDataModel {
@@ -78,15 +60,15 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 	}
 
 	get drain(): number {
-		if (this.formulas.drainFormula) {
-			return this.solveFormula(this.formulas.drainFormula);
+		if (this.formulas.drain) {
+			return this.solveFormula(this.formulas.drain);
 		}
 		return 0;
 	}
 
 	get baseDamage(): number {
-		if (this.formulas.damageFormula) {
-			return this.solveFormula(this.formulas.damageFormula);
+		if (this.formulas.damage) {
+			return this.solveFormula(this.formulas.damage);
 		} else {
 			switch (this.damage.combat) {
 				case SpellCombatType.Direct:
@@ -114,13 +96,13 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 	}
 
 	getSoakPool(actor: SR6Actor<LifeformDataModel>): number {
-		if (!this.formulas.soakFormula && !this.damage) {
+		if (!this.formulas.soak && !this.damage) {
 			ui.notifications.error('Called getSoakPool on a spell without a combat type and no formula?');
 			return 0;
 		}
 
-		if (this.formulas.soakFormula) {
-			return this.item!.solveFormula(this.formulas.soakFormula!, actor);
+		if (this.formulas.soak) {
+			return this.item!.solveFormula(this.formulas.soak!, actor);
 		} else {
 			switch (this.damage.combat) {
 				case SpellCombatType.Direct:
@@ -133,13 +115,13 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 	}
 
 	getDefensePool(actor: SR6Actor<LifeformDataModel>): number {
-		if (!this.formulas.defenseFormula && !this.damage) {
+		if (!this.formulas.defend && !this.damage) {
 			ui.notifications.error('Called getDefensePool on a spell without a combat type and no formula?');
 			return 0;
 		}
 
-		if (this.formulas.defenseFormula) {
-			return this.item!.solveFormula(this.formulas.defenseFormula!, actor);
+		if (this.formulas.defend) {
+			return this.item!.solveFormula(this.formulas.defend!, actor);
 		} else {
 			switch (this.damage.combat) {
 				case SpellCombatType.Direct:
@@ -148,6 +130,19 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 					return this.item!.solveFormula('@willpower + @reaction', actor);
 			}
 		}
+	}
+
+	getDamage(attack: Record<string, unknown> = {}, defend: Record<string, unknown> = {}): number {
+		switch (this.damage.combat) {
+			case SpellCombatType.Direct:
+				return (attack.hits ? (attack.hits as number) : 0) - (defend.hits ? (defend.hits as number) : 0);
+			case SpellCombatType.Indirect:
+				return this.solveFormula('ceil(@magic / 2)') - (defend.hits ? (defend.hits as number) : 0);
+		}
+	}
+
+	getAttackRating(data: Record<string, unknown> = {}): number {
+		TODO: return 69;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -163,25 +158,25 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 			}),
 			formulas: new fields.SchemaField(
 				{
-					damageFormula: new fields.StringField({
+					damage: new fields.StringField({
 						initial: null,
 						required: true,
 						nullable: true,
 						blank: false,
 					}),
-					drainFormula: new fields.StringField({
+					drain: new fields.StringField({
 						initial: null,
 						required: true,
 						nullable: true,
 						blank: false,
 					}),
-					defenseFormula: new fields.StringField({
+					defend: new fields.StringField({
 						initial: null,
 						required: true,
 						nullable: true,
 						blank: false,
 					}),
-					soakFormula: new fields.StringField({
+					soak: new fields.StringField({
 						initial: null,
 						required: true,
 						nullable: true,

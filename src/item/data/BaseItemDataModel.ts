@@ -5,6 +5,7 @@
  */
 
 import SR6Actor from '@/actor/SR6Actor';
+import { ActivationType } from '@/data';
 import BaseDataModel from '@/data/BaseDataModel';
 
 /**
@@ -68,5 +69,30 @@ export default abstract class BaseItemDataModel extends BaseDataModel {
 			content: chatTemplate,
 			type: CONST.CHAT_MESSAGE_TYPES.OOC,
 		});
+	}
+}
+
+export abstract class ItemActivationDataModel extends BaseDataModel {
+	abstract type: ActivationType;
+	abstract status: boolean;
+
+	override prepareBaseData(): void {
+		if (this.type == ActivationType.Passive) {
+			this.status = true;
+		}
+	}
+
+	static defineSchema(): foundry.data.fields.DataSchema {
+		const fields = foundry.data.fields;
+		return {
+			type: new fields.StringField({
+				initial: ActivationType.Minor,
+				nullable: false,
+				required: true,
+				blank: false,
+				choices: Object.values(ActivationType),
+			}),
+			status: new fields.BooleanField({ initial: false, required: true, nullable: false }),
+		};
 	}
 }

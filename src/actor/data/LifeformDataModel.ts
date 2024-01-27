@@ -6,10 +6,9 @@ import MonitorDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataMo
 import { InitiativeType } from '@/data';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
 
-import { AvailableActions, IHasEdge, IHasInitiative, IHasPools, IHasPostCreate } from '@/data/interfaces';
+import { AvailableActions, IHasEdge, IHasInitiative, IHasPostCreate } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
-import { RollType } from '@/roll/legacy';
 
 /** s
  *
@@ -47,7 +46,7 @@ export type Initiatives = {
 
 export default abstract class LifeformDataModel
 	extends BaseActorDataModel
-	implements IHasPostCreate, IHasInitiative, IHasEdge, IHasPools
+	implements IHasPostCreate, IHasInitiative, IHasEdge
 {
 	abstract attributes: Attributes;
 
@@ -67,8 +66,11 @@ export default abstract class LifeformDataModel
 		return this.solveFormula(`@magic + @${MAGIC_TRADITION_ATTRIBUTE[this.magicTradition]}`);
 	}
 
-	get spellResistDrain(): number {
+	get spellDrainPool(): number {
 		return this.solveFormula(`@willpower + @${MAGIC_TRADITION_ATTRIBUTE[this.magicTradition]}`);
+	}
+	get spellAmps(): number {
+		return this.solveFormula(`max(@magic, @sorcery)`);
 	}
 
 	get matrixPersona(): null | MatrixPersonaDataModel {
@@ -82,18 +84,18 @@ export default abstract class LifeformDataModel
 	//
 	// IHasInitiative
 	//
-	getInitiativeFormula(type: InitiativeType): null | string {
-		const modifier = 0; // TODO:
+	getInitiative(type: InitiativeType): null | InitiativeDataModel {
 		switch (type) {
 			case InitiativeType.Physical:
-				return `${this.initiatives.physical.formula} + ${modifier}`;
+				return this.initiatives.physical;
 			case InitiativeType.Astral:
-				return this.initiatives.astral ? `${this.initiatives.astral!.formula} + ${modifier}` : null;
+				return this.initiatives.astral;
 			case InitiativeType.Matrix: {
 				if (!this.matrixPersona) {
 					ui.notifications.error('No matrix persona activated for rolling initiative');
+					return null;
 				}
-				return this.matrixPersona ? this.matrixPersona.initiativeFormula : null;
+				return this.matrixPersona.initiative;
 			}
 		}
 	}
@@ -113,43 +115,6 @@ export default abstract class LifeformDataModel
 			major: 1,
 			minor: 1,
 		};
-	}
-
-	//
-	// IHasPool
-	//
-	override get defenseRating(): number {
-		return this.attribute(EnumAttribute.body).value;
-	}
-
-	override getPool(type: RollType): number {
-		const pool = this.woundModifier;
-
-		switch (type) {
-			case RollType.WeaponAttack:
-				return pool;
-			case RollType.WeaponDefend:
-				return (
-					pool + this.attribute(EnumAttribute.agility).value + this.attribute(EnumAttribute.intuition).value
-				);
-			// Damage Soaks are the same here
-			case RollType.SpellSoak:
-			case RollType.WeaponSoak:
-				return pool + this.attribute(EnumAttribute.body).value;
-			case RollType.Initiative:
-			case RollType.Attribute:
-			case RollType.Skill:
-			case RollType.MatrixAction:
-			case RollType.MatrixActionDefend:
-			case RollType.SpellCast:
-			case RollType.SpellDrain:
-			case RollType.SpellDefend:
-				break;
-			default:
-				ui.notifications.error('Unimplemented pool type');
-		}
-
-		return pool;
 	}
 
 	//

@@ -6,6 +6,20 @@ export type SR6RollOptions = {
 export default class SR6Roll extends Roll {
 	declare options: SR6RollOptions;
 
+	getRollData(): Record<string, unknown> {
+		return {
+			hits: this.hits,
+			glitches: this.glitches,
+			net_hits: this.net_hits,
+			total: this.total,
+			success: this.success,
+			glitch: this.is_glitch,
+			critical_glitch: this.is_critical_glitch,
+			threshold: this.threshold,
+			pool: this.pool,
+		};
+	}
+
 	get success(): boolean {
 		if (this.options.threshold!) {
 			return this.hits >= this.options.threshold!;
@@ -67,7 +81,7 @@ export default class SR6Roll extends Roll {
 		if (die === null) {
 			die = this._getLowestRollIndex();
 		}
-		const reroll = new SR6Roll(1);
+		const reroll = SR6Roll.createRoll(1);
 		reroll.evaluate({ async: false });
 		await reroll.showVisual();
 
@@ -76,7 +90,7 @@ export default class SR6Roll extends Roll {
 		return true;
 	}
 
-	async addOne(die: null | number = null): Promise<boolean> {
+	addOne(die: null | number = null): boolean {
 		if (die === null) {
 			// Find the best candidate to add one to,
 
@@ -125,7 +139,7 @@ export default class SR6Roll extends Roll {
 			return false;
 		}
 
-		const reroll = new SR6Roll(failedList.length);
+		const reroll = SR6Roll.createRoll(failedList.length);
 		reroll.evaluate({ async: false });
 		await reroll.showVisual();
 
@@ -146,7 +160,7 @@ export default class SR6Roll extends Roll {
 
 	async explode(): Promise<void> {
 		if (this.sixes > 0) {
-			const explode_roll = new SR6Roll(this.sixes);
+			const explode_roll = SR6Roll.createRoll(this.sixes);
 			explode_roll.evaluate({ async: false });
 			await explode_roll.showVisual();
 
@@ -168,12 +182,20 @@ export default class SR6Roll extends Roll {
 	_updateDie(idx: number, value: number): void {
 		(this.terms[0] as DiceTerm).results[idx].result = value;
 	}
+	protected constructor(formula: string, data?: Record<string, unknown>, options?: RollOptions) {
+		const configuredOptions = foundry.utils.mergeObject(options ? options : {}, {
+			parameters: { glitch: [1], success: [5, 6] },
+			pool: 0,
+		});
+		super(formula, data, configuredOptions);
+	}
 
-	constructor(pool: number, data?: Record<string, unknown>, options?: SR6RollOptions) {
+	static createRoll(pool: number, data?: Record<string, unknown>, options?: SR6RollOptions): SR6Roll {
 		const configuredOptions = foundry.utils.mergeObject(options ? options : {}, {
 			parameters: { glitch: [1, 2], success: [5, 6] },
 			pool: pool,
 		});
-		super(`${pool}d6`, data, configuredOptions);
+
+		return new SR6Roll(`${pool}d6`, data, configuredOptions);
 	}
 }

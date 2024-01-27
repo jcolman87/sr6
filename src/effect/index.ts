@@ -7,6 +7,8 @@ import SR6Effect from '@/effect/SR6Effect';
 import SR6EffectSheet from '@/effect/SR6EffectSheet';
 
 export function register(): void {
+	CONFIG.ActiveEffect.legacyTransferral = false;
+
 	CONFIG.ActiveEffect.documentClass = SR6Effect;
 
 	DocumentSheetConfig.unregisterSheet(ActiveEffect, 'core', ActiveEffectConfig);

@@ -8,7 +8,7 @@ import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
 import { IModifier, Modifiers } from '@/modifier';
-import TestPoolModifier from '@/modifier/TestPoolModifier';
+import { TestPoolModifier } from '@/modifier/TestModifiers';
 import { getItemSync } from '@/util';
 
 export const EFFECT_MODES = {
@@ -133,8 +133,6 @@ export default class SR6Effect extends ActiveEffect {
 		_delta: Record<string, unknown>,
 		_changes: Record<string, unknown>,
 	): void {
-		console.log('SR6Effect::_applyPoolModifier');
-
 		const testClasses = change.key.split(',');
 		const value = parseInt(change.value);
 
@@ -224,21 +222,15 @@ export default class SR6Effect extends ActiveEffect {
 
 	_parseChanges(document: SR6Actor | SR6Item, change: ApplicableChangeData<this>): ApplicableChangeData<this> {
 		if (change.value.includes('@')) {
-			const uuid = parseUuid(this.origin);
-
-			if (uuid) {
-				if (Object.keys(uuid.embedded).length === 0) {
-					console.error('TODO');
+			if (this.parent instanceof SR6Item) {
+				if (document instanceof SR6Actor) {
+					change.value = (this.parent as SR6Item).solveFormula(change.value, document).toString();
 				} else {
-					console.log('solve');
-					const item = getItemSync(SR6Item, this.origin as ItemUUID);
-					if (item) {
-						change.value = item.solveFormula(change.value).toString();
-					}
+					change.value = (this.parent as SR6Item).solveFormula(change.value).toString();
 				}
+			} else if (this.parent instanceof SR6Actor) {
+				change.value = (this.parent as SR6Actor).solveFormula(change.value).toString();
 			}
-
-			// change.value = item.solveFormula(change.value, document).toString();
 		}
 
 		return change;

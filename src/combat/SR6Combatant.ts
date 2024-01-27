@@ -9,7 +9,8 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Combat from '@/combat/SR6Combat';
 import { InitiativeType } from '@/data';
 import { IHasInitiative, AvailableActions } from '@/data/interfaces';
-import { getInitiativeRoll } from '@/roll';
+import InitiativeRoll from '@/roll/InitiativeRoll';
+import InitiativeRollPrompt from '@/roll/InitiativeRollPrompt';
 
 export type CombatantFlagData = {
 	initiativeType: InitiativeType;
@@ -82,18 +83,4 @@ export default class SR6Combatant extends Combatant<SR6Combat, SR6Actor> {
 	}
 
 	async endTurn(): Promise<void> {}
-
-	override _getInitiativeFormula(): string {
-		const formula = this.actorSystemData.getInitiativeFormula(this.systemData.initiativeType);
-		if (formula) {
-			return formula!;
-		} else {
-			console.error!(`This actor cannot do initiative of this type? ${this.systemData.initiativeType}`);
-			throw 'ERR';
-		}
-	}
-
-	override getInitiativeRoll(_f: string): Roll {
-		return getInitiativeRoll(this.actorSystemData, this._getInitiativeFormula());
-	}
 }

@@ -2,7 +2,7 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { FireMode } from '@/data';
-import RangedAttackTest from '@/test/RangedAttackTest';
+import { RangedAttackTest } from '@/test/RangedTests';
 import { getActorSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
@@ -27,12 +27,6 @@ const targets = computed(
 		props.test.data.targetIds?.map((id) =>
 			getActorSync(SR6Actor<BaseActorDataModel>, id),
 		) as SR6Actor<BaseActorDataModel>[],
-);
-const targetDefenseRating = computed(() =>
-	targets.value.reduce(
-		(acc, target) => (target.systemData.defenseRating > acc ? (acc = target.systemData.defenseRating) : acc),
-		0,
-	),
 );
 
 emit('setText', {
@@ -116,7 +110,7 @@ onBeforeUpdate(updateEdgeGain);
 			<div class="target-box">
 				<template v-for="target in targets" :key="target.id"
 					><div @click.prevent="focusTarget(target)" @dblclick.prevent="target.sheet?.render(true)">
-						{{ target.name }} ({{ target.systemData.defenseRating }})
+						{{ target.name }}
 					</div></template
 				>
 			</div>
@@ -133,11 +127,7 @@ onBeforeUpdate(updateEdgeGain);
 				</tr>
 				<tr>
 					<td></td>
-					<td>
-						<Localized label="SR6.Combat.DefenseRating" />:
-						<template v-if="targets.length > 0">{{ targetDefenseRating }}</template>
-						<template v-else>N/A</template>
-					</td>
+					<td><Localized label="SR6.Combat.DefenseRating" />: TODO</td>
 				</tr>
 			</table>
 		</div>

@@ -1,6 +1,5 @@
 import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
-import { IHasPools } from '@/data/interfaces';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
@@ -18,28 +17,11 @@ import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
-import { RollType } from '@/roll/legacy';
 
-export default abstract class BaseActorDataModel extends BaseDataModel implements IHasPools {
+export default abstract class BaseActorDataModel extends BaseDataModel {
 	abstract monitors: MonitorsDataModel;
 	abstract description: string;
 	abstract source: string;
-
-	// IHasPools
-	get defenseRating(): number {
-		return 0;
-	}
-
-	getPool(_type: RollType): number {
-		// TODO:
-		return 0;
-	}
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	is<I>(): this is I {
-		return true;
-	}
-
 	get skills(): SkillDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'skill').map(
 			(i) => (i as SR6Item<SkillDataModel>).systemData,

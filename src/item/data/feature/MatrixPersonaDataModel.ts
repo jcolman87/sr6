@@ -1,3 +1,4 @@
+import InitiativeDataModel from '@/data/InitiativeDataModel';
 import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
@@ -35,38 +36,56 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	abstract attributes: AdjustableMatrixAttributesDataModel;
 	abstract formulas: MatrixPersonaFormulasData;
 	abstract type: PersonaType;
-	abstract simType: MatrixSimType;
+	protected abstract _simType: MatrixSimType;
 
-	get initiativeBasis(): number {
+	get initiative(): InitiativeDataModel {
 		switch (this.simType) {
 			case MatrixSimType.AR:
-				return this.solveFormula('@reaction + @intuition');
+				return new InitiativeDataModel(
+					{
+						dice: 0,
+						scoreFormula: '@reaction + @intuition',
+						actions: {
+							majorFormula: '1',
+							minorFormula: '@reaction + @intuition',
+						},
+					},
+					{ parent: this },
+				);
 			case MatrixSimType.VRCold:
+				return new InitiativeDataModel(
+					{
+						dice: 1,
+						scoreFormula: '@intuition + @persona.d',
+						actions: {
+							majorFormula: '1',
+							minorFormula: '@intuition + @persona.d',
+						},
+					},
+					{ parent: this },
+				);
 			case MatrixSimType.VRHot:
-				return this.solveFormula('@intuition + @persona.d');
+				return new InitiativeDataModel(
+					{
+						dice: 2,
+						scoreFormula: '@intuition + @persona.d',
+						actions: {
+							majorFormula: '1',
+							minorFormula: '@intuition + @persona.d',
+						},
+					},
+					{ parent: this },
+				);
 		}
 	}
 
-	get initiativeDice(): number {
-		switch (this.simType) {
-			case MatrixSimType.AR:
-				return 0;
-			case MatrixSimType.VRCold:
-				return 1;
-			case MatrixSimType.VRHot:
-				return 2;
-		}
+	get simType(): MatrixSimType {
+		return this._simType;
 	}
-
-	get initiativeFormula(): string {
-		switch (this.simType) {
-			case MatrixSimType.AR:
-				return '@reaction + @intuition';
-			case MatrixSimType.VRCold:
-				return '(@intuition + @persona.d) + 1d6';
-			case MatrixSimType.VRHot:
-				return '(@intuition + @persona.d) + 2d6';
-		}
+	set simType(simType: MatrixSimType) {
+		// Swap initiative for sim type
+		this._simType = simType;
+		// TODO:
 	}
 
 	get sourceDevice(): null | SR6Item<GearDataModel> {
@@ -115,7 +134,11 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 		return {
 			...super.getRollData(),
 			...this.attributes.getRollData(),
-			type: this.type,
+			persona: {
+				type: this.type,
+				simType: this.simType,
+				...this.attributes.getRollData(),
+			},
 		};
 	}
 
@@ -164,7 +187,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 				},
 				{ required: true, nullable: false },
 			),
-			simType: new fields.StringField({
+			_simType: new fields.StringField({
 				initial: MatrixSimType.AR,
 				required: true,
 				nullable: false,

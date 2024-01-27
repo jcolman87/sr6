@@ -8,8 +8,12 @@ export default class FlagDocument<TDataModel extends foundry.abstract.DataModel>
 
 	system: TDataModel;
 
+	get systemData(): TDataModel {
+		return this.system;
+	}
+
 	async save(): Promise<void> {
-		await this.document.setFlag('sr6', this.name, this.system.toObject());
+		await this.document.setFlag('sr6', this.name, this.system.toObject(false));
 	}
 
 	prepareBaseData(): void {
@@ -28,8 +32,6 @@ export default class FlagDocument<TDataModel extends foundry.abstract.DataModel>
 		this.document = document;
 		this.type = type;
 		this.name = name;
-
-		console.log('document', this);
 
 		let data = this.document.getFlag('sr6', this.name);
 		if (!data) {

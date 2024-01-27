@@ -1,4 +1,5 @@
 import SR6Actor from '@/actor/SR6Actor';
+import InitiativeRoll from '@/roll/InitiativeRoll';
 import { ITest } from 'src/test';
 import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
 import SR6Roll from '@/roll/SR6Roll';
@@ -48,6 +49,7 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 	mounted: boolean = false;
 
 	constructor(data: PreCreate<foundry.data.ChatMessageSource>, context?: DocumentConstructionContext<ChatMessage>) {
+		console.log('SR6ChatMessage::constructor', data, context);
 		super(data, context);
 
 		this.vueContext = reactive(new ChatMessageContext(this));
@@ -60,19 +62,13 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 		this.form = form;
 		this.vueApp = createApp(VueChatMessage);
 
-		if (this.flags?.sr6?.testData) {
-			const testObj = BaseTest.fromData(this.flags!.sr6!.testData!);
-			if (testObj.ok) {
-				this.vueContext.test = testObj.val;
-			}
-		}
 		if (this.rolls.length > 0) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			if ((this.rolls[0] as any).class) {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				switch ((this.rolls[0] as any).class) {
-					case 'Roll': {
-						this.vueContext.roll = Roll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
+					case 'InitiativeRoll': {
+						this.vueContext.roll = InitiativeRoll.fromData(this.rolls[0] as unknown as RollJSON) as SR6Roll;
 						break;
 					}
 					case 'SR6Roll': {
@@ -87,9 +83,19 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 	}
 
 	override async getHTML(): Promise<JQuery> {
+		console.log('SR6ChatMessage::getHTML', this);
+
 		const html = await super.getHTML();
 
+		if (this.flags?.sr6?.testData) {
+			const testObj = BaseTest.fromData(this.flags!.sr6!.testData!);
+			if (testObj.ok) {
+				this.vueContext.test = testObj.val;
+			}
+		}
+
 		if (!this.mounted) {
+			this.mounted = true;
 			await util.waitForCanvasTokens();
 			this.vueApp.provide(ChatContext, this.vueContext);
 			this.vueApp.mount(this.form);

@@ -3,6 +3,9 @@ import SR6Actor from '@/actor/SR6Actor';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ConstructorOf<T> = new (...args: any[]) => T;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AbstractConstructorOf<T> = abstract new (...args: any[]) => T;
+
 export function constructOptGroup(
 	select: HTMLSelectElement,
 	groupLabel: string,

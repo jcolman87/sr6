@@ -1,7 +1,7 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import { DamageType } from '@/data';
-import RangedDefenseTest from '@/test/RangedDefenseTest';
+import { RangedDefenseTest } from '@/test/RangedTests';
 import Localized from '@/vue/components/Localized.vue';
 import { toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
@@ -12,6 +12,7 @@ const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
 }>();
 const props = defineProps<{
+	src: foundry.abstract.Document;
 	test: RangedDefenseTest;
 }>();
 
@@ -27,7 +28,7 @@ async function executeSoakTest() {
 }
 
 emit('setText', {
-	title: `Defense (${props.test.opposedTest.type})`,
+	title: `Defense (Against ${props.test.opposedTest.actor.name})`,
 	hint: ``,
 });
 
@@ -40,7 +41,9 @@ const showRoll = ref(true);
 
 <template>
 	<div class="flexrow chat-opposed-test">
-		<div class="line">Defending against {{ test.opposedTest.actor.name }} {{ test.opposedTest.item?.name }}</div>
+		<div class="line">
+			Defending against {{ test.opposedTest.actor.name }} using {{ test.opposedTest.item?.name }}
+		</div>
 		<div v-if="!test.roll?.success">
 			<hr />
 			<div v-if="test.opposedTest.damage" class="line">

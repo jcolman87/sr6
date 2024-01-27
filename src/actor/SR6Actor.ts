@@ -13,11 +13,13 @@ import {
 	IHasOnUpdate,
 	IHasSystemData,
 } from '@/data/interfaces';
+import SR6Effect from '@/effect/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import { Modifiers, ModifiersSourceData } from '@/modifier';
+import FormulaRoll from '@/roll/FormulaRoll';
 import * as util from '@/util';
 
 export interface SR6ActorFlags {
@@ -132,9 +134,21 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		this.systemData.prepareDerivedData();
 	}
 
+	override applyActiveEffects(): void {
+		super.applyActiveEffects();
+		for (const e of this.allApplicableEffects()) {
+			const effect = e as SR6Effect;
+			if (e.disabled) {
+				continue;
+			}
+			effect.modifiers.all.forEach((mod) => this.modifiers.all.push(mod));
+		}
+	}
+
 	solveFormula(formula: string, data: Record<string, unknown> = {}): number {
-		let roll = new Roll(formula, { ...this.getRollData(), ...data, actor: this });
+		let roll = new FormulaRoll(formula, { ...this.getRollData(), ...data, actor: this });
 		roll = roll.evaluate({ async: false });
+
 		return roll.total!;
 	}
 

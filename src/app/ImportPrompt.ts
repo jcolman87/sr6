@@ -167,7 +167,6 @@ export class ImportPrompt extends VueSheet(Application) {
 			sins = (await actor.createEmbeddedDocuments(
 				'Item',
 				json.sins.map((value: any) => {
-					console.log(`Creating SIN: ${value.name}`);
 					return {
 						name: value.name,
 						type: 'sin',
@@ -191,7 +190,7 @@ export class ImportPrompt extends VueSheet(Application) {
 							sin_id = sin.id;
 						}
 					}
-					console.log(`Creating Lifestyle: ${value.customName}, linked to SIN:${sin_id}`);
+
 					return {
 						name: value.customName,
 						type: 'lifestyle',
@@ -211,7 +210,6 @@ export class ImportPrompt extends VueSheet(Application) {
 		if (Object.prototype.hasOwnProperty.call(json, 'contacts') && json.contacts.length > 0) {
 			items = items.concat(
 				json.contacts.map((value: any) => {
-					console.log(`Creating Contact: ${value.name}`);
 					return {
 						name: value.name !== null ? value.name : 'No Name!',
 						type: 'contact',
@@ -233,10 +231,8 @@ export class ImportPrompt extends VueSheet(Application) {
 				json.adeptPowers.map((value: any) => {
 					const existing = all.find((i: SR6Item) => i.name === value.name);
 					if (existing) {
-						console.log(`Adding Existing Adept Power: ${value.name}`);
 						return existing;
 					} else {
-						console.log(`Creating Adept Power: ${value.name}`);
 						return {
 							name: value.name,
 							type: 'adeptpower',
@@ -261,10 +257,8 @@ export class ImportPrompt extends VueSheet(Application) {
 					.map((value: any) => {
 						const existing = all.find((i) => i.name === value.name);
 						if (existing) {
-							console.log(`Adding Existing Quality: ${existing.name}`);
 							return existing;
 						} else {
-							console.log(`Creating Quality: ${value.name}`);
 							switch (value.name) {
 								case 'Adept': {
 									data.magicAwakened = MagicAwakenedType.Adept;
@@ -484,7 +478,6 @@ export class ImportPrompt extends VueSheet(Application) {
 			);
 		}
 
-		console.log('Adding final items list', items);
 		if (items.length > 0) {
 			await actor.createEmbeddedDocuments('Item', items);
 		}

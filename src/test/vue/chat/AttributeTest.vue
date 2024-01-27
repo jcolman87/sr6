@@ -8,6 +8,7 @@ const emit = defineEmits<{
 }>();
 
 const props = defineProps<{
+	src: foundry.abstract.Document;
 	test: AttributeTest;
 }>();
 

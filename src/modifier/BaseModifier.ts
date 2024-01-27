@@ -1,6 +1,7 @@
 import { getClass } from '@/data/serialize';
 import { checkConditions, ConditionalData } from '@/effect/conditional';
 import { IModifier, ModifierSourceData, ModifierSourceUUID } from '@/modifier';
+import { ITest } from '@/test';
 import { ConstructorOf } from '@/util';
 import { Err, Ok, Result } from 'ts-results';
 
@@ -8,7 +9,8 @@ export default class BaseModifier<
 	TData extends ModifierSourceData = ModifierSourceData,
 	TParent extends foundry.abstract.Document = foundry.abstract.Document,
 	TSource extends foundry.abstract.Document = foundry.abstract.Document,
-> {
+> implements IModifier
+{
 	_parent: TParent;
 	_source: TSource;
 	conditions: ConditionalData[];
@@ -19,11 +21,11 @@ export default class BaseModifier<
 	}
 
 	get name(): string {
-		return this.data!.name;
+		return this.data!.name || '[Missing name]';
 	}
 
 	get description(): string {
-		return this.data!.description;
+		return this.data!.description || '';
 	}
 
 	get parent(): foundry.abstract.Document {
@@ -34,8 +36,8 @@ export default class BaseModifier<
 		return this._source;
 	}
 
-	get isApplicable(): boolean {
-		if (this.conditions.length < 1) {
+	isApplicable(test: Maybe<ITest> = null): boolean {
+		if (this.conditions.length == 0) {
 			return true;
 		}
 
@@ -60,7 +62,7 @@ export default class BaseModifier<
 
 		const cls = getClass<ConstructorOf<BaseModifier>>(CONFIG.sr6.types.modifiers, data);
 		if (cls.ok) {
-			return Ok(new cls.val({ parent, source, conditions: data.conditions, data }));
+			return Ok(new cls.val({ parent, source, conditions: data.conditions, data }) as unknown as IModifier);
 		}
 		throw '';
 	}

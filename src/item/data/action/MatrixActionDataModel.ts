@@ -6,8 +6,10 @@
 
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
+import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { ActivationPeriod, ActivationType } from '@/data';
+import { ActivationPeriod, ActivationType, DamageType } from '@/data';
+import { SpellCombatType } from '@/data/magic';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
@@ -37,6 +39,22 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 
 	abstract formulas: MatrixActionFormulas;
 
+	abstract damage: {
+		type: DamageType;
+	};
+
+	get canDefend(): boolean {
+		return this.formulas.defend != null;
+	}
+
+	get canSoak(): boolean {
+		return this.formulas.soak != null;
+	}
+
+	get canDamage(): boolean {
+		return this.formulas.damage != null;
+	}
+
 	get pool(): number {
 		if (this.skillUse) {
 			return this.solveFormula(`@${this.skillUse!.attribute} + @${this.skillUse!.skill.toLowerCase()}`);
@@ -47,22 +65,36 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 		return 0;
 	}
 
-	defendAgainstPool<TDataModel extends BaseActorDataModel = BaseActorDataModel>(
+	getDamage(data: Record<string, unknown> = {}): number {
+		return this.formulas.damage ? this.solveFormula(this.formulas.damage!, data) : 0;
+	}
+
+	getAttackRating(data: Record<string, unknown> = {}): number {
+		return this.formulas.attackRating ? this.solveFormula(this.formulas.attackRating!, data) : 0;
+	}
+
+	getSoakPool(actor: SR6Actor<BaseActorDataModel>, data: Record<string, unknown> = {}): number {
+		if (!this.formulas.soak && !this.damage) {
+			ui.notifications.error('Called getSoakPool on a spell without a combat type and no formula?');
+			return 0;
+		}
+
+		if (this.formulas.soak) {
+			return this.item!.solveFormula(this.formulas.soak!, actor, data);
+		}
+
+		return 0;
+	}
+
+	getDefensePool<TDataModel extends BaseActorDataModel = BaseActorDataModel>(
 		defender: SR6Actor<TDataModel>,
+		data: Record<string, unknown> = {},
 	): number {
 		const fuckme = defender;
 		if (defender.systemData instanceof CharacterDataModel) {
-			return this.formulas.defend ? defender.solveFormula(this.formulas.defend!) : 0;
+			return this.formulas.defend ? defender.solveFormula(this.formulas.defend!, data) : 0;
 		}
-		return this.formulas.deviceDefend ? fuckme.solveFormula(this.formulas.deviceDefend!) : 0;
-	}
-
-	get damage(): number {
-		return this.formulas.damage ? this.solveFormula(this.formulas.damage!) : 0;
-	}
-
-	get attackRating(): number {
-		return this.formulas.attackRating ? this.solveFormula(this.formulas.attackRating!) : 0;
+		return this.formulas.deviceDefend ? fuckme.solveFormula(this.formulas.deviceDefend!, data) : 0;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {
@@ -120,6 +152,18 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 					}),
 				},
 				{ required: true, nullable: false },
+			),
+			damage: new fields.SchemaField(
+				{
+					type: new fields.StringField({
+						initial: DamageType.Matrix,
+						required: true,
+						nullable: false,
+						blank: false,
+						choices: [DamageType.Biofeedback, DamageType.Matrix, DamageType.Physical],
+					}),
+				},
+				{ nullable: true, required: false },
 			),
 			formulas: new fields.SchemaField(
 				{

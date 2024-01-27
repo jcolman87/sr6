@@ -14,9 +14,12 @@ declare module foundry {
 			sound: AudioFilePath | null;
 			emote?: boolean;
 			flags: ChatMessageFlags;
+			rollMode: RollMode;
 		}
 
-		class ChatMessageData<TDocument extends documents.BaseChatMessage = documents.BaseChatMessage> extends abstract.DocumentData<TDocument> {
+		class ChatMessageData<
+			TDocument extends documents.BaseChatMessage = documents.BaseChatMessage,
+		> extends abstract.DocumentData<TDocument> {
 			static override defineSchema(): abstract.DocumentSchema;
 		}
 

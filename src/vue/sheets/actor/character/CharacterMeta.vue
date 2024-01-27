@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import * as images from '@/vue/images';
 import MonitorView from '@/vue/views/MonitorView.vue';
-import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
+import { MonitorDataModel, MonitorType } from '@/actor/data/MonitorsDataModel';
 import { inject, toRaw, computed } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -12,16 +12,11 @@ import Localized from '@/vue/components/Localized.vue';
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
 
-async function setDamage(monitor: MonitorDataModel, field: string, amount: number) {
-	// If we arnt maxed on physical, reset overflow
-	if (toRaw(system.value).monitors.physical.value > 0) {
-		await toRaw(context.data.actor).update({ ['system.monitors.overflow.damage']: 0 });
-	}
-
-	if (monitor.damage === amount) {
-		await toRaw(context.data.actor).update({ [field]: 0 });
+async function setDamage(monitor: MonitorType, amount: number) {
+	if (toRaw(system.value).monitors.get(monitor).damage === amount) {
+		await toRaw(system.value).monitors.setDamage(monitor, 0);
 	} else {
-		await toRaw(context.data.actor).update({ [field]: amount });
+		await toRaw(system.value).monitors.setDamage(monitor, amount);
 	}
 }
 
@@ -83,19 +78,19 @@ async function setEdge(ev: Event) {
 			<div class="section" style="align-self: start; width: 95%">
 				<MonitorView
 					:monitor="system.monitors.physical"
-					@setDamage="(idx) => setDamage(system.monitors.physical, 'system.monitors.physical.damage', idx)"
+					@setDamage="(idx) => setDamage(MonitorType.Physical, idx)"
 				/>
 				<MonitorView
 					v-if="system.monitors.physical.value <= 0"
 					:monitor="system.monitors.overflow"
 					icon="/icons/svg/skull.svg"
 					:showModifiers="false"
-					@setDamage="(idx) => setDamage(system.monitors.overflow, 'system.monitors.overflow.damage', idx)"
+					@setDamage="(idx) => setDamage(MonitorType.Overflow, idx)"
 				/>
 				<MonitorView
 					:monitor="system.monitors.stun"
 					icon="/systems/sr6/assets/brain.webp"
-					@setDamage="(idx) => setDamage(system.monitors.stun, 'system.monitors.stun.damage', idx)"
+					@setDamage="(idx) => setDamage(MonitorType.Stun, idx)"
 				/>
 			</div>
 		</div>

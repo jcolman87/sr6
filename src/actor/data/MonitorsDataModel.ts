@@ -1,5 +1,7 @@
 import BaseDataModel from '@/data/BaseDataModel';
 import { IHasEdge } from '@/data/interfaces';
+import { IModifier } from '@/modifier';
+import { WoundModifier } from '@/modifier/impl/WoundModifier';
 
 export enum MonitorType {
 	Physical = 'physical',
@@ -64,7 +66,8 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 	}
 
 	get woundModifier(): number {
-		return Object.entries(this.woundModifier).reduce((acc, [_key, value]) => (acc += value), 0);
+		const modifiers = this.woundModifiers;
+		return modifiers[MonitorType.Physical]! + modifiers[MonitorType.Stun]!;
 	}
 
 	get(type: MonitorType): MonitorDataModel {
@@ -74,21 +77,54 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 			case MonitorType.Overflow:
 				return this.overflow;
 			case MonitorType.Stun:
-				return this.physical;
-			case MonitorType.Matrix:
-				return this.physical;
+				return this.stun;
 			case MonitorType.Edge:
 				return this.edge;
 		}
 		throw 'ERROR INVALID MONITOR TYPE';
 	}
 
+	async heal(type: MonitorType, value: number): Promise<void> {
+		switch (type) {
+			case MonitorType.Physical: {
+				await this.actor!.update({
+					[`system.monitors.physical.damage`]: Math.max(0, this.physical.damage - value),
+				});
+				break;
+			}
+			case MonitorType.Stun: {
+				await this.actor!.update({
+					[`system.monitors.stun.damage`]: Math.max(0, this.stun.damage - value),
+				});
+				break;
+			}
+		}
+	}
+
+	async setDamage(type: MonitorType, newDamage: number): Promise<void> {
+		if (type === MonitorType.Edge) {
+			ui.notifications.error('Dont use applyDamage for edge, use spendEdge instaed');
+			return;
+		}
+
+		// If the setDamage call was on overflow, that means physical automatically maxes.
+		if (type == MonitorType.Overflow) {
+			if (newDamage > 0 && this.physical.damage < this.physical.max) {
+				await this.actor!.update({ [`system.monitors.physical.damage`]: this.physical.max });
+			}
+		}
+
+		await this.actor!.update({ [`system.monitors.${type.toString()}.damage`]: newDamage });
+	}
+
 	// returns remainder
 	private async _applyDamage(type: MonitorType, value: number): Promise<number> {
 		const monitor: MonitorDataModel = this.get(type);
 
-		const newDamage: number = monitor.value + value;
-		const remainder: number = newDamage - monitor.max;
+		const newDamage: number = monitor.damage + value;
+		const remainder: number = Math.max(0, newDamage - monitor.max);
+
+		console.log('type', type.toString(), `system.monitors.${type.toString()}.damage`);
 
 		if (remainder > 0) {
 			await this.actor!.update({ [`system.monitors.${type.toString()}.damage`]: monitor.max });
@@ -102,6 +138,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 	async applyDamage(type: MonitorType, value: number): Promise<void> {
 		if (type === MonitorType.Edge) {
 			ui.notifications.error('Dont use applyDamage for edge, use spendEdge instaed');
+			return;
 		}
 		let physicalDamage: number = type === MonitorType.Physical ? value : 0;
 		let overflowDamage: number = 0;
@@ -144,6 +181,24 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		return true;
 	}
 
+	prepareWoundModifier(): void {
+		// Is there already a wound modifier? if so delete it and recreate it
+		let modifier = this.actor!.modifiers.all.find((modifier) => modifier.class == 'WoundModifier') as
+			| WoundModifier
+			| undefined;
+		if (!modifier) {
+			modifier = new WoundModifier({
+				parent: this.actor!,
+				source: this.actor!,
+				data: { value: 0 },
+			});
+			this.actor!.modifiers.all.push(modifier as unknown as IModifier);
+		}
+		if (modifier) {
+			modifier.data!.value = this.woundModifier;
+		}
+	}
+
 	override prepareBaseData(): void {
 		this.physical.prepareBaseData();
 		this.stun.prepareBaseData();
@@ -163,6 +218,8 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		this.stun.prepareDerivedData();
 		this.overflow.prepareDerivedData();
 		this.edge.prepareDerivedData();
+
+		this.prepareWoundModifier();
 	}
 
 	override getRollData(): Record<string, unknown> {

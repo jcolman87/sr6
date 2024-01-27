@@ -1,0 +1,248 @@
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import LifeformDataModel from '@/actor/data/LifeformDataModel';
+import SR6Actor from '@/actor/SR6Actor';
+import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
+import SR6Item from '@/item/SR6Item';
+import SR6Roll from '@/roll/SR6Roll';
+import { AttackTestData } from '@/test/AttackTestData';
+import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
+import { ITest, RollDataDelta, TestType } from '@/test/index';
+import ChatComponent from '@/test/vue/chat/PhysicalSoakTest.vue';
+import { getActorSync, getTargetActorIds } from '@/util';
+import { Component } from 'vue';
+
+import ActionPromptComponent from '@/test/vue/prompt/MatrixActionTest.vue';
+import ActionChatComponent from '@/test/vue/chat/MatrixActionTest.vue';
+
+import DefensePromptComponent from '@/test/vue/prompt/MatrixDefenseTest.vue';
+import DefenseChatComponent from '@/test/vue/chat/MatrixDefenseTest.vue';
+
+import SoakChatComponent from '@/test/vue/chat/MatrixSoakTest.vue';
+
+export interface MatrixActionTestData extends AttackTestData {}
+
+export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
+	override get type(): TestType {
+		return TestType.MatrixAction;
+	}
+
+	matrixAction: SR6Item<MatrixActionDataModel>;
+
+	get canDefend(): boolean {
+		return this.matrixAction.systemData.canDefend;
+	}
+
+	get canDamage(): boolean {
+		return this.matrixAction.systemData.canDamage;
+	}
+
+	get damage(): number {
+		if (this.canDamage) {
+			let rollData = {};
+			if (this.roll) {
+				rollData = this.roll.getRollData();
+			}
+
+			return this.matrixAction.systemData.getDamage(rollData);
+		}
+
+		return 0;
+	}
+
+	get baseDamage(): number {
+		if (this.canDamage) {
+			return this.matrixAction.systemData.getDamage();
+		}
+
+		return 0;
+	}
+
+	get targets(): SR6Actor[] {
+		if (!this.data.targetIds) {
+			return [];
+		}
+		return this.data.targetIds
+			.map((id) => getActorSync(SR6Actor, id))
+			.filter((actor) => actor !== null)
+			.map((actor) => actor!);
+	}
+
+	opposed(actor: SR6Actor<BaseActorDataModel>, item: undefined | SR6Item = undefined): MatrixDefenseTest {
+		if (this.matrixAction.systemData.canDefend) {
+			return new MatrixDefenseTest({
+				actor,
+				item,
+				data: {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					opposedData: this.toJSON() as any,
+				},
+			});
+		}
+		throw 'err';
+	}
+
+	soak(defenseTest: MatrixDefenseTest): ITest {
+		if (this.matrixAction.systemData.canSoak) {
+			return new MatrixSoakTest({
+				actor: defenseTest.actor,
+				data: {
+					threshold: this.damage,
+					defenseTest: defenseTest.toJSON() as any,
+				},
+			});
+		}
+		throw 'err';
+	}
+
+	chatComponent(): Component {
+		return ActionChatComponent;
+	}
+
+	promptComponent(): Component {
+		return ActionPromptComponent;
+	}
+
+	constructor({
+		actor,
+		item,
+		data,
+		roll,
+		delta,
+	}: {
+		actor: SR6Actor<BaseActorDataModel>;
+		item: SR6Item;
+		data?: MatrixActionTestData;
+		roll?: SR6Roll;
+		delta?: RollDataDelta;
+	}) {
+		const matrixAction = item as SR6Item<MatrixActionDataModel>;
+		const defaultData = {
+			targetIds: getTargetActorIds(),
+			damage: matrixAction.systemData.getDamage(),
+			attackRating: matrixAction.systemData.getAttackRating(),
+			pool: matrixAction.systemData.pool,
+		};
+
+		super({
+			actor,
+			item,
+			data: data
+				? foundry.utils.mergeObject(data, defaultData, { overwrite: false, inplace: true })
+				: defaultData,
+			roll,
+			delta,
+		});
+		this.matrixAction = matrixAction;
+	}
+}
+
+export interface MatrixDefenseTestData extends BaseTestData {
+	opposedData: TestSourceData<MatrixActionTestData>;
+}
+
+export class MatrixDefenseTest extends BaseTest<MatrixDefenseTestData> {
+	override get type(): TestType {
+		return TestType.MatrixDefense;
+	}
+
+	opposedTest: MatrixActionTest;
+
+	get damage(): number {
+		return Math.max(0, this.opposedTest.damage - (this.roll?.hits || 0));
+	}
+
+	get baseDamage(): number {
+		return this.opposedTest.baseDamage;
+	}
+
+	promptComponent(): Component {
+		return DefensePromptComponent;
+	}
+
+	chatComponent(): Component {
+		return DefenseChatComponent;
+	}
+
+	constructor({
+		actor,
+		item,
+		data,
+		delta,
+		roll,
+	}: {
+		actor: SR6Actor;
+		item?: SR6Item;
+		data: MatrixDefenseTestData;
+		delta?: RollDataDelta;
+		roll?: SR6Roll;
+	}) {
+		// Set the threshold automatically from the opposed data
+		const opposedTest = BaseTest.fromData<MatrixActionTest>(data.opposedData);
+		if (opposedTest.ok) {
+			data.threshold = opposedTest.val.roll?.hits;
+			if (actor.systemData instanceof LifeformDataModel) {
+				data.pool = actor.solveFormula(
+					opposedTest.val.matrixAction.systemData.formulas.defend!,
+					opposedTest.val.roll?.getRollData(),
+				);
+			} else {
+				data.pool = actor.solveFormula(
+					opposedTest.val.matrixAction.systemData.formulas.deviceDefend!,
+					opposedTest.val.roll?.getRollData(),
+				);
+			}
+		} else {
+			throw opposedTest.val;
+		}
+
+		super({ actor, item, data, roll, delta });
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		this.opposedTest = opposedTest.val;
+	}
+}
+
+export interface MatrixSoakTestData extends AttackTestData {
+	defenseTest: TestSourceData<MatrixDefenseTestData>;
+}
+
+export class MatrixSoakTest extends BaseTest<MatrixSoakTestData> {
+	override get type(): TestType {
+		return TestType.MatrixSoak;
+	}
+
+	defenseTest: MatrixDefenseTest;
+
+	damage(opposedHits: number = 0): number {
+		if (this.roll) {
+			return this.baseDamage() - this.roll.hits - opposedHits;
+		} else {
+			return this.baseDamage() - opposedHits;
+		}
+	}
+
+	baseDamage(): number {
+		return this.data.threshold!;
+	}
+
+	chatComponent(): Component {
+		return SoakChatComponent;
+	}
+
+	constructor(args: TestConstructorData<MatrixSoakTestData>) {
+		const defenseTest = BaseTest.fromData<MatrixDefenseTest>(args.data.defenseTest);
+		if (defenseTest.ok) {
+			args.data.threshold = defenseTest.val.damage;
+			args.data.pool = args.actor.solveFormula(
+				defenseTest.val.opposedTest.matrixAction.systemData.formulas.soak!,
+			);
+		}
+		super(args);
+
+		if (defenseTest.ok) {
+			this.defenseTest = defenseTest.val;
+		} else {
+			throw 'err';
+		}
+	}
+}

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import CredstickDataModel, { CredstickRating } from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -95,6 +96,18 @@ const augmentations = computed(() =>
 					</div>
 					<table>
 						<tr v-for="item in augmentations" :key="item.id" :title="item.systemData.description">
+							<td>
+								<template v-if="item.systemData.activation">
+									<label class="switch">
+										<input
+											type="checkbox"
+											@change.prevent="toRaw(item.systemData).toggleActive()"
+											:checked="item.systemData.activation?.status"
+										/>
+										<span class="slider round"></span>
+									</label>
+								</template>
+							</td>
 							<td class="entry">
 								<input
 									type="text"

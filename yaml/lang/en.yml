@@ -147,10 +147,6 @@ SR6:
       P: Physical
       S: Stun
 
-  Edge:
-    EdgeBoost: Edge Boost
-    EdgeAction: Edge Action
-
   RollPrompt:
     Title: Configure Roll
     PoolModifier: Pool Modifier
@@ -263,6 +259,7 @@ SR6:
     Chilled: Chilled
 
   Magic:
+    Drain: Drain
     Traditions:
       Shamanism: Shamanism
       Hermeticism: Hermeticism
@@ -322,3 +319,47 @@ SR6:
       Name: Ranged Attack
     OpposedTest:
       Name: Defense
+
+  Edge:
+    EdgeBoost: Edge Boost
+    EdgeAction: Edge Action
+    Boosts:
+# 1 edge
+      Action:
+        Name: Edge Action
+        Description: Perform an Edge Action
+      RerollOne:
+        Name: Reroll One Dice
+        Description: Pick any die and reroll it. It can be yours or your opponent’s, but the result stands no matter what you roll. This is done after all rolls have been made.
+      AddInitiative:
+        Name: Add 3 to Initiative Score
+        Description: This one kicks in before combat even starts. You can choose to spend one point of Edge to increase your Initiative Score by 3. It can also be used during the fight if you want to move up in the order on the next Initiative Cycle.
+      PlusOneSingleDice:
+        Name: +1 to Single Dice
+        Description: You get to add 1 to a single die. Maybe that’s making a 4 a 5 to get another hit, or making 1 a 2 to avoid a glitch.
+# 3 edge
+      BuyHit:
+        Name: Buy Automatic Hit
+        Description: You get an automatic hit. This one adds on to the total hits you roll. This isn’t an automatic success at whatever test you’re attempting, just another hit to add to your total.
+
+# 4 edge
+      AddEdgeExplode:
+        Name: Add Edge + Explode
+        Description: Add your Edge as a dice pool bonus to your roll, and make 6s explode. “Exploding” means that 6s count as a hit and can be rerolled in an attempt to get an additional hit. If another hit is scored, tack it on; if another 6 is rolled, tack on a hit and roll it again. Keep the hits coming! If a 1  is rolled after a 6, it does not count toward your total for calculating glitches.
+      RerollFailures:
+        Name: Reroll all Failed Dice
+        Description: Pretty much what it says—after a roll is made, you can reroll all failed dice. This Edge Boost cannot be used if a glitch or critical glitch is rolled.
+      HealOnePhysical:
+        Name: Heal 1 Physical Damage
+        Description: You take off a single box of damage from your Physical Condition Monitor—your advantage over your opponents means they didn’t hit you quite as hard as they first thought.
+      HealOneStun:
+        Name: Heal 1 Stun Damage
+        Description: You catch a second wind and clear a box from your Stun Condition Monitor.
+
+  Modifiers:
+    WoundModifier:
+      Name: Wound Modifier
+      Description: Wound Modifier description
+    PainEditorModifier:
+      Name: Pain Editor
+      Description: This cluster of specialized nervous tissue is designed to filter sensory stimuli. If the pain editor is active, this allows you to ignore all injury modifiers, and you even stay conscious when your Stun Condition Monitor is completely full. You feel no pain—you’re blissfully, dangerously, recklessly unaware of the extent of damage you’ve taken without either performing a self-examination (Observe in Detail action) or being informed by a biomonitor (p. 281). While active, the pain editor increases your Willpower by 1 and decreases your Intuition by 1; additionally, all tactile Perception tests you make have their threshold increased by 1.

@@ -19,8 +19,8 @@ export default abstract class AttributeDataModel extends BaseDataModel {
 		};
 	}
 
-	override prepareBaseData(): void {
-		super.prepareBaseData();
+	override prepareDerivedData(): void {
+		super.prepareDerivedData();
 		this.value = this.base + this.mod;
 	}
 }

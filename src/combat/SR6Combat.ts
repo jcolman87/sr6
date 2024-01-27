@@ -6,6 +6,9 @@
 
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Combatant, { CombatantFlagData } from '@/combat/SR6Combatant';
+import { IHasInitiative } from '@/data/interfaces';
+import InitiativeRoll from '@/roll/InitiativeRoll';
+import InitiativeRollPrompt from '@/roll/InitiativeRollPrompt';
 import { emit as socketEmit, SOCKET_NAME, SocketPayload, SocketOperation, CombatSocketBaseData } from '@/socket';
 
 export default class SR6Combat extends Combat {
@@ -86,6 +89,75 @@ export default class SR6Combat extends Combat {
 
 	override previousRound(): Promise<this> {
 		return super.previousRound();
+	}
+
+	override async rollInitiative(
+		ids: string | string[],
+		opts: RollInitiativeOptions = { formula: null, updateTurn: true, messageOptions: {} },
+	): Promise<this> {
+		// Structure input data
+		ids = typeof ids === 'string' ? [ids] : ids;
+		const currentId = this.combatant?.id;
+		const chatRollMode = game.settings.get('core', 'rollMode');
+
+		// Iterate over Combatants, performing an initiative roll for each
+		const updates = [];
+		const messages = [];
+		for (let [i, id] of ids.entries()) {
+			// Get Combatant data (non-strictly)
+			const combatant = this.combatants.get(id) as SR6Combatant;
+			if (!combatant?.isOwner) continue;
+
+			// Produce an initiative roll for the Combatant
+			const roll = await InitiativeRollPrompt.prompt(
+				combatant.actor as unknown as SR6Actor<IHasInitiative>,
+				combatant.systemData.initiativeType,
+			);
+			if (roll) {
+				await roll.evaluate({ async: true });
+				updates.push({ _id: id, initiative: roll.total });
+
+				// Construct chat message data
+				let messageData = foundry.utils.mergeObject(
+					{
+						speaker: ChatMessage.getSpeaker({
+							actor: combatant.actor,
+							token: combatant.token,
+							alias: combatant.name,
+						}),
+						flavor: game.i18n.format('COMBAT.RollsInitiative', { name: combatant.name }),
+						flags: { 'core.initiativeRoll': true },
+					},
+					opts.messageOptions,
+				);
+				const chatData: foundry.data.ChatMessageSource = await roll.toMessage(messageData, { create: false });
+
+				// If the combatant is hidden, use a private roll unless an alternative rollMode was explicitly requested
+				chatData.rollMode =
+					'rollMode' in opts.messageOptions
+						? opts.messageOptions.rollMode
+						: combatant.hidden
+							? CONST.DICE_ROLL_MODES.PRIVATE
+							: chatRollMode;
+
+				// Play 1 sound for the whole rolled set
+				if (i > 0) chatData.sound = null;
+				messages.push(chatData);
+			}
+		}
+		if (!updates.length) return this;
+
+		// Update multiple combatants
+		await this.updateEmbeddedDocuments('Combatant', updates);
+
+		// Ensure the turn order remains with the same combatant
+		if (opts.updateTurn && currentId) {
+			await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
+		}
+
+		// Create multiple chat messages
+		await ChatMessage.implementation.create(messages);
+		return this;
 	}
 
 	debounceRender = foundry.utils.debounce(() => {

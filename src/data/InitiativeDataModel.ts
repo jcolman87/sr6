@@ -1,14 +1,22 @@
+import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import { AvailableActions } from '@/data/interfaces';
+import SR6Item from '@/item/SR6Item';
 
-export default abstract class InitiativeDataModel extends BaseDataModel {
-	abstract dice: number;
-	abstract formula: string;
+export default class InitiativeDataModel extends BaseDataModel {
+	declare parent: SR6Item | SR6Actor | BaseDataModel;
 
-	abstract actions: {
+	declare dice: number;
+	declare scoreFormula: string;
+
+	declare actions: {
 		majorFormula: string;
 		minorFormula: string;
 	};
+
+	get score(): number {
+		return this.solveFormula(this.scoreFormula);
+	}
 
 	get availableActions(): AvailableActions {
 		return {
@@ -21,9 +29,9 @@ export default abstract class InitiativeDataModel extends BaseDataModel {
 		const fields = foundry.data.fields;
 
 		return {
-			dice: new fields.NumberField({ initial: 1, required: true, nullable: false, integer: true, min: 1 }),
-			formula: new fields.StringField({
-				initial: '(@reaction + @intuition) + (@initiatives.physical.dice)d6',
+			dice: new fields.NumberField({ initial: 0, required: true, nullable: false, integer: true, min: 0 }),
+			scoreFormula: new fields.StringField({
+				initial: '(@reaction + @intuition)',
 				required: true,
 				nullable: false,
 				blank: false,

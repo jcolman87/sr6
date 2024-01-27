@@ -104,4 +104,6 @@ export async function getCoreAugmentations(): Promise<SR6Item<GeneralActionDataM
 	);
 }
 
+(window as any).getCoreQualities = getCoreQualities;
+
 export function register(): void {}

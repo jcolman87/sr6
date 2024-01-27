@@ -28,7 +28,6 @@ const contacts = computed(() =>
 );
 
 async function rollContact(contact: SR6Item<ContactDataModel>) {
-	console.log('roll contact', contact);
 	// await new ContactTest({ actor: toRaw(context.data.actor), item: contact, data: {} }).execute();
 }
 </script>

@@ -3,10 +3,13 @@ import { Distance } from '@/data';
 import { BaseTestData } from '@/test/BaseTest';
 import { getActorSync } from '@/util';
 
-export default interface AttackTestData extends BaseTestData {
+export interface AttackTestData extends BaseTestData {
 	targetIds?: ActorUUID[];
 	damage?: number;
 	attackRating?: number;
+}
+
+export interface PhysicalAttackTestData extends AttackTestData {
 	distance?: Distance;
 }
 

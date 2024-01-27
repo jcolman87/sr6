@@ -3,6 +3,8 @@ import { EnumAttribute } from '@/actor/data';
 import { MagicTradition } from '@/data/magic';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
+import AttributeTest from '@/test/AttributeTest';
+import { SpellCastTest } from '@/test/SpellTests';
 import Localized from '@/vue/components/Localized.vue';
 import { createNewItem, updateItem, deleteItem } from '@/vue/directives';
 import { computed, inject, toRaw } from 'vue';
@@ -28,14 +30,12 @@ const adeptpowers = computed(() =>
 		.map((i) => i as SR6Item<AdeptPowerDataModel>),
 );
 
-async function rollSpell(_spell: SR6Item<SpellDataModel>) {
-	// TODO:
-	// await rollers.rollSpellCast(toRaw(context.data.actor), spell);
+async function rollSpell(spell: SR6Item<SpellDataModel>) {
+	await new SpellCastTest({ actor: toRaw(context.data.actor), item: spell }).execute();
 }
 
-async function rollAttribute(_attr: EnumAttribute) {
-	// TODO:
-	// await rollers.rollAttribute(toRaw(context.data.actor), EnumAttribute.magic)
+async function rollAttribute(attribute: EnumAttribute) {
+	await new AttributeTest({ actor: toRaw(context.data.actor), data: { attribute } }).execute();
 }
 </script>
 

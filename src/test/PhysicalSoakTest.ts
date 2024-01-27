@@ -2,7 +2,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { RollDataDelta, TestType } from '@/test/index';
-import { RangedDefenseTestData } from '@/test/RangedDefenseTest';
+import { RangedDefenseTestData } from '@/test/RangedTests';
 import SR6Roll from '@/roll/SR6Roll';
 
 import { Component } from 'vue';
@@ -13,7 +13,9 @@ export interface PhysicalSoakTestData extends BaseTestData {
 }
 
 export default class PhysicalSoakTest extends BaseTest<PhysicalSoakTestData> {
-	override type: TestType = TestType.PhysicalSoak;
+	override get type(): TestType {
+		return TestType.PhysicalSoak;
+	}
 
 	damage(opposedHits: number = 0): number {
 		if (this.roll) {

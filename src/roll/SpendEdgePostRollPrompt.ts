@@ -7,28 +7,29 @@
  */
 
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
+import { IEdgeBoost } from '@/edge';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 
-import { ITest } from '@/test/index';
-import BaseTest, { BaseTestData } from '@/test/BaseTest';
+import { ITest } from '@/test';
 import { ContextBase } from '@/vue/SheetContext';
-import VueRollPrompt from '@/test/vue/RollPrompt.vue';
+import VueRollPrompt from '@/roll/vue/SpendEdgePostRollPrompt.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
-export interface RollPromptContext<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = ITest<TData>>
-	extends ContextBase {
-	test: TTest;
-	resolvePromise: (value: TData) => void;
+export interface SpendEdgePostRollPromptContext extends ContextBase {
+	actor: SR6Actor<BaseActorDataModel>;
+	message: SR6ChatMessage;
+	test: ITest;
+	resolvePromise: (value: IEdgeBoost | null) => void;
 }
 
-export default class RollPrompt<
-	TData extends BaseTestData = BaseTestData,
-	TTest extends ITest<TData> = BaseTest<TData>,
-> extends VueSheet(ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>) {
+export default class SpendEdgePostRollPrompt extends VueSheet(
+	ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>,
+) {
 	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
@@ -43,25 +44,24 @@ export default class RollPrompt<
 		};
 	}
 
-	static async prompt<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = BaseTest<TData>>(
-		actor: SR6Actor,
-		test: TTest,
-	): Promise<TData | null> {
-		const sheet = new RollPrompt<TData, TTest>(actor, test);
+	static async prompt(message: SR6ChatMessage, test: ITest): Promise<IEdgeBoost | null> {
+		const sheet = new SpendEdgePostRollPrompt(message, test);
 		await sheet.render(true);
 
-		return new Promise<TData | null>((resolve) => {
+		return new Promise<IEdgeBoost | null>((resolve) => {
 			sheet.#resolvePromise = resolve;
 		});
 	}
 
-	#resolvePromise?: (value: TData | null) => void;
+	#resolvePromise?: (value: IEdgeBoost | null) => void;
 
-	test: TTest;
+	message: SR6ChatMessage;
+	test: ITest;
 
-	constructor(actor: SR6Actor, test: TTest) {
-		super(actor);
+	constructor(message: SR6ChatMessage, test: ITest) {
+		super(test.actor);
 		this.test = test;
+		this.message = message;
 	}
 
 	override async close(options = {}): Promise<void> {
@@ -69,7 +69,7 @@ export default class RollPrompt<
 		return super.close(options);
 	}
 
-	async getVueContext(): Promise<RollPromptContext<TData, TTest>> {
+	async getVueContext(): Promise<SpendEdgePostRollPromptContext> {
 		return {
 			resolvePromise: async (data) => {
 				this.#resolvePromise?.(data);
@@ -77,8 +77,8 @@ export default class RollPrompt<
 
 				await this.close();
 			},
-			actor: this.actor,
-			app: this,
+			actor: this.test.actor,
+			message: this.message,
 			test: this.test,
 		};
 	}

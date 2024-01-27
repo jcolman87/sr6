@@ -6,7 +6,7 @@ system:
   description: 'Essential spellcasting, shaping mana to crack skulls. Who can argue with this purity? Manabolt targets individuals, while Manaball is area effect.'
   type: M
   formulas:
-    drainFormula: '4'
+    drain: '4'
   range:
     type: los
     value: 0
@@ -26,7 +26,7 @@ system:
   description: 'Essential spellcasting, shaping mana to crack skulls. Who can argue with this purity? Manabolt targets individuals, while Manaball is area effect.'
   type: M
   formulas:
-    drainFormula: '5'
+    drain: '5'
   range:
     type: losa
     value: 0
@@ -48,7 +48,7 @@ system:
     \ dose for those insomniac rockers? Stunball is there when you need it.'
   type: M
   formulas:
-    drainFormula: '3'
+    drain: '3'
   range:
     type: los
     value: 0
@@ -70,7 +70,7 @@ system:
     \ dose for those insomniac rockers? Stunball is there when you need it.'
   type: M
   formulas:
-    drainFormula: '4'
+    drain: '4'
   range:
     type: losa
     value: 0
@@ -94,7 +94,7 @@ system:
     \ status (p. 51) with a rating equal to net hits on the Spellcasting test.'
   type: P
   formulas:
-    drainFormula: '5'
+    drain: '5'
   range:
     type: los
     value: 0
@@ -118,7 +118,7 @@ system:
     \ status (p. 51) with a rating equal to net hits on the Spellcasting test.'
   type: P
   formulas:
-    drainFormula: '6'
+    drain: '6'
   range:
     type: losa
     value: 0
@@ -141,7 +141,7 @@ system:
     \ Blast is area effect.'
   type: P
   formulas:
-    drainFormula: '3'
+    drain: '3'
   range:
     type: los
     value: 0
@@ -164,7 +164,7 @@ system:
     \ Blast is area effect.'
   type: P
   formulas:
-    drainFormula: '4'
+    drain: '4'
   range:
     type: losa
     value: 0
@@ -187,7 +187,7 @@ system:
     single-target spell, Toxic Wave is area effect.'
   type: P
   formulas:
-    drainFormula: '5'
+    drain: '5'
   range:
     type: los
     value: 0
@@ -210,7 +210,7 @@ system:
     single-target spell, Toxic Wave is area effect.'
   type: P
   formulas:
-    drainFormula: '6'
+    drain: '6'
   range:
     type: losa
     value: 0
@@ -236,7 +236,7 @@ system:
     \ spell.'
   type: P
   formulas:
-    drainFormula: '5'
+    drain: '5'
   range:
     type: los
     value: 0
@@ -262,7 +262,7 @@ system:
     \ spell.'
   type: P
   formulas:
-    drainFormula: '6'
+    drain: '6'
   range:
     type: losa
     value: 0
@@ -286,7 +286,7 @@ system:
     \ (p. 53) for a number of turns equal to net hits.'
   type: P
   formulas:
-    drainFormula: '5'
+    drain: '5'
   range:
     type: los
     value: 0
@@ -310,7 +310,7 @@ system:
     \ (p. 53) for a number of turns equal to net hits.'
   type: P
   formulas:
-    drainFormula: '6'
+    drain: '6'
   range:
     type: losa
     value: 0
@@ -331,7 +331,7 @@ system:
     damage; Powerball does the same as an area effect.
   type: P
   formulas:
-    drainFormula: '4'
+    drain: '4'
   range:
     type: los
     value: 0
@@ -352,7 +352,7 @@ system:
     damage; Powerball does the same as an area effect.
   type: P
   formulas:
-    drainFormula: '5'
+    drain: '5'
   range:
     type: losa
     value: 0
@@ -379,8 +379,8 @@ system:
     \ of gaining no more than 2 Edge in a combat round applies).'
   type: P
   formulas:
-    drainFormula: '2'
-    soakFormula: ''
+    drain: '2'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -399,8 +399,8 @@ system:
     the magical effect being analyzed.
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -420,8 +420,8 @@ system:
     \ or audio/video transmissions cannot be used. Because mana, thats why.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -442,8 +442,8 @@ system:
     have do not have any effect.
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -465,8 +465,8 @@ system:
     have any effect.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -485,8 +485,8 @@ system:
     \ 108) as long as the spell is sustained.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -506,8 +506,8 @@ system:
     \ light up). Great for detecting ambushes!'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -525,8 +525,8 @@ system:
     detect every living thing, but rather focuses on sentient beings.
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -549,8 +549,8 @@ system:
     \ of permanent spells once they have become permanent.'
   type: M
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -573,8 +573,8 @@ system:
     \ was continuously sustained.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -600,8 +600,8 @@ system:
     \ or hidden memories.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -620,8 +620,8 @@ system:
     hits zero, any ongoing effects of the toxin are eliminated.
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -641,8 +641,8 @@ system:
     \ only be affected once by any healing spell.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: 5 - @essense
+    drain: '5'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -662,8 +662,8 @@ system:
     \ be affected once by any healing spell.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: 5 - @essense
+    drain: '5'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -685,8 +685,8 @@ system:
     spell cannot affect Edge, Essence, Magic, or Resonance.
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -707,8 +707,8 @@ system:
     \ Heal).'
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: 5 - @essense
+    drain: '3'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -731,8 +731,8 @@ system:
     \ Magic, or Resonance.'
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: 5 - @essense
+    drain: '3'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -754,8 +754,8 @@ system:
     \ by 1.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: 5 - @essense
+    drain: '5'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -774,8 +774,8 @@ system:
     \ dice-pool modifiers from damage by 1.'
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: 5 - @essense
+    drain: '3'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -795,8 +795,8 @@ system:
     The net hits can only affect Overflow damage and cannot heal regular damage.
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -816,8 +816,8 @@ system:
     \ only be affected once by any healing spell.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: 5 - @essense
+    drain: '5'
+    soak: 5 - @essense
   range:
     type: touch
     value: 0
@@ -841,8 +841,8 @@ system:
     \ +1 DV).'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: los
     value: 0
@@ -867,8 +867,8 @@ system:
     \ the Shift Area effect can be used.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: los
     value: 0
@@ -893,8 +893,8 @@ system:
     \ the Shift Area effect can be used.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: los
     value: 0
@@ -918,8 +918,8 @@ system:
     \ targeted character.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -943,8 +943,8 @@ system:
     \ targeted character.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -966,8 +966,8 @@ system:
     \ as against living entities.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -989,8 +989,8 @@ system:
     \ as against living entities.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1013,8 +1013,8 @@ system:
     \ Mask affects cameras, microphones, and other technology.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1037,8 +1037,8 @@ system:
     \ Mask affects cameras, microphones, and other technology.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1062,8 +1062,8 @@ system:
     \ effect; Trid Phantasm affects cameras, microphones, and other technology.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1087,8 +1087,8 @@ system:
     \ effect; Trid Phantasm affects cameras, microphones, and other technology.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1110,8 +1110,8 @@ system:
     \ sensors.'
   type: P
   formulas:
-    drainFormula: '2'
-    soakFormula: ''
+    drain: '2'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1140,8 +1140,8 @@ system:
     s Body + Strength to see if the object is impeded from acting on the command.'
   type: P
   formulas:
-    drainFormula: '6'
-    soakFormula: ''
+    drain: '6'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1170,8 +1170,8 @@ system:
     s Body + Strength to see if the object is impeded from acting on the command.'
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1200,8 +1200,8 @@ system:
     s Body + Strength to see if the object is impeded from acting on the command.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1230,8 +1230,8 @@ system:
     s Body + Strength to see if the object is impeded from acting on the command.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1249,8 +1249,8 @@ system:
     s Defense Rating.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1274,8 +1274,8 @@ system:
     \ who did not resist the spell, even if they move out of the initial area.'
   type: M
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1307,8 +1307,8 @@ system:
     \ or if it violates their basic instincts.'
   type: M
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1329,8 +1329,8 @@ system:
     Area.
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1351,8 +1351,8 @@ system:
     Area.
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1376,8 +1376,8 @@ system:
     \ prevents Chilled.'
   type: M
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1401,8 +1401,8 @@ system:
     \ up.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1424,8 +1424,8 @@ system:
     \ 2.'
   type: M
   formulas:
-    drainFormula: '7'
-    soakFormula: ''
+    drain: '7'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1451,8 +1451,8 @@ system:
     \ (casters Magic rating) meters per turn. Moving them requires a Minor Action.'
   type: P
   formulas:
-    drainFormula: '6'
-    soakFormula: ''
+    drain: '6'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1481,8 +1481,8 @@ system:
     \ p. 161.'
   type: M
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1500,8 +1500,8 @@ system:
     s Defense Rating when in astral combat or against mana-based Combat spells.'
   type: M
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: touch
     value: 0
@@ -1524,8 +1524,8 @@ system:
     \ the device takes Matrix Damage equal to the net hits used, resisted by Firewall.'
   type: M
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1546,8 +1546,8 @@ system:
     meters in length and width (but not depth) for each time the effect is chosen.
   type: P
   formulas:
-    drainFormula: '6'
-    soakFormula: ''
+    drain: '6'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1571,8 +1571,8 @@ system:
     \ it should be predominantly made out of the material.'
   type: P
   formulas:
-    drainFormula: '5'
-    soakFormula: ''
+    drain: '5'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1596,8 +1596,8 @@ system:
     \ it should be predominantly made out of the material.'
   type: P
   formulas:
-    drainFormula: '2'
-    soakFormula: ''
+    drain: '2'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1621,8 +1621,8 @@ system:
     \ it should be predominantly made out of the material.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1646,8 +1646,8 @@ system:
     \ it should be predominantly made out of the material.'
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: los
     value: 0
@@ -1670,8 +1670,8 @@ system:
     \ point of DV added. The Shift Area effect can be used for this spell.'
   type: P
   formulas:
-    drainFormula: '4'
-    soakFormula: ''
+    drain: '4'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1695,8 +1695,8 @@ system:
     \ noises in the area.'
   type: P
   formulas:
-    drainFormula: '3'
-    soakFormula: ''
+    drain: '3'
+    soak: ''
   range:
     type: losa
     value: 0
@@ -1715,8 +1715,8 @@ system:
     per net hit.
   type: P
   formulas:
-    drainFormula: '6'
-    soakFormula: ''
+    drain: '6'
+    soak: ''
   range:
     type: los
     value: 0

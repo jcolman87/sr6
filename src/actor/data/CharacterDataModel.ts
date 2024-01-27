@@ -109,10 +109,6 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		return modifiers;
 	}
 
-	override get defenseRating(): number {
-		return super.defenseRating + this.equipped.defenseRating;
-	}
-
 	//
 	// IHasMatrixPersona
 	//
@@ -133,10 +129,17 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 	}
 
 	override getRollData(): Record<string, unknown> {
-		return {
-			...super.getRollData(),
-			persona: this.matrixPersona ? this.matrixPersona.getRollData() : null,
-		};
+		if (this.matrixPersona) {
+			return {
+				...super.getRollData(),
+				...this.matrixPersona.getRollData(),
+			};
+		} else {
+			return {
+				...super.getRollData(),
+				persona: null,
+			};
+		}
 	}
 
 	async _addCoreSkills(): Promise<void> {
