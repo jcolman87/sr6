@@ -7,6 +7,7 @@ import { EdgeBoostType, IEdgeBoost } from '@/edge';
 import InitiativeRoll from '@/roll/InitiativeRoll';
 import SpendEdgePostRollPrompt from '@/roll/SpendEdgePostRollPrompt';
 import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
+import { enumKeys } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { inject, toRaw, onBeforeMount, onUpdated, ref } from 'vue';
@@ -49,7 +50,7 @@ async function promptSpendEdge() {
 }
 
 function getEdgeBoostKey(boost: EdgeBoostType): undefined | string {
-	return Object.keys(EdgeBoostType).find((x) => EdgeBoostType[x as any] == boost);
+	return enumKeys(EdgeBoostType).find((x) => EdgeBoostType[x] == boost);
 }
 
 onUpdated(update);

@@ -21,9 +21,11 @@ const maxAmps = ref((toRaw(props.test.actor).systemData as LifeformDataModel).sp
 
 function currentAmps(): number {
 	let n = 0;
-	Object.values(props.test.data.adjustments).forEach((key) => {
-		n += props.test.data.adjustments[key as string];
-	});
+
+	n += props.test.data.adjustments[SpellAdjustmentType.AmpUp];
+	n += props.test.data.adjustments[SpellAdjustmentType.ShiftArea];
+	n += props.test.data.adjustments[SpellAdjustmentType.IncreaseArea];
+
 	return n;
 }
 
