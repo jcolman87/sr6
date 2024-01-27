@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import { ActivationPhase } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import { IModifier } from '@/modifier';
 import { TestPoolModifier } from '@/modifier/TestModifiers';
 import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
-import { inject, toRaw, ref, onMounted, computed } from 'vue';
+import { inject, toRaw, ref, onMounted } from 'vue';
 import { TestRollPromptContext } from '@/roll/TestRollPrompt';
 import { RootContext } from '@/vue/SheetContext';
 import Localized from '@/vue/components/Localized.vue';
@@ -14,7 +13,6 @@ import { Collapse } from 'vue-collapsed';
 import * as images from '@/vue/images';
 
 const context = inject<TestRollPromptContext>(RootContext)!;
-const baseSystem = computed(() => toRaw(context.actor).systemData as BaseActorDataModel);
 const edgeBoost = ref<IEdgeBoost | null>(null);
 
 const text = ref({
@@ -38,7 +36,7 @@ const conditionsDescriptionsVisible = ref(
 
 async function roll() {
 	if (edgeBoost.value) {
-		toRaw(context.test).applyEdgeBoost(toRaw(edgeBoost.value));
+		await toRaw(context.test).applyEdgeBoost(toRaw(edgeBoost.value));
 	}
 	context.resolvePromise(toRaw(context.test.data));
 }

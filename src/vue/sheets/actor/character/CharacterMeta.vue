@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import * as images from '@/vue/images';
 import MonitorView from '@/vue/views/MonitorView.vue';
-import { MonitorDataModel, MonitorType } from '@/actor/data/MonitorsDataModel';
+import { MonitorType } from '@/actor/data/MonitorsDataModel';
 import { inject, toRaw, computed } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';

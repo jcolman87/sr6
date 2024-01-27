@@ -20,8 +20,6 @@ export default class InitiativeRoll extends Roll {
 		data?: Record<string, unknown>,
 		options?: RollOptions,
 	): InitiativeRoll {
-		const formula = `${initiativeData.score} + ${initiativeData.dice}d6`;
-
 		return new InitiativeRoll(`${initiativeData.score} + ${initiativeData.dice}d6`, data, {
 			...options,
 			initiativeRoll: true,

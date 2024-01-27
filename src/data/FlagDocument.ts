@@ -1,4 +1,3 @@
-import BaseDataModel from '@/data/BaseDataModel';
 import { ConstructorOf } from '@/util';
 
 export default class FlagDocument<TDataModel extends foundry.abstract.DataModel> {

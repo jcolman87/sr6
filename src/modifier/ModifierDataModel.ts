@@ -46,4 +46,3 @@ export abstract class ModifierDataModel extends BaseDataModel {
 		};
 	}
 }
-(window as any).ModifierDataModel = ModifierDataModel;

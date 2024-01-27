@@ -1,4 +1,3 @@
-import { IHasInitiative } from '@/data/interfaces';
 import SR6Roll from '@/roll/SR6Roll';
 import InitiativeRoll from '@/roll/InitiativeRoll';
 

@@ -7,7 +7,6 @@ import SR6Roll from '@/roll/SR6Roll';
 import { AttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import ChatComponent from '@/test/vue/chat/PhysicalSoakTest.vue';
 import { getActorSync, getTargetActorIds } from '@/util';
 import { Component } from 'vue';
 
@@ -87,6 +86,7 @@ export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 				actor: defenseTest.actor,
 				data: {
 					threshold: this.damage,
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					defenseTest: defenseTest.toJSON() as any,
 				},
 			});

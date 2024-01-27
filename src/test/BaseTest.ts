@@ -112,7 +112,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		);
 	}
 
-	applyEdgeBoost(boost: IEdgeBoost): boolean {
+	async applyEdgeBoost(boost: IEdgeBoost): Promise<boolean> {
 		if (this.data.edgeSpent) {
 			return false;
 		}
@@ -121,9 +121,9 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 		// Are we applying post-roll? If so just call the post roll application
 		if (this.roll) {
-			this.edgeBoost.finishRoll?.(this.roll);
-			this.edgeBoost.finishTest?.(this);
-			this.edgeBoost.finishActor?.(this.actor);
+			await this.edgeBoost.finishRoll?.(this.roll);
+			await this.edgeBoost.finishTest?.(this);
+			await this.edgeBoost.finishActor?.(this.actor);
 		}
 
 		return true;
@@ -136,8 +136,8 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		const configuredData = await this.prompt();
 		if (configuredData.ok) {
 			if (this.edgeBoost) {
-				this.edgeBoost.prepareTest?.(this);
-				this.edgeBoost.prepareActor?.(this.actor);
+				await this.edgeBoost.prepareTest?.(this);
+				await this.edgeBoost.prepareActor?.(this.actor);
 			}
 			this.roll = this.createRoll();
 
@@ -179,9 +179,9 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 		if (this.edgeBoost) {
 			if (this.roll) {
-				this.edgeBoost.finishRoll?.(this.roll);
+				await this.edgeBoost.finishRoll?.(this.roll);
 			}
-			this.edgeBoost.finishTest?.(this);
+			await this.edgeBoost.finishTest?.(this);
 		}
 	}
 

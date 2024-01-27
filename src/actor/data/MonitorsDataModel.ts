@@ -108,7 +108,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		}
 
 		// If the setDamage call was on overflow, that means physical automatically maxes.
-		if (type == MonitorType.Overflow) {
+		if (type === MonitorType.Overflow) {
 			if (newDamage > 0 && this.physical.damage < this.physical.max) {
 				await this.actor!.update({ [`system.monitors.physical.damage`]: this.physical.max });
 			}
@@ -183,7 +183,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 
 	prepareWoundModifier(): void {
 		// Is there already a wound modifier? if so delete it and recreate it
-		let modifier = this.actor!.modifiers.all.find((modifier) => modifier.class == 'WoundModifier') as
+		let modifier = this.actor!.modifiers.all.find((modifier) => modifier.class === 'WoundModifier') as
 			| WoundModifier
 			| undefined;
 		if (!modifier) {

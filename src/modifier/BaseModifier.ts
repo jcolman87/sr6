@@ -36,8 +36,8 @@ export default class BaseModifier<
 		return this._source;
 	}
 
-	isApplicable(test: Maybe<ITest> = null): boolean {
-		if (this.conditions.length == 0) {
+	isApplicable(_test: Maybe<ITest> = null): boolean {
+		if (this.conditions.length === 0) {
 			return true;
 		}
 

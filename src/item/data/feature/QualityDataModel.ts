@@ -2,8 +2,6 @@ import { IHasPostCreate, IHasPreCreate } from '@/data/interfaces';
 import SR6Effect from '@/effect/SR6Effect';
 import BaseItemDataModel, { ItemActivationDataModel } from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { ModifierSourceUUID } from '@/modifier';
-import BaseModifier from '@/modifier/BaseModifier';
 import { ModifierDataModel } from '@/modifier/ModifierDataModel';
 
 export default abstract class QualityDataModel
@@ -61,9 +59,9 @@ export default abstract class QualityDataModel
 	async preCreate(
 		document: SR6Item<QualityDataModel>,
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		data: PreDocumentId<any>,
-		options: DocumentModificationContext<SR6Item<QualityDataModel>>,
-		user: foundry.documents.BaseUser,
+		_data: PreDocumentId<any>,
+		_options: DocumentModificationContext<SR6Item<QualityDataModel>>,
+		_user: foundry.documents.BaseUser,
 	): Promise<void> {
 		const effect: Maybe<SR6Effect> = document.effects.getName(this.item!.name) as SR6Effect | undefined;
 		if (!effect) {
@@ -87,6 +85,7 @@ export default abstract class QualityDataModel
 	override prepareBaseData(): void {
 		this.activation?.prepareBaseData();
 	}
+
 	override prepareData(): void {
 		this.activation?.prepareData();
 	}

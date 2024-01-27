@@ -1,6 +1,4 @@
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import { InitiativeType } from '@/data';
-import InitiativeDataModel from '@/data/InitiativeDataModel';
 import { IHasInitiative } from '@/data/interfaces';
 
 import SR6Actor from '@/actor/SR6Actor';
@@ -55,7 +53,7 @@ export default class InitiativeRollPrompt extends VueSheet(
 		super(actor);
 		const initiative = actor.systemData.getInitiative(initiativeType);
 		if (!initiative) {
-			this.close();
+			void this.close();
 			throw 'err';
 		}
 		this.data = new InitiativeRollData(initiative);

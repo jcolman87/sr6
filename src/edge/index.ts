@@ -53,7 +53,7 @@ export abstract class BaseEdgeBoost {
 		return this.edgeCost;
 	}
 
-	async prepareActor(actor: SR6Actor<BaseActorDataModel>): Promise<void> {
+	async prepareActor(_actor: SR6Actor<BaseActorDataModel>): Promise<void> {
 		// TODO: spend edge
 	}
 }
@@ -68,16 +68,20 @@ export class EdgeActionBoost extends BaseEdgeBoost implements IEdgeBoost {
 	async prepareInitiative(data: InitiativeRollData): Promise<void> {
 		await this.edgeAction?.prepareInitiative(data);
 	}
+
 	async prepareTest(test: ITest): Promise<void> {
 		await this.edgeAction?.prepareTest(test);
 	}
+
 	async finishRoll(roll: SR6Roll): Promise<void> {
 		await this.edgeAction?.finishRoll(roll);
 	}
+
 	override async prepareActor(actor: SR6Actor<BaseActorDataModel>): Promise<void> {
 		await super.prepareActor(actor);
 		await this.edgeAction?.prepareActor(actor);
 	}
+
 	async finishTest(test: ITest): Promise<void> {
 		await this.edgeAction?.finishTest(test);
 	}

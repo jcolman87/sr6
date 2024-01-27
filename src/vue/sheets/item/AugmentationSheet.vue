@@ -2,13 +2,12 @@
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import SR6Item from '@/item/SR6Item';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
-import { computed, inject, ref, toRaw } from 'vue';
+import { computed, inject } from 'vue';
 
 import { ItemSheetContext, RootContext } from '@/vue/SheetContext';
-import Localized from '@/vue/components/Localized.vue';
 
 const context = inject<ItemSheetContext>(RootContext)!;
-const system = computed(() => (context.data.item as SR6Item<AugmentationDataModel>).systemData);
+const _system = computed(() => (context.data.item as SR6Item<AugmentationDataModel>).systemData);
 </script>
 
 <template>

@@ -73,6 +73,7 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 
 	constructor(
 		data?: DeepPartial<SourceFromSchema<foundry.data.fields.DataSchema>>,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		options?: DataModelConstructionOptions<any>,
 	) {
 		super(data, options);

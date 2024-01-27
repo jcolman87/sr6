@@ -7,7 +7,6 @@
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Combatant, { CombatantFlagData } from '@/combat/SR6Combatant';
 import { IHasInitiative } from '@/data/interfaces';
-import InitiativeRoll from '@/roll/InitiativeRoll';
 import InitiativeRollPrompt from '@/roll/InitiativeRollPrompt';
 import { emit as socketEmit, SOCKET_NAME, SocketPayload, SocketOperation, CombatSocketBaseData } from '@/socket';
 
@@ -103,7 +102,7 @@ export default class SR6Combat extends Combat {
 		// Iterate over Combatants, performing an initiative roll for each
 		const updates = [];
 		const messages = [];
-		for (let [i, id] of ids.entries()) {
+		for (const [i, id] of ids.entries()) {
 			// Get Combatant data (non-strictly)
 			const combatant = this.combatants.get(id) as SR6Combatant;
 			if (!combatant?.isOwner) continue;
@@ -118,19 +117,21 @@ export default class SR6Combat extends Combat {
 				updates.push({ _id: id, initiative: roll.total });
 
 				// Construct chat message data
-				let messageData = foundry.utils.mergeObject(
-					{
-						speaker: ChatMessage.getSpeaker({
-							actor: combatant.actor,
-							token: combatant.token,
-							alias: combatant.name,
-						}),
-						flavor: game.i18n.format('COMBAT.RollsInitiative', { name: combatant.name }),
-						flags: { 'core.initiativeRoll': true },
-					},
-					opts.messageOptions,
+				const chatData: foundry.data.ChatMessageSource = await roll.toMessage(
+					foundry.utils.mergeObject(
+						{
+							speaker: ChatMessage.getSpeaker({
+								actor: combatant.actor,
+								token: combatant.token,
+								alias: combatant.name,
+							}),
+							flavor: game.i18n.format('COMBAT.RollsInitiative', { name: combatant.name }),
+							flags: { 'core.initiativeRoll': true },
+						},
+						opts.messageOptions,
+					),
+					{ create: false },
 				);
-				const chatData: foundry.data.ChatMessageSource = await roll.toMessage(messageData, { create: false });
 
 				// If the combatant is hidden, use a private roll unless an alternative rollMode was explicitly requested
 				chatData.rollMode =

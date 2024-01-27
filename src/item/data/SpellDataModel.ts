@@ -141,8 +141,9 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 		}
 	}
 
-	getAttackRating(data: Record<string, unknown> = {}): number {
-		TODO: return 69;
+	getAttackRating(_data: Record<string, unknown> = {}): number {
+		// TODO:
+		return 69;
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

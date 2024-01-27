@@ -44,13 +44,11 @@ async function executeOpposedTest() {
 }
 
 async function executeDrainTest() {
-	for (const actor of getSelfOrSelectedActors()) {
-		await new SpellDrainTest({
-			actor: toRaw(props.test).actor as SR6Actor<LifeformDataModel>,
-			item: toRaw(props.test).spell,
-			data: { opposedData: toRaw(props.test).toJSON() as unknown as TestSourceData<SpellCastTestData> },
-		}).execute();
-	}
+	await new SpellDrainTest({
+		actor: toRaw(props.test).actor as SR6Actor<LifeformDataModel>,
+		item: toRaw(props.test).spell,
+		data: { opposedData: toRaw(props.test).toJSON() as unknown as TestSourceData<SpellCastTestData> },
+	}).execute();
 }
 console.log(toRaw(props.test.spell));
 </script>

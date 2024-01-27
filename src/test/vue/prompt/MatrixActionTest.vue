@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import { MatrixActionTest } from '@/test/MatrixTests';
 import Localized from '@/vue/components/Localized.vue';
-import { toRaw, ref } from 'vue';
+import { ref } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;

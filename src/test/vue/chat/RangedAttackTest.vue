@@ -1,6 +1,5 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
-import SR6Actor from '@/actor/SR6Actor';
 import { isTargetOwner } from '@/test/AttackTestData';
 import { RangedAttackTest } from '@/test/RangedTests';
 import { getSelfOrSelectedActors } from '@/util';

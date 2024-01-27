@@ -69,6 +69,7 @@ export default abstract class LifeformDataModel
 	get spellDrainPool(): number {
 		return this.solveFormula(`@willpower + @${MAGIC_TRADITION_ATTRIBUTE[this.magicTradition]}`);
 	}
+
 	get spellAmps(): number {
 		return this.solveFormula(`max(@magic, @sorcery)`);
 	}

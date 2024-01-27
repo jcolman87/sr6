@@ -20,23 +20,28 @@ const emit = defineEmits<{
 const edgeBoost = ref<IEdgeBoost | null>(null);
 
 function getBoostsForPhase(phase: ActivationPhase): IEdgeBoost[] {
-	return Object.keys(CONFIG.sr6.types.edge)
-		.map((key) => new (CONFIG.sr6.types.edge[key] as any)())
-		.filter((boost) => boost.phase == phase || boost.phase == ActivationPhase.Any);
+	return (
+		Object.keys(CONFIG.sr6.types.edge)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			.map((key) => new (CONFIG.sr6.types.edge[key] as any)())
+			.filter((boost) => boost.phase === phase || boost.phase === ActivationPhase.Any)
+	);
 }
 
 function selectEdgeBoost(ev: Event) {
 	const key = getEventValue(ev) as string;
 	if (key) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		edgeBoost.value = new (CONFIG.sr6.types.edge[key] as any)();
 	} else {
 		edgeBoost.value = null;
 	}
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	emit('setEdgeBoost', edgeBoost.value as any);
 }
 
 function getEdgeBoostKey(boost: IEdgeBoost): undefined | string {
-	return Object.keys(EdgeBoostType).find((x) => EdgeBoostType[x as keyof typeof EdgeBoostType] == boost.type);
+	return Object.keys(EdgeBoostType).find((x) => EdgeBoostType[x as keyof typeof EdgeBoostType] === boost.type);
 }
 
 function localize(val: string): string {
@@ -49,7 +54,7 @@ function localize(val: string): string {
 		<label><Localized label="SR6.Edge.EdgeBoost" /></label>
 		<select @change="selectEdgeBoost">
 			<option value="null">-</option>
-			<template v-for="boost in getBoostsForPhase(phase)" v-bind:key="boost.type">
+			<template v-for="boost in getBoostsForPhase(props.phase)" v-bind:key="boost.type">
 				<option
 					:value="boost.type"
 					:title="localize(`SR6.Edge.Boosts.${getEdgeBoostKey(boost)}.Description`)"

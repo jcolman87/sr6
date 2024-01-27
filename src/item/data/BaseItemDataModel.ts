@@ -77,7 +77,7 @@ export abstract class ItemActivationDataModel extends BaseDataModel {
 	abstract status: boolean;
 
 	override prepareBaseData(): void {
-		if (this.type == ActivationType.Passive) {
+		if (this.type === ActivationType.Passive) {
 			this.status = true;
 		}
 	}

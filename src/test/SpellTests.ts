@@ -89,6 +89,7 @@ export class SpellCastTest extends BaseTest<SpellCastTestData> {
 				actor: defenseTest.actor as SR6Actor<LifeformDataModel>,
 				data: {
 					threshold: this.data.damage,
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					defenseTest: defenseTest.toJSON() as any,
 				},
 			});

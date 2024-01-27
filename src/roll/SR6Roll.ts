@@ -182,6 +182,7 @@ export default class SR6Roll extends Roll {
 	_updateDie(idx: number, value: number): void {
 		(this.terms[0] as DiceTerm).results[idx].result = value;
 	}
+
 	protected constructor(formula: string, data?: Record<string, unknown>, options?: RollOptions) {
 		const configuredOptions = foundry.utils.mergeObject(options ? options : {}, {
 			parameters: { glitch: [1], success: [5, 6] },

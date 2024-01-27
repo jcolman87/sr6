@@ -9,8 +9,6 @@ import SR6Actor from '@/actor/SR6Actor';
 import SR6Combat from '@/combat/SR6Combat';
 import { InitiativeType } from '@/data';
 import { IHasInitiative, AvailableActions } from '@/data/interfaces';
-import InitiativeRoll from '@/roll/InitiativeRoll';
-import InitiativeRollPrompt from '@/roll/InitiativeRollPrompt';
 
 export type CombatantFlagData = {
 	initiativeType: InitiativeType;

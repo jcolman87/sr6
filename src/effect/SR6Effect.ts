@@ -9,7 +9,6 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
 import { IModifier, Modifiers } from '@/modifier';
 import { TestPoolModifier } from '@/modifier/TestModifiers';
-import { getItemSync } from '@/util';
 
 export const EFFECT_MODES = {
 	POOL_MODIFIER: 900,

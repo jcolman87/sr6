@@ -6,10 +6,8 @@
 
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
-import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { ActivationPeriod, ActivationType, DamageType } from '@/data';
-import { SpellCombatType } from '@/data/magic';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
@@ -44,15 +42,15 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 	};
 
 	get canDefend(): boolean {
-		return this.formulas.defend != null;
+		return this.formulas.defend !== null;
 	}
 
 	get canSoak(): boolean {
-		return this.formulas.soak != null;
+		return this.formulas.soak !== null;
 	}
 
 	get canDamage(): boolean {
-		return this.formulas.damage != null;
+		return this.formulas.damage !== null;
 	}
 
 	get pool(): number {

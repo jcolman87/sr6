@@ -12,7 +12,7 @@ export abstract class TestModifier<TSourceData extends TestModifierSourceData> e
 			return false;
 		}
 		if (test) {
-			return this.testClasses.length == 0 || this.testClasses.includes(test.type);
+			return this.testClasses.length === 0 || this.testClasses.includes(test.type);
 		}
 
 		return true;

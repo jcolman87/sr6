@@ -3,7 +3,6 @@ import { ActivationPhase } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import { SpendEdgePostRollPromptContext } from '@/roll/SpendEdgePostRollPrompt';
 import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
-import Localized from '@/vue/components/Localized.vue';
 import { RootContext } from '@/vue/SheetContext';
 import { inject, ref, toRaw } from 'vue';
 

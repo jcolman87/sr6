@@ -14,7 +14,7 @@ const edgeBoost = ref<IEdgeBoost | null>(null);
 
 async function roll() {
 	// Apply the boost to the data
-	edgeBoost.value?.prepareInitiative?.(toRaw(context.data));
+	await edgeBoost.value?.prepareInitiative?.(toRaw(context.data));
 	context.resolvePromise(toRaw(context.data));
 }
 </script>

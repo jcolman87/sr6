@@ -7,7 +7,6 @@ import { getSelfOrSelectedActors } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { ref, toRaw } from 'vue';
-import { Collapse } from 'vue-collapsed';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;

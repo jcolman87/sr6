@@ -41,6 +41,7 @@ export default class SkillUseDataModel extends BaseDataModel {
 
 	constructor(
 		data?: DeepPartial<SourceFromSchema<foundry.data.fields.DataSchema>>,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		options?: DataModelConstructionOptions<any>,
 	) {
 		super(data, options);

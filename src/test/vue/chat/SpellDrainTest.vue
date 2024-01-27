@@ -1,7 +1,6 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import { SpellDrainTest } from '@/test/SpellTests';
-import { getSelfOrSelectedActors } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { ref, toRaw } from 'vue';
@@ -21,7 +20,7 @@ const visibility = ref({
 });
 
 const actionName = ref(props.test.opposedTest.spell.name);
-const actionDescription = ref(props.test.opposedTest.spell.systemData.description);
+const _actionDescription = ref(props.test.opposedTest.spell.systemData.description);
 
 emit('setText', {
 	title: `Resist Drain (${actionName.value})`,

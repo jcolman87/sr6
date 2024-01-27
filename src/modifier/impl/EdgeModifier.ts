@@ -69,4 +69,3 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 		super({ parent, source, conditions, data });
 	}
 }
-(window as any).EdgeModifier = EdgeModifier;

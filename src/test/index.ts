@@ -85,6 +85,6 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 
 	toJSON(): Record<string, unknown>;
 
-	applyEdgeBoost(boost: IEdgeBoost): boolean;
+	applyEdgeBoost(boost: IEdgeBoost): Promise<boolean>;
 }
 export function register(): void {}

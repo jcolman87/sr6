@@ -82,6 +82,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
 	get simType(): MatrixSimType {
 		return this._simType;
 	}
+
 	set simType(simType: MatrixSimType) {
 		// Swap initiative for sim type
 		this._simType = simType;

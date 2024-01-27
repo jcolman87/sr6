@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import CredstickDataModel, { CredstickRating } from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';

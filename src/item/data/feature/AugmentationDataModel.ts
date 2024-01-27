@@ -1,6 +1,5 @@
 import { DocumentUUIDField } from '@/data/fields';
 import { IHasOnDelete } from '@/data/interfaces';
-import { ItemActivationDataModel } from '@/item/data/BaseItemDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import { GearAvailabilityDataModel } from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -54,9 +53,9 @@ export default abstract class AugmentationDataModel
 	}
 
 	onDelete(
-		document: SR6Item<QualityDataModel>,
-		options: DocumentModificationContext<SR6Item<QualityDataModel>>,
-		userId: string,
+		_document: SR6Item<QualityDataModel>,
+		_options: DocumentModificationContext<SR6Item<QualityDataModel>>,
+		_userId: string,
 	): void {
 		this._attachedGearIds.forEach((uuid) => {
 			const item = getItemSync(SR6Item, uuid);

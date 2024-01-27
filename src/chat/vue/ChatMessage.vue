@@ -2,16 +2,12 @@
 <script lang="ts" setup>
 import { ChatContext, ChatMessageContext } from '@/chat/SR6ChatMessage';
 import ChatHeader from '@/chat/vue/ChatHeader.vue';
-import { ActivationPhase } from '@/data';
-import { EdgeBoostType, IEdgeBoost } from '@/edge';
-import InitiativeRoll from '@/roll/InitiativeRoll';
+import { EdgeBoostType } from '@/edge';
 import SpendEdgePostRollPrompt from '@/roll/SpendEdgePostRollPrompt';
-import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
 import { enumKeys } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { inject, toRaw, onBeforeMount, onUpdated, ref } from 'vue';
-import { Collapse } from 'vue-collapsed';
 
 const context = inject<ChatMessageContext>(ChatContext)!;
 const text = ref({
@@ -43,14 +39,14 @@ async function promptSpendEdge() {
 		// Apply the boost to the test and save it to the message
 		// TODO: we should really do this somewhere else
 		const test = toRaw(context.test!);
-		toRaw(test).applyEdgeBoost(boost);
+		await toRaw(test).applyEdgeBoost(boost);
 		const data = test.toJSON();
 		await context.message.setFlag('sr6', 'testData', data);
 	}
 }
 
 function getEdgeBoostKey(boost: EdgeBoostType): undefined | string {
-	return enumKeys(EdgeBoostType).find((x) => EdgeBoostType[x] == boost);
+	return enumKeys(EdgeBoostType).find((x) => EdgeBoostType[x] === boost);
 }
 
 onUpdated(update);

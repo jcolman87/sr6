@@ -1,7 +1,6 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import { SpellDefenseTest } from '@/test/SpellTests';
-import { getSelfOrSelectedActors } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { ref, toRaw } from 'vue';
@@ -21,7 +20,7 @@ const visibility = ref({
 });
 
 const actionName = ref(props.test.opposedTest.spell.name);
-const actionDescription = ref(props.test.opposedTest.spell.systemData.description);
+const _actionDescription = ref(props.test.opposedTest.spell.systemData.description);
 
 emit('setText', {
 	title: `Defend (${actionName.value})`,
@@ -29,9 +28,7 @@ emit('setText', {
 });
 
 async function executeSoakTest() {
-	for (const actor of getSelfOrSelectedActors()) {
-		await toRaw(props.test.opposedTest).soak(toRaw(props.test)).execute();
-	}
+	await toRaw(props.test.opposedTest).soak(toRaw(props.test)).execute();
 }
 </script>
 
