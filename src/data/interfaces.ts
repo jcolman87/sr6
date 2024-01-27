@@ -30,8 +30,8 @@ export interface IHasInitiative extends IHasActor {
 }
 
 export interface IHasEdge {
-	gainEdge?(count: number): boolean;
-	spendEdge?(count: number): boolean;
+	gainEdge?(count: number): Promise<boolean>;
+	spendEdge?(count: number): Promise<boolean>;
 }
 
 export interface IHasMatrixPersona extends IHasActor {

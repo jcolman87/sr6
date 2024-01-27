@@ -49,8 +49,8 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 		return true;
 	}
 
-	finishTest<TTest extends ITest>(test: TTest): void {
-		test.actor.systemData.monitors.gainEdge(1);
+	async finishTest<TTest extends ITest>(test: TTest): Promise<void> {
+		await test.actor.systemData.monitors.gainEdge(1);
 	}
 
 	override toJSON(): ModifierSourceData {

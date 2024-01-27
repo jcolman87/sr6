@@ -165,13 +165,13 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		}
 	}
 
-	gainEdge(count: number): boolean {
+	async gainEdge(count: number): Promise<boolean> {
 		this.edge.damage = Math.max(0, (this.edge.damage -= count));
-
+		await this.actor!.update({ ['system.monitors.edge.damage']: this.edge.damage });
 		return true;
 	}
 
-	spendEdge(count: number): boolean {
+	async spendEdge(count: number): Promise<boolean> {
 		if (this.edge.value < count) {
 			return false;
 		}

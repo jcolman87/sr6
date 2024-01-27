@@ -120,11 +120,11 @@ export default abstract class LifeformDataModel
 	//
 	// IHasEdge
 	//
-	gainEdge(count: number): boolean {
+	async gainEdge(count: number): Promise<boolean> {
 		return this.monitors.gainEdge(count);
 	}
 
-	spendEdge(count: number): boolean {
+	async spendEdge(count: number): Promise<boolean> {
 		return this.monitors.spendEdge(count);
 	}
 
@@ -175,6 +175,10 @@ export default abstract class LifeformDataModel
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this._prepareAttributes(AttributeDataModel.prototype.prepareDerivedData);
+
+		// Set our max edge to our edge attribute
+		this.monitors.edge.max = this.attributes.edge.base;
+
 		this.monitors.prepareDerivedData();
 	}
 
