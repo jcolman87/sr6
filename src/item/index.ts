@@ -30,7 +30,7 @@ import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import MatrixICDataModel from '@/item/data/MatrixICDataModel';
-import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
+import ProgramDataModel from '@/item/data/ProgramDataModel';
 
 export function register(): void {
 	CONFIG.Item.documentClass = SR6Item;
@@ -79,7 +79,7 @@ function registerDataModels(): void {
 	// Matrix
 	CONFIG.Item.dataModels.matrix_action = MatrixActionDataModel;
 	CONFIG.Item.dataModels.matrix_persona = MatrixPersonaDataModel;
-	CONFIG.Item.dataModels.matrix_program = MatrixProgramDataModel;
+	CONFIG.Item.dataModels.program = ProgramDataModel;
 	CONFIG.Item.dataModels.matrix_ic = MatrixICDataModel;
 
 	//

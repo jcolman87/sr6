@@ -8,15 +8,14 @@ import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { ActivationPeriod, ActivationType, DamageType } from '@/data';
+import { ActivationDataModel } from '@/data/ActivationDataModel';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import BaseActionDataModel from '@/item/data/action/BaseActionDataModel';
 
 export type MatrixActionLimits = {
 	illegal: boolean;
 	access_level: MatrixAccessLevel[];
-	activation_type: ActivationType;
-	activation_period: ActivationPeriod;
 };
 
 export type MatrixActionFormulas = {
@@ -28,7 +27,7 @@ export type MatrixActionFormulas = {
 	soak: null | string;
 };
 
-export default abstract class MatrixActionDataModel extends BaseItemDataModel {
+export default abstract class MatrixActionDataModel extends BaseActionDataModel {
 	abstract type: MatrixActionType;
 
 	abstract skillUse: SkillUseDataModel | null;
@@ -134,20 +133,6 @@ export default abstract class MatrixActionDataModel extends BaseItemDataModel {
 							nullable: false,
 						},
 					),
-					activationType: new fields.StringField({
-						initial: ActivationType.Major,
-						required: true,
-						nullable: false,
-						blank: false,
-						choices: Object.values(ActivationType),
-					}),
-					activationPeriod: new fields.StringField({
-						initial: ActivationPeriod.Initiative,
-						required: true,
-						nullable: false,
-						blank: false,
-						choices: Object.values(ActivationPeriod),
-					}),
 				},
 				{ required: true, nullable: false },
 			),

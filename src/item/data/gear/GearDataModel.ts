@@ -13,7 +13,7 @@ import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import { MatrixSimType } from '@/data/matrix';
-import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
+import ProgramDataModel from '@/item/data/ProgramDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getActorSync, getItemSync } from '@/util';
 
@@ -68,7 +68,7 @@ export type GearCategory = {
 export type ProgramSlotsData = {
 	total: number;
 	available: number;
-	programs: SR6Item<MatrixProgramDataModel>[];
+	programs: SR6Item<ProgramDataModel>[];
 };
 
 export abstract class GearWirelessBonusDataModel extends BaseDataModel {
@@ -110,7 +110,7 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 			return {
 				total: total,
 				available: total - this._programSlots.length,
-				programs: this._programSlots.map((uuid) => getItemSync(SR6Item<MatrixProgramDataModel>, uuid)!),
+				programs: this._programSlots.map((uuid) => getItemSync(SR6Item<ProgramDataModel>, uuid)!),
 			};
 		} else {
 			return {
@@ -121,7 +121,7 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 		}
 	}
 
-	async setProgramSlots(programs: SR6Item<MatrixProgramDataModel>[]): Promise<boolean> {
+	async setProgramSlots(programs: SR6Item<ProgramDataModel>[]): Promise<boolean> {
 		if (this.totalProgramSlots < programs.length) {
 			this._programSlots = programs.map((p) => p.uuid).slice(0, this.programSlots.total);
 			return true;

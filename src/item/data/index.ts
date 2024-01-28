@@ -5,7 +5,7 @@ import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
-import MatrixProgramDataModel from '@/item/data/MatrixProgramDataModel';
+import ProgramDataModel from '@/item/data/ProgramDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
 import SR6Item from '@/item/SR6Item';
 
@@ -85,13 +85,13 @@ export async function getCoreSpells(): Promise<SR6Item<SpellDataModel>[]> {
 	);
 }
 
-export async function getCoreMatrixPrograms(): Promise<SR6Item<MatrixProgramDataModel>[]> {
+export async function getCorePrograms(): Promise<SR6Item<ProgramDataModel>[]> {
 	const pack = game.packs.get('sr6.sr6-crb-matrix-items')!;
 
 	return Array.from(
 		(await pack.getDocuments())
-			.filter((i) => (i as SR6Item).type === 'matrix_program')
-			.map((i) => i as SR6Item<MatrixProgramDataModel>),
+			.filter((i) => (i as SR6Item).type === 'program')
+			.map((i) => i as SR6Item<ProgramDataModel>),
 	);
 }
 

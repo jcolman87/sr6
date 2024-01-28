@@ -22,7 +22,7 @@ import {
 	getCoreGeneralActions,
 	getCoreGear,
 	getCoreAugmentations,
-	getCoreMatrixPrograms,
+	getCorePrograms,
 } from '@/item/data';
 import LifestyleType from '@/item/data/feature/LifestyleDataModel';
 import SINDataModel from '@/item/data/feature/SINDataModel';
@@ -123,7 +123,7 @@ export class ImportPrompt extends VueSheet(Application) {
 		// Add all core actions
 		await actor.createEmbeddedDocuments('Item', await getCoreGeneralActions());
 		await actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
-		await actor.createEmbeddedDocuments('Item', await getCoreMatrixPrograms());
+		await actor.createEmbeddedDocuments('Item', await getCorePrograms());
 
 		Object.keys(data.attributes).forEach((name: string) => {
 			const value = json.attr(name);

@@ -45,11 +45,14 @@ async function addEffect(category: string) {
 }
 
 function updateEffects(): void {
+	componentKey.value += 1;
 	effects.value = [...toRaw(context.data.actor).effects.map((e) => e as SR6Effect)];
 }
 
 onBeforeMount(updateEffects);
 onBeforeUpdate(updateEffects);
+
+const componentKey = ref(0);
 </script>
 
 <template>
@@ -104,11 +107,11 @@ onBeforeUpdate(updateEffects);
 			</div>
 
 			<div class="tab" data-group="primary" data-tab="data">
-				<slot name="data"> DATA </slot>
+				<slot name="data" :key="componentKey"> DATA </slot>
 			</div>
 
 			<div v-if="props.showEffectsTab" class="tab" data-group="primary" data-tab="effects">
-				<EffectsView :effects="[...(effects as any)]" @add-effect="addEffect" />
+				<EffectsView :key="componentKey" :effects="[...(effects as any)]" @add-effect="addEffect" />
 			</div>
 		</section>
 	</div>

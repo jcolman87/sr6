@@ -55,17 +55,6 @@ export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 
 		return 0;
 	}
-
-	get targets(): SR6Actor[] {
-		if (!this.data.targetIds) {
-			return [];
-		}
-		return this.data.targetIds
-			.map((id) => getActorSync(SR6Actor, id))
-			.filter((actor) => actor !== null)
-			.map((actor) => actor!);
-	}
-
 	opposed(actor: SR6Actor<BaseActorDataModel>, item: undefined | SR6Item = undefined): MatrixDefenseTest {
 		if (this.matrixAction.systemData.canDefend) {
 			return new MatrixDefenseTest({

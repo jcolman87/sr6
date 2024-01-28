@@ -11,4 +11,8 @@ export class SR6Token<TDocument extends TokenDocument = SR6TokenDocument> extend
 	get systemActor(): null | SR6Actor<BaseActorDataModel> {
 		return this.actor as SR6Actor<BaseActorDataModel>;
 	}
+
+	protected override _canDrag(user: User, event?: PIXI.InteractionEvent): boolean {
+		return super._canDrag(user, event);
+	}
 }

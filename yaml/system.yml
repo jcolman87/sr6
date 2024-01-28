@@ -70,6 +70,11 @@ packs:
     system: sr6
     path: ./packs/sr6-crb-matrix-items.db
     type: Item
+  - name: sr6-crb-vehicles
+    label: Core Vehicles
+    system: sr6
+    path: ./packs/sr6-crb-vehicles.db
+    type: Actor
 socket: true
 url: https://github.com/jaynus/sr6
 bugs: https://github.com/jaynus/sr6/issues

@@ -7,7 +7,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Item from '@/item/SR6Item';
-
+import { IHasOnDropActor, IHasOnDropItem } from '@/data/interfaces';
 import './SR6ActorSheet.scss';
 
 export default class SR6ActorSheet<
@@ -39,6 +39,28 @@ export default class SR6ActorSheet<
 			// Foundry v10 and v11 bind this functionality differently so instead we override that behavior with our own.
 			html.find('img[data-edit]').off('click');
 			html.find('img[data-edit]').on('click', this._onEditImage.bind(this));
+		}
+	}
+
+	protected override async _onDropActor(
+		event: ElementDragEvent,
+		data: DropCanvasData<'Actor', SR6Actor<TActorDataModel>>,
+	): Promise<false | void> {
+		if ((<IHasOnDropActor<TActorDataModel>>this.actor.systemData).onDropActor) {
+			return (<IHasOnDropActor<TActorDataModel>>this.actor.systemData).onDropActor!(event, data);
+		} else {
+			return super._onDropActor(event, data);
+		}
+	}
+
+	protected override async _onDropItem(
+		event: DragEvent,
+		data: DropCanvasData<'Item', SR6Item<TItemDataModel>>,
+	): Promise<SR6Item<TItemDataModel>[] | boolean> {
+		if ((<IHasOnDropItem<TItemDataModel>>this.actor.systemData).onDropItem) {
+			return (<IHasOnDropItem<TItemDataModel>>this.actor.systemData).onDropItem!(event, data);
+		} else {
+			return super._onDropItem(event, data);
 		}
 	}
 }

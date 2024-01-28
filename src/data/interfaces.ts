@@ -1,7 +1,9 @@
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import { InitiativeType } from '@/data/index';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
+import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
@@ -68,4 +70,18 @@ export interface IHasOnUpdate<TDocumentType extends foundry.abstract.Document> {
 		options: DocumentUpdateContext<TDocumentType>,
 		userId: string,
 	): Promise<void>;
+}
+
+export interface IHasOnDropActor<TActorDataModel extends BaseActorDataModel> {
+	onDropActor?(
+		event: ElementDragEvent,
+		data: DropCanvasData<'Actor', SR6Actor<TActorDataModel>>,
+	): Promise<false | void>;
+}
+
+export interface IHasOnDropItem<TItemDataModel extends BaseItemDataModel> {
+	onDropItem?(
+		event: DragEvent,
+		data: DropCanvasData<'Item', SR6Item<TItemDataModel>>,
+	): Promise<SR6Item<TItemDataModel>[] | boolean>;
 }

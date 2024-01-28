@@ -39,14 +39,14 @@ const system = computed(() => context.data.item.systemData);
 					</select>
 
 					<label><Localized label="SR6.Enums.ActivationType" /></label>
-					<select name="system.limits.activation_type" :value="system.limits.activation_type">
+					<select name="system.activation.type" :value="system.activation.type">
 						<option value="major"><Localized label="SR6.Enums.ActivationTypes.Major" /></option>
 						<option value="minor"><Localized label="SR6.Enums.ActivationTypes.Minor" /></option>
 						<option value="passive"><Localized label="SR6.Enums.ActivationTypes.Passive" /></option>
 					</select>
 
 					<label><Localized label="SR6.Enums.ActivationPeriod" /></label>
-					<select name="system.limits.activation_period" :value="system.limits.activation_period">
+					<select name="system.activation.type" :value="system.activation.period">
 						<option value="any"><Localized label="SR6.Enums.ActivationPeriods.Any" /></option>
 						<option value="initiative"><Localized label="SR6.Enums.ActivationPeriods.Initiative" /></option>
 						<option value="pre"><Localized label="SR6.Enums.ActivationPeriods.PreRoll" /></option>

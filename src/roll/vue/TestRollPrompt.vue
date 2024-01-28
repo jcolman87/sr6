@@ -3,7 +3,7 @@ import { ActivationPhase } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import { IModifier } from '@/modifier';
 import { TestPoolModifier } from '@/modifier/TestModifiers';
-import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
+import EdgeMenu from '@/edge/vue/EdgeMenu.vue';
 import { inject, toRaw, ref, onMounted } from 'vue';
 import { TestRollPromptContext } from '@/roll/TestRollPrompt';
 import { RootContext } from '@/vue/SheetContext';
@@ -65,10 +65,10 @@ onMounted(() => {
 <template>
 	<table>
 		<tr>
-			<td>
-				<div class="edge-roll" style="flex: 0.48; margin-right: 10px">
+			<td class="roll-numbers flexrow">
+				<div class="edge-roll">
 					<img
-						:src="images.edge"
+						:src="images.blank_dice"
 						style="
 							border: 0;
 							height: auto;
@@ -80,8 +80,22 @@ onMounted(() => {
 					/>
 					<label name="pool" class="edge-value">{{ context.test.data.pool }}</label>
 				</div>
+				<div class="edge-roll">
+					<img
+						:src="images.edge"
+						style="
+							border: 0;
+							height: auto;
+							width: 48px;
+							z-index: 0;
+							position: absolute;
+							filter: drop-shadow(0 0 4px #000000);
+						"
+					/>
+					<label name="pool" class="edge-value">{{ context.test.availableEdge }}</label>
+				</div>
 			</td>
-			<td>
+			<td class="roll-title">
 				<header>
 					<span>{{ text.title }}</span>
 					<span class="hint">{{ text.hint }}</span>
@@ -136,13 +150,17 @@ onMounted(() => {
 			@setText="setText"
 		/>
 
-		<div class="section" style="width: 100%; display: flex; justify-content: space-between">
-			<div>
-				<label><Localized label="SR6.RollPrompt.PoolModifier" /></label>
+		<div class="global-modifiers">
+			<div class="section">
+				<div class="section-head"><Localized label="SR6.RollPrompt.PoolModifier" /></div>
+
 				<input name="pool_modifier" type="number" v-model="poolModifier" @change.prevent="onUpdatePool" />
 			</div>
-			<div>
-				<label><Localized label="SR6.RollPrompt.ConsumeAction" /></label>
+
+			<div class="section">
+				<div class="section-head">
+					<label><Localized label="SR6.RollPrompt.ConsumeAction" /></label>
+				</div>
 				<label class="switch">
 					<input type="checkbox" checked />
 					<span class="slider round"></span>
@@ -152,8 +170,10 @@ onMounted(() => {
 
 		<EdgeMenu
 			@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
+			:test="context.test"
 			:actor="context.test.actor"
 			:phase="ActivationPhase.PreRoll"
+			:show="false"
 		/>
 
 		<!-- Roll Button -->
@@ -173,6 +193,22 @@ onMounted(() => {
 	min-width: 500px;
 	min-height: 500px;
 
+	.global-modifiers {
+		@extend .section;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.roll-numbers {
+		white-space: nowrap;
+		width: 125px;
+	}
+	.roll-title {
+		text-align: center;
+		width: 100%;
+	}
+
 	.window-content {
 		color: white;
 	}
@@ -185,6 +221,7 @@ onMounted(() => {
 		grid-row: 1 / span 1;
 
 		.hint {
+			text-align: left;
 			font-size: 0.8rem;
 			color: white;
 		}
@@ -211,7 +248,7 @@ onMounted(() => {
 		flex-flow: column nowrap;
 		justify-items: flex-start;
 		position: relative;
-		flex: 0.48;
+
 		margin-right: 10px;
 	}
 	.edge-roll .edge-value {
@@ -223,13 +260,6 @@ onMounted(() => {
 		font-size: large;
 		color: white;
 		font-weight: bold;
-	}
-	.edge-roll input {
-		background-color: transparent;
-		width: 2em;
-		color: white;
-		border: 0;
-		outline: 0;
 	}
 }
 </style>

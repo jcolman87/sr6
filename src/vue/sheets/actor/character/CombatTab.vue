@@ -27,10 +27,10 @@ function getWearables(): WearableDataModel[] {
 
 function sortActions(a: SR6Item<GeneralActionDataModel>, b: SR6Item<GeneralActionDataModel>) {
 	return (
-		Object.values(ActivationType).indexOf(b.systemData.limits.activationType) -
-			Object.values(ActivationType).indexOf(a.systemData.limits.activationType) ||
-		Object.values(ActivationPeriod).indexOf(b.systemData.limits.activationPeriod) -
-			Object.values(ActivationPeriod).indexOf(a.systemData.limits.activationPeriod) ||
+		Object.values(ActivationType).indexOf(b.systemData.activation.type) -
+			Object.values(ActivationType).indexOf(a.systemData.activation.type) ||
+		Object.values(ActivationPeriod).indexOf(b.systemData.activation.period) -
+			Object.values(ActivationPeriod).indexOf(a.systemData.activation.period) ||
 		a.name.localeCompare(b.name)
 	);
 }
@@ -198,8 +198,8 @@ function minimizeCategory(actions: SR6Item<GeneralActionDataModel>[]) {
 									><i class="fa-solid fa-down-from-line"></i> {{ action.name }}</a
 								>
 							</td>
-							<td style="padding-right: 5px">{{ action.systemData.limits.activationType }}</td>
-							<td style="padding-right: 5px">{{ action.systemData.limits.activationPeriod }}</td>
+							<td style="padding-right: 5px">{{ action.systemData.activation.type }}</td>
+							<td style="padding-right: 5px">{{ action.systemData.activation.period }}</td>
 							<td>
 								<a v-if="action.systemData.available" @click="useGeneralAction(action)"
 									><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
@@ -239,8 +239,8 @@ function minimizeCategory(actions: SR6Item<GeneralActionDataModel>[]) {
 						<template v-for="action in generalActions" :key="action.id">
 							<tr :title="action.systemData.description" :class="getActiveClass(action)">
 								<td style="width: 100%">{{ action.name }}</td>
-								<td style="padding-right: 5px">{{ action.systemData.limits.activationType }}</td>
-								<td style="padding-right: 5px">{{ action.systemData.limits.activationPeriod }}</td>
+								<td style="padding-right: 5px">{{ action.systemData.activation.type }}</td>
+								<td style="padding-right: 5px">{{ action.systemData.activation.period }}</td>
 								<td>
 									<a v-if="action.systemData.available" @click="useGeneralAction(action)" data-die="A"
 										><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
@@ -267,8 +267,8 @@ function minimizeCategory(actions: SR6Item<GeneralActionDataModel>[]) {
 						<template v-for="action in magicActions" :key="action.id">
 							<tr :title="action.systemData.description" :class="getActiveClass(action)">
 								<td style="width: 100%">{{ action.name }}</td>
-								<td style="padding-right: 5px">{{ action.systemData.limits.activationType }}</td>
-								<td style="padding-right: 5px">{{ action.systemData.limits.activationPeriod }}</td>
+								<td style="padding-right: 5px">{{ action.systemData.activation.type }}</td>
+								<td style="padding-right: 5px">{{ action.systemData.activation.period }}</td>
 								<td>
 									<a v-if="action.systemData.available" @click="useGeneralAction(action)" data-die="A"
 										><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a

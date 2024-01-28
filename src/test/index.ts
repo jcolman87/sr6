@@ -63,11 +63,12 @@ export function config(): Record<string, unknown> {
 }
 
 export interface ITest<TData extends BaseTestData = BaseTestData> {
-	modifiers: IModifier[];
 	actor: SR6Actor;
 	item?: SR6Item;
 
 	roll?: SR6Roll;
+
+	get modifiers(): IModifier[];
 
 	get type(): TestType;
 
@@ -85,6 +86,7 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 
 	toJSON(): Record<string, unknown>;
 
+	get availableEdge(): number;
 	applyEdgeBoost(boost: IEdgeBoost): Promise<boolean>;
 }
 export function register(): void {}

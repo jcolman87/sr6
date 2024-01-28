@@ -10,7 +10,7 @@ import { MatrixActionTest } from '@/test/MatrixTests';
 import { deleteItem } from '@/vue/directives';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import MatrixPersonaView from '@/vue/views/MatrixPersonaView.vue';
-import MatrixProgramSlotsView from '@/vue/views/MatrixProgramSlotsView.vue';
+import ProgramSlotsView from '@/vue/views/ProgramSlotsView.vue';
 import MonitorView from '@/vue/views/MonitorView.vue';
 import { computed, inject, toRaw, ref, onBeforeUpdate } from 'vue';
 import { Collapse } from 'vue-collapsed';
@@ -251,7 +251,7 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 											:monitor="device.systemData.monitors.matrix!"
 											@setDamage="(idx) => setDeviceDamage(device, idx)"
 										/>
-										<MatrixProgramSlotsView
+										<ProgramSlotsView
 											v-if="
 												device.systemData.matrix !== null &&
 												device.systemData.matrix!.totalProgramSlots > 0

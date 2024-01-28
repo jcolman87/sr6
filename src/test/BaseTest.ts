@@ -7,11 +7,17 @@ import TestRollPrompt from '@/roll/TestRollPrompt';
 import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Item from '@/item/SR6Item';
 import { IModifier, ModifierSourceData } from '@/modifier';
+import { AttackTestData, getAttackDataTargets } from '@/test/AttackTestData';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
 import SR6Roll from '@/roll/SR6Roll';
 import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 import { Result, Ok, Err } from 'ts-results';
 
+export enum EdgeGainTarget {
+	None,
+	Self,
+	Target,
+}
 export interface BaseTestData {
 	pool?: number;
 	actorId?: ActorUUID;
@@ -24,6 +30,10 @@ export interface BaseTestData {
 	parameters?: { glitch: number[]; success: number[] };
 
 	edgeSpent?: EdgeBoostType;
+	edgeGain?: {
+		[EdgeGainTarget.Self]: number;
+		[EdgeGainTarget.Target]: number;
+	};
 }
 
 export interface TestConstructorData<
@@ -52,8 +62,6 @@ export interface TestSourceData<TData extends BaseTestData> {
 export default abstract class BaseTest<TData extends BaseTestData = BaseTestData> implements ITest<TData> {
 	protected baseData: TData;
 	protected delta: RollDataDelta;
-
-	modifiers: IModifier[];
 	actor: SR6Actor;
 
 	item?: SR6Item;
@@ -67,6 +75,17 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 	get isOwner(): boolean {
 		return this.actor.isOwner;
+	}
+
+	get modifiers(): IModifier[] {
+		return this.actor.modifiers.getApplicable(this);
+	}
+
+	get targets(): SR6Actor[] {
+		if (Object.prototype.hasOwnProperty.call(this.data, 'targetIds')) {
+			return getAttackDataTargets(this.data as unknown as AttackTestData);
+		}
+		return [];
 	}
 
 	is(type: ConstructorOf<BaseTest>): boolean {
@@ -112,6 +131,15 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		);
 	}
 
+	get availableEdge(): number {
+		let gain = 0;
+		// Dont show edge gains post roll
+		if (this.data.edgeGain && !this.roll) {
+			gain = this.data.edgeGain[EdgeGainTarget.Self];
+		}
+		return this.actor.systemData.monitors.edge.value + gain;
+	}
+
 	async applyEdgeBoost(boost: IEdgeBoost): Promise<boolean> {
 		if (this.data.edgeSpent) {
 			return false;
@@ -119,12 +147,14 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		this.data.edgeSpent = boost.type;
 		this.edgeBoost = boost;
 
-		// Are we applying post-roll? If so just call the post roll application
+		// Are we applying post-roll? If so call the post roll application
 		if (this.roll) {
 			await this.edgeBoost.finishRoll?.(this.roll);
 			await this.edgeBoost.finishTest?.(this);
 			await this.edgeBoost.finishActor?.(this.actor);
 		}
+
+		await this.actor.systemData.monitors.spendEdge(this.edgeBoost.cost);
 
 		return true;
 	}
@@ -177,11 +207,27 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			await modifier.finishTest?.(this);
 		}
 
+		// Did we have edge gain? apply
+		if (this.data.edgeGain) {
+			if (this.data.edgeGain![EdgeGainTarget.Self]) {
+				await this.actor.systemData.monitors.gainEdge(this.data.edgeGain[EdgeGainTarget.Self]);
+			}
+			if (this.data.edgeGain![EdgeGainTarget.Target]) {
+				// We dont know if we are an attack type here, so lets just check cuz lazy
+				this.targets.forEach((target) => {
+					target.systemData.monitors.gainEdge(this.data.edgeGain![EdgeGainTarget.Target]);
+				});
+			}
+		}
+
 		if (this.edgeBoost) {
 			if (this.roll) {
 				await this.edgeBoost.finishRoll?.(this.roll);
 			}
 			await this.edgeBoost.finishTest?.(this);
+
+			// Did we have edge spends? if so, apply them to the actor
+			await this.actor.systemData.monitors.spendEdge(this.edgeBoost.cost);
 		}
 	}
 
@@ -223,17 +269,18 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		this.actor = args.actor;
 		this.item = args.item;
 		this.roll = args.roll;
-		this.modifiers = args.modifiers || [];
 
 		this.baseData.actorId = args.actor.uuid;
 		this.baseData.itemId = args.item ? args.item.uuid : undefined;
 
+		this.data.edgeGain = this.data.edgeGain || {
+			[EdgeGainTarget.Self]: 0,
+			[EdgeGainTarget.Target]: 0,
+		};
+
 		if (this.data.edgeSpent) {
 			this.edgeBoost = getEdgeBoost(this.data.edgeSpent);
 		}
-
-		// copy applicable modifiers off the actor
-		this.modifiers = this.actor.modifiers.getApplicable(this);
 	}
 
 	static fromData<TTest extends BaseTest = BaseTest, TData extends BaseTestData = BaseTestData>(

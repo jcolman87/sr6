@@ -25,7 +25,7 @@ export abstract class ActivationDataModel extends BaseDataModel {
 				choices: Object.values(ActivationPeriod),
 			}),
 			mode: new fields.StringField({
-				initial: ActivationMode.Always,
+				initial: ActivationMode.Manual,
 				nullable: false,
 				required: true,
 				blank: false,

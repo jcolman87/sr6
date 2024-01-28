@@ -4,7 +4,10 @@
  * @file SR6 Actors root.
  */
 
+import DroneDataModel from '@/actor/data/DroneDataModel';
 import MatrixHostDataModel from '@/actor/data/MatrixHostDataModel';
+import SpriteDataModel from '@/actor/data/SpriteDataModel';
+import VehicleDataModel from '@/actor/data/VehicleDataModel';
 import { register as registerSheets } from '@/actor/sheets';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 
@@ -24,6 +27,9 @@ export function register(): void {
 function registerDataModels(): void {
 	CONFIG.Actor.dataModels.character = CharacterDataModel;
 	CONFIG.Actor.dataModels.matrix_host = MatrixHostDataModel;
+	CONFIG.Actor.dataModels.vehicle = VehicleDataModel;
+	CONFIG.Actor.dataModels.drone = DroneDataModel;
+	CONFIG.Actor.dataModels.sprite = SpriteDataModel;
 }
 
 export function setOptGroups(_select: HTMLSelectElement): void {}

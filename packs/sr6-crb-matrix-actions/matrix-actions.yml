@@ -14,8 +14,9 @@ system:
     illegal: true
     access_level:
       - outsider
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -41,8 +42,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -64,8 +66,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: minor
-    activationPeriod: any
+  activation:
+    type: minor
+    period: any
   formulas:
     attack: null
     defend: null
@@ -90,8 +93,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -115,8 +119,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -140,8 +145,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@rating * 2'
@@ -164,8 +170,9 @@ system:
     illegal: true
     access_level:
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@persona.d + @persona.device.rating'
@@ -190,8 +197,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   damage:
     type: 'M'
   formulas:
@@ -217,8 +225,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@rating * 2'
@@ -242,8 +251,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@intuition + @persona.f'
@@ -267,8 +277,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -290,8 +301,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: minor
-    activationPeriod: initiative
+  activation:
+    type: minor
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -315,8 +327,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -339,8 +352,9 @@ system:
     illegal: false
     access_level:
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -362,8 +376,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: any
+  activation:
+    type: major
+    period: any
   formulas:
     attack: null
     defend: null
@@ -387,8 +402,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -413,8 +429,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: any
+  activation:
+    type: major
+    period: any
   formulas:
     attack: null
     defend: '@intuition + @persona.d'
@@ -439,8 +456,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@charisma + @persona.d'
@@ -463,8 +481,9 @@ system:
     illegal: true
     access_level:
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -488,8 +507,9 @@ system:
     access_level:
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -514,8 +534,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.s'
@@ -540,8 +561,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: extended
-    activationPeriod: 10minute
+  activation:
+    type: extended
+    period: 10minute
   formulas:
     attack: null
     defend: null
@@ -566,8 +588,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: extended
-    activationPeriod: 1minute
+  activation:
+    type: extended
+    period: 1minute
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -590,8 +613,9 @@ system:
     illegal: false
     access_level:
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.f'
@@ -611,8 +635,9 @@ system:
     illegal: false
     access_level:
       - admin
-    activationType: minor
-    activationPeriod: initiative
+  activation:
+    type: minor
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -634,8 +659,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: minor
-    activationPeriod: initiative
+  activation:
+    type: minor
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -658,8 +684,9 @@ system:
     illegal: true
     access_level:
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@persona.device.rating * 2'
@@ -682,8 +709,9 @@ system:
     illegal: true
     access_level:
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@logic + @persona.f'
@@ -708,8 +736,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@logic + @persona.d'
@@ -729,8 +758,9 @@ system:
     illegal: false
     access_level:
       - admin
-    activationType: minor
-    activationPeriod: initiative
+  activation:
+    type: minor
+    period: initiative
   formulas:
     attack: null
     defend: null
@@ -755,8 +785,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: major
-    activationPeriod: initiative
+  activation:
+    type: major
+    period: initiative
   formulas:
     attack: null
     defend: '@persona.d + @persona.f'
@@ -781,8 +812,9 @@ system:
       - outsider
       - user
       - admin
-    activationType: minor
-    activationPeriod: initiative
+  activation:
+    type: minor
+    period: initiative
   formulas:
     attack: null
     defend: '@willpower + @persona.s'

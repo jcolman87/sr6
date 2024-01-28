@@ -3,6 +3,8 @@ import AttributeTest from '@/test/AttributeTest';
 import { ITest } from '@/test';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import { TestModifier, TestModifierSourceData } from '@/modifier/TestModifiers';
+import { EdgeGainTarget } from '@/test/BaseTest';
+import { MatrixActionTest } from '@/test/MatrixTests';
 import SkillTest from '@/test/SkillTest';
 
 export interface BonusEdgeModifierSourceData extends TestModifierSourceData {
@@ -39,6 +41,23 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 			}
 		}
 
+		if (testInterface.type === 'MatrixActionTest') {
+			const test = testInterface as MatrixActionTest;
+			if (this.data.skill) {
+				if (
+					test.matrixAction.systemData.skillUse?.skill !== this.data.skill &&
+					test.matrixAction.systemData.skillUse?.skill !== this.data.skill
+				) {
+					return false;
+				}
+			}
+			if (this.data.attribute) {
+				if (test.matrixAction.systemData.skillUse?.attribute !== this.data.attribute) {
+					return false;
+				}
+			}
+		}
+
 		if (testInterface.type === 'AttributeTest' && this.data.attribute) {
 			const test = testInterface as AttributeTest;
 			if (test.data.attribute !== this.data.attribute) {
@@ -49,8 +68,11 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 		return true;
 	}
 
-	async finishTest<TTest extends ITest>(test: TTest): Promise<void> {
-		await test.actor.systemData.monitors.gainEdge(1);
+	async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
+		// await test.actor.systemData.monitors.gainEdge(1);
+		const edgeGain = test.data.edgeGain!;
+		edgeGain[EdgeGainTarget.Self] += 1;
+		test.data.edgeGain = edgeGain;
 	}
 
 	override toJSON(): ModifierSourceData {

@@ -168,6 +168,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 	async gainEdge(count: number): Promise<boolean> {
 		this.edge.damage = Math.max(0, (this.edge.damage -= count));
 		await this.actor!.update({ ['system.monitors.edge.damage']: this.edge.damage });
+
 		return true;
 	}
 
@@ -177,6 +178,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		}
 
 		this.edge.damage += count;
+		await this.actor!.update({ ['system.monitors.edge.damage']: this.edge.damage });
 
 		return true;
 	}

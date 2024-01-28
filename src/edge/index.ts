@@ -3,7 +3,7 @@ import { MonitorType } from '@/actor/data/MonitorsDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Roll from '@/roll/SR6Roll';
 import { ActivationPhase } from '@/data';
-import EdgeActionDataModel from '@/item/data/feature/EdgeActionDataModel';
+import EdgeActionDataModel from '@/item/data/action/EdgeActionDataModel';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
 import { ITest } from '@/test';
 import { ConstructorOf } from '@/util';

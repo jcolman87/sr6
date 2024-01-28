@@ -4,7 +4,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import { ActivationPhase } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import { InitiativeRollPromptContext } from '@/roll/InitiativeRollPrompt';
-import EdgeMenu from '@/roll/vue/EdgeMenu.vue';
+import EdgeMenu from '@/edge/vue/EdgeMenu.vue';
 import Localized from '@/vue/components/Localized.vue';
 import { RootContext } from '@/vue/SheetContext';
 import { inject, ref, toRaw } from 'vue';
@@ -22,6 +22,7 @@ async function roll() {
 <template>
 	<EdgeMenu
 		@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
+		:test="context.test"
 		:actor="context.actor as unknown as SR6Actor<BaseActorDataModel>"
 		:phase="ActivationPhase.Initiative"
 	/>

@@ -2,12 +2,14 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { FireMode } from '@/data';
+import EdgeGainMenu from '@/edge/vue/EdgeGainMenu.vue';
+import { EdgeGainTarget } from '@/test/BaseTest';
 import { RangedAttackTest } from '@/test/RangedTests';
 import { getActorSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { computed, toRaw } from 'vue';
+import { computed, toRaw, ref } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -79,26 +81,10 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 		await canvas.ping(target.token.object.center);
 	}
 }
-
-/*
-function updateEdgeGain() {
-	if (targets.value.length === 0) {
-		props.test.data.edgeGained = EdgeGainedTarget.None;
-	} else {
-		if (props.test.data.attackRating! >= targetDefenseRating.value + 4) {
-			props.test.data.edgeGained = EdgeGainedTarget.Attacker;
-		} else if (targetDefenseRating.value >= props.test.data.attackRating! + 4) {
-			props.test.data.edgeGained = EdgeGainedTarget.Defender;
-		}
-	}
-}
-onMounted(updateEdgeGain);
-onBeforeUpdate(updateEdgeGain);
-*/
 </script>
 
 <template>
-	<div class="roll-prompt" style="display: flex; flex-flow: wrap">
+	<div class="roll-prompt">
 		<div class="section warning-box" v-if="test.data.targetIds?.length == 0">
 			<div class="section-head warning-title">Warning: No targets selected</div>
 			You did not have any targets selected for this roll. Automatic damage, conditions and effects will not be
@@ -115,7 +101,7 @@ onBeforeUpdate(updateEdgeGain);
 				>
 			</div>
 		</div>
-		<div class="section" style="width: 70%">
+		<div class="section" style="width: 76%">
 			<div class="section-title"><Localized label="SR6.Labels.Information" /></div>
 			<table>
 				<tr>
@@ -131,48 +117,7 @@ onBeforeUpdate(updateEdgeGain);
 				</tr>
 			</table>
 		</div>
-		<!--
-		<div class="section" style="width: 25%">
-			<div class="section-title">
-				<label><Localized label="SR6.RollPrompt.EdgeGained" /></label>
-			</div>
-			<table style="border: 0; padding: 0; margin: 0">
-				<tr>
-					<td>
-						<input
-							name="edgeGained"
-							type="radio"
-							:value="EdgeGainedTarget.None"
-							:checked="data.edgeGained === EdgeGainedTarget.None"
-						/>
-					</td>
-					<td><label for="edgeGainedTarget">None</label></td>
-				</tr>
-				<tr :class="data.edgeGained === EdgeGainedTarget.Attacker ? '.good' : ''">
-					<td>
-						<input
-							name="edgeGained"
-							type="radio"
-							:value="EdgeGainedTarget.Attacker"
-							:checked="data.edgeGained === EdgeGainedTarget.Attacker"
-						/>
-					</td>
-					<td><label for="edgeGained">You</label></td>
-				</tr>
-				<tr :class="data.edgeGained === EdgeGainedTarget.Defender ? '.bad' : ''">
-					<td>
-						<input
-							name="edgeGained"
-							type="radio"
-							:value="EdgeGainedTarget.Defender"
-							:checked="data.edgeGained == EdgeGainedTarget.Defender"
-						/>
-					</td>
-					<td><label for="edgeGainedTarget">Target(s)</label></td>
-				</tr>
-			</table>
-		</div>
-		-->
+		<EdgeGainMenu :test="test" />
 		<div class="section">
 			<div class="section-title">
 				<label><Localized label="SR6.Combat.Distance" /></label>
@@ -203,6 +148,9 @@ onBeforeUpdate(updateEdgeGain);
 @use '@/scss/vars/colors';
 
 .roll-prompt {
+	display: flex;
+	flex-flow: wrap;
+
 	.warning-box {
 		background-color: colors.$light-red;
 		font-size: 16px;

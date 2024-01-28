@@ -58,16 +58,6 @@ export class SpellCastTest extends BaseTest<SpellCastTestData> {
 		}
 	}
 
-	get targets(): SR6Actor[] {
-		if (!this.data.targetIds) {
-			return [];
-		}
-		return this.data.targetIds
-			.map((id) => getActorSync(SR6Actor, id))
-			.filter((actor) => actor !== null)
-			.map((actor) => actor!);
-	}
-
 	opposed(actor: SR6Actor<LifeformDataModel>, item: undefined | SR6Item = undefined): SpellDefenseTest {
 		if (this.spell.systemData.canDefend) {
 			return new SpellDefenseTest({

@@ -26,16 +26,6 @@ export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 
 	weapon: SR6Item<WeaponDataModel>;
 
-	get targets(): SR6Actor[] {
-		if (!this.data.targetIds) {
-			return [];
-		}
-		return this.data.targetIds
-			.map((id) => getActorSync(SR6Actor, id))
-			.filter((actor) => actor !== null)
-			.map((actor) => actor!);
-	}
-
 	damage(opposedHits: number = 0): number {
 		if (this.roll) {
 			return this.baseDamage() + this.roll.hits - opposedHits;

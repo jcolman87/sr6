@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { getCoreMatrixPrograms } from '@/item/data';
+import { getCorePrograms } from '@/item/data';
 import { GearMatrixDataModel } from '@/item/data/gear/GearDataModel';
-import MatrixProgramDataModel, { MatrixProgramType } from '@/item/data/MatrixProgramDataModel';
+import ProgramDataModel, { ProgramType } from '@/item/data/ProgramDataModel';
 import SR6Item from '@/item/SR6Item';
 import { computed, toRaw, ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
@@ -17,16 +17,16 @@ const isGM = computed(() => game.user!.isGM);
 
 const basicPrograms = computed(() =>
 	toRaw(props.model)
-		.actor!.items.filter((i) => i.type === 'matrix_program')
-		.map((i) => i as SR6Item<MatrixProgramDataModel>)
-		.filter((i) => i.systemData.type === MatrixProgramType.Basic)
+		.actor!.items.filter((i) => i.type === 'program')
+		.map((i) => i as SR6Item<ProgramDataModel>)
+		.filter((i) => i.systemData.type === ProgramType.Basic)
 		.sort((a, b) => a.name.localeCompare(b.name)),
 );
 const hackingPrograms = computed(() =>
 	toRaw(props.model)
-		.actor!.items.filter((i) => i.type === 'matrix_program')
-		.map((i) => i as SR6Item<MatrixProgramDataModel>)
-		.filter((i) => i.systemData.type === MatrixProgramType.Hacking)
+		.actor!.items.filter((i) => i.type === 'program')
+		.map((i) => i as SR6Item<ProgramDataModel>)
+		.filter((i) => i.systemData.type === ProgramType.Hacking)
 		.sort((a, b) => a.name.localeCompare(b.name)),
 );
 
@@ -38,7 +38,7 @@ const showProgramDescription = ref({
 const isCollapsed = ref(false);
 
 async function addAllPrograms() {
-	await toRaw(props.model).actor!.createEmbeddedDocuments('Item', await getCoreMatrixPrograms());
+	await toRaw(props.model).actor!.createEmbeddedDocuments('Item', await getCorePrograms());
 	emit('change', props.model);
 }
 
@@ -47,7 +47,7 @@ async function reset() {
 	emit('change', props.model);
 }
 
-async function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>): Promise<void> {
+async function toggleProgram(ev: Event, program: SR6Item<ProgramDataModel>): Promise<void> {
 	if (props.model.programSlots.available <= 0) {
 		ui.notifications.error!('Maximum program slots reached');
 		(ev.target as HTMLInputElement).checked = false;
@@ -62,7 +62,7 @@ async function toggleProgram(ev: Event, program: SR6Item<MatrixProgramDataModel>
 	emit('change', props.model);
 }
 
-function isLoaded(program: SR6Item<MatrixProgramDataModel>): boolean {
+function isLoaded(program: SR6Item<ProgramDataModel>): boolean {
 	return props.model.programSlots.programs.find((p) => p.uuid === program.uuid) !== undefined;
 }
 

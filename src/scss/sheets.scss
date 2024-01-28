@@ -47,6 +47,14 @@
 		border-bottom: 0;
 		margin: 0;
 	}
+
+	.section-head-button {
+		margin-left: auto;
+		font-size: 10px;
+		font-weight: normal;
+	}
+
+
 	.section-title {
 		font-weight: bold;
 		font-family: var(--font-header);
@@ -72,6 +80,11 @@
 
 	thead {
 		font-size: 12px;
+	}
+
+	.formula {
+		font-style: italic;
+		font-size: 11px;
 	}
 }
 

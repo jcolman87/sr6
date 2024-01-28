@@ -1,5 +1,5 @@
 name: Baby Monitor
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -8,7 +8,7 @@ system:
   description: 'Tells you your current Overwatch Score without needing an action'
 ---
 name: Browse
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -17,7 +17,7 @@ system:
   description: 'When doing Matrix searches, gain 1 Edge that is either spent immediately on thataction or disappears.'
 ---
 name: Configurator
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -26,7 +26,7 @@ system:
   description: 'Store alternate deck configuration, swap to it instead of changing two attributes.'
 ---
 name: Edit
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -35,7 +35,7 @@ system:
   description: 'When doing Edit File action, gain 1 Edge that must be immediately spent or else it vanishes.'
 ---
 name: Encryption
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -44,7 +44,7 @@ system:
   description: '+2 dice when doing Encrypt File action.'
 ---
 name: Signal Scrubber
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -53,7 +53,7 @@ system:
   description: 'Reduce noise level by 2.'
 ---
 name: Toolbox
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -62,7 +62,7 @@ system:
   description: +1 to Data Processing.
 ---
 name: Virtual Machine
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -71,7 +71,7 @@ system:
   description: '2 extra program slots; take 1 extra box of unresisted Matrix damage when attacked.'
 ---
 name: Armor
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -80,7 +80,7 @@ system:
   description: '+2 to Defense Rating'
 ---
 name: Biofeedback
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -89,7 +89,7 @@ system:
   description: 'Causes Stun (if target is in cold-sim) or Physical (if target is in hot-sim) damage with Matrix attack. This program is linked to the Attack attribute.'
 ---
 name: Biofeedback Filter
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -98,7 +98,7 @@ system:
   description: 'Allow Device Rating or Body roll to soak Matrix damage.'
 ---
 name: Blackout
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -107,7 +107,7 @@ system:
   description: 'Like Biofeedback, but Stun damage only. This program is linked to the At-tack attribute.'
 ---
 name: Decryption
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -116,7 +116,7 @@ system:
   description: '+2 dice on Crack File action.'
 ---
 name: Defuse
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -125,7 +125,7 @@ system:
   description: 'Allow Device Rating or Body roll to soak damage from Data Bomb.'
 ---
 name: Exploit
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -134,7 +134,7 @@ system:
   description: 'Reduce Defense Rating of hacking target by 2.'
 ---
 name: Fork
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -143,7 +143,7 @@ system:
   description: 'Hit two targets with a single Matrix action without splitting dice pools.'
 ---
 name: Lockdown
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:
@@ -152,7 +152,7 @@ system:
   description: 'Cause link-lock when you do Matrix damage.'
 ---
 name: Overclock
-type: matrix_program
+type: program
 img: /systems/sr6/assets/matrix/program.webp
 effects: []
 system:

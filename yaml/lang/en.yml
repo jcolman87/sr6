@@ -152,6 +152,7 @@ SR6:
     PoolModifier: Pool Modifier
     Conditions: Conditions Modifying
     ConsumeAction: Consume Action
+    ConsumeEdge: Consume Edge
     EdgeGained: Edge Gained?
     WoundModifiers:
       physical:
