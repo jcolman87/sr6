@@ -10,11 +10,14 @@ import BaseDataModel from '@/data/BaseDataModel';
 import { DocumentUUIDField, EnumNumberField } from '@/data/fields';
 import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
+import SR6Effect from '@/effect/SR6Effect';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { MatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import { MatrixSimType } from '@/data/matrix';
 import ProgramDataModel from '@/item/data/ProgramDataModel';
 import SR6Item from '@/item/SR6Item';
+import { createModifiers } from '@/modifier';
+import { ModifierDataModel } from '@/modifier/ModifierDataModel';
 import { getActorSync, getItemSync } from '@/util';
 
 export enum GearSize {
@@ -73,16 +76,18 @@ export type ProgramSlotsData = {
 
 export abstract class GearWirelessBonusDataModel extends BaseDataModel {
 	abstract description: string;
+	abstract modifiers: ModifierDataModel[];
+
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
 			description: new fields.StringField({ initial: '', required: true, blank: true, nullable: false }),
-			// effects: new fields.ArrayField(new fields.EmbeddedDataField(ActiveEffectConfig), {
-			//	initial: [],
-			//	required: true,
-			//	nullable: false,
-			// }),
+			modifiers: new fields.ArrayField(new fields.EmbeddedDataField(ModifierDataModel), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
 		};
 	}
 }
@@ -229,14 +234,40 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 		}
 	}
 
+	get wirelessBonusName(): string {
+		return `${this.item!.name} (Wireless Bonus)`;
+	}
+
 	async toggleWireless(): Promise<boolean> {
 		if (!this.matrix) {
 			return false;
 		}
 
+		this.matrix!.active = !this.matrix!.active;
 		await this.item!.update({
-			['system.matrix.active']: !this.matrix!.active,
+			['system.matrix.active']: this.matrix!.active,
 		});
+		console.log('activating', this.item!);
+		if (this.matrix!.active && this.matrix!.wirelessBonus) {
+			// Create an active effect for us being active and add its modifiers and conditions
+			const effect = (
+				await this.item!.createEmbeddedDocuments('ActiveEffect', [
+					{
+						label: this.wirelessBonusName,
+						icon: this.item!.img,
+						disabled: false,
+						transfers: true,
+					},
+				])
+			)[0] as SR6Effect;
+
+			if (this.matrix?.wirelessBonus?.modifiers) {
+				await createModifiers(this.item!, effect, this.matrix!.wirelessBonus!.modifiers);
+			}
+		} else {
+			// Remove the wireless bonus effect if it was present
+			await this.item!.getEffectByName(this.wirelessBonusName)?.delete();
+		}
 
 		return this.matrix!.active;
 	}

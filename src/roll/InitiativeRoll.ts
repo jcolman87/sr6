@@ -3,7 +3,6 @@ import InitiativeDataModel from '@/data/InitiativeDataModel';
 export class InitiativeRollData {
 	score: number;
 	dice: number;
-
 	constructor(source: InitiativeDataModel) {
 		this.score = source.score;
 		this.dice = source.dice;

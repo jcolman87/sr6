@@ -56,7 +56,7 @@ export default class InitiativeRollPrompt extends VueSheet(
 			void this.close();
 			throw 'err';
 		}
-		this.data = new InitiativeRollData(initiative);
+		this.data = initiative;
 	}
 
 	override async close(options = {}): Promise<void> {

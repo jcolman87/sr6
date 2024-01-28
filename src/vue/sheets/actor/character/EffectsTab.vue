@@ -2,7 +2,7 @@
 import SR6Effect from '@/effect/SR6Effect';
 import EffectsView from '@/vue/views/EffectsView.vue';
 
-import { inject, toRaw, ref, onBeforeMount, onBeforeUpdate } from 'vue';
+import { inject, toRaw, ref, onBeforeMount, onBeforeUpdate, onUpdated } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
@@ -14,6 +14,7 @@ const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 //   2. Keep a local ref that gets updated in onBeforeUpdate in order to work around some struggles with Foundry.
 const effects = ref<SR6Effect[]>([]);
 const effectsView = ref<typeof EffectsView>();
+const componentKey = ref(0);
 
 async function addEffect(category: string) {
 	await toRaw(context.sheet.actor).createEmbeddedDocuments('ActiveEffect', [
@@ -39,12 +40,14 @@ async function deleteEffect(effect: SR6Effect): Promise<void> {
 
 onBeforeMount(updateEffects);
 onBeforeUpdate(updateEffects);
+onUpdated(() => (componentKey.value += 1));
 </script>
 
 <template>
 	<section v-if="context.user.isGM" class="tab-effects">
 		<EffectsView
 			ref="effectsView"
+			:key="componentKey"
 			:effects="[...(effects as any)]"
 			@add-effect="addEffect"
 			@delete-effect="deleteEffect"

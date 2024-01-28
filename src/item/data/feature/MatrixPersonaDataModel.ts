@@ -1,10 +1,13 @@
+import { InitiativeType } from '@/data';
 import InitiativeDataModel from '@/data/InitiativeDataModel';
+import { AvailableActions, IHasInitiative } from '@/data/interfaces';
 import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
 
 import SR6Item from '@/item/SR6Item';
+import { InitiativeRollData } from '@/roll/InitiativeRoll';
 import { getItemSync } from '@/util';
 
 export enum PersonaType {
@@ -31,52 +34,41 @@ type MatrixPersonaFormulasData = {
 	defenseRating: string;
 };
 
-export default abstract class MatrixPersonaDataModel extends BaseItemDataModel {
+export default abstract class MatrixPersonaDataModel extends BaseItemDataModel implements IHasInitiative {
 	abstract sourceDeviceId: null | ItemUUID;
 	abstract attributes: AdjustableMatrixAttributesDataModel;
 	abstract formulas: MatrixPersonaFormulasData;
 	abstract type: PersonaType;
 	protected abstract _simType: MatrixSimType;
 
-	get initiative(): InitiativeDataModel {
+	getInitiative(type: InitiativeType): null | InitiativeRollData {
+		if (type != InitiativeType.Matrix) {
+			return null;
+		}
 		switch (this.simType) {
 			case MatrixSimType.AR:
-				return new InitiativeDataModel(
-					{
-						dice: 0,
-						scoreFormula: '@reaction + @intuition',
-						actions: {
-							majorFormula: '1',
-							minorFormula: '@reaction + @intuition',
-						},
-					},
-					{ parent: this },
-				);
+				return {
+					score: this.solveFormula('@reaction + @intuition'),
+					dice: 0,
+				};
 			case MatrixSimType.VRCold:
-				return new InitiativeDataModel(
-					{
-						dice: 1,
-						scoreFormula: '@intuition + @persona.d',
-						actions: {
-							majorFormula: '1',
-							minorFormula: '@intuition + @persona.d',
-						},
-					},
-					{ parent: this },
-				);
+				return {
+					score: this.solveFormula('@intuition + @persona.d'),
+					dice: 1,
+				};
 			case MatrixSimType.VRHot:
-				return new InitiativeDataModel(
-					{
-						dice: 2,
-						scoreFormula: '@intuition + @persona.d',
-						actions: {
-							majorFormula: '1',
-							minorFormula: '@intuition + @persona.d',
-						},
-					},
-					{ parent: this },
-				);
+				return {
+					score: this.solveFormula('@intuition + @persona.d'),
+					dice: 2,
+				};
 		}
+	}
+
+	getAvailableActions(type: InitiativeType): AvailableActions {
+		return {
+			major: 0,
+			minor: 0,
+		};
 	}
 
 	get simType(): MatrixSimType {

@@ -32,7 +32,7 @@ function compilePacks() {
 				let json = yaml.loadAll(file.contents.toString());
 				db.insert(json);
 				cb(null, file);
-			})
+			}),
 		);
 	});
 

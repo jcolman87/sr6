@@ -56,6 +56,10 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 		);
 	}
 
+	getEffectByName(name: string): Maybe<SR6Effect> {
+		return this.effects.find((effect) => effect.name == name) as SR6Effect | undefined;
+	}
+
 	/**
 	 * Specialized property for accessing `item.system` in a typed manner.
 	 */

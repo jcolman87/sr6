@@ -9,6 +9,7 @@ import InitiativeDataModel from '@/data/InitiativeDataModel';
 import { AvailableActions, IHasEdge, IHasInitiative, IHasPostCreate } from '@/data/interfaces';
 import { MAGIC_TRADITION_ATTRIBUTE, MagicAwakenedType, MagicTradition } from '@/data/magic';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
+import { InitiativeRollData } from '@/roll/InitiativeRoll';
 
 /** s
  *
@@ -85,20 +86,35 @@ export default abstract class LifeformDataModel
 	//
 	// IHasInitiative
 	//
-	getInitiative(type: InitiativeType): null | InitiativeDataModel {
+	getInitiative(type: InitiativeType): null | InitiativeRollData {
+		let result: null | InitiativeRollData = null;
 		switch (type) {
 			case InitiativeType.Physical:
-				return this.initiatives.physical;
+				result = new InitiativeRollData(this.initiatives.physical);
+				break;
 			case InitiativeType.Astral:
-				return this.initiatives.astral;
+				result = this.initiatives.astral ? new InitiativeRollData(this.initiatives.astral!) : null;
+				break;
 			case InitiativeType.Matrix: {
 				if (!this.matrixPersona) {
 					ui.notifications.error('No matrix persona activated for rolling initiative');
 					return null;
 				}
-				return this.matrixPersona.initiative;
+				result = this.matrixPersona.getInitiative(type);
+				break;
 			}
 		}
+
+		if (result) {
+			// Apply modifiers
+			this.actor!.modifiers.getApplicable(null).forEach((modifier) => {
+				if (modifier.prepareInitiative) {
+					modifier.prepareInitiative(type, result, null);
+				}
+			});
+		}
+
+		return result;
 	}
 
 	getAvailableActions(type: InitiativeType): AvailableActions {

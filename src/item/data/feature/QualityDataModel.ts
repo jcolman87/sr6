@@ -2,6 +2,7 @@ import { IHasPostCreate, IHasPreCreate } from '@/data/interfaces';
 import SR6Effect from '@/effect/SR6Effect';
 import BaseItemDataModel, { ItemActivationDataModel } from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
+import { createModifiers } from '@/modifier';
 import { ModifierDataModel } from '@/modifier/ModifierDataModel';
 
 export default abstract class QualityDataModel
@@ -44,16 +45,7 @@ export default abstract class QualityDataModel
 	}
 
 	async createModifiers(): Promise<void> {
-		const effect = this.getEffect();
-		if (effect) {
-			this.modifiers.forEach((modifierDataModel) => {
-				const modifier = modifierDataModel.create(effect, this.item!);
-				if (modifier.ok) {
-					effect.modifiers.all.push(modifier.val);
-				}
-			});
-			await effect.modifiers.save();
-		}
+		await createModifiers(this.item!, this.getEffect(), this.modifiers);
 	}
 
 	async preCreate(

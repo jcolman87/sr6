@@ -112,6 +112,7 @@ export default class SR6Combat extends Combat {
 				combatant.actor as unknown as SR6Actor<IHasInitiative>,
 				combatant.systemData.initiativeType,
 			);
+
 			if (roll) {
 				await roll.evaluate({ async: true });
 				updates.push({ _id: id, initiative: roll.total });

@@ -1,4 +1,5 @@
 import BaseDataModel from '@/data/BaseDataModel';
+import { ConditionalData, ConditionalDataModel } from '@/effect/conditional';
 import BaseModifier from '@/modifier/BaseModifier';
 import { IModifier, ModifierSourceUUID } from '@/modifier/index';
 import { Result } from 'ts-results';
@@ -11,6 +12,8 @@ export abstract class ModifierDataModel extends BaseDataModel {
 
 	abstract data: Maybe<object>;
 
+	abstract conditions: ConditionalDataModel[];
+
 	create(
 		parent: foundry.abstract.Document,
 		source: Maybe<foundry.abstract.Document> = null,
@@ -21,6 +24,7 @@ export abstract class ModifierDataModel extends BaseDataModel {
 			class: this.class,
 			parent: parent.uuid as ModifierSourceUUID,
 			source: (source?.uuid as ModifierSourceUUID) || (parent.uuid as ModifierSourceUUID),
+			conditions: this.conditions.length > 0 ? (this.conditions as ConditionalData[]) : undefined,
 			...data,
 		});
 	}
@@ -41,8 +45,8 @@ export abstract class ModifierDataModel extends BaseDataModel {
 				required: true,
 				choices: Object.keys(CONFIG.sr6.types.modifiers),
 			}),
-
 			data: new fields.ObjectField({ initial: undefined, nullable: true, required: false }),
+			conditions: new fields.ArrayField(new fields.EmbeddedDataField(ConditionalDataModel), { initial: [] }),
 		};
 	}
 }

@@ -1,4 +1,10 @@
+import { InitiativeType } from '@/data';
+import { AvailableActions } from '@/data/interfaces';
 import { ConditionalData } from '@/effect/conditional';
+import SR6Effect from '@/effect/SR6Effect';
+
+import { ModifierDataModel } from '@/modifier/ModifierDataModel';
+import { InitiativeRollData } from '@/roll/InitiativeRoll';
 
 import { ITest } from 'src/test';
 import { ClassData } from '@/data/serialize';
@@ -9,6 +15,7 @@ import { TestPoolModifier, TestFunctionModifier } from '@/modifier/TestModifiers
 import { WoundModifier } from '@/modifier/impl/WoundModifier';
 import { PainEditorModifier } from '@/modifier/impl/PainEditorModifier';
 import { EdgeModifier } from '@/modifier/impl/EdgeModifier';
+import { InitiativeModifier } from '@/modifier/impl/InitiativeModifier';
 
 export type ModifierSourceUUID =
 	| ActorDocumentUUID
@@ -32,6 +39,12 @@ export interface IModifier {
 	finishTest?<TTest extends ITest>(test: TTest): Promise<void>;
 
 	prepareDocument?(document: foundry.abstract.Document): Promise<void>;
+
+	prepareInitiative?(
+		type: InitiativeType,
+		initiative: Maybe<InitiativeRollData>,
+		actions: Maybe<AvailableActions>,
+	): void;
 
 	toJSON(): ModifierSourceData;
 }
@@ -108,5 +121,23 @@ export function config(): Record<string, unknown> {
 		WoundModifier: WoundModifier,
 
 		EdgeModifier: EdgeModifier,
+
+		InitiativeModifier: InitiativeModifier,
 	};
+}
+
+export async function createModifiers<TParent extends foundry.abstract.Document>(
+	parent: TParent,
+	effect: SR6Effect,
+	modifiers: ModifierDataModel[],
+): Promise<void> {
+	if (effect) {
+		modifiers.forEach((modifierDataModel) => {
+			const modifier = modifierDataModel.create(effect, parent);
+			if (modifier.ok) {
+				effect.modifiers.all.push(modifier.val);
+			}
+		});
+		await effect.modifiers.save();
+	}
 }

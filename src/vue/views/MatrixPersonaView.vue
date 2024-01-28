@@ -1,11 +1,13 @@
 <script lang="ts" setup>
+import { InitiativeType } from '@/data';
+import { IHasInitiative } from '@/data/interfaces';
 import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
 import Localized from '@/vue/components/Localized.vue';
 import MatrixAttributesView from '@/vue/views/MatrixAttributesView.vue';
 import MonitorView from '@/vue/views/MonitorView.vue';
-import { toRaw } from 'vue';
+import { computed, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'change', persona: MatrixPersonaDataModel): void;
@@ -51,6 +53,10 @@ function getPersonaName(): string {
 		}
 	}
 }
+
+const initiative = computed(
+	() => (toRaw(props.persona!.actor!.systemData) as unknown as IHasInitiative).getInitiative(InitiativeType.Matrix)!,
+);
 </script>
 
 <template>
@@ -85,8 +91,7 @@ function getPersonaName(): string {
 						<td class="title">Initiative</td>
 						<td>
 							<i class="bold-value"
-								>{{ props.persona.initiative.score }}
-								<span>+ {{ props.persona.initiative.dice }}d6</span></i
+								>{{ initiative.score }} <span>+ {{ initiative.dice }}d6</span></i
 							>
 						</td>
 					</tr>
