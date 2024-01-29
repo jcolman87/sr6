@@ -1,5 +1,4 @@
 import { InitiativeType } from '@/data';
-import InitiativeDataModel from '@/data/InitiativeDataModel';
 import { AvailableActions, IHasInitiative } from '@/data/interfaces';
 import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
@@ -42,7 +41,7 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel i
 	protected abstract _simType: MatrixSimType;
 
 	getInitiative(type: InitiativeType): null | InitiativeRollData {
-		if (type != InitiativeType.Matrix) {
+		if (type !== InitiativeType.Matrix) {
 			return null;
 		}
 		switch (this.simType) {
@@ -64,7 +63,8 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel i
 		}
 	}
 
-	getAvailableActions(type: InitiativeType): AvailableActions {
+	getAvailableActions(_type: InitiativeType): AvailableActions {
+		console.warn('TODO getAvailableActions');
 		return {
 			major: 0,
 			minor: 0,

@@ -5,7 +5,6 @@
  */
 import SR6Effect from '@/effect/SR6Effect';
 import SR6EffectSheet from '@/effect/SR6EffectSheet';
-import { CoverModifier } from '@/modifier/impl/CoverModifier';
 
 export function register(): void {
 	CONFIG.ActiveEffect.legacyTransferral = false;

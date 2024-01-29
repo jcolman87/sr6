@@ -2,7 +2,6 @@ import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import { InitiativeType } from '@/data/index';
-import InitiativeDataModel from '@/data/InitiativeDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import MatrixPersonaDataModel from '@/item/data/feature/MatrixPersonaDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';

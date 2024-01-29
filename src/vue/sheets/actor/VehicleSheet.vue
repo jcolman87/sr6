@@ -10,12 +10,12 @@ const system = computed(() => toRaw(context.data.actor).systemData);
 
 async function setAcceleration(ev: Event) {
 	let newAccel = getEventValue(ev) as number;
-	const accel = await toRaw(system.value).setAcceleration(newAccel);
+	await toRaw(system.value).setAcceleration(newAccel);
 }
 
 async function setSpeed(ev: Event) {
 	let newSpeed = getEventValue(ev) as number;
-	const speed = await toRaw(system.value).setSpeed(newSpeed);
+	await toRaw(system.value).setSpeed(newSpeed);
 }
 
 async function pilotRoll() {}

@@ -90,11 +90,13 @@ export default abstract class BaseActionDataModel extends BaseItemDataModel {
 
 	// Apply effects to the local actor
 	async applyEffectLocal(): Promise<SR6Effect> {
-		throw 'err';
+		console.warn('TODO');
+		throw 'TODO';
 	}
 
-	async applyEffectTarget(actor: SR6Actor): Promise<SR6Effect> {
-		throw 'err';
+	async applyEffectTarget(_actor: SR6Actor): Promise<SR6Effect> {
+		console.warn('TODO');
+		throw 'TODO';
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

@@ -1,8 +1,6 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { ActivationPeriod } from '@/data';
 import BaseActionDataModel from '@/item/data/action/BaseActionDataModel';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
 import { ITest } from '@/test';
 

@@ -7,8 +7,7 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { ActivationPeriod, ActivationType, DamageType } from '@/data';
-import { ActivationDataModel } from '@/data/ActivationDataModel';
+import { DamageType } from '@/data';
 import { MatrixAccessLevel, MatrixActionType, MatrixAttribute } from '@/data/matrix';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseActionDataModel from '@/item/data/action/BaseActionDataModel';

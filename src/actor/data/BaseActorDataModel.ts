@@ -28,6 +28,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel {
 			(i) => (i as SR6Item<SkillDataModel>).systemData,
 		);
 	}
+
 	get gear(): GearDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'gear').map((i) => (i as SR6Item<GearDataModel>).systemData);
 	}
@@ -96,7 +97,7 @@ export default abstract class BaseActorDataModel extends BaseDataModel {
 		);
 	}
 
-	defenseRating(test: Maybe<ITest>): number {
+	defenseRating(_test: Maybe<ITest>): number {
 		return 0;
 	}
 

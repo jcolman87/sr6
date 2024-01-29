@@ -3,13 +3,11 @@ import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { FireMode } from '@/data';
 import EdgeGainMenu from '@/edge/vue/EdgeGainMenu.vue';
-import { Target } from '@/test/BaseTest';
 import { RangedAttackTest } from '@/test/RangedTests';
-import { getActorSync } from '@/util';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { computed, toRaw, ref } from 'vue';
+import { computed, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -86,7 +84,7 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 	}
 }
 
-async function updateEdgeGain() {
+async function _updateEdgeGain() {
 	// Are there targets? If so, assign edge gain based on AR vs. DR
 }
 </script>

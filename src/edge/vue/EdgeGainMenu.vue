@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ITest } from '@/test';
 import { Target } from '@/test/BaseTest';
-import { ref, toRaw } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
 	test: ITest;
@@ -12,11 +12,11 @@ const edgeGainTarget = ref<Target>(Target.None);
 async function setEdgeGainTarget(newTarget: Target) {
 	const currentEdgeGain = props.test.data.edge!.gain!;
 
-	if (edgeGainTarget.value != Target.None) {
+	if (edgeGainTarget.value !== Target.None) {
 		currentEdgeGain[edgeGainTarget.value] = Math.max(0, currentEdgeGain[edgeGainTarget.value] - 1);
 	}
 	edgeGainTarget.value = newTarget;
-	if (newTarget != Target.None) {
+	if (newTarget !== Target.None) {
 		currentEdgeGain[newTarget] += 1;
 	}
 	props.test.data.edge!.gain = currentEdgeGain;

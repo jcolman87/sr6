@@ -7,7 +7,7 @@ import SR6Roll from '@/roll/SR6Roll';
 import { AttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import { getActorSync, getTargetActorIds } from '@/util';
+import { getTargetActorIds } from '@/util';
 import { Component } from 'vue';
 
 import ActionPromptComponent from '@/test/vue/prompt/MatrixActionTest.vue';
@@ -55,6 +55,7 @@ export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 
 		return 0;
 	}
+
 	opposed(actor: SR6Actor<BaseActorDataModel>, item: undefined | SR6Item = undefined): MatrixDefenseTest {
 		if (this.matrixAction.systemData.canDefend) {
 			return new MatrixDefenseTest({

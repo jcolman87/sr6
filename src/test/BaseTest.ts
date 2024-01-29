@@ -231,9 +231,9 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			}
 			if (this.data.edge!.gain![Target.Target]) {
 				// We dont know if we are an attack type here, so lets just check cuz lazy
-				this.targets.forEach((target) => {
-					target.systemData.monitors.gainEdge(this.data.edge!.gain![Target.Target]);
-				});
+				for (const target of this.targets) {
+					await target.systemData.monitors.gainEdge(this.data.edge!.gain![Target.Target]);
+				}
 			}
 		}
 
@@ -329,6 +329,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 	canGainEdge(target: Target): boolean {
 		return !(this.data.edge?.blockGain?.[target] || this.data.edge?.blockGain?.[Target.Any]);
 	}
+
 	canSpendEdge(target: Target): boolean {
 		return !(this.data.edge?.blockSpend?.[target] || this.data.edge?.blockSpend?.[Target.Any]);
 	}

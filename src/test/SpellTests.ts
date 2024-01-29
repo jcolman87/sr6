@@ -10,7 +10,7 @@ import SR6Roll from '@/roll/SR6Roll';
 import { AttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import { getActorSync, getTargetActorIds } from '@/util';
+import { getTargetActorIds } from '@/util';
 import { Component } from 'vue';
 
 import ActionPromptComponent from '@/test/vue/prompt/SpellCastTest.vue';

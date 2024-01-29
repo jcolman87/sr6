@@ -110,7 +110,7 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		return modifiers;
 	}
 
-	override defenseRating(test: Maybe<ITest>): number {
+	override defenseRating(_test: Maybe<ITest>): number {
 		return this.attributes.body.value + this.equipped.defenseRating;
 	}
 

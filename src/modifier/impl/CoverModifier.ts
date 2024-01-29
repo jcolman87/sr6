@@ -1,4 +1,3 @@
-import { ITest } from '@/test';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import { TestPoolModifier, TestPoolModifierSourceData } from '@/modifier/TestModifiers';
 

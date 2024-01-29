@@ -192,17 +192,17 @@ export default abstract class VehicleDataModel
 	abstract seats: Seats;
 
 	async onDropActor(
-		event: ElementDragEvent,
-		data: DropCanvasData<'Actor', SR6Actor<LifeformDataModel>>,
+		_event: ElementDragEvent,
+		_data: DropCanvasData<'Actor', SR6Actor<LifeformDataModel>>,
 	): Promise<false | void> {
-		//if (this.occupants) {
-		//}
+		// if (this.occupants) {
+		// }
 		return false;
 	}
 
 	async onDropItem(
-		event: DragEvent,
-		data: DropCanvasData<'Item', SR6Item<BaseItemDataModel>>,
+		_event: DragEvent,
+		_data: DropCanvasData<'Item', SR6Item<BaseItemDataModel>>,
 	): Promise<SR6Item<BaseItemDataModel>[] | boolean> {
 		return false;
 	}
