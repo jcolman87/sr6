@@ -2,6 +2,7 @@ import { InitiativeType } from '@/data';
 import { AvailableActions } from '@/data/interfaces';
 import { ConditionalData } from '@/effect/conditional';
 import SR6Effect from '@/effect/SR6Effect';
+import { CoverModifier } from '@/modifier/impl/CoverModifier';
 
 import { ModifierDataModel } from '@/modifier/ModifierDataModel';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
@@ -83,12 +84,14 @@ export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abs
 		this.all = [];
 		this.sourceData = data;
 
-		this.sourceData.modifiers?.forEach((modifierSourceData) => {
-			const mod = BaseModifier.fromData(modifierSourceData);
-			if (mod.ok) {
-				this.all.push(mod.val);
-			}
-		});
+		if (this.sourceData.modifiers) {
+			this.sourceData.modifiers!.forEach((modifierSourceData) => {
+				const mod = BaseModifier.fromData(modifierSourceData, this.parent);
+				if (mod.ok) {
+					this.all.push(mod.val);
+				}
+			});
+		}
 	}
 
 	async pushSave(newModifier: IModifier): Promise<void> {
@@ -123,6 +126,7 @@ export function config(): Record<string, unknown> {
 		EdgeModifier: EdgeModifier,
 
 		InitiativeModifier: InitiativeModifier,
+		CoverModifier: CoverModifier,
 	};
 }
 

@@ -1,25 +1,25 @@
 <script lang="ts" setup>
 import { ITest } from '@/test';
-import { EdgeGainTarget } from '@/test/BaseTest';
+import { Target } from '@/test/BaseTest';
 import { ref, toRaw } from 'vue';
 
 const props = defineProps<{
 	test: ITest;
 }>();
 
-const edgeGainTarget = ref<EdgeGainTarget>(EdgeGainTarget.None);
+const edgeGainTarget = ref<Target>(Target.None);
 
-async function setEdgeGainTarget(newTarget: EdgeGainTarget) {
-	const currentEdgeGain = props.test.data.edgeGain!;
+async function setEdgeGainTarget(newTarget: Target) {
+	const currentEdgeGain = props.test.data.edge!.gain!;
 
-	if (edgeGainTarget.value != EdgeGainTarget.None) {
+	if (edgeGainTarget.value != Target.None) {
 		currentEdgeGain[edgeGainTarget.value] = Math.max(0, currentEdgeGain[edgeGainTarget.value] - 1);
 	}
 	edgeGainTarget.value = newTarget;
-	if (newTarget != EdgeGainTarget.None) {
+	if (newTarget != Target.None) {
 		currentEdgeGain[newTarget] += 1;
 	}
-	props.test.data.edgeGain = currentEdgeGain;
+	props.test.data.edge!.gain = currentEdgeGain;
 }
 </script>
 
@@ -34,8 +34,8 @@ async function setEdgeGainTarget(newTarget: EdgeGainTarget) {
 							id="edgeGainNone"
 							name="edgeGain"
 							type="radio"
-							:checked="edgeGainTarget === EdgeGainTarget.None"
-							@change.prevent="setEdgeGainTarget(EdgeGainTarget.None)"
+							:checked="edgeGainTarget === Target.None"
+							@change.prevent="setEdgeGainTarget(Target.None)"
 						/>
 						<span class="slider round"></span>
 					</label>
@@ -49,8 +49,8 @@ async function setEdgeGainTarget(newTarget: EdgeGainTarget) {
 							id="edgeGainSelf"
 							name="edgeGain"
 							type="radio"
-							:checked="edgeGainTarget === EdgeGainTarget.Self"
-							@change.prevent="setEdgeGainTarget(EdgeGainTarget.Self)"
+							:checked="edgeGainTarget === Target.Self"
+							@change.prevent="setEdgeGainTarget(Target.Self)"
 						/>
 						<span class="slider round"></span>
 					</label>
@@ -64,8 +64,8 @@ async function setEdgeGainTarget(newTarget: EdgeGainTarget) {
 							id="edgeGainTarget"
 							name="edgeGain"
 							type="radio"
-							:checked="edgeGainTarget === EdgeGainTarget.Target"
-							@change.prevent="setEdgeGainTarget(EdgeGainTarget.Target)"
+							:checked="edgeGainTarget === Target.Target"
+							@change.prevent="setEdgeGainTarget(Target.Target)"
 						/>
 						<span class="slider round"></span>
 					</label>

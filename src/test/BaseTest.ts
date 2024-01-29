@@ -13,11 +13,32 @@ import SR6Roll from '@/roll/SR6Roll';
 import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 import { Result, Ok, Err } from 'ts-results';
 
-export enum EdgeGainTarget {
-	None,
-	Self,
-	Target,
+export enum Target {
+	Any = 0,
+	None = 0,
+	Self = 1,
+	Target = 2,
 }
+
+export interface TestEdgeData {
+	spent?: EdgeBoostType;
+	gain?: {
+		[Target.Any]: number;
+		[Target.Self]: number;
+		[Target.Target]: number;
+	};
+	blockGain?: {
+		[Target.Any]: boolean;
+		[Target.Self]: boolean;
+		[Target.Target]: boolean;
+	};
+	blockSpend?: {
+		[Target.Any]: boolean;
+		[Target.Self]: boolean;
+		[Target.Target]: boolean;
+	};
+}
+
 export interface BaseTestData {
 	pool?: number;
 	actorId?: ActorUUID;
@@ -29,11 +50,7 @@ export interface BaseTestData {
 	explode?: true;
 	parameters?: { glitch: number[]; success: number[] };
 
-	edgeSpent?: EdgeBoostType;
-	edgeGain?: {
-		[EdgeGainTarget.Self]: number;
-		[EdgeGainTarget.Target]: number;
-	};
+	edge?: TestEdgeData;
 }
 
 export interface TestConstructorData<
@@ -134,17 +151,17 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 	get availableEdge(): number {
 		let gain = 0;
 		// Dont show edge gains post roll
-		if (this.data.edgeGain && !this.roll) {
-			gain = this.data.edgeGain[EdgeGainTarget.Self];
+		if (this.data.edge?.gain && !this.roll) {
+			gain = this.data.edge!.gain[Target.Self];
 		}
 		return this.actor.systemData.monitors.edge.value + gain;
 	}
 
 	async applyEdgeBoost(boost: IEdgeBoost): Promise<boolean> {
-		if (this.data.edgeSpent) {
+		if (this.data.edge?.spent) {
 			return false;
 		}
-		this.data.edgeSpent = boost.type;
+		this.data.edge!.spent = boost.type;
 		this.edgeBoost = boost;
 
 		// Are we applying post-roll? If so call the post roll application
@@ -208,14 +225,14 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		}
 
 		// Did we have edge gain? apply
-		if (this.data.edgeGain) {
-			if (this.data.edgeGain![EdgeGainTarget.Self]) {
-				await this.actor.systemData.monitors.gainEdge(this.data.edgeGain[EdgeGainTarget.Self]);
+		if (this.data.edge?.gain) {
+			if (this.data.edge!.gain![Target.Self]) {
+				await this.actor.systemData.monitors.gainEdge(this.data.edge!.gain![Target.Self]);
 			}
-			if (this.data.edgeGain![EdgeGainTarget.Target]) {
+			if (this.data.edge!.gain![Target.Target]) {
 				// We dont know if we are an attack type here, so lets just check cuz lazy
 				this.targets.forEach((target) => {
-					target.systemData.monitors.gainEdge(this.data.edgeGain![EdgeGainTarget.Target]);
+					target.systemData.monitors.gainEdge(this.data.edge!.gain![Target.Target]);
 				});
 			}
 		}
@@ -273,13 +290,16 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		this.baseData.actorId = args.actor.uuid;
 		this.baseData.itemId = args.item ? args.item.uuid : undefined;
 
-		this.data.edgeGain = this.data.edgeGain || {
-			[EdgeGainTarget.Self]: 0,
-			[EdgeGainTarget.Target]: 0,
+		this.data.edge = this.data.edge || {
+			gain: {
+				[Target.Any]: 0,
+				[Target.Self]: 0,
+				[Target.Target]: 0,
+			},
 		};
 
-		if (this.data.edgeSpent) {
-			this.edgeBoost = getEdgeBoost(this.data.edgeSpent);
+		if (this.data.edge.spent) {
+			this.edgeBoost = getEdgeBoost(this.data.edge.spent);
 		}
 	}
 
@@ -303,5 +323,27 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			return Ok(test);
 		}
 		return Err(cls.val);
+	}
+
+	// Edge control
+	canGainEdge(target: Target): boolean {
+		return !(this.data.edge?.blockGain?.[target] || this.data.edge?.blockGain?.[Target.Any]);
+	}
+	canSpendEdge(target: Target): boolean {
+		return !(this.data.edge?.blockSpend?.[target] || this.data.edge?.blockSpend?.[Target.Any]);
+	}
+
+	getEdgeGain(target: Target): number {
+		return this.data.edge?.gain?.[target] || 0;
+	}
+
+	setEdgeGain(target: Target, value: number): boolean {
+		if (this.data.edge?.blockGain?.[target] || this.data.edge?.blockGain?.[Target.Any]) {
+			return false;
+		}
+
+		this.data.edge!.gain![target] = value;
+
+		return true;
 	}
 }

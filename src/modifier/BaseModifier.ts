@@ -44,20 +44,21 @@ export default class BaseModifier<
 		return checkConditions(this.source, this.parent, this.conditions).ok;
 	}
 
-	static fromData(data: ModifierSourceData): Result<IModifier, string> {
-		if (!data.parent || !data.source) {
-			return Err(`Source or parent document cannot be undefined: ${data.parent}, ${data.source}`);
-		}
-
+	static fromData<TDocument extends foundry.abstract.Document>(
+		data: ModifierSourceData,
+		creatingParent: Maybe<TDocument> = undefined,
+	): Result<IModifier, string> {
 		const parent = fromUuidSync(data.parent!);
 		const source = fromUuidSync(data.source!);
 
-		if (!parent || !source) {
+		if ((!parent || !source) && !creatingParent) {
 			return Err(`Source or parent document didnt exist: ${parent}, ${source}`);
 		}
-
-		if (!parent || !source) {
-			return Err(`Source or parent document didnt exist: ${parent}, ${source}`);
+		if (!parent && creatingParent) {
+			data.parent = creatingParent.uuid as ModifierSourceUUID;
+		}
+		if (!source && creatingParent) {
+			data.source = creatingParent.uuid as ModifierSourceUUID;
 		}
 
 		const cls = getClass<ConstructorOf<BaseModifier>>(CONFIG.sr6.types.modifiers, data);

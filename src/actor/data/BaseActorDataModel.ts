@@ -17,6 +17,7 @@ import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import ProgramDataModel from '@/item/data/ProgramDataModel';
 
 import SR6Item from '@/item/SR6Item';
+import { ITest } from '@/test';
 
 export default abstract class BaseActorDataModel extends BaseDataModel {
 	abstract monitors: MonitorsDataModel;
@@ -27,7 +28,6 @@ export default abstract class BaseActorDataModel extends BaseDataModel {
 			(i) => (i as SR6Item<SkillDataModel>).systemData,
 		);
 	}
-
 	get gear(): GearDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'gear').map((i) => (i as SR6Item<GearDataModel>).systemData);
 	}
@@ -94,6 +94,10 @@ export default abstract class BaseActorDataModel extends BaseDataModel {
 		return this.actor!.items.filter((i) => i.type === 'wearable').map(
 			(i) => (i as SR6Item<WearableDataModel>).systemData,
 		);
+	}
+
+	defenseRating(test: Maybe<ITest>): number {
+		return 0;
 	}
 
 	get woundModifiers(): WoundModifierData {

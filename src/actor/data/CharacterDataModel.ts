@@ -15,6 +15,7 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getCoreSkills, getCoreMatrixActions, getCoreGeneralActions } from '@/item/data';
+import { ITest } from '@/test';
 import { getItemSync } from '@/util';
 
 export abstract class CharacterEquippedDataModel extends BaseDataModel {
@@ -107,6 +108,10 @@ export default abstract class CharacterDataModel extends LifeformDataModel imple
 		}
 
 		return modifiers;
+	}
+
+	override defenseRating(test: Maybe<ITest>): number {
+		return this.attributes.body.value + this.equipped.defenseRating;
 	}
 
 	//

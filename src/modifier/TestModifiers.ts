@@ -68,7 +68,9 @@ export interface TestPoolModifierSourceData extends TestModifierSourceData {
 	value: number;
 }
 
-export class TestPoolModifier extends TestModifier<TestPoolModifierSourceData> {
+export class TestPoolModifier<
+	TData extends TestPoolModifierSourceData = TestPoolModifierSourceData,
+> extends TestModifier<TData> {
 	get value(): number {
 		return this.data!.value;
 	}
@@ -84,7 +86,7 @@ export class TestPoolModifier extends TestModifier<TestPoolModifierSourceData> {
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<TestPoolModifierSourceData>) {
+	constructor({ parent, source, conditions, data }: ModifierConstructorData<TData>) {
 		super({ parent, source, conditions, data });
 	}
 }

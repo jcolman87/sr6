@@ -3,7 +3,7 @@ import { IEdgeBoost } from '@/edge';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
 import SR6Roll from '@/roll/SR6Roll';
-import { BaseTestData } from '@/test/BaseTest';
+import { BaseTestData, Target } from '@/test/BaseTest';
 
 import { Component } from 'vue';
 import { Result } from 'ts-results';
@@ -85,6 +85,14 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 	execute(): Promise<Result<null, null>>;
 
 	toJSON(): Record<string, unknown>;
+
+	// edge control
+	canGainEdge(target: Target): boolean;
+	canSpendEdge(target: Target): boolean;
+
+	getEdgeGain(target: Target): number;
+
+	setEdgeGain(target: Target, value: number): boolean;
 
 	get availableEdge(): number;
 	applyEdgeBoost(boost: IEdgeBoost): Promise<boolean>;

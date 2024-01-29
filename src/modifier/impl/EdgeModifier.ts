@@ -3,7 +3,7 @@ import AttributeTest from '@/test/AttributeTest';
 import { ITest } from '@/test';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import { TestModifier, TestModifierSourceData } from '@/modifier/TestModifiers';
-import { EdgeGainTarget } from '@/test/BaseTest';
+import { Target } from '@/test/BaseTest';
 import { MatrixActionTest } from '@/test/MatrixTests';
 import SkillTest from '@/test/SkillTest';
 
@@ -69,10 +69,7 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 	}
 
 	async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
-		// await test.actor.systemData.monitors.gainEdge(1);
-		const edgeGain = test.data.edgeGain!;
-		edgeGain[EdgeGainTarget.Self] += 1;
-		test.data.edgeGain = edgeGain;
+		test.setEdgeGain(Target.Self, test.getEdgeGain(Target.Self) + 1);
 	}
 
 	override toJSON(): ModifierSourceData {

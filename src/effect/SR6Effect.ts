@@ -4,10 +4,11 @@
  * @file ActiveEffects Customizations
  */
 import SR6Actor from '@/actor/SR6Actor';
+import { IHasOnUpdate } from '@/data/interfaces';
 import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { IModifier, Modifiers } from '@/modifier';
+import { IModifier, Modifiers, ModifierSourceData, ModifiersSourceData } from '@/modifier';
 import { TestPoolModifier } from '@/modifier/TestModifiers';
 
 export const EFFECT_MODES = {
@@ -24,7 +25,7 @@ export enum EffectType {
 interface EffectFlags {
 	type: EffectType;
 	conditions?: ConditionalData[];
-	modifiers?: IModifier[];
+	modifiers?: ModifiersSourceData;
 }
 
 export default class SR6Effect extends ActiveEffect {
@@ -80,6 +81,7 @@ export default class SR6Effect extends ActiveEffect {
 		options: DocumentModificationContext,
 		user: User,
 	): Promise<void> {
+		console.log('SR6Effect::preCreate', data, options, user);
 		if (data.flags?.sr6) {
 			this.updateSource({
 				['flags.sr6']: foundry.utils.mergeObject(data.flags.sr6, SR6Effect.defaultFlags(), {
@@ -97,7 +99,7 @@ export default class SR6Effect extends ActiveEffect {
 
 	constructor(data: PreCreate<foundry.data.ActiveEffectSource>, context?: DocumentConstructionContext<ActiveEffect>) {
 		super(data, context);
-
+		console.log('SR6Effect::constructor', data, context);
 		if (context?.parent) {
 			const originDescription =
 				context?.parent instanceof SR6Item

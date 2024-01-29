@@ -19,7 +19,7 @@ declare global {
 		TTokenDocument extends TokenDocument = TokenDocument,
 		TScene extends Scene = Scene,
 		TUser extends User = User,
-		TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup
+		TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup,
 	> {
 		/** Configure debugging flags to display additional information */
 		debug: {
@@ -87,7 +87,7 @@ declare global {
 			documentClass: {
 				new (
 					data: PreCreate<TChatMessage['_source']>,
-					context?: DocumentConstructionContext<TChatMessage>
+					context?: DocumentConstructionContext<TChatMessage>,
 				): TChatMessage;
 			};
 			sidebarIcon: string;
@@ -189,7 +189,7 @@ declare global {
 			documentClass: {
 				new (
 					data: PreCreate<TActiveEffect['_source']>,
-					context?: DocumentConstructionContext<TActiveEffect>
+					context?: DocumentConstructionContext<TActiveEffect>,
 				): TActiveEffect;
 			};
 			legacyTransferral: boolean;
@@ -199,7 +199,7 @@ declare global {
 		Combatant: {
 			documentClass: new (
 				data: PreCreate<TCombatant['_source']>,
-				context?: DocumentConstructionContext<TCombatant>
+				context?: DocumentConstructionContext<TCombatant>,
 			) => TCombatant;
 		};
 
@@ -217,7 +217,7 @@ declare global {
 			};
 			documentClass: new (
 				data: PreCreate<foundry.data.MeasuredTemplateSource>,
-				context?: DocumentConstructionContext<TMeasuredTemplateDocument>
+				context?: DocumentConstructionContext<TMeasuredTemplateDocument>,
 			) => TMeasuredTemplateDocument;
 			objectClass: ConstructorOf<TMeasuredTemplateDocument['object']>;
 			layerClass: ConstructorOf<TMeasuredTemplateDocument['object']['layer']>;
@@ -563,11 +563,11 @@ declare global {
 		};
 	}
 
-	interface StatusEffect {
+	type StatusEffect = {
 		id: string;
-		label: string;
+		name: string;
 		icon: ImageFilePath | VideoFilePath;
-	}
+	} & Record<string, unknown>;
 
 	interface FontFamilyDefinition {
 		/** Whether the font is available in the rich text editor. This will also enable it for notes and drawings. */

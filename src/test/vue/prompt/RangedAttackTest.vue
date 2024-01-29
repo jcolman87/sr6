@@ -3,7 +3,7 @@ import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { FireMode } from '@/data';
 import EdgeGainMenu from '@/edge/vue/EdgeGainMenu.vue';
-import { EdgeGainTarget } from '@/test/BaseTest';
+import { Target } from '@/test/BaseTest';
 import { RangedAttackTest } from '@/test/RangedTests';
 import { getActorSync } from '@/util';
 
@@ -24,12 +24,16 @@ const system = computed(() => toRaw(weapon.value).systemData);
 
 const original_pool = props.test.data.pool!;
 
-const targets = computed(
-	() =>
-		props.test.data.targetIds?.map((id) =>
-			getActorSync(SR6Actor<BaseActorDataModel>, id),
-		) as SR6Actor<BaseActorDataModel>[],
-);
+const targetDefenseRating = computed(() => {
+	const highestDefenseRating = props.test.targets.reduce((acc, target) => {
+		const defenseRating = target.systemData.defenseRating(props.test);
+		if (target.systemData.defenseRating(props.test) > acc) {
+			acc = defenseRating;
+		}
+		return acc;
+	}, 0);
+	return highestDefenseRating;
+});
 
 emit('setText', {
 	title: `Roll Attack (${weapon.value.name})`,
@@ -81,6 +85,10 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 		await canvas.ping(target.token.object.center);
 	}
 }
+
+async function updateEdgeGain() {
+	// Are there targets? If so, assign edge gain based on AR vs. DR
+}
 </script>
 
 <template>
@@ -94,7 +102,7 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 			<div class="section-head">Targets</div>
 
 			<div class="target-box">
-				<template v-for="target in targets" :key="target.id"
+				<template v-for="target in props.test.targets" :key="target.id"
 					><div @click.prevent="focusTarget(target)" @dblclick.prevent="target.sheet?.render(true)">
 						{{ target.name }}
 					</div></template
@@ -113,7 +121,7 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 				</tr>
 				<tr>
 					<td></td>
-					<td><Localized label="SR6.Combat.DefenseRating" />: TODO</td>
+					<td><Localized label="SR6.Combat.DefenseRating" />: {{ targetDefenseRating }}</td>
 				</tr>
 			</table>
 		</div>
