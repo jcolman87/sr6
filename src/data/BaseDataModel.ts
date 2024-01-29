@@ -55,8 +55,10 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 				return actor.solveFormula(formula, data);
 			}
 		}
-		console.error('No parent that can solve a formula exists for this model');
-		throw 'err';
+
+		const err = `No parent that can solve a formula exists for this model ${typeof this}`;
+		console.error(err, formula, this);
+		throw err;
 	}
 
 	prepareEmbeddedDocuments(): void {}

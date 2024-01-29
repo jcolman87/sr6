@@ -23,6 +23,7 @@
 	width: 1.5em;
 }
 
+
 .section {
 	display: inline-block;
 	background: var(--section-background);
@@ -85,6 +86,16 @@
 	.formula {
 		font-style: italic;
 		font-size: 11px;
+	}
+}
+
+.warning-box {
+	background-color: colors.$light-red;
+	font-size: 12px;
+	color: black;
+	.warning-title {
+		font-weight: bold;
+		font-size: 16px;
 	}
 }
 

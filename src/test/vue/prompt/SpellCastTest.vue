@@ -44,7 +44,6 @@ function adjustAmp(amp: SpellAdjustmentType, val: number) {
 	}
 	adjustments[amp] += val;
 	props.test.data.adjustments = adjustments;
-	console.log('setting amp', props.test.data.adjustments, amp, val);
 }
 
 function currentDamage(): number {

@@ -31,7 +31,7 @@ async function setEdge(ev: Event) {
 	if (value > actor.systemData.monitors.edge.max) {
 		value = actor.systemData.monitors.edge.max;
 	}
-	console.log('setEdge', value);
+
 	await actor.update({ ['system.monitors.edge.damage']: actor.systemData.monitors.edge.max - (value as number) });
 }
 </script>

@@ -7,7 +7,7 @@ export interface TestModifierSourceData extends ModifierSourceData {
 }
 
 export abstract class TestModifier<TSourceData extends TestModifierSourceData> extends BaseModifier<TSourceData> {
-	override isApplicable(test: Maybe<ITest> = null): boolean {
+	override isApplicable(test: Maybe<ITest> = null, _roll: Maybe<Roll> = null): boolean {
 		if (!super.isApplicable(test)) {
 			return false;
 		}
@@ -71,12 +71,16 @@ export interface TestPoolModifierSourceData extends TestModifierSourceData {
 export class TestPoolModifier<
 	TData extends TestPoolModifierSourceData = TestPoolModifierSourceData,
 > extends TestModifier<TData> {
+	override get displayValue(): undefined | string {
+		return this.value > 0 ? `+${this.value}` : this.value.toString();
+	}
+
 	get value(): number {
 		return this.data!.value;
 	}
 
 	async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
-		test.data.pool! += this.value;
+		test.pool += this.value;
 	}
 
 	override toJSON(): ModifierSourceData {

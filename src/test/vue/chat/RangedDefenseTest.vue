@@ -23,8 +23,10 @@ const visibility = ref({
 const damageValue = ref(toRaw(props.test.opposedTest).damage(props.test.roll!.hits));
 
 async function executeSoakTest() {
-	showRoll.value = false;
-	await toRaw(props.test.opposedTest).soak(toRaw(props.test)).execute();
+	const result = await toRaw(props.test.opposedTest).soak(toRaw(props.test)).execute();
+	if (result.ok && !game.user!.isGM) {
+		showRoll.value = false;
+	}
 }
 
 emit('setText', {
@@ -75,9 +77,5 @@ const showRoll = ref(true);
 .chat-opposed-test {
 	padding-top: 5px;
 	font-size: 12px;
-
-	.line {
-		min-width: 100%;
-	}
 }
 </style>

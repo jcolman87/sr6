@@ -124,8 +124,6 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		const newDamage: number = monitor.damage + value;
 		const remainder: number = Math.max(0, newDamage - monitor.max);
 
-		console.log('type', type.toString(), `system.monitors.${type.toString()}.damage`);
-
 		if (remainder > 0) {
 			await this.actor!.update({ [`system.monitors.${type.toString()}.damage`]: monitor.max });
 			return remainder;
@@ -184,20 +182,40 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 	}
 
 	prepareWoundModifier(): void {
-		// Is there already a wound modifier? if so delete it and recreate it
-		let modifier = this.actor!.modifiers.all.find((modifier) => modifier.class === 'WoundModifier') as
-			| WoundModifier
-			| undefined;
-		if (!modifier) {
-			modifier = new WoundModifier({
+		let physicalWoundModifier = this.actor!.modifiers.all.find(
+			(modifier) =>
+				modifier.class === 'WoundModifier' && modifier.data.name === 'SR6.Modifiers.PhysicalWoundModifier.Name',
+		) as WoundModifier | undefined;
+		let stunWoundModifier = this.actor!.modifiers.all.find(
+			(modifier) =>
+				modifier.class === 'WoundModifier' && modifier.data.name === 'SR6.Modifiers.StunWoundModifier.Name',
+		) as WoundModifier | undefined;
+
+		if (!physicalWoundModifier && this.physical.woundModifier != 0) {
+			physicalWoundModifier = new WoundModifier({
 				parent: this.actor!,
 				source: this.actor!,
-				data: { value: 0 },
+				data: { name: 'SR6.Modifiers.PhysicalWoundModifier.Name', value: this.physical.woundModifier },
 			});
-			this.actor!.modifiers.all.push(modifier as unknown as IModifier);
+			this.actor!.modifiers.all.push(physicalWoundModifier as unknown as IModifier);
 		}
-		if (modifier) {
-			modifier.data!.value = this.woundModifier;
+		if (!stunWoundModifier && this.stun.woundModifier != 0) {
+			stunWoundModifier = new WoundModifier({
+				parent: this.actor!,
+				source: this.actor!,
+				data: { name: 'SR6.Modifiers.StunWoundModifier.Name', value: this.stun.woundModifier },
+			});
+			this.actor!.modifiers.all.push(stunWoundModifier as unknown as IModifier);
+		}
+
+		// Update them
+
+		if (physicalWoundModifier && this.physical.woundModifier > 0) {
+			physicalWoundModifier.data!.value = this.physical.woundModifier;
+		}
+
+		if (stunWoundModifier && this.stun.woundModifier > 0) {
+			stunWoundModifier.data!.value = this.stun.woundModifier;
 		}
 	}
 

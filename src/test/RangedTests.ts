@@ -55,7 +55,7 @@ export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			actor: defenseTest.actor,
 			data: {
 				pool: defenseTest.actor.solveFormula(this.weapon.systemData.damageData?.soakFormula),
-				threshold: this.damage(defenseTest.roll?.net_hits),
+				threshold: this.damage(defenseTest.roll?.hits),
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				defenseTest: defenseTest.toJSON() as any,
 			},

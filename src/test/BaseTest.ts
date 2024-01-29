@@ -1,5 +1,6 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
+import { makeDeltaProxy, makeDeltaProxyHandler } from '@/data/DeltaProxy';
 import { getClass } from '@/data/serialize';
 import { EdgeBoostType, getEdgeBoost, IEdgeBoost } from '@/edge';
 import BaseModifier from '@/modifier/BaseModifier';
@@ -8,7 +9,7 @@ import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Item from '@/item/SR6Item';
 import { IModifier, ModifierSourceData } from '@/modifier';
 import { AttackTestData, getAttackDataTargets } from '@/test/AttackTestData';
-import { ITest, RollDataDelta, TestType } from '@/test/index';
+import { ITest, RollDataDelta, TestError, TestType } from '@/test/index';
 import SR6Roll from '@/roll/SR6Roll';
 import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 import { Result, Ok, Err } from 'ts-results';
@@ -105,20 +106,21 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		return [];
 	}
 
+	get pool(): number {
+		return this.data.pool || 0;
+	}
+
+	set pool(newValue: number) {
+		this.data.pool = Math.max(0, newValue);
+	}
+
 	is(type: ConstructorOf<BaseTest>): boolean {
-		console.log(type);
 		throw 'lol';
 	}
 
 	// We use a proxy here for any changes to be applied to the delta
 	get data(): TData {
-		return new Proxy(foundry.utils.mergeObject(this.baseData, this.delta, { inplace: false }), {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			set: (diff: any, property: string, value: any) => {
-				this.delta[property] = value;
-				return true;
-			},
-		});
+		return makeDeltaProxy(this.baseData, this.delta);
 	}
 
 	async performRoll(): Promise<Result<null, string>> {
@@ -176,7 +178,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		return true;
 	}
 
-	async execute(): Promise<Result<null, null>> {
+	async execute(): Promise<Result<null, TestError>> {
 		// Add our modifiers to the roll delta
 		await this.prepareModifiers();
 
@@ -194,10 +196,12 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 				await this.toMessage();
 				return Ok(null);
+			} else {
+				return Err(TestError.RollFailed);
 			}
 		}
 
-		return Err(null);
+		return Err(TestError.Cancelled);
 	}
 
 	async prompt(): Promise<Result<RollDataDelta, null>> {
@@ -290,7 +294,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		this.baseData.actorId = args.actor.uuid;
 		this.baseData.itemId = args.item ? args.item.uuid : undefined;
 
-		this.data.edge = this.data.edge || {
+		this.baseData.edge = this.baseData.edge || {
 			gain: {
 				[Target.Any]: 0,
 				[Target.Self]: 0,

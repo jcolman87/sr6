@@ -80,7 +80,6 @@ export default class SR6Effect extends ActiveEffect {
 		options: DocumentModificationContext,
 		user: User,
 	): Promise<void> {
-		console.log('SR6Effect::preCreate', data, options, user);
 		if (data.flags?.sr6) {
 			this.updateSource({
 				['flags.sr6']: foundry.utils.mergeObject(data.flags.sr6, SR6Effect.defaultFlags(), {
@@ -98,7 +97,7 @@ export default class SR6Effect extends ActiveEffect {
 
 	constructor(data: PreCreate<foundry.data.ActiveEffectSource>, context?: DocumentConstructionContext<ActiveEffect>) {
 		super(data, context);
-		console.log('SR6Effect::constructor', data, context);
+
 		if (context?.parent) {
 			const originDescription =
 				context?.parent instanceof SR6Item

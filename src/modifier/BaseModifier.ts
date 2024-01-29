@@ -20,12 +20,16 @@ export default class BaseModifier<
 		return this.constructor.name;
 	}
 
-	get name(): string {
-		return this.data!.name || '[Missing name]';
+	get name(): undefined | string {
+		return this.data!.name ? game.i18n.localize(this.data.name) : '[Missing name]';
 	}
 
-	get description(): string {
-		return this.data!.description || '';
+	get description(): undefined | string {
+		return this.data!.description ? game.i18n.localize(this.data.description) : '[Missing Description]';
+	}
+
+	get displayValue(): undefined | string {
+		return undefined;
 	}
 
 	get parent(): foundry.abstract.Document {
@@ -36,7 +40,7 @@ export default class BaseModifier<
 		return this._source;
 	}
 
-	isApplicable(_test: Maybe<ITest> = null): boolean {
+	isApplicable(_test: Maybe<ITest> = null, _roll: Maybe<Roll> = null): boolean {
 		if (this.conditions.length === 0) {
 			return true;
 		}
@@ -94,5 +98,7 @@ export default class BaseModifier<
 		this._parent = parent;
 		this._source = source;
 		this.conditions = conditions ? conditions : [];
+
+		// Attempt to localize names if they exist, otherwise replace with placeholders
 	}
 }

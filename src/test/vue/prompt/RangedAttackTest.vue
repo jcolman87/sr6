@@ -157,15 +157,6 @@ async function _updateEdgeGain() {
 	display: flex;
 	flex-flow: wrap;
 
-	.warning-box {
-		background-color: colors.$light-red;
-		font-size: 16px;
-		color: black;
-		.warning-title {
-			font-weight: bold;
-		}
-	}
-
 	.good {
 		background-color: colors.$green-bg;
 	}

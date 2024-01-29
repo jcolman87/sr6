@@ -50,7 +50,6 @@ async function executeDrainTest() {
 		data: { opposedData: toRaw(props.test).toJSON() as unknown as TestSourceData<SpellCastTestData> },
 	}).execute();
 }
-console.log(toRaw(props.test.spell));
 </script>
 
 <template>

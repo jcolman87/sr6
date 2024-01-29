@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import { isTargetOwner } from '@/test/AttackTestData';
 import { RangedAttackTest } from '@/test/RangedTests';
-import { getSelfOrSelectedActors } from '@/util';
+import { getSelfActor, getSelfOrSelectedActors } from '@/util';
 import Targets from '@/chat/vue/Targets.vue';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
@@ -18,8 +18,13 @@ const props = defineProps<{
 }>();
 
 async function executeOpposedTest() {
-	for (const actor of getSelfOrSelectedActors()) {
-		await toRaw(props.test).opposed?.(actor).execute();
+	if (!game.user!.isGM) {
+		const result = await toRaw(props.test).opposed?.(getSelfActor()).execute();
+		showRoll.value = !result.ok;
+	} else {
+		for (const actor of getSelfOrSelectedActors()) {
+			await toRaw(props.test).opposed?.(actor).execute();
+		}
 	}
 }
 
@@ -35,6 +40,8 @@ emit('setText', {
 	title: `Roll Attack (${props.test.weapon.name})`,
 	hint: `asdfasdfasdf`,
 });
+
+const showRoll = ref(true);
 </script>
 
 <template>
@@ -99,8 +106,8 @@ emit('setText', {
 		</div>
 		<Targets v-if="test.targets.length > 0" :targets="test.targets" />
 		<input
-			v-if="isTargetOwner(test.data)"
-			class="dialog-button"
+			v-if="showRoll && isTargetOwner(test.data)"
+			class="dialog-button chat-toggled-button"
 			type="button"
 			value="Roll Defense"
 			@click.prevent="executeOpposedTest"

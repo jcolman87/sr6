@@ -50,7 +50,7 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 	getPoints(specialization: string | null = null): number {
 		let specializationPoints: number = 0;
 
-		if (specialization) {
+		if (specialization && this.specializations.includes(specialization)) {
 			if (specialization === this.specialization) {
 				specializationPoints += 2;
 			}

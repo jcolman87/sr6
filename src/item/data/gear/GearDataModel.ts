@@ -247,7 +247,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 		await this.item!.update({
 			['system.matrix.active']: this.matrix!.active,
 		});
-		console.log('activating', this.item!);
+
 		if (this.matrix!.active && this.matrix!.wirelessBonus) {
 			// Create an active effect for us being active and add its modifiers and conditions
 			const effect = (

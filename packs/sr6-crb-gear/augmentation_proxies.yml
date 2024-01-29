@@ -29,5 +29,5 @@ system:
       modifiers:
         - name: Cyberjack Active
           class: InitiativeModifier
-          data: { type: 'matrix', dice: 2 }
+          data: { type: 'matrix', diceFormula: 'ceil(@rating / 3)' }
   description: ''

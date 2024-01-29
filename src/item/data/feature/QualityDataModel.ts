@@ -39,7 +39,6 @@ export default abstract class QualityDataModel
 			ui.notifications.error('Wtf we dont have an effect?');
 			throw 'error';
 		} else {
-			console.log('ok now we do?');
 			return effect!;
 		}
 	}

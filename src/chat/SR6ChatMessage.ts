@@ -49,7 +49,6 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 	mounted: boolean = false;
 
 	constructor(data: PreCreate<foundry.data.ChatMessageSource>, context?: DocumentConstructionContext<ChatMessage>) {
-		console.log('SR6ChatMessage::constructor', data, context);
 		super(data, context);
 
 		this.vueContext = reactive(new ChatMessageContext(this));
@@ -83,8 +82,6 @@ export class SR6ChatMessage extends ChatMessage<SR6Actor> {
 	}
 
 	override async getHTML(): Promise<JQuery> {
-		console.log('SR6ChatMessage::getHTML', this);
-
 		const html = await super.getHTML();
 
 		if (this.flags?.sr6?.testData) {

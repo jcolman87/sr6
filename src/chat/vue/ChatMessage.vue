@@ -142,13 +142,18 @@ onBeforeMount(update);
 						:message="context.message"
 						@setText="setText"
 					/>
-					<div v-if="context.message.isOwner" class="edge-used">
+					<div v-if="context.test.isOwner" class="edge-used">
 						<template v-if="context.test.data.edge?.spent"
 							>Edge Used:
 							<Localized
 								:label="`SR6.Edge.Boosts.${getEdgeBoostKey(context.test.data.edge!.spent!)}.Name`" /></template
 						><template v-else>
-							<input class="dialog-button" type="button" value="Edge" @click.prevent="promptSpendEdge" />
+							<input
+								class="dialog-button line"
+								type="button"
+								value="Spend Edge"
+								@click.prevent="promptSpendEdge"
+							/>
 						</template>
 					</div>
 				</section>

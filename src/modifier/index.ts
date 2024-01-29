@@ -6,6 +6,7 @@ import { CoverModifier } from '@/modifier/impl/CoverModifier';
 
 import { ModifierDataModel } from '@/modifier/ModifierDataModel';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
+import { BaseTestData } from '@/test/BaseTest';
 
 import { ITest } from 'src/test';
 import { ClassData } from '@/data/serialize';
@@ -28,10 +29,13 @@ export type ModifierSourceUUID =
 export interface IModifier {
 	get class(): string;
 
-	isApplicable(test: Maybe<ITest>): boolean;
+	get data(): Record<string, unknown>;
+
+	isApplicable(test: Maybe<ITest>, roll: Maybe<Roll>): boolean;
 
 	get name(): undefined | string;
 	get description(): undefined | string;
+	get displayValue(): undefined | string;
 
 	get parent(): foundry.abstract.Document;
 	get source(): foundry.abstract.Document;
@@ -77,7 +81,7 @@ export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abs
 	all: IModifier[];
 
 	getApplicable(test: Maybe<ITest> = null): IModifier[] {
-		return this.all.filter((mod) => mod.isApplicable(test));
+		return this.all.filter((mod) => mod.isApplicable(test, null));
 	}
 
 	updateSource(data: ModifiersSourceData): void {

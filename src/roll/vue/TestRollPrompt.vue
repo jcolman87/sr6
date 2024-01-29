@@ -51,9 +51,6 @@ function onUpdatePool() {
 function toggleConditions() {
 	isDisplayConditions.value = !isDisplayConditions.value;
 }
-function asModifierString(modifier: number): string {
-	return modifier > 0 ? `+${modifier}` : modifier.toString();
-}
 
 onMounted(() => {
 	setTimeout(() => {
@@ -115,10 +112,7 @@ onMounted(() => {
 				<table>
 					<tr>
 						<td style="width: 3em">
-							<template v-if="modifier.class == 'TestPoolModifier'">{{
-								asModifierString((modifier as TestPoolModifier).value)
-							}}</template>
-							<template v-else>-</template>
+							{{ modifier.displayValue }}
 						</td>
 						<td>
 							<a
@@ -178,6 +172,10 @@ onMounted(() => {
 
 		<!-- Roll Button -->
 		<div class="row">
+			<div class="section warning-box" v-if="context.test.pool === 0">
+				<div class="section-head warning-title">Warning: Pool is Zero</div>
+				A zero pool becomes an automatic failure.
+			</div>
 			<button ref="finishRollButton" class="dialog-button finish-roll-button" @click.prevent="roll">
 				<Localized label="SR6.Labels.Roll" />
 			</button>

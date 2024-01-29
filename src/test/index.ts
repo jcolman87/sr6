@@ -18,6 +18,11 @@ import { MatrixActionTest, MatrixDefenseTest, MatrixSoakTest } from '@/test/Matr
 import { SpellCastTest, SpellDrainTest, SpellDefenseTest, SpellSoakTest } from '@/test/SpellTests';
 export type RollDataDelta = Record<string, unknown>;
 
+export enum TestError {
+	Cancelled,
+	RollFailed,
+}
+
 export enum TestType {
 	INVALID = 'INVALID',
 	Attribute = 'AttributeTest',
@@ -77,12 +82,15 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 	get data(): TData;
 	set data(data: TData);
 
+	get pool(): number;
+	set pool(newValue: number);
+
 	reset(): void;
 
 	promptComponent?(): Component;
 	chatComponent?(): Component;
 
-	execute(): Promise<Result<null, null>>;
+	execute(): Promise<Result<null, TestError>>;
 
 	toJSON(): Record<string, unknown>;
 
