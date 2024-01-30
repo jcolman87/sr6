@@ -1,6 +1,6 @@
 name: Laser Sight
 type: gear
-img: systems/sr6/assets/items/laser.webp
+img: /systems/sr6/assets/items/laser.webp
 system:
   description: This device uses a laser beam to project a visible dot (normal, low-light, or thermographic) on the target. This increases the weapon’s Attack Rating by 1, not cumulative with smartlink modifiers. The laser sight can be mounted as either an underbarrel mount or top mount. Activating or deactivating a laser sight is a Minor Action. Note that in weapons with a laser sight included as standard equipment, this bonus is already calculated into the Attack Rating.
   rating: 1

@@ -1,6 +1,6 @@
 name: Credstick (Standard)
 type: credstick
-img: systems/sr6/assets/yen.webp
+img: /systems/sr6/assets/yen.webp
 effects: []
 system:
   rating: 1
@@ -10,7 +10,7 @@ system:
 ---
 name: Credstick (Silver)
 type: credstick
-img: systems/sr6/assets/yen.webp
+img: /systems/sr6/assets/yen.webp
 effects: []
 system:
   rating: 2
@@ -20,7 +20,7 @@ system:
 ---
 name: Credstick (Gold)
 type: credstick
-img: systems/sr6/assets/yen.webp
+img: /systems/sr6/assets/yen.webp
 effects: []
 system:
   rating: 3
@@ -30,7 +30,7 @@ system:
 ---
 name: Credstick (Platinum)
 type: credstick
-img: systems/sr6/assets/yen.webp
+img: /systems/sr6/assets/yen.webp
 effects: []
 system:
   rating: 4
@@ -40,7 +40,7 @@ system:
 ---
 name: Credstick (Ebony)
 type: credstick
-img: systems/sr6/assets/yen.webp
+img: /systems/sr6/assets/yen.webp
 effects: []
 system:
   rating: 5
@@ -50,7 +50,7 @@ system:
 ---
 name: Bank Account
 type: credstick
-img: systems/sr6/assets/yen.webp
+img: /systems/sr6/assets/yen.webp
 effects: []
 system:
   rating: 6

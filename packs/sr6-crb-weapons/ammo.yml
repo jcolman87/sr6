@@ -1,6 +1,6 @@
 name: Holdout/Light/Machine Pistol Ammo (Regular)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -12,7 +12,7 @@ system:
 ---
 name: Holdout/Light/Machine Pistol Ammo (APDS)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -26,7 +26,7 @@ system:
 ---
 name: Holdout/Light/Machine Pistol Ammo (Explosive)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -40,7 +40,7 @@ system:
 ---
 name: Holdout/Light/Machine Pistol Ammo (Flechette)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -54,7 +54,7 @@ system:
 ---
 name: Holdout/Light/Machine Pistol Ammo (Gel)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -69,7 +69,7 @@ system:
 ---
 name: Holdout/Light/Machine Pistol Ammo (Stick-n-Shock)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -84,7 +84,7 @@ system:
 ---
 name: Holdout/Light/Machine Pistol Ammo (Caseless)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -98,7 +98,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo (Regular)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -110,7 +110,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo  (APDS)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -124,7 +124,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo  (Explosive)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -138,7 +138,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo  (Flechette)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -152,7 +152,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo  (Gel)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -167,7 +167,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo  (Stick-n-Shock)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -182,7 +182,7 @@ system:
 ---
 name: Heavy Pistol/SMG Ammo  (Caseless)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -196,7 +196,7 @@ system:
 ---
 name: Rifle Ammo (Regular)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -208,7 +208,7 @@ system:
 ---
 name: Rifle Ammo (APDS)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -222,7 +222,7 @@ system:
 ---
 name: Rifle Ammo (Explosive)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -236,7 +236,7 @@ system:
 ---
 name: Rifle Ammo (Flechette)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -250,7 +250,7 @@ system:
 ---
 name: Rifle Ammo (Gel)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -265,7 +265,7 @@ system:
 ---
 name: Rifle Ammo (Stick-n-Shock)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -280,7 +280,7 @@ system:
 ---
 name: Rifle Ammo (Caseless)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -294,7 +294,7 @@ system:
 ---
 name: Shotgun Ammo (Regular)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -306,7 +306,7 @@ system:
 ---
 name: Shotgun Ammo (APDS)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -320,7 +320,7 @@ system:
 ---
 name: Shotgun Ammo (Explosive)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -334,7 +334,7 @@ system:
 ---
 name: Shotgun Ammo (Flechette)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -348,7 +348,7 @@ system:
 ---
 name: Shotgun Ammo (Gel)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -363,7 +363,7 @@ system:
 ---
 name: Shotgun Ammo (Stick-n-Shock)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -378,7 +378,7 @@ system:
 ---
 name: Shotgun Ammo (Caseless)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -392,7 +392,7 @@ system:
 ---
 name: Machine Gun Ammo (Regular)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -404,7 +404,7 @@ system:
 ---
 name: Machine Gun Ammo (APDS)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -418,7 +418,7 @@ system:
 ---
 name: Machine Gun Ammo (Explosive)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -432,7 +432,7 @@ system:
 ---
 name: Machine Gun Ammo (Flechette)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -446,7 +446,7 @@ system:
 ---
 name: Machine Gun Ammo (Gel)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -461,7 +461,7 @@ system:
 ---
 name: Machine Gun Ammo (Stick-n-Shock)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -476,7 +476,7 @@ system:
 ---
 name: Machine Gun Ammo (Caseless)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -490,7 +490,7 @@ system:
 ---
 name: Taser Ammo (Regular)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -502,7 +502,7 @@ system:
 ---
 name: Taser Ammo (APDS)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -516,7 +516,7 @@ system:
 ---
 name: Taser Ammo (Explosive)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -530,7 +530,7 @@ system:
 ---
 name: Taser Ammo (Flechette)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -544,7 +544,7 @@ system:
 ---
 name: Taser Ammo (Gel)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -559,7 +559,7 @@ system:
 ---
 name: Taser Ammo (Stick-n-Shock)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''
@@ -574,7 +574,7 @@ system:
 ---
 name: Taser Ammo (Caseless)
 type: ammo
-img: systems/sr6/assets/items/ammo.webp
+img: /systems/sr6/assets/items/ammo.webp
 effects: []
 system:
   description: ''

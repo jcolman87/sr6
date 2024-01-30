@@ -1,6 +1,6 @@
 name: Erika MCD-6
 type: gear
-img: systems/sr6/assets/items/cyberdeck.webp
+img: /systems/sr6/assets/items/cyberdeck.webp
 effects: []
 system:
   rating: 1
@@ -30,7 +30,7 @@ system:
 ---
 name: Spinrad Falcon
 type: gear
-img: systems/sr6/assets/items/cyberdeck.webp
+img: /systems/sr6/assets/items/cyberdeck.webp
 effects: []
 system:
   rating: 2
@@ -60,7 +60,7 @@ system:
 ---
 name: MCT 360
 type: gear
-img: systems/sr6/assets/items/cyberdeck.webp
+img: /systems/sr6/assets/items/cyberdeck.webp
 effects: []
 system:
   rating: 3
@@ -90,7 +90,7 @@ system:
 ---
 name: Renraku Kitsune
 type: gear
-img: systems/sr6/assets/items/cyberdeck.webp
+img: /systems/sr6/assets/items/cyberdeck.webp
 effects: []
 system:
   rating: 4
@@ -120,7 +120,7 @@ system:
 ---
 name: Shiawase Cyber-6
 type: gear
-img: systems/sr6/assets/items/cyberdeck.webp
+img: /systems/sr6/assets/items/cyberdeck.webp
 effects: []
 system:
   rating: 5
@@ -150,7 +150,7 @@ system:
 ---
 name: Fairlight Excalibur
 type: gear
-img: systems/sr6/assets/items/cyberdeck.webp
+img: /systems/sr6/assets/items/cyberdeck.webp
 effects: []
 system:
   rating: 6

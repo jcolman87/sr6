@@ -4,6 +4,7 @@
  * @file SR6 Items Root.
  */
 
+import EdgeActionDataModel from '@/item/data/action/EdgeActionDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
@@ -84,6 +85,7 @@ function registerDataModels(): void {
 
 	//
 	CONFIG.Item.dataModels.general_action = GeneralActionDataModel;
+	CONFIG.Item.dataModels.edge_action = EdgeActionDataModel;
 }
 
 export function setOptGroups(select: HTMLSelectElement): void {

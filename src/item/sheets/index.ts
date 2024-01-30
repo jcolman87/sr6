@@ -4,9 +4,18 @@
  * @file Item Sheet Registration
  */
 
+import AdeptPowerSheet from '@/vue/sheets/item/AdeptPowerSheet.vue';
 import AugmentationSheet from '@/vue/sheets/item/AugmentationSheet.vue';
 import BasicGearSheet from '@/vue/sheets/item/BasicGearSheet.vue';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
+import ComplexFormSheet from '@/vue/sheets/item/ComplexFormSheet.vue';
+import ContactSheet from '@/vue/sheets/item/ContactSheet.vue';
+import CredstickSheet from '@/vue/sheets/item/CredstickSheet.vue';
+import EdgeActionSheet from '@/vue/sheets/item/EdgeActionSheet.vue';
+import GeneralActionSheet from '@/vue/sheets/item/GeneralActionSheet.vue';
+import LifestyleSheet from '@/vue/sheets/item/LifestyleSheet.vue';
+import QualitySheet from '@/vue/sheets/item/QualitySheet.vue';
+import SpellSheet from '@/vue/sheets/item/SpellSheet.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 import SR6ItemSheet from '@/item/SR6ItemSheet';
@@ -54,26 +63,21 @@ export function basicSheet(vueComponent: Component, sheetType: any = VueSheet(SR
 export function register(): void {
 	Items.unregisterSheet('core', ItemSheet);
 
+	/*
 	Items.registerSheet('sr6', basicSheet(BasicItemSheet), {
 		types: [
-			'credstick',
-			'contact',
-			'sin',
-			'lifestyle',
-			'quality',
-			'augmentation',
-			'spell',
-			'adeptpower',
-			'complexform',
-			'matrix_action',
-			'matrix_persona',
-			'general_action',
 		],
 		makeDefault: true,
 	});
+	*/
 
 	Items.registerSheet('sr6', basicSheet(BasicGearSheet), {
 		types: ['gear', 'weapon', 'wearable'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(AdeptPowerSheet), {
+		types: ['adeptpower'],
 		makeDefault: true,
 	});
 
@@ -82,8 +86,33 @@ export function register(): void {
 		makeDefault: true,
 	});
 
-	Items.registerSheet('sr6', basicSheet(SkillSheet), {
-		types: ['skill'],
+	Items.registerSheet('sr6', basicSheet(ComplexFormSheet), {
+		types: ['complexform'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(ContactSheet), {
+		types: ['contact'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(CredstickSheet), {
+		types: ['credstick'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(EdgeActionSheet), {
+		types: ['edge_action'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(GeneralActionSheet), {
+		types: ['general_action'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(LifestyleSheet), {
+		types: ['lifestyle'],
 		makeDefault: true,
 	});
 
@@ -94,6 +123,21 @@ export function register(): void {
 
 	Items.registerSheet('sr6', basicSheet(MatrixICSheet), {
 		types: ['matrix_ic'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(QualitySheet), {
+		types: ['quality'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(SkillSheet), {
+		types: ['skill'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(SpellSheet), {
+		types: ['spell'],
 		makeDefault: true,
 	});
 }

@@ -14,6 +14,8 @@ import { register as registerToken } from '@/token';
 import { register as registerModifiers } from '@/modifier';
 import { register as registerTests } from 'src/test';
 import { register as registerFonts } from '@/fonts';
+import { register as registerEdge } from '@/edge/';
+
 import { onChatLogEntryContext } from '@/chat';
 
 import { register as registerSettings } from '@/settings';
@@ -58,6 +60,7 @@ Hooks.once('init', async () => {
 	registerChat();
 	registerToken();
 	registerModifiers();
+	registerEdge();
 });
 
 Hooks.once('ready', async () => {

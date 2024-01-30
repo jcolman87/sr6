@@ -209,7 +209,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 	}
 
 	async prompt(): Promise<Result<RollDataDelta, null>> {
-		const configuredRoll = await TestRollPrompt.prompt<TData, this>(this.actor, this);
+		const configuredRoll = await TestRollPrompt.prompt<TData, this>(this);
 		if (!configuredRoll) {
 			return Err(null);
 		}
@@ -249,7 +249,9 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			if (this.roll) {
 				await this.edgeBoost.finishRoll?.(this.roll);
 			}
+
 			await this.edgeBoost.finishTest?.(this);
+			await this.edgeBoost.finishActor?.(this.actor);
 
 			// Did we have edge spends? if so, apply them to the actor
 			await this.actor.systemData.monitors.spendEdge(this.edgeBoost.cost);

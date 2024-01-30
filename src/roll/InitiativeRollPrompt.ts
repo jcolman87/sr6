@@ -16,16 +16,17 @@ export interface InitiativeRollPromptContext extends ContextBase {
 	resolvePromise: (roll: InitiativeRollData) => void;
 }
 
-export default class InitiativeRollPrompt extends VueSheet(
-	ActorSheet<SR6Actor<IHasInitiative>, SR6Item<BaseItemDataModel>>,
-) {
+export default class InitiativeRollPrompt extends VueSheet(Application) {
+	actor: SR6Actor<IHasInitiative>;
+
 	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
 
-	static override get defaultOptions(): ActorSheetOptions {
+	static override get defaultOptions(): ApplicationOptions {
 		return {
 			...super.defaultOptions,
+			title: 'Roll Initiative',
 			classes: ['app-roll-prompt'],
 			width: 500,
 			scroll: true,
@@ -50,13 +51,14 @@ export default class InitiativeRollPrompt extends VueSheet(
 	data: InitiativeRollData;
 
 	constructor(actor: SR6Actor<IHasInitiative>, initiativeType: InitiativeType) {
-		super(actor);
+		super();
 		const initiative = actor.systemData.getInitiative(initiativeType);
 		if (!initiative) {
 			void this.close();
 			throw 'err';
 		}
 		this.data = initiative;
+		this.actor = actor;
 	}
 
 	override async close(options = {}): Promise<void> {

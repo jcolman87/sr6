@@ -30,14 +30,15 @@ export interface TestRollPromptContext<
 export default class TestRollPrompt<
 	TData extends BaseTestData = BaseTestData,
 	TTest extends ITest<TData> = BaseTest<TData>,
-> extends VueSheet(ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>) {
+> extends VueSheet(Application) {
 	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
 
-	static override get defaultOptions(): ActorSheetOptions {
+	static override get defaultOptions(): ApplicationOptions {
 		return {
 			...super.defaultOptions,
+			title: 'Test Configuration',
 			classes: ['app-roll-prompt'],
 			width: 500,
 			scroll: true,
@@ -46,10 +47,9 @@ export default class TestRollPrompt<
 	}
 
 	static async prompt<TData extends BaseTestData = BaseTestData, TTest extends ITest<TData> = BaseTest<TData>>(
-		actor: SR6Actor,
 		test: TTest,
 	): Promise<TData | null> {
-		const sheet = new TestRollPrompt<TData, TTest>(actor, test);
+		const sheet = new TestRollPrompt<TData, TTest>(test);
 		await sheet.render(true);
 
 		return new Promise<TData | null>((resolve) => {
@@ -61,8 +61,8 @@ export default class TestRollPrompt<
 
 	test: TTest;
 
-	constructor(actor: SR6Actor, test: TTest) {
-		super(actor);
+	constructor(test: TTest) {
+		super();
 		this.test = test;
 	}
 
@@ -79,7 +79,6 @@ export default class TestRollPrompt<
 
 				await this.close();
 			},
-			actor: this.actor,
 			app: this,
 			test: this.test,
 		};

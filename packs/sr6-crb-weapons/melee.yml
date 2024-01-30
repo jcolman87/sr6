@@ -1,6 +1,6 @@
 name: Unarmed
 type: weapon
-img: systems/sr6/assets/items/fist.webp
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   rating: 1
@@ -30,7 +30,7 @@ system:
 ---
 name: Combat Axe
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -64,7 +64,7 @@ system:
 ---
 name: Combat Knife
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -96,7 +96,7 @@ system:
 ---
 name: Survival Knife
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -134,7 +134,7 @@ system:
 ---
 name: Forearm Snap Blades
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -168,7 +168,7 @@ system:
 ---
 name: Knife
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -199,7 +199,7 @@ system:
 ---
 name: Katana
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -231,7 +231,7 @@ system:
 ---
 name: Polearm
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -265,7 +265,7 @@ system:
 ---
 name: Sword
 type: weapon
-img: systems/sr6/assets/items/blades.webp
+img: /systems/sr6/assets/items/blades.webp
 effects: []
 system:
   rating: 1
@@ -297,7 +297,7 @@ system:
 ---
 name: Club
 type: weapon
-img: systems/sr6/assets/items/clubs.webp
+img: /systems/sr6/assets/items/clubs.webp
 effects: []
 system:
   rating: 1
@@ -330,7 +330,7 @@ system:
 ---
 name: Extendable baton
 type: weapon
-img: systems/sr6/assets/items/clubs.webp
+img: /systems/sr6/assets/items/clubs.webp
 effects: []
 system:
   rating: 1
@@ -364,7 +364,7 @@ system:
 ---
 name: Sap
 type: weapon
-img: systems/sr6/assets/items/clubs.webp
+img: /systems/sr6/assets/items/clubs.webp
 effects: []
 system:
   rating: 1
@@ -397,7 +397,7 @@ system:
 ---
 name: Staff
 type: weapon
-img: systems/sr6/assets/items/clubs.webp
+img: /systems/sr6/assets/items/clubs.webp
 effects: []
 system:
   rating: 1
@@ -427,7 +427,7 @@ system:
 ---
 name: Stun Baton
 type: weapon
-img: systems/sr6/assets/items/clubs.webp
+img: /systems/sr6/assets/items/clubs.webp
 effects: []
 system:
   rating: 1
@@ -461,7 +461,7 @@ system:
 ---
 name: Telescoping staff
 type: weapon
-img: systems/sr6/assets/items/clubs.webp
+img: /systems/sr6/assets/items/clubs.webp
 effects: []
 system:
   rating: 1
@@ -497,7 +497,7 @@ system:
 ---
 name: Bike Chain
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -530,7 +530,7 @@ system:
 ---
 name: Bullwhip
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -564,7 +564,7 @@ system:
 ---
 name: Knucks
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -597,7 +597,7 @@ system:
 ---
 name: Shock Gloves
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -634,7 +634,7 @@ system:
 ---
 name: Monofilament Whip
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1

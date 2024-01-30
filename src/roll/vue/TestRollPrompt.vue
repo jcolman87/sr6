@@ -61,7 +61,7 @@ onMounted(() => {
 
 <template>
 	<table>
-		<tr>
+		<tr class="roll-header">
 			<td class="roll-numbers flexrow">
 				<div class="edge-roll">
 					<img
@@ -162,13 +162,15 @@ onMounted(() => {
 			</div>
 		</div>
 
-		<EdgeMenu
-			@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
-			:test="context.test"
-			:actor="context.test.actor"
-			:phase="ActivationPhase.PreRoll"
-			:show="false"
-		/>
+		<Suspense>
+			<EdgeMenu
+				@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
+				:test="context.test"
+				:actor="context.test.actor"
+				:phase="ActivationPhase.PreRoll"
+				:show="false"
+			/>
+		</Suspense>
 
 		<!-- Roll Button -->
 		<div class="row">
@@ -198,13 +200,17 @@ onMounted(() => {
 		justify-content: space-between;
 	}
 
-	.roll-numbers {
-		white-space: nowrap;
-		width: 125px;
-	}
-	.roll-title {
-		text-align: center;
-		width: 100%;
+	.roll-header {
+		background: var(--section-background);
+
+		.roll-numbers {
+			white-space: nowrap;
+			width: 125px;
+		}
+		.roll-title {
+			text-align: center;
+			width: 100%;
+		}
 	}
 
 	.window-content {

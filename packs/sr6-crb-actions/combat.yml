@@ -1,6 +1,6 @@
 name: Change Focus
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can activate or deactivate a bonded focus that they are carrying on their person with a Minor Action.
@@ -11,7 +11,7 @@ system:
 ---
 name: Avoid Incoming
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can use this action when it is not their player turn to get away from an incoming Blast or Gas attack. With this action, a character makes a Reaction + Athletics – Dodge Penalty roll (see Dodge Penalty table, p. 311, for these values). Hits on the test allow a character to move a number of meters equal to their hits in a direction of their choosing, but they shouldn’t know the results of the scatter until after they decide which way they’re headed. If they choose to move more than 2 meters, they dive to the ground at the end of their defense and gain the Prone status. This action cannot be used if the character has taken a previous Avoid Incoming, Move, or Sprint action this combat round and prevents the use of another Avoid Incoming, Move, or Sprint action for the remainder of the combat round.
@@ -22,7 +22,7 @@ system:
 ---
 name: Block
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can add their Close Combat skill to a single Defense test in melee. The roll must happen in the same player turn in which the action is used.
@@ -33,7 +33,7 @@ system:
 ---
 name: Call a Shot
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: Edge allows for some specific called shots without dice penalty or with reduced penalty, but yo can increase the damage by 2 by taking a –4 dic pool penalty. This must be combined with the Attack action.
@@ -44,7 +44,7 @@ system:
 ---
 name: Change Device Mode
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may use a Minor Action to activate deactivate, or switch the mode on any device tha they are linked to by a direct neural interface, b it a wired or wireless link. This includes activatin or deactivating cyberware, changing a smartgun’ firing settings, switching a commlink to hidde mode, turning a device’s wireless functionality off and so on.
@@ -55,7 +55,7 @@ system:
 ---
 name: Command Drone
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may issue a command to a dron they control. If multiple drones are controlle through a rigger command console (RCC), th same command can be issued to every drone. I a different command is desired for each drone, i requires multiple Minor Actions.
@@ -66,7 +66,7 @@ system:
 ---
 name: Command Spirit
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may issue a service command to  single spirit or group of spirits under their control, or dismiss them. The service must be th same. If multiple services are desired, multipl Minor Actions must be used.
@@ -77,7 +77,7 @@ system:
 ---
 name: Dodge
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can add their Athletics skill to a single Defense test in combat. The roll must happe in the same player turn in which the action is used.
@@ -88,7 +88,7 @@ system:
 ---
 name: Drop Object
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may drop an object they are holding in their hand or hands as a single Minor Action. The objects fall to the ground and may suffe damage or ill effects if the gamemaster so chooses depending on the distance of the fall and the landing spot.
@@ -99,7 +99,7 @@ system:
 ---
 name: Drop Prone
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may choose to drop themselves t the ground as a Minor Action. They gain the Pron status (p. 53) until they choose to use the Stand U Action.
@@ -110,7 +110,7 @@ system:
 ---
 name: Hit the Dirt
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can quickly drop to the ground i a defensive manner, gaining +2 dice on the Defens test of an incoming attack. They gain the Prone status (p. 53), but due to the awkwardness of their fall they suffer a –2 dice pool penalty on any subsequen tests using active skills until the end of their nex turn, unless they use the Stand Up action.
@@ -121,7 +121,7 @@ system:
 ---
 name: Intercept
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: If an opponent comes within Close attack range you may go out of Initiative order and make an Attack action as long as you have both a Minor and  Major Action still available in this round (becaus block exampl Caboose and Whitney are taking on a couple of gan enforcers. They’re both built for speed, so they both g before the enforcers. Caboose decides to Move, Quic Draw a weapon, Take Aim, Call a Shot, and Attack, usin up his full allotment of actions for this combat round.
@@ -132,7 +132,7 @@ system:
 ---
 name: Move
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can use this Minor Action for 10 meters of movement. Only one Move Action is allowed per player turn.
@@ -143,7 +143,7 @@ system:
 ---
 name: Multiple Attacks
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can attack more than one opponent, assuming ammunition, reach, and enem placement allow it. Split your dice pool evenl among all targets, or if you are using two differen forms of attack, use half the dice pool for each rounded down. This action must be used in conjunction with an Attack Major Action.
@@ -154,7 +154,7 @@ system:
 ---
 name: Quick Draw
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may quick draw a pistol, pistol-sized weapon, or small throwing weapon an immediately attack with this Minor Action. Th Attack action must be used in conjunction wit this action. They must have the appropriate gear augmentation, or quality to be allowed this action—if they don’t have something that allows thi action, they can’t take it.
@@ -165,7 +165,7 @@ system:
 ---
 name: Reload Smartgun
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character linked to a ready smartgun may us a mental command to eject the weapon’s clip whil sliding a new one in with one deft motion, assuming that the new ammo is readily available.
@@ -176,7 +176,7 @@ system:
 ---
 name: Shift Perception
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character capable of Astral Perception may shif perception to or from astral space as a Minor Action.
@@ -187,7 +187,7 @@ system:
 ---
 name: Stand Up
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: Whether they chose to be prone or they go knocked down, a character uses this action to get bac to their feet and remove the Prone status (p. 53).
@@ -198,7 +198,7 @@ system:
 ---
 name: Take Aim
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character gains a +1 dice pool bonus with the use of this action. The action can only be taken once per combat round, but if the bonus is not used, it carries over to the next combat round, allowing it to be combined with actions taken over the course of several combat rounds. If the character takes a player turn without taking the Take Aim or Attack actions, any carryover bonuses from previous rounds are lost. The maximum dice pool bonus from the use of this action is equal to the character’s Willpower. A character may take aim with a ready firearm, bow, or exotic ranged weapon. If the character is using vision magnification or a targeting scope, the Take Aim action must be used to line up the shot in order to receive any bonus from the item. In this case, the first action of Take Aim does not provide any additional bonus beyond enabling the function of the modification.
@@ -209,7 +209,7 @@ system:
 ---
 name: Take Cover
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: The character uses something in their area t provide protection, but they also must operat from the constraints created by the cover. Takin cover gives the player the Cover I, II, III, or IV status (see p. 52).
@@ -220,7 +220,7 @@ system:
 ---
 name: Trip
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: This action focuses more on bringing the target to the ground than on doing damage. It can onl be done with a melee attack and must be combine with an Attack Major Action. Decrease the bas damage of the attack by 2; if it hits, target roll Athletics + Agility with a threshold of the adjuste DV of the attack. If the target fails, they gain th Prone status.
@@ -231,7 +231,7 @@ system:
 ---
 name: Assist
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: You can become a helper on a Teamwork test working to help one of your teammates on som task (see Teamwork Tests, p. 36).
@@ -242,7 +242,7 @@ system:
 ---
 name: Astral Projection
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character capable of Astral Projection (ful magician or aspected magician) may shift thei consciousness to or from the astral plane as a Major Action. The process is complete the momen the action is declared and therefore places the on the astral plane immediately, including for th remainder of the current combat round.
@@ -253,7 +253,7 @@ system:
 ---
 name: Attack
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may perform one of a variety o forms of attack with this Major Action. See th Combat chapter (p. 104) for more details.
@@ -264,7 +264,7 @@ system:
 ---
 name: Banish Spirit
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: Any character may attempt a Banishing on  spirit as a Major Action (see Banishing, p. 147).
@@ -275,7 +275,7 @@ system:
 ---
 name: Cast Spell
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may cast a spell as a Major Action. For details on how, see Spells (p. 130).
@@ -286,7 +286,7 @@ system:
 ---
 name: Cleanse
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: Awakened characters use this action to eras traces of their magic activity (see p. 160).
@@ -297,7 +297,7 @@ system:
 ---
 name: Counterspell
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: 'Counterspelling is the equal and opposite reaction to spellcasting. Magicians give benefits through spells, while other magicians use their gifts to take them the hell away. Counterspelling is a spellcaster’s quick reaction defense, and it comes in one of two forms: boosted defense and dispelling.
@@ -314,7 +314,7 @@ system:
 ---
 name: Full Defense
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can add their Willpower to all Defense tests until the end of the combat round.
@@ -325,7 +325,7 @@ system:
 ---
 name: Manifest
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: Characters who are astrally projecting use thi action to appear as a ghostly form (see p. 160).
@@ -336,7 +336,7 @@ system:
 ---
 name: Observe in Detail
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may make a detailed observation b taking a Major Action. This action allows a Perception test (see Perception, p. 96) or Assensing test (p.159). This action is intended for determining detail that may be obscured due to the pace and rigor of combat. It is assumed that everyone engaged i a combat is aware of the presence of everyone else, barring the use of Stealth or obscuring magic, but no necessarily details of their gear or equipment, and i some particularly hectic or rushed circumstances, th identity of individuals. In the midst of a hectic gunfight/brawl in the dark, the winner of the brawl, wh is now sprinting toward your character, may not b identifiable without an Observe in Detail action.
@@ -347,7 +347,7 @@ system:
 ---
 name: Manipulate Object
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may pick up an object within reac or put down one that they were holding as a Major Action. This action means care is taken to put th object down or pick it up. If the picked-up objec is a weapon, this counts as readying the weapon.
@@ -358,7 +358,7 @@ system:
 ---
 name: Ready Weapon
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may ready a weapon by usin this action. This includes drawing and readyin a firearm; pulling a melee weapon from a sheat or pocket; taking out and readying a grenad or throwing knife; or any other kind of weapo preparation. Almost all weapons require this action before they are ready for use, though man times it occurs before combat even starts. Small weapons such as throwing knives an shuriken can be readied in bunches, with a tota number equal to the character’s Agility attribut pulled into the character’s off-hand with a single Ready Weapon action.
@@ -369,7 +369,7 @@ system:
 ---
 name: Reload Weapon
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: Weapons without a smartlink, or weapon where the smartlink is currently disengaged, requir a Major Action to reload. Reloading a weapon refills the weapon to its maximum capacity as long a the character has sufficient ammunition to do so.
@@ -380,7 +380,7 @@ system:
 ---
 name: Rigger Jump In
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character with a vehicle control rig (VCR) an rigger-adapted vehicle or drone or a rigger command console (RCC) may jump in to control th vehicle or operate the RCC with a Major Action.
@@ -391,7 +391,7 @@ system:
 ---
 name: Sprint
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may move at a Sprint with this Majo Action. Movement starts at 15 meters and is increase by 1 meter per hit on an Athletics + Agility Test. Onl one Sprint Action is allowed per player turn, and i cannot be performed in the same turn as a Move action or Avoid Incoming action.
@@ -402,7 +402,7 @@ system:
 ---
 name: Summon Spirit
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character capable of summoning may use  Major Action to summon a spirit to assist them.  spirit that is already summoned is controlled usin the Command Spirit Minor Action.
@@ -413,7 +413,7 @@ system:
 ---
 name: Use Simple Device
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character can use any simple device with  Major Action. Simple devices are those that are activated with a simple movement like a thumb trigger pressing a single key, or tapping a single icon. It takes longer to interact with more comple devices, with required time being up to the gamemaster or listed with the description of specific gear.Remember, a device connected via a DNI-enabled system uses the Minor Action.
@@ -424,7 +424,7 @@ system:
 ---
 name: Use Skill
 type: general_action
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
   description: A character may use an appropriate skill by using a Major Action (see Skills, p. 92).

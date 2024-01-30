@@ -1,6 +1,6 @@
 name: Cerebral Booster
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects:
   - name: Cerebral Booster
     transfer: true
@@ -19,7 +19,7 @@ system:
 ---
 name: Damage Compensator
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects: []
 system:
   description: 'Damage compensators are essentially cut-offs stored in the nervous pathways that report pain from the body back to your brain. You ignore a number of damage boxes (your choice of Physical, Stun, or a combination of the two) equal to the compensator’s rating before determining your injury modifiers.'
@@ -32,7 +32,7 @@ system:
 ---
 name: Mnemonic Enhancer
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects: []
 system:
   description: 'This highly concentrated growth of grey matter gets attached to the brain’s memory centers, improving both short and long-term memory. Add the enhancer’s rating as a dice pool bonus to your Knowledge, Language, and memory-related tests.'
@@ -45,7 +45,7 @@ system:
 ---
 name: Pain Editor
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects:
   - name: Pain Editor
     transfer: true
@@ -75,7 +75,7 @@ system:
 ---
 name: Reflex Recorder
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects: []
 system:
   description: 'This system uses extra nervous tissue linked to specific areas of the body to improve muscle memory. The reflex recorder adds 1 to the rating of a skill linked to a Physical attribute. Multiple recorders may be taken for multiple skills, but you can’t implant two reflex recorders for the same skill.'
@@ -88,7 +88,7 @@ system:
 ---
 name: Sleep Regulator
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects: []
 system:
   description: 'The sleep regulator is a modification to the hypothalamus, allowing for longer periods of wakefulness, an incredibly useful advantage for anyone with any profession, not just shadowrunners. You need less sleep per day, and the sleep you get is deep and restful (and harder to wake you up from). The sleep regulator lets you get by with three hours of sleep each night, and you can stay awake for twice as long as normal without acquiring the Fatigued status (p. 52). Resting hours for healing purposes are not affected.'
@@ -101,7 +101,7 @@ system:
 ---
 name: Synaptic Booster
 type: augmentation
-img: systems/sr6/assets/items/cyber_headware.webp
+img: /systems/sr6/assets/items/cyber_headware.webp
 effects:
   - name: Synaptic Booster
     transfer: true

@@ -1,6 +1,6 @@
 name: Fichetti Tiffani Needler
 type: weapon
-img: systems/sr6/assets/items/holdouts.webp
+img: /systems/sr6/assets/items/holdouts.webp
 effects: []
 system:
   rating: 1
@@ -43,7 +43,7 @@ system:
 ---
 name: Streetline Special
 type: weapon
-img: systems/sr6/assets/items/holdouts.webp
+img: /systems/sr6/assets/items/holdouts.webp
 effects: []
 system:
   rating: 1
@@ -79,7 +79,7 @@ system:
 ---
 name: Walther Palm Pistol
 type: weapon
-img: systems/sr6/assets/items/holdouts.webp
+img: /systems/sr6/assets/items/holdouts.webp
 effects: []
 system:
   rating: 1
@@ -117,7 +117,7 @@ system:
 ---
 name: Ares Light Fire 70
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -157,7 +157,7 @@ system:
 ---
 name: Ares Light Fire 75
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -197,7 +197,7 @@ system:
 ---
 name: Baretta 101T
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -235,7 +235,7 @@ system:
 ---
 name: Baretta 201T
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -274,7 +274,7 @@ system:
 ---
 name: Colt America L36
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -312,7 +312,7 @@ system:
 ---
 name: Fichetti Security 600
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -350,7 +350,7 @@ system:
 ---
 name: Ruger Redhawk
 type: weapon
-img: systems/sr6/assets/items/pistols_light.webp
+img: /systems/sr6/assets/items/pistols_light.webp
 effects: []
 system:
   rating: 1
@@ -390,7 +390,7 @@ system:
 ---
 name: Ares Crusader II
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -430,7 +430,7 @@ system:
 ---
 name: Ceska Black Scorpion
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -468,7 +468,7 @@ system:
 ---
 name: Steyr TMPhysical
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -505,7 +505,7 @@ system:
 ---
 name: Ares Predator VI
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -550,7 +550,7 @@ system:
 ---
 name: Ares Viper Slivergun
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -590,7 +590,7 @@ system:
 ---
 name: Browning Ultra Power
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -626,7 +626,7 @@ system:
 ---
 name: 'Colt Government 2076 '
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -665,7 +665,7 @@ system:
 ---
 name: Colt Government 2076 Manhunter
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -704,7 +704,7 @@ system:
 ---
 name: Ruger Super Warhawk
 type: weapon
-img: systems/sr6/assets/items/pistols_heavy.webp
+img: /systems/sr6/assets/items/pistols_heavy.webp
 effects: []
 system:
   rating: 1
@@ -740,7 +740,7 @@ system:
 ---
 name: Colt Cobra TZ-100
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -781,7 +781,7 @@ system:
 ---
 name: Colt Cobra TZ-110
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -822,7 +822,7 @@ system:
 ---
 name: Colt Cobra TZ-120
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -863,7 +863,7 @@ system:
 ---
 name: FN P93 Praetor
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -904,7 +904,7 @@ system:
 ---
 name: HK-227
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -943,7 +943,7 @@ system:
 ---
 name: Ingram Smartgun XI
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -982,7 +982,7 @@ system:
 ---
 name: SCK Model 100
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -1022,7 +1022,7 @@ system:
 ---
 name: Uzi V
 type: weapon
-img: systems/sr6/assets/items/smg.webp
+img: /systems/sr6/assets/items/smg.webp
 effects: []
 system:
   rating: 1
@@ -1062,7 +1062,7 @@ system:
 ---
 name: Defiance T-250
 type: weapon
-img: systems/sr6/assets/items/shotguns.webp
+img: /systems/sr6/assets/items/shotguns.webp
 effects: []
 system:
   rating: 1
@@ -1100,7 +1100,7 @@ system:
 ---
 name: Mossberg CMDT
 type: weapon
-img: systems/sr6/assets/items/shotguns.webp
+img: /systems/sr6/assets/items/shotguns.webp
 effects: []
 system:
   rating: 1
@@ -1139,7 +1139,7 @@ system:
 ---
 name: PJSS Model 55
 type: weapon
-img: systems/sr6/assets/items/shotguns.webp
+img: /systems/sr6/assets/items/shotguns.webp
 effects: []
 system:
   rating: 1
@@ -1179,7 +1179,7 @@ system:
 ---
 name: Remington Roomsweeper
 type: weapon
-img: systems/sr6/assets/items/shotguns.webp
+img: /systems/sr6/assets/items/shotguns.webp
 effects: []
 system:
   rating: 1
@@ -1228,7 +1228,7 @@ system:
 ---
 name: AK-97
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1267,7 +1267,7 @@ system:
 ---
 name: Ares Alpha
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1308,7 +1308,7 @@ system:
 ---
 name: Ares Alpha (Grenade Launcher)
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1342,7 +1342,7 @@ system:
 ---
 name: Colt M23
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1383,7 +1383,7 @@ system:
 ---
 name: FN-HAR
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1423,7 +1423,7 @@ system:
 ---
 name: Yamaha Raiden
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1465,7 +1465,7 @@ system:
 ---
 name: Yamaha Raiden (Grenade Launcher)
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1499,7 +1499,7 @@ system:
 ---
 name: Yamaha Raiden (Shotgun)
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1534,7 +1534,7 @@ system:
 ---
 name: Ares Desert Strike
 type: weapon
-img: systems/sr6/assets/items/rifle_assault.webp
+img: /systems/sr6/assets/items/rifle_assault.webp
 effects: []
 system:
   rating: 1
@@ -1569,7 +1569,7 @@ system:
 ---
 name: Cavalier Arms Crockett EBR
 type: weapon
-img: systems/sr6/assets/items/rifle_sniper.webp
+img: /systems/sr6/assets/items/rifle_sniper.webp
 effects: []
 system:
   rating: 1
@@ -1607,7 +1607,7 @@ system:
 ---
 name: Ranger Arms SM-5
 type: weapon
-img: systems/sr6/assets/items/rifle_sniper.webp
+img: /systems/sr6/assets/items/rifle_sniper.webp
 effects: []
 system:
   rating: 1
@@ -1646,7 +1646,7 @@ system:
 ---
 name: Remington 900
 type: weapon
-img: systems/sr6/assets/items/rifle_sniper.webp
+img: /systems/sr6/assets/items/rifle_sniper.webp
 effects: []
 system:
   rating: 1
@@ -1682,7 +1682,7 @@ system:
 ---
 name: Ruger 101
 type: weapon
-img: systems/sr6/assets/items/rifle_sniper.webp
+img: /systems/sr6/assets/items/rifle_sniper.webp
 effects: []
 system:
   rating: 1
@@ -1719,7 +1719,7 @@ system:
 ---
 name: Barret Model 122
 type: weapon
-img: systems/sr6/assets/items/rifle_sniper.webp
+img: /systems/sr6/assets/items/rifle_sniper.webp
 effects: []
 system:
   rating: 1
@@ -1758,7 +1758,7 @@ system:
 ---
 name: Ingram Valiant
 type: weapon
-img: systems/sr6/assets/items/mmg.webp
+img: /systems/sr6/assets/items/mmg.webp
 effects: []
 system:
   rating: 1
@@ -1798,7 +1798,7 @@ system:
 ---
 name: Stoner-Ares M202
 type: weapon
-img: systems/sr6/assets/items/mmg.webp
+img: /systems/sr6/assets/items/mmg.webp
 effects: []
 system:
   rating: 1
@@ -1837,7 +1837,7 @@ system:
 ---
 name: RPK HMG
 type: weapon
-img: systems/sr6/assets/items/mmg.webp
+img: /systems/sr6/assets/items/mmg.webp
 effects: []
 system:
   rating: 1
@@ -1878,7 +1878,7 @@ system:
 ---
 name: Panther XXL
 type: weapon
-img: systems/sr6/assets/items/mmg.webp
+img: /systems/sr6/assets/items/mmg.webp
 effects: []
 system:
   rating: 1

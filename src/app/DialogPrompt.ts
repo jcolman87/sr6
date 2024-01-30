@@ -1,28 +1,29 @@
-import SR6Actor from '@/actor/SR6Actor';
 import { ContextBase } from '@/vue/SheetContext';
 import VueSheet from '@/vue/VueSheet';
-import VueSelectActorPrompt from '@/vue/apps/SelectActorPrompt.vue';
 import { Component } from 'vue';
 
 export interface DialogPromptContext<TResult, TData> extends ContextBase {
 	app: DialogPrompt<TResult, TData>;
 	data: TData;
-	resolvePromise: (value: TResult) => void;
+	resolvePromise: (value: Maybe<TResult>) => void;
 }
 export class DialogPrompt<TResult, TData> extends VueSheet(Application) {
 	data: TData;
 	_vueComponent: Component;
-	#resolvePromise?: (value: TResult | null) => void;
+	#resolvePromise?: (value: Maybe<TResult>) => void;
 
 	static async prompt<TResult, TData = null>(
 		vueComponent: Component,
 		data: TData,
-		options?: ApplicationOptions,
-	): Promise<TResult | null> {
-		const prompt = new DialogPrompt<TResult, TData>(data, vueComponent);
+		options?: Record<string, unknown>,
+	): Promise<Maybe<TResult>> {
+		const prompt = new DialogPrompt<TResult, TData>(data, vueComponent, {
+			...DialogPrompt.defaultOptions,
+			...options,
+		});
 		await prompt.render(true);
 
-		return new Promise<TResult | null>((resolve) => {
+		return new Promise<Maybe<TResult>>((resolve) => {
 			prompt.#resolvePromise = resolve;
 		});
 	}
@@ -50,17 +51,25 @@ export class DialogPrompt<TResult, TData> extends VueSheet(Application) {
 		};
 	}
 
+	protected override async _renderOuter(options: RenderOptions): Promise<JQuery> {
+		let html = await super._renderOuter(options);
+		const app = html[0];
+		app.setAttribute('role', 'dialog');
+		app.setAttribute('aria-modal', 'true');
+		return html;
+	}
+
 	get vueComponent(): Component {
 		return this._vueComponent;
 	}
-}
 
-export function testDialog(): void {
-	const result = DialogPrompt.prompt<SR6Actor>(VueSelectActorPrompt, null, {
-		...DialogPrompt.defaultOptions,
-		classes: ['app-select-actor-prompt'],
-		width: 500,
-		height: 400,
-	});
+	static override get defaultOptions() {
+		return foundry.utils.mergeObject(super.defaultOptions, {
+			focus: true,
+			classes: ['dialog'],
+			width: 500,
+			height: 300,
+			minimizable: false,
+		});
+	}
 }
-(window as any).testDialog = testDialog;

@@ -10,16 +10,17 @@ const props = defineProps<{
 const edgeGainTarget = ref<Target>(Target.None);
 
 async function setEdgeGainTarget(newTarget: Target) {
-	const currentEdgeGain = props.test.data.edge!.gain!;
-
 	if (edgeGainTarget.value !== Target.None) {
-		currentEdgeGain[edgeGainTarget.value] = Math.max(0, currentEdgeGain[edgeGainTarget.value] - 1);
+		props.test.data.edge!.gain![edgeGainTarget.value] = Math.max(
+			0,
+			props.test.data.edge!.gain![edgeGainTarget.value] - 1,
+		);
 	}
 	edgeGainTarget.value = newTarget;
 	if (newTarget !== Target.None) {
-		currentEdgeGain[newTarget] += 1;
+		props.test.data.edge!.gain![newTarget] += 1;
 	}
-	props.test.data.edge!.gain = currentEdgeGain;
+	props.test.data.edge!.gain = props.test.data.edge!.gain!;
 }
 </script>
 

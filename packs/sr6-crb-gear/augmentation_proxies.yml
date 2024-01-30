@@ -1,6 +1,6 @@
 name: Cyberjack
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   isProxy: true

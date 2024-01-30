@@ -5,36 +5,72 @@ import { pingActor } from '@/vue/directives';
 import { RootContext } from '@/vue/SheetContext';
 import { inject, computed, ref, toRaw } from 'vue';
 
-const context = inject<DialogPromptContext<SR6Actor, null>>(RootContext)!;
+type Filters = {
+	dispositions: number[];
+};
 
-const filters = ref({
-	disposition: undefined,
+const context = inject<DialogPromptContext<SR6Actor, { self: Maybe<SR6Actor> }>>(RootContext)!;
+const filters = ref<Filters>({
+	dispositions: [CONST.TOKEN_DISPOSITIONS.FRIENDLY],
 });
-
-const availableActors = computed(() => {
+const availableActors = computed<SR6Actor[]>(() => {
 	if (!game.scenes.active) {
 		return [];
 	}
-	return game.scenes.active.tokens
-		.filter((token) => {
-			return token.actor != null;
-		})
-		.map((token: Token) => token.actor as SR6Actor);
-});
+	return game.scenes
+		.active!.tokens.filter((token) => {
+			if (token.actor == null) {
+				return false;
+			}
+			if (context.data.self?.uuid === token.actor.uuid) {
+				return false;
+			}
+			if (filters.value.dispositions.length > 0 && !filters.value.dispositions.includes(token.disposition)) {
+				return false;
+			}
 
-const selectedActor = ref<SR6Actor | undefined>(undefined);
+			return true;
+		})
+		.map((token) => token.actor! as SR6Actor);
+});
+const selectedActor = ref<SR6Actor | null>(null);
 
 function isSelectedClass(actor: SR6Actor): string {
 	return selectedActor.value?.uuid === actor.uuid ? 'actor actor-selected ' : 'actor';
 }
 
-function close(actor: SR6Actor | null) {
-	context.resolvePromise(toRaw(actor));
+function close() {
+	context.resolvePromise(toRaw(selectedActor.value as SR6Actor));
 }
+
+function toggleFilterDisposition(val: number) {
+	console.log('wtf', val, filters.value.dispositions);
+	if (filters.value.dispositions.includes(val)) {
+		filters.value.dispositions = filters.value.dispositions.filter((v) => {
+			return v !== val;
+		});
+		console.log(filters.value.dispositions);
+	} else {
+		filters.value.dispositions.push(val);
+	}
+}
+
+const TOKEN_DISPOSITIONS = ref(CONST.TOKEN_DISPOSITIONS);
 </script>
 
 <template>
-	<div class="flexcol app-select-actor-prompt">
+	<div class="flexcol">
+		<div class="filters">
+			Friendlies:
+			<label class="switch">
+				<input
+					type="radio"
+					:checked="filters.dispositions.includes(TOKEN_DISPOSITIONS.FRIENDLY)"
+					@click="toggleFilterDisposition(TOKEN_DISPOSITIONS.FRIENDLY)"
+				/>
+				<span class="slider round"></span>
+			</label>
+		</div>
 		<table class="actor-list">
 			<tr
 				v-for="actor in availableActors"
@@ -51,8 +87,18 @@ function close(actor: SR6Actor | null) {
 			</tr>
 		</table>
 		<div>
-			<input type="button" class="dialog-button" value="Ok" @click="close(selectedActor)" />
-			<input type="button" class="dialog-button" value="Cancel" @click="close(null)" />
+			<input type="button" class="dialog-button" value="Ok" @click="close()" />
+			<input
+				type="button"
+				class="dialog-button"
+				value="Cancel"
+				@click="
+					(_ev) => {
+						selectedActor = null;
+						close();
+					}
+				"
+			/>
 		</div>
 	</div>
 </template>
@@ -64,7 +110,7 @@ function close(actor: SR6Actor | null) {
 	.actor-list {
 		//border: 1px red solid;
 		width: 500px;
-		height: 400px;
+		height: 300px;
 		overflow: scroll;
 
 		.actor {

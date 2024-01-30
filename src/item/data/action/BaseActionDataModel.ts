@@ -16,6 +16,12 @@ export default abstract class BaseActionDataModel extends BaseItemDataModel {
 			if (!combat.combatant) {
 				return true;
 			}
+
+			// Are we in this combat? If not, allow action
+			if (!combat.combatants.find((c) => c.uuid === this.actor!.uuid)) {
+				return true;
+			}
+
 			// Is it our turn?
 			if (
 				this.activation.period === ActivationPeriod.Initiative &&
@@ -27,7 +33,6 @@ export default abstract class BaseActionDataModel extends BaseItemDataModel {
 			// Do we have enough actions?
 			const combatData = combat.getCombatantData(this.actor!);
 			if (!combatData) {
-				ui.notifications.warning('Unable to fetch combat data for actor');
 				return true;
 			}
 			switch (this.activation.type) {

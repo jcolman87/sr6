@@ -336,14 +336,23 @@ SR6:
       AddInitiative:
         Name: Add 3 to Initiative Score
         Description: This one kicks in before combat even starts. You can choose to spend one point of Edge to increase your Initiative Score by 3. It can also be used during the fight if you want to move up in the order on the next Initiative Cycle.
+# 2 Edge
       PlusOneSingleDice:
         Name: +1 to Single Dice
         Description: You get to add 1 to a single die. Maybe that’s making a 4 a 5 to get another hit, or making 1 a 2 to avoid a glitch.
+      GrantAllyEdge:
+          Name: Give ally 1 Edge
+          Description: You do something that offers an advantage for another member of your team. Take away two of your own Edge, and give one to a teammate.
+      NegateFoeEdge:
+          Name: Negate 1 Edge of a foe
+          Description: No sense in letting the bad guys get the best of you if you don’t need to. You spend two of your own Edge, but one vanishes from the opponent of your choice.
 # 3 edge
       BuyHit:
         Name: Buy Automatic Hit
         Description: You get an automatic hit. This one adds on to the total hits you roll. This isn’t an automatic success at whatever test you’re attempting, just another hit to add to your total.
-
+      HealOneStun:
+        Name: Heal 1 Stun Damage
+        Description: You catch a second wind and clear a box from your Stun Condition Monitor.
 # 4 edge
       AddEdgeExplode:
         Name: Add Edge + Explode
@@ -354,11 +363,14 @@ SR6:
       HealOnePhysical:
         Name: Heal 1 Physical Damage
         Description: You take off a single box of damage from your Physical Condition Monitor—your advantage over your opponents means they didn’t hit you quite as hard as they first thought.
-      HealOneStun:
-        Name: Heal 1 Stun Damage
-        Description: You catch a second wind and clear a box from your Stun Condition Monitor.
-
-  Modifiers:
+# 5 Edge
+      CountTwoGlitchesOpposed:
+        Name: Count 2s as glitches for Target
+        Description: Time to get counteroffensive! When an opponent rolls, both 1s and 2s count in their total to determine if they glitch or critical glitch.
+      CreateSpecialEffect:
+        Name: Create Special Effect
+        Description: Bring your creativity to the table! You spend this Edge and something fortuitous happens. It’s up to you and your gamemaster to determine what it is, but it should certainly turn the tides slightly in your favor. Burst pipes, approaching sirens, incoming DocWagon, an angry spirit, something that adds a little more oomph to your side or puts a little stress on the enemy.
+Modifiers:
     PhysicalWoundModifier:
       Name: Wound Modifier (Physical)
       Description: You suffer a -1 dice pool penalty for every 3 boxes of damage to your physical condition monitor.

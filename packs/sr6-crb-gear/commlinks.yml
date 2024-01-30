@@ -1,6 +1,6 @@
 name: Meta Link
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   rating: 1
@@ -28,7 +28,7 @@ system:
 ---
 name: Sony Emperor
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   rating: 2
@@ -56,7 +56,7 @@ system:
 ---
 name: Renraku Sensei
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   rating: 3
@@ -84,7 +84,7 @@ system:
 ---
 name: Erika Elite
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   rating: 4
@@ -112,7 +112,7 @@ system:
 ---
 name: Hermes Ikon
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   rating: 5
@@ -140,7 +140,7 @@ system:
 ---
 name: Transys Avalon
 type: gear
-img: systems/sr6/assets/items/commlink.webp
+img: /systems/sr6/assets/items/commlink.webp
 effects: []
 system:
   rating: 6

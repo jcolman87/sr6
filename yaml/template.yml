@@ -30,11 +30,12 @@ Item:
     - adeptpower
     - complexform
     # Matrix Stuff
-    - matrix_action
     - matrix_persona
     - matrix_ic
     # Combat
     - general_action
+    - matrix_action
+    - edge_action
   gear:
   weapon:
   ammo:
@@ -49,7 +50,8 @@ Item:
   spell:
   adeptpower:
   complexform:
-  matrix_action:
   matrix_persona:
   matrix_ic:
   general_action:
+  matrix_action:
+  edge_action:

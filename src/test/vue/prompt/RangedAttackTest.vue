@@ -83,10 +83,6 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 		await canvas.ping(target.token.object.center);
 	}
 }
-
-async function _updateEdgeGain() {
-	// Are there targets? If so, assign edge gain based on AR vs. DR
-}
 </script>
 
 <template>

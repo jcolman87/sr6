@@ -30,15 +30,10 @@ packs:
     system: sr6
     path: ./packs/sr6-crb-skills.db
     type: Item
-  - name: sr6-crb-general-actions
-    label: Core General Actions
+  - name: sr6-crb-actions
+    label: Core Actions
     system: sr6
-    path: ./packs/sr6-crb-general-actions.db
-    type: Item
-  - name: sr6-crb-matrix-actions
-    label: Core Matrix Actions
-    system: sr6
-    path: ./packs/sr6-crb-matrix-actions.db
+    path: ./packs/sr6-crb-actions.db
     type: Item
   - name: sr6-crb-spells
     label: Core Spells

@@ -27,14 +27,12 @@ export interface SpendEdgePostRollPromptContext extends ContextBase {
 	resolvePromise: (value: IEdgeBoost | null) => void;
 }
 
-export default class SpendEdgePostRollPrompt extends VueSheet(
-	ActorSheet<SR6Actor<BaseActorDataModel>, SR6Item<BaseItemDataModel>>,
-) {
+export default class SpendEdgePostRollPrompt extends VueSheet(Application) {
 	get vueComponent(): Component {
 		return VueRollPrompt;
 	}
 
-	static override get defaultOptions(): ActorSheetOptions {
+	static override get defaultOptions(): ApplicationOptions {
 		return {
 			...super.defaultOptions,
 			classes: ['app-roll-prompt'],
@@ -59,7 +57,7 @@ export default class SpendEdgePostRollPrompt extends VueSheet(
 	test: ITest;
 
 	constructor(message: SR6ChatMessage, test: ITest) {
-		super(test.actor);
+		super();
 		this.test = test;
 		this.message = message;
 	}

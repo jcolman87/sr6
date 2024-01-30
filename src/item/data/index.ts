@@ -1,3 +1,4 @@
+import EdgeActionDataModel from '@/item/data/action/EdgeActionDataModel';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import GeneralActionDataModel from '@/item/data/action/GeneralActionDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
@@ -20,7 +21,7 @@ export async function getCoreSkills(): Promise<SR6Item<SkillDataModel>[]> {
 }
 
 export async function getCoreMatrixActions(): Promise<SR6Item<MatrixActionDataModel>[]> {
-	const pack = game.packs.get('sr6.sr6-crb-matrix-actions')!;
+	const pack = game.packs.get('sr6.sr6-crb-actions')!;
 
 	return Array.from(
 		(await pack.getDocuments())
@@ -30,12 +31,22 @@ export async function getCoreMatrixActions(): Promise<SR6Item<MatrixActionDataMo
 }
 
 export async function getCoreGeneralActions(): Promise<SR6Item<GeneralActionDataModel>[]> {
-	const pack = game.packs.get('sr6.sr6-crb-general-actions')!;
+	const pack = game.packs.get('sr6.sr6-crb-actions')!;
 
 	return Array.from(
 		(await pack.getDocuments())
 			.filter((i) => (i as SR6Item).type === 'general_action')
 			.map((i) => i as SR6Item<GeneralActionDataModel>),
+	);
+}
+
+export async function getCoreEdgeActions(): Promise<SR6Item<EdgeActionDataModel>[]> {
+	const pack = game.packs.get('sr6.sr6-crb-actions')!;
+
+	return Array.from(
+		(await pack.getDocuments())
+			.filter((i) => (i as SR6Item).type === 'edge_action')
+			.map((i) => i as SR6Item<EdgeActionDataModel>),
 	);
 }
 

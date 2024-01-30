@@ -1,10 +1,13 @@
 import SR6Actor from '@/actor/SR6Actor';
+import { isString } from 'remeda';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ConstructorOf<T> = new (...args: any[]) => T;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AbstractConstructorOf<T> = abstract new (...args: any[]) => T;
+
+export const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 
 export function constructOptGroup(
 	select: HTMLSelectElement,
@@ -125,4 +128,37 @@ export function getTargetActorIds(): ActorUUID[] {
 
 export function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
 	return Object.keys(obj).filter((k) => !Number.isNaN(k)) as K[];
+}
+
+export function isAlphaNumeric(str: string) {
+	const len: number = str.length;
+
+	for (let i = 0; i < len; i++) {
+		const code = str.charCodeAt(i);
+		if (
+			!(code > 47 && code < 58) && // numeric (0-9)
+			!(code > 64 && code < 91) && // upper alpha (A-Z)
+			!(code > 96 && code < 123)
+		) {
+			// lower alpha (a-z)
+			return false;
+		}
+	}
+	return true;
+}
+
+export function isAlpha(str: string) {
+	const len: number = str.length;
+
+	for (let i = 0; i < len; i++) {
+		const code = str.charCodeAt(i);
+		if (
+			!(code > 64 && code < 91) && // upper alpha (A-Z)
+			!(code > 96 && code < 123)
+		) {
+			// lower alpha (a-z)
+			return false;
+		}
+	}
+	return true;
 }

@@ -15,7 +15,6 @@ function makeDeltaProxyHandler<T extends object>(
 		},
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		set: (diff: any, key: string, value: any) => {
-			console.log('set lol', diff, key, value, rootDelta);
 			foundry.utils.setProperty(rootDelta, `${prePath}${key}`, value);
 			return true;
 		},

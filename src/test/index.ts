@@ -33,6 +33,9 @@ export enum TestType {
 	RangedAttack = 'RangedAttackTest',
 	RangedDefense = 'RangedDefenseTest',
 
+	MeleeAttack = 'MeleeAttackTest',
+	MeleeDefense = 'MeleeDefenseTest',
+
 	PhysicalSoak = 'PhysicalSoakTest',
 
 	MatrixAction = 'MatrixActionTest',

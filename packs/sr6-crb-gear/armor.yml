@@ -1,6 +1,6 @@
 name: Synthleather Jacket
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1
@@ -20,7 +20,7 @@ system:
 ---
 name: Actioneer Business Clothes
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1
@@ -40,7 +40,7 @@ system:
 ---
 name: Armor Clothing
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1
@@ -60,7 +60,7 @@ system:
 ---
 name: Armor Jacket
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1
@@ -80,7 +80,7 @@ system:
 ---
 name: Full Body Armor
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1
@@ -100,7 +100,7 @@ system:
 ---
 name: Armored Helmet
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1
@@ -120,7 +120,7 @@ system:
 ---
 name: Lined Coat
 type: wearable
-img: systems/sr6/assets/items/armor_body.webp
+img: /systems/sr6/assets/items/armor_body.webp
 effects: []
 system:
   rating: 1

@@ -1,7 +1,7 @@
 ---
 name: GMC Bulldog
 type: vehicle
-img: systems/sr6/assets/items/vehicle.webp
+img: /systems/sr6/assets/items/vehicle.webp
 effects: []
 items: []
 system:

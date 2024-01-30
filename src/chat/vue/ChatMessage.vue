@@ -5,7 +5,7 @@ import { ChatContext, ChatMessageContext } from '@/chat/SR6ChatMessage';
 import ChatHeader from '@/chat/vue/ChatHeader.vue';
 import { EdgeBoostType } from '@/edge';
 import SpendEdgePostRollPrompt from '@/roll/SpendEdgePostRollPrompt';
-import { AttackTestData } from '@/test/AttackTestData';
+import { AttackTestData, isTargetOwner } from '@/test/AttackTestData';
 import { enumKeys, getSelfOrSelectedActors } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
 import Localized from '@/vue/components/Localized.vue';
@@ -21,6 +21,7 @@ function setText(value: { title: string; hint: string }) {
 	text.value = value;
 }
 
+const isTargetOrGm = ref(game.user.isGM || isTargetOwner(context.test?.data as AttackTestData));
 const expandDice = ref(false);
 const showTestContextMenu = ref(false);
 
@@ -152,7 +153,7 @@ onBeforeMount(update);
 						</template>
 					</div>
 				</section>
-				<FloatCollapse v-if="getDamage()" :when="showTestContextMenu" class="test-context-menu"
+				<FloatCollapse v-if="getDamage()" :when="isTargetOrGm && showTestContextMenu" class="test-context-menu"
 					><div class="damage-physical-bg" :title="`Damage (${getDamage()}P)`">
 						<div class="context-button-damage" @click.prevent="applyDamage(MonitorType.Physical)">
 							<i class="fa fa-minus fa-lg"></i>

@@ -297,6 +297,10 @@ declare global {
 		popOut: boolean;
 		/** Whether the rendered application can be minimized (popOut only) */
 		minimizable: boolean;
+
+		focus: boolean;
+		scroll: boolean;
+
 		/** Whether the rendered application can be drag-resized (popOut only) */
 		resizable: boolean | null;
 		/** The default CSS id to assign to the rendered HTML */
