@@ -92,9 +92,11 @@ export function getSelfActor(): SR6Actor {
 }
 
 export function getSelectedActors(): SR6Actor[] {
-	return getSelectedTokens().map((token) => {
-		return token.actor as SR6Actor;
-	});
+	return getSelectedTokens()
+		.filter((token) => token.actor != null)
+		.map((token) => {
+			return token.actor as SR6Actor;
+		});
 }
 
 export function getSelectedTokens(): Token[] {

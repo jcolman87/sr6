@@ -9,7 +9,7 @@ import { PhysicalAttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
 import { getTargetActorIds } from '@/util';
-import { Component } from 'vue';
+import { Component, toRaw } from 'vue';
 
 import AttackPromptComponent from '@/test/vue/prompt/RangedAttackTest.vue';
 import AttackChatComponent from '@/test/vue/chat/RangedAttackTest.vue';
@@ -20,22 +20,24 @@ export interface RangedAttackTestData extends PhysicalAttackTestData {
 }
 
 export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
+	private _baseDamage: number;
+
 	override get type(): TestType {
 		return TestType.RangedAttack;
 	}
 
 	weapon: SR6Item<WeaponDataModel>;
 
-	damage(opposedHits: number = 0): number {
+	override get damage(): number {
 		if (this.roll) {
-			return this.baseDamage() + this.roll.hits - opposedHits;
+			return this.baseDamage + this.roll.hits;
 		} else {
-			return this.baseDamage() - opposedHits;
+			return this.baseDamage;
 		}
 	}
 
-	baseDamage(): number {
-		return this.weapon.systemData.damage;
+	get baseDamage(): number {
+		return this._baseDamage;
 	}
 
 	opposed(actor: SR6Actor, item: undefined | SR6Item = undefined): RangedDefenseTest {
@@ -55,7 +57,7 @@ export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			actor: defenseTest.actor,
 			data: {
 				pool: defenseTest.actor.solveFormula(this.weapon.systemData.damageData?.soakFormula),
-				threshold: this.damage(defenseTest.roll?.hits),
+				threshold: this.damage - defenseTest.roll!.hits,
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				defenseTest: defenseTest.toJSON() as any,
 			},
@@ -102,7 +104,9 @@ export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 			roll,
 			delta,
 		});
+
 		this.weapon = weapon;
+		this._baseDamage = this.weapon.systemData.damage;
 	}
 }
 
@@ -111,11 +115,19 @@ export interface RangedDefenseTestData extends BaseTestData {
 }
 
 export class RangedDefenseTest extends BaseTest<RangedDefenseTestData> {
+	opposedTest: RangedAttackTest;
+
 	override get type(): TestType {
 		return TestType.RangedDefense;
 	}
 
-	opposedTest: RangedAttackTest;
+	override get damage(): number {
+		if (this.roll) {
+			return this.opposedTest.damage - this.roll.hits;
+		} else {
+			return this.opposedTest.damage;
+		}
+	}
 
 	chatComponent(): Component {
 		return DefenseChatComponent;

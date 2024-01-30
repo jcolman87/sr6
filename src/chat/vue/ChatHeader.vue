@@ -7,8 +7,8 @@ import { Collapse } from 'vue-collapsed';
 import { toRaw, ref } from 'vue';
 
 const props = defineProps<{
-	actor: SR6Actor | null;
-	token: SR6Token | null;
+	actor: Maybe<SR6Actor>;
+	token: Maybe<SR6Token>;
 	text: { title: string; hint: string };
 }>();
 
@@ -22,11 +22,7 @@ const expandHint = ref(false);
 </script>
 
 <template>
-	<div
-		class="flexrow chat-message-header"
-		@mouseenter.prevent="expandHint = true"
-		@mouseleave.prevent="expandHint = false"
-	>
+	<div class="flexrow chat-message-header" @mouseenter="expandHint = true" @mouseleave="expandHint = false">
 		<div class="actor-image" v-if="props.actor">
 			<a @click.prevent="pingActor(props.actor)" @dblclick.prevent="openActorSheet()">
 				<img

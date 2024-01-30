@@ -35,7 +35,7 @@ export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 		return this.matrixAction.systemData.canDamage;
 	}
 
-	get damage(): number {
+	override get damage(): number {
 		if (this.canDamage) {
 			let rollData = {};
 			if (this.roll) {
@@ -137,7 +137,7 @@ export class MatrixDefenseTest extends BaseTest<MatrixDefenseTestData> {
 
 	opposedTest: MatrixActionTest;
 
-	get damage(): number {
+	override get damage(): number {
 		return Math.max(0, this.opposedTest.damage - (this.roll?.hits || 0));
 	}
 
@@ -203,15 +203,15 @@ export class MatrixSoakTest extends BaseTest<MatrixSoakTestData> {
 
 	defenseTest: MatrixDefenseTest;
 
-	damage(opposedHits: number = 0): number {
+	override get damage(): number {
 		if (this.roll) {
-			return this.baseDamage() - this.roll.hits - opposedHits;
+			return this.baseDamage - this.roll.hits;
 		} else {
-			return this.baseDamage() - opposedHits;
+			return this.baseDamage;
 		}
 	}
 
-	baseDamage(): number {
+	get baseDamage(): number {
 		return this.data.threshold!;
 	}
 

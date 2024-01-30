@@ -4,7 +4,7 @@ import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import Targets from '@/chat/vue/Targets.vue';
 import { isTargetOwner } from '@/test/AttackTestData';
-import { damageFromSpellAdjustments } from '@/item/data/SpellDataModel';
+import { damageFromSpellAdjustments, drainFromSpellAdjustments, SpellAdjustmentType } from '@/item/data/SpellDataModel';
 import { TestSourceData } from '@/test/BaseTest';
 
 import { SpellCastTest, SpellCastTestData, SpellDrainTest } from '@/test/SpellTests';
@@ -28,6 +28,7 @@ const actionDescription = ref(props.test.spell.systemData.description);
 const visibility = ref({
 	description: false,
 	damageFormula: false,
+	drainFormula: false,
 });
 
 emit('setText', {
@@ -49,6 +50,14 @@ async function executeDrainTest() {
 		item: toRaw(props.test).spell,
 		data: { opposedData: toRaw(props.test).toJSON() as unknown as TestSourceData<SpellCastTestData> },
 	}).execute();
+}
+
+function hasAdjustment() {
+	return (
+		toRaw(props.test).data.adjustments[SpellAdjustmentType.AmpUp] ||
+		toRaw(props.test).data.adjustments[SpellAdjustmentType.IncreaseArea] ||
+		toRaw(props.test).data.adjustments[SpellAdjustmentType.ShiftArea]
+	);
 }
 </script>
 
@@ -78,7 +87,19 @@ async function executeDrainTest() {
 				</FloatCollapse>
 			</div>
 			<div class="drain">
-				<Localized label="SR6.Magic.Drain" />: <i class="dv">{{ toRaw(test.spell).systemData.drain }}</i>
+				<a
+					@mouseenter.prevent="visibility.drainFormula = true"
+					@mouseleave.prevent="visibility.drainFormula = false"
+					><Localized label="SR6.Magic.Drain" />: <i class="dv">{{ test.data.drain }}</i>
+				</a>
+				<FloatCollapse class="formula" :when="visibility.drainFormula">
+					{{ toRaw(test.spell).systemData.drain }} +
+					{{ drainFromSpellAdjustments(toRaw(test).data.adjustments) }} = {{ test.data.drain }}
+				</FloatCollapse>
+			</div>
+			<div class="chat-head" v-if="hasAdjustment()">Adjustments</div>
+			<div v-if="toRaw(test).data.adjustments[SpellAdjustmentType.AmpUp]">
+				Amp Up: {{ toRaw(test).data.adjustments[SpellAdjustmentType.AmpUp] }}
 			</div>
 		</div>
 		<Targets v-if="test.targets.length > 0" :targets="test.targets" />

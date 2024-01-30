@@ -36,11 +36,11 @@ emit('setText', {
 				>
 					<Localized label="SR6.Combat.Damage" />:
 
-					<i class="dv">{{ toRaw(test).damage() }}</i>
+					<i class="dv">{{ toRaw(test).damage }}</i>
 					&nbsp;
 				</a>
 				<Collapse class="formula" :when="visibility.description.damage">
-					{{ toRaw(test).baseDamage() }} - {{ test.roll?.hits }} = {{ toRaw(test).damage() }}
+					{{ toRaw(test).baseDamage }} - {{ test.roll?.hits }} = {{ toRaw(test).damage }}
 				</Collapse>
 			</div>
 		</div>

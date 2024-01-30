@@ -17,15 +17,15 @@ export default class PhysicalSoakTest extends BaseTest<PhysicalSoakTestData> {
 		return TestType.PhysicalSoak;
 	}
 
-	damage(opposedHits: number = 0): number {
+	override get damage(): number {
 		if (this.roll) {
-			return this.baseDamage() - this.roll.hits - opposedHits;
+			return this.baseDamage - this.roll.hits;
 		} else {
-			return this.baseDamage() - opposedHits;
+			return this.baseDamage;
 		}
 	}
 
-	baseDamage(): number {
+	get baseDamage(): number {
 		return this.data.threshold!;
 	}
 

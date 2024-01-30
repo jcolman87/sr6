@@ -21,6 +21,8 @@ export type RollDataDelta = Record<string, unknown>;
 export enum TestError {
 	Cancelled,
 	RollFailed,
+	MissingDocument,
+	FailedConstructor,
 }
 
 export enum TestType {
@@ -78,6 +80,8 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 	get type(): TestType;
 
 	get isOwner(): boolean;
+
+	get damage(): Maybe<number>;
 
 	get data(): TData;
 	set data(data: TData);

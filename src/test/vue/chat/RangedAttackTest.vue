@@ -54,13 +54,11 @@ const showRoll = ref(true);
 				>
 					<Localized label="SR6.Combat.Damage" />:
 
-					<i class="dv"
-						>{{ toRaw(test).damage() }} {{ toRaw(test.weapon).systemData.damageData.damageType }}</i
-					>
+					<i class="dv">{{ toRaw(test).damage }} {{ toRaw(test.weapon).systemData.damageData.damageType }}</i>
 					&nbsp;
 				</a>
 				<FloatCollapse class="formula" :when="visibility.description.damage">
-					{{ toRaw(test).baseDamage() }} + {{ test.roll?.hits }} = {{ toRaw(test).damage() }}
+					{{ toRaw(test).baseDamage }} + {{ test.roll?.hits }} = {{ toRaw(test).damage }}
 				</FloatCollapse>
 			</div>
 			<div class="distance">

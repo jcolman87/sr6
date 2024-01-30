@@ -2,6 +2,7 @@ import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SpellDataModel, {
 	damageFromSpellAdjustments,
+	drainFromSpellAdjustments,
 	SpellAdjustments,
 	SpellAdjustmentType,
 } from '@/item/data/SpellDataModel';
@@ -9,8 +10,9 @@ import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
 import { AttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
-import { ITest, RollDataDelta, TestType } from '@/test/index';
+import { ITest, RollDataDelta, TestError, TestType } from '@/test/index';
 import { getTargetActorIds } from '@/util';
+import { Result } from 'ts-results';
 import { Component } from 'vue';
 
 import ActionPromptComponent from '@/test/vue/prompt/SpellCastTest.vue';
@@ -47,7 +49,7 @@ export class SpellCastTest extends BaseTest<SpellCastTestData> {
 		return this.spell.systemData.getDamage();
 	}
 
-	get damage(): number {
+	override get damage(): number {
 		if (this.roll) {
 			return (
 				this.spell.systemData.getDamage(this.roll.getRollData()) +
@@ -56,6 +58,14 @@ export class SpellCastTest extends BaseTest<SpellCastTestData> {
 		} else {
 			return this.spell.systemData.getDamage() + damageFromSpellAdjustments(this.data.adjustments);
 		}
+	}
+
+	override async performRoll(): Promise<Result<null, string>> {
+		// save amp values and then execute
+		this.data.drain = this.baseData.drain + drainFromSpellAdjustments(this.data.adjustments);
+		this.data.damage = this.baseData.damage! + drainFromSpellAdjustments(this.data.adjustments);
+
+		return super.performRoll();
 	}
 
 	opposed(actor: SR6Actor<LifeformDataModel>, item: undefined | SR6Item = undefined): SpellDefenseTest {
@@ -198,7 +208,7 @@ export class SpellDefenseTest extends BaseTest<SpellDefenseTestData> {
 
 	opposedTest: SpellCastTest;
 
-	get damage(): number {
+	override get damage(): number {
 		if (this.roll) {
 			return (
 				this.opposedTest.spell.systemData.getDamage(
@@ -266,15 +276,15 @@ export class SpellSoakTest extends BaseTest<SpellSoakTestData> {
 
 	defenseTest: SpellDefenseTest;
 
-	damage(opposedHits: number = 0): number {
+	override get damage(): number {
 		if (this.roll) {
-			return this.baseDamage() - this.roll.hits - opposedHits;
+			return this.baseDamage - this.roll.hits;
 		} else {
-			return this.baseDamage() - opposedHits;
+			return this.baseDamage;
 		}
 	}
 
-	baseDamage(): number {
+	get baseDamage(): number {
 		return this.data.threshold!;
 	}
 

@@ -20,8 +20,6 @@ const visibility = ref({
 	damageFormula: false,
 });
 
-const damageValue = ref(toRaw(props.test.opposedTest).damage(props.test.roll!.hits));
-
 async function executeSoakTest() {
 	const result = await toRaw(props.test.opposedTest).soak(toRaw(props.test)).execute();
 	if (result.ok && !game.user!.isGM) {
@@ -55,11 +53,11 @@ const showRoll = ref(true);
 				>
 					<Localized label="SR6.Combat.Damage" />:
 
-					<i class="dv">{{ damageValue }} {{ getDamageTypeForTest(test) }}</i>
+					<i class="dv">{{ props.test.damage }} {{ getDamageTypeForTest(test) }}</i>
 				</a>
 				<Collapse class="formula" :when="visibility.damageFormula">
-					{{ toRaw(test.opposedTest).damage?.(0) }} - {{ test.roll?.hits }} =
-					{{ damageValue }}
+					{{ toRaw(test.opposedTest).damage }} - {{ test.roll?.hits }} =
+					{{ props.test.damage }}
 				</Collapse>
 			</div>
 		</div>

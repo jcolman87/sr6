@@ -84,23 +84,6 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		throw 'ERROR INVALID MONITOR TYPE';
 	}
 
-	async heal(type: MonitorType, value: number): Promise<void> {
-		switch (type) {
-			case MonitorType.Physical: {
-				await this.actor!.update({
-					[`system.monitors.physical.damage`]: Math.max(0, this.physical.damage - value),
-				});
-				break;
-			}
-			case MonitorType.Stun: {
-				await this.actor!.update({
-					[`system.monitors.stun.damage`]: Math.max(0, this.stun.damage - value),
-				});
-				break;
-			}
-		}
-	}
-
 	async setDamage(type: MonitorType, newDamage: number): Promise<void> {
 		if (type === MonitorType.Edge) {
 			ui.notifications.error('Dont use applyDamage for edge, use spendEdge instaed');
@@ -131,6 +114,34 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 			await this.actor!.update({ [`system.monitors.${type.toString()}.damage`]: newDamage });
 			return 0;
 		}
+	}
+
+	async applyHeal(type: MonitorType, value: number): Promise<void> {
+		if (type === MonitorType.Edge) {
+			ui.notifications.error('Dont use applyHeal for edge, use spendEdge instaed');
+			return;
+		}
+		const monitor: MonitorDataModel = this.get(type);
+
+		if (type == MonitorType.Physical) {
+			let remainder = value;
+			if (this.overflow.damage > 0) {
+				remainder = this.overflow.damage - value;
+				await this.actor!.update({
+					[`system.monitors.overflow.damage`]: Math.max(0, this.overflow.damage - value),
+				});
+				if (remainder < 0) {
+					await this.actor!.update({
+						[`system.monitors.physical.damage`]: Math.max(0, monitor.damage - Math.abs(remainder)),
+					});
+					return;
+				}
+			}
+		}
+		console.log('Healing ', monitor.damage - value);
+		await this.actor!.update({
+			[`system.monitors.${type.toString()}.damage`]: Math.max(0, monitor.damage - value),
+		});
 	}
 
 	async applyDamage(type: MonitorType, value: number): Promise<void> {

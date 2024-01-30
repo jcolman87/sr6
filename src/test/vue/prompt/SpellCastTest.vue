@@ -35,15 +35,13 @@ emit('setText', {
 });
 
 function adjustAmp(amp: SpellAdjustmentType, val: number) {
-	const adjustments = props.test.data.adjustments;
-	if (adjustments[amp] === 0 && val === -1) {
+	if (props.test.data.adjustments[amp] === 0 && val === -1) {
 		return;
 	}
 	if (currentAmps() === maxAmps.value && val === 1) {
 		return;
 	}
-	adjustments[amp] += val;
-	props.test.data.adjustments = adjustments;
+	props.test.data.adjustments[amp] += val;
 }
 
 function currentDamage(): number {

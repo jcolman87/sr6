@@ -1,6 +1,6 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { makeDeltaProxy, makeDeltaProxyHandler } from '@/data/DeltaProxy';
+import { makeDeltaProxy } from '@/data/DeltaProxy';
 import { getClass } from '@/data/serialize';
 import { EdgeBoostType, getEdgeBoost, IEdgeBoost } from '@/edge';
 import BaseModifier from '@/modifier/BaseModifier';
@@ -93,6 +93,10 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 	get isOwner(): boolean {
 		return this.actor.isOwner;
+	}
+
+	get damage(): number {
+		return 0;
 	}
 
 	get modifiers(): IModifier[] {
@@ -302,17 +306,22 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			},
 		};
 
-		if (this.data.edge.spent) {
-			this.edgeBoost = getEdgeBoost(this.data.edge.spent);
+		if (this.data.edge?.spent) {
+			this.edgeBoost = getEdgeBoost(this.data.edge!.spent);
 		}
 	}
 
 	static fromData<TTest extends BaseTest = BaseTest, TData extends BaseTestData = BaseTestData>(
 		msgData: TestSourceData<TData>,
-	): Result<TTest, string> {
+	): Result<TTest, TestError> {
 		const actor = getActorSync(SR6Actor, msgData.baseData.actorId!);
 		const item = msgData.baseData.itemId ? getItemSync(SR6Item, msgData.baseData.itemId) : null;
 		const modifiers = msgData.modifiers.map((modifierData) => BaseModifier.fromData(modifierData));
+
+		if (!actor || (!item && msgData.baseData.itemId)) {
+			console.warn('Test actor has been deleted.');
+			return Err(TestError.MissingDocument);
+		}
 
 		const cls = getClass<ConstructorOf<BaseTest>>(CONFIG.sr6.types.tests, { class: msgData.type });
 		if (cls.ok) {
@@ -326,7 +335,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			}) as TTest;
 			return Ok(test);
 		}
-		return Err(cls.val);
+		return Err(TestError.FailedConstructor);
 	}
 
 	// Edge control
