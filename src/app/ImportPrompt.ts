@@ -33,6 +33,32 @@ import { ContextBase } from '@/vue/SheetContext';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 
+export enum ImportAction {
+	Skip,
+	Replace,
+	NoReplace,
+	Merge,
+}
+
+export const DefaultImportAction = ImportAction.Replace;
+
+export class ImportSettings {
+	Attributes: ImportAction = DefaultImportAction;
+	Qualities: ImportAction = DefaultImportAction;
+	AdeptPowers: ImportAction = DefaultImportAction;
+	Augmentations: ImportAction = DefaultImportAction;
+	Skills: ImportAction = DefaultImportAction;
+
+	Gear: ImportAction = DefaultImportAction;
+	Weapons: ImportAction = DefaultImportAction;
+	GeneralActions: ImportAction = DefaultImportAction;
+	MatrixActions: ImportAction = DefaultImportAction;
+
+	Lifestyles: ImportAction = DefaultImportAction;
+	SINs: ImportAction = DefaultImportAction;
+	Spells: ImportAction = DefaultImportAction;
+}
+
 export interface ImportPromptContext extends ContextBase {
 	app: ImportPrompt;
 }
@@ -98,6 +124,9 @@ function convertActivation(value: string): ActivationType {
 
  */
 export class ImportPrompt extends VueSheet(Application) {
+	settings: ImportSettings = new ImportSettings();
+	actor: Maybe<SR6Actor>;
+
 	async _onImportGenesisActor(file: string): Promise<void> {
 		const response = await fetch(file);
 		const json = await response.json();
@@ -109,21 +138,24 @@ export class ImportPrompt extends VueSheet(Application) {
 			return json.skills.find((a: any) => a.id === name.toLowerCase());
 		};
 
-		const actor = (await Actor.create({
-			name: json.streetName,
-			type: 'character',
-		})) as SR6Actor<CharacterDataModel>;
+		if (!this.actor) {
+			this.actor = (await Actor.create({
+				name: json.streetName,
+				type: 'character',
+			})) as SR6Actor<CharacterDataModel>;
+		}
 
-		if (actor === undefined) {
+		if (!this.actor) {
 			ui.notifications!.error('import failed to create actor');
 			return;
 		}
-		const data = actor.systemData;
+
+		const data = this.actor.systemData;
 
 		// Add all core actions
-		await actor.createEmbeddedDocuments('Item', await getCoreGeneralActions());
-		await actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
-		await actor.createEmbeddedDocuments('Item', await getCorePrograms());
+		await this.actor.createEmbeddedDocuments('Item', await getCoreGeneralActions());
+		await this.actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
+		await this.actor.createEmbeddedDocuments('Item', await getCorePrograms());
 
 		Object.keys(data.attributes).forEach((name: string) => {
 			const value = json.attr(name);
@@ -136,8 +168,8 @@ export class ImportPrompt extends VueSheet(Application) {
 		});
 
 		const coreSkills = await getCoreSkills();
-		await actor.createEmbeddedDocuments('Item', coreSkills);
-		const filtered = actor.items.filter((i) => i.type === 'skill');
+		await this.actor.createEmbeddedDocuments('Item', coreSkills);
+		const filtered = this.actor.items.filter((i) => i.type === 'skill');
 
 		for (const s of filtered) {
 			const skill = s as SR6Item<SkillDataModel>;
@@ -164,7 +196,7 @@ export class ImportPrompt extends VueSheet(Application) {
 
 		let sins: SR6Item<SINDataModel>[] = [];
 		if (Object.prototype.hasOwnProperty.call(json, 'sins') && json.sins.length > 0) {
-			sins = (await actor.createEmbeddedDocuments(
+			sins = (await this.actor.createEmbeddedDocuments(
 				'Item',
 				json.sins.map((value: any) => {
 					return {
@@ -479,11 +511,11 @@ export class ImportPrompt extends VueSheet(Application) {
 		}
 
 		if (items.length > 0) {
-			await actor.createEmbeddedDocuments('Item', items);
+			await this.actor.createEmbeddedDocuments('Item', items);
 		}
 
-		await actor.update({ ['system']: data });
-		// await actor.delete();
+		await this.actor.update({ ['system']: data });
+		// await this.actor.delete();
 	}
 
 	static override get defaultOptions(): ApplicationOptions {
@@ -491,11 +523,14 @@ export class ImportPrompt extends VueSheet(Application) {
 			...super.defaultOptions,
 			classes: ['app-import-prompt'],
 			width: 500,
+			height: 600,
+			scroll: true,
 		};
 	}
 
-	constructor() {
+	constructor(actor: Maybe<SR6Actor> = null) {
 		super();
+		this.actor = actor;
 	}
 
 	override async close(options: {} = {}): Promise<void> {

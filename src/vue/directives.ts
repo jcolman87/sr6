@@ -63,11 +63,13 @@ export function getEventValue(event: Event): null | string | number | boolean {
 	return null;
 }
 
-export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event): Promise<void> {
+export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event): Promise<void>;
+export async function updateItem(actor: SR6Actor, id: string, field: string, event: string): Promise<void>;
+export async function updateItem(actor: SR6Actor, id: string, field: string, event: Event | string): Promise<void> {
 	await toRaw(actor).updateEmbeddedDocuments('Item', [
 		{
 			_id: id,
-			[field]: getEventValue(event),
+			[field]: event instanceof Event ? getEventValue(event) : event,
 		},
 	]);
 }

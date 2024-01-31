@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { computed, inject, toRaw } from 'vue';
+import SINDataModel from '@/item/data/feature/SINDataModel';
+import SelectItem from '@/vue/components/SelectItem.vue';
+import { computed, inject, onUpdated, toRaw, ref } from 'vue';
 
 import SR6Item from '@/item/SR6Item';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -7,7 +9,6 @@ import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import { createNewItem, updateItem, deleteItem } from '@/vue/directives';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
-import SINDataModel from '@/item/data/feature/SINDataModel';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const _system = computed(() => context.data.actor.systemData);
@@ -47,28 +48,29 @@ async function rollContact(_contact: SR6Item<ContactDataModel>) {
 						<td></td>
 					</tr>
 				</thead>
-				<tr v-for="item in lifestyles" :key="item.id">
+				<tr v-for="sin in lifestyles" :key="sin.id">
 					<td class="entry">
 						<input
 							type="text"
-							:value="item.name"
-							@change="(ev) => updateItem(context.data.actor, item.id, 'name', ev)"
+							:value="sin.name"
+							@change="(ev) => updateItem(context.data.actor, sin.id, 'name', ev)"
 						/>
 					</td>
 					<td>
-						<select
-							width="50px"
-							:value="item.systemData.sin"
-							@change="(ev) => updateItem(context.data.actor, item.id, 'system.sin', ev)"
-						>
-							<option value="">-</option>
-							<option v-for="sin in sins" :key="sin.id" :value="sin.id">{{ sin.name }}</option>
-						</select>
+						<SelectItem
+							:options="sins"
+							:selectedId="sin.systemData.sin"
+							@change="
+								(newSin: Maybe<SR6Item<SINDataModel>>) => {
+									updateItem(context.data.actor, sin.id, 'system.sin', newSin?.uuid);
+								}
+							"
+						/>
 					</td>
 					<td class="actions">
-						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
+						<a class="fas fa-edit" @click.prevent="sin.sheet?.render(true)" /><a
 							class="fas fa-minus"
-							@click.prevent="deleteItem(item)"
+							@click.prevent="deleteItem(sin)"
 						/>
 					</td>
 				</tr>

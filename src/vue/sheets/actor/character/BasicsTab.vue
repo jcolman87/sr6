@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
+import SINDataModel from '@/item/data/feature/SINDataModel';
 import CredstickDataModel, { CredstickRating } from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import Localized from '@/vue/components/Localized.vue';
+import SelectItem from '@/vue/components/SelectItem.vue';
 import { computed, inject, toRaw } from 'vue';
 
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -64,10 +66,30 @@ const augmentations = computed(() =>
 						<a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'credstick')" />
 					</div>
 					<table>
+						<thead>
+							<tr>
+								<td>Rating</td>
+								<td>SIN</td>
+								<td>Nuyen</td>
+								<td></td>
+							</tr>
+						</thead>
 						<tr v-for="item in credsticks" :key="item.id" :title="item.systemData.description">
 							<td class="entry">
 								<Localized
 									:label="`SR6.Items.Credstick.Ratings.${CredstickRating[item.systemData.rating]}`"
+								/>
+							</td>
+							<td class="entry">
+								<SelectItem
+									:actor="context.data.actor"
+									type="sin"
+									:selectedId="item.systemData.sin"
+									@change="
+										(newSin: Maybe<SR6Item<SINDataModel>>) => {
+											updateItem(context.data.actor, item.id, 'system.sin', newSin?.uuid);
+										}
+									"
 								/>
 							</td>
 							<td class="entry" style="white-space: nowrap">

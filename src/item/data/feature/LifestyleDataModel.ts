@@ -1,3 +1,4 @@
+import { DocumentUUIDField } from '@/data/fields';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 export enum LifestyleRating {
@@ -12,7 +13,7 @@ export default abstract class LifestyleDataModel extends BaseItemDataModel {
 	abstract rating: number;
 	abstract costFormula: string;
 	abstract monthsPaid: number;
-	abstract sin: string | null;
+	abstract sin: Maybe<ItemUUID>;
 
 	get cost(): number {
 		return this.solveFormula(this.costFormula);
@@ -34,7 +35,7 @@ export default abstract class LifestyleDataModel extends BaseItemDataModel {
 
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
 			monthsPaid: new fields.NumberField({ initial: 1, nullable: false, required: true }),
-			sin: new fields.DocumentIdField({ initial: null, required: true, nullable: true }),
+			sin: new DocumentUUIDField({ initial: null, required: true, nullable: true }),
 		};
 	}
 }

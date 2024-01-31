@@ -24,7 +24,7 @@ export default abstract class CredstickDataModel extends BaseItemDataModel {
 	abstract rating: number;
 	abstract nuyen: number;
 
-	abstract sin: ItemUUID | null;
+	abstract sin: Maybe<ItemUUID>;
 
 	get capacity(): number {
 		return CredstickCapacity[CredstickRating[this.rating as number] as keyof typeof CredstickCapacity];
