@@ -59,13 +59,13 @@ function getDamage(): number {
 
 async function applyDamage(type: MonitorType) {
 	for (const actor of getSelfOrSelectedActors()) {
-		await toRaw(context.test!.actor.systemData.monitors.applyDamage(type, getDamage()));
+		await toRaw(actor.systemData.monitors.applyDamage(type, getDamage()));
 	}
 }
 
 async function applyHealing(type: MonitorType) {
 	for (const actor of getSelfOrSelectedActors()) {
-		await toRaw(context.test!.actor.systemData.monitors.applyHeal(type, getDamage()));
+		await toRaw(actor.systemData.monitors.applyHeal(type, getDamage()));
 	}
 }
 

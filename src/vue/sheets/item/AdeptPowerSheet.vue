@@ -27,7 +27,9 @@ const system = computed(() => (context.data.item as SR6Item<AdeptPowerDataModel>
 				<div class="row">
 					<label>Activation Type:</label
 					><select name="system.activationType" :value="system.activationType">
-						<option v-for="key in enumKeys(ActivationType)" :value="ActivationType[key]">{{ key }}</option>
+						<option v-for="key in enumKeys(ActivationType)" v-bind:key="key" :value="ActivationType[key]">
+							{{ key }}
+						</option>
 					</select>
 				</div>
 			</section>

@@ -52,10 +52,12 @@ export class DialogPrompt<TResult, TData> extends VueSheet(Application) {
 	}
 
 	protected override async _renderOuter(options: RenderOptions): Promise<JQuery> {
-		let html = await super._renderOuter(options);
+		const html = await super._renderOuter(options);
 		const app = html[0];
+
 		app.setAttribute('role', 'dialog');
 		app.setAttribute('aria-modal', 'true');
+
 		return html;
 	}
 
@@ -63,7 +65,7 @@ export class DialogPrompt<TResult, TData> extends VueSheet(Application) {
 		return this._vueComponent;
 	}
 
-	static override get defaultOptions() {
+	static override get defaultOptions(): ApplicationOptions {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			focus: true,
 			classes: ['dialog'],

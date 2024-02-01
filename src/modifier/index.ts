@@ -6,7 +6,6 @@ import { CoverModifier } from '@/modifier/impl/CoverModifier';
 
 import { ModifierDataModel } from '@/modifier/ModifierDataModel';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
-import { BaseTestData } from '@/test/BaseTest';
 
 import { ITest } from 'src/test';
 import { ClassData } from '@/data/serialize';

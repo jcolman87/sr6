@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
-import SINDataModel from '@/item/data/feature/SINDataModel';
 import CredstickDataModel, { CredstickRating } from '@/item/data/gear/CredstickDataModel';
 import SR6Item from '@/item/SR6Item';
 import Localized from '@/vue/components/Localized.vue';
@@ -86,8 +85,13 @@ const augmentations = computed(() =>
 									type="sin"
 									:selectedId="item.systemData.sin"
 									@change="
-										(newSin: Maybe<SR6Item<SINDataModel>>) => {
-											updateItem(context.data.actor, item.id, 'system.sin', newSin?.uuid);
+										(newSin: Maybe<SR6Item>) => {
+											updateItem(
+												context.data.actor,
+												item.id,
+												'system.sin',
+												newSin?.uuid as string,
+											);
 										}
 									"
 								/>

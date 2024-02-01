@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ImportAction, ImportPromptContext, ImportSettings } from '@/app/ImportPrompt';
+import { ImportAction, ImportPromptContext } from '@/app/ImportPrompt';
 import { RootContext } from '@/vue/SheetContext';
 import { inject, toRaw } from 'vue';
 
@@ -16,7 +16,7 @@ async function click() {
 
 <template>
 	<div class="flexrow">
-		<div class="section" style="width: auto" v-for="key in Object.keys(context.app.settings)">
+		<div class="section" style="width: auto" v-for="key in Object.keys(context.app.settings)" v-bind:key="key">
 			<div class="section-head">{{ key }}</div>
 			<div style="white-space: nowrap">
 				Skip
@@ -58,6 +58,17 @@ async function click() {
 						:name="key"
 						type="radio"
 						:checked="(context.app.settings as any)[key] === ImportAction.Merge"
+					/>
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<div style="white-space: nowrap">
+				Fresh
+				<label class="switch">
+					<input
+						:name="key"
+						type="radio"
+						:checked="(context.app.settings as any)[key] === ImportAction.Fresh"
 					/>
 					<span class="slider round"></span>
 				</label>

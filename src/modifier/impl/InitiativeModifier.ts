@@ -12,12 +12,8 @@ export interface InitiativeModifierSourceData extends ModifierSourceData {
 }
 
 export abstract class InitiativeModifier extends BaseModifier<InitiativeModifierSourceData> {
-	override isApplicable(test: Maybe<ITest> = null, roll: Maybe<Roll> = null): boolean {
-		if (test) {
-			return false;
-		}
-
-		return true;
+	override isApplicable(test: Maybe<ITest> = null, _roll: Maybe<Roll> = null): boolean {
+		return !test;
 	}
 
 	override get displayValue(): undefined | string {
@@ -28,7 +24,7 @@ export abstract class InitiativeModifier extends BaseModifier<InitiativeModifier
 	prepareInitiative?(
 		type: InitiativeType,
 		initiative: Maybe<InitiativeRollData>,
-		actions: Maybe<AvailableActions>,
+		_actions: Maybe<AvailableActions>,
 	): void {
 		if (this.data.type) {
 			if (this.data.type !== type) {
@@ -37,11 +33,11 @@ export abstract class InitiativeModifier extends BaseModifier<InitiativeModifier
 		}
 
 		if (initiative) {
-			//initiative!.dice += this.data.dice || 0;
-			//initiative!.score += this.data.score || 0;
-			//if (actions) {
+			// initiative!.dice += this.data.dice || 0;
+			// initiative!.score += this.data.score || 0;
+			// if (actions) {
 			//	actions!.minor = 1 + initiative.dice;
-			//}
+			// }
 		}
 	}
 

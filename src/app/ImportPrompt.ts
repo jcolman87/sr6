@@ -1,4 +1,4 @@
-/* eslint @typescript-eslint/no-explicit-any:0 */
+/* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
 /**
  * FVTT-SR6
  * Unofficial implementation of the SR6 RPG for Foundry
@@ -31,6 +31,7 @@ import SR6Item from '@/item/SR6Item';
 import VueImportPrompt from '@/vue/apps/ImportPrompt.vue';
 import { ContextBase } from '@/vue/SheetContext';
 import VueSheet from '@/vue/VueSheet';
+import { Err, Ok, Result } from 'ts-results';
 import { Component } from 'vue';
 
 export enum ImportAction {
@@ -38,9 +39,12 @@ export enum ImportAction {
 	Replace,
 	NoReplace,
 	Merge,
+	Fresh,
 }
 
 export const DefaultImportAction = ImportAction.Replace;
+
+export type ImportResult = {};
 
 export class ImportSettings {
 	Attributes: ImportAction = DefaultImportAction;
@@ -120,12 +124,126 @@ function convertActivation(value: string): ActivationType {
 "vehicles"
 "version"
 "weight"
-
-
  */
+
 export class ImportPrompt extends VueSheet(Application) {
 	settings: ImportSettings = new ImportSettings();
-	actor: Maybe<SR6Actor>;
+	actor: Maybe<SR6Actor<CharacterDataModel>>;
+
+	protected async _removeItemType(type: string) {
+		for (const i of this.actor!.items.filter((i) => i.type === type)) {
+			await i.delete();
+		}
+	}
+
+	protected async _genericItemImport(all: SR6Item[], action: ImportAction): Promise<Result<ImportResult, string>> {
+		if (all.length < 1) {
+			return Ok({});
+		}
+		// assert that all items are of the same type
+		const type = all[0].type;
+		for (const item of all) {
+			if (item.type !== type) {
+				return Err('All items must be the same type');
+			}
+		}
+
+		switch (action) {
+			case ImportAction.Merge: {
+				const newItems = [];
+				for (const item of all) {
+					const existing = this.actor!.items.getName(item.name);
+					if (existing) {
+						await existing.update({
+							['system']: foundry.utils.mergeObject(existing.system, item.system, {
+								inplace: false,
+								enforceTypes: false,
+								overwrite: true,
+							}),
+							['flags']: foundry.utils.mergeObject(existing.flags, item.flags, {
+								inplace: false,
+								enforceTypes: false,
+								overwrite: true,
+							}),
+						});
+					} else {
+						newItems.push(item);
+					}
+				}
+				await this.actor!.createEmbeddedDocuments('Item', newItems);
+				break;
+			}
+			case ImportAction.NoReplace: {
+				await this.actor!.createEmbeddedDocuments(
+					'Item',
+					all.filter((action) => !this.actor!.items.getName(action.name)),
+				);
+				break;
+			}
+			case ImportAction.Replace: {
+				for (const action of all) {
+					await this.actor!.items.getName(action.name)?.delete();
+				}
+				await this.actor!.createEmbeddedDocuments('Item', all);
+				break;
+			}
+			case ImportAction.Fresh: {
+				await this._removeItemType(all[0].type);
+				await this.actor!.createEmbeddedDocuments('Item', all);
+				break;
+			}
+		}
+
+		return Ok({});
+	}
+
+	async attributes(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async qualities(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async adeptPowers(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async augmentations(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async skills(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async gear(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async weapons(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async generalActions(_json: any): Promise<Result<ImportResult, string>> {
+		return this._genericItemImport(await getCoreGeneralActions(), this.settings.GeneralActions);
+	}
+
+	async matrixActions(_json: any): Promise<Result<ImportResult, string>> {
+		return this._genericItemImport(await getCoreMatrixActions(), this.settings.MatrixActions);
+	}
+
+	async lifestyles(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async sins(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
+
+	async spells(_json: any): Promise<Result<ImportResult, string>> {
+		return Ok({});
+	}
 
 	async _onImportGenesisActor(file: string): Promise<void> {
 		const response = await fetch(file);
@@ -150,12 +268,13 @@ export class ImportPrompt extends VueSheet(Application) {
 			return;
 		}
 
-		const data = this.actor.systemData;
+		const data = this.actor!.systemData;
 
 		// Add all core actions
-		await this.actor.createEmbeddedDocuments('Item', await getCoreGeneralActions());
-		await this.actor.createEmbeddedDocuments('Item', await getCoreMatrixActions());
-		await this.actor.createEmbeddedDocuments('Item', await getCorePrograms());
+		await this.generalActions(json);
+
+		await this.actor!.createEmbeddedDocuments('Item', await getCoreMatrixActions());
+		await this.actor!.createEmbeddedDocuments('Item', await getCorePrograms());
 
 		Object.keys(data.attributes).forEach((name: string) => {
 			const value = json.attr(name);
@@ -168,8 +287,8 @@ export class ImportPrompt extends VueSheet(Application) {
 		});
 
 		const coreSkills = await getCoreSkills();
-		await this.actor.createEmbeddedDocuments('Item', coreSkills);
-		const filtered = this.actor.items.filter((i) => i.type === 'skill');
+		await this.actor!.createEmbeddedDocuments('Item', coreSkills);
+		const filtered = this.actor!.items.filter((i) => i.type === 'skill');
 
 		for (const s of filtered) {
 			const skill = s as SR6Item<SkillDataModel>;
@@ -196,7 +315,7 @@ export class ImportPrompt extends VueSheet(Application) {
 
 		let sins: SR6Item<SINDataModel>[] = [];
 		if (Object.prototype.hasOwnProperty.call(json, 'sins') && json.sins.length > 0) {
-			sins = (await this.actor.createEmbeddedDocuments(
+			sins = (await this.actor!.createEmbeddedDocuments(
 				'Item',
 				json.sins.map((value: any) => {
 					return {
@@ -511,11 +630,11 @@ export class ImportPrompt extends VueSheet(Application) {
 		}
 
 		if (items.length > 0) {
-			await this.actor.createEmbeddedDocuments('Item', items);
+			await this.actor!.createEmbeddedDocuments('Item', items);
 		}
 
-		await this.actor.update({ ['system']: data });
-		// await this.actor.delete();
+		await this.actor!.update({ ['system']: data });
+		// await this.actor!.delete();
 	}
 
 	static override get defaultOptions(): ApplicationOptions {
@@ -528,7 +647,7 @@ export class ImportPrompt extends VueSheet(Application) {
 		};
 	}
 
-	constructor(actor: Maybe<SR6Actor> = null) {
+	constructor(actor: Maybe<SR6Actor<CharacterDataModel>> = null) {
 		super();
 		this.actor = actor;
 	}

@@ -2,8 +2,6 @@ import { InitiativeType } from '@/data';
 import { IHasInitiative } from '@/data/interfaces';
 
 import SR6Actor from '@/actor/SR6Actor';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-import SR6Item from '@/item/SR6Item';
 import InitiativeRoll, { InitiativeRollData } from '@/roll/InitiativeRoll';
 import { ContextBase } from '@/vue/SheetContext';
 import VueRollPrompt from '@/roll/vue/InitiativeRollPrompt.vue';

@@ -2,7 +2,6 @@
 import { ActivationPhase } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import { IModifier } from '@/modifier';
-import { TestPoolModifier } from '@/modifier/TestModifiers';
 import EdgeMenu from '@/edge/vue/EdgeMenu.vue';
 import { inject, toRaw, ref, onMounted } from 'vue';
 import { TestRollPromptContext } from '@/roll/TestRollPrompt';

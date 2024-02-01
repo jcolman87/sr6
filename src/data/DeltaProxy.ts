@@ -1,5 +1,6 @@
 function makeDeltaProxyHandler<T extends object>(
 	object: T,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	rootDelta: any,
 	path: string | undefined = undefined,
 ): ProxyHandler<T> {
@@ -21,7 +22,8 @@ function makeDeltaProxyHandler<T extends object>(
 	};
 }
 
-export function makeDeltaProxy<T extends object>(object: T, delta: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export function makeDeltaProxy<T extends object>(object: T, delta: any): any {
 	const merged = foundry.utils.mergeObject(object, delta, { inplace: false });
 	return new Proxy(merged, makeDeltaProxyHandler(merged, delta));
 }

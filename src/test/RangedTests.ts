@@ -9,7 +9,7 @@ import { PhysicalAttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
 import { getTargetActorIds } from '@/util';
-import { Component, toRaw } from 'vue';
+import { Component } from 'vue';
 
 import AttackPromptComponent from '@/test/vue/prompt/RangedAttackTest.vue';
 import AttackChatComponent from '@/test/vue/chat/RangedAttackTest.vue';

@@ -10,7 +10,7 @@ import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
 import { AttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
-import { ITest, RollDataDelta, TestError, TestType } from '@/test/index';
+import { ITest, RollDataDelta, TestType } from '@/test/index';
 import { getTargetActorIds } from '@/util';
 import { Result } from 'ts-results';
 import { Component } from 'vue';

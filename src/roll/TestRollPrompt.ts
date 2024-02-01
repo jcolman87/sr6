@@ -1,17 +1,3 @@
-/**
- * FVTT-SR6
- * Unofficial implementation of the SR6 RPG for Foundry
- *
- * @author jaynus
- * @file Dice roll prompt app.
- */
-
-import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
-
-import SR6Actor from '@/actor/SR6Actor';
-import SR6Item from '@/item/SR6Item';
-
 import { ITest } from '@/test';
 import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { ContextBase } from '@/vue/SheetContext';

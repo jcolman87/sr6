@@ -118,7 +118,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		this.data.pool = Math.max(0, newValue);
 	}
 
-	is(type: ConstructorOf<BaseTest>): boolean {
+	is(_type: ConstructorOf<BaseTest>): boolean {
 		throw 'lol';
 	}
 

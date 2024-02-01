@@ -8,7 +8,7 @@ export interface WoundModifierSourceData extends TestPoolModifierSourceData {
 
 export class WoundModifier extends TestPoolModifier<WoundModifierSourceData> {
 	override isApplicable(test: Maybe<ITest> = null): boolean {
-		if (this.value == 0) {
+		if (this.value === 0) {
 			return false;
 		}
 		return super.isApplicable(test);

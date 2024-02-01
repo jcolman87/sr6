@@ -3,6 +3,7 @@
  * @author jaynus
  * @file Basic Actor Sheet
  */
+import CharacterDataModel from '@/actor/data/CharacterDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { ImportPrompt } from '@/app/ImportPrompt';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
@@ -10,7 +11,6 @@ import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Item from '@/item/SR6Item';
 import { IHasOnDropActor, IHasOnDropItem } from '@/data/interfaces';
 import './SR6ActorSheet.scss';
-import { data } from '../../gulpfile';
 
 export default class SR6ActorSheet<
 	TActorDataModel extends BaseActorDataModel = BaseActorDataModel,
@@ -45,18 +45,20 @@ export default class SR6ActorSheet<
 	}
 
 	protected override async _renderOuter(options: RenderOptions): Promise<JQuery> {
-		let outer = await super._renderOuter(options);
+		const outer = await super._renderOuter(options);
 
-		// Add import button
-		const importButton = $(
-			'<a class="sr6-import-button" title="SR6 Importer"><i class="fa-solid fa-file-import"></i></a>',
-		);
-		importButton.on('click', async (_ev: JQuery.ClickEvent) => {
-			const importPrompt = new ImportPrompt(this.actor);
-			await importPrompt.render(true);
-		});
+		if (this.actor.systemData instanceof CharacterDataModel) {
+			// Add import button
+			const importButton = $(
+				'<a class="sr6-import-button" title="SR6 Importer"><i class="fa-solid fa-file-import"></i></a>',
+			);
+			importButton.on('click', async (_ev: JQuery.ClickEvent) => {
+				const importPrompt = new ImportPrompt(this.actor as unknown as SR6Actor<CharacterDataModel>);
+				await importPrompt.render(true);
+			});
 
-		outer.find('.window-title').append(importButton);
+			outer.find('.window-title').append(importButton);
+		}
 
 		return outer;
 	}

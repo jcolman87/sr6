@@ -57,7 +57,7 @@ const sourceGear = computedAsync(async () => {
 				<div class="row">
 					<label>Gear Added:</label>
 					<table>
-						<tr v-for="item in sourceGear">
+						<tr v-for="item in sourceGear" v-bind:key="item.uuid">
 							<td class="item-image">
 								<img :src="item.img" :title="item.name" :alt="item.name" width="32px" height="32px" />
 							</td>

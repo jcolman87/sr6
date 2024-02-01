@@ -243,7 +243,7 @@ export class CreateSpecialEffect extends BaseEdgeBoost implements IEdgeBoost {
 	edgeCost: number = 5;
 }
 
-//////
+// TODO: Edge Action? Broken atm
 
 export class EdgeActionBoost extends BaseEdgeBoost implements IEdgeBoost {
 	category: EdgeCategory = EdgeCategory.general;
@@ -256,6 +256,7 @@ export class EdgeActionBoost extends BaseEdgeBoost implements IEdgeBoost {
 	get edgeAction(): Maybe<EdgeActionDataModel> {
 		return this._edgeAction;
 	}
+
 	set edgeAction(edgeAction: Maybe<EdgeActionDataModel>) {
 		this._edgeAction = edgeAction;
 	}
@@ -353,9 +354,11 @@ export function register(): void {
 						},
 					})
 				) {
-					payload.data.value > 0
-						? await targetActor.systemData.monitors.gainEdge(payload.data.value)
-						: await targetActor.systemData.monitors.spendEdge(payload.data.value);
+					if (payload.data.value > 0) {
+						await targetActor.systemData.monitors.gainEdge(payload.data.value);
+					} else {
+						await targetActor.systemData.monitors.spendEdge(payload.data.value);
+					}
 				}
 
 				break;

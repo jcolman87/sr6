@@ -1,8 +1,7 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { ActivationDataModel } from '@/data/ActivationDataModel';
 import BaseDataModel from '@/data/BaseDataModel';
-import { ConditionalDataModel, ConditionalType } from '@/effect/conditional';
+import { ConditionalDataModel } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
 import { ITest, TestType } from '@/test';
@@ -89,7 +88,7 @@ export default abstract class EdgeActionDataModel extends BaseItemDataModel {
 	abstract finishRoll: Maybe<FinishRollFn>;
 	abstract prepareActor: Maybe<PrepareActorFn>;
 
-	override prepareData() {
+	override prepareData(): void {
 		if (this.scripts?.prepareInitiative) {
 			this.prepareInitiative = new AsyncFunction('data', this.scripts!.prepareInitiative);
 		}

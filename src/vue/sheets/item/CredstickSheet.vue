@@ -20,6 +20,7 @@ const system = computed(() => (context.data.item as SR6Item<CredstickDataModel>)
 					><select data-dtype="Number" name="system.rating">
 						<option
 							v-for="key of enumKeys(CredstickRating).filter((k) => isAlpha(k))"
+							v-bind:key="key"
 							:value="CredstickRating[key]"
 						>
 							{{ key }}

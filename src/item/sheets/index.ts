@@ -7,7 +7,6 @@
 import AdeptPowerSheet from '@/vue/sheets/item/AdeptPowerSheet.vue';
 import AugmentationSheet from '@/vue/sheets/item/AugmentationSheet.vue';
 import BasicGearSheet from '@/vue/sheets/item/BasicGearSheet.vue';
-import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
 import ComplexFormSheet from '@/vue/sheets/item/ComplexFormSheet.vue';
 import ContactSheet from '@/vue/sheets/item/ContactSheet.vue';
 import CredstickSheet from '@/vue/sheets/item/CredstickSheet.vue';

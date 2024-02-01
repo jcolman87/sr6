@@ -1,5 +1,4 @@
 import SR6Actor from '@/actor/SR6Actor';
-import { isString } from 'remeda';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ConstructorOf<T> = new (...args: any[]) => T;
@@ -96,7 +95,7 @@ export function getSelfActor(): SR6Actor {
 
 export function getSelectedActors(): SR6Actor[] {
 	return getSelectedTokens()
-		.filter((token) => token.actor != null)
+		.filter((token) => token.actor !== null)
 		.map((token) => {
 			return token.actor as SR6Actor;
 		});
@@ -130,7 +129,7 @@ export function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O):
 	return Object.keys(obj).filter((k) => !Number.isNaN(k)) as K[];
 }
 
-export function isAlphaNumeric(str: string) {
+export function isAlphaNumeric(str: string): boolean {
 	const len: number = str.length;
 
 	for (let i = 0; i < len; i++) {
@@ -147,7 +146,7 @@ export function isAlphaNumeric(str: string) {
 	return true;
 }
 
-export function isAlpha(str: string) {
+export function isAlpha(str: string): boolean {
 	const len: number = str.length;
 
 	for (let i = 0; i < len; i++) {

@@ -9,10 +9,8 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import { IEdgeBoost } from '@/edge';
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 import SR6Actor from '@/actor/SR6Actor';
-import SR6Item from '@/item/SR6Item';
 
 import { ITest } from '@/test';
 import { ContextBase } from '@/vue/SheetContext';

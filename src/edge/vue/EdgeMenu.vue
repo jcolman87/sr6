@@ -9,7 +9,7 @@ import SR6Item from '@/item/SR6Item';
 import { ITest } from '@/test';
 import Localized from '@/vue/components/Localized.vue';
 import { getEventValue } from '@/vue/directives';
-import { ref, toRaw } from 'vue';
+import { ref } from 'vue';
 import { Collapse } from 'vue-collapsed';
 
 const props = withDefaults(
@@ -31,10 +31,10 @@ const emit = defineEmits<{
 const edgeBoost = ref<IEdgeBoost | null>(null);
 const showMenu = ref(props.show);
 
-const allEdgeActions = await getCoreEdgeActions();
+const _allEdgeActions = await getCoreEdgeActions();
 // TODO: disabled for now, i need to hardcode these after all
 // const availableEdgeActions = ref(allEdgeActions);
-const availableEdgeActions = ref([]);
+const availableEdgeActions = ref<SR6Item<EdgeActionDataModel>[]>([]);
 
 function getBoostsForPhase(phase: ActivationPhase): IEdgeBoost[] {
 	return (
@@ -61,15 +61,15 @@ async function onSelectEdgeAction(ev: Event) {
 	const uuid = getEventValue(ev) as string;
 	if (uuid) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const action = new (CONFIG.sr6.types.edge[EdgeBoostType.Action] as any)() as EdgeActionBoost;
-		action.edgeAction = toRaw(availableEdgeActions.value).find((action: SR6Item<EdgeActionDataModel>) => {
-			return action.uuid === uuid;
-		})?.systemData;
+		const _action = new (CONFIG.sr6.types.edge[EdgeBoostType.Action] as any)() as EdgeActionBoost;
+		// action.edgeAction = toRaw(availableEdgeActions.value).find((action: SR6Item<EdgeActionDataModel>) => {
+		//	return action.uuid === uuid;
+		// })?.systemData as EdgeActionDataModel;
 	} else {
 		edgeBoost.value = null;
 	}
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	//emit('setEdgeBoost', edgeBoost.value as any);
+	// emit('setEdgeBoost', edgeBoost.value as any);
 }
 
 function getEdgeBoostKey(boost: IEdgeBoost): undefined | string {
@@ -111,7 +111,11 @@ function edgeAvailable(): number {
 				<label><Localized label="SR6.Edge.EdgeAction" /></label>
 				<select @change="onSelectEdgeAction" :disabled="edgeBoost?.type !== EdgeBoostType.Action">
 					<option>-</option>
-					<option v-for="edgeAction in availableEdgeActions" :value="edgeAction.uuid">
+					<option
+						v-for="edgeAction in availableEdgeActions"
+						v-bind:key="edgeAction.uuid"
+						:value="edgeAction.uuid"
+					>
 						({{ edgeAction.systemData.edgeCostFormula }}) {{ edgeAction.name }}
 					</option>
 				</select>

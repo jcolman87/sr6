@@ -19,7 +19,6 @@
 	"devDependencies": {
 		"@rushstack/eslint-patch": "^1.7.2",
 		"@seald-io/nedb": "^4.0.4",
-		"@types/gulp": "^4.0.17",
 		"@types/jquery": "^3.5.29",
 		"@types/node": "^20.11.9",
 		"@types/tinymce": "^4.6.9",

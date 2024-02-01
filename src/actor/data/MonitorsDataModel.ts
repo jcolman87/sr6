@@ -123,7 +123,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 		}
 		const monitor: MonitorDataModel = this.get(type);
 
-		if (type == MonitorType.Physical) {
+		if (type === MonitorType.Physical) {
 			let remainder = value;
 			if (this.overflow.damage > 0) {
 				remainder = this.overflow.damage - value;
@@ -202,7 +202,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 				modifier.class === 'WoundModifier' && modifier.data.name === 'SR6.Modifiers.StunWoundModifier.Name',
 		) as WoundModifier | undefined;
 
-		if (!physicalWoundModifier && this.physical.woundModifier != 0) {
+		if (!physicalWoundModifier && this.physical.woundModifier !== 0) {
 			physicalWoundModifier = new WoundModifier({
 				parent: this.actor!,
 				source: this.actor!,
@@ -210,7 +210,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 			});
 			this.actor!.modifiers.all.push(physicalWoundModifier as unknown as IModifier);
 		}
-		if (!stunWoundModifier && this.stun.woundModifier != 0) {
+		if (!stunWoundModifier && this.stun.woundModifier !== 0) {
 			stunWoundModifier = new WoundModifier({
 				parent: this.actor!,
 				source: this.actor!,

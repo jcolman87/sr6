@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import SINDataModel from '@/item/data/feature/SINDataModel';
 import SelectItem from '@/vue/components/SelectItem.vue';
-import { computed, inject, onUpdated, toRaw, ref } from 'vue';
+import { computed, inject, toRaw } from 'vue';
 
 import SR6Item from '@/item/SR6Item';
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
@@ -12,6 +12,7 @@ import ContactDataModel from '@/item/data/feature/ContactDataModel';
 
 const context = inject<ActorSheetContext<CharacterDataModel>>(RootContext)!;
 const _system = computed(() => context.data.actor.systemData);
+
 const lifestyles = computed(() =>
 	toRaw(context.data.actor)
 		.items.filter((i) => i.type === 'lifestyle')
@@ -61,8 +62,8 @@ async function rollContact(_contact: SR6Item<ContactDataModel>) {
 							:options="sins"
 							:selectedId="sin.systemData.sin"
 							@change="
-								(newSin: Maybe<SR6Item<SINDataModel>>) => {
-									updateItem(context.data.actor, sin.id, 'system.sin', newSin?.uuid);
+								(newSin: Maybe<SR6Item>) => {
+									updateItem(context.data.actor, sin.id, 'system.sin', newSin?.uuid as string);
 								}
 							"
 						/>

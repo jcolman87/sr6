@@ -19,7 +19,7 @@ const availableActors = computed<SR6Actor[]>(() => {
 	}
 	return game.scenes
 		.active!.tokens.filter((token) => {
-			if (token.actor == null) {
+			if (token.actor === null) {
 				return false;
 			}
 			if (context.data.self?.uuid === token.actor.uuid) {

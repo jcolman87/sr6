@@ -9,12 +9,12 @@ const props = defineProps<{
 	actor?: SR6Actor;
 	type?: string;
 	options?: SR6Item<SINDataModel>[];
-	selected?: SR6Item<SINDataModel>;
-	selectedId?: ItemUUID;
+	selected?: SR6Item<SINDataModel> | null;
+	selectedId?: ItemUUID | null;
 }>();
 
 const emit = defineEmits<{
-	(e: 'change', value: SR6Item): void;
+	(e: 'change', value: Maybe<SR6Item>): void;
 }>();
 
 const items = computed<SR6Item[]>(() => {
