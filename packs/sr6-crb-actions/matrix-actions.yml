@@ -287,7 +287,7 @@ system:
     damage: null
     soak: null
 ---
-name: Enter Host
+name: Enter/Exit Host
 type: matrix_action
 img: /systems/sr6/assets/items/software.webp
 effects: []

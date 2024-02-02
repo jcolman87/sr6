@@ -3,8 +3,10 @@
 import { MonitorType } from '@/actor/data/MonitorsDataModel';
 import { ChatContext, ChatMessageContext } from '@/chat/SR6ChatMessage';
 import ChatHeader from '@/chat/vue/ChatHeader.vue';
+import { IHasMatrixPersona } from '@/data/interfaces';
 import { EdgeBoostType } from '@/edge';
 import SpendEdgePostRollPrompt from '@/roll/SpendEdgePostRollPrompt';
+import SR6Roll from '@/roll/vue/SR6Roll.vue';
 import { AttackTestData, isTargetOwner } from '@/test/AttackTestData';
 import { enumKeys, getSelfOrSelectedActors } from '@/util';
 import FloatCollapse from '@/vue/components/FloatCollapse.vue';
@@ -54,12 +56,20 @@ function getEdgeBoostKey(boost: EdgeBoostType): undefined | string {
 }
 
 function getDamage(): number {
-	return context.test?.damage || 0;
+	return toRaw(context.test)?.damage || 0;
 }
 
 async function applyDamage(type: MonitorType) {
 	for (const actor of getSelfOrSelectedActors()) {
-		await toRaw(actor.systemData.monitors.applyDamage(type, getDamage()));
+		if (type != MonitorType.Matrix) {
+			await toRaw(actor.systemData.monitors.applyDamage(type, getDamage()));
+		} else {
+			const hasPersona = actor.systemData as unknown as IHasMatrixPersona;
+			if (hasPersona.matrixPersona) {
+				console.log(hasPersona.matrixPersona.monitor(context.test?.item));
+				throw 'TODO';
+			}
+		}
 	}
 }
 
@@ -68,6 +78,8 @@ async function applyHealing(type: MonitorType) {
 		await toRaw(actor.systemData.monitors.applyHeal(type, getDamage()));
 	}
 }
+
+console.log('lol', context.test);
 
 onUpdated(update);
 onBeforeMount(update);
@@ -81,52 +93,9 @@ onBeforeMount(update);
 				<div class="roll-formula">{{ context.test?.roll?.formula }}</div>
 				<div style="text-align: center; font-weight: bold">{{ context.test?.roll?.total }}</div>
 			</template>
-			<template v-else-if="context.roll">
-				<section
-					class="flexrow roll-information"
-					@mouseenter.prevent="expandDice = true"
-					@mouseleave.prevent="expandDice = false"
-				>
-					<div class="roll-formula">{{ context.test ? context.test?.data.pool : context.roll.pool }}d6</div>
-					<div class="hits">
-						<i class="bold">{{ context.test ? context.test?.roll?.hits : context.roll.hits }}</i> hits
-					</div>
+			<SR6Roll v-else-if="context.test" :roll="context.test?.roll" />
+			<SR6Roll v-else-if="context.roll" :roll="context.roll" />
 
-					<!-- Glitch/Critical Glitch -->
-
-					<div class="glitches" v-if="context.test">
-						<div class="critical-glitch" v-if="context.test?.roll?.is_critical_glitch">
-							<Localized label="SR6.Labels.CriticalGlitch" />
-						</div>
-						<div class="glitch" v-else-if="context.test?.roll?.is_glitch">
-							<Localized label="SR6.Labels.Glitch" />
-						</div>
-					</div>
-
-					<!-- Success/Fail -->
-					<div class="result" v-if="context.test">
-						<div class="success" v-if="context.test?.roll?.threshold && context.test?.roll.success">
-							<Localized label="SR6.Labels.Success" />
-						</div>
-						<div class="failure" v-else-if="!context.test?.roll?.success">
-							<Localized label="SR6.Labels.Failure" />
-						</div>
-					</div>
-				</section>
-				<div class="threshold" v-if="context.test?.roll?.threshold">
-					Threshold: <i class="bold">{{ context.test?.roll.threshold }}</i>
-				</div>
-
-				<!-- Dice -->
-				<FloatCollapse v-if="context.test" :when="expandDice" class="dice-details">
-					<i class="dice" v-for="num in context.test?.roll!.sides" v-bind:key="num" :data-die="num"
-						>&nbsp;
-					</i>
-				</FloatCollapse>
-				<FloatCollapse v-else :when="expandDice" class="dice-details">
-					<i class="dice" v-for="num in context.roll.sides" v-bind:key="num" :data-die="num">&nbsp; </i>
-				</FloatCollapse>
-			</template>
 			<template v-if="context.test">
 				<!-- Test Information -->
 				<section v-if="context.test" style="min-width: 100%">
@@ -174,6 +143,16 @@ onBeforeMount(update);
 							<i class="fa fa-plus fa-lg"></i>
 						</div>
 					</div>
+					<div class="damage-matrix-bg" :title="`Damage (${getDamage()}M)`">
+						<div class="context-button-damage" @click.prevent="applyDamage(MonitorType.Matrix)">
+							<i class="fa fa-minus fa-lg"></i>
+						</div>
+					</div>
+					<div class="damage-matrix-bg" :title="`Heal (${getDamage()}M)`">
+						<div class="context-button-heal" @click.prevent="applyHealing(MonitorType.Matrix)">
+							<i class="fa fa-plus fa-lg"></i>
+						</div>
+					</div>
 				</FloatCollapse>
 			</template>
 		</template>
@@ -209,6 +188,11 @@ onBeforeMount(update);
 }
 .damage-stun-bg {
 	background-color: rgba(137, 196, 244, 0.7);
+	padding: 3px;
+	display: inline-block;
+}
+.damage-matrix-bg {
+	background-color: rgba(90, 34, 139, 0.7);
 	padding: 3px;
 	display: inline-block;
 }

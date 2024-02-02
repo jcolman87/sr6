@@ -180,22 +180,19 @@ export abstract class GearMatrixDataModel extends BaseDataModel {
 
 export abstract class GearAvailabilityDataModel extends BaseDataModel {
 	abstract illegal: boolean;
-	abstract license: null | LicenseType;
+	abstract requiresLicense: boolean;
 	abstract rating: number;
+
+	abstract licensingSinId: Maybe<DocumentUUIDField>;
 
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
 			illegal: new fields.BooleanField({ initial: false, required: true, nullable: false }),
-			license: new fields.StringField({
-				initial: null,
-				blank: false,
-				nullable: true,
-				required: true,
-				choices: Object.values(LicenseType),
-			}),
+			requiresLicense: new fields.BooleanField({ initial: false, required: true, nullable: false }),
 			rating: new fields.NumberField({ initial: 1, nullable: false, required: true, min: 1 }),
+			licensingSinId: new DocumentUUIDField({ required: false, nullable: true }),
 		};
 	}
 }

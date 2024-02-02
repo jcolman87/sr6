@@ -75,3 +75,17 @@ export class DialogPrompt<TResult, TData> extends VueSheet(Application) {
 		});
 	}
 }
+
+export class ConfirmationPrompt<TData = null> extends DialogPrompt<boolean, TData> {
+	static override get defaultOptions(): ApplicationOptions {
+		return foundry.utils.mergeObject(super.defaultOptions, {
+			height: 100,
+		});
+	}
+
+	constructor(data: TData, vueComponent: Component, options?: ApplicationOptions) {
+		super(data, vueComponent, options);
+		this.data = data;
+		this._vueComponent = vueComponent;
+	}
+}

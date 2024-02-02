@@ -3,7 +3,7 @@ import AttributeTest from '@/test/AttributeTest';
 import { ITest } from '@/test';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import { TestModifier, TestModifierSourceData } from '@/modifier/TestModifiers';
-import { Target } from '@/test/BaseTest';
+import { Target } from '@/data';
 import { MatrixActionTest } from '@/test/MatrixTests';
 import SkillTest from '@/test/SkillTest';
 

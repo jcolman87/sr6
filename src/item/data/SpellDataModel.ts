@@ -1,24 +1,24 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { DamageType } from '@/data';
+import { DamageType, DamageForm, Duration, RangeType } from '@/data';
 
-import { SpellCombatType, SpellDamageForm, SpellDuration, SpellRangeType, SpellType } from '@/data/magic';
+import { SpellCombatType, SpellType, SpellAdjustmentType, SpellAdjustments } from '@/data/magic';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 export type SpellRangeData = {
-	type: SpellRangeType;
+	type: RangeType;
 	value: number;
 };
 
 export type SpellDurationData = {
-	type: SpellDuration;
+	type: Duration;
 	value: number;
 };
 
 export type SpellDamageData = {
 	combat: SpellCombatType;
 	type: DamageType;
-	form: SpellDamageForm;
+	form: DamageForm;
 };
 
 export type SpellFormulaData = {
@@ -26,18 +26,6 @@ export type SpellFormulaData = {
 	damage: string;
 	defend: string;
 	soak: string;
-};
-
-export enum SpellAdjustmentType {
-	AmpUp = 'amp',
-	IncreaseArea = 'increase',
-	ShiftArea = 'shift',
-}
-
-export type SpellAdjustments = {
-	[SpellAdjustmentType.AmpUp]: number;
-	[SpellAdjustmentType.IncreaseArea]: number;
-	[SpellAdjustmentType.ShiftArea]: number;
 };
 
 export function drainFromSpellAdjustments(adjustments: SpellAdjustments): number {
@@ -189,11 +177,11 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 			range: new fields.SchemaField(
 				{
 					type: new fields.StringField({
-						initial: SpellRangeType.Touch,
+						initial: RangeType.Touch,
 						required: true,
 						nullable: false,
 						blank: false,
-						choices: Object.values(SpellRangeType),
+						choices: Object.values(RangeType),
 					}),
 					value: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
 				},
@@ -202,11 +190,11 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 			duration: new fields.SchemaField(
 				{
 					type: new fields.StringField({
-						initial: SpellDuration.Instantaneous,
+						initial: Duration.Instantaneous,
 						required: true,
 						nullable: false,
 						blank: false,
-						choices: Object.values(SpellDuration),
+						choices: Object.values(Duration),
 					}),
 					value: new fields.NumberField({ initial: 1, required: false, nullable: false, integer: true }),
 				},
@@ -229,11 +217,11 @@ export default abstract class SpellDataModel extends BaseItemDataModel {
 						choices: Object.values(DamageType),
 					}),
 					form: new fields.StringField({
-						initial: SpellDamageForm.Force,
+						initial: DamageForm.Force,
 						required: true,
 						nullable: false,
 						blank: false,
-						choices: Object.values(SpellDamageForm),
+						choices: Object.values(DamageForm),
 					}),
 				},
 				{ required: true, nullable: true },

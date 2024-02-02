@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
+import ComplexFormDataModel from '@/item/data/ComplexFormDataModel';
 import SR6Item from '@/item/SR6Item';
 import BasicItemSheet from '@/vue/sheets/item/BasicItemSheet.vue';
 import { computed, inject } from 'vue';

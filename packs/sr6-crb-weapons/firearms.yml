@@ -14,7 +14,6 @@ system:
   costFormula: '435'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -57,7 +56,6 @@ system:
   costFormula: '200'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -93,7 +91,6 @@ system:
   costFormula: '345'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -131,7 +128,7 @@ system:
   costFormula: '350'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -171,7 +168,7 @@ system:
   costFormula: '400'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -211,7 +208,7 @@ system:
   costFormula: '260'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -249,7 +246,7 @@ system:
   costFormula: '460'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -288,7 +285,7 @@ system:
   costFormula: '230'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -326,7 +323,7 @@ system:
   costFormula: '390'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -364,7 +361,7 @@ system:
   costFormula: '250'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -404,7 +401,7 @@ system:
   costFormula: '520'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -444,7 +441,7 @@ system:
   costFormula: '510'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -482,7 +479,7 @@ system:
   costFormula: '690'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -519,7 +516,7 @@ system:
   costFormula: '750'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -564,7 +561,7 @@ system:
   costFormula: '610'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -604,7 +601,7 @@ system:
   costFormula: '315'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -640,7 +637,7 @@ system:
   costFormula: '275'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -679,7 +676,7 @@ system:
   costFormula: '500'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -718,7 +715,7 @@ system:
   costFormula: '400'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -754,7 +751,7 @@ system:
   costFormula: '730'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -795,7 +792,7 @@ system:
   costFormula: '785'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -836,7 +833,7 @@ system:
   costFormula: '840'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -877,7 +874,7 @@ system:
   costFormula: '925'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -918,7 +915,7 @@ system:
   costFormula: '825'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -957,7 +954,7 @@ system:
   costFormula: '750'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -996,7 +993,7 @@ system:
   costFormula: '725'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -1036,7 +1033,7 @@ system:
   costFormula: '455'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -1076,7 +1073,7 @@ system:
   costFormula: '330'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -1114,7 +1111,7 @@ system:
   costFormula: '700'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -1153,7 +1150,7 @@ system:
   costFormula: '325'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1193,7 +1190,7 @@ system:
   costFormula: '325'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -1242,7 +1239,7 @@ system:
   costFormula: '2100'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -1281,7 +1278,7 @@ system:
   costFormula: '3400'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1322,7 +1319,7 @@ system:
   costFormula: '0'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1356,7 +1353,7 @@ system:
   costFormula: '2100'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -1397,7 +1394,7 @@ system:
   costFormula: '2100'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -1437,7 +1434,7 @@ system:
   costFormula: '3200'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1479,7 +1476,7 @@ system:
   costFormula: '0'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1513,7 +1510,7 @@ system:
   costFormula: '0'
   availability:
     illegal: false
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1548,7 +1545,7 @@ system:
   costFormula: '11000'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -1583,7 +1580,7 @@ system:
   costFormula: '9050'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1621,7 +1618,7 @@ system:
   costFormula: '13200'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1660,7 +1657,7 @@ system:
   costFormula: '12000'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 3
   matrix: null
   attackRatings:
@@ -1696,7 +1693,7 @@ system:
   costFormula: '11100'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 2
   matrix: null
   attackRatings:
@@ -1733,7 +1730,7 @@ system:
   costFormula: '15200'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 6
   matrix: null
   attackRatings:
@@ -1772,7 +1769,7 @@ system:
   costFormula: '4175'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -1812,7 +1809,7 @@ system:
   costFormula: '6900'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 4
   matrix: null
   attackRatings:
@@ -1851,7 +1848,7 @@ system:
   costFormula: '8000'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 5
   matrix: null
   attackRatings:
@@ -1892,7 +1889,7 @@ system:
   costFormula: '10000'
   availability:
     illegal: true
-    license: firearm
+    requiresLicense: true
     rating: 6
   matrix: null
   attackRatings:

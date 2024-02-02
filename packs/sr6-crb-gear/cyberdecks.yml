@@ -11,7 +11,6 @@ system:
   costFormula: '24750'
   availability:
     illegal: true
-    license: null
     rating: 3
   monitors:
     matrix:
@@ -41,7 +40,6 @@ system:
   costFormula: '61500'
   availability:
     illegal: true
-    license: null
     rating: 3
   monitors:
     matrix:
@@ -71,7 +69,6 @@ system:
   costFormula: '95000'
   availability:
     illegal: true
-    license: null
     rating: 3
   monitors:
     matrix:
@@ -101,7 +98,6 @@ system:
   costFormula: '107000'
   availability:
     illegal: true
-    license: null
     rating: 4
   monitors:
     matrix:
@@ -131,7 +127,6 @@ system:
   costFormula: '172500'
   availability:
     illegal: true
-    license: null
     rating: 5
   monitors:
     matrix:
@@ -161,7 +156,6 @@ system:
   costFormula: '410600'
   availability:
     illegal: true
-    license: null
     rating: 6
   monitors:
     matrix:

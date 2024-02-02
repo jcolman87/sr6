@@ -1,9 +1,11 @@
+import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import { InitiativeType } from '@/data';
 import { AvailableActions, IHasInitiative } from '@/data/interfaces';
 import { MatrixSimType } from '@/data/matrix';
 import { AdjustableMatrixAttributesDataModel } from '@/data/MatrixAttributesDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import GearDataModel from '@/item/data/gear/GearDataModel';
+import MatrixICDataModel from '@/item/data/MatrixICDataModel';
 
 import SR6Item from '@/item/SR6Item';
 import { InitiativeRollData } from '@/roll/InitiativeRoll';
@@ -115,6 +117,22 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel i
 		return this.actor!.solveFormula(this.formulas.defenseRating);
 	}
 
+	monitor(item: Maybe<SR6Item> = null): Maybe<MonitorDataModel> {
+		switch (this.type) {
+			case PersonaType.Device: {
+				return item
+					? (item as SR6Item<GearDataModel>).systemData.monitors.matrix
+					: this.sourceDevice?.systemData.monitors.matrix;
+			}
+			case PersonaType.Living: {
+				return this.actor!.systemData.monitors.stun;
+			}
+			case PersonaType.IC: {
+				return (item as SR6Item<MatrixICDataModel>).systemData.monitor;
+			}
+		}
+	}
+
 	get woundModifier(): number {
 		if (!this.sourceDevice) {
 			return 0;
@@ -148,6 +166,8 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel i
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.attributes.prepareDerivedData();
+
+		console.log('wut', this.actor!.modifiers.simple);
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

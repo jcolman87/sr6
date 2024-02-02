@@ -59,3 +59,41 @@ export enum Distance {
 	Far = 'far',
 	Extreme = 'extreme',
 }
+
+export enum Target {
+	Any = 0,
+	None = 0,
+	Self = 1,
+	Target = 2,
+}
+
+export enum TargetString {
+	Any = 'any',
+	None = 'none',
+	Self = 'self',
+	Target = 'target',
+}
+
+export enum RangeType {
+	Touch = 'touch',
+	LineOfSight = 'los',
+	LineOfSightArea = 'losa',
+	Perceived = 'perceived',
+}
+
+export enum Duration {
+	Instantaneous = 'I',
+	Sustained = 'S',
+	Permanent = 'P',
+	Limited = 'L',
+}
+
+export enum DamageForm {
+	Force = 'force',
+	Stun = 'stun',
+	Fire = 'fire',
+	Acid = 'acid',
+	Electrical = 'electric',
+	Air = 'air',
+	Cold = 'cold',
+}

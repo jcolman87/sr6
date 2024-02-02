@@ -35,6 +35,10 @@ export abstract class MonitorDataModel extends BaseDataModel {
 		};
 	}
 
+	async applyHeal(type: MonitorType, value: number): Promise<void> {}
+
+	async applyDamage(type: MonitorType, value: number): Promise<void> {}
+
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 

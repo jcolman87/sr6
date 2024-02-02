@@ -22,7 +22,7 @@ import SINDataModel from '@/item/data/feature/SINDataModel';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import QualityDataModel from '@/item/data/feature/QualityDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
-import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
+import ComplexFormDataModel from '@/item/data/ComplexFormDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
 import SpellDataModel from '@/item/data/SpellDataModel';
 

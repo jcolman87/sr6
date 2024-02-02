@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { createNewItem } from '@/vue/directives';
 import { computed, inject, toRaw, ref } from 'vue';
 import SR6Item from '@/item/SR6Item';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
@@ -48,6 +49,7 @@ const draggingItem = ref(false);
 		</div>
 		<div>
 			<label>Gear</label>
+			<div><a class="fas fa-plus" @click.prevent="createNewItem(context.data.actor, 'gear')" /></div>
 			<TransitionGroup name="weapons">
 				<template v-for="item in gear" :key="item.id">
 					<InventoryItem

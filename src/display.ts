@@ -3,7 +3,7 @@ import { GearAvailabilityDataModel, GearSize } from '@/item/data/gear/GearDataMo
 export function GearAvailabilityToString(avail: GearAvailabilityDataModel): string {
 	const rating = avail.rating.toString();
 	const legal = avail.illegal ? '(I)' : '';
-	const license = avail.license ? '(L)' : '';
+	const license = avail.requiresLicense ? '(L)' : '';
 
 	return `${rating} ${legal} ${license}`.trim().replace('  ', ' ');
 }

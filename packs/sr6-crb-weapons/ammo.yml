@@ -7,7 +7,6 @@ system:
   costFormula: '0.5'
   availability:
     illegal: false
-    license: null
     rating: 1
 ---
 name: Holdout/Light/Machine Pistol Ammo (APDS)
@@ -19,7 +18,6 @@ system:
   costFormula: '1.5'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '2'
@@ -33,7 +31,6 @@ system:
   costFormula: '1'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '1'
@@ -47,7 +44,6 @@ system:
   costFormula: '0.75'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '1'
@@ -61,7 +57,6 @@ system:
   costFormula: '0.75'
   availability:
     illegal: false
-    license: null
     rating: 1
 # Change damage to stun
   damageModifierFormula: '0'
@@ -76,7 +71,6 @@ system:
   costFormula: '1'
   availability:
     illegal: false
-    license: null
     rating: 1
 # Change damage to stun
   damageModifierFormula: '0'
@@ -91,7 +85,6 @@ system:
   costFormula: '1'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '0'
@@ -105,7 +98,6 @@ system:
   costFormula: '1'
   availability:
     illegal: false
-    license: null
     rating: 1
 ---
 name: Heavy Pistol/SMG Ammo  (APDS)
@@ -117,7 +109,6 @@ system:
   costFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '2'
@@ -131,7 +122,6 @@ system:
   costFormula: '2'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '1'
@@ -145,7 +135,6 @@ system:
   costFormula: '1.5'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '1'
@@ -159,7 +148,6 @@ system:
   costFormula: '1.5'
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -174,7 +162,6 @@ system:
   costFormula: '2'
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -189,7 +176,6 @@ system:
   costFormula: '2'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '0'
@@ -203,7 +189,6 @@ system:
   costFormula: '2'
   availability:
     illegal: false
-    license: null
     rating: 1
 ---
 name: Rifle Ammo (APDS)
@@ -215,7 +200,6 @@ system:
   costFormula: '6'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '2'
@@ -229,7 +213,6 @@ system:
   costFormula: '4'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '1'
@@ -243,7 +226,6 @@ system:
   costFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '1'
@@ -257,7 +239,6 @@ system:
   costFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -272,7 +253,6 @@ system:
   costFormula: '4'
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -287,7 +267,6 @@ system:
   costFormula: '4'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '0'
@@ -301,7 +280,6 @@ system:
   costFormula: '1.5'
   availability:
     illegal: false
-    license: null
     rating: 1
 ---
 name: Shotgun Ammo (APDS)
@@ -313,7 +291,6 @@ system:
   costFormula: '4.5'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '2'
@@ -327,7 +304,6 @@ system:
   costFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '1'
@@ -341,7 +317,6 @@ system:
   costFormula: '2.25'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '1'
@@ -355,7 +330,6 @@ system:
   costFormula: '2.25'
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -370,7 +344,6 @@ system:
   costFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -385,7 +358,6 @@ system:
   costFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '0'
@@ -399,7 +371,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
 ---
 name: Machine Gun Ammo (APDS)
@@ -411,7 +382,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '2'
@@ -425,7 +395,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '1'
@@ -439,7 +408,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '1'
@@ -453,7 +421,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -468,7 +435,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -483,7 +449,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '0'
@@ -497,7 +462,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
 ---
 name: Taser Ammo (APDS)
@@ -509,7 +473,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '2'
@@ -523,7 +486,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '1'
@@ -537,7 +499,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '-1'
   attackRatingModifierFormula: '1'
@@ -551,7 +512,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -566,7 +526,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   # Change damage to stun
   damageModifierFormula: '0'
@@ -581,7 +540,6 @@ system:
   costFormula: ''
   availability:
     illegal: false
-    license: null
     rating: 1
   damageModifierFormula: '0'
   attackRatingModifierFormula: '0'

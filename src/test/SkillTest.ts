@@ -2,7 +2,9 @@ import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import { TestType } from '@/test';
 import ChatComponent from '@/test/vue/chat/SkillTest.vue';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
+import SkillUse from '@/vue/components/SkillUse.vue';
 import { Component } from 'vue';
+import { toRaw } from 'vue/dist/vue';
 
 export interface SkillTestData extends BaseTestData {
 	skillUse: SkillUseDataModel;
@@ -18,8 +20,12 @@ export default class SkillTest extends BaseTest<SkillTestData> {
 	}
 
 	constructor(args: TestConstructorData<SkillTestData>) {
-		args.data.pool = args.data.skillUse.pool;
-
 		super(args);
+		if (!args.data.pool) {
+			if (args.data.skillUse) {
+				args.data.skillUse = new SkillUseDataModel(args.data.skillUse, { parent: this.actor });
+			}
+			args.data.pool = args.data.skillUse.pool;
+		}
 	}
 }

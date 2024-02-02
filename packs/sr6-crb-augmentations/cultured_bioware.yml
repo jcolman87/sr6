@@ -14,7 +14,6 @@ system:
   cost: '@rating * 31500'
   availability:
     illegal: false
-    license: null
     rating: 5
 ---
 name: Damage Compensator
@@ -27,7 +26,7 @@ system:
   cost: '@rating * 2000'
   availability:
     illegal: false
-    license: 'damage_compensator'
+    requiresLicense: true
     rating: 5
 ---
 name: Mnemonic Enhancer
@@ -40,7 +39,6 @@ system:
   cost: '@rating * 9000'
   availability:
     illegal: false
-    license: null
     rating: 5
 ---
 name: Pain Editor
@@ -70,7 +68,6 @@ system:
     type: 'minor'
   availability:
     illegal: true
-    license: null
     rating: 5
 ---
 name: Reflex Recorder
@@ -83,7 +80,6 @@ system:
   cost: '@rating * 9000'
   availability:
     illegal: false
-    license: null
     rating: 5
 ---
 name: Sleep Regulator
@@ -96,7 +92,6 @@ system:
   cost: '@rating * 9000'
   availability:
     illegal: false
-    license: null
     rating: 5
 ---
 name: Synaptic Booster
@@ -118,5 +113,5 @@ system:
   cost: '@rating * 95000'
   availability:
     illegal: false
-    license: 'synaptic_booster'
+    requiresLicense: true
     rating: 5

@@ -14,7 +14,6 @@ system:
     defenseRatingFormula: '1'
   availability:
     illegal: false
-    license: null
     rating: 1
   description: 'Synthleather is the norm for street types, and this type of jacket (waist-length to duster) never goes out of style. It even offers a modicum of protection.'
 ---
@@ -34,7 +33,6 @@ system:
     defenseRatingFormula: '2'
   availability:
     illegal: false
-    license: null
     rating: 2
   description: 'This is the fancy armored suit popular among Mr. Johnsons, faces, and fixers looking for a little protection coupled with style. It features a concealable holster (see p. 259) in the jacket.'
 ---
@@ -54,7 +52,6 @@ system:
     defenseRatingFormula: '2'
   availability:
     illegal: false
-    license: null
     rating: 2
   description: 'Lightweight ballistic weave makes these garments almost impossible to detect as armor. It doesn’t provide as much protection as real armor, but it comes in just about any style you desire.'
 ---
@@ -74,7 +71,6 @@ system:
     defenseRatingFormula: '4'
   availability:
     illegal: false
-    license: null
     rating: 2
   description: 'Available in all manner of styles, it offers good protection without catching too much attention. But dont think of wearing one to a social event or government building.'
 ---
@@ -94,7 +90,7 @@ system:
     defenseRatingFormula: '5'
   availability:
     illegal: false
-    license: 'bodyarmor'
+    requiresLicense: true
     rating: 4
   description: 'This cowboy-style duster has been consistently popular on the mean streets of the worlds sprawls for the past fifty years. Besides being protective, the armored trenchcoat provides a bonus Edge against tests to spot items hidden underneath.'
 ---
@@ -114,7 +110,7 @@ system:
     defenseRatingFormula: '2'
   availability:
     illegal: false
-    license: 'bodyarmor'
+    requiresLicense: true
     rating: 4
   description: 'This armor is worn by military and security personnel around the world for heavy-duty jobs. It is styled for intimidation but includes an array of tactical holsters, pouches, and webbing for deadly effi-ciency. It’s going to draw attention, just so you know. The suit can be modified for environmental adaptation (hot or cold environments) or chemically sealed to completely protect the wearer from toxic environments and attacks. The suit comes with a helmet with a Capacity of 6 for vision or audio enhancements.'
 ---
@@ -134,6 +130,5 @@ system:
     defenseRatingFormula: '3'
   availability:
     illegal: false
-    license: null
     rating: 2
   description: 'This cowboy-style duster has been consistently popular on the mean streets of the worlds sprawls for the past fifty years. Besides being protective, the armored trenchcoat provides a bonus Edge against tests to spot items hidden underneath.'

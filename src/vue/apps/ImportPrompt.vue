@@ -12,10 +12,22 @@ async function click() {
 		},
 	}).render(true);
 }
+
+function setGlobal(action: ImportAction) {
+	Object.keys(context.app.settings).forEach((key) => ((context.app.settings as any)[key] = action));
+}
 </script>
 
 <template>
 	<div class="flexrow">
+		<div class="section flexcol" style="width: auto">
+			<div class="section-head">Global</div>
+			<input type="button" value="Skip" @click="setGlobal(ImportAction.Skip)" />
+			<input type="button" value="Replace" @click="setGlobal(ImportAction.Replace)" />
+			<input type="button" value="No Replace" @click="setGlobal(ImportAction.NoReplace)" />
+			<input type="button" value="Merge" @click="setGlobal(ImportAction.Merge)" />
+			<input type="button" value="Fresh" @click="setGlobal(ImportAction.Fresh)" />
+		</div>
 		<div class="section" style="width: auto" v-for="key in Object.keys(context.app.settings)" v-bind:key="key">
 			<div class="section-head">{{ key }}</div>
 			<div style="white-space: nowrap">
@@ -24,6 +36,7 @@ async function click() {
 					<input
 						:name="key"
 						type="radio"
+						@click="(context.app.settings as any)[key] = ImportAction.Skip"
 						:checked="(context.app.settings as any)[key] === ImportAction.Skip"
 					/>
 					<span class="slider round"></span>
@@ -35,6 +48,7 @@ async function click() {
 					<input
 						:name="key"
 						type="radio"
+						@click="(context.app.settings as any)[key] = ImportAction.Replace"
 						:checked="(context.app.settings as any)[key] === ImportAction.Replace"
 					/>
 					<span class="slider round"></span>
@@ -46,6 +60,7 @@ async function click() {
 					<input
 						:name="key"
 						type="radio"
+						@click="(context.app.settings as any)[key] = ImportAction.NoReplace"
 						:checked="(context.app.settings as any)[key] === ImportAction.NoReplace"
 					/>
 					<span class="slider round"></span>
@@ -57,6 +72,7 @@ async function click() {
 					<input
 						:name="key"
 						type="radio"
+						@click="(context.app.settings as any)[key] = ImportAction.Merge"
 						:checked="(context.app.settings as any)[key] === ImportAction.Merge"
 					/>
 					<span class="slider round"></span>
@@ -68,6 +84,7 @@ async function click() {
 					<input
 						:name="key"
 						type="radio"
+						@click="(context.app.settings as any)[key] = ImportAction.Fresh"
 						:checked="(context.app.settings as any)[key] === ImportAction.Fresh"
 					/>
 					<span class="slider round"></span>

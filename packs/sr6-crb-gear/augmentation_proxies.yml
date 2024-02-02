@@ -12,7 +12,6 @@ system:
   costFormula: '0'
   availability:
     illegal: false
-    license: null
     rating: 2
   monitors:
     matrix:

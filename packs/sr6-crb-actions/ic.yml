@@ -1,6 +1,78 @@
+name: Acid IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_acid.webp
+effects: []
+system:
+  description: Acid IC is about wearing down the defenses of intruders so that the other IC can finish it off. When Acid IC hits in cybercombat, the target’s Firewall attribute is reduced by 1 per net hit, reducing the effective defenses. Lost points are restored after leaving the host, at a rate of 1 point per minute.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@willpower + @firewall'
+    deviceDefend: null
+    damage: null
+    soak: null
+  effects:
+    - target: target
+      when: onhit
+      duplicates: true
+      effect:
+        name: Acid IC
+        icon: /systems/sr6/assets/matrix/ic_acid.webp
+        description: Reduces firewall by 1 per net hit
+---
+name: Binder IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_binder.webp
+effects: []
+system:
+  description: Where Acid IC wants to reduce your defenses, Binder IC wants to slow down all of your functionality—and keep you from running as many programs as you would like. When Binder IC hits in cybercombat, the target’s Data Processing attribute is reduced by 1 per net hit. When Data Processing hits 0, no Matrix actions can be performed until it hits 1 or higher. Lost points are restored after leaving the host, at a rate of 1 point per minute.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@willpower + @dataProcessing'
+    deviceDefend: null
+    damage: '@rating'
+    soak: '@firewall'
+  effects:
+    - target: target
+      when: onhit
+      duplicates: true
+      effect:
+        name: Binder IC
+        icon: /systems/sr6/assets/matrix/ic_binder.webp
+        description: Reduces data processing by 1 per net hit
+---
+name: Black IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_black.webp
+effects: []
+system:
+  description: Black IC means business. When a host tosses this out, it wants your brain fried, plain and simple. If you see this coming at you, no one would blame you for running. In cybercombat, Black IC does (host rating + net hits) in both Matrix dam age and biofeedback damage.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  damage:
+    types: ['B', 'M']
+  formulas:
+    attack: '@rating * 2'
+    defend: '@intuition + @firewall'
+    deviceDefend: null
+    damage: '@rating + @net_hits'
+    soak: '@firewall'
+---
 name: Blaster IC
 type: matrix_ic
-img: /systems/sr6/assets/matrix/blaster_ic.webp
+img: /systems/sr6/assets/matrix/ic_blaster.webp
 effects: []
 system:
   description: Blaster IC isn’t fun, but at least it’s not as focused on killing you as Black IC is. Yeah, it might want to subject you to all sorts of unpleasant Matrix-based torture, but you have to be alive to experience pain, so that’s something, right? In cyber-combat, this does (Rating) Matrix damage while also link-locking the target.
@@ -10,10 +82,194 @@ system:
     activationType: major
     activationPeriod: initiative
   damage:
-    type: 'M'
+    type: ['M']
   formulas:
     attack: '@rating * 2'
     defend: '@logic + @persona.f'
     deviceDefend: null
     damage: '@rating'
     soak: '@firewall'
+  effects:
+    - target: target
+      when: onhit
+      effect:
+        name: Link-locked
+        statuses:
+          - linklocked
+        icon: systems/sr6/assets/matrix/lock.webp
+---
+name: Crash IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_crash.webp
+effects: []
+system:
+  description: Crash delivers a sweeping blow intended to take weapons out of your hand. When it hits in cybercombat, this IC does no Matrix damage; instead, it crashes one random program. Crashed programs can’t be run again until the device is rebooted.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@intuition + @firewall'
+    deviceDefend: null
+    damage: null
+    soak: null
+---
+name: Jammer IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_jammer.webp
+effects: []
+system:
+  description: Jammer IC is an expert fencer who toys with you rather than killing you outright. In cyber-combat, when Jammer IC hits, the target’s Attack attribute is reduced by 1 per net hit. No actionsusing the Attack rating can be performed when the Attack rating is 0. Lost points are restored after leaving the host, at a rate of 1 point per minute.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@willpower + @persona.a'
+    deviceDefend: null
+    damage: null
+    soak: null
+  effects:
+    - target: target
+      when: onhit
+      effect:
+        name: Jammer IC
+        icon: systems/sr6/assets/matrix/ic_jammer.webp
+---
+name: Killer IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_killer.webp
+effects: []
+system:
+  description: Killer IC is the choice of hosts where they don’t want to go for a bunch of fancy tactics and prefer to just leap for the jugular. When Killer IC hits in cybercombat, it does (net hits + host rating) Matrix damage to the target.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@intuition + @persona.f'
+    deviceDefend: null
+    damage: '@rating + @net_hits'
+    soak: '@firewall'
+---
+name: Marker IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_marker.webp
+effects: []
+system:
+  description: Marker IC is a response to too many back- doors—if hackers are going to start preferring Sleaze options to make and secure backdoors into hosts, then hosts are going to keep hackers from having high Sleaze ratings. In cybercombat, when Marker IC hits, the target’s Sleaze attribute is reduced by 1 per net hit. No actions using the Sleaze rating can be performed when the Sleaze rating is 0. Lost points are restored after leaving the host, at a rate of 1 point/minute.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@intuition + @persona.f'
+    deviceDefend: null
+    damage: null
+    soak: null
+---
+name: Patrol IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_patrol.webp
+effects: []
+system:
+  description: Patrol IC is often the first line of defense in hosts, since it doesn’t escalate any confrontations, but in stead gives the host’s owners a good sense of what’s going on. When it is activated, make a Matrix Perception roll for the Patrol IC; that serves as hits on Matrix Perception actions it takes every in-game minute it is active. That means one of the Patrol IC’s Minor Actions is always given over to Matrix Perception. Reroll the Matrix Perception test once per minute.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@willpower + @persona.s'
+    deviceDefend: null
+    damage: null
+    soak: null
+---
+name: Scramble IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_scramble.webp
+effects: []
+system:
+  description: Scramble IC doesn’t care how hurt or damaged you are; it just wants you gone. If Scramble IC hits in cybercombat, it forces the target to reboot on the target’s next turn, unless the target is link-locked.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@intuition + @persona.f'
+    deviceDefend: null
+    damage: null
+    soak: null
+---
+name: Sparky IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_sparky.webp
+effects: []
+system:
+  description: Sparky is aggressive IC that wants to bring the damage right to the user, bypassing hardware entirely. If Sparky IC hits in cybercombat, it does (host rating + net hits) in biofeedback damage.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@logic + @persona.f'
+    deviceDefend: null
+    damage: '@rating + @net_hits'
+    soak: '@firewall'
+---
+name: Tar Baby IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_tarbaby.webp
+effects: []
+system:
+  description: Tar Baby is about slowing you down so you can be caught by other IC or you abandon the host in frustration. If Tar Baby hits in cybercombat, it forces link-lock.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@willpower + @persona.s'
+    deviceDefend: null
+    damage: null
+    soak: null
+  effects:
+    - target: target
+      when: onhit
+      effect:
+        name: Link-locked
+        statuses:
+          - linklocked
+        icon: systems/sr6/assets/matrix/lock.webp
+---
+name: Track IC
+type: matrix_ic
+img: /systems/sr6/assets/matrix/ic_track.webp
+effects: []
+system:
+  description: Track IC doesn’t do harm directly—it’s about gathering information in case harm needs to be done later. If it hits in cybercombat, Track IC discovers the target’s physical location.
+  type: ic
+  skillUse: null
+  limits:
+    activationType: major
+    activationPeriod: initiative
+  formulas:
+    attack: '@rating * 2'
+    defend: '@intuition + @persona.f'
+    deviceDefend: null
+    damage: null
+    soak: null

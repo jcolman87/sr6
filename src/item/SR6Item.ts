@@ -81,22 +81,30 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 
 	override prepareEmbeddedDocuments(): void {
 		super.prepareEmbeddedDocuments();
-		this.systemData.prepareEmbeddedDocuments();
+		if (this.systemData?.prepareEmbeddedDocuments) {
+			this.systemData.prepareEmbeddedDocuments();
+		}
 	}
 
 	override prepareBaseData(): void {
 		super.prepareBaseData();
-		this.systemData.prepareBaseData();
+		if (this.systemData?.prepareBaseData) {
+			this.systemData.prepareBaseData();
+		}
 	}
 
 	override prepareData(): void {
 		super.prepareData();
-		this.systemData.prepareData();
+		if (this.systemData?.prepareData) {
+			this.systemData.prepareData();
+		}
 	}
 
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
-		this.systemData.prepareDerivedData();
+		if (this.systemData?.prepareDerivedData) {
+			this.systemData.prepareDerivedData();
+		}
 	}
 
 	override getRollData(): Record<string, unknown> {

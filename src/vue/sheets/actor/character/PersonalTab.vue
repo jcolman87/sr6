@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import SINDataModel from '@/item/data/feature/SINDataModel';
+import ContactTest from '@/test/ContactTest';
 import SelectItem from '@/vue/components/SelectItem.vue';
 import { computed, inject, toRaw } from 'vue';
 
@@ -29,8 +30,8 @@ const contacts = computed(() =>
 		.map((i) => i as SR6Item<ContactDataModel>),
 );
 
-async function rollContact(_contact: SR6Item<ContactDataModel>) {
-	// await new ContactTest({ actor: toRaw(context.data.actor), item: contact, data: {} }).execute();
+async function rollContact(contact: SR6Item<ContactDataModel>) {
+	await new ContactTest({ actor: toRaw(context.data.actor), item: contact, data: {} }).execute();
 }
 </script>
 

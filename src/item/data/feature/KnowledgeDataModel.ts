@@ -1,9 +1,3 @@
-import BaseItemDataModel from '@/item/data/BaseItemDataModel';
+import SkillDataModel from '@/item/data/feature/SkillDataModel';
 
-export default abstract class KnowledgeDataModel extends BaseItemDataModel {
-	static override defineSchema(): foundry.data.fields.DataSchema {
-		return {
-			...super.defineSchema(),
-		};
-	}
-}
+export default abstract class KnowledgeDataModel extends SkillDataModel {}

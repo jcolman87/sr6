@@ -14,7 +14,6 @@ system:
   costFormula: '500'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -44,7 +43,6 @@ system:
   costFormula: '500'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -78,7 +76,6 @@ system:
   costFormula: '220'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -110,7 +107,6 @@ system:
   costFormula: '220'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -148,7 +144,6 @@ system:
   costFormula: '185'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -182,7 +177,6 @@ system:
   costFormula: '20'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -213,7 +207,6 @@ system:
   costFormula: '350'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -245,7 +238,6 @@ system:
   costFormula: '210'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -279,7 +271,6 @@ system:
   costFormula: '320'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -311,7 +302,6 @@ system:
   costFormula: '65'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -344,7 +334,6 @@ system:
   costFormula: '52'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -378,7 +367,6 @@ system:
   costFormula: '75'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -411,7 +399,6 @@ system:
   costFormula: '150'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -441,7 +428,6 @@ system:
   costFormula: '600'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -475,7 +461,6 @@ system:
   costFormula: '250'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -511,7 +496,6 @@ system:
   costFormula: '15'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -544,7 +528,6 @@ system:
   costFormula: '225'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -578,7 +561,6 @@ system:
   costFormula: '100'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -611,7 +593,6 @@ system:
   costFormula: '790'
   availability:
     illegal: false
-    license: null
     rating: 1
   matrix: null
   attackRatings:
@@ -648,7 +629,6 @@ system:
   costFormula: '1300'
   availability:
     illegal: false
-    license: null
     rating: 6
   matrix: null
   attackRatings:

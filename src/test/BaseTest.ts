@@ -13,13 +13,7 @@ import { ITest, RollDataDelta, TestError, TestType } from '@/test/index';
 import SR6Roll from '@/roll/SR6Roll';
 import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 import { Result, Ok, Err } from 'ts-results';
-
-export enum Target {
-	Any = 0,
-	None = 0,
-	Self = 1,
-	Target = 2,
-}
+import { Target } from '@/data';
 
 export interface TestEdgeData {
 	spent?: EdgeBoostType;
@@ -128,7 +122,7 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 	}
 
 	async performRoll(): Promise<Result<null, string>> {
-		if (this.roll) {
+		if (this.roll && !this.roll._evaluated) {
 			this.roll = await this.roll?.evaluate({ async: true });
 			if (this.roll.options.explode) {
 				await this.roll.explode();
@@ -160,7 +154,11 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		if (this.data.edge?.gain && !this.roll) {
 			gain = this.data.edge!.gain[Target.Self];
 		}
-		return this.actor.systemData.monitors.edge.value + gain;
+		if (this.actor.systemData.monitors) {
+			return this.actor.systemData.monitors.edge.value + gain;
+		} else {
+			return 0;
+		}
 	}
 
 	async applyEdgeBoost(boost: IEdgeBoost): Promise<boolean> {
@@ -196,9 +194,14 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 
 			const res = await this.performRoll();
 			if (res.ok) {
+				// Finalize things
+				await this._onUse();
 				await this.finishModifiers();
 
+				this.roll.success ? await this._onSuccess() : await this._onFailure();
+
 				await this.toMessage();
+
 				return Ok(null);
 			} else {
 				return Err(TestError.RollFailed);
@@ -339,6 +342,13 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		}
 		return Err(TestError.FailedConstructor);
 	}
+
+	// Provide interfaces for doing things at times
+	protected async _onSuccess(): Promise<void> {}
+
+	protected async _onFailure(): Promise<void> {}
+
+	protected async _onUse(): Promise<void> {}
 
 	// Edge control
 	canGainEdge(target: Target): boolean {

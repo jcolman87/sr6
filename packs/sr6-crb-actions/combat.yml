@@ -212,7 +212,7 @@ type: general_action
 img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
-  description: The character uses something in their area t provide protection, but they also must operat from the constraints created by the cover. Takin cover gives the player the Cover I, II, III, or IV status (see p. 52).
+  description: The character uses something in their area to provide protection, but they also must operate from the constraints created by the cover. Taking cover gives the player the Cover I, II, III, or IV status (see p. 52).
   category: combat
   activation:
     type: minor
@@ -234,7 +234,7 @@ type: general_action
 img: /systems/sr6/assets/items/fist.webp
 effects: []
 system:
-  description: You can become a helper on a Teamwork test working to help one of your teammates on som task (see Teamwork Tests, p. 36).
+  description: You can become a helper on a Teamwork test working to help one of your teammates on some task (see Teamwork Tests, p. 36).
   category: combat
   activation:
     type: major

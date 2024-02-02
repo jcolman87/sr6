@@ -6,6 +6,7 @@ import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { RangedAttackTest } from '@/test/RangedTests';
+import { getTargetActors } from '@/util';
 import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
 import Weapons from '@/vue/components/combat/Weapons.vue';
 import Wearing from '@/vue/components/combat/Wearing.vue';
@@ -106,6 +107,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 			// await new MeleeAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 		} else {
 			await new RangedAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
+			// TODO: consume and use
 		}
 	} /* else if (action.name == 'Cast Spell') {
 		const actor = toRaw(context.data.actor);
@@ -124,7 +126,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 				},
 			});
 		}
-		await action.systemData.use(consume);
+		await action.systemData.use(getTargetActors(), consume);
 	}
 }
 

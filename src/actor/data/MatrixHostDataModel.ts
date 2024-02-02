@@ -1,4 +1,5 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import { MonitorDataModel } from '@/actor/data/MonitorsDataModel';
 import { DocumentUUIDField } from '@/data/fields';
 import { IHasMatrixPersona } from '@/data/interfaces';
 import { IHasPostCreate } from '@/data/interfaces';
@@ -79,6 +80,7 @@ export default abstract class MatrixHostDataModel
 			...super.defineSchema(),
 			rating: new fields.NumberField({ initial: 1, min: 1, max: 20, nullable: false, required: true }),
 			_personas: new fields.ArrayField(new DocumentUUIDField()),
+			monitors: new fields.SchemaField({ edge: new fields.EmbeddedDataField(MonitorDataModel) }),
 			attributes: new fields.EmbeddedDataField(AdjustableMatrixAttributesDataModel, {
 				initial: {
 					base: {

@@ -12,7 +12,6 @@ system:
   costFormula: '125'
   availability:
     illegal: false
-    license: null
     rating: 1
   monitors:
   matrix:

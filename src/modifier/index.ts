@@ -2,6 +2,7 @@ import { InitiativeType } from '@/data';
 import { AvailableActions } from '@/data/interfaces';
 import { ConditionalData } from '@/effect/conditional';
 import SR6Effect from '@/effect/SR6Effect';
+import { BlockActionModifier } from '@/modifier/impl/BlockActionModifier';
 import { CoverModifier } from '@/modifier/impl/CoverModifier';
 
 import { ModifierDataModel } from '@/modifier/ModifierDataModel';
@@ -74,10 +75,20 @@ export type ModifierConstructorData<TSourceData extends ModifierSourceData> = {
 	data: TSourceData;
 };
 
+export interface SimpleModifiersData {
+	persona?: {
+		attack?: number;
+		sleaze?: number;
+		dataProcessing?: number;
+		firewall?: number;
+	};
+}
+
 export class Modifiers<TDocument extends foundry.abstract.Document = foundry.abstract.Document> {
 	parent: TDocument;
 	sourceData: ModifiersSourceData;
 	all: IModifier[];
+	simple: SimpleModifiersData = {};
 
 	getApplicable(test: Maybe<ITest> = null): IModifier[] {
 		return this.all.filter((mod) => mod.isApplicable(test, null));
@@ -130,6 +141,8 @@ export function config(): Record<string, unknown> {
 
 		InitiativeModifier: InitiativeModifier,
 		CoverModifier: CoverModifier,
+
+		BlockActionModifier: BlockActionModifier,
 	};
 }
 

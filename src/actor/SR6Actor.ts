@@ -156,7 +156,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 		const skills: Record<string, unknown> = {};
 
 		this.items
-			.filter((i) => i.type === 'skill')
+			.filter((i) => i.type === 'skill' || i.type === 'knowledge')
 			.forEach((i) => {
 				const skill = i as SR6Item<SkillDataModel>;
 				skills[skill.safe_name] = skill.systemData.points;
@@ -165,6 +165,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 					skills[safe_special] = skill.systemData.getPoints(special);
 				});
 			});
+
 		return foundry.utils.mergeObject(skills, {
 			...super.getRollData(),
 			...this.systemData.getRollData(),

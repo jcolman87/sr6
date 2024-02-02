@@ -80,17 +80,31 @@ export default class SR6Effect extends ActiveEffect {
 		options: DocumentModificationContext,
 		user: User,
 	): Promise<void> {
+		let flags = {
+			sr6: SR6Effect.defaultFlags(),
+		};
+
 		if (data.flags?.sr6) {
-			this.updateSource({
-				['flags.sr6']: foundry.utils.mergeObject(data.flags.sr6, SR6Effect.defaultFlags(), {
-					overwrite: false,
-				}),
-			});
-		} else {
-			this.updateSource({
-				['flags.sr6']: SR6Effect.defaultFlags(),
+			foundry.utils.mergeObject(flags, data.flags, {
+				overwrite: true,
+				inplace: true,
 			});
 		}
+
+		CONFIG.statusEffects
+			.filter((status) => data.statuses?.includes(status.id))
+			.forEach((activeStatus) => {
+				if (activeStatus.flags) {
+					foundry.utils.mergeObject(flags, activeStatus.flags as object, {
+						inplace: true,
+						overwrite: true,
+					});
+				}
+			});
+
+		this.updateSource({
+			['flags.sr6']: flags,
+		});
 
 		return super._preCreate(data, options, user);
 	}

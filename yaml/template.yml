@@ -21,6 +21,7 @@ Item:
     - program
     # Character Building
     - skill
+    - knowledge
     - contact
     - sin
     - lifestyle
@@ -55,3 +56,4 @@ Item:
   general_action:
   matrix_action:
   edge_action:
+  knowledge:

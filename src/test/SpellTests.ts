@@ -1,11 +1,7 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import SpellDataModel, {
-	damageFromSpellAdjustments,
-	drainFromSpellAdjustments,
-	SpellAdjustments,
-	SpellAdjustmentType,
-} from '@/item/data/SpellDataModel';
+import SpellDataModel, { damageFromSpellAdjustments, drainFromSpellAdjustments } from '@/item/data/SpellDataModel';
+import { SpellAdjustments, SpellAdjustmentType } from '@/data/magic';
 import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
 import { AttackTestData } from '@/test/AttackTestData';

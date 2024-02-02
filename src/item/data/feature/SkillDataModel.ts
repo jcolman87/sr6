@@ -15,6 +15,10 @@ export enum SkillCategory {
 	Magic = 'magic',
 	Social = 'social',
 	Other = 'other',
+
+	//
+	Knowledge = 'knowledge',
+	Language = 'language',
 }
 
 export default abstract class SkillDataModel extends BaseItemDataModel {
@@ -94,6 +98,7 @@ export default abstract class SkillDataModel extends BaseItemDataModel {
 
 			specializations: new fields.ArrayField(
 				new fields.StringField({ required: true, nullable: false, blank: false }),
+				{ initial: [], required: true, nullable: false },
 			),
 
 			canUntrained: new fields.BooleanField({ initial: true, nullable: false, required: true }),

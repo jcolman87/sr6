@@ -40,10 +40,6 @@ async function executeOpposedTest() {
 <template>
 	<div class="flexcol chat-matrix-action-test">
 		<div class="action-description">
-			<a @mouseenter.prevent="visibility.description = true" @mouseleave.prevent="visibility.description = false"
-				>Description</a
-			>
-
 			{{ actionDescription }}
 		</div>
 		<div class="attack-details">

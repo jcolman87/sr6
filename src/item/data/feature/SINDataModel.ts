@@ -1,3 +1,4 @@
+import { DocumentUUIDField } from '@/data/fields';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 
 export enum SINRating {
@@ -13,6 +14,8 @@ const SIN_RATING_BOUND = { min: 1, max: 6 };
 export default abstract class SINDataModel extends BaseItemDataModel {
 	abstract rating: number;
 	abstract costFormula: string;
+
+	abstract licensedGearIds: ItemUUID[];
 
 	get cost(): number {
 		return this.solveFormula(this.costFormula);
@@ -32,6 +35,11 @@ export default abstract class SINDataModel extends BaseItemDataModel {
 				max: SIN_RATING_BOUND.max,
 			}),
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
+			licensedGearIds: new fields.ArrayField(new DocumentUUIDField(), {
+				initial: [],
+				required: true,
+				nullable: false,
+			}),
 		};
 	}
 }

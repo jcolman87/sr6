@@ -36,7 +36,7 @@ export default abstract class MatrixActionDataModel extends BaseActionDataModel 
 	abstract formulas: MatrixActionFormulas;
 
 	abstract damage: {
-		type: DamageType;
+		types: DamageType[];
 	};
 
 	get canDefend(): boolean {
@@ -137,13 +137,15 @@ export default abstract class MatrixActionDataModel extends BaseActionDataModel 
 			),
 			damage: new fields.SchemaField(
 				{
-					type: new fields.StringField({
-						initial: DamageType.Matrix,
-						required: true,
-						nullable: false,
-						blank: false,
-						choices: [DamageType.Biofeedback, DamageType.Matrix, DamageType.Physical],
-					}),
+					types: new fields.ArrayField(
+						new fields.StringField({
+							required: true,
+							nullable: false,
+							blank: false,
+							choices: [DamageType.Biofeedback, DamageType.Matrix, DamageType.Physical],
+						}),
+						{ initial: [DamageType.Matrix] },
+					),
 				},
 				{ nullable: true, required: false },
 			),

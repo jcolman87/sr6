@@ -1,9 +1,11 @@
 import SR6Actor from '@/actor/SR6Actor';
+import { Target } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
 import SR6Roll from '@/roll/SR6Roll';
-import { BaseTestData, Target } from '@/test/BaseTest';
+import { BaseTestData } from '@/test/BaseTest';
+import ContactTest from '@/test/ContactTest';
 
 import { Component } from 'vue';
 import { Result } from 'ts-results';
@@ -29,6 +31,7 @@ export enum TestType {
 	INVALID = 'INVALID',
 	Attribute = 'AttributeTest',
 	Skill = 'SkillTest',
+	Contact = 'ContactTest',
 
 	RangedAttack = 'RangedAttackTest',
 	RangedDefense = 'RangedDefenseTest',
@@ -52,6 +55,7 @@ export function config(): Record<string, unknown> {
 		// misc
 		AttributeTest: AttributeTest,
 		SkillTest: SkillTest,
+		ContactTest: ContactTest,
 
 		// combat
 		RangedAttackTest: RangedAttackTest,

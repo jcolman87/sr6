@@ -2,8 +2,9 @@ import MonitorsDataModel, { WoundModifierData } from '@/actor/data/MonitorsDataM
 import BaseDataModel from '@/data/BaseDataModel';
 import AdeptPowerDataModel from '@/item/data/feature/AdeptPowerDataModel';
 import AugmentationDataModel from '@/item/data/feature/AugmentationDataModel';
-import ComplexFormDataModel from '@/item/data/feature/ComplexFormDataModel';
+import ComplexFormDataModel from '@/item/data/ComplexFormDataModel';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
+import KnowledgeDataModel from '@/item/data/feature/KnowledgeDataModel';
 import LifestyleDataModel from '@/item/data/feature/LifestyleDataModel';
 import MatrixPersonaDataModel, { PersonaType } from '@/item/data/feature/MatrixPersonaDataModel';
 import { MatrixAttributesData } from '@/data/MatrixAttributesDataModel';
@@ -23,9 +24,16 @@ export default abstract class BaseActorDataModel extends BaseDataModel {
 	abstract monitors: MonitorsDataModel;
 	abstract description: string;
 	abstract source: string;
+
 	get skills(): SkillDataModel[] {
 		return this.actor!.items.filter((i) => i.type === 'skill').map(
 			(i) => (i as SR6Item<SkillDataModel>).systemData,
+		);
+	}
+
+	get knowledge(): KnowledgeDataModel[] {
+		return this.actor!.items.filter((i) => i.type === 'knowledge').map(
+			(i) => (i as SR6Item<KnowledgeDataModel>).systemData,
 		);
 	}
 

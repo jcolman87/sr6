@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ITest } from '@/test';
-import { Target } from '@/test/BaseTest';
+import { Target } from '@/data';
 import { ref } from 'vue';
 
 const props = defineProps<{

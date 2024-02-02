@@ -9,7 +9,6 @@ system:
   costFormula: '35000'
   availability:
     illegal: false
-    license: null
     rating: 1
   handling:
     onRoad: 5

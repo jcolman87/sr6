@@ -1,22 +1,23 @@
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
+import { EffectType } from '@/effect/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
-import { AttackTestData } from '@/test/AttackTestData';
+import { AttackTestData, getAttackDataTargets } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestConstructorData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import { getTargetActorIds } from '@/util';
-import { Component } from 'vue';
-
-import ActionPromptComponent from '@/test/vue/prompt/MatrixActionTest.vue';
 import ActionChatComponent from '@/test/vue/chat/MatrixActionTest.vue';
-
-import DefensePromptComponent from '@/test/vue/prompt/MatrixDefenseTest.vue';
 import DefenseChatComponent from '@/test/vue/chat/MatrixDefenseTest.vue';
 
 import SoakChatComponent from '@/test/vue/chat/MatrixSoakTest.vue';
+
+import ActionPromptComponent from '@/test/vue/prompt/MatrixActionTest.vue';
+
+import DefensePromptComponent from '@/test/vue/prompt/MatrixDefenseTest.vue';
+import { getTargetActorIds } from '@/util';
+import { Component } from 'vue';
 
 export interface MatrixActionTestData extends AttackTestData {}
 
@@ -92,6 +93,10 @@ export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 		return ActionPromptComponent;
 	}
 
+	protected override async _onUse(): Promise<void> {
+		await this.matrixAction.systemData.applyEffects(EffectType.OnUse, getAttackDataTargets(this.data));
+	}
+
 	constructor({
 		actor,
 		item,
@@ -136,6 +141,13 @@ export class MatrixDefenseTest extends BaseTest<MatrixDefenseTestData> {
 	}
 
 	opposedTest: MatrixActionTest;
+
+	protected override async _onFailure(): Promise<void> {
+		await this.opposedTest.matrixAction.systemData.applyEffects(
+			EffectType.OnHit,
+			getAttackDataTargets(this.opposedTest.data),
+		);
+	}
 
 	override get damage(): number {
 		return Math.max(0, this.opposedTest.damage - (this.roll?.hits || 0));

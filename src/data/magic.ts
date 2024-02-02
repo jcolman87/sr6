@@ -24,31 +24,19 @@ export enum SpellCombatType {
 	Indirect = 'indirect',
 }
 
-export enum SpellRangeType {
-	Touch = 'touch',
-	LineOfSight = 'los',
-	LineOfSightArea = 'losa',
-	Perceived = 'perceived',
-}
-
-export enum SpellDuration {
-	Instantaneous = 'I',
-	Sustained = 'S',
-	Permanent = 'P',
-	Limited = 'L',
-}
-
 export enum SpellType {
 	Mana = 'M',
 	Physical = 'P',
 }
 
-export enum SpellDamageForm {
-	Force = 'force',
-	Stun = 'stun',
-	Fire = 'fire',
-	Acid = 'acid',
-	Electrical = 'electric',
-	Air = 'air',
-	Cold = 'cold',
+export enum SpellAdjustmentType {
+	AmpUp = 'amp',
+	IncreaseArea = 'increase',
+	ShiftArea = 'shift',
 }
+
+export type SpellAdjustments = {
+	[SpellAdjustmentType.AmpUp]: number;
+	[SpellAdjustmentType.IncreaseArea]: number;
+	[SpellAdjustmentType.ShiftArea]: number;
+};

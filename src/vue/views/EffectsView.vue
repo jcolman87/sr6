@@ -66,7 +66,7 @@ const dummy = ref(0);
 								><i class="fas fa-power-off"></i
 							></a>
 							<a @click="openEffect(effect)"><i class="fas fa-edit"></i></a>
-							<a v-if="!effect.origin" @click="emit('deleteEffect', effect)"
+							<a v-if="!(!effect.origin || effect.transfer)" @click="emit('deleteEffect', effect)"
 								><i class="fas fa-trash"></i
 							></a>
 						</div>

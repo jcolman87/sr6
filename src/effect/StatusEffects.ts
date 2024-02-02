@@ -15,6 +15,25 @@ export const SR6StatusEffects: StatusEffect[] = [
 		icon: 'icons/svg/target.svg',
 	},
 	{
+		id: 'linklocked',
+		name: 'Link-locked',
+		icon: 'systems/sr6/assets/matrix/lock.webp',
+		flags: {
+			sr6: {
+				modifiers: {
+					modifiers: [
+						{
+							class: 'BlockActionModifier',
+							name: 'Link-locked',
+							description: 'link locked lol',
+							actions: ['Enter/Exit Host', 'Reboot Device', 'Switch Interface Mode'],
+						},
+					],
+				},
+			},
+		},
+	},
+	{
 		id: 'cover1',
 		name: 'SR6.Effect.Cover1',
 		icon: 'systems/sr6/assets/status/cover1.webp',

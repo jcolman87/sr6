@@ -22,6 +22,7 @@ declare module foundry {
 			origin: string | undefined;
 			transfer: boolean;
 			flags: Record<string, unknown>;
+			statuses: string[];
 		}
 
 		class ActiveEffectData<
