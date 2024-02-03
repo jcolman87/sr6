@@ -6,6 +6,8 @@ import { IModifier } from '@/modifier';
 import SR6Roll from '@/roll/SR6Roll';
 import { BaseTestData } from '@/test/BaseTest';
 import ContactTest from '@/test/ContactTest';
+import { KnowledgeTest, LanguageTest, MemoryTest } from '@/test/MemoryTests';
+import { ComposureTest, JudgeIntentionsTest, LiftCarryTest } from '@/test/SimpleTests';
 
 import { Component } from 'vue';
 import { Result } from 'ts-results';
@@ -49,6 +51,16 @@ export enum TestType {
 	SpellDrain = 'SpellDrainTest',
 	SpellDefense = 'SpellDefenseTest',
 	SpellSoak = 'SpellSoakTest',
+
+	// Memory
+	Memory = 'MemoryTest',
+	Knowledge = 'KnowledgeTest',
+	Language = 'LanguageTest',
+
+	// Misc
+	Composure = 'ComposureTest',
+	JudgeIntentions = 'JudgeIntentionsTest',
+	LiftCarry = 'LiftCarryTest',
 }
 export function config(): Record<string, unknown> {
 	return {
@@ -73,6 +85,16 @@ export function config(): Record<string, unknown> {
 		SpellDrainTest: SpellDrainTest,
 		SpellDefenseTest: SpellDefenseTest,
 		SpellSoakTest: SpellSoakTest,
+
+		// Logic
+		MemoryTest: MemoryTest,
+		KnowledgeTest: KnowledgeTest,
+		LanguageTest: LanguageTest,
+
+		// Misc
+		ComposureTest: ComposureTest,
+		JudgeIntentionsTest: JudgeIntentionsTest,
+		LiftCarryTest: LiftCarryTest,
 	};
 }
 

@@ -1,7 +1,8 @@
 /* eslint-disable vue/multi-word-component-names */
 <script lang="ts" setup>
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
-import { SpellAdjustmentType, damageFromSpellAdjustments, drainFromSpellAdjustments } from '@/item/data/SpellDataModel';
+import { damageFromSpellAdjustments, drainFromSpellAdjustments } from '@/item/data/SpellDataModel';
+import { SpellAdjustmentType } from '@/data/magic';
 import { SpellCastTest } from '@/test/SpellTests';
 import Localized from '@/vue/components/Localized.vue';
 import { ref, toRaw } from 'vue';

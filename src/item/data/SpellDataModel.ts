@@ -1,7 +1,6 @@
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { DamageType, DamageForm, Duration, RangeType } from '@/data';
-
 import { SpellCombatType, SpellType, SpellAdjustmentType, SpellAdjustments } from '@/data/magic';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 

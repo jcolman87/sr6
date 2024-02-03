@@ -370,7 +370,8 @@ SR6:
       CreateSpecialEffect:
         Name: Create Special Effect
         Description: Bring your creativity to the table! You spend this Edge and something fortuitous happens. It’s up to you and your gamemaster to determine what it is, but it should certainly turn the tides slightly in your favor. Burst pipes, approaching sirens, incoming DocWagon, an angry spirit, something that adds a little more oomph to your side or puts a little stress on the enemy.
-Modifiers:
+
+  Modifiers:
     PhysicalWoundModifier:
       Name: Wound Modifier (Physical)
       Description: You suffer a -1 dice pool penalty for every 3 boxes of damage to your physical condition monitor.

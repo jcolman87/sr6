@@ -1,0 +1,98 @@
+name: Adrenaline pump
+type: augmentation
+img: /systems/sr6/assets/items/cyber_headware.webp
+effects:
+  - name: Pain Editor
+    transfer: true
+    disabled: true
+    changes:
+      - mode: 2
+        key: system.attributes.strength.mod
+        value: '@rating'
+      - mode: 2
+        key: system.attributes.agility.mod
+        value: '@rating'
+      - mode: 2
+        key: system.attributes.reaction.mod
+        value: '@rating'
+      - mode: 2
+        key: system.attributes.willpower.mod
+        value: '@rating'
+system:
+  description: 'This enhanced gland is implanted in the lower abdomen, connected to both supradrenal glands. When dormant, the pump is merely a reservoir for adrenaline. When activated, a small muscular sac contracts, sending a surge of concentrated adrenaline into the blood stream. Physical and emotional stress can force your pump to activate if you fail a Composure test (p. 67); otherwise you can trigger it as a Minor Action. While the pump is active, you ignore injury modifiers, don’t fall unconscious even if your Stun Condition Monitor is filled, you can’t rest, and the adrenaline pump’s rating is added to your Strength, Agility, Reaction, and Willpower attributes. The pump works for (rating x 1D6) combat rounds, and it can’t be switched off early. When time’s up, you crash and take Stun damage equal to one half, rounded up, of the number of combat rounds the pump was active (use unaugmented Body to resist the damage). After the effect’s end, your attribute values return to normal and you stop ignoring injury modifiers or unconsciousness from Stun damage. After use, the pump requires one hour to regenerate its supply. During that time, it cannot be activated. '
+  essenceCostFormula: '@rating * 0.75'
+  cost: '@rating * 55000'
+  hasActivate: true
+  modifiers:
+    - name: Adrenaline Pump
+      description: balls
+      class: PainEditorModifier
+  activation:
+    type: 'minor'
+    # TODO: Deactivation effects
+  availability:
+    illegal: true
+    rating: 5
+---
+name: Bone Density Augmentation
+type: augmentation
+img: /systems/sr6/assets/items/fist.webp
+effects: []
+system:
+  description: 'The molecular structure of your bones is altered to increase density and tensile strength. Ligaments are strengthened, and the greater bone density increases your weight by fifteen percent. You gain its rating as extra Body when resisting physical damage. Your unarmed combat damage becomes Physical and your Damage Value and Attack Rating increase per the table below. Bone density augmentation is incompatible with other augmentations to bones, including bone lacing cyberware. '
+  essenceCostFormula: '@rating * 0.3'
+  cost: '@rating * 5000'
+  availability:
+    illegal: false
+    rating: 4
+    requiresLicense: true
+  modifiers:
+    - name: Bone Density Augmentation
+      class: TestPoolModifier
+      data: { valueFormula: '@rating', testClasses: ['PhysicalSoakTest'] }
+    # TODO: AttackRating and DV modifications, changes unarmed to physical and +DV/AR
+---
+name: Muscle Augmentation
+type: augmentation
+img: /systems/sr6/assets/items/fist.webp
+effects: []
+system:
+  description: 'This biological weaving treatment enhances existing muscle tissue, rather than replacing it with vat-grown muscles. Specially grown muscle cables are woven into existing muscle fibers, enhancing muscle mass and brute strength while providing a bulkier look. Muscle augmentation adds its rating to your Strength attribute. This bioware is incompatible with augmentations that increase Strength, including the muscle replacement cyberware.'
+  essenceCostFormula: '@rating * 0.2'
+  cost: '@rating * 31000'
+  availability:
+    illegal: false
+    rating: 4
+    requiresLicense: true
+---
+name: Muscle Toner
+type: augmentation
+img: /systems/sr6/assets/items/fist.webp
+effects:
+  - name: Muscle Toner
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.agility.mod
+        value: '@rating'
+system:
+  description: 'This treatment increases muscle-fiber elasticity in existing muscle tension, resulting in increased muscle tension and flexibility while providing a smooth and ropy physique. Muscle toner adds its rating to your Agility attribute. This bioware is incompatible with augmentations that increase Agility, including the muscle replacement cyberware and enhanced articulation bioware.'
+  essenceCostFormula: '@rating * 0.2'
+  cost: '@rating * 32000'
+  availability:
+    illegal: false
+    rating: 4
+    requiresLicense: true
+---
+name: Enhanced Articulation
+type: augmentation
+img: /systems/sr6/assets/items/fist.webp
+effects: []
+system:
+  description: 'A number of procedures like joint-surface coating, re-lubrication, and tendon and ligament augmentation lead to more fluid muscle and joint action. Enhanced articulation provides you with a +1 Agility and a bonus Edge when trying to move through cramped or confining spaces.'
+  essenceCostFormula: '0.2'
+  cost: '30000'
+  availability:
+    illegal: false
+    rating: 4
+    requiresLicense: false

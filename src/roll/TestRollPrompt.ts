@@ -27,8 +27,10 @@ export default class TestRollPrompt<
 			title: 'Test Configuration',
 			classes: ['app-roll-prompt'],
 			width: 500,
+			height: 600,
 			scroll: true,
 			focus: true,
+			resizable: true,
 		};
 	}
 

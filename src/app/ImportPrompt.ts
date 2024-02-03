@@ -339,9 +339,14 @@ export class ImportPrompt extends VueSheet(Application) {
 						if (arr) {
 							name = arr[1].trim();
 							rating = parseInt(arr[2]);
+						} else {
+							rating = parseInt(value.level);
+							if (isNaN(rating)) {
+								rating = 1;
+							}
 						}
 
-						const existing = all.find((i: SR6Item) => i.name === name);
+						const existing = all.find((i: SR6Item) => i.name.toLowerCase() === name.toLowerCase());
 						if (existing) {
 							return existing;
 						} else {
@@ -740,10 +745,10 @@ export class ImportPrompt extends VueSheet(Application) {
 		const json = await response.json();
 
 		json.attr = (name: string): string => {
-			return json.attributes.find((a: any) => a.id === name.toUpperCase());
+			return json.attributes.find((a: any) => a.id.toLowerCase() === name.toLowerCase());
 		};
 		json.skill = (name: string): string => {
-			return json.skills.find((a: any) => a.id === name.toLowerCase());
+			return json.skills.find((a: any) => a.id.toLowerCase() === name.toLowerCase());
 		};
 
 		if (!this.actor) {

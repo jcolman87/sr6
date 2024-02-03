@@ -1,3 +1,5 @@
+import SR6Actor from '@/actor/SR6Actor';
+import SR6Item from '@/item/SR6Item';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import BaseModifier from '@/modifier/BaseModifier';
 import { ITest } from '@/test';
@@ -65,7 +67,8 @@ export class TestFunctionModifier<
 }
 
 export interface TestPoolModifierSourceData extends TestModifierSourceData {
-	value: number;
+	value?: number;
+	valueFormula?: string;
 }
 
 export class TestPoolModifier<
@@ -76,7 +79,7 @@ export class TestPoolModifier<
 	}
 
 	get value(): number {
-		return this.data!.value;
+		return this.data!.value!;
 	}
 
 	async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
@@ -86,11 +89,20 @@ export class TestPoolModifier<
 	override toJSON(): ModifierSourceData {
 		return {
 			...super.toJSON(),
-			value: this.value,
+			value: this.data.value,
+			valueFormula: this.data.valueFormula,
 		};
 	}
 
 	constructor({ parent, source, conditions, data }: ModifierConstructorData<TData>) {
+		if (data.valueFormula) {
+			if (source instanceof SR6Item) {
+				data.value = (source as SR6Item).solveFormula(data.valueFormula!);
+			} else if (source instanceof SR6Actor) {
+				data.value = (source as SR6Actor).solveFormula(data.valueFormula!);
+			}
+		}
+
 		super({ parent, source, conditions, data });
 	}
 }

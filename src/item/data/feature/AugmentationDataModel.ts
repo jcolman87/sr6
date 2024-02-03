@@ -5,12 +5,18 @@ import { GearAvailabilityDataModel } from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
 import { getItem, getItemSync } from '@/util';
 
+export enum AugmentationVisibility {
+	Synthetic = 'synthetic',
+	Obvious = 'obvious',
+}
+
 export default abstract class AugmentationDataModel
 	extends QualityDataModel
 	implements IHasOnDelete<SR6Item<QualityDataModel>>
 {
 	abstract rating: number;
 	abstract quality: number;
+	abstract visibility: AugmentationVisibility;
 
 	abstract costFormula: string;
 	abstract availability: GearAvailabilityDataModel;
@@ -84,6 +90,13 @@ export default abstract class AugmentationDataModel
 				integer: true,
 				min: 1,
 				max: 6,
+			}),
+			visibility: new fields.StringField({
+				initial: AugmentationVisibility.Synthetic,
+				nullable: false,
+				required: true,
+				blank: false,
+				choices: Object.values(AugmentationVisibility),
 			}),
 			essenceCostFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
 

@@ -4,7 +4,8 @@ import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import Targets from '@/chat/vue/Targets.vue';
 import { isTargetOwner } from '@/test/AttackTestData';
-import { damageFromSpellAdjustments, drainFromSpellAdjustments, SpellAdjustmentType } from '@/item/data/SpellDataModel';
+import { SpellAdjustmentType } from '@/data/magic';
+import { damageFromSpellAdjustments, drainFromSpellAdjustments } from '@/item/data/SpellDataModel';
 import { TestSourceData } from '@/test/BaseTest';
 
 import { SpellCastTest, SpellCastTestData, SpellDrainTest } from '@/test/SpellTests';

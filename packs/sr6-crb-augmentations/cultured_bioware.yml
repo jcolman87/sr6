@@ -40,6 +40,10 @@ system:
   availability:
     illegal: false
     rating: 5
+  modifiers:
+    - name: Mnemonic Enhancer
+      class: TestPoolModifier
+      data: { valueFormula: '@rating', testClasses: [ 'KnowledgeTest', 'MemoryTest', 'LanguageTest' ] }
 ---
 name: Pain Editor
 type: augmentation
