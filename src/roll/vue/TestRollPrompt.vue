@@ -121,10 +121,10 @@ async function toggleModifier(status: boolean, idx: number) {
 						<td v-else>
 							<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-play"></i></a>
 						</td>
-						<td style="width: 3em">
+						<td style="width: 3em; white-space: nowrap">
 							{{ modifier.displayValue }}
 						</td>
-						<td>
+						<td style="padding-left: 7px">
 							<a
 								@click="
 									conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible =

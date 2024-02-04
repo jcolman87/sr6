@@ -113,7 +113,8 @@ export class TestPoolModifier<
 	TData extends TestPoolModifierSourceData = TestPoolModifierSourceData,
 > extends TestModifier<TData> {
 	override get displayValue(): undefined | string {
-		return this.value > 0 ? `+${this.value}` : this.value.toString();
+		const number = this.value > 0 ? `+${this.value}` : this.value.toString();
+		return `${number} Pool`;
 	}
 
 	get value(): number {

@@ -15,6 +15,11 @@ export interface BonusEdgeModifierSourceData extends TestModifierSourceData {
 }
 
 export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
+	override get displayValue(): undefined | string {
+		const number = this.value > 0 ? `+${this.value}` : this.value.toString();
+		return `${number} Edge`;
+	}
+
 	get value(): number {
 		return this.data!.value;
 	}

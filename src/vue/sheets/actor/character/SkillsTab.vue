@@ -53,7 +53,7 @@ const languages = ref(
 );
 
 async function updateSkill(skill: SR6Item<SkillDataModel | KnowledgeDataModel>) {
-	await skill.update({ ['system']: skill.systemData });
+	await toRaw(skill).update({ ['system']: skill.systemData });
 }
 
 function addSkill() {}

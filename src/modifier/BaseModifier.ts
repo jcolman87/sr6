@@ -29,7 +29,7 @@ export default class BaseModifier<
 	}
 
 	get displayValue(): undefined | string {
-		return undefined;
+		return '-';
 	}
 
 	get parent(): foundry.abstract.Document {
