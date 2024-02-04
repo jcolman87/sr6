@@ -1,44 +1,43 @@
 name: Ambidextrous
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects: []
 system:
 ---
 name: Analytical Mind
 type: quality
-img: icons/svg/item-bag.svg
-effects:
-  - name: Analytical Mind
-    transfer: true
+img: /systems/sr6/assets/brain.webp
+effects: []
 system:
+  description: You gain a bonus Edge when you make any Logic-based test.
   modifiers:
-    - name: Analytical Mind
-      description: Grant Edge for Logic Tests
-      class: EdgeModifier
-      data: { testClasses: ['SkillTest', 'AttributeTest', 'MatrixActionTest'], attribute: 'logic' }
+    - class: EdgeModifier
+      data: { value: 1, testClasses: ['SkillTest', 'AttributeTest', 'MatrixActionTest'], attribute: 'logic' }
 ---
 name: Aptitude
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects: []
 system:
+  description: Your skill maximum for the selected skill is 10, instead of 9, and your maximum starting rank is 7, instead of 6.
 ---
 name: Astral Chameleon
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects: []
 system:
+  description: Characters receive –2 dice on tests to recognize your aura or astral signature. Your astral signature fades in half the normal time (see p. 159).
 ---
 name: Blandness
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects: []
 system:
+  description: Characters take a –2 penalty on Memory tests (p. 67) to remember if they have seen you before, and the threshold on tests to notice if you are following or observing them is increased by 1. If the character acquires something permanent and distinctive—obvious, unusual cyberware, a unique tattoo, that sort of thing—they lose this quality. If they acquire something temporarily distinctive, such as an extreme hairdo, the effects are negated until those changes are reversed.
 ---
 name: Built Tough I
 type: quality
-img: icons/svg/item-bag.svg
-description: ''
+img: /systems/sr6/assets/brain.webp
 effects:
   - name: Built Tough I
     transfer: true
@@ -47,10 +46,11 @@ effects:
         key: system.monitors.physical.max
         value: '1'
 system:
+  description: 'You’re built like a brick drekhouse. You’re pretty good at taking a few extra hits before the lights go out. You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality. '
 ---
 name: Built Tough II
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects:
   - name: Built Tough II
     transfer: true
@@ -59,10 +59,11 @@ effects:
         key: system.monitors.physical.max
         value: '2'
 system:
+  description: 'You’re built like a brick drekhouse. You’re pretty good at taking a few extra hits before the lights go out. You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality. '
 ---
 name: Built Tough III
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects:
   - name: Built Tough III
     transfer: true
@@ -71,10 +72,11 @@ effects:
         key: system.monitors.physical.max
         value: '3'
 system:
+  description: 'You’re built like a brick drekhouse. You’re pretty good at taking a few extra hits before the lights go out. You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality. '
 ---
 name: Built Tough IV
 type: quality
-img: icons/svg/item-bag.svg
+img: /systems/sr6/assets/brain.webp
 effects:
   - name: Built Tough IV
     transfer: true
@@ -83,3 +85,230 @@ effects:
         key: system.monitors.physical.max
         value: '4'
 system:
+  description: 'You’re built like a brick drekhouse. You’re pretty good at taking a few extra hits before the lights go out. You have a number of additional boxes on your Physical Condition Monitor equal to the rank of this quality. '
+---
+name: Photographic Memory
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain a bonus Edge point when making a Memory test (p. 67). If you do not use this point of Edge on the test, it goes away.'
+  modifiers:
+      - class: EdgeModifier
+        data: { value: 1, testClasses: ['MemoryTest', 'KnowledgeTest', 'LanguageTest'] }
+---
+name: Catlike
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain a bonus Edge on all tests for balance, falling, and landing safely. Note the rules in the Preventing Edge Abuse section, p. 45.'
+---
+name: Dermal Deposits
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain 1 level of natural Armor. Your Unarmed Melee attacks inflict Physical damage. '
+---
+name: Double-Jointed
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain a bonus Edge on all tests involving grappling, escaping bonds, flexibility, or fitting into tight spaces. Note the rules on Preventing Edge Abuse, p. 45.'
+---
+name: Elemental Resistance (Fire)
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'When attacked with a weapon or spell (including unarmed combat by a spirit) that does this form of damage, gain a point of Edge before making your Defense test.'
+---
+name: Elemental Resistance (Ice)
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'When attacked with a weapon or spell (including unarmed combat by a spirit) that does this form of damage, gain a point of Edge before making your Defense test.'
+---
+name: Elemental Resistance (Air)
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'When attacked with a weapon or spell (including unarmed combat by a spirit) that does this form of damage, gain a point of Edge before making your Defense test.'
+---
+name: Elemental Resistance (Water)
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'When attacked with a weapon or spell (including unarmed combat by a spirit) that does this form of damage, gain a point of Edge before making your Defense test.'
+---
+name: Exceptional Body
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Body
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.body.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Agility
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Agility
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.agility.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Reaction
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Reaction
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.reaction.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Strength
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Strength
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.strength.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Willpower
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Willpower
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.willpower.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Logic
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Logic
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.logic.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Intuition
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Intuition
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.intuition.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: Exceptional Charisma
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects:
+  - name: Exceptional Charisma
+    transfer: true
+    changes:
+      - mode: 2
+        key: system.attributes.charisma.max
+        value: '1'
+system:
+  description: That attribute's maximum (but not current) rank increases by 1. This quality can only be purchased once per attribute.
+---
+name: First Impression
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain 2 Edge for Social Tests during your first meeting with anyone, and both your Heat and Reputation are ignored for this first encounter.'
+---
+name: Focused Concentration I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You can sustain multiple spells or complex forms without penalty. For each level, you can sustain 1 additional spell or complex form without suffering the associated penalty. The spell cannot have a modified Drain Value of 7 or greater.'
+---
+name: Focused Concentration II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You can sustain multiple spells or complex forms without penalty. For each level, you can sustain 1 additional spell or complex form without suffering the associated penalty. The spell cannot have a modified Drain Value of 7 or greater.'
+---
+name: Focused Concentration III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You can sustain multiple spells or complex forms without penalty. For each level, you can sustain 1 additional spell or complex form without suffering the associated penalty. The spell cannot have a modified Drain Value of 7 or greater.'
+---
+name: Gearhead
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain an Edge on Repair tests for any vehicle and can spend Edge during downtime to make Extended Repair tests.'
+---
+name: Guts
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain an Edge when resisting Intimidation or effects that cause the Frightened status. '
+---
+name: Hardening
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'You gain a bonus Edge when making Matrix Damage Resistance tests. If you do not use that point of Edge immediately on the Damage Resistance test, it goes away. When struck by any damage in the Matrix, you can convert up to two boxes to Stun Damage, rather than Matrix damage, protecting your persona at the cost of yourself.'
+---
+name: High Pain Tolerance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'When wounded, reduce your wound penalty by one (to a minimum of 0).'
+---
+name: Home Ground
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system:
+  description: 'Select a neighborhood or Matrix host each time you take this quality. Outdoors and Perception tests made in your Home Ground gain an Edge for use on that test; if you do not use the Edge on that test, it goes away. '

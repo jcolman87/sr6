@@ -12,7 +12,6 @@ const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
 }>();
 const props = defineProps<{
-	src: foundry.abstract.Document;
 	test: RangedDefenseTest;
 }>();
 

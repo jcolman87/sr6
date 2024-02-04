@@ -74,7 +74,14 @@ export default abstract class QualityDataModel
 	}
 
 	override prepareBaseData(): void {
-		this.activation?.prepareBaseData();
+		this.modifiers.forEach((modifier) => {
+			if (!modifier.name) {
+				modifier.name = this.item!.name;
+			}
+			if (!modifier.description) {
+				modifier.description = this.description;
+			}
+		});
 	}
 
 	override prepareData(): void {

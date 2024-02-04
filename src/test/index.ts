@@ -98,13 +98,19 @@ export function config(): Record<string, unknown> {
 	};
 }
 
+export interface ITestModifierData {
+	disabled: boolean;
+	modifier: IModifier;
+}
+
 export interface ITest<TData extends BaseTestData = BaseTestData> {
 	actor: SR6Actor;
 	item?: SR6Item;
 
 	roll?: SR6Roll;
 
-	get modifiers(): IModifier[];
+	get allModifiers(): ITestModifierData[];
+	get activeModifiers(): IModifier[];
 
 	get type(): TestType;
 
@@ -118,7 +124,7 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 	get pool(): number;
 	set pool(newValue: number);
 
-	reset(): void;
+	reset(): Promise<void>;
 
 	promptComponent?(): Component;
 	chatComponent?(): Component;

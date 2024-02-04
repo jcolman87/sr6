@@ -7,8 +7,8 @@ import { Result } from 'ts-results';
 export abstract class ModifierDataModel extends BaseDataModel {
 	abstract class: string;
 
-	abstract name: string;
-	abstract description: string;
+	abstract name: Maybe<string>;
+	abstract description: Maybe<string>;
 
 	abstract data: Maybe<object>;
 
@@ -18,7 +18,7 @@ export abstract class ModifierDataModel extends BaseDataModel {
 		parent: foundry.abstract.Document,
 		source: Maybe<foundry.abstract.Document> = null,
 	): Result<IModifier, string> {
-		const data = { name: this.name, description: this.description, ...(this.data || {}) };
+		const data = { name: this.name || '[No Name]', description: this.description || '', ...(this.data || {}) };
 
 		return BaseModifier.fromData({
 			class: this.class,
@@ -33,13 +33,8 @@ export abstract class ModifierDataModel extends BaseDataModel {
 		const fields = foundry.data.fields;
 
 		return {
-			name: new fields.StringField({ initial: 'Missing name', required: true, blank: true, nullable: false }),
-			description: new fields.StringField({
-				initial: '',
-				required: true,
-				blank: true,
-				nullable: false,
-			}),
+			name: new fields.StringField({ required: false, blank: true, nullable: true }),
+			description: new fields.StringField({ required: false, blank: true, nullable: true }),
 			class: new fields.StringField({
 				nullable: false,
 				required: true,

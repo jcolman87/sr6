@@ -10,7 +10,6 @@ const emit = defineEmits<{
 }>();
 
 defineProps<{
-	src: foundry.abstract.Document;
 	test: SpellSoakTest;
 }>();
 

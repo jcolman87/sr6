@@ -2,6 +2,8 @@
 <script lang="ts" setup>
 import { TestType } from '@/test';
 import BaseTest from '@/test/BaseTest';
+import Localized from '@/vue/components/Localized.vue';
+import { ref } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
@@ -34,19 +36,17 @@ switch (props.test.type) {
 </script>
 
 <template>
-	<div class="flexrow chat-simple-test">
-		<div class="details"></div>
+	<div class="matrix-action-test-prompt">
+		<div class="section" style="width: 76%">
+			<div class="section-title"><Localized label="SR6.Labels.Information" /></div>
+		</div>
+		TODO: Edge Gain
 	</div>
 </template>
 
 <style lang="scss" scoped>
-.chat-simple-test {
-	font-size: 12px;
-
-	.details {
-		padding-top: 5px;
-		padding-bottom: 5px;
-		min-width: 100%;
-	}
+.matrix-action-test-prompt {
+	display: flex;
+	flex-flow: wrap;
 }
 </style>

@@ -1,11 +1,16 @@
+import { EnumAttribute } from '@/actor/data';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import BaseModifier from '@/modifier/BaseModifier';
-import { ITest } from '@/test';
+import { ITest, TestType } from '@/test';
+import { RangedAttackTest } from '@/test/RangedTests';
+import SkillTest from '@/test/SkillTest';
 
 export interface TestModifierSourceData extends ModifierSourceData {
 	testClasses?: string[];
+	skills?: string[];
+	attributes?: EnumAttribute[];
 }
 
 export abstract class TestModifier<TSourceData extends TestModifierSourceData> extends BaseModifier<TSourceData> {
@@ -14,10 +19,41 @@ export abstract class TestModifier<TSourceData extends TestModifierSourceData> e
 			return false;
 		}
 		if (test) {
-			return this.testClasses.length === 0 || this.testClasses.includes(test.type);
+			if (this.testClasses.length === 0) {
+				return true;
+			}
+
+			// TODO: this shit is a mess
+			if (this.testClasses.includes(test.type)) {
+				if (this.skills.length > 0) {
+					if (test.type === TestType.Skill) {
+						if (!this.skills.includes((test as SkillTest).data.skillUse.skill)) {
+							return false;
+						}
+					} else if (test.type === TestType.RangedAttack) {
+						if (!this.skills.includes((test as RangedAttackTest).weapon.systemData.skillUse!.skill)) {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				}
+
+				if (this.attributes.length > 0) {
+					// TODO: impl
+				}
+			}
 		}
 
 		return true;
+	}
+
+	get skills(): string[] {
+		return this.data!.skills || [];
+	}
+
+	get attributes(): EnumAttribute[] {
+		return this.data!.attributes || [];
 	}
 
 	get testClasses(): string[] {
@@ -28,6 +64,8 @@ export abstract class TestModifier<TSourceData extends TestModifierSourceData> e
 		return {
 			...super.toJSON(),
 			testClasses: this.testClasses,
+			skills: this.skills,
+			attributes: this.attributes,
 		};
 	}
 

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ActivationPhase } from '@/data';
 import { IEdgeBoost } from '@/edge';
+import EdgeGainMenu from '@/edge/vue/EdgeGainMenu.vue';
 import { IModifier } from '@/modifier';
 import EdgeMenu from '@/edge/vue/EdgeMenu.vue';
 import { inject, toRaw, ref, onMounted } from 'vue';
@@ -21,11 +22,12 @@ const text = ref({
 
 const poolModifier = ref(0);
 const originalPool = context.test.data.pool!;
+const edgeGainMenu = ref(null);
 
 const finishRollButton = ref();
 const isDisplayConditions = ref(false);
 const conditionsDescriptionsVisible = ref(
-	context.test.modifiers.map((_modifier: IModifier, idx: number) => {
+	context.test.activeModifiers.map((_modifier: IModifier, idx: number) => {
 		return {
 			id: idx,
 			visible: false,
@@ -47,15 +49,18 @@ function onUpdatePool() {
 	context.test.data.pool = originalPool + poolModifier.value;
 }
 
-function toggleConditions() {
-	isDisplayConditions.value = !isDisplayConditions.value;
-}
-
 onMounted(() => {
 	setTimeout(() => {
 		finishRollButton.value.focus();
 	});
 });
+
+async function toggleModifier(status: boolean, idx: number) {
+	context.test.allModifiers[idx].disabled = status;
+	await context.test.reset();
+	edgeGainMenu.value?.reset();
+	poolModifier.value = 0;
+}
 </script>
 
 <template>
@@ -99,17 +104,23 @@ onMounted(() => {
 			</td>
 		</tr>
 	</table>
-	<div v-if="context.test.modifiers.length > 0" class="section" style="width: 100%">
+	<div v-if="context.test.allModifiers.length > 0" class="section" style="width: 100%">
 		<div class="section-title" style="width: 100%">
-			<a @click.prevent="toggleConditions"
+			<a @click.prevent="isDisplayConditions = !isDisplayConditions"
 				><i class="fa-solid fa-down-from-line"></i>&nbsp;&nbsp;<Localized label="SR6.RollPrompt.Conditions" />
-				({{ context.test.modifiers.length }})</a
+				({{ context.test.activeModifiers.length }})</a
 			>
 		</div>
 		<table v-if="isDisplayConditions" style="width: 100%">
-			<tr v-for="(modifier, idx) in context.test.modifiers" v-bind:key="idx">
-				<table>
+			<tr v-for="({ disabled, modifier }, idx) in context.test.allModifiers" v-bind:key="idx">
+				<table :class="disabled ? 'disabled' : ''">
 					<tr>
+						<td v-if="!disabled">
+							<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-ban"></i></a>
+						</td>
+						<td v-else>
+							<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-play"></i></a>
+						</td>
 						<td style="width: 3em">
 							{{ modifier.displayValue }}
 						</td>
@@ -124,7 +135,7 @@ onMounted(() => {
 						</td>
 					</tr>
 					<tr>
-						<td class="hint" colspan="2">
+						<td class="hint" colspan="3">
 							<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible">
 								<div v-html="modifier.description"></div>
 							</Collapse>
@@ -149,10 +160,17 @@ onMounted(() => {
 
 				<input name="pool_modifier" type="number" v-model="poolModifier" @change.prevent="onUpdatePool" />
 			</div>
-
+			<EdgeGainMenu ref="edgeGainMenu" :test="context.test" />
 			<div class="section">
 				<div class="section-head">
 					<label><Localized label="SR6.RollPrompt.ConsumeAction" /></label>
+				</div>
+				<label class="switch">
+					<input type="checkbox" checked />
+					<span class="slider round"></span>
+				</label>
+				<div class="section-head">
+					<label><Localized label="SR6.RollPrompt.ConsumeEdge" /></label>
 				</div>
 				<label class="switch">
 					<input type="checkbox" checked />
@@ -191,6 +209,11 @@ onMounted(() => {
 .app-roll-prompt {
 	min-width: 500px;
 	min-height: 500px;
+
+	.disabled {
+		font-style: italic;
+		background-color: colors.$disabled;
+	}
 
 	.global-modifiers {
 		@extend .section;

@@ -5,6 +5,7 @@
  */
 
 import EdgeActionDataModel from '@/item/data/action/EdgeActionDataModel';
+import KnowledgeDataModel from '@/item/data/feature/KnowledgeDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
 import { register as registerSheets } from '@/item/sheets';
@@ -86,6 +87,7 @@ function registerDataModels(): void {
 	//
 	CONFIG.Item.dataModels.general_action = GeneralActionDataModel;
 	CONFIG.Item.dataModels.edge_action = EdgeActionDataModel;
+	CONFIG.Item.dataModels.knowledge = KnowledgeDataModel;
 }
 
 export function setOptGroups(select: HTMLSelectElement): void {

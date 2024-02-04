@@ -11,6 +11,7 @@ export interface BonusEdgeModifierSourceData extends TestModifierSourceData {
 	value: number;
 	skill: Maybe<string>;
 	attribute: Maybe<EnumAttribute>;
+	loseIt: Maybe<boolean>; // TODO: implement
 }
 
 export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {

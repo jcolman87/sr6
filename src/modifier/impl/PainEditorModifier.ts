@@ -14,7 +14,7 @@ export class PainEditorModifier extends TestModifier<PainEditorModifierSourceDat
 
 	async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
 		if (test.data.pool) {
-			test.data.pool += test.modifiers.reduce((acc, modifier) => {
+			test.data.pool += test.activeModifiers.reduce((acc, modifier) => {
 				if (modifier.class === 'WoundModifier') {
 					const w = modifier as WoundModifier;
 					acc += Math.abs(w.value);

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ITest } from '@/test';
 import { Target } from '@/data';
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 
 const props = defineProps<{
 	test: ITest;
@@ -20,8 +20,14 @@ async function setEdgeGainTarget(newTarget: Target) {
 	if (newTarget !== Target.None) {
 		props.test.data.edge!.gain![newTarget] += 1;
 	}
-	props.test.data.edge!.gain = props.test.data.edge!.gain!;
+	console.log('new gain:', toRaw(props.test.data.edge.gain));
 }
+
+function reset() {
+	edgeGainTarget.value = Target.None;
+}
+
+defineExpose({ reset });
 </script>
 
 <template>
@@ -67,6 +73,7 @@ async function setEdgeGainTarget(newTarget: Target) {
 							type="radio"
 							:checked="edgeGainTarget === Target.Target"
 							@change.prevent="setEdgeGainTarget(Target.Target)"
+							:disabled="!Object.prototype.hasOwnProperty.call(test.data, 'targetIds')"
 						/>
 						<span class="slider round"></span>
 					</label>

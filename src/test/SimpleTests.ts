@@ -3,6 +3,7 @@ import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import { TestType } from '@/test';
 import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import ChatComponent from '@/test/vue/chat/SimpleTest.vue';
+import PromptComponent from '@/test/vue/prompt/SimpleTest.vue';
 import { Component } from 'vue/dist/vue';
 
 export class ComposureTest extends BaseTest {
@@ -14,6 +15,9 @@ export class ComposureTest extends BaseTest {
 		return ChatComponent;
 	}
 
+	promptComponent(): Component {
+		return PromptComponent;
+	}
 	constructor(args: TestConstructorData<BaseTestData, LifeformDataModel>) {
 		if (!args.data.pool) {
 			args.data.pool =

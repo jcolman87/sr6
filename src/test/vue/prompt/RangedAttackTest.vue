@@ -119,7 +119,6 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 				</tr>
 			</table>
 		</div>
-		<EdgeGainMenu :test="test" />
 		<div class="section">
 			<div class="section-title">
 				<label><Localized label="SR6.Combat.Distance" /></label>

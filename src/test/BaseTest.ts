@@ -9,7 +9,7 @@ import { SR6ChatMessage } from '@/chat/SR6ChatMessage';
 import SR6Item from '@/item/SR6Item';
 import { IModifier, ModifierSourceData } from '@/modifier';
 import { AttackTestData, getAttackDataTargets } from '@/test/AttackTestData';
-import { ITest, RollDataDelta, TestError, TestType } from '@/test/index';
+import { ITest, ITestModifierData, RollDataDelta, TestError, TestType } from '@/test/index';
 import SR6Roll from '@/roll/SR6Roll';
 import { ConstructorOf, getActorSync, getItemSync } from '@/util';
 import { Result, Ok, Err } from 'ts-results';
@@ -54,7 +54,7 @@ export interface TestConstructorData<
 > {
 	actor: SR6Actor<TActorDataModel>;
 	data: TData;
-	modifiers?: IModifier[];
+	modifiers?: ITestModifierData[];
 	item?: SR6Item;
 	delta?: RollDataDelta;
 	roll?: SR6Roll;
@@ -62,7 +62,7 @@ export interface TestConstructorData<
 
 export interface TestSourceData<TData extends BaseTestData> {
 	type: string;
-	modifiers: ModifierSourceData[];
+	modifiers: TestModifierSourceData[];
 	baseData: TData;
 	actor: SR6Actor;
 
@@ -71,9 +71,15 @@ export interface TestSourceData<TData extends BaseTestData> {
 	roll?: RollJSON;
 }
 
+export interface TestModifierSourceData {
+	disabled: boolean;
+	modifier: ModifierSourceData;
+}
+
 export default abstract class BaseTest<TData extends BaseTestData = BaseTestData> implements ITest<TData> {
 	protected baseData: TData;
 	protected delta: RollDataDelta;
+	protected _modifiers: ITestModifierData[];
 	actor: SR6Actor;
 
 	item?: SR6Item;
@@ -93,8 +99,12 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		return 0;
 	}
 
-	get modifiers(): IModifier[] {
-		return this.actor.modifiers.getApplicable(this);
+	get allModifiers(): ITestModifierData[] {
+		return this._modifiers;
+	}
+
+	get activeModifiers(): IModifier[] {
+		return this._modifiers.filter((data) => !data.disabled).map(({ disabled, modifier }) => modifier);
 	}
 
 	get targets(): SR6Actor[] {
@@ -220,18 +230,19 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		return Ok(this.delta);
 	}
 
-	reset(): void {
+	async reset(): Promise<void> {
 		this.delta = {};
+		await this.prepareModifiers();
 	}
 
 	async prepareModifiers(): Promise<void> {
-		for (const modifier of this.modifiers) {
+		for (const modifier of this.activeModifiers) {
 			await modifier.prepareTest?.(this);
 		}
 	}
 
 	async finishModifiers(): Promise<void> {
-		for (const modifier of this.modifiers) {
+		for (const modifier of this.activeModifiers) {
 			await modifier.finishTest?.(this);
 		}
 
@@ -288,7 +299,12 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			type: this.type,
 			baseData: this.baseData,
 			delta: this.delta,
-			modifiers: this.modifiers.map((modifier) => modifier.toJSON()),
+			modifiers: this._modifiers.map(({ disabled, modifier }) => {
+				return {
+					disabled,
+					modifier: modifier.toJSON(),
+				};
+			}),
 			roll: this.roll?.toJSON(),
 		};
 	}
@@ -314,6 +330,15 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		if (this.data.edge?.spent) {
 			this.edgeBoost = getEdgeBoost(this.data.edge!.spent);
 		}
+
+		this._modifiers =
+			args.modifiers ||
+			this.actor.modifiers.getApplicable(this).map((modifier) => {
+				return {
+					disabled: false,
+					modifier,
+				};
+			});
 	}
 
 	static fromData<TTest extends BaseTest = BaseTest, TData extends BaseTestData = BaseTestData>(
@@ -321,7 +346,12 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 	): Result<TTest, TestError> {
 		const actor = getActorSync(SR6Actor, msgData.baseData.actorId!);
 		const item = msgData.baseData.itemId ? getItemSync(SR6Item, msgData.baseData.itemId) : null;
-		const modifiers = msgData.modifiers.map((modifierData) => BaseModifier.fromData(modifierData));
+		const modifiers = msgData.modifiers.map((modifierData) => {
+			return {
+				disabled: modifierData.disabled,
+				modifier: BaseModifier.fromData(modifierData.modifier),
+			};
+		});
 
 		if (!actor || (!item && msgData.baseData.itemId)) {
 			console.warn('Test actor has been deleted.');
