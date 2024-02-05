@@ -22,7 +22,7 @@ const text = ref({
 
 const poolModifier = ref(0);
 const originalPool = context.test.data.pool!;
-const edgeGainMenu = ref(null);
+const edgeGainMenu = ref<Maybe<typeof EdgeGainMenu>>(null);
 
 const finishRollButton = ref();
 const isDisplayConditions = ref(false);

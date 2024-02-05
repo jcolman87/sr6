@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import VehicleDataModel from '@/actor/data/VehicleDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { getActor } from '@/util';
@@ -30,12 +31,15 @@ async function _getDragActor(ev: DragEvent): Promise<Maybe<SR6Actor>> {
 	if (!dropJson) {
 		return null;
 	}
-	const dropData: DropData = JSON.parse(dropJson);
+	const DragEventData: DragEventData = JSON.parse(dropJson);
 
-	if (dropData.type !== 'Actor') {
+	if (DragEventData.type !== 'Actor') {
 		return null;
 	}
-	const actor = await getActor(SR6Actor, dropData.uuid);
+	const actor = await getActor<SR6Actor<BaseActorDataModel>>(
+		SR6Actor<BaseActorDataModel>,
+		DragEventData.uuid as ActorUUID,
+	);
 	if (!actor) {
 		return null;
 	}
@@ -68,7 +72,7 @@ async function setOccupant(idx: number, actor: Maybe<SR6Actor>) {
 	}
 
 	if (idx < occupants.value.length) {
-		await toRaw(system.value).removeOccupant(toRaw(occupants.value[idx]));
+		await toRaw(system.value).removeOccupant(toRaw(occupants.value)[idx] as unknown as SR6Actor);
 	}
 	await toRaw(system.value).addOccupant(actor ? toRaw(actor) : null);
 

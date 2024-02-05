@@ -90,7 +90,7 @@ onBeforeMount(update);
 				<div class="roll-formula">{{ context.test?.roll?.formula }}</div>
 				<div style="text-align: center; font-weight: bold">{{ context.test?.roll?.total }}</div>
 			</template>
-			<SR6Roll v-else-if="context.test" :roll="context.test?.roll" />
+			<SR6Roll v-else-if="context.test && context.test.roll" :roll="context.test!.roll!" />
 			<SR6Roll v-else-if="context.roll" :roll="context.roll" />
 
 			<template v-if="context.test">

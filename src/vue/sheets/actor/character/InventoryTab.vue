@@ -94,7 +94,7 @@ function dragStart(ev: DragEvent, item: SR6Item<GearDataModel>) {
 						<i
 							v-if="item.systemData.attached"
 							class="fas fa-link"
-							:title="item.systemData.attachedTo.name"
+							:title="item.systemData.attachedTo?.name"
 						/>
 						<i v-else class="fas fa-link-slash" />
 					</td>

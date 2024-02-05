@@ -8,7 +8,7 @@ import { Ok, Result } from 'ts-results';
 import { Component } from 'vue';
 
 export interface ContactTestData extends BaseTestData {
-	connectionRollData: RollJSON;
+	connectionRollData?: RollJSON;
 }
 
 export default class ContactTest extends BaseTest<ContactTestData> {

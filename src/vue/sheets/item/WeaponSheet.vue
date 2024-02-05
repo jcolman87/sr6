@@ -60,12 +60,12 @@ async function _getDropAccessory(ev: DragEvent): Promise<Maybe<SR6Item<GearDataM
 	if (!dropJson) {
 		return null;
 	}
-	const dropData: DropData = JSON.parse(dropJson);
+	const DragEventData: DragEventData = JSON.parse(dropJson);
 
-	if (dropData.type !== 'Item') {
+	if (DragEventData.type !== 'Item') {
 		return null;
 	}
-	const item: Maybe<SR6Item<GearDataModel>> = await getItem(SR6Item<GearDataModel>, dropData.uuid as ItemUUID);
+	const item: Maybe<SR6Item<GearDataModel>> = await getItem(SR6Item<GearDataModel>, DragEventData.uuid as ItemUUID);
 	if (!item) {
 		return null;
 	}

@@ -81,7 +81,7 @@ declare global {
 	}
 
 	type DragEventData = {
-		type: string;
+		type: 'ActiveEffect' | 'Actor' | 'Item' | 'Folder';
 		uuid: ItemUUID | ActorUUID | TokenDocumentUUID;
 	};
 
@@ -90,9 +90,4 @@ declare global {
 	};
 
 	export type Maybe<T> = T | null | undefined;
-
-	type DropData = {
-		type: 'ActiveEffect' | 'Actor' | 'Item' | 'Folder';
-		uuid: string;
-	};
 }

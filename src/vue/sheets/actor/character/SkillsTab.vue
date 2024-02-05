@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import CharacterDataModel from '@/actor/data/CharacterDataModel';
+import SR6Actor from '@/actor/SR6Actor';
 import Localized from '@/vue/components/Localized.vue';
 import SkillUseDataModel from '@/data/SkillUseDataModel';
 import KnowledgeDataModel from '@/item/data/feature/KnowledgeDataModel';
@@ -27,6 +28,21 @@ const skills = ref(
 		.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<SkillDataModel>[],
 );
 
+const knowledges = ref(
+	toRaw(context.data.actor)
+		.items.filter((i) => i.type === 'knowledge')
+		.map((i) => i as SR6Item<KnowledgeDataModel>)
+		.filter((i) => i.systemData.category == 'knowledge')
+		.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<KnowledgeDataModel>[],
+);
+const languages = ref(
+	toRaw(context.data.actor)
+		.items.filter((i) => i.type === 'knowledge')
+		.map((i) => i as SR6Item<KnowledgeDataModel>)
+		.filter((i) => i.systemData.category == 'language')
+		.sort((a, b) => a.name.localeCompare(b.name)) as SR6Item<KnowledgeDataModel>[],
+);
+
 const skillsVisible = ref(
 	skills.value.map((skill) => {
 		return {
@@ -37,22 +53,7 @@ const skillsVisible = ref(
 );
 const isMaximized = ref(false);
 
-const knowledges = ref(
-	toRaw(context.data.actor)
-		.items.filter((i) => i.type === 'knowledge')
-		.map((i) => i as SR6Item<KnowledgeDataModel>)
-		.filter((i) => i.systemData.category == 'knowledge')
-		.sort((a, b) => a.name.localeCompare(b.name)),
-);
-const languages = ref(
-	toRaw(context.data.actor)
-		.items.filter((i) => i.type === 'knowledge')
-		.map((i) => i as SR6Item<KnowledgeDataModel>)
-		.filter((i) => i.systemData.category == 'language')
-		.sort((a, b) => a.name.localeCompare(b.name)),
-);
-
-async function updateSkill(skill: SR6Item<SkillDataModel | KnowledgeDataModel>) {
+async function updateSkill(skill: SR6Item<SkillDataModel>) {
 	await toRaw(skill).update({ ['system']: skill.systemData });
 }
 
@@ -75,9 +76,9 @@ function maximize() {
 	skillsVisible.value.forEach((e) => (e.visible = isMaximized.value));
 }
 
-async function roll(skill: SR6Item<SkillDataModel | KnowledgeDataModel>, specialization: null | string = null) {
-	if (skill instanceof SR6Item<KnowledgeDataModel>) {
-		await new KnowledgeTest({ actor: toRaw(context.data.actor), item: toRaw(skill), data: {} }).execute();
+async function roll(skill: SR6Item<SkillDataModel>, specialization: null | string = null) {
+	if (skill.systemData instanceof KnowledgeDataModel) {
+		await new KnowledgeTest({ actor: toRaw(context.data.actor), item: skill, data: {} }).execute();
 	} else {
 		const skillUse = new SkillUseDataModel(
 			{ skill: skill.name, specialization, attribute: skill.systemData.attribute },
@@ -142,12 +143,14 @@ async function rollSimple(type: TestType) {
 								class="field-number"
 								type="number"
 								v-model="skill.systemData.points"
-								@change="updateSkill(skill)"
+								@change="updateSkill(toRaw(skill) as unknown as SR6Item<SkillDataModel>)"
 							/>
 						</td>
 						<td style="text-align: left">{{ skill.systemData.pool }}</td>
 						<td>
-							<a @click="roll(skill)" data-die="A"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+							<a @click="roll(toRaw(skill) as unknown as SR6Item<SkillDataModel>)" data-die="A"
+								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+							>
 						</td>
 					</tr>
 					<tr class="skill-details">
@@ -156,7 +159,13 @@ async function rollSimple(type: TestType) {
 								<i class="fa-solid fa-arrow-right"></i>
 								<select
 									:value="skill.systemData.specialization"
-									@change.prevent="(ev) => selectSkillSpecialization(ev, skill)"
+									@change.prevent="
+										(ev) =>
+											selectSkillSpecialization(
+												ev,
+												toRaw(skill) as unknown as SR6Item<SkillDataModel>,
+											)
+									"
 								>
 									<option value="" :selected="!skill.systemData.specialization">-</option>
 									<option v-for="special in skill.systemData.specializations" v-bind:key="special">
@@ -182,7 +191,14 @@ async function rollSimple(type: TestType) {
 						</td>
 						<td>
 							<Collapse :when="skillsVisible.find((v) => v.id == skill.id)!.visible"
-								><a @click="roll(skill, skill.systemData.specialization)" data-die="A"
+								><a
+									@click="
+										roll(
+											toRaw(skill) as unknown as SR6Item<SkillDataModel>,
+											skill.systemData.specialization,
+										)
+									"
+									data-die="A"
 									><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 								></Collapse
 							>
@@ -194,7 +210,10 @@ async function rollSimple(type: TestType) {
 								<i class="fa-solid fa-arrow-right"></i>
 								<select
 									:value="skill.systemData.expertise"
-									@change.prevent="(ev) => selectSkillExpertise(ev, skill)"
+									@change.prevent="
+										(ev) =>
+											selectSkillExpertise(ev, toRaw(skill) as unknown as SR6Item<SkillDataModel>)
+									"
 									:disabled="skill.systemData.specialization == null"
 								>
 									<option value="" :selected="!skill.systemData.expertise">-</option>
@@ -225,7 +244,14 @@ async function rollSimple(type: TestType) {
 						</td>
 						<td>
 							<Collapse :when="skillsVisible.find((v) => v.id == skill.id)!.visible"
-								><a @click="roll(skill, skill.systemData.expertise)" data-die="A"
+								><a
+									@click="
+										roll(
+											toRaw(skill) as unknown as SR6Item<SkillDataModel>,
+											skill.systemData.expertise,
+										)
+									"
+									data-die="A"
 									><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 								></Collapse
 							>
@@ -311,7 +337,9 @@ async function rollSimple(type: TestType) {
 						</td>
 						<td>{{ skill.systemData.pool }}</td>
 						<td>
-							<a @click="roll(skill)" data-die="A"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+							<a @click="roll(toRaw(skill) as unknown as SR6Item<SkillDataModel>)" data-die="A"
+								><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
+							>
 						</td>
 					</tr>
 				</table>
@@ -336,7 +364,7 @@ async function rollSimple(type: TestType) {
 							</td>
 							<td>{{ skill.systemData.pool }}</td>
 							<td>
-								<a @click="roll(skill)" data-die="A"
+								<a @click="roll(toRaw(skill) as unknown as SR6Item<SkillDataModel>)" data-die="A"
 									><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 								>
 							</td>
