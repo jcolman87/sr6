@@ -26,9 +26,10 @@ export abstract class BlockActionModifier extends BaseModifier<BlockActionModifi
 	protected constructor({
 		parent,
 		source,
+		target,
 		conditions,
 		data,
 	}: ModifierConstructorData<BlockActionModifierSourceData>) {
-		super({ parent, source, conditions, data });
+		super({ parent, source, target, conditions, data });
 	}
 }

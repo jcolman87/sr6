@@ -166,8 +166,6 @@ export default abstract class MatrixPersonaDataModel extends BaseItemDataModel i
 	override prepareDerivedData(): void {
 		super.prepareDerivedData();
 		this.attributes.prepareDerivedData();
-
-		console.log('wut', this.actor!.modifiers.simple);
 	}
 
 	static override defineSchema(): foundry.data.fields.DataSchema {

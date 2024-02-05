@@ -24,7 +24,8 @@ system:
   cost: '@rating * 55000'
   hasActivate: true
   modifiers:
-    - class: PainEditorModifier
+    - name: Adrenaline Pump (Ignore Pain)
+      class: PainEditorModifier
   activation:
     type: 'minor'
     # TODO: Deactivation effects

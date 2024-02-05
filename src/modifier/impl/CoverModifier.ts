@@ -11,10 +11,10 @@ export class CoverModifier extends TestPoolModifier<CoverModifierSourceData> {
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<CoverModifierSourceData>) {
+	constructor({ parent, source, target, conditions, data }: ModifierConstructorData<CoverModifierSourceData>) {
 		data.class = 'CoverModifier';
 		data.testClasses = data.testClasses || ['RangedDefenseTest'];
 
-		super({ parent, source, conditions, data });
+		super({ parent, source, target, conditions, data });
 	}
 }

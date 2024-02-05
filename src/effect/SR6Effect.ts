@@ -7,7 +7,7 @@ import SR6Actor from '@/actor/SR6Actor';
 import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
-import { Modifiers, ModifiersSourceData } from '@/modifier';
+import { Modifiers, ModifiersSourceData, ModifierTarget } from '@/modifier';
 import { TestPoolModifier } from '@/modifier/TestModifiers';
 
 export const EFFECT_MODES = {
@@ -154,6 +154,7 @@ export default class SR6Effect extends ActiveEffect {
 			new TestPoolModifier({
 				parent: target,
 				source: this,
+				target: ModifierTarget.Actor,
 				data: {
 					name: this.name,
 					description: this.description,

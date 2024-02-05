@@ -87,10 +87,10 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<BonusEdgeModifierSourceData>) {
+	constructor({ parent, source, target, conditions, data }: ModifierConstructorData<BonusEdgeModifierSourceData>) {
 		data.class = 'EdgeModifier';
 		data.testClasses = data.testClasses || [];
 
-		super({ parent, source, conditions, data });
+		super({ parent, source, target, conditions, data });
 	}
 }

@@ -17,9 +17,8 @@ const sourceGear = computedAsync(async () => {
 	const items: SR6Item[] = [];
 	for (const uuid of system.value.sourceGearIds) {
 		const item = await getItem(SR6Item, uuid);
-		console.log('uuid =', uuid, item);
+
 		if (item) {
-			console.log('adding', item);
 			items.push(item!);
 		}
 	}

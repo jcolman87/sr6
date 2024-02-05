@@ -6,6 +6,7 @@ import { IModifier } from '@/modifier';
 import SR6Roll from '@/roll/SR6Roll';
 import { BaseTestData } from '@/test/BaseTest';
 import ContactTest from '@/test/ContactTest';
+import { MeleeAttackTest, MeleeDefenseTest } from '@/test/MeleeTests';
 import { KnowledgeTest, LanguageTest, MemoryTest } from '@/test/MemoryTests';
 import { ComposureTest, JudgeIntentionsTest, LiftCarryTest } from '@/test/SimpleTests';
 
@@ -72,6 +73,9 @@ export function config(): Record<string, unknown> {
 		// combat
 		RangedAttackTest: RangedAttackTest,
 		RangedDefenseTest: RangedDefenseTest,
+
+		MeleeAttackTest: MeleeAttackTest,
+		MeleeDefenseTest: MeleeDefenseTest,
 
 		PhysicalSoakTest: PhysicalSoakTest,
 

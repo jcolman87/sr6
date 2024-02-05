@@ -90,4 +90,9 @@ declare global {
 	};
 
 	export type Maybe<T> = T | null | undefined;
+
+	type DropData = {
+		type: 'ActiveEffect' | 'Actor' | 'Item' | 'Folder';
+		uuid: string;
+	};
 }

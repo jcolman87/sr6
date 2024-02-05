@@ -65,9 +65,7 @@ system:
   cost: '@rating * 9000'
   hasActivate: true
   modifiers:
-    - name: Pain Editor
-      description: balls
-      class: PainEditorModifier
+    - class: PainEditorModifier
   activation:
     type: 'minor'
   availability:

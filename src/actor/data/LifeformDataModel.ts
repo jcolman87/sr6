@@ -261,62 +261,62 @@ export default abstract class LifeformDataModel
 
 			attributes: new fields.SchemaField({
 				body: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				agility: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				reaction: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				strength: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				willpower: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				logic: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				intuition: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				charisma: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 2, value: 2, mod: 0 },
+					initial: { base: 2, value: 2, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				magic: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 0, value: 0, mod: 0 },
+					initial: { base: 0, value: 0, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				resonance: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 0, value: 0, mod: 0 },
+					initial: { base: 0, value: 0, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				essence: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 6, value: 0, mod: 0 },
+					initial: { base: 6, value: 0, mod: 0, max: 6 },
 					required: true,
 					nullable: false,
 				}),
 				edge: new fields.EmbeddedDataField(AttributeDataModel, {
-					initial: { base: 1, value: 0, mod: 0 },
+					initial: { base: 1, value: 0, mod: 0, max: 10 },
 					required: true,
 					nullable: false,
 				}),

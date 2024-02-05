@@ -21,12 +21,12 @@ export class WoundModifier extends TestPoolModifier<WoundModifierSourceData> {
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<WoundModifierSourceData>) {
+	constructor({ parent, source, conditions, target, data }: ModifierConstructorData<WoundModifierSourceData>) {
 		data.class = data.class || 'WoundModifier';
 		data.name = data.name || 'SR6.Modifiers.PhysicalWoundModifier.Name';
 		data.description = data.description || 'SR6.Modifiers.PhysicalWoundModifier.Description';
 		data.testClasses = data.testClasses || [];
 
-		super({ parent, source, conditions, data });
+		super({ parent, source, conditions, target, data });
 	}
 }

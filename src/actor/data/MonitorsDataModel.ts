@@ -1,6 +1,6 @@
 import BaseDataModel from '@/data/BaseDataModel';
 import { IHasEdge } from '@/data/interfaces';
-import { IModifier } from '@/modifier';
+import { IModifier, ModifierTarget } from '@/modifier';
 import { WoundModifier } from '@/modifier/impl/WoundModifier';
 
 export enum MonitorType {
@@ -142,7 +142,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 				}
 			}
 		}
-		console.log('Healing ', monitor.damage - value);
+
 		await this.actor!.update({
 			[`system.monitors.${type.toString()}.damage`]: Math.max(0, monitor.damage - value),
 		});
@@ -210,6 +210,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 			physicalWoundModifier = new WoundModifier({
 				parent: this.actor!,
 				source: this.actor!,
+				target: ModifierTarget.Actor,
 				data: { name: 'SR6.Modifiers.PhysicalWoundModifier.Name', value: this.physical.woundModifier },
 			});
 			this.actor!.modifiers.all.push(physicalWoundModifier as unknown as IModifier);
@@ -218,6 +219,7 @@ export default abstract class MonitorsDataModel extends BaseDataModel implements
 			stunWoundModifier = new WoundModifier({
 				parent: this.actor!,
 				source: this.actor!,
+				target: ModifierTarget.Actor,
 				data: { name: 'SR6.Modifiers.StunWoundModifier.Name', value: this.stun.woundModifier },
 			});
 			this.actor!.modifiers.all.push(stunWoundModifier as unknown as IModifier);

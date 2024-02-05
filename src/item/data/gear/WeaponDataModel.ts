@@ -113,7 +113,6 @@ export default abstract class WeaponDataModel extends GearDataModel {
 	override prepareEmbeddedDocuments(): void {
 		super.prepareEmbeddedDocuments();
 		this.attackRatings.prepareEmbeddedDocuments();
-		this.applyAttachmentEffects();
 	}
 
 	override prepareDerivedData(): void {
@@ -148,8 +147,16 @@ export default abstract class WeaponDataModel extends GearDataModel {
 
 	applyAttachmentEffects(): void {
 		for (const accessory of this.accessories) {
+			// copy attachment modifiers
+			//this.item!.modifiers.all = this.item!.modifiers.all.concat(accessory.modifiers.all);
+
 			for (const effectData of accessory.effects) {
 				const effect = effectData as SR6Effect;
+
+				// copy attachment effect modifiers
+				console.log('adding modifiers', accessory, effect, this.item!.modifiers.all, effect.modifiers.all);
+				this.item!.modifiers.all = this.item!.modifiers.all.concat(effect.modifiers.all);
+
 				for (const change of effect.changes) {
 					effect._apply(this.item!, change);
 				}
@@ -158,55 +165,7 @@ export default abstract class WeaponDataModel extends GearDataModel {
 	}
 
 	// Transfer effects off of attachments onto us
-	async _syncAttachmentEffects(): Promise<void> {
-		/*
-		const toRemove = [];
-		// Remove local effects that the attachment no longer exists for
-		for (const effect of this.item!.effects) {
-			const effectData = effect.getFlag('sr6', 'WeaponAttachmentEffectData') as
-				| undefined
-				| WeaponAttachmentEffectData;
-			if (effectData) {
-				if (!this._accessories.includes(effectData.sourceAttachmentId)) {
-					toRemove.push(effect.id);
-				}
-			}
-		}
-		await this.item!.deleteEmbeddedDocuments('ActiveEffect', toRemove);
-
-		// Add new effects from new attachments
-		const toCreate = [];
-		for (const accessory of this.accessories) {
-			if (
-				!this.item!.effects.find((effect) => {
-					const effectData = effect.getFlag('sr6', 'WeaponAttachmentEffectData') as
-						| undefined
-						| WeaponAttachmentEffectData;
-					if (!effectData) {
-						return false;
-					}
-					if (effectData.sourceAttachmentId == accessory.uuid) {
-						return true;
-					}
-					return false;
-				})
-			) {
-				for (const effect of accessory.effects) {
-					toCreate.push({
-						...effect,
-						disabled: false,
-						flags: {
-							['WeaponAttachmentEffectData']: {
-								sourceAttachmentId: accessory.uuid,
-							},
-						},
-					});
-				}
-			}
-		}
-		await this.item!.createEmbeddedDocuments('ActiveEffect', toCreate);
-		*/
-	}
+	async _syncAttachmentEffects(): Promise<void> {}
 
 	async attach(accessory: SR6Item<GearDataModel>): Promise<boolean> {
 		if (!this.isOwner || !accessory.isOwner) {

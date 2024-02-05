@@ -1,5 +1,17 @@
 @use 'vars/colors';
 
+.fa {
+	color: colors.$icon;
+}
+.fa-regular {
+	color: colors.$icon;
+}
+
+.fas {
+	color: colors.$icon;
+}
+
+
 .roll-button {
 	font-size: 16px;
 	background: url(/systems/sr6/assets/dice/die_6.png) no-repeat;

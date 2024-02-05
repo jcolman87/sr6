@@ -31,12 +31,12 @@ export class PainEditorModifier extends TestModifier<PainEditorModifierSourceDat
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<PainEditorModifierSourceData>) {
+	constructor({ parent, source, conditions, target, data }: ModifierConstructorData<PainEditorModifierSourceData>) {
 		data.class = 'PainEditorModifier';
 		data.name = game.i18n.localize('SR6.Modifiers.PainEditorModifier.Name');
 		data.description = game.i18n.localize('SR6.Modifiers.PainEditorModifier.Description');
 		data.testClasses = data.testClasses || [];
 
-		super({ parent, source, conditions, data });
+		super({ parent, source, conditions, target, data });
 	}
 }

@@ -10,11 +10,6 @@ import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import './SR6ItemSheet.scss';
 import { getItemSync } from '@/util';
 
-export type DropData = {
-	type: 'ActiveEffect' | 'Actor' | 'Item' | 'Folder';
-	uuid: string;
-};
-
 /**
  * Basic functionality shared by all ItemSheets.
  */

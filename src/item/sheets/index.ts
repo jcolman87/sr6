@@ -15,6 +15,7 @@ import GeneralActionSheet from '@/vue/sheets/item/GeneralActionSheet.vue';
 import LifestyleSheet from '@/vue/sheets/item/LifestyleSheet.vue';
 import QualitySheet from '@/vue/sheets/item/QualitySheet.vue';
 import SpellSheet from '@/vue/sheets/item/SpellSheet.vue';
+import WeaponSheet from '@/vue/sheets/item/WeaponSheet.vue';
 import VueSheet from '@/vue/VueSheet';
 import { Component } from 'vue';
 import SR6ItemSheet from '@/item/SR6ItemSheet';
@@ -72,6 +73,11 @@ export function register(): void {
 
 	Items.registerSheet('sr6', basicSheet(BasicGearSheet), {
 		types: ['gear', 'weapon', 'wearable'],
+		makeDefault: true,
+	});
+
+	Items.registerSheet('sr6', basicSheet(WeaponSheet), {
+		types: ['weapon'],
 		makeDefault: true,
 	});
 

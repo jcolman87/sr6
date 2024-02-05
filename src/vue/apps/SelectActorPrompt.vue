@@ -44,12 +44,10 @@ function close() {
 }
 
 function toggleFilterDisposition(val: number) {
-	console.log('wtf', val, filters.value.dispositions);
 	if (filters.value.dispositions.includes(val)) {
 		filters.value.dispositions = filters.value.dispositions.filter((v) => {
 			return v !== val;
 		});
-		console.log(filters.value.dispositions);
 	} else {
 		filters.value.dispositions.push(val);
 	}

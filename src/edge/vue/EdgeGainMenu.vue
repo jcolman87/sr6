@@ -20,7 +20,6 @@ async function setEdgeGainTarget(newTarget: Target) {
 	if (newTarget !== Target.None) {
 		props.test.data.edge!.gain![newTarget] += 1;
 	}
-	console.log('new gain:', toRaw(props.test.data.edge.gain));
 }
 
 function reset() {

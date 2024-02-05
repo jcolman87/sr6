@@ -69,8 +69,8 @@ export abstract class TestModifier<TSourceData extends TestModifierSourceData> e
 		};
 	}
 
-	protected constructor({ parent, source, conditions, data }: ModifierConstructorData<TSourceData>) {
-		super({ parent, source, conditions, data });
+	protected constructor({ parent, source, conditions, target, data }: ModifierConstructorData<TSourceData>) {
+		super({ parent, source, conditions, target, data });
 		if (!data.testClasses) {
 			data.testClasses = [];
 		}
@@ -96,8 +96,8 @@ export class TestFunctionModifier<
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<TSourceData>) {
-		super({ parent, source, conditions, data });
+	constructor({ parent, source, conditions, target, data }: ModifierConstructorData<TSourceData>) {
+		super({ parent, source, conditions, target, data });
 
 		this.prepareTest = data.prepareTestScript ? Function('test', data.prepareTestScript) : undefined;
 		this.finishTest = data.finishTestScript ? Function('test', data.finishTestScript) : undefined;
@@ -133,7 +133,7 @@ export class TestPoolModifier<
 		};
 	}
 
-	constructor({ parent, source, conditions, data }: ModifierConstructorData<TData>) {
+	constructor({ parent, source, conditions, target, data }: ModifierConstructorData<TData>) {
 		if (data.valueFormula) {
 			if (source instanceof SR6Item) {
 				data.value = (source as SR6Item).solveFormula(data.valueFormula!);
@@ -142,6 +142,6 @@ export class TestPoolModifier<
 			}
 		}
 
-		super({ parent, source, conditions, data });
+		super({ parent, source, conditions, target, data });
 	}
 }

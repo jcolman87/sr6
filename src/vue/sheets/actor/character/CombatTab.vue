@@ -5,6 +5,7 @@ import GeneralActionDataModel, { GeneralActionCategory } from '@/item/data/actio
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import WearableDataModel from '@/item/data/gear/WearableDataModel';
 import SR6Item from '@/item/SR6Item';
+import { MeleeAttackTest } from '@/test/MeleeTests';
 import { RangedAttackTest } from '@/test/RangedTests';
 import { getTargetActors } from '@/util';
 import CombatInfo from '@/vue/components/combat/CombatInfo.vue';
@@ -104,7 +105,7 @@ async function useGeneralAction(action: SR6Item<GeneralActionDataModel>) {
 			return;
 		}
 		if (weapon.systemData.isMelee) {
-			// await new MeleeAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
+			await new MeleeAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 		} else {
 			await new RangedAttackTest({ actor: toRaw(context.data.actor), item: weapon }).execute();
 			// TODO: consume and use

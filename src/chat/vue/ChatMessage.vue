@@ -66,7 +66,6 @@ async function applyDamage(type: MonitorType) {
 		} else {
 			const hasPersona = actor.systemData as unknown as IHasMatrixPersona;
 			if (hasPersona.matrixPersona) {
-				console.log(hasPersona.matrixPersona.monitor(context.test?.item));
 				throw 'TODO';
 			}
 		}
@@ -78,8 +77,6 @@ async function applyHealing(type: MonitorType) {
 		await toRaw(actor.systemData.monitors.applyHeal(type, getDamage()));
 	}
 }
-
-console.log('lol', context.test);
 
 onUpdated(update);
 onBeforeMount(update);

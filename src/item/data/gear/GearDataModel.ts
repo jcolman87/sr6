@@ -77,12 +77,14 @@ export type ProgramSlotsData = {
 export abstract class GearWirelessBonusDataModel extends BaseDataModel {
 	abstract description: string;
 	abstract modifiers: ModifierDataModel[];
+	abstract transfers: boolean;
 
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
 			description: new fields.StringField({ initial: '', required: true, blank: true, nullable: false }),
+			transfers: new fields.BooleanField({ initial: true, nullable: false, required: true }),
 			modifiers: new fields.ArrayField(new fields.EmbeddedDataField(ModifierDataModel), {
 				initial: [],
 				required: true,
@@ -213,10 +215,10 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 
 	abstract matrix: GearMatrixDataModel | null;
 
-	protected abstract _attachedTo: null | ItemUUID | ActorUUID;
+	protected abstract _attachedTo: Maybe<ItemUUID | ActorUUID>;
 
 	get attached(): boolean {
-		return this._attachedTo !== null;
+		return !!this._attachedTo;
 	}
 
 	get attachedTo(): null | SR6Actor<BaseActorDataModel> | SR6Item<GearDataModel> {
@@ -253,7 +255,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 						label: this.wirelessBonusName,
 						icon: this.item!.img,
 						disabled: false,
-						transfers: true,
+						transfers: this.matrix!.wirelessBonus.transfers,
 					},
 				])
 			)[0] as SR6Effect;
@@ -353,9 +355,7 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 
 	override prepareDerivedData(): void {
 		this.monitors.physical.prepareDerivedData();
-
 		this.monitors.matrix?.prepareDerivedData();
-
 		this.matrix?.attributes?.prepareDerivedData();
 	}
 }

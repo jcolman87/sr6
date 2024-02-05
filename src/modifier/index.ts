@@ -29,6 +29,8 @@ export type ModifierSourceUUID =
 export interface IModifier {
 	get class(): string;
 
+	get target(): ModifierTarget;
+
 	get data(): Record<string, unknown>;
 
 	isApplicable(test: Maybe<ITest>, roll: Maybe<Roll>): boolean;
@@ -54,6 +56,11 @@ export interface IModifier {
 	toJSON(): ModifierSourceData;
 }
 
+export enum ModifierTarget {
+	Actor = 'actor',
+	Item = 'item',
+}
+
 export type ModifierSourceData = {
 	parent?: ModifierSourceUUID;
 	source?: ModifierSourceUUID;
@@ -61,6 +68,7 @@ export type ModifierSourceData = {
 	name?: string;
 	description?: string;
 	conditions?: ConditionalData[];
+	target?: ModifierTarget;
 } & ClassData &
 	Record<string, unknown>;
 
@@ -72,6 +80,7 @@ export type ModifierConstructorData<TSourceData extends ModifierSourceData> = {
 	parent: foundry.abstract.Document;
 	source: foundry.abstract.Document;
 	conditions?: ConditionalData[];
+	target: ModifierTarget;
 	data: TSourceData;
 };
 

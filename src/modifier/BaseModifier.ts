@@ -1,6 +1,6 @@
 import { getClass } from '@/data/serialize';
 import { checkConditions, ConditionalData } from '@/effect/conditional';
-import { IModifier, ModifierSourceData, ModifierSourceUUID } from '@/modifier';
+import { IModifier, ModifierSourceData, ModifierSourceUUID, ModifierTarget } from '@/modifier';
 import { ITest } from '@/test';
 import { ConstructorOf } from '@/util';
 import { Err, Ok, Result } from 'ts-results';
@@ -13,8 +13,13 @@ export default class BaseModifier<
 {
 	_parent: TParent;
 	_source: TSource;
+	_target: ModifierTarget;
 	conditions: ConditionalData[];
 	data: TData;
+
+	get target(): ModifierTarget {
+		return this._target;
+	}
 
 	get class(): string {
 		return this.constructor.name;
@@ -67,7 +72,15 @@ export default class BaseModifier<
 
 		const cls = getClass<ConstructorOf<BaseModifier>>(CONFIG.sr6.types.modifiers, data);
 		if (cls.ok) {
-			return Ok(new cls.val({ parent, source, conditions: data.conditions, data }) as unknown as IModifier);
+			return Ok(
+				new cls.val({
+					parent,
+					source,
+					conditions: data.conditions,
+					target: data.target,
+					data,
+				}) as unknown as IModifier,
+			);
 		}
 		throw '';
 	}
@@ -80,6 +93,7 @@ export default class BaseModifier<
 			parent: this.parent.uuid as ModifierSourceUUID,
 			source: this.source.uuid as ModifierSourceUUID,
 			conditions: this.conditions,
+			target: this.target,
 		};
 	}
 
@@ -87,16 +101,19 @@ export default class BaseModifier<
 		parent,
 		source,
 		conditions,
+		target,
 		data,
 	}: {
 		parent: TParent;
 		source: TSource;
+		target: ModifierTarget;
 		conditions?: ConditionalData[];
 		data: TData;
 	}) {
 		this.data = data;
 		this._parent = parent;
 		this._source = source;
+		this._target = target;
 		this.conditions = conditions ? conditions : [];
 
 		// Attempt to localize names if they exist, otherwise replace with placeholders

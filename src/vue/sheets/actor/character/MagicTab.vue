@@ -146,7 +146,7 @@ async function rollAttribute(attribute: EnumAttribute) {
 						</td>
 						<td class="actions">
 							<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-								class="fas fa-minus"
+								class="fas fa-trash"
 								@click.prevent="deleteItem(item)"
 							/>
 						</td>
@@ -177,7 +177,7 @@ async function rollAttribute(attribute: EnumAttribute) {
 							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 						>
 						<a class="fas fa-edit" @click.prevent="spell.sheet?.render(true)" /><a
-							class="fas fa-minus"
+							class="fas fa-trash"
 							@click.prevent="deleteItem(spell)"
 						/>
 					</td>

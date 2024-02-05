@@ -71,7 +71,7 @@ async function rollContact(contact: SR6Item<ContactDataModel>) {
 					</td>
 					<td class="actions">
 						<a class="fas fa-edit" @click.prevent="sin.sheet?.render(true)" /><a
-							class="fas fa-minus"
+							class="fas fa-trash"
 							@click.prevent="deleteItem(sin)"
 						/>
 					</td>
@@ -94,7 +94,7 @@ async function rollContact(contact: SR6Item<ContactDataModel>) {
 					</td>
 					<td class="actions">
 						<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-							class="fas fa-minus"
+							class="fas fa-trash"
 							@click.prevent="deleteItem(item)"
 						/>
 					</td>
@@ -141,7 +141,7 @@ async function rollContact(contact: SR6Item<ContactDataModel>) {
 						<a @click="rollContact(item)" title="Roll Contact"
 							><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a
 						>&nbsp;&nbsp; <a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-							class="fas fa-minus"
+							class="fas fa-trash"
 							@click.prevent="deleteItem(item)"
 						/>
 					</td>

@@ -4,9 +4,11 @@ import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import { DocumentUUIDField } from '@/data/fields';
 import { IHasOnDropActor } from '@/data/interfaces';
+import SkillUseDataModel from '@/data/SkillUseDataModel';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import { GearAvailabilityDataModel, GearMatrixDataModel } from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
+import { getActorSync } from '@/util';
 
 export type Handling = {
 	onRoad: number;
@@ -18,14 +20,20 @@ export type Seats = {
 	back: number;
 };
 
-export enum DriverType {
+export enum PilotType {
 	Physical = 'physical',
 	Rigged = 'rigged',
 }
 
-export abstract class VehicleDriverDataModel extends BaseDataModel {
+export enum VehicleTravelType {
+	Ground = 'ground',
+	Air = 'air',
+	Water = 'water',
+}
+
+export abstract class VehiclePilotDataModel extends BaseDataModel {
 	abstract actorId: Maybe<ActorUUID>;
-	abstract type: Maybe<DriverType>;
+	abstract type: Maybe<PilotType>;
 
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
@@ -33,11 +41,11 @@ export abstract class VehicleDriverDataModel extends BaseDataModel {
 		return {
 			actorId: new DocumentUUIDField({ nullable: true, required: false }),
 			type: new fields.StringField({
-				initial: DriverType.Physical,
+				initial: PilotType.Physical,
 				required: false,
 				nullable: true,
 				blank: false,
-				choices: Object.values(DriverType),
+				choices: Object.values(PilotType),
 			}),
 		};
 	}
@@ -47,7 +55,7 @@ export abstract class VehicleStatusDataModel extends BaseDataModel {
 	abstract speed: number;
 	abstract acceleration: number;
 
-	abstract driver: Maybe<VehicleDriverDataModel>;
+	abstract pilot: Maybe<VehiclePilotDataModel>;
 	abstract occupants: ActorUUID[];
 
 	static defineSchema(): foundry.data.fields.DataSchema {
@@ -66,7 +74,7 @@ export abstract class VehicleStatusDataModel extends BaseDataModel {
 				required: true,
 				integer: true,
 			}),
-			driver: new fields.EmbeddedDataField(VehicleDriverDataModel, { nullable: true, required: false }),
+			pilot: new fields.EmbeddedDataField(VehiclePilotDataModel, { nullable: true, required: false }),
 			occupants: new fields.ArrayField(new DocumentUUIDField(), {
 				initial: [],
 				required: true,
@@ -76,40 +84,110 @@ export abstract class VehicleStatusDataModel extends BaseDataModel {
 	}
 }
 
+type VehicleStatsData = {
+	acceleration: number;
+	speedInterval: number;
+	maxSpeed: number;
+
+	body: number;
+	armor: number;
+
+	pilot: number;
+	sensor: number;
+};
+
 export abstract class BaseVehicleDataModel extends BaseActorDataModel {
 	abstract costFormula: string;
 	abstract availability: GearAvailabilityDataModel;
 	abstract handling: Handling;
 
-	abstract acceleration: number;
-	abstract speedInterval: number;
-	abstract maxSpeed: number;
-
-	abstract body: number;
-	abstract armor: number;
-
-	abstract pilot: number;
-	abstract sensor: number;
+	abstract stats: VehicleStatsData;
 
 	abstract current: VehicleStatusDataModel;
 	abstract matrix: Maybe<GearMatrixDataModel>;
+
+	abstract skillUse: SkillUseDataModel;
 
 	get cost(): number {
 		return this.solveFormula(this.costFormula);
 	}
 
+	get pilot(): Maybe<SR6Actor> {
+		const actorId = this.current.pilot?.actorId;
+		if (!actorId) {
+			return null;
+		}
+
+		return getActorSync(SR6Actor, actorId);
+	}
+
+	get occupants(): SR6Actor[] {
+		return (
+			this.current.occupants
+				.map((actorId) => getActorSync(SR6Actor, actorId))
+				.filter((a) => a != null)
+				.map((a) => a as SR6Actor) || []
+		);
+	}
+
+	get pilotPool(): number {
+		const skillUse = this.pilotSkillUse;
+
+		return skillUse ? skillUse.pool : 0;
+	}
+
+	get pilotSkillUse(): Maybe<SkillUseDataModel> {
+		return this.pilot
+			? new SkillUseDataModel(
+					{
+						skill: this.skillUse.skill,
+						specialization: this.skillUse.specialization,
+						attribute: this.skillUse.attribute,
+					},
+					{ parent: this.pilot },
+				)
+			: null;
+	}
+
 	get speedPoolModifier(): number {
-		return -Math.floor(this.current.speed / this.speedInterval);
+		return -Math.floor(this.current.speed / this.stats.speedInterval);
+	}
+
+	async setPilot(actor: Maybe<SR6Actor>): Promise<void> {
+		await this.actor!.update({
+			['system.current.pilot']: actor
+				? {
+						type: PilotType.Physical,
+						actorId: actor.uuid,
+					}
+				: null,
+		});
+	}
+
+	async addOccupant(actor: Maybe<SR6Actor>): Promise<void> {
+		if (actor?.uuid) {
+			this.current.occupants.push(actor.uuid);
+			await this.actor!.update({ ['system.current.occupants']: this.current.occupants });
+		}
+	}
+
+	async removeOccupant(actor: Maybe<SR6Actor>): Promise<void> {
+		if (actor?.uuid) {
+			if (this.current.occupants.indexOf(actor.uuid) > -1) {
+				this.current.occupants.splice(this.current.occupants.indexOf(actor.uuid), 1);
+				await this.actor!.update({ ['system.current.occupants']: this.current.occupants });
+			}
+		}
 	}
 
 	async setAcceleration(newAcceleration: number): Promise<number> {
-		if (newAcceleration > this.acceleration) {
-			ui.notifications.warn(`New acceleration higher than max, adjusting ${this.acceleration}`);
-			newAcceleration = this.acceleration;
+		if (newAcceleration > this.stats.acceleration) {
+			ui.notifications.warn(`New acceleration higher than max, adjusting ${this.stats.acceleration}`);
+			newAcceleration = this.stats.acceleration;
 		}
-		if (newAcceleration < -this.acceleration) {
-			ui.notifications.warn(`New acceleration higher than max, adjusting ${this.acceleration}`);
-			newAcceleration = -this.acceleration;
+		if (newAcceleration < -this.stats.acceleration) {
+			ui.notifications.warn(`New acceleration higher than max, adjusting ${this.stats.acceleration}`);
+			newAcceleration = -this.stats.acceleration;
 		}
 		this.current.acceleration = newAcceleration;
 		await this.actor!.update({ ['system.current.acceleration']: newAcceleration });
@@ -118,7 +196,7 @@ export abstract class BaseVehicleDataModel extends BaseActorDataModel {
 	}
 
 	async setSpeed(newSpeed: number): Promise<number> {
-		this.current.speed = Math.max(-this.maxSpeed, Math.min(this.maxSpeed, newSpeed));
+		this.current.speed = Math.max(-this.stats.maxSpeed, Math.min(this.stats.maxSpeed, newSpeed));
 		await this.actor!.update({ ['system.current.speed']: this.current.speed });
 
 		return this.current.speed;
@@ -140,16 +218,70 @@ export abstract class BaseVehicleDataModel extends BaseActorDataModel {
 			...super.defineSchema(),
 			costFormula: new fields.StringField({ initial: '0', nullable: false, required: true, blank: false }),
 			availability: new fields.EmbeddedDataField(GearAvailabilityDataModel, { nullable: false, required: true }),
-			handling: new fields.SchemaField(
+			stats: new fields.SchemaField(
 				{
-					onRoad: new fields.NumberField({
+					handling: new fields.SchemaField(
+						{
+							onRoad: new fields.NumberField({
+								initial: 0,
+								nullable: false,
+								required: true,
+								min: 0,
+								integer: true,
+							}),
+							offRoad: new fields.NumberField({
+								initial: 0,
+								nullable: false,
+								required: true,
+								min: 0,
+								integer: true,
+							}),
+						},
+						{ nullable: false, required: true },
+					),
+					acceleration: new fields.NumberField({
 						initial: 0,
 						nullable: false,
 						required: true,
 						min: 0,
 						integer: true,
 					}),
-					offRoad: new fields.NumberField({
+					speedInterval: new fields.NumberField({
+						initial: 0,
+						nullable: false,
+						required: true,
+						min: 0,
+						integer: true,
+					}),
+					maxSpeed: new fields.NumberField({
+						initial: 0,
+						nullable: false,
+						required: true,
+						min: 0,
+						integer: true,
+					}),
+					body: new fields.NumberField({
+						initial: 0,
+						nullable: false,
+						required: true,
+						min: 0,
+						integer: true,
+					}),
+					armor: new fields.NumberField({
+						initial: 0,
+						nullable: false,
+						required: true,
+						min: 0,
+						integer: true,
+					}),
+					pilot: new fields.NumberField({
+						initial: 0,
+						nullable: false,
+						required: true,
+						min: 0,
+						integer: true,
+					}),
+					sensor: new fields.NumberField({
 						initial: 0,
 						nullable: false,
 						required: true,
@@ -157,28 +289,17 @@ export abstract class BaseVehicleDataModel extends BaseActorDataModel {
 						integer: true,
 					}),
 				},
-				{ nullable: false, required: true },
+				{ required: true, nullable: false },
 			),
-			acceleration: new fields.NumberField({
-				initial: 0,
-				nullable: false,
+			skillUse: new fields.EmbeddedDataField(SkillUseDataModel, {
+				initial: {
+					skill: 'piloting',
+					attribute: 'reaction',
+					specialization: null,
+				},
 				required: true,
-				min: 0,
-				integer: true,
+				nullable: true,
 			}),
-			speedInterval: new fields.NumberField({
-				initial: 0,
-				nullable: false,
-				required: true,
-				min: 0,
-				integer: true,
-			}),
-			maxSpeed: new fields.NumberField({ initial: 0, nullable: false, required: true, min: 0, integer: true }),
-			body: new fields.NumberField({ initial: 0, nullable: false, required: true, min: 0, integer: true }),
-			armor: new fields.NumberField({ initial: 0, nullable: false, required: true, min: 0, integer: true }),
-			pilot: new fields.NumberField({ initial: 0, nullable: false, required: true, min: 0, integer: true }),
-			sensor: new fields.NumberField({ initial: 0, nullable: false, required: true, min: 0, integer: true }),
-
 			matrix: new fields.EmbeddedDataField(GearMatrixDataModel, { nullable: true, required: false }),
 			current: new fields.EmbeddedDataField(VehicleStatusDataModel, { required: true, nullable: true }),
 		};

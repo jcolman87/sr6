@@ -51,7 +51,7 @@ const augmentations = computed(() =>
 						</td>
 						<td class="actions">
 							<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-								class="fas fa-minus"
+								class="fas fa-trash"
 								@click.prevent="deleteItem(item)"
 							/>
 						</td>
@@ -107,7 +107,7 @@ const augmentations = computed(() =>
 							</td>
 							<td class="actions">
 								<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-									class="fas fa-minus"
+									class="fas fa-trash"
 									@click.prevent="deleteItem(item)"
 								/>
 							</td>
@@ -142,7 +142,7 @@ const augmentations = computed(() =>
 							</td>
 							<td class="actions">
 								<a class="fas fa-edit" @click.prevent="item.sheet?.render(true)" /><a
-									class="fas fa-minus"
+									class="fas fa-trash"
 									@click.prevent="deleteItem(item)"
 								/>
 							</td>

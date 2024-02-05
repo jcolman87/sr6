@@ -1,12 +1,17 @@
 <script lang="ts" setup>
 import VehicleDataModel from '@/actor/data/VehicleDataModel';
+import SR6Actor from '@/actor/SR6Actor';
+import { getActor } from '@/util';
 import { getEventValue } from '@/vue/directives';
-import { computed, toRaw, inject } from 'vue';
+import { computed, toRaw, inject, ref, onUpdated } from 'vue';
 import { ActorSheetContext, RootContext } from '@/vue/SheetContext';
 import BasicActorSheet from '@/vue/sheets/actor/BasicActorSheet.vue';
 
 const context = inject<ActorSheetContext<VehicleDataModel>>(RootContext)!;
 const system = computed(() => toRaw(context.data.actor).systemData);
+
+const pilot = ref<Maybe<SR6Actor>>(system.value.pilot);
+const occupants = ref<SR6Actor[]>(system.value.occupants);
 
 async function setAcceleration(ev: Event) {
 	let newAccel = getEventValue(ev) as number;
@@ -19,6 +24,56 @@ async function setSpeed(ev: Event) {
 }
 
 async function pilotRoll() {}
+
+async function _getDragActor(ev: DragEvent): Promise<Maybe<SR6Actor>> {
+	const dropJson = ev.dataTransfer?.getData('text/plain') ?? null;
+	if (!dropJson) {
+		return null;
+	}
+	const dropData: DropData = JSON.parse(dropJson);
+
+	if (dropData.type !== 'Actor') {
+		return null;
+	}
+	const actor = await getActor(SR6Actor, dropData.uuid);
+	if (!actor) {
+		return null;
+	}
+
+	if (actor.type !== 'character') {
+		ui.notifications.warn('Only characters can pilot vehicles');
+	}
+	return actor;
+}
+async function onDropPilot(ev: DragEvent) {
+	await setPilot(await _getDragActor(ev));
+}
+
+async function setPilot(actor: Maybe<SR6Actor>) {
+	await toRaw(system.value).setPilot(toRaw(actor));
+	pilot.value = actor;
+}
+
+async function onDropOccupant(idx: number, ev: DragEvent) {
+	await setOccupant(idx, await _getDragActor(ev));
+}
+
+async function setOccupant(idx: number, actor: Maybe<SR6Actor>) {
+	// If its an actor, make sure they arnt already in the vehicle
+	if (actor) {
+		if ((pilot.value && actor.uuid === pilot.value.uuid) || occupants.value.find((a) => a.uuid === actor.uuid)) {
+			ui.notifications.warn('Actor already in vehicle');
+			return;
+		}
+	}
+
+	if (idx < occupants.value.length) {
+		await toRaw(system.value).removeOccupant(toRaw(occupants.value[idx]));
+	}
+	await toRaw(system.value).addOccupant(actor ? toRaw(actor) : null);
+
+	occupants.value = system.value.occupants;
+}
 </script>
 
 <template>
@@ -27,8 +82,8 @@ async function pilotRoll() {}
 			<div class="vehicle-sheet">
 				<div class="vehicle-info">
 					<div class="section-head">Information</div>
-					<div>Max Acceleration: {{ system.acceleration }}</div>
-					<div>Max Speed: {{ system.maxSpeed }}</div>
+					<div>Max Acceleration: {{ system.stats.acceleration }}</div>
+					<div>Max Speed: {{ system.stats.maxSpeed }}</div>
 				</div>
 				<div class="vehicle-current">
 					<div class="section">
@@ -68,42 +123,52 @@ async function pilotRoll() {}
 					</div>
 					<div class="section">
 						<div class="section-head">Rolls</div>
-						Piloting Roll ({{ system.speedPoolModifier }})
-						<a @click.prevent="pilotRoll"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+						<template v-if="system.pilotPool">
+							Piloting Roll ({{ system.pilotPool }})
+							<a @click.prevent="pilotRoll"><i class="roll-button">&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+						</template>
+						<template v-else> Piloting Roll - No Pilot </template>
 					</div>
 					<div class="vehicle-occupants">
 						<div class="section-head">Passangers</div>
-						<div class="vehicle-pilot">
-							<div class="section-head">Pilot</div>
-							<img
-								:src="context.data.actor.img"
-								data-edit="img"
-								:alt="context.data.actor.name"
-								width="64"
-								height="64"
-							/>
+						<div class="vehicle-pilot" @drop="onDropPilot">
+							<template v-if="pilot">
+								<div class="section-head">
+									{{ pilot!.name }}
+									<a @click="setPilot(null)"><i class="fa-solid fa-person-circle-minus" /></a>
+								</div>
+								<img :src="pilot!.img" data-edit="img" :alt="pilot!.name" width="64" height="64" />
+							</template>
+							<template v-else>
+								<div class="section-head">Pilot</div>
+								<div style="width: 64px; height: 64px; text-align: center">Empty</div>
+							</template>
 						</div>
 						<div class="vehicle-passengers">
 							<div class="section-head">Occupants</div>
-							<img
-								:src="context.data.actor.img"
-								data-edit="img"
-								:alt="context.data.actor.name"
-								width="64"
-								height="64"
-							/><img
-								:src="context.data.actor.img"
-								data-edit="img"
-								:alt="context.data.actor.name"
-								width="64"
-								height="64"
-							/><img
-								:src="context.data.actor.img"
-								data-edit="img"
-								:alt="context.data.actor.name"
-								width="64"
-								height="64"
-							/>
+							<template v-for="idx in system.seats.back" v-bind:key="idx">
+								<div class="vehicle-passenger" @drop="(ev) => onDropOccupant(idx, ev)">
+									<template v-if="occupants.length > idx">
+										<div class="section-head">
+											{{ occupants[idx].name
+											}}<a @click="setOccupant(idx, null)"
+												><i class="fa-solid fa-person-circle-minus"
+											/></a>
+										</div>
+										<img
+											:src="occupants[idx].img"
+											data-edit="img"
+											:alt="occupants[idx].name"
+											width="64"
+											height="64"
+										/>
+									</template>
+									<template v-else>
+										<div class="section-head">Empty</div>
+										<div style="width: 64px; height: 64px; text-align: center">&nbsp;</div>
+									</template>
+								</div>
+							</template>
 						</div>
 					</div>
 				</div>
@@ -132,6 +197,9 @@ async function pilotRoll() {}
 			@extend .section;
 			min-width: 98%;
 			.vehicle-pilot {
+				@extend .section;
+			}
+			.vehicle-passenger {
 				@extend .section;
 			}
 			.vehicle-passengers {

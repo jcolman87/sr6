@@ -236,7 +236,7 @@ async function setDeviceDamage(device: SR6Item<GearDataModel>, value: number) {
 							</td>
 							<td class="buttons">
 								<a class="fas fa-edit" @click.prevent="device.sheet?.render(true)" />&nbsp;<a
-									class="fas fa-minus"
+									class="fas fa-trash"
 									@click.prevent="deleteItem(device)"
 								/>
 							</td>
