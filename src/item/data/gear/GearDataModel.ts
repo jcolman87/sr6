@@ -77,14 +77,14 @@ export type ProgramSlotsData = {
 export abstract class GearWirelessBonusDataModel extends BaseDataModel {
 	abstract description: string;
 	abstract modifiers: ModifierDataModel[];
-	abstract transfers: boolean;
+	abstract transfer: boolean;
 
 	static defineSchema(): foundry.data.fields.DataSchema {
 		const fields = foundry.data.fields;
 
 		return {
 			description: new fields.StringField({ initial: '', required: true, blank: true, nullable: false }),
-			transfers: new fields.BooleanField({ initial: true, nullable: false, required: true }),
+			transfer: new fields.BooleanField({ initial: false, nullable: false, required: true }),
 			modifiers: new fields.ArrayField(new fields.EmbeddedDataField(ModifierDataModel), {
 				initial: [],
 				required: true,
@@ -253,9 +253,10 @@ export default abstract class GearDataModel extends BaseItemDataModel {
 				await this.item!.createEmbeddedDocuments('ActiveEffect', [
 					{
 						label: this.wirelessBonusName,
+						description: this.matrix!.wirelessBonus.description,
 						icon: this.item!.img,
 						disabled: false,
-						transfers: this.matrix!.wirelessBonus.transfers,
+						transfer: this.matrix!.wirelessBonus.transfer,
 					},
 				])
 			)[0] as SR6Effect;

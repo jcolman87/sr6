@@ -9,7 +9,7 @@ const props = defineProps<{
 
 const edgeGainTarget = ref<Target>(Target.None);
 
-async function setEdgeGainTarget(newTarget: Target) {
+function setEdgeGainTarget(newTarget: Target) {
 	if (edgeGainTarget.value !== Target.None) {
 		props.test.data.edge!.gain![edgeGainTarget.value] = Math.max(
 			0,
@@ -26,7 +26,7 @@ function reset() {
 	edgeGainTarget.value = Target.None;
 }
 
-defineExpose({ reset });
+defineExpose({ reset, setEdgeGainTarget });
 </script>
 
 <template>

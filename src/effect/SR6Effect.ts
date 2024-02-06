@@ -8,10 +8,11 @@ import { ConditionalData, checkConditions } from '@/effect/conditional';
 import BaseItemDataModel from '@/item/data/BaseItemDataModel';
 import SR6Item from '@/item/SR6Item';
 import { Modifiers, ModifiersSourceData, ModifierTarget } from '@/modifier';
-import { TestPoolModifier } from '@/modifier/TestModifiers';
+import { AttackRatingModifier, PoolModifier } from '@/modifier/TestModifiers';
 
 export const EFFECT_MODES = {
 	POOL_MODIFIER: 900,
+	ATTACK_RATING_MODIFIER: 901,
 	...CONST.ACTIVE_EFFECT_MODES,
 };
 
@@ -151,10 +152,36 @@ export default class SR6Effect extends ActiveEffect {
 
 		// Get modifier class
 		target.modifiers.all.push(
-			new TestPoolModifier({
+			new PoolModifier({
 				parent: target,
 				source: this,
 				target: ModifierTarget.Actor,
+				data: {
+					name: this.name,
+					description: this.description,
+					testClasses,
+					value,
+				},
+			}),
+		);
+	}
+
+	_applyAttackRatingModifier(
+		target: SR6Actor | SR6Item,
+		change: ApplicableChangeData<this>,
+		_current: Record<string, unknown>,
+		_delta: Record<string, unknown>,
+		_changes: Record<string, unknown>,
+	): void {
+		const testClasses = change.key.split(',');
+		const value = parseInt(change.value);
+
+		// Get modifier class
+		target.modifiers.all.push(
+			new AttackRatingModifier({
+				parent: target,
+				source: this,
+				target: ModifierTarget.Item,
 				data: {
 					name: this.name,
 					description: this.description,
@@ -224,6 +251,9 @@ export default class SR6Effect extends ActiveEffect {
 				break;
 			case EFFECT_MODES.POOL_MODIFIER:
 				this._applyPoolModifier(document, change, current, delta, changes);
+				break;
+			case EFFECT_MODES.ATTACK_RATING_MODIFIER:
+				this._applyAttackRatingModifier(document, change, current, delta, changes);
 				break;
 		}
 

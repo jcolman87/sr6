@@ -1,10 +1,11 @@
+import { EnumAttribute } from '@/actor/data';
 import ContactDataModel from '@/item/data/feature/ContactDataModel';
 import SR6Item from '@/item/SR6Item';
 import SR6Roll from '@/roll/SR6Roll';
-import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import { TestType } from '@/test';
+import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import ChatComponent from '@/test/vue/chat/ContactTest.vue';
-import { Ok, Result } from 'ts-results';
+import { Result } from 'ts-results';
 import { Component } from 'vue';
 
 export interface ContactTestData extends BaseTestData {
@@ -54,6 +55,14 @@ export default class ContactTest extends BaseTest<ContactTestData> {
 		}
 
 		return testResult;
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return attribute === EnumAttribute.charisma;
+	}
+
+	override hasSkill(skill: string): boolean {
+		return skill === 'influence';
 	}
 
 	constructor(args: TestConstructorData<ContactTestData>) {

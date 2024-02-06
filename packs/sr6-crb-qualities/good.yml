@@ -12,7 +12,7 @@ system:
   description: You gain a bonus Edge when you make any Logic-based test.
   modifiers:
     - class: EdgeModifier
-      data: { value: 1, testClasses: ['SkillTest', 'AttributeTest', 'MatrixActionTest'], attribute: 'logic' }
+      data: { value: 1, attributes: ['logic'] }
 ---
 name: Aptitude
 type: quality
@@ -305,6 +305,9 @@ img: /systems/sr6/assets/brain.webp
 effects: []
 system:
   description: 'When wounded, reduce your wound penalty by one (to a minimum of 0).'
+  modifiers:
+    - class: PainEditorModifier
+      data: { value: 1 }
 ---
 name: Home Ground
 type: quality

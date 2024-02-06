@@ -1,3 +1,4 @@
+import { EnumAttribute } from '@/actor/data';
 import BaseTest, { BaseTestData, TestConstructorData } from '@/test/BaseTest';
 import { TestType } from '@/test';
 import ChatComponent from '@/test/vue/chat/SkillTest.vue';
@@ -17,6 +18,13 @@ export default class SkillTest extends BaseTest<SkillTestData> {
 
 	chatComponent(): Component {
 		return ChatComponent;
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return this.data.skillUse.attribute === attribute;
+	}
+	override hasSkill(skill: string): boolean {
+		return this.data.skillUse.skill === skill || this.data.skillUse.specialization === skill;
 	}
 
 	constructor(args: TestConstructorData<SkillTestData>) {

@@ -1,5 +1,7 @@
+import { EnumAttribute } from '@/actor/data';
 import SR6Actor from '@/actor/SR6Actor';
 import { Target } from '@/data';
+import SkillUseDataModel from '@/data/SkillUseDataModel';
 import { IEdgeBoost } from '@/edge';
 import SR6Item from '@/item/SR6Item';
 import { IModifier } from '@/modifier';
@@ -115,6 +117,10 @@ export interface ITest<TData extends BaseTestData = BaseTestData> {
 
 	get allModifiers(): ITestModifierData[];
 	get activeModifiers(): IModifier[];
+
+	// Modifier helpers
+	hasAttribute(attribute: EnumAttribute): boolean;
+	hasSkill(skill: string): boolean;
 
 	get type(): TestType;
 

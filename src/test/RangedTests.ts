@@ -1,19 +1,20 @@
+import { EnumAttribute } from '@/actor/data';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { Distance, FireMode } from '@/data';
 import WeaponDataModel from '@/item/data/gear/WeaponDataModel';
 import SR6Item from '@/item/SR6Item';
-import PhysicalSoakTest from '@/test/PhysicalSoakTest';
 import SR6Roll from '@/roll/SR6Roll';
 import { PhysicalAttackTestData } from '@/test/AttackTestData';
 import BaseTest, { BaseTestData, TestSourceData } from '@/test/BaseTest';
 import { ITest, RollDataDelta, TestType } from '@/test/index';
-import { getTargetActorIds } from '@/util';
-import { Component } from 'vue';
-
-import AttackPromptComponent from '@/test/vue/prompt/RangedAttackTest.vue';
+import PhysicalSoakTest from '@/test/PhysicalSoakTest';
 import AttackChatComponent from '@/test/vue/chat/RangedAttackTest.vue';
 import DefenseChatComponent from '@/test/vue/chat/RangedDefenseTest.vue';
+
+import AttackPromptComponent from '@/test/vue/prompt/RangedAttackTest.vue';
+import { getTargetActorIds } from '@/util';
+import { Component } from 'vue';
 
 export interface RangedAttackTestData extends PhysicalAttackTestData {
 	firemode?: FireMode;
@@ -70,6 +71,16 @@ export class RangedAttackTest extends BaseTest<RangedAttackTestData> {
 
 	promptComponent(): Component {
 		return AttackPromptComponent;
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return this.weapon.systemData.skillUse?.attribute === attribute;
+	}
+	override hasSkill(skill: string): boolean {
+		return (
+			this.weapon.systemData.skillUse?.skill === skill ||
+			this.weapon.systemData.skillUse?.specialization === skill
+		);
 	}
 
 	constructor({
@@ -131,6 +142,10 @@ export class RangedDefenseTest extends BaseTest<RangedDefenseTestData> {
 
 	chatComponent(): Component {
 		return DefenseChatComponent;
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return attribute === EnumAttribute.agility || attribute === EnumAttribute.intuition;
 	}
 
 	constructor({

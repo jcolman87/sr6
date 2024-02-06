@@ -1,12 +1,13 @@
+import { EnumAttribute } from '@/actor/data';
 import SR6Actor from '@/actor/SR6Actor';
 import SR6Item from '@/item/SR6Item';
+import SR6Roll from '@/roll/SR6Roll';
 import BaseTest, { BaseTestData } from '@/test/BaseTest';
 import { RollDataDelta, TestType } from '@/test/index';
 import { RangedDefenseTestData } from '@/test/RangedTests';
-import SR6Roll from '@/roll/SR6Roll';
+import ChatComponent from '@/test/vue/chat/PhysicalSoakTest.vue';
 
 import { Component } from 'vue';
-import ChatComponent from '@/test/vue/chat/PhysicalSoakTest.vue';
 
 export interface PhysicalSoakTestData extends BaseTestData {
 	defenseTest: RangedDefenseTestData;
@@ -31,6 +32,10 @@ export default class PhysicalSoakTest extends BaseTest<PhysicalSoakTestData> {
 
 	chatComponent(): Component {
 		return ChatComponent;
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return attribute === EnumAttribute.body;
 	}
 
 	constructor({

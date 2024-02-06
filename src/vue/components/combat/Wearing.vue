@@ -29,6 +29,8 @@ const wearablesVisible = ref(
 	}),
 );
 
+const defenseRating = ref(toRaw(props.actor).systemData.defenseRating(null));
+
 function toggleWearableVisible(wearable: WearableDataModel) {
 	const isVisible = wearablesVisible.value.find((v) => v.id === wearable.item!.id)!.visible;
 	wearablesVisible.value.find((v) => v.id === wearable.item!.id)!.visible = !isVisible;
@@ -64,12 +66,14 @@ function toggleEquipWearable(wearable: WearableDataModel) {
 			break;
 		}
 	}
+	defenseRating.value = toRaw(props.actor).systemData.defenseRating(null);
 }
 </script>
 
 <template>
 	<div class="wearables-list">
 		<div class="section-head">Wearable</div>
+		Defense Rating: {{ defenseRating }}
 		<table>
 			<template v-for="wearable in props.wearables" v-bind:key="wearable.item!.id">
 				<tr>

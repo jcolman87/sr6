@@ -23,6 +23,15 @@ export class MemoryTest extends BaseTest {
 		return PromptComponent;
 	}
 
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		switch (attribute) {
+			case EnumAttribute.logic:
+			case EnumAttribute.intuition:
+				return true;
+		}
+		return false;
+	}
+
 	constructor(args: TestConstructorData<BaseTestData, LifeformDataModel>) {
 		let knowledge = args.item as SR6Item<KnowledgeDataModel> | undefined;
 		if (!args.data.pool) {

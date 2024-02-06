@@ -4,13 +4,9 @@ import { ITest } from '@/test';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import { TestModifier, TestModifierSourceData } from '@/modifier/TestModifiers';
 import { Target } from '@/data';
-import { MatrixActionTest } from '@/test/MatrixTests';
-import SkillTest from '@/test/SkillTest';
 
 export interface BonusEdgeModifierSourceData extends TestModifierSourceData {
 	value: number;
-	skill: Maybe<string>;
-	attribute: Maybe<EnumAttribute>;
 	loseIt: Maybe<boolean>; // TODO: implement
 }
 
@@ -33,44 +29,6 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 			return false;
 		}
 
-		if (testInterface.type === 'SkillTest') {
-			const test = testInterface as SkillTest;
-			if (this.data.skill) {
-				if (test.data.skillUse.skill !== this.data.skill && test.data.skillUse.skill !== this.data.skill) {
-					return false;
-				}
-			}
-			if (this.data.attribute) {
-				if (test.data.skillUse.attribute !== this.data.attribute) {
-					return false;
-				}
-			}
-		}
-
-		if (testInterface.type === 'MatrixActionTest') {
-			const test = testInterface as MatrixActionTest;
-			if (this.data.skill) {
-				if (
-					test.matrixAction.systemData.skillUse?.skill !== this.data.skill &&
-					test.matrixAction.systemData.skillUse?.skill !== this.data.skill
-				) {
-					return false;
-				}
-			}
-			if (this.data.attribute) {
-				if (test.matrixAction.systemData.skillUse?.attribute !== this.data.attribute) {
-					return false;
-				}
-			}
-		}
-
-		if (testInterface.type === 'AttributeTest' && this.data.attribute) {
-			const test = testInterface as AttributeTest;
-			if (test.data.attribute !== this.data.attribute) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 
@@ -89,7 +47,6 @@ export class EdgeModifier extends TestModifier<BonusEdgeModifierSourceData> {
 
 	constructor({ parent, source, target, conditions, data }: ModifierConstructorData<BonusEdgeModifierSourceData>) {
 		data.class = 'EdgeModifier';
-		data.testClasses = data.testClasses || [];
 
 		super({ parent, source, target, conditions, data });
 	}

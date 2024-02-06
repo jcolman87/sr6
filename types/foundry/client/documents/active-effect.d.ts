@@ -54,6 +54,8 @@ declare global {
 		/** A cached property for obtaining the source name */
 		get sourceName(): string;
 
+		get active(): boolean;
+
 		/**
 		 * An instance of the ActiveEffectConfig sheet to use for this ActiveEffect instance.
 		 * The reference to the sheet is cached so the same sheet instance is reused.

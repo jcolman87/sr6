@@ -4,6 +4,10 @@ import SR6Item from '@/item/SR6Item';
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
 import BaseModifier from '@/modifier/BaseModifier';
 import { ITest, TestType } from '@/test';
+import { AttackTestData } from '@/test/AttackTestData';
+import AttributeTest from '@/test/AttributeTest';
+import { MatrixActionTest } from '@/test/MatrixTests';
+import { KnowledgeTest } from '@/test/MemoryTests';
 import { RangedAttackTest } from '@/test/RangedTests';
 import SkillTest from '@/test/SkillTest';
 
@@ -18,62 +22,33 @@ export abstract class TestModifier<TSourceData extends TestModifierSourceData> e
 		if (!super.isApplicable(test)) {
 			return false;
 		}
+
 		if (test) {
-			if (this.testClasses.length === 0) {
-				return true;
+			if (this.data.testClasses && !this.data.testClasses.includes(test.type)) {
+				return false;
 			}
-
-			// TODO: this shit is a mess
-			if (this.testClasses.includes(test.type)) {
-				if (this.skills.length > 0) {
-					if (test.type === TestType.Skill) {
-						if (!this.skills.includes((test as SkillTest).data.skillUse.skill)) {
-							return false;
-						}
-					} else if (test.type === TestType.RangedAttack) {
-						if (!this.skills.includes((test as RangedAttackTest).weapon.systemData.skillUse!.skill)) {
-							return false;
-						}
-					} else {
-						return false;
-					}
-				}
-
-				if (this.attributes.length > 0) {
-					// TODO: impl
-				}
+			if (this.data.attributes && this.data.attributes.find((attr) => !test.hasAttribute(attr))) {
+				return false;
+			}
+			if (this.data.skills && this.data.skills.find((skill) => !test.hasSkill(skill))) {
+				return false;
 			}
 		}
 
 		return true;
 	}
 
-	get skills(): string[] {
-		return this.data!.skills || [];
-	}
-
-	get attributes(): EnumAttribute[] {
-		return this.data!.attributes || [];
-	}
-
-	get testClasses(): string[] {
-		return this.data!.testClasses || [];
-	}
-
 	override toJSON(): ModifierSourceData {
 		return {
 			...super.toJSON(),
-			testClasses: this.testClasses,
-			skills: this.skills,
-			attributes: this.attributes,
+			testClasses: this.data.testClasses,
+			skills: this.data.skills,
+			attributes: this.data.attributes,
 		};
 	}
 
 	protected constructor({ parent, source, conditions, target, data }: ModifierConstructorData<TSourceData>) {
 		super({ parent, source, conditions, target, data });
-		if (!data.testClasses) {
-			data.testClasses = [];
-		}
 	}
 }
 
@@ -104,14 +79,12 @@ export class TestFunctionModifier<
 	}
 }
 
-export interface TestPoolModifierSourceData extends TestModifierSourceData {
+export interface PoolModifierSourceData extends TestModifierSourceData {
 	value?: number;
 	valueFormula?: string;
 }
 
-export class TestPoolModifier<
-	TData extends TestPoolModifierSourceData = TestPoolModifierSourceData,
-> extends TestModifier<TData> {
+export class PoolModifier<TData extends PoolModifierSourceData = PoolModifierSourceData> extends TestModifier<TData> {
 	override get displayValue(): undefined | string {
 		const number = this.value > 0 ? `+${this.value}` : this.value.toString();
 		return `${number} Pool`;
@@ -143,5 +116,47 @@ export class TestPoolModifier<
 		}
 
 		super({ parent, source, conditions, target, data });
+	}
+}
+
+export class AttackRatingModifier extends PoolModifier {
+	override get displayValue(): undefined | string {
+		const number = this.value > 0 ? `+${this.value}` : this.value.toString();
+		return `${number} AR`;
+	}
+
+	override async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
+		const data = test.data as AttackTestData;
+		if (data.attackRating) {
+			data.attackRating += this.value;
+		}
+	}
+}
+
+export class DamageModifier extends PoolModifier {
+	override get displayValue(): undefined | string {
+		const number = this.value > 0 ? `+${this.value}` : this.value.toString();
+		return `${number} Damage`;
+	}
+
+	override async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
+		const data = test.data as AttackTestData;
+		if (data.damage) {
+			data.damage += this.value;
+		}
+	}
+}
+
+export class ThresholdModifier extends PoolModifier {
+	override get displayValue(): undefined | string {
+		const number = this.value > 0 ? `+${this.value}` : this.value.toString();
+		return `${number} Threshold`;
+	}
+
+	override async prepareTest<TTest extends ITest>(test: TTest): Promise<void> {
+		const data = test.data as AttackTestData;
+		if (data.threshold) {
+			data.threshold += this.value;
+		}
 	}
 }

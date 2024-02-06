@@ -42,7 +42,7 @@ system:
     rating: 5
   modifiers:
     - name: Mnemonic Enhancer
-      class: TestPoolModifier
+      class: PoolModifier
       data: { valueFormula: '@rating', testClasses: [ 'KnowledgeTest', 'MemoryTest', 'LanguageTest' ] }
 ---
 name: Pain Editor

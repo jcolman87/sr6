@@ -58,8 +58,5 @@ export abstract class InitiativeModifier extends BaseModifier<InitiativeModifier
 		data,
 	}: ModifierConstructorData<InitiativeModifierSourceData>) {
 		super({ parent, source, target, conditions, data });
-		if (!data.testClasses) {
-			data.testClasses = [];
-		}
 	}
 }

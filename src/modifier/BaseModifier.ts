@@ -113,7 +113,7 @@ export default class BaseModifier<
 		this.data = data;
 		this._parent = parent;
 		this._source = source;
-		this._target = target;
+		this._target = target || ModifierTarget.Actor;
 		this.conditions = conditions ? conditions : [];
 
 		// Attempt to localize names if they exist, otherwise replace with placeholders

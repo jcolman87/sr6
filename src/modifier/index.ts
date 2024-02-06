@@ -11,7 +11,7 @@ import { InitiativeRollData } from '@/roll/InitiativeRoll';
 import { ITest } from 'src/test';
 import { ClassData } from '@/data/serialize';
 import BaseModifier from '@/modifier/BaseModifier';
-import { TestPoolModifier, TestFunctionModifier } from '@/modifier/TestModifiers';
+import { PoolModifier, TestFunctionModifier, AttackRatingModifier } from '@/modifier/TestModifiers';
 
 // Specialized impls
 import { WoundModifier } from '@/modifier/impl/WoundModifier';
@@ -141,8 +141,11 @@ export function register(): void {}
 
 export function config(): Record<string, unknown> {
 	return {
-		TestPoolModifier: TestPoolModifier,
+		PoolModifier: PoolModifier,
+		AttackRatingModifier: AttackRatingModifier,
+
 		TestFunctionModifier: TestFunctionModifier,
+
 		PainEditorModifier: PainEditorModifier,
 		WoundModifier: WoundModifier,
 

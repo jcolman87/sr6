@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ActivationPhase } from '@/data';
+import { ActivationPhase, Target } from '@/data';
 import { IEdgeBoost } from '@/edge';
 import EdgeGainMenu from '@/edge/vue/EdgeGainMenu.vue';
 import { IModifier } from '@/modifier';
@@ -61,6 +61,10 @@ async function toggleModifier(status: boolean, idx: number) {
 	edgeGainMenu.value?.reset();
 	poolModifier.value = 0;
 }
+
+function setEdgeGainTarget(target: Target) {
+	edgeGainMenu.value?.setEdgeGainTarget(target);
+}
 </script>
 
 <template>
@@ -113,35 +117,37 @@ async function toggleModifier(status: boolean, idx: number) {
 		</div>
 		<table v-if="isDisplayConditions" style="width: 100%">
 			<tr v-for="({ disabled, modifier }, idx) in context.test.allModifiers" v-bind:key="idx">
-				<table :class="disabled ? 'disabled' : ''">
-					<tr>
-						<td v-if="!disabled">
-							<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-ban"></i></a>
-						</td>
-						<td v-else>
-							<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-play"></i></a>
-						</td>
-						<td style="width: 3em; white-space: nowrap">
-							{{ modifier.displayValue }}
-						</td>
-						<td style="padding-left: 7px">
-							<a
-								@click="
-									conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible =
-										!conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible
-								"
-								>{{ modifier.name }}</a
-							>
-						</td>
-					</tr>
-					<tr>
-						<td class="hint" colspan="3">
-							<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible">
-								<div v-html="modifier.description"></div>
-							</Collapse>
-						</td>
-					</tr>
-				</table>
+				<td>
+					<table :class="disabled ? 'disabled' : ''">
+						<tr>
+							<td v-if="!disabled">
+								<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-ban"></i></a>
+							</td>
+							<td v-else>
+								<a @click.prevent="toggleModifier(!disabled, idx)"><i class="fa-solid fa-play"></i></a>
+							</td>
+							<td style="width: 3em; white-space: nowrap">
+								{{ modifier.displayValue }}
+							</td>
+							<td style="padding-left: 7px">
+								<a
+									@click="
+										conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible =
+											!conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible
+									"
+									>{{ modifier.name }}</a
+								>
+							</td>
+						</tr>
+						<tr>
+							<td class="hint" colspan="3">
+								<Collapse :when="conditionsDescriptionsVisible.find((v) => v.id == idx)!.visible">
+									<div v-html="modifier.description"></div>
+								</Collapse>
+							</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -152,6 +158,7 @@ async function toggleModifier(status: boolean, idx: number) {
 			:is="context.test.promptComponent?.()"
 			:test="context.test"
 			@setText="setText"
+			@setEdgeGainTarget="setEdgeGainTarget"
 		/>
 
 		<div class="global-modifiers">

@@ -145,20 +145,23 @@ export default abstract class WeaponDataModel extends GearDataModel {
 		return this.skillUse ? this.skillUse!.pool : 0;
 	}
 
+	override applyActiveEffects(): void {
+		this.applyAttachmentEffects();
+	}
+
 	applyAttachmentEffects(): void {
 		for (const accessory of this.accessories) {
 			// copy attachment modifiers
-			//this.item!.modifiers.all = this.item!.modifiers.all.concat(accessory.modifiers.all);
+			this.item!.modifiers.all = this.item!.modifiers.all.concat(accessory.modifiers.all);
 
 			for (const effectData of accessory.effects) {
 				const effect = effectData as SR6Effect;
 
-				// copy attachment effect modifiers
-				console.log('adding modifiers', accessory, effect, this.item!.modifiers.all, effect.modifiers.all);
-				this.item!.modifiers.all = this.item!.modifiers.all.concat(effect.modifiers.all);
-
 				for (const change of effect.changes) {
-					effect._apply(this.item!, change);
+					if (change.mode < 900) {
+						// Change modes > 900 are modifiers, are we already copied those
+						effect._apply(this.item!, change);
+					}
 				}
 			}
 		}

@@ -17,7 +17,7 @@ const props = withDefaults(
 		actor: SR6Actor<BaseActorDataModel>;
 		test: Maybe<ITest>;
 		phase: ActivationPhase;
-		show: boolean;
+		show?: boolean;
 	}>(),
 	{
 		phase: ActivationPhase.Any,
@@ -108,17 +108,19 @@ function edgeAvailable(): number {
 						</option>
 					</template>
 				</select>
-				<label><Localized label="SR6.Edge.EdgeAction" /></label>
-				<select @change="onSelectEdgeAction" :disabled="edgeBoost?.type !== EdgeBoostType.Action">
-					<option>-</option>
-					<option
-						v-for="edgeAction in availableEdgeActions"
-						v-bind:key="edgeAction.uuid"
-						:value="edgeAction.uuid"
-					>
-						({{ edgeAction.systemData.edgeCostFormula }}) {{ edgeAction.name }}
-					</option>
-				</select>
+				<template v-if="phase === ActivationPhase.PreRoll">
+					<label><Localized label="SR6.Edge.EdgeAction" /></label>
+					<select @change="onSelectEdgeAction" :disabled="edgeBoost?.type !== EdgeBoostType.Action">
+						<option>-</option>
+						<option
+							v-for="edgeAction in availableEdgeActions"
+							v-bind:key="edgeAction.uuid"
+							:value="edgeAction.uuid"
+						>
+							({{ edgeAction.systemData.edgeCostFormula }}) {{ edgeAction.name }}
+						</option>
+					</select>
+				</template>
 				<Collapse :when="edgeBoost != null" v-if="edgeBoost != null">
 					<div class="edge-description">
 						<div class="section-head"><Localized label="SR6.Labels.Description" /></div>

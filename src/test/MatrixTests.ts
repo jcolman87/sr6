@@ -1,3 +1,4 @@
+import { EnumAttribute } from '@/actor/data';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
@@ -83,6 +84,17 @@ export class MatrixActionTest extends BaseTest<MatrixActionTestData> {
 			});
 		}
 		throw 'err';
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return this.matrixAction.systemData.skillUse?.attribute === attribute;
+	}
+
+	override hasSkill(skill: string): boolean {
+		return (
+			this.matrixAction.systemData.skillUse?.skill === skill ||
+			this.matrixAction.systemData.skillUse?.specialization === skill
+		);
 	}
 
 	chatComponent(): Component {

@@ -26,6 +26,7 @@ export abstract class ModifierDataModel extends BaseDataModel {
 			class: this.class,
 			parent: parent.uuid as ModifierSourceUUID,
 			source: (source?.uuid as ModifierSourceUUID) || (parent.uuid as ModifierSourceUUID),
+			target: this.target,
 			conditions: this.conditions.length > 0 ? (this.conditions as ConditionalData[]) : undefined,
 			...data,
 		});

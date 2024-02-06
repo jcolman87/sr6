@@ -18,6 +18,10 @@ export default class AttributeTest extends BaseTest<AttributeTestData> {
 		return ChatComponent;
 	}
 
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return this.data.attribute === attribute;
+	}
+
 	constructor(args: TestConstructorData<AttributeTestData, LifeformDataModel>) {
 		args.data.pool = args.actor.systemData.attribute(args.data.attribute).pool;
 		super(args);

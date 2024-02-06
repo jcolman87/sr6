@@ -3,20 +3,20 @@
  * @author jaynus
  * @file Base SR6 Item
  */
+import SR6Actor from '@/actor/SR6Actor';
 import BaseDataModel from '@/data/BaseDataModel';
 import {
-	IHasOnUpdate,
-	IHasPostCreate,
-	IHasSystemData,
-	IHasPreCreate,
 	IHasModifiers,
 	IHasOnDelete,
+	IHasOnUpdate,
+	IHasPostCreate,
+	IHasPreCreate,
+	IHasSystemData,
 } from '@/data/interfaces';
 import SR6Effect from '@/effect/SR6Effect';
-import { Modifiers, ModifiersSourceData } from '@/modifier';
+import { Modifiers, ModifiersSourceData, ModifierTarget } from '@/modifier';
 import FormulaRoll from '@/roll/FormulaRoll';
 import * as util from '@/util';
-import SR6Actor from '@/actor/SR6Actor';
 
 export interface SR6ItemFlags {
 	modifiers?: ModifiersSourceData;
@@ -29,6 +29,7 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	extends Item<SR6Actor>
 	implements IHasSystemData, IHasModifiers
 {
+	overrides: Record<string, unknown> = {};
 	modifiers: Modifiers<SR6Item<ItemDataModel>> = new Modifiers(this);
 
 	get systemFlags(): undefined | SR6ItemFlags {
@@ -79,6 +80,55 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 		return roll.evaluate({ async: false }).total;
 	}
 
+	allApplicableEffects(): SR6Effect[] {
+		return this.effects.map((e) => e as SR6Effect);
+	}
+
+	applyActiveEffects(): void {
+		console.log('SR6Item::applyActiveEffects', this.name);
+		const overrides = {};
+
+		// Organize non-disabled effects by their application priority
+		const changes = [];
+		for (const effect of this.allApplicableEffects()) {
+			if (!effect.active) continue;
+			changes.push(
+				...effect.changes.map((change) => {
+					const c = foundry.utils.deepClone(change);
+					c.effect = effect;
+					c.priority = c.priority ?? c.mode * 10;
+					return c;
+				}),
+			);
+
+			effect.modifiers.all.forEach((mod) => {
+				console.log('applying item modifier', mod);
+				switch (mod.target) {
+					case ModifierTarget.Item:
+						this.modifiers.all.push(mod);
+						break;
+					case ModifierTarget.Actor:
+						if (this.actor) {
+							this.actor.modifiers.all.push(mod);
+						}
+				}
+			});
+		}
+		changes.sort((a, b) => a.priority - b.priority);
+
+		// Apply all changes
+		for (let change of changes) {
+			if (!change.key) continue;
+			const changes = change.effect._apply(this, change);
+			Object.assign(overrides, changes);
+		}
+
+		// Expand the set of final overrides
+		this.overrides = foundry.utils.expandObject(overrides);
+
+		this.systemData.applyActiveEffects();
+	}
+
 	override prepareEmbeddedDocuments(): void {
 		super.prepareEmbeddedDocuments();
 		if (this.systemData?.prepareEmbeddedDocuments) {
@@ -87,6 +137,9 @@ export default class SR6Item<ItemDataModel extends BaseDataModel = BaseDataModel
 	}
 
 	override prepareBaseData(): void {
+		this.modifiers = new Modifiers(this);
+		this.overrides = {};
+
 		super.prepareBaseData();
 		if (this.systemData?.prepareBaseData) {
 			this.systemData.prepareBaseData();

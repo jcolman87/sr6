@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import SR6Effect from '@/effect/SR6Effect';
 import EffectsView from '@/vue/views/EffectsView.vue';
+import ModifiersView from '@/vue/views/ModifiersView.vue';
 
 import { inject, toRaw, ref, onBeforeMount, onBeforeUpdate, onUpdated } from 'vue';
 
@@ -45,13 +46,18 @@ onUpdated(() => (componentKey.value += 1));
 
 <template>
 	<section v-if="context.user.isGM" class="tab-effects">
-		<EffectsView
-			ref="effectsView"
-			:key="componentKey"
-			:effects="[...(effects as any)]"
-			@add-effect="addEffect"
-			@delete-effect="deleteEffect"
-		/>
+		<section class="section-modifiers">
+			<ModifiersView :modifiers="context.data.actor.modifiers.all" />
+		</section>
+		<section v-if="context.user.isGM" class="section-effects">
+			<EffectsView
+				ref="effectsView"
+				:key="componentKey"
+				:effects="[...(effects as any)]"
+				@add-effect="addEffect"
+				@delete-effect="deleteEffect"
+			/>
+		</section>
 	</section>
 </template>
 

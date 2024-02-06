@@ -69,6 +69,7 @@ export default abstract class BaseDataModel extends foundry.abstract.DataModel {
 
 	prepareDerivedData(): void {}
 
+	applyActiveEffects(): void {}
 	getRollData(): Record<string, unknown> {
 		return {};
 	}

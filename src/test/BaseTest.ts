@@ -1,3 +1,4 @@
+import { EnumAttribute } from '@/actor/data';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import { makeDeltaProxy } from '@/data/DeltaProxy';
@@ -331,14 +332,27 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 			this.edgeBoost = getEdgeBoost(this.data.edge!.spent);
 		}
 
-		this._modifiers =
-			args.modifiers ||
-			this.actor.modifiers.getApplicable(this).map((modifier) => {
+		if (args.modifiers) {
+			this._modifiers = args.modifiers;
+		} else {
+			this._modifiers = this.actor.modifiers.getApplicable(this).map((modifier) => {
 				return {
 					disabled: false,
 					modifier,
 				};
 			});
+			// Also add item modifiers
+			if (this.item) {
+				this._modifiers = this._modifiers.concat(
+					this.item.modifiers.getApplicable(this).map((modifier) => {
+						return {
+							disabled: false,
+							modifier,
+						};
+					}),
+				);
+			}
+		}
 	}
 
 	static fromData<TTest extends BaseTest = BaseTest, TData extends BaseTestData = BaseTestData>(
@@ -401,5 +415,12 @@ export default abstract class BaseTest<TData extends BaseTestData = BaseTestData
 		this.data.edge!.gain![target] = value;
 
 		return true;
+	}
+
+	hasAttribute(attribute: EnumAttribute): boolean {
+		return false;
+	}
+	hasSkill(skill: string): boolean {
+		return false;
 	}
 }

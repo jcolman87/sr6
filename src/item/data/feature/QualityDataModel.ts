@@ -62,7 +62,7 @@ export default abstract class QualityDataModel
 						name: document.name,
 						origin: this.item!.uuid,
 						disabled: !!this.activation,
-						transfers: true,
+						transfer: false,
 					},
 				],
 			});

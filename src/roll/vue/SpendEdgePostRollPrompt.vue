@@ -33,12 +33,14 @@ async function roll() {
 				<label name="pool" class="edge-value">{{ context.test.availableEdge }}</label>
 			</div>
 		</div>
-		<EdgeMenu
-			@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
-			:test="context.test"
-			:actor="context.actor"
-			:phase="ActivationPhase.PostRoll"
-		/>
+		<Suspense>
+			<EdgeMenu
+				@setEdgeBoost="(boost) => (edgeBoost = boost as unknown as IEdgeBoost)"
+				:test="context.test"
+				:actor="context.actor"
+				:phase="ActivationPhase.PostRoll"
+			/>
+		</Suspense>
 
 		<div class="flexcol">
 			<!-- Roll Button -->

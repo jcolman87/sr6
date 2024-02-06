@@ -3,22 +3,23 @@
  * @author jaynus
  * @file Base SR6 Actor
  */
-import BaseDataModel from '@/data/BaseDataModel';
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
+import BaseDataModel from '@/data/BaseDataModel';
 import {
-	IHasPostCreate,
-	IHasOnDelete,
-	IHasPreCreate,
 	IHasModifiers,
+	IHasOnDelete,
 	IHasOnUpdate,
+	IHasPostCreate,
+	IHasPreCreate,
 	IHasSystemData,
 } from '@/data/interfaces';
 import SR6Effect from '@/effect/SR6Effect';
 import MatrixActionDataModel from '@/item/data/action/MatrixActionDataModel';
 import SkillDataModel from '@/item/data/feature/SkillDataModel';
 import CredstickDataModel from '@/item/data/gear/CredstickDataModel';
+import GearDataModel from '@/item/data/gear/GearDataModel';
 import SR6Item from '@/item/SR6Item';
-import { Modifiers, ModifiersSourceData } from '@/modifier';
+import { Modifiers, ModifiersSourceData, ModifierTarget } from '@/modifier';
 import FormulaRoll from '@/roll/FormulaRoll';
 import * as util from '@/util';
 
@@ -116,6 +117,7 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 	}
 
 	override prepareBaseData(): void {
+		super.prepareBaseData();
 		this.modifiers = new Modifiers<SR6Actor<ActorDataModel>>(this);
 	}
 
@@ -136,13 +138,30 @@ export default class SR6Actor<ActorDataModel extends foundry.abstract.DataModel 
 
 	override applyActiveEffects(): void {
 		super.applyActiveEffects();
+
 		for (const e of this.allApplicableEffects()) {
 			const effect = e as SR6Effect;
 			if (e.disabled) {
 				continue;
 			}
-			effect.modifiers.all.forEach((mod) => this.modifiers.all.push(mod));
+			effect.modifiers.all
+				.filter((mod) => mod.target === ModifierTarget.Actor)
+				.forEach((mod) => this.modifiers.all.push(mod));
 		}
+
+		// Apply and prepare attached items first
+		this.items
+			.map((item) => item as SR6Item)
+			.filter((item) => item.type === 'gear' && (item.systemData as GearDataModel).attached)
+			.forEach((item) => item.applyActiveEffects());
+
+		// Now all unattached items
+		this.items
+			.map((item) => item as SR6Item)
+			.filter((item) => item.type !== 'gear' || !(item.systemData as GearDataModel).attached)
+			.forEach((item) => item.applyActiveEffects());
+
+		this.systemData.applyActiveEffects();
 	}
 
 	solveFormula(formula: string, data: Record<string, unknown> = {}): number {

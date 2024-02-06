@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import BaseActorDataModel from '@/actor/data/BaseActorDataModel';
 import SR6Actor from '@/actor/SR6Actor';
-import { FireMode } from '@/data';
-import EdgeGainMenu from '@/edge/vue/EdgeGainMenu.vue';
+import { FireMode, Target } from '@/data';
 import { RangedAttackTest } from '@/test/RangedTests';
 
 import Localized from '@/vue/components/Localized.vue';
 
-import { computed, toRaw } from 'vue';
+import { computed, onMounted, onUpdated, toRaw } from 'vue';
 
 const emit = defineEmits<{
 	(e: 'setText', value: { title: string; hint: string }): void;
+	(e: 'setEdgeGainTarget', value: Target): void;
 }>();
 
 const props = defineProps<{
@@ -24,8 +24,8 @@ const original_pool = props.test.data.pool!;
 
 const targetDefenseRating = computed(() => {
 	const highestDefenseRating = props.test.targets.reduce((acc, target) => {
-		const defenseRating = target.systemData.defenseRating(props.test);
-		if (target.systemData.defenseRating(props.test) > acc) {
+		const defenseRating = toRaw(target).systemData.defenseRating(props.test);
+		if (defenseRating > acc) {
 			acc = defenseRating;
 		}
 		return acc;
@@ -40,6 +40,7 @@ emit('setText', {
 
 function onChangeDistance() {
 	props.test.data.attackRating = system.value.attackRatings.atDistance(props.test.data.distance!);
+	setEdgeGainTarget();
 }
 
 function onChangeFiremode() {
@@ -75,6 +76,7 @@ function onChangeFiremode() {
 			break;
 		}
 	}
+	setEdgeGainTarget();
 }
 
 async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> {
@@ -83,6 +85,20 @@ async function focusTarget(target: SR6Actor<BaseActorDataModel>): Promise<void> 
 		await canvas.ping(target.token.object.center);
 	}
 }
+
+function setEdgeGainTarget(): void {
+	console.log('setEdgeGainTarget');
+
+	if (props.test.data.attackRating! > targetDefenseRating.value + 4) {
+		emit('setEdgeGainTarget', Target.Self);
+	} else if (props.test.data.attackRating! + 4 < targetDefenseRating.value) {
+		emit('setEdgeGainTarget', Target.Target);
+	} else {
+		emit('setEdgeGainTarget', Target.None);
+	}
+}
+
+onMounted(setEdgeGainTarget);
 </script>
 
 <template>

@@ -18,6 +18,11 @@ export class ComposureTest extends BaseTest {
 	promptComponent(): Component {
 		return PromptComponent;
 	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return EnumAttribute.willpower === attribute || EnumAttribute.charisma === attribute;
+	}
+
 	constructor(args: TestConstructorData<BaseTestData, LifeformDataModel>) {
 		if (!args.data.pool) {
 			args.data.pool =
@@ -33,6 +38,10 @@ export class JudgeIntentionsTest extends ComposureTest {
 		return TestType.JudgeIntentions;
 	}
 
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return EnumAttribute.willpower === attribute || EnumAttribute.intuition === attribute;
+	}
+
 	constructor(args: TestConstructorData<BaseTestData, LifeformDataModel>) {
 		if (!args.data.pool) {
 			args.data.pool =
@@ -46,6 +55,10 @@ export class JudgeIntentionsTest extends ComposureTest {
 export class LiftCarryTest extends ComposureTest {
 	override get type(): TestType {
 		return TestType.LiftCarry;
+	}
+
+	override hasAttribute(attribute: EnumAttribute): boolean {
+		return EnumAttribute.willpower === attribute || EnumAttribute.body === attribute;
 	}
 
 	constructor(args: TestConstructorData<BaseTestData, LifeformDataModel>) {

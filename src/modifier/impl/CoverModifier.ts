@@ -1,9 +1,9 @@
 import { ModifierConstructorData, ModifierSourceData } from '@/modifier';
-import { TestPoolModifier, TestPoolModifierSourceData } from '@/modifier/TestModifiers';
+import { PoolModifier, PoolModifierSourceData } from '@/modifier/TestModifiers';
 
-export interface CoverModifierSourceData extends TestPoolModifierSourceData {}
+export interface CoverModifierSourceData extends PoolModifierSourceData {}
 
-export class CoverModifier extends TestPoolModifier<CoverModifierSourceData> {
+export class CoverModifier extends PoolModifier<CoverModifierSourceData> {
 	override toJSON(): ModifierSourceData {
 		return {
 			...super.toJSON(),

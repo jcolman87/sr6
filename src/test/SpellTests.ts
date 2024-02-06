@@ -1,3 +1,4 @@
+import { EnumAttribute } from '@/actor/data';
 import LifeformDataModel from '@/actor/data/LifeformDataModel';
 import SR6Actor from '@/actor/SR6Actor';
 import SpellDataModel, { damageFromSpellAdjustments, drainFromSpellAdjustments } from '@/item/data/SpellDataModel';
