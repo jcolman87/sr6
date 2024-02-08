@@ -315,3 +315,215 @@ img: /systems/sr6/assets/brain.webp
 effects: []
 system:
   description: 'Select a neighborhood or Matrix host each time you take this quality. Outdoors and Perception tests made in your Home Ground gain an Edge for use on that test; if you do not use the Edge on that test, it goes away. '
+---
+name: Human-Looking
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Small orks, tall dwarfs, and ugly elves do exist. Whether through genetics or modifications, you do not look like your birth metatype; you appear human. The points in your ears are easily overlooked, your tusks are filed down to mere teeth, your cheekbones are rounder, your legs longer— that sort of thing. You can pass for human, which might help with humans or cause obstacles with non-humans.  Game Effect: You generally appear human at first glance and gain +2 dice on Disguise tests to hide your metatype and appear more human. '
+---
+name: Indomitable
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Whether through deep studies, natural selection, or intense training, your mind is hard to break. You can hold out longer under interrogation, shrug off mild injuries with ease, and hold your mind against the onslaught of incoming mana.  Game Effect: Edge Boost costs are reduced by 1 on tests involving Willpower. '
+---
+name: Juryrigger
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'When you don’t have the time or the parts to do it right, you can still get it done. Whether it’s slapping on duct tape, twisting together wires that maybe shouldn’t be connected, or just giving the thing a swift kick, you find a creative way to get a machine working, even if only briefly.  Game Effect: When performing a Juryrigging test (see p. 95), you gain a point of Edge that must be spent on that test, or it goes away. '
+---
+name: Long Reach
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Whether it’s because of long arms, long legs, or some exceptional physical grace, you are able to reach people with melee weapons easier than others.  Game Effect: When you are using a melee weapon, Close range is extended to 5 meters instead of 3. '
+---
+name: Low-Light Vision
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Thanks to an increase in the number of rod cells in your natural eyes, an implanted increase of said rod cells, or an augmentation that enhances the light level of incoming data, you are capable of operating in light levels that would leave others essentially blind.  Game Effect: You can see clearly in any light level that is not total darkness (see Environment and Visibility, p. 118). '
+---
+name: Magic Resistance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You could have been born under a blood moon, filled your body with foreign substances, or had bits of your soul sucked out by a spirit or vampire. For good or ill, mana just doesn’t seem to want to connect with you. Whether it’s a manabolt trying to melt your brain, a fireball trying to cook you alive, or a healing spell trying to mend your wounds, it’s just harder to get magic to work on you.  Game Effect: You gain a bonus Edge for use on any Magic Resistance test; if you do not use it on that test, that point goes away. When a Health spell is cast on you, treat your Essence as if it were 2 points lower than it actually is. '
+---
+name: Mentor Spirit
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You believe in something other than yourself to help guide and channel your magic, and that something believes in you. Whether it be the totem of Wolf, the Norse god Loki, or the Christian God, you utilize your beliefs to shape and focus your arcane abilities more easily.  Game Effect: You gain the benefits listed with the description of your mentor spirit (see p. 162). If you fail to keep aligned with one of those tenets, you lose your faith and connection to your mentor and all associated bonuses. '
+---
+name: Quick Healer
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You tend to heal from injury quicker than your peers, which is incredibly valuable in a profession that is all about putting your body on the line.  Game Effect: Cut the interval for any natural healing test (p. 120) in half, meaning you can heal Stun Damage after half an hour and Physical Damage after half a day. '
+---
+name: Resistance to Pathogens
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'When you claim, “I’ve never been sick a day in my life,” there’s a good chance it may be true. You have a very healthy immune system that has mastered the art of fighting off any and all comers that try to slip into your body and make you sick.  Game Effect: You gain a bonus point of Edge when you make a Pathogen Resistance test. If you do not use it on that test, it goes away. '
+---
+name: Thermographic Vision
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Thanks to enhancements or just genetics, your vision allows you to see differences in temperature on and around objects and people, though most of the time ambient regular light overrides the heat signature. Large local sources of heat can create a glare of sorts, but usually something giving off that much heat is also giving off light, so your regular vision takes over.  Game Effect: You can see the heat of objects in total darkness (assuming they are warmer or colder than the ambient temperature), allowing you to operate in such conditions. '
+---
+name: Toughness
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Whether it’s mental training, a physical regimen of self-inflicted injury, or you’re just one tough bastard, you can take a bit more of a beating and shrug off the injuries better than most.  Game Effect: You gain a bonus point of Edge when making Damage Resistance tests. If you do not use it on the test, it goes away. '
+---
+name: Toxin Resistance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Whether through naturally superior organs or because you think getting bit by a snake on a daily basis is a fun way to pass the time, you’re able to better resist the effects of toxins in the Sixth World.  Game Effect: You gain a bonus point of Edge when you make a Toxin Resistance test (p. 121). If you do not use it on that test, it goes away. '
+---
+name: Will to Live 1
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'No matter how hard the hit, you have the tenacity to hold on to the bitter end. You are quite capable of taking a .50-cal round to the chest and waking up in the hospital, rather than never waking up at all.  Game Effect: For every rank of this quality you possess, you gain two additional Damage Overflow boxes (see p. 121). '
+---
+name: Will to Live 2
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'No matter how hard the hit, you have the tenacity to hold on to the bitter end. You are quite capable of taking a .50-cal round to the chest and waking up in the hospital, rather than never waking up at all.  Game Effect: For every rank of this quality you possess, you gain two additional Damage Overflow boxes (see p. 121). '
+---
+name: Will to Live 3
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'No matter how hard the hit, you have the tenacity to hold on to the bitter end. You are quite capable of taking a .50-cal round to the chest and waking up in the hospital, rather than never waking up at all.  Game Effect: For every rank of this quality you possess, you gain two additional Damage Overflow boxes (see p. 121). '
+---
+name: In Debt
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Sometimes to get cash you need to owe cash. You’ve built up a bit of debt trying to get a foothold in the shadows.  Game Effect: When you spend Karma for cash, every point of Karma you spend gets you 5,000 instead of 2,000 nuyen. Each point of Karma spent also puts you 5,000 nuyen into debt with someone very dangerous and capable of collecting. You must pay a monthly interest rate of 500 nuyen per Karma spent, in addition to any payment to the principal. If the interest is not paid, the lenders come searching for you. The quality can be bought off purely with money; if the principal is repaid the quality is eliminated. This quality can be obtained only during character creation, not during gameplay. '
+---
+name: Guardians at the Gates
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Bellevue is a tough place to get to. There are go-gangs rampaging across the highways, and if that weren’t enough, there is a heavily guarded toll booth blocking the way in. Of course, the locals know when the gangs are out and when the bridge security is toughest to get by.  Game Effect: You have insider knowledge on the security schedules of the border guards as well as when the go-gangs are more likely to be in the area. You do not need to make any Knowledge skill tests to know these things. to is increased by 1. While suffering the ill effects of an illness, you suffer a –1 dice pool modifier to all tests. '
+---
+name: I Belong Here
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'People who spend their time around security learn how to treat them in a way that makes those interactions go much smoother than they would for the average wageslave. Bellevue people go even further. They know the cops are here to protect them, not bust them. The cops know it as well.  Game Effect: You know the ins and outs of dealing with local security. You carry yourself with a presence that gives you a reduced chance of being stopped by the police. You also act the part well enough to not get in trouble when you do. You gain a point of Edge on all social interactions involving local security. '
+---
+name: So many rich friends
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Being part of the Bellevue scene means you know people. They may be your neighbors or friends or just that rich guy you rode the elevator with that one time. Still, being next to the right people makes you seem more worth knowing.  Game Effect: Lifestyle costs are reduced by ten percent because you know the right people. Additionally, you gain a bonus point of Edge for all social tests involving getting into public locations such as bars, clubs, etc. within Bellevue. '
+---
+name: Hunting Permit
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'While a standard gun license gives you the right to be armed, a hunting permit allows you to bag game, transport in-season firearms (rifles, bows, or smoothbore guns) across the border, and make legal, if heavily inspected, crossings from Seattle to Salish territory and back. You must have a legal SIN, which is recorded each time you traverse, and making these legal crossings can sometimes result in long delays, but it’s a boon to the economy of both nations, and a rare way for people to procure real meat.  Game Effect: You can cross the Seattle-Salish border without needing additional clearances or procedures, and you can carry a hunting- appropriate long arm with you without attracting attention or questions. Any bags with a capacity of 40 liters or more will be searched. '
+---
+name: Union Man
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You’re not just a supporter but a card-carrying member of a union. You’re kept abreast of all the union news, are aware of what strikes are on, and can always rely on other union members to have your back when corporate overlords get greedy. You can’t cross picket lines and you never, ever, support a scab.  Game Effect: Gain +1 bonus Edge for any social interaction with a member of any union. '
+---
+name: You Get Used to It
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Auburn’s full of toxins, from the air to the water to the dirt you played in as a kid. Not all the kids make it, but the ones who do grow up tough.  Game Effect: Gain +1 Body for any Toxin Resistance test. '
+---
+name: Big Brother’s Blindspot
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'In the AAA megacorporate backyard, privacy is rare. There’s monitoring everywhere, making it difficult to stay in the shadows. You’ve got a highly tuned sense for surveillance, granting you a bonus against being caught on camera and slipping in where the eyes aren’t. Of course, knowing about those blind spots also means you’re keener on where others might try to slip in.  Game Effect: You gain one bonus point of Edge on Stealth tests when evading technological surveillance such as cameras and other sensors. You also gain a bonus point of Edge on Perception tests when using technological surveillance. This bonus Edge is lost if not spent on that test. In addition, you gain the Surveillance Technology knowledge skill. '
+---
+name: Corp Flash
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Some runners come from the heady heights of the enclaves. Others have to study them from afar. Either way, you’re tuned in to the fashions, ways, means, and mannerisms of corporate style and etiquette. Whatever your method, you’ve learned how to blend in to a corp’s culture, and that’s an advantage, whether you’re pulling a con or brokering at the bargaining table.  Game Effect: You gain one bonus edge on Con and Etiquette checks when attempting to blend in to corporate culture. If this bonus edge is not used on the check, it is lost. In addition, you gain the Fashion knowledge skill. '
+---
+name: Paparazzi Savvy
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Maybe you subscribe to all the local scandal screamsheets. Maybe you have a contact who gives you all the sweetest insider gossip at the local kaf shop. However you get it, you’re in the know when it comes to who’s who, and what their secrets are. That extra bit of skinny can earn more cred or dodge more drama.  Game Effect: You gain one bonus point of Edge when making Perception tests to recognize people and to see through disguises and impersonations. If this bonus point of Edge is not used on the test, it is lost. In addition, you gain the Celebrity Gossip and News knowledge skill. '
+---
+name: Border Hopper
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Everett has two main border crossings along with the entire northern Port Authority. People who live and work here are used to the ins and outs of travel, and many of them can help make border crossing a breeze.  Game Effect: You get +1 Edge on Outdoors tests or Knowledge tests used to help you determine where, when, and how to cross the Everett borders. You also get the same +1 Edge bonus on social tests when discussing irregularities that show up in documents at the Everett border checkpoints. '
+---
+name: Northgate Optimist
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Being in Everett fills you with energy and enthusiasm, and that can be infectious to those around you. People who live or work more than half their time in Everett have been caught up in a “Caution be damned, git ’er done” mindset ever since about three months after the independence declaration.  Game Effect: Characters with this quality gain a bonus point of Edge on any social test with people working or living in Everett. '
+---
+name: Union Supporter
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Everett has seen a massive resurgence in its local labor unions. You are either a member of one, have strong ties to one, or are just a regular at their hangouts. You often get some early information on work being done in the Everett district.  Game Effect: Pick one of the unions described previously as your select group. You get a +1 Edge on all social tests when working with people who are part of that union. '
+---
+name: The Briar Patch
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Barrens Matrix connectivity is very outdated. Even with the wireless revolution, there are many dead zones and a scattering of noiseless islands that GOD would have trouble finding. Only those who have lived here have an intimate relationship to all of Puyallup’s features and hardpoints, and those who know the ins and outs can outfox those who don’t.  Game Effect: While hacking from a physical location in Puyallup, increases to the Overwatch Score are reduced by 1 (minimum increase 1). '
+---
+name: Carbonado Smuggler
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Whether you are a smuggler with CalHots from CalFree, a coyote from the UCAS, or a made man making a delivery, you can take advantage of the mining tunnels of Carbonado to evade any authorities.  Game Effect: You get a +1 dice pool bonus on Knowledge and Outdoors tests related to knowing where, when, and how to cross the Puyallup borders. You also get the same +1 die when evading anyone attempting to follow you into or out of the mines. '
+---
+
