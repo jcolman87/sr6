@@ -1,11 +1,1533 @@
-name: Danger Sense
-type: adeptpower
-img: icons/svg/item-bag.svg
+name: Adrenaline Boost I
+type: quality
+img: /systems/sr6/assets/brain.webp
 effects: []
-system:
+system: 
+description: 'Activation: Minor Action You get a surge of energy so you can get the jump on others. For each level of the power, add 2 to your initiative score for (Magic) combat rounds. At the the end of those combat rounds, experience drain equal to the level of the power, which you can resist as normal. '
+---
+name: Adrenaline Boost II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action You get a surge of energy so you can get the jump on others. For each level of the power, add 2 to your initiative score for (Magic) combat rounds. At the the end of those combat rounds, experience drain equal to the level of the power, which you can resist as normal. '
+---
+name: Adrenaline Boost III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action You get a surge of energy so you can get the jump on others. For each level of the power, add 2 to your initiative score for (Magic) combat rounds. At the the end of those combat rounds, experience drain equal to the level of the power, which you can resist as normal. '
+---
+name: Adrenaline Boost IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action You get a surge of energy so you can get the jump on others. For each level of the power, add 2 to your initiative score for (Magic) combat rounds. At the the end of those combat rounds, experience drain equal to the level of the power, which you can resist as normal. '
+---
+name: Aid Sorcery I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action (Minor to maintain) An adept with this power can channel their inner magic to aid a nearby spellcaster with their sorcery. The adept must touch the spellcaster and spend a Major Action to open a mana conduit between them, and they must maintain physical contact and spend a Minor Action every subsequent round to keep the conduit open. A spellcaster that casts a spell while a conduit is maintained in this way adds the adept’s Aid Sorcery ranks as bonus dice on any Sorcery test (also including Counterspelling and Ritual Spellcasting). After each time a spellcaster uses these bonus dice, the adept must resist drain in the form of Stun damage equal to their ranks in Aid Sorcery. '
+---
+name: Aid Sorcery II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action (Minor to maintain) An adept with this power can channel their inner magic to aid a nearby spellcaster with their sorcery. The adept must touch the spellcaster and spend a Major Action to open a mana conduit between them, and they must maintain physical contact and spend a Minor Action every subsequent round to keep the conduit open. A spellcaster that casts a spell while a conduit is maintained in this way adds the adept’s Aid Sorcery ranks as bonus dice on any Sorcery test (also including Counterspelling and Ritual Spellcasting). After each time a spellcaster uses these bonus dice, the adept must resist drain in the form of Stun damage equal to their ranks in Aid Sorcery. '
+---
+name: Aid Sorcery III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action (Minor to maintain) An adept with this power can channel their inner magic to aid a nearby spellcaster with their sorcery. The adept must touch the spellcaster and spend a Major Action to open a mana conduit between them, and they must maintain physical contact and spend a Minor Action every subsequent round to keep the conduit open. A spellcaster that casts a spell while a conduit is maintained in this way adds the adept’s Aid Sorcery ranks as bonus dice on any Sorcery test (also including Counterspelling and Ritual Spellcasting). After each time a spellcaster uses these bonus dice, the adept must resist drain in the form of Stun damage equal to their ranks in Aid Sorcery. '
+---
+name: Aid Sorcery IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action (Minor to maintain) An adept with this power can channel their inner magic to aid a nearby spellcaster with their sorcery. The adept must touch the spellcaster and spend a Major Action to open a mana conduit between them, and they must maintain physical contact and spend a Minor Action every subsequent round to keep the conduit open. A spellcaster that casts a spell while a conduit is maintained in this way adds the adept’s Aid Sorcery ranks as bonus dice on any Sorcery test (also including Counterspelling and Ritual Spellcasting). After each time a spellcaster uses these bonus dice, the adept must resist drain in the form of Stun damage equal to their ranks in Aid Sorcery. '
+---
+name: Air Dance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Using Air Dance lets a particularly speedy adept capitalize on their reaction time against slower opponents, gliding smoothly on air with their feet just a centimeter off the ground. At the start of the round, compare the adept’s initiative to the highest initiative on the opposing side. For every (10 –Initiate Grade) Initiative Points that the adept beats their fastest opponent by, the adept gains +1 Minor Action. '
+---
+name: Analytics
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with this power recognize and solve patterns and puzzles with supernatural ease. They gain a bonus Edge when making any Logic-based test (this Edge must be spent on that test, or it is lost). '
+---
+name: Animal Empathy I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts have an uncanny ability to connect with critters. An adept with one level of Animal Empathy reduces the cost of Edge Boosts by one when making any Charisma-based test against mundane critters. '
+---
+name: Animal Empathy II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts have an uncanny ability to connect with critters. Animal Empathy reduces the cost of Edge Boosts by one when making any Charisma-based test against mundane or Awakened critters—including dracoforms, the Infected, and the like. Good luck with that! '
+---
+name: Astral Perception
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action You gain the ability to astrally perceive and follow the rules involved in so doing (see p. 159). You are dual-natured while using this power and can attack astral forms. '
+---
+name: Berserk
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Some adepts are wells of furious mana and have learned to tap into that primal energy to enter a frenzied state that greatly increases their physical abilities. When this power is activated, the adept gains +1 to all their Physical attributes per level of Berserk (this bonus combines with other enhancements but is still limited to the usual augmented maximum of +4), ignores an amount of damage equal to their ranks in Berserk (as though they also had Pain Resistance at the same level; this stacks with existing Pain Resistance and other modifier amelioration), but suffers a –1 to all Mental attributes per level of Berserk (to a minimum of 1) and is a slave to their mindless aggression. These modifications affect most dice pools and Close Combat Attack Rating (Initiative, attack rolls, soak rolls, etc.), but not Condition Monitors. A berserk adept must make Close Combat attacks against a target in range or use Major Actions to close with someone in order to do so, every round (including friendlies or bystanders once they run out of opponents). The berserker frenzy lasts for (Berserk Levels x 2) rounds. If the adept wishes to leave this aggressive state early (in order to retreat or because their opponents are all down, for instance) they must roll an Adept Drain test (Body + Willpower, or as appropriate for their way) and score hits equal to their ranks in the Berserk power. When the power expires, either naturally or through a voluntary withdrawal, the adept must resist drain equal to (2 x ranks in this power), using their regular (non-Berserk) drain attributes. '
+---
+name: Blind Fighting
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with this power uses some combination of other senses to reflexively compensate for a lack of vision, whether due to permanent injury, temporary penalties, or a simple blindfold. An adept using Blind Fighting never grants a Close Combat opponent bonus Edge for vision modifiers (for darkness, flash-paks, tear gas, or other vision- based penalties), but they are still vulnerable to ambush or surprise situations. '
+---
+name: Boost Agility I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 1. Each hit temporarily increases the Body rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Agility II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 2. Each hit temporarily increases the Agility rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Agility III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 3. Each hit temporarily increases the Agility rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Agility IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 4. Each hit temporarily increases the Agility rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Body I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 1. Each hit temporarily increases the Body rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Body II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 2. Each hit temporarily increases the Body rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Body III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 3. Each hit temporarily increases the Body rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Body IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 4. Each hit temporarily increases the Body rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Charisma I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 1. Each hit temporarily increases the Charisma rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Charisma II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 2. Each hit temporarily increases the Charisma rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Charisma III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 3. Each hit temporarily increases the Charisma rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Charisma IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 4. Each hit temporarily increases the Charisma rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Intuition I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 1. Each hit temporarily increases the Intuition rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Intuition II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 2. Each hit temporarily increases the Intuition rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Intuition III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 3. Each hit temporarily increases the Intuition rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Intuition IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 4. Each hit temporarily increases the Intuition rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Logic I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 1. Each hit temporarily increases the Logic rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Logic II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 2. Each hit temporarily increases the Logic rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Logic III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 3. Each hit temporarily increases the Logic rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Logic IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 4. Each hit temporarily increases the Logic rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Reaction I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 1. Each hit temporarily increases the Reaction rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Reaction II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 2. Each hit temporarily increases the Reaction rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Reaction III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 3. Each hit temporarily increases the Reaction rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Reaction IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 4. Each hit temporarily increases the Reaction rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Strength I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 1. Each hit temporarily increases the Strength rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Strength II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 2. Each hit temporarily increases the Strength rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Strength III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 3. Each hit temporarily increases the Strength rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Strength IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Mana flows into your body and enhances your inherent abilities, carrying you to a superior level. This power can be purchased multiple times, adding ranks to an existing Boost. When this power is activated, roll Magic + 4. Each hit temporarily increases the Strength rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Boost Willpower I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 1. Each hit temporarily increases the Willpower rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 1. '
+---
+name: Boost Willpower II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 2. Each hit temporarily increases the Willpower rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 2. '
+---
+name: Boost Willpower III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 3. Each hit temporarily increases the Willpower rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 3. '
+---
+name: Boost Willpower IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action More refined adepts harness their internal mana flow and use it to empower not only their physical abilities, but their cleverness, perception, force of personality, and strength of will. This power can be purchased multiple times, adding ranks to an existing Boost. This power cannot be applied to Physical or Special attributes. When this power is activated, roll Magic + 4. Each hit temporarily increases the Willpower rating by 1, up to the augmented maximum of +4. This affects only dice pools, not Initiative rank, Condition Monitor, etc. The effect lasts for (net hits) rounds, and when the power expires, the adept must Resist Drain 4. '
+---
+name: Cloak I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some auras are harder to draw a bead on than others. For every rank an adept has in the Cloak power, they may impose a –1 dice pool penalty to tests made to read their aura. '
+---
+name: Cloak II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some auras are harder to draw a bead on than others. For every rank an adept has in the Cloak power, they may impose a –1 dice pool penalty to tests made to read their aura. '
+---
+name: Cloak III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some auras are harder to draw a bead on than others. For every rank an adept has in the Cloak power, they may impose a –1 dice pool penalty to tests made to read their aura. '
+---
+name: Cloak IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some auras are harder to draw a bead on than others. For every rank an adept has in the Cloak power, they may impose a –1 dice pool penalty to tests made to read their aura. '
+---
+name: Combat Sense I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you the ability to anticipate and avoid harm. Gain a +1 dice pool bonus per level on any defensive tests. This bonus also applies to any surprise tests (p. 108) you make. '
+---
+name: Combat Sense II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you the ability to anticipate and avoid harm. Gain a +1 dice pool bonus per level on any defensive tests. This bonus also applies to any surprise tests (p. 108) you make. '
+---
+name: Combat Sense III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you the ability to anticipate and avoid harm. Gain a +1 dice pool bonus per level on any defensive tests. This bonus also applies to any surprise tests (p. 108) you make. '
+---
+name: Combat Sense IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you the ability to anticipate and avoid harm. Gain a +1 dice pool bonus per level on any defensive tests. This bonus also applies to any surprise tests (p. 108) you make. '
+---
+name: Commanding Voice I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action The words of an adept with Commanding Voice are infused with supernatural authority and power. Every level of this power adds +1 die to opposed Influence tests for Intimidation that the character initiates, while also lacing those forceful commands with unstoppable intent. If the adept succeeds in such a test, the target must obey the adept’s given order, at least momentarily. Dangerous orders or orders given in dangerous situations (in combat, for instance) will be followed for a maximum of (Commanding Voice) rounds. Orders may never result in the target directly harming themselves (“leap off the roof,” “step into traffic,” and “shoot yourself” are not valid commands, for instance), though they may result in a moment of vulnerability that can be taken advantage of (“sit” or “freeze”) or a momentary shift in allegiance (“shoot that guard!”). When in doubt, a successful order should at least make a target freeze up for at least one full round, even if the order given is impossible or clearly suicidal. Clearly supernatural orders will leave a target aware of this external control, but less radical commands may result in longer obedience, and if phrased carefully may not even result in the target or other witnesses being aware of any supernatural manipulation (though they’ll still likely notice someone barking orders and those orders being obeyed, the magical control itself may not be obvious). “Come on, man, just let us in” may get you into a club without incident, while a shouted “fight him, muwahaha” and setting a bouncer against his coworker for your amusement is likely to draw attention and be pretty obvious. '
+---
+name: Commanding Voice II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action The words of an adept with Commanding Voice are infused with supernatural authority and power. Every level of this power adds +1 die to opposed Influence tests for Intimidation that the character initiates, while also lacing those forceful commands with unstoppable intent. If the adept succeeds in such a test, the target must obey the adept’s given order, at least momentarily. Dangerous orders or orders given in dangerous situations (in combat, for instance) will be followed for a maximum of (Commanding Voice) rounds. Orders may never result in the target directly harming themselves (“leap off the roof,” “step into traffic,” and “shoot yourself” are not valid commands, for instance), though they may result in a moment of vulnerability that can be taken advantage of (“sit” or “freeze”) or a momentary shift in allegiance (“shoot that guard!”). When in doubt, a successful order should at least make a target freeze up for at least one full round, even if the order given is impossible or clearly suicidal. Clearly supernatural orders will leave a target aware of this external control, but less radical commands may result in longer obedience, and if phrased carefully may not even result in the target or other witnesses being aware of any supernatural manipulation (though they’ll still likely notice someone barking orders and those orders being obeyed, the magical control itself may not be obvious). “Come on, man, just let us in” may get you into a club without incident, while a shouted “fight him, muwahaha” and setting a bouncer against his coworker for your amusement is likely to draw attention and be pretty obvious. '
+---
+name: Commanding Voice III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action The words of an adept with Commanding Voice are infused with supernatural authority and power. Every level of this power adds +1 die to opposed Influence tests for Intimidation that the character initiates, while also lacing those forceful commands with unstoppable intent. If the adept succeeds in such a test, the target must obey the adept’s given order, at least momentarily. Dangerous orders or orders given in dangerous situations (in combat, for instance) will be followed for a maximum of (Commanding Voice) rounds. Orders may never result in the target directly harming themselves (“leap off the roof,” “step into traffic,” and “shoot yourself” are not valid commands, for instance), though they may result in a moment of vulnerability that can be taken advantage of (“sit” or “freeze”) or a momentary shift in allegiance (“shoot that guard!”). When in doubt, a successful order should at least make a target freeze up for at least one full round, even if the order given is impossible or clearly suicidal. Clearly supernatural orders will leave a target aware of this external control, but less radical commands may result in longer obedience, and if phrased carefully may not even result in the target or other witnesses being aware of any supernatural manipulation (though they’ll still likely notice someone barking orders and those orders being obeyed, the magical control itself may not be obvious). “Come on, man, just let us in” may get you into a club without incident, while a shouted “fight him, muwahaha” and setting a bouncer against his coworker for your amusement is likely to draw attention and be pretty obvious. '
+---
+name: Commanding Voice IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action The words of an adept with Commanding Voice are infused with supernatural authority and power. Every level of this power adds +1 die to opposed Influence tests for Intimidation that the character initiates, while also lacing those forceful commands with unstoppable intent. If the adept succeeds in such a test, the target must obey the adept’s given order, at least momentarily. Dangerous orders or orders given in dangerous situations (in combat, for instance) will be followed for a maximum of (Commanding Voice) rounds. Orders may never result in the target directly harming themselves (“leap off the roof,” “step into traffic,” and “shoot yourself” are not valid commands, for instance), though they may result in a moment of vulnerability that can be taken advantage of (“sit” or “freeze”) or a momentary shift in allegiance (“shoot that guard!”). When in doubt, a successful order should at least make a target freeze up for at least one full round, even if the order given is impossible or clearly suicidal. Clearly supernatural orders will leave a target aware of this external control, but less radical commands may result in longer obedience, and if phrased carefully may not even result in the target or other witnesses being aware of any supernatural manipulation (though they’ll still likely notice someone barking orders and those orders being obeyed, the magical control itself may not be obvious). “Come on, man, just let us in” may get you into a club without incident, while a shouted “fight him, muwahaha” and setting a bouncer against his coworker for your amusement is likely to draw attention and be pretty obvious. '
+---
+name: Cool Resolve I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts shield their psyches with mana and certainty, making themselves impressively unflappable. For every level in Cool Resolve, they may add +1 die to all opposed social tests to resist someone else’s initiated Influence skills, and +1 die on all tests to resist the Fear critter power. (They may add these dice, not must, allowing them to benefit from friendly Leadership or Instruction rolls, etc.). '
+---
+name: Cool Resolve II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts shield their psyches with mana and certainty, making themselves impressively unflappable. For every level in Cool Resolve, they may add +1 die to all opposed social tests to resist someone else’s initiated Influence skills, and +1 die on all tests to resist the Fear critter power. (They may add these dice, not must, allowing them to benefit from friendly Leadership or Instruction rolls, etc.). '
+---
+name: Cool Resolve III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts shield their psyches with mana and certainty, making themselves impressively unflappable. For every level in Cool Resolve, they may add +1 die to all opposed social tests to resist someone else’s initiated Influence skills, and +1 die on all tests to resist the Fear critter power. (They may add these dice, not must, allowing them to benefit from friendly Leadership or Instruction rolls, etc.). '
+---
+name: Cool Resolve IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts shield their psyches with mana and certainty, making themselves impressively unflappable. For every level in Cool Resolve, they may add +1 die to all opposed social tests to resist someone else’s initiated Influence skills, and +1 die on all tests to resist the Fear critter power. (They may add these dice, not must, allowing them to benefit from friendly Leadership or Instruction rolls, etc.). '
+---
+name: Cosmetic Control I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action An adept with Cosmetic Control may alter their body in order to change their physical appearance by growing or shedding hair, changing traditional gender markers, altering their skin tone, adding or removing blemishes or scars, reshaping their facial features, changing their height and weight, or increasing or decreasing other cosmetic physical attributes (bust and hip size, growing or retracting nails, etc.). These changes are purely cosmetic but are not illusory, and clothing and other equipment are not affected, nor may damage be healed in this way, augmentations expelled or installed, etc. One level of Cosmetic Control allows for the adept to change within the confines of what is normally allowed for their metatype (ears remain pointed or round as appropriate, trolls maintain horns and orks tusks, height remains within the range of their metatype, and hair, eye, and skin colors are limited to the usual range of their metatype). The second level of Cosmetic Control allows an adept to reach beyond the usual limitations of their metaspecies, in both general appearance (ear shape, the addition or removal of horns or tusks, etc.) and in size, allowing a dwarf to reach human/ elven/orkish height (or reduce themselves to a smaller size, such as a pixie), allowing a troll to reduce to human/elven/orkish height, or allowing a human/elf/ork to grow or shrink to either extreme. These modifications still provide no alteration to attributes in any way, but they are enough to allow an adept to pass completely as a member of a different metatype. It also allows for a broader '
+---
+name: Cosmetic Control II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action An adept with Cosmetic Control may alter their body in order to change their physical appearance by growing or shedding hair, changing traditional gender markers, altering their skin tone, adding or removing blemishes or scars, reshaping their facial features, changing their height and weight, or increasing or decreasing other cosmetic physical attributes (bust and hip size, growing or retracting nails, etc.). These changes are purely cosmetic but are not illusory, and clothing and other equipment are not affected, nor may damage be healed in this way, augmentations expelled or installed, etc. One level of Cosmetic Control allows for the adept to change within the confines of what is normally allowed for their metatype (ears remain pointed or round as appropriate, trolls maintain horns and orks tusks, height remains within the range of their metatype, and hair, eye, and skin colors are limited to the usual range of their metatype). The second level of Cosmetic Control allows an adept to reach beyond the usual limitations of their metaspecies, in both general appearance (ear shape, the addition or removal of horns or tusks, etc.) and in size, allowing a dwarf to reach human/ elven/orkish height (or reduce themselves to a smaller size, such as a pixie), allowing a troll to reduce to human/elven/orkish height, or allowing a human/elf/ork to grow or shrink to either extreme. These modifications still provide no alteration to attributes in any way, but they are enough to allow an adept to pass completely as a member of a different metatype. It also allows for a broader '
+---
+name: Countermagic I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Spells slide off an adept with this power like water off a duck’s back. An adept with Countermagic adds one die to tests to resist spells per level of this power. '
+---
+name: Countermagic II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Spells slide off an adept with this power like water off a duck’s back. An adept with Countermagic adds one die to tests to resist spells per level of this power. '
+---
+name: Countermagic III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Spells slide off an adept with this power like water off a duck’s back. An adept with Countermagic adds one die to tests to resist spells per level of this power. '
+---
+name: Countermagic IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Spells slide off an adept with this power like water off a duck’s back. An adept with Countermagic adds one die to tests to resist spells per level of this power. '
+---
+name: Counterstrike I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Counterstrike may smoothly shift from defense to attack in Close Combat, catching an opponent off-guard after successfully defending against an attack. This power may only be used on their first turn after successfully using a Minor Action to Block a Close Combat attack (p. 41, SR6). After spending an additional Minor Action to trigger Counterstrike, add dice to their next Close Combat attack roll equal to their levels in Counterstrike plus any net hits from the Block— but only on attacks against the character who attacked them. '
+---
+name: Counterstrike II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Counterstrike may smoothly shift from defense to attack in Close Combat, catching an opponent off-guard after successfully defending against an attack. This power may only be used on their first turn after successfully using a Minor Action to Block a Close Combat attack (p. 41, SR6). After spending an additional Minor Action to trigger Counterstrike, add dice to their next Close Combat attack roll equal to their levels in Counterstrike plus any net hits from the Block— but only on attacks against the character who attacked them. '
+---
+name: Counterstrike III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Counterstrike may smoothly shift from defense to attack in Close Combat, catching an opponent off-guard after successfully defending against an attack. This power may only be used on their first turn after successfully using a Minor Action to Block a Close Combat attack (p. 41, SR6). After spending an additional Minor Action to trigger Counterstrike, add dice to their next Close Combat attack roll equal to their levels in Counterstrike plus any net hits from the Block— but only on attacks against the character who attacked them. '
+---
+name: Counterstrike IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Counterstrike may smoothly shift from defense to attack in Close Combat, catching an opponent off-guard after successfully defending against an attack. This power may only be used on their first turn after successfully using a Minor Action to Block a Close Combat attack (p. 41, SR6). After spending an additional Minor Action to trigger Counterstrike, add dice to their next Close Combat attack roll equal to their levels in Counterstrike plus any net hits from the Block— but only on attacks against the character who attacked them. '
+---
+name: Critical Strike I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Increase the DV of your melee attacks by 1 per level of this power. This power is compatible with other enhancements from weapons and adept powers unless otherwise prohibited. '
+---
+name: Critical Strike II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Increase the DV of your melee attacks by 1 per level of this power. This power is compatible with other enhancements from weapons and adept powers unless otherwise prohibited. '
+---
+name: Critical Strike III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Increase the DV of your melee attacks by 1 per level of this power. This power is compatible with other enhancements from weapons and adept powers unless otherwise prohibited. '
+---
+name: Critical Strike IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Increase the DV of your melee attacks by 1 per level of this power. This power is compatible with other enhancements from weapons and adept powers unless otherwise prohibited. '
+---
+name: Danger Sense
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive You have a sixth sense for danger, instinctively knowing when it’s nearby and preparing for it. Gain an Edge before making Surprise tests. '
+---
+name: Dash I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Fleet of foot is putting it mildly! When an adept makes a Sprint test (p. 44, SR6) and invests a Minor Action to focus themselves, they add +1 meter to their movement for every rank in Dash. '
+---
+name: Dash II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Fleet of foot is putting it mildly! When an adept makes a Sprint test (p. 44, SR6) and invests a Minor Action to focus themselves, they add +1 meter to their movement for every rank in Dash. '
+---
+name: Dash III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Fleet of foot is putting it mildly! When an adept makes a Sprint test (p. 44, SR6) and invests a Minor Action to focus themselves, they add +1 meter to their movement for every rank in Dash. '
+---
+name: Dash IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Fleet of foot is putting it mildly! When an adept makes a Sprint test (p. 44, SR6) and invests a Minor Action to focus themselves, they add +1 meter to their movement for every rank in Dash. '
+---
+name: Direction Sense
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive You have a good sense of where you have been, where you’re going, and a few of the obstacles in between. When making an Outdoors test related to directions, you may gain an Edge point, provided you spend it immediately on that test. '
+---
+name: Distance Grasp I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Distance Grasp lets an adept reach out and manipulate the physical world through a psychokinetic effect that roughly mimics their hands. The range of this power is (Distance Grasp levels x Magic) in meters, and the adept has an effective Strength equal to their levels in Distance Grasp. They may use skills remotely, pick up small objects, flip switches, peck at keyboards, pick locks, etc, but they may not attack (see Distance Strike for that). The supernatural intent behind Distance Grasp is for manipulation, not offense. '
+---
+name: Distance Grasp II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Distance Grasp lets an adept reach out and manipulate the physical world through a psychokinetic effect that roughly mimics their hands. The range of this power is (Distance Grasp levels x Magic) in meters, and the adept has an effective Strength equal to their levels in Distance Grasp. They may use skills remotely, pick up small objects, flip switches, peck at keyboards, pick locks, etc, but they may not attack (see Distance Strike for that). The supernatural intent behind Distance Grasp is for manipulation, not offense. '
+---
+name: Distance Grasp III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Distance Grasp lets an adept reach out and manipulate the physical world through a psychokinetic effect that roughly mimics their hands. The range of this power is (Distance Grasp levels x Magic) in meters, and the adept has an effective Strength equal to their levels in Distance Grasp. They may use skills remotely, pick up small objects, flip switches, peck at keyboards, pick locks, etc, but they may not attack (see Distance Strike for that). The supernatural intent behind Distance Grasp is for manipulation, not offense. '
+---
+name: Distance Grasp IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Distance Grasp lets an adept reach out and manipulate the physical world through a psychokinetic effect that roughly mimics their hands. The range of this power is (Distance Grasp levels x Magic) in meters, and the adept has an effective Strength equal to their levels in Distance Grasp. They may use skills remotely, pick up small objects, flip switches, peck at keyboards, pick locks, etc, but they may not attack (see Distance Strike for that). The supernatural intent behind Distance Grasp is for manipulation, not offense. '
+---
+name: Distance Strike
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with Distance Strike may project their physical strength across short distances with the clear, mana-infused intent to deal damage, allowing them to strike a target without physically touching them. The range of a Distance Strike is the adept’s Magic in meters, and it deals damage and has an Attack Rating the same as the adept’s unarmed attacks (including supernatural or Essence-invested modifiers, such as Killing Hands, Elemental Strike, or Bone Lacing, but not purely external modifications like knucks or shock gloves). The adept attacks with Close Combat as though it were a regular Unarmed attack, but targets may resist the attack as either a Close Combat or ranged attack (using Dodge or Block as they prefer). Cover modifiers apply as usual, and the strike cannot pass through solid objects or pierce mana barriers. '
+---
+name: Elemental Missile
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Elemental Missile lets an adept infuse a ranged attack with an elemental damage type (see Damage Types, p. 109, SR6). Activating the power and visibly charging your weapon with elemental energy requires a Minor Action, after which time it remains active for (Magic) rounds or until deactivated at will. When Elemental Missile is purchased, the adept must choose one element and one type of ranged attack from the following list: Thrown Weapons (including attacks made with Missile Mastery), Projectile Weapons, one Specialization of the Exotic Weapon skill or one Specialization of Firearms (Automatics, Longarms, Pistols, Rifles, or Shotguns; the character need not have the specialization or expertise purchased, but the narrower categories apply to its use). Elemental Missile may also be purchased for the Gunnery specialization of Engineering, but the elemental effect can only be applied to Gunnery weapons if the adept has used Item Attunement to link to the drone or vehicle that holds the weapon. This power may be purchased multiple times, either to apply alternate (not multiple) elemental effects to one category of ranged attack, or to apply already-purchased elemental effects to a wider variety of weapons. Only one elemental effect can be active per attack. '
+---
+name: Elemental Strike
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Prerequisite: Killing Hands (p. 157, SR6) An adept with Elemental Strike may infuse their unarmed attacks with raw elemental force, adding an elemental damage type (see Damage Types, p. 109, SR6). Activating the power and visibly wreathing your hand, foot, or other striking body part with power requires a Minor Action, after which it remains active for (Magic) rounds or until deactivated at will. The power may be purchased multiple times, adding a new elemental option with each purchase, but only one elemental effect can be active per attack. '
+---
+name: Elemental Weapon I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Elemental Weapon is able to channel elemental power into their melee attacks with Close Combat weapons rather than unarmed attacks. They add an elemental damage type (see Damage Types, p. 109, SR6) to their weapon attacks. Activating the power and wreathing your weapon in visible elemental energy requires a Minor Action, after which time it remains active for (Magic) rounds or until deactivated at all. The power may be purchased multiple times, adding a new elemental option with each purchase, but only one elemental effect can be active per attack. '
+---
+name: Elemental Weapon II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Elemental Weapon is able to channel elemental power into their melee attacks with Close Combat weapons rather than unarmed attacks. They add an elemental damage type (see Damage Types, p. 109, SR6) to their weapon attacks. Activating the power and wreathing your weapon in visible elemental energy requires a Minor Action, after which time it remains active for (Magic) rounds or until deactivated at all. The power may be purchased multiple times, adding a new elemental option with each purchase, but only one elemental effect can be active per attack. '
+---
+name: Elemental Weapon III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Elemental Weapon is able to channel elemental power into their melee attacks with Close Combat weapons rather than unarmed attacks. They add an elemental damage type (see Damage Types, p. 109, SR6) to their weapon attacks. Activating the power and wreathing your weapon in visible elemental energy requires a Minor Action, after which time it remains active for (Magic) rounds or until deactivated at all. The power may be purchased multiple times, adding a new elemental option with each purchase, but only one elemental effect can be active per attack. '
+---
+name: Elemental Weapon IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action An adept with Elemental Weapon is able to channel elemental power into their melee attacks with Close Combat weapons rather than unarmed attacks. They add an elemental damage type (see Damage Types, p. 109, SR6) to their weapon attacks. Activating the power and wreathing your weapon in visible elemental energy requires a Minor Action, after which time it remains active for (Magic) rounds or until deactivated at all. The power may be purchased multiple times, adding a new elemental option with each purchase, but only one elemental effect can be active per attack. '
+---
+name: Empathic Healing
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action (see below) Adepts can, in times of crisis, link their health to that of an injured person, and pull the target’s injuries into their own body along this powerful, and painful, conduit. The adept begins the Empathic Healing process through physical contact with the target and a Magic + Willpower roll (threshold of 5 – target’s Essence). The adept removes 1 box of Physical or Overflow damage from the target per hit, simultaneously suffering 1 box of Stun damage for the first box of damage transferred this way, then Physical damage equal to the remaining boxes in future actions. Damage is transferred at the rate of 1 box per Major Action, during which time physical contact must be maintained. Injuries can only be affected once with Empathic Healing (but using Empathic Healing does not count toward the limit of one Healing spell per injury). Example: The team’s face has Essence 6 and has received 8 boxes of Physical damage from a rifle shot. The adept makes contact, spends a Major Action, rolls Magic + Willpower, gets 4 hits, then adds +1 hit for the target’s high Essence for a total of 5 hits. Immediately upon rolling, the face is lowered to 7 boxes of Physical damage and the adept receives 1 box of (unsoakable) Stun. During the next Major Action dedicated to the process, the face is lowered to 6 damage, and the adept takes 1 level of (unsoakable) Physical damage. If contact is maintained and the power is used for the full duration, at the end of the process the face will still have 3 boxes of Physical damage, and the adept will have 4 boxes of Physical damage and 1 box of Stun. '
+---
+name: Empathic Sense
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Empathic Sense allows adepts access to a weaker form of Assensing, allowing them to sense the true feelings and health of targets they can see. The adept spends a Minor Action and rolls Intuition + Perception, and gains information according to the Assensing Table (p. 159, SR6), but they are limited to the emotional state and the physical health of the target (maladies, injuries, toxins, whether the target is Awakened, mundane, a technomancer or Monad). If an adept makes an Opposed Social test against the target and is able to leverage information gathered via Empathic Sense, grant the adept Edge on that roll (which must be used only on that roll, or it is lost). If an adept with Empathic Sense later gains the ability for full Astral Sight, this Power Point may be reallocated. '
 ---
 name: Enhanced Accuracy
-type: adeptpower
-img: icons/svg/item-bag.svg
+type: quality
+img: /systems/sr6/assets/brain.webp
 effects: []
-system:
+system: 
+description: 'Activation: Passive Weapons are more accurate and deadly in your hands than in those of normal people. Increase the Attack Rating of any weapon you wield by 2. '
+---
+name: Enhanced Perception
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your senses are keenly honed, giving you information in enough time for you to figure out what to do about it. Gain an Edge when Observing in Detail or making a Perception test to find something hidden or listen to something you’re not supposed to hear. '
+---
+name: Enthralling Performance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Enthralling Performance lets an adept lace an artistic performance with magical power in order to mesmerize their audience and, in fact, put them into a relaxed hypnotic state. By investing a Minor Action to harness their power (in addition to the necessary action investment to perform with their instrument, dance, sing, etc.), the adept may then roll their appropriate skill/specialty + Magic, and their hits serve as a threshold modifier for any Perception tests their audience might try to make during the performance. Enthralled audience members may be distracted and entranced for a maximum of (Charisma + Magic) x net hits minutes, but viewers who are attacked, overtly threatened, or otherwise shocked out of it (an appropriately loud noise, sprinkler system or flash-pak going off, unsilenced gunshots, etc.) are snapped out of it early. Enthralling Performance defaults to Con/Performance specialty, but gamemasters may allow Influence/ Leadership for a rousing speech, Athletics/ Gymnastics for an impressive display, or even Close Combat/Unarmed for a kata routine, Stealth/Palming for distracting magic tricks, or other combinations as appropriate for the character, decided when it is purchased. It may be purchased more than one time for different Skill/Specialization combinations. '
+---
+name: Freefall I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are light on their feet, preternaturally so. Every level of Freefall adds 3 meters to the distance an adept falls before calculating damage (see p. 113, SR6). '
+---
+name: Freefall II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are light on their feet, preternaturally so. Every level of Freefall adds 3 meters to the distance an adept falls before calculating damage (see p. 113, SR6). '
+---
+name: Freefall III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are light on their feet, preternaturally so. Every level of Freefall adds 3 meters to the distance an adept falls before calculating damage (see p. 113, SR6). '
+---
+name: Great Leap I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Great Leap lets an adept cross impressive distances with jumping. When attempting a Jumping test (Athletics + Strength) after investing a Minor Action to focus, an adept with Great Leap can make a running jump of 2 meters per hit, a standing horizontal jump of 1 meter per hit, and a standing vertical jump of 0.5 meters per hit. They also get +1 die on the Jumping test per level of Great Leap. '
+---
+name: Great Leap II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Great Leap lets an adept cross impressive distances with jumping. When attempting a Jumping test (Athletics + Strength) after investing a Minor Action to focus, an adept with Great Leap can make a running jump of 2 meters per hit, a standing horizontal jump of 1 meter per hit, and a standing vertical jump of 0.5 meters per hit. They also get +1 die on the Jumping test per level of Great Leap. '
+---
+name: Great Leap III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Great Leap lets an adept cross impressive distances with jumping. When attempting a Jumping test (Athletics + Strength) after investing a Minor Action to focus, an adept with Great Leap can make a running jump of 2 meters per hit, a standing horizontal jump of 1 meter per hit, and a standing vertical jump of 0.5 meters per hit. They also get +1 die on the Jumping test per level of Great Leap. '
+---
+name: Great Leap IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Great Leap lets an adept cross impressive distances with jumping. When attempting a Jumping test (Athletics + Strength) after investing a Minor Action to focus, an adept with Great Leap can make a running jump of 2 meters per hit, a standing horizontal jump of 1 meter per hit, and a standing vertical jump of 0.5 meters per hit. They also get +1 die on the Jumping test per level of Great Leap. '
+---
+name: Improved Ability (Combat Skill) I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Combat Skill) II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Combat Skill) III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Combat Skill) IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Non-combat Skill) I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Non-combat Skill) II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Non-combat Skill) III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Ability (Non-combat Skill) IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive A skill must be selected when this power is chosen. That skill receives an ongoing boost equal to the rating of the power. The maximum boosted value of the skill is 1.5 times the original (rounded up) or the augmented maximum, whichever is lower. You need to have at least one rank in a skill to buy this power for it, and the power can be purchased for multiple skills. '
+---
+name: Improved Agility I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Agility receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Agility II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Agility receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Agility III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Agility receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Agility IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Agility receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Body I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Body receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Body II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Body receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Body III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Body receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Body IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Body receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Charisma I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Charisma receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Charisma II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Charisma receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Charisma III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Charisma receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Charisma IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Charisma receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Hearing
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive When this power is purchased, select a sense (sight, hearing, touch, taste, or smell). When making a test involving that sense, you get a bonus Edge, but only if you use it (either alone or in combination with other Edge points) on that test. Edge points from this power cannot be gained more than once when the same sense (noise, sight, flavor, etc.) is involved. This power can be selected more than once, each time for a different sense. '
+---
+name: Improved Intuition I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Intuition receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Intuition II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Intuition receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Intuition III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Intuition receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Intuition IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Intuition receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Logic I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Logic receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Logic II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Logic receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Logic III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Logic receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Logic IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Logic receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Reaction I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Reaction receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Reaction II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Reaction receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Reaction III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Reaction receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Reaction IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Reaction receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Reflexes I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you quick reflexes and anticipation, allowing you to act and react much faster than the normies. For each level of this power, add an Initiative Die and increase your Reaction by 1. The maximum level of this power is 4, and it cannot be combined with any other Initiative or Reaction boosts. '
+---
+name: Improved Reflexes II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you quick reflexes and anticipation, allowing you to act and react much faster than the normies. For each level of this power, add an Initiative Die and increase your Reaction by 1. The maximum level of this power is 4, and it cannot be combined with any other Initiative or Reaction boosts. '
+---
+name: Improved Reflexes III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you quick reflexes and anticipation, allowing you to act and react much faster than the normies. For each level of this power, add an Initiative Die and increase your Reaction by 1. The maximum level of this power is 4, and it cannot be combined with any other Initiative or Reaction boosts. '
+---
+name: Improved Reflexes IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive This power gives you quick reflexes and anticipation, allowing you to act and react much faster than the normies. For each level of this power, add an Initiative Die and increase your Reaction by 1. The maximum level of this power is 4, and it cannot be combined with any other Initiative or Reaction boosts. '
+---
+name: Improved Sight
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive When this power is purchased, select a sense (sight, hearing, touch, taste, or smell). When making a test involving that sense, you get a bonus Edge, but only if you use it (either alone or in combination with other Edge points) on that test. Edge points from this power cannot be gained more than once when the same sense (noise, sight, flavor, etc.) is involved. This power can be selected more than once, each time for a different sense. '
+---
+name: Improved Smell
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive When this power is purchased, select a sense (sight, hearing, touch, taste, or smell). When making a test involving that sense, you get a bonus Edge, but only if you use it (either alone or in combination with other Edge points) on that test. Edge points from this power cannot be gained more than once when the same sense (noise, sight, flavor, etc.) is involved. This power can be selected more than once, each time for a different sense. '
+---
+name: Improved Strength I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Strength receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Strength II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Strength receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Strength III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Strength receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Strength IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your Strength receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Taste
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive When this power is purchased, select a sense (sight, hearing, touch, taste, or smell). When making a test involving that sense, you get a bonus Edge, but only if you use it (either alone or in combination with other Edge points) on that test. Edge points from this power cannot be gained more than once when the same sense (noise, sight, flavor, etc.) is involved. This power can be selected more than once, each time for a different sense. '
+---
+name: Improved Touch
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive When this power is purchased, select a sense (sight, hearing, touch, taste, or smell). When making a test involving that sense, you get a bonus Edge, but only if you use it (either alone or in combination with other Edge points) on that test. Edge points from this power cannot be gained more than once when the same sense (noise, sight, flavor, etc.) is involved. This power can be selected more than once, each time for a different sense. '
+---
+name: Improved Willpower I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your willpower receives an ongoing increase equal to the level of this power (1), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Willpower II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your willpower receives an ongoing increase equal to the level of this power (2), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Willpower III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your willpower receives an ongoing increase equal to the level of this power (3), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Improved Willpower IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your willpower receives an ongoing increase equal to the level of this power (4), up to the augmented maximum of +4 or 1.5 times the current level of the attribute. '
+---
+name: Iron Will I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The adept is able to shake off supernatural influences easier than most. They may add +1 die per level of Iron Will to any test to resist magical mind control or magical emotional manipulation (including but not limited to Manipulation spells, critter powers, and adept powers). '
+---
+name: Iron Will II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The adept is able to shake off supernatural influences easier than most. They may add +1 die per level of Iron Will to any test to resist magical mind control or magical emotional manipulation (including but not limited to Manipulation spells, critter powers, and adept powers). '
+---
+name: Iron Will III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The adept is able to shake off supernatural influences easier than most. They may add +1 die per level of Iron Will to any test to resist magical mind control or magical emotional manipulation (including but not limited to Manipulation spells, critter powers, and adept powers). '
+---
+name: Iron Will IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The adept is able to shake off supernatural influences easier than most. They may add +1 die per level of Iron Will to any test to resist magical mind control or magical emotional manipulation (including but not limited to Manipulation spells, critter powers, and adept powers). '
+---
+name: Killing Hands
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Your hands become lethal and magical, useful both in shadowrunning and cheesy pickup lines. When fighting unarmed, you can choose to deal Stun or Physical damage. Killing Hands can be combined with other powers affecting unarmed combat. Attacks made with Killing Hands are considered magical, meaning they bypass protections against normal weapons and can be made against astral beings. '
+---
+name: Kinesics
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Your command of body language and nonverbal communication is, well, magical, and it helps you be incredibly difficult to read. When you are resisting Social tests and tests to read your emotions, judge your intentions, or gauge your truthfulness, you gain an Edge point. Only one such Edge point can be gained per encounter. '
+---
+name: Kinesics Mastery I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Prerequisite: Kinesics (p. 157, SR6) An adept with Kinesics Mastery is a master of body language, nonverbal communication, and both sensing tension in others and hiding their own. This power provides two benefits: First, it allows two adepts with Kinesics Mastery and line of sight to one another to relay complicated, detailed information to one another without outsiders noticing (essentially holding a full conversation in secret). Second, every level of Kinesics Mastery increases the number of times per encounter that the Kinesics power grants Edge (p. 157, SR6). '
+---
+name: Kinesics Mastery II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Prerequisite: Kinesics (p. 157, SR6) An adept with Kinesics Mastery is a master of body language, nonverbal communication, and both sensing tension in others and hiding their own. This power provides two benefits: First, it allows two adepts with Kinesics Mastery and line of sight to one another to relay complicated, detailed information to one another without outsiders noticing (essentially holding a full conversation in secret). Second, every level of Kinesics Mastery increases the number of times per encounter that the Kinesics power grants Edge (p. 157, SR6). '
+---
+name: Kinesics Mastery III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Prerequisite: Kinesics (p. 157, SR6) An adept with Kinesics Mastery is a master of body language, nonverbal communication, and both sensing tension in others and hiding their own. This power provides two benefits: First, it allows two adepts with Kinesics Mastery and line of sight to one another to relay complicated, detailed information to one another without outsiders noticing (essentially holding a full conversation in secret). Second, every level of Kinesics Mastery increases the number of times per encounter that the Kinesics power grants Edge (p. 157, SR6). '
+---
+name: Kinesics Mastery IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Prerequisite: Kinesics (p. 157, SR6) An adept with Kinesics Mastery is a master of body language, nonverbal communication, and both sensing tension in others and hiding their own. This power provides two benefits: First, it allows two adepts with Kinesics Mastery and line of sight to one another to relay complicated, detailed information to one another without outsiders noticing (essentially holding a full conversation in secret). Second, every level of Kinesics Mastery increases the number of times per encounter that the Kinesics power grants Edge (p. 157, SR6). '
+---
+name: Linguistics
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with Linguistics is able to focus their superhuman perception, memorization, mimicry, and empathic powers in order to learn languages after only a minimal amount of exposure, and without spending Karma. Adepts must be exposed to a new language for a minimum of one hour, at which time they gain the new Language Skill at the basic level (see Language Skills, p. 99, SR6). Linguistics also provides one bonus die to Perception tests to understand a language in which the character is trained (either via this skill or through traditional means). '
+---
+name: Living Focus I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Living Focus lets an adept focus their internalized mana and use it like a battery to sustain a spell cast on them (similar to a sustaining focus). Using this power to maintain a spell removes the burden of sustaining from the spellcaster and requires no roll, but the adept suffers the usual –2 dice pool penalty for sustaining the spell. If the adept falls asleep or unconscious, they can no longer sustain the spell, so the caster must either sustain it themselves (with the dice pool penalty) or drop it. Additional levels of Living Focus allow adepts to sustain additional spells (one spell per rank in Living Focus) or may be invested in defraying the penalty of sustaining a spell (every rank of Living Focus, after the first, invested into a spell may lower the penalty by 1). For example, Living Focus 3 allows an adept to self-sustain one spell for no penalty, three spells for a total penalty of –6, or two spells for a total penalty of –3). '
+---
+name: Living Focus II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Living Focus lets an adept focus their internalized mana and use it like a battery to sustain a spell cast on them (similar to a sustaining focus). Using this power to maintain a spell removes the burden of sustaining from the spellcaster and requires no roll, but the adept suffers the usual –2 dice pool penalty for sustaining the spell. If the adept falls asleep or unconscious, they can no longer sustain the spell, so the caster must either sustain it themselves (with the dice pool penalty) or drop it. Additional levels of Living Focus allow adepts to sustain additional spells (one spell per rank in Living Focus) or may be invested in defraying the penalty of sustaining a spell (every rank of Living Focus, after the first, invested into a spell may lower the penalty by 1). For example, Living Focus 3 allows an adept to self-sustain one spell for no penalty, three spells for a total penalty of –6, or two spells for a total penalty of –3). '
+---
+name: Living Focus III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Living Focus lets an adept focus their internalized mana and use it like a battery to sustain a spell cast on them (similar to a sustaining focus). Using this power to maintain a spell removes the burden of sustaining from the spellcaster and requires no roll, but the adept suffers the usual –2 dice pool penalty for sustaining the spell. If the adept falls asleep or unconscious, they can no longer sustain the spell, so the caster must either sustain it themselves (with the dice pool penalty) or drop it. Additional levels of Living Focus allow adepts to sustain additional spells (one spell per rank in Living Focus) or may be invested in defraying the penalty of sustaining a spell (every rank of Living Focus, after the first, invested into a spell may lower the penalty by 1). For example, Living Focus 3 allows an adept to self-sustain one spell for no penalty, three spells for a total penalty of –6, or two spells for a total penalty of –3). '
+---
+name: Living Focus IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Living Focus lets an adept focus their internalized mana and use it like a battery to sustain a spell cast on them (similar to a sustaining focus). Using this power to maintain a spell removes the burden of sustaining from the spellcaster and requires no roll, but the adept suffers the usual –2 dice pool penalty for sustaining the spell. If the adept falls asleep or unconscious, they can no longer sustain the spell, so the caster must either sustain it themselves (with the dice pool penalty) or drop it. Additional levels of Living Focus allow adepts to sustain additional spells (one spell per rank in Living Focus) or may be invested in defraying the penalty of sustaining a spell (every rank of Living Focus, after the first, invested into a spell may lower the penalty by 1). For example, Living Focus 3 allows an adept to self-sustain one spell for no penalty, three spells for a total penalty of –6, or two spells for a total penalty of –3). '
+---
+name: Maneuver
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action An adept with this power can almost run rings around their chosen opponent, thanks to balance and footwork, along with carefully watching opponents’ body language and tells. To use this power, the adept invests a Major Action and rolls Close Combat + Intuition, opposed by their chosen combatant’s Intuition. Net hits on the Maneuver test may then be allocated as bonus dice to either the adept’s next Close Combat test made to attack that opponent or their next Defense test made against that opponent’s attack (these bonus dice may be stacked with other modifiers, such as the Block action). This “pool” of Maneuver dice goes away if they are not used before the end of next combat round. '
+---
+name: Missile Mastery
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Everyday items become lethal weapons to an adept with Missile Mastery, due to sheer power, uncanny accuracy, or both. With a purpose- built, non-explosive throwing weapon, increase the DV and Attack Rating of the weapon by +1 (grenades don’t do extra explosive damage just because you throw them really hard, but they may be used as improvised weapons; see below). With an improvised throwing weapon— a coin, a bullet, a playing card, an empty magazine, a chopstick, a flash-pak, use your imagination!—the adept can attack for DV 1P or 1S, with an Attack Rating equal to the adept’s Athletics + Strength at Close and Near range, half that (rounded up) at Medium range, up to a maximum 100 meters. (For example, an adept with Strength 5 and Athletics 4 would create an Attack Rating line of 9/9/5*/—/—.) '
+---
+name: Missile Parry
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Through uncanny reflexes and hand-eye coordination, an adept with Missile Parry has an extra layer of defense against non-explosive thrown and projectile weapons (to be clear, bullets count as explosive due to the way they are propelled). When being attacked in such a way, the adept may use the Block Minor Action (p. 41, SR6), allowing them to add their Close Combat skill to their Defense test, despite not being in melee. If the adept’s net hits on the Block test exceed the base damage of the projectile or throwing weapon, the adept may, at their discretion, catch the weapon instead of batting it out of the air. '
+---
+name: Momentum I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are capable of a level of focused concentration that unaugmented mundanes cannot match. The Momentum power helps them move from success to success, regardless of how long they work at a task; every level of Momentum lets them ignore one level of the –1 dice pool modifier that progressively shrinks their pool when making an Extended test (SR6 p. 36). For example, Momentum 2 would allow an adept to use their full pool for the first, second, and third Intervals of an Extended test, and then roll with only a –1 penalty on the fourth, –2 on the fifth, etc. '
+---
+name: Momentum II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are capable of a level of focused concentration that unaugmented mundanes cannot match. The Momentum power helps them move from success to success, regardless of how long they work at a task; every level of Momentum lets them ignore one level of the –1 dice pool modifier that progressively shrinks their pool when making an Extended test (SR6 p. 36). For example, Momentum 2 would allow an adept to use their full pool for the first, second, and third Intervals of an Extended test, and then roll with only a –1 penalty on the fourth, –2 on the fifth, etc. '
+---
+name: Momentum III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are capable of a level of focused concentration that unaugmented mundanes cannot match. The Momentum power helps them move from success to success, regardless of how long they work at a task; every level of Momentum lets them ignore one level of the –1 dice pool modifier that progressively shrinks their pool when making an Extended test (SR6 p. 36). For example, Momentum 2 would allow an adept to use their full pool for the first, second, and third Intervals of an Extended test, and then roll with only a –1 penalty on the fourth, –2 on the fifth, etc. '
+---
+name: Momentum IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are capable of a level of focused concentration that unaugmented mundanes cannot match. The Momentum power helps them move from success to success, regardless of how long they work at a task; every level of Momentum lets them ignore one level of the –1 dice pool modifier that progressively shrinks their pool when making an Extended test (SR6 p. 36). For example, Momentum 2 would allow an adept to use their full pool for the first, second, and third Intervals of an Extended test, and then roll with only a –1 penalty on the fourth, –2 on the fifth, etc. '
+---
+name: Mystic Armor I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Mana forms a shield around you, enhancing your protection. Gain 1 point of Armor for each level of this power, cumulative with worn Armor, which also increases your Defense Rating. Mystic Armor is also active on the astral plane. '
+---
+name: Mystic Armor II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Mana forms a shield around you, enhancing your protection. Gain 1 point of Armor for each level of this power, cumulative with worn Armor, which also increases your Defense Rating. Mystic Armor is also active on the astral plane. '
+---
+name: Mystic Armor III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Mana forms a shield around you, enhancing your protection. Gain 1 point of Armor for each level of this power, cumulative with worn Armor, which also increases your Defense Rating. Mystic Armor is also active on the astral plane. '
+---
+name: Mystic Armor IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Mana forms a shield around you, enhancing your protection. Gain 1 point of Armor for each level of this power, cumulative with worn Armor, which also increases your Defense Rating. Mystic Armor is also active on the astral plane. '
+---
+name: Nerve Strike
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with Nerve Strike is not only in tune with their own flow of internal mana, but also able to disrupt that flow of life energy in others by striking nerve clusters and other focal points where such mana pools. The adept declares the use of this power prior to making a Close Combat roll, then rolls (and the target defends) as normal. Instead of declaring damage after the attack and defense tests, the adept can lower the target’s Agility or Reaction (adept’s choice) by 1 per net hit. If the targeted attribute is reduced to a 0 or less, the target is paralyzed. Lost attribute points recover at the rate of 1 point per hour of rest. No Physical or Stun damage is done by the attack, regardless of any secondary effects that would normally occur (such as striking with a stun baton or making an unarmed attack with Elemental Strike empowered). This power may be used against critters as well as metahumans but is useless against opponents without working nervous systems or biological life energy (drones, spirits, and the like). '
+---
+name: Nimble Fingers I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Nimble Fingers are amazingly dexterous and quick-fingered. The first level of Nimble Fingers lowers the cost of Edge Boosts by one on tests like Stealth (Palming) for sleight-of-hand or picking pockets, Engineering (Lockpicking) for opening locks, or Con (Performance) tests for certain fine manipulations. Each level of Nimble Fingers after the first one grants a +1 dice pool modifier for such tests and a bonus Minor Action that can only be used to offset the Major/Minor Action cost of Pick Up/Put Down Object, Reload Weapon, Use Simple Device, and other actions that rely on quick fingers and manual dexterity (Nimble Fingers 3, for instance, would reduce the Reload Weapon Major Action to an action cost of two Minor Actions, cutting the time it takes in half). This action discount does not apply for Ready Weapon actions; for that, see Quick Draw (below). '
+---
+name: Nimble Fingers II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Nimble Fingers are amazingly dexterous and quick-fingered. The first level of Nimble Fingers lowers the cost of Edge Boosts by one on tests like Stealth (Palming) for sleight-of-hand or picking pockets, Engineering (Lockpicking) for opening locks, or Con (Performance) tests for certain fine manipulations. Each level of Nimble Fingers after the first one grants a +1 dice pool modifier for such tests and a bonus Minor Action that can only be used to offset the Major/Minor Action cost of Pick Up/Put Down Object, Reload Weapon, Use Simple Device, and other actions that rely on quick fingers and manual dexterity (Nimble Fingers 3, for instance, would reduce the Reload Weapon Major Action to an action cost of two Minor Actions, cutting the time it takes in half). This action discount does not apply for Ready Weapon actions; for that, see Quick Draw (below). '
+---
+name: Nimble Fingers III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Nimble Fingers are amazingly dexterous and quick-fingered. The first level of Nimble Fingers lowers the cost of Edge Boosts by one on tests like Stealth (Palming) for sleight-of-hand or picking pockets, Engineering (Lockpicking) for opening locks, or Con (Performance) tests for certain fine manipulations. Each level of Nimble Fingers after the first one grants a +1 dice pool modifier for such tests and a bonus Minor Action that can only be used to offset the Major/Minor Action cost of Pick Up/Put Down Object, Reload Weapon, Use Simple Device, and other actions that rely on quick fingers and manual dexterity (Nimble Fingers 3, for instance, would reduce the Reload Weapon Major Action to an action cost of two Minor Actions, cutting the time it takes in half). This action discount does not apply for Ready Weapon actions; for that, see Quick Draw (below). '
+---
+name: Nimble Fingers IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Nimble Fingers are amazingly dexterous and quick-fingered. The first level of Nimble Fingers lowers the cost of Edge Boosts by one on tests like Stealth (Palming) for sleight-of-hand or picking pockets, Engineering (Lockpicking) for opening locks, or Con (Performance) tests for certain fine manipulations. Each level of Nimble Fingers after the first one grants a +1 dice pool modifier for such tests and a bonus Minor Action that can only be used to offset the Major/Minor Action cost of Pick Up/Put Down Object, Reload Weapon, Use Simple Device, and other actions that rely on quick fingers and manual dexterity (Nimble Fingers 3, for instance, would reduce the Reload Weapon Major Action to an action cost of two Minor Actions, cutting the time it takes in half). This action discount does not apply for Ready Weapon actions; for that, see Quick Draw (below). '
+---
+name: Pain Relief
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action By manipulating someone’s nerve clusters, qi points, and other natural areas where mana and life energy pool within a metahuman body, an adept with Pain Relief may temporarily relieve tension, fatigue, and discomfort. The adept rolls Agility + Magic to accurately target the appropriate points on the body in a flurry of nerve strikes, and for every hit rolled, the target may ignore one point of Stun Damage for purposes of calculating wound modifiers. This damage is not healed, but the target feels refreshed and recharged, better able to continue on despite their bruises or exhaustion. This damage relief fades after (Magic) hours. Alternately, instead of ignoring damage, the subject may have the effects of the Nerve Strike power removed. This effect is permanent. '
+---
+name: Pain Resistance I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Pain hurts, but you gain an elevated ability to ignore it. For each level of this power, the negative modifiers from damage move one box farther down the Condition Monitor—for example, at level 1, you don’t suffer the –1 penalty until 4 boxes are filled on a Condition Monitor, rather than 3. It works for both Stun and Physical Condition Monitors. '
+---
+name: Pain Resistance II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Pain hurts, but you gain an elevated ability to ignore it. For each level of this power, the negative modifiers from damage move one box farther down the Condition Monitor—for example, at level 1, you don’t suffer the –1 penalty until 4 boxes are filled on a Condition Monitor, rather than 3. It works for both Stun and Physical Condition Monitors. '
+---
+name: Pain Resistance III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Pain hurts, but you gain an elevated ability to ignore it. For each level of this power, the negative modifiers from damage move one box farther down the Condition Monitor—for example, at level 1, you don’t suffer the –1 penalty until 4 boxes are filled on a Condition Monitor, rather than 3. It works for both Stun and Physical Condition Monitors. '
+---
+name: Pain Resistance IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Pain hurts, but you gain an elevated ability to ignore it. For each level of this power, the negative modifiers from damage move one box farther down the Condition Monitor—for example, at level 1, you don’t suffer the –1 penalty until 4 boxes are filled on a Condition Monitor, rather than 3. It works for both Stun and Physical Condition Monitors. '
+---
+name: Penetrating Strike I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are supernaturally precise, powerful, or both, in melee combat. For each level of Penetrating Strike, increase your Attack Rating with Close Combat attacks by +1. '
+---
+name: Penetrating Strike II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are supernaturally precise, powerful, or both, in melee combat. For each level of Penetrating Strike, increase your Attack Rating with Close Combat attacks by +1. '
+---
+name: Penetrating Strike III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are supernaturally precise, powerful, or both, in melee combat. For each level of Penetrating Strike, increase your Attack Rating with Close Combat attacks by +1. '
+---
+name: Penetrating Strike IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are supernaturally precise, powerful, or both, in melee combat. For each level of Penetrating Strike, increase your Attack Rating with Close Combat attacks by +1. '
+---
+name: Power Throw I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Power Throw are amazingly dangerous with thrown weapons. For every level of Power Throw, add +1 DV or +2 Attack Rating to direct-damage (non-explosive) thrown weapons (choose which bonus when the level of Power Throw is purchased). These bonuses cannot add an Attack Rating where a weapon has no Attack Rating, and cannot more than double the base DV or AR of an attack so modified. This means a throwing knife (2P, 10/9/3/—/—) is capped, regardless of the number of Power Throw points invested, at an attack profile of (4P, 20/18/6/—/—). Only one level of Power Throw can be used in conjunction with the Missile Mastery power (p. 82), meaning bonuses are capped at +1 DV and +2 Attack Rating. '
+---
+name: Power Throw II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Power Throw are amazingly dangerous with thrown weapons. For every level of Power Throw, add +1 DV or +2 Attack Rating to direct-damage (non-explosive) thrown weapons (choose which bonus when the level of Power Throw is purchased). These bonuses cannot add an Attack Rating where a weapon has no Attack Rating, and cannot more than double the base DV or AR of an attack so modified. This means a throwing knife (2P, 10/9/3/—/—) is capped, regardless of the number of Power Throw points invested, at an attack profile of (4P, 20/18/6/—/—). Only one level of Power Throw can be used in conjunction with the Missile Mastery power (p. 82), meaning bonuses are capped at +1 DV and +2 Attack Rating. '
+---
+name: Power Throw III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Power Throw are amazingly dangerous with thrown weapons. For every level of Power Throw, add +1 DV or +2 Attack Rating to direct-damage (non-explosive) thrown weapons (choose which bonus when the level of Power Throw is purchased). These bonuses cannot add an Attack Rating where a weapon has no Attack Rating, and cannot more than double the base DV or AR of an attack so modified. This means a throwing knife (2P, 10/9/3/—/—) is capped, regardless of the number of Power Throw points invested, at an attack profile of (4P, 20/18/6/—/—). Only one level of Power Throw can be used in conjunction with the Missile Mastery power (p. 82), meaning bonuses are capped at +1 DV and +2 Attack Rating. '
+---
+name: Power Throw IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Power Throw are amazingly dangerous with thrown weapons. For every level of Power Throw, add +1 DV or +2 Attack Rating to direct-damage (non-explosive) thrown weapons (choose which bonus when the level of Power Throw is purchased). These bonuses cannot add an Attack Rating where a weapon has no Attack Rating, and cannot more than double the base DV or AR of an attack so modified. This means a throwing knife (2P, 10/9/3/—/—) is capped, regardless of the number of Power Throw points invested, at an attack profile of (4P, 20/18/6/—/—). Only one level of Power Throw can be used in conjunction with the Missile Mastery power (p. 82), meaning bonuses are capped at +1 DV and +2 Attack Rating. '
+---
+name: Quick Draw
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The Quick Draw power lets an adept use the Quick Draw Minor Action with weapons larger than the usual pistol or small throwing weapon, and use it on those already-allowed small weapons without the need for a specialized holster, augmentation, or quality. '
+---
+name: Quick Strike
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive There is fast, and there is impossibly fast; an adept with Quick Strike is the latter. When initiative is rolled, an adept with Quick Strike rolls as normal, but may then choose to simply act first that round instead of taking their actions in Initiative order. Their Initiative score is not modified, and they receive no additional Minor Actions because of this power. If two adepts with Quick Strike both use this power at the same time, compare their Initiative Rolls for a tiebreaker, with the higher of them going first, the loser of the comparison going second, and then Initiative progressing as normal. '
+---
+name: Rapid Healing I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The magic that flows through you helps knit your bones and regrow your flesh, making you heal quickly. Add one hit per level on Healing tests performed to heal you. '
+---
+name: Rapid Healing II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The magic that flows through you helps knit your bones and regrow your flesh, making you heal quickly. Add one hit per level on Healing tests performed to heal you. '
+---
+name: Rapid Healing III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The magic that flows through you helps knit your bones and regrow your flesh, making you heal quickly. Add one hit per level on Healing tests performed to heal you. '
+---
+name: Rapid Healing IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive The magic that flows through you helps knit your bones and regrow your flesh, making you heal quickly. Add one hit per level on Healing tests performed to heal you. '
+---
+name: Side Step I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Side Step are experts at narrowly avoiding incoming attacks with the most precise and efficient movements possible. Every rank in Side Step provides +1 die on tests when they put extra effort into Defense, such as with the Block or Dodge Minor Actions (the bonus is not given on routine Defense tests, only on those augmented through an action expenditure such as those listed). These bonuses stack with the additional dice offered by Block and Dodge, and with Combat Sense or other such modifiers. '
+---
+name: Side Step II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Side Step are experts at narrowly avoiding incoming attacks with the most precise and efficient movements possible. Every rank in Side Step provides +1 die on tests when they put extra effort into Defense, such as with the Block or Dodge Minor Actions (the bonus is not given on routine Defense tests, only on those augmented through an action expenditure such as those listed). These bonuses stack with the additional dice offered by Block and Dodge, and with Combat Sense or other such modifiers. '
+---
+name: Side Step III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Side Step are experts at narrowly avoiding incoming attacks with the most precise and efficient movements possible. Every rank in Side Step provides +1 die on tests when they put extra effort into Defense, such as with the Block or Dodge Minor Actions (the bonus is not given on routine Defense tests, only on those augmented through an action expenditure such as those listed). These bonuses stack with the additional dice offered by Block and Dodge, and with Combat Sense or other such modifiers. '
+---
+name: Side Step IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Adepts with Side Step are experts at narrowly avoiding incoming attacks with the most precise and efficient movements possible. Every rank in Side Step provides +1 die on tests when they put extra effort into Defense, such as with the Block or Dodge Minor Actions (the bonus is not given on routine Defense tests, only on those augmented through an action expenditure such as those listed). These bonuses stack with the additional dice offered by Block and Dodge, and with Combat Sense or other such modifiers. '
+---
+name: Spell Resistance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Spells have a tendency to bounce off you rather than affect you. Gain a point of Edge when targeted by spells. '
+---
+name: Spell Shroud I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with the Spell Shroud power is fuzzy and indistinct against those who seek them out magically. For every level of this power, add +1 die to all tests to oppose Detection spells. '
+---
+name: Spell Shroud II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with the Spell Shroud power is fuzzy and indistinct against those who seek them out magically. For every level of this power, add +1 die to all tests to oppose Detection spells. '
+---
+name: Spell Shroud III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with the Spell Shroud power is fuzzy and indistinct against those who seek them out magically. For every level of this power, add +1 die to all tests to oppose Detection spells. '
+---
+name: Spell Shroud IV
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive An adept with the Spell Shroud power is fuzzy and indistinct against those who seek them out magically. For every level of this power, add +1 die to all tests to oppose Detection spells. '
+---
+name: Sustenance
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive Some adepts are able to overcome the needs of the body, whether it be through discipline, harnessing the manafield of the planet, surviving off sunlight, eating literal garbage, or meditating their hungers and exhaustion away. The Sustenance power lets an adept receive as much sustenance and rest from one good meal a day and three hours of sleep as most metahumans get from three square meals and a solid eight hours. Reduce the adept’s Lifestyle cost by 250 nuyen/month (needing to eat less makes a world of difference to a Squatter, but not to someone who’s making a full meal out of caviar and quail eggs). '
+---
+name: Three-Dimensional Memory
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Major Action Three-Dimensional Memory lets an adept memorize an area in detail through firsthand viewing and with a bit of time (a Major Action at minimum). Later, the adept may make a memory test (Logic + Intuition) with their Magic attribute replacing one or another of the mental attributes if they wish. The difficulty of this test varies based on how far back the adept is trying to remember (difficulty 1 for the first day, 2 for a week, 3 for a month, 4 for a year or more). The area memorized is limited by what the adept was actually able to see, so spending more than one Major Action is a good idea; if they didn’t open a closet or inspect the inside of a desk drawer, for instance, they don’t know what was hidden from them. '
+---
+name: Traceless Walk
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive You don’t disturb the dust, dirt, snow, water, or anything else under your feet as you move, so there is no evidence of your passing. You don’t trigger tripwires, pressure pads, or other traps based on leg movement. Hearing tests to listen for your passage and Outdoors tests to perceive your tracks cannot gain or spend Edge. '
+---
+name: Vocal Control
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Passive You can control the pitch and modulation of your voice to make it sound the way you want— loud, quiet, resonant, or like some person you want to imitate. Gain Edge when attempting a Con or Influence test that somehow involves your voice. Only one point of Edge may be earned per encounter with this power. '
+---
+name: Wall Running
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Activation: Minor Action Running horizontally is so pedestrian (get it?). Running up a wall is how you show you’re special. When using this power, you can use a Sprint action (see p. 44) to run up a vertical surface. You cannot use this power for two actions in a row; you have to spend at least one turn moving across a horizontal surface before using this power again. So if you run up a wall and don’t find a good foot or handhold, you’ll be falling right back down. '
+---
