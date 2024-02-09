@@ -1,0 +1,588 @@
+name: Addiction I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some habits just can’t be kicked. It might be as simple as a need for a drag off that nic-stick to cool your nerves, or as life-twisting as a need for something better-than-life, but whatever it is, it’s got a firm grip on you.  Game Effect: You cannot earn Edge or spend Edge in any form while suffering withdrawal. Withdrawal times (the time that passes before you need your next hit) and requirements are based on the level of addiction and can be found on the Addiction Withdrawal table. When in withdrawal, take a –2 dicepool penalty on all tests; increase that penalty by 1 each time you pass another Withdrawal time period. '
+---
+name: Addiction II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some habits just can’t be kicked. It might be as simple as a need for a drag off that nic-stick to cool your nerves, or as life-twisting as a need for something better-than-life, but whatever it is, it’s got a firm grip on you.  Game Effect: You cannot earn Edge or spend Edge in any form while suffering withdrawal. Withdrawal times (the time that passes before you need your next hit) and requirements are based on the level of addiction and can be found on the Addiction Withdrawal table. When in withdrawal, take a –2 dicepool penalty on all tests; increase that penalty by 1 each time you pass another Withdrawal time period. '
+---
+name: Addiction III
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some habits just can’t be kicked. It might be as simple as a need for a drag off that nic-stick to cool your nerves, or as life-twisting as a need for something better-than-life, but whatever it is, it’s got a firm grip on you.  Game Effect: You cannot earn Edge or spend Edge in any form while suffering withdrawal. Withdrawal times (the time that passes before you need your next hit) and requirements are based on the level of addiction and can be found on the Addiction Withdrawal table. When in withdrawal, take a –2 dicepool penalty on all tests; increase that penalty by 1 each time you pass another Withdrawal time period. '
+---
+name: Addiction IV
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some habits just can’t be kicked. It might be as simple as a need for a drag off that nic-stick to cool your nerves, or as life-twisting as a need for something better-than-life, but whatever it is, it’s got a firm grip on you.  Game Effect: You cannot earn Edge or spend Edge in any form while suffering withdrawal. Withdrawal times (the time that passes before you need your next hit) and requirements are based on the level of addiction and can be found on the Addiction Withdrawal table. When in withdrawal, take a –2 dicepool penalty on all tests; increase that penalty by 1 each time you pass another Withdrawal time period. '
+---
+name: Addiction V
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some habits just can’t be kicked. It might be as simple as a need for a drag off that nic-stick to cool your nerves, or as life-twisting as a need for something better-than-life, but whatever it is, it’s got a firm grip on you.  Game Effect: You cannot earn Edge or spend Edge in any form while suffering withdrawal. Withdrawal times (the time that passes before you need your next hit) and requirements are based on the level of addiction and can be found on the Addiction Withdrawal table. When in withdrawal, take a –2 dicepool penalty on all tests; increase that penalty by 1 each time you pass another Withdrawal time period. '
+---
+name: Addiction VI
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some habits just can’t be kicked. It might be as simple as a need for a drag off that nic-stick to cool your nerves, or as life-twisting as a need for something better-than-life, but whatever it is, it’s got a firm grip on you.  Game Effect: You cannot earn Edge or spend Edge in any form while suffering withdrawal. Withdrawal times (the time that passes before you need your next hit) and requirements are based on the level of addiction and can be found on the Addiction Withdrawal table. When in withdrawal, take a –2 dicepool penalty on all tests; increase that penalty by 1 each time you pass another Withdrawal time period. '
+---
+name: Allergy (Common, Extreme)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Extreme: You experience a –6 dice pool modifier to all actions and suffer 1 box of unresisted Physical Damage for every 30 seconds you are exposed to the allergen. '
+---
+name: Allergy (Seasonal, Extreme)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Extreme: You experience a –6 dice pool modifier to all actions and suffer 1 box of unresisted Physical Damage for every 30 seconds you are exposed to the allergen. '
+---
+name: Allergy (Uncommon, Extreme)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Extreme: You experience a –6 dice pool modifier to all actions and suffer 1 box of unresisted Physical Damage for every 30 seconds you are exposed to the allergen. '
+---
+name: Allergy (Rare, Extreme)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Extreme: You experience a –6 dice pool modifier to all actions and suffer 1 box of unresisted Physical Damage for every 30 seconds you are exposed to the allergen. '
+---
+name: Allergy (Common, Severe)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Severe: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. You also suffer 1 box of unresisted Physical Damage for every minute you are exposed to the allergen. '
+---
+name: Allergy (Seasonal, Severe)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Severe: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. You also suffer 1 box of unresisted Physical Damage for every minute you are exposed to the allergen. '
+---
+name: Allergy (Uncommon, Severe)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Severe: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. You also suffer 1 box of unresisted Physical Damage for every minute you are exposed to the allergen. '
+---
+name: Allergy (Rare, Severe)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Severe: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. You also suffer 1 box of unresisted Physical Damage for every minute you are exposed to the allergen. '
+---
+name: Allergy (Common, Moderate)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Moderate: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Seasonal, Moderate)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Moderate: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Uncommon, Moderate)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Moderate: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Rare, Moderate)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Moderate: You experience a –4 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Common, Mild)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Mild: You experience a –2 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Seasonal, Mild)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Mild: You experience a –2 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Uncommon, Mild)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Mild: You experience a –2 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: Allergy (Rare, Mild)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe it’s a runny nose and poorly timed sneezes from pollen, or a full-blown anaphylactic reaction from some of those rare natural peanuts. Whatever it is, you suffer some level of discomfort from a substance found in the Sixth World.  Game Effect: Select an allergen and severity to determine Karma value. You cannot spend or earn Edge while exposed to your allergen. You also suffer secondary effects, which are listed below.  Mild: You experience a –2 dice pool modifier to any test involving a Physical attribute while the allergen is affecting you. '
+---
+name: AR Vertigo
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Whether it’s just too much information, a focal issue in your visual field, or just an inability to focus when there’s so much to look at, you get dizzy and nauseated when utilizing AR.  Game Effect: You cannot gain or spend Edge while utilizing AR of any sort. You also gain the Nauseated status (p. 52) while using AR and for one hour after you exit it. '
+---
+name: Astral Beacon
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Whenever people talk about someone having a “bright soul,” they make it sound like a good thing. You know it’s not. Your bright aura makes you stick out like a sore thumb on the astral. You have a hard time hiding or masking your aura, you can’t hide your feelings worth a damn, and attempts to locate you magically can be managed by first-year dropouts from Hagerstown Community College’s Arcane Studies program.  Game Effect: You are considered Untrained for all Stealth tests in the astral plane. You can never take the masking metamagic. Assensing tests made against you get a free Edge, and all thresholds are reduced by 1. Astral Tracking tests made against you gain 2 Edge, and all thresholds are reduced by half. '
+---
+name: Bad Luck
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You were born under a bad sign, broke a mirror, spilled some salt, got the evil eye laid on you, or just can’t catch a break. No matter the reason, things just go wrong around you. Often.  Game Effect: Glitches occur more frequently. Count dice showing both 1 and 2 for determining a glitch. This does not affect critical glitches, only regular glitches. '
+---
+name: Bad Rep
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Word on the street does not speak favorably of you. Maybe you lost a team or got kicked from a team for breaking during interrogation. Whatever it is, your reputation precedes you, and never in the way you want it to.  Game Effect: You cannot spend Edge on Social tests. If you engage in a Teamwork test to assist a Social test, no one can spend Edge, and the opposing individual gains a point of Edge. '
+---
+name: Combat Paralysis
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'No matter how many times the street sam takes you to the range, you just can’t help but jump and freeze that first time they start shooting. Sure, you recover, but you always feel a half step behind in the fight.  Game Effect: Your Initiative Score is divided in half at the start of combat. You cannot take a Move or Sprint action in the first round, and you act last in that round. Your movement is restored to normal after the first round, but your Initiative Score is unchanged. '
+---
+name: Dependents I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Children, lovers, or something other, you have people relying on you for financial support. They live in your doss, eat your food, use your trid account, and generally cost you enough nuyen to keep you looking for that next score.  Game Effect: Choose a level for the dependents. Level 1 dependents are the equivalent of a family member who does not live with you but still needs support. Five percent of any score goes to this person. For purposes of this quality, a “score” is any income that comes their way. Job payments, fencing stolen goods or paydata, or even gambling winnings. The people important to you prosper when you do! '
+---
+name: Dependents II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Children, lovers, or something other, you have people relying on you for financial support. They live in your doss, eat your food, use your trid account, and generally cost you enough nuyen to keep you looking for that next score.  Game Effect: Choose a level for the dependents. Level 2 dependents are more stable costs, like the support of a high-maintenance significant other, a child, or a small family. This level costs the runner 10 percent of every score. For purposes of this quality, a “score” is any income that comes their way. Job payments, fencing stolen goods or paydata, or even gambling winnings. The people important to you prosper when you do! '
+---
+name: Dependents III
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Children, lovers, or something other, you have people relying on you for financial support. They live in your doss, eat your food, use your trid account, and generally cost you enough nuyen to keep you looking for that next score.  Game Effect: Choose a level for the dependents. Level 3 dependents are rare in the shadows, because most runners don’t have a regular family and a second life outside the shadows, which is what this level entails. This level costs the runner 25 percent of all their scores. For purposes of this quality, a “score” is any income that comes their way. Job payments, fencing stolen goods or paydata, or even gambling winnings. The people important to you prosper when you do! '
+---
+name: Distinctive Style
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You only fit in when you’re in places where no one fits in. The way you dress and look are unique to you. This isn’t just a pink mohawk or a signature black trenchcoat. This is a two-meter-tall SURGEd lizard with a rainbow head frill, a head full of piercings including a bullring in his snout, dressed in full punk regalia. This is an albino ork who wears white sunglasses and a white trench coat over a head-to-toe white suit. A distinctive style is more than just what you choose to put on each day—it’s a way of life.  Game Effect: You cannot gain or spend Edge when you’re not rocking your distinctive look. Others get a +2 dice pool bonus when conducting a Memory test (p. 67) to recall your appearance or remember if they have seen you before. '
+---
+name: Elf Poser
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Your blood may be human or ork, but your ears, cheekbones, and hoity-toity attitude are all elf. A surgery here and there, maybe a Sperethiel class on the Matrix, and a lot of time watching footage of the Tír princes has you all set to join those you feel you truly belong with, no matter how round your ears or broad your tusks were at birth.  Game Effect: Elves, orks, and trolls gain a point of Edge in Influence (Etiquette) tests made against you. '
+---
+name: Glass Jaw
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Doesn’t take much to lay you on your hoop. You just never could take a punch.  Game Effect: You have 1 less Stun Box for each level of this Quality, down to a minimum of 2. '
+---
+name: Gremlins
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Commlinks freeze, guns jam, car tires blow, electrical systems short. Any and every thing that could go wrong with some fidgety bit of tech in your hands has gone wrong at one point in your life.  Game Effect: Whenever you use any device, roll 2D6. If you get a 1 on either die, it means the device fails to function correctly and can be treated as a glitch. The device can be quickly reset with a Minor Action and used again. Rolling snake eyes (double 1s) means the device fails catastrophically, and the roll can be treated like a critical glitch. The device is done for good and you might be in for a bit of hurt from shock or biofeedback. '
+---
+name: Honorbound
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You have a code. You live by the code. You die by the code. There are many codes, each with a set of tenets that must be obeyed to maintain the balance in your soul, heart, qi, brain chemistry, etc.  Game Effect: You cannot spend or earn Edge for twenty-four hours after you break a tenet of your code. If the same tenet is broken multiple times or broken again during the twenty-four hour period, each infraction adds another forty-eight hours onto the initial twenty-four. If a different tenet is broken, it’s twenty-four hours for that one added to any current infractions, and the same rules apply for additional violations. See the Honorbound sidebar for some sample codes and tenets. '
+---
+name: Impaired I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some folks are just not meant to be naturally talented. A bum knee, poor genetics, or an illness as a kid has you lacking the maximum achievement level of your peers.  Game Effect: The character’s maximum for the chosen attribute decreases by 1. '
+---
+name: Impaired II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some folks are just not meant to be naturally talented. A bum knee, poor genetics, or an illness as a kid has you lacking the maximum achievement level of your peers.  Game Effect: The character’s maximum for the chosen attribute decreases by 2. '
+---
+name: Impaired III
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some folks are just not meant to be naturally talented. A bum knee, poor genetics, or an illness as a kid has you lacking the maximum achievement level of your peers.  Game Effect: The character’s maximum for the chosen attribute decreases by 3. '
+---
+name: Impaired IV
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some folks are just not meant to be naturally talented. A bum knee, poor genetics, or an illness as a kid has you lacking the maximum achievement level of your peers.  Game Effect: The character’s maximum for the chosen attribute decreases by 4. '
+---
+name: Incompetent (Skill)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'No matter how much you practice and try to figure it out, there are some skills you just can’t manage to get right.  Game Effect: When this quality is chosen, select a skill. You are unable to gain ranks in the selected skill. You cannot be Incompetent in skills you have no chance to perform— so you cannot choose this quality for Magic skills if you do not have a Magic rating, and you cannot choose it for Tasking if you do not have a Resonance rating. This skill may only be selected once. '
+---
+name: Insomnia
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Sleep? What’s that? It could be nightmares, brain damage, funky biochemistry, or a psychological disorder, but no matter the reason, you just can’t get a good night’s rest.  Game Effect: Without proper rest, you can’t regain Edge or spend it as you might like. Each day the runner must make a Body + Willpower (3) test to get a successful night of rest. If they fail, they cannot earn more than two Edge from any source that day. Also, they cannot spend more than 2 Edge on any given test. The purchase and use of a sleep regulator reduces the threshold on the test to 1. The runner can also purchase medication (50 nuyen/dose) that reduces the threshold to 2. '
+---
+name: Loss of Confidence
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Imposter syndrome, a single traumatic failure, or just too many rejections or small failures in life have left you doubting yourself at every turn.  Game Effect: During any encounter, the runner must make a Willpower (2) test as a Minor Action. Failure means they cannot earn or spend Edge for the entire encounter. '
+---
+name: Low Pain Tolerance
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You’ve got sensitive nerves or a generally sensitive nature. For whatever reason, you are more affected by injuries and discomfort.  Game Effect: All wound modifiers are doubled. '
+---
+name: Ork Poser
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Your blood may be human or elf, but your ears, jaw, tusks, and rough attitude are all ork. A surgery here and there, maybe an Or’zet class on the Matrix, and a lot of time watching documentaries on the Seattle Underground has you all set to join those you feel you truly belong with, no matter how round your ears or thin your frame was at birth.  Game Effect: Elves, orks, and trolls gain a point of Edge in Influence (Etiquette) tests made against you. '
+---
+name: Prejudiced (Group)
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You have some deep-seated views and beliefs about a certain group, and no matter what anyone says, you know they’re no good. Your opinion of them is so negative and distracting you just can’t keep focused on other things while they’re around.  Game Effect: Select a specific group or type of people. You are unable to gain or use Edge while the object of your prejudice is present (unless you’re directly opposing them). • Note: Gamemasters and players should use this quality carefully. Everyone in the group should be on board with it being used, and it should never be used as a veiled excuse to state real-world prejudices or verbally attack, either directly or indirectly, other players. '
+---
+name: Scorched
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'A Matrix, simsense, or BTL experience has fried your neurons to the point of perpetual frazzle, causing trouble when you’re logged on, even when it’s just AR.  Game Effect: You cannot spend Edge while accessing the Matrix. This includes through use of commlinks, smartlinks, and any other source of data coming in from the ether. '
+---
+name: Sensitive System
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'It could be latent unexpressed arcane talent or just a hyperactive immune system, but the result is the same. Your body does not like to have anything grafted or merged with it that isn’t part of its natural code.  Game Effect: Essence costs are doubled for all cyberware, bioware, and nanoware. Geneware suffers no ill effects. You cannot have this quality if you have a Magic or Resonance rating. (Note that nanoware and geneware will be covered in future books.) '
+---
+name: Simsense Vertigo
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Somewhere inside your brain, you’ve got some wires crossed. Whenever you log onto the Matrix in VR, your disorientation is nauseating.  Game Effect: You cannot gain or spend Edge while accessing the Matrix via VR. You also receive the Nauseated status (p. 52) for one hour after you log off the Matrix. '
+---
+name: SINner
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Unlike a lot of runners, who have either no SIN or a criminal SIN, you have a legitimate SIN that links back to biometric data. You have enough attachment to it, whether for your own or family purposes, that you can’t just burn it.  Game Effect: You pay taxes to the issuer of your SIN, either a megacorporation or a nation. This cost comes as a 10 percent increase in the cost of the lifestyle associated with this SIN. Due to data within the Global SIN Registry, you are easier to track or identify, giving opponents a point of Edge every time they attempt a Trace Icon action against you. '
+---
+name: Social Stress
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'There is a social situation that simply does not work for you, like being in large groups, talking to new people, being the center of attention, being out of the spotlight, or a myriad of other situations that some folks find totally normal but you find ridiculously stressful.  Game Effect: Select a specific social stressor. When encountering your social stressor, you must make a Charisma (2) test as a Minor Action. Failure means you cannot earn or spend Edge until you succeed. You can choose not to take the test but if so, any tests made against you gain a bonus Edge. '
+---
+name: Spirit/Sprite Bane
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You may have angered them with how you treat their fellows, killed a powerful and respected member of their kind, or been born under a bad sign and marked as an enemy to entities like them. The reason doesn’t matter—what matters is the fact that a certain type of spirit/sprite has an inherent dislike for you.  Game Effect: When selecting this quality, choose a type of spirit or sprite. Spirits/ sprites from that category gain a bonus point of Edge when you attempt a Conjuring or Tasking test against them. This quality can be taken multiple times, selecting a new class of spirits/sprites each time. In combat, spirits/sprites of the chosen type will attack you first and relentlessly, often to the point of savaging a dead body or bricking a deck if they have nothing else to do. '
+---
+name: Uncouth
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'At some point in life, the filter between your thoughts and your mouth disappeared. You consider yourself brutally honest, but others tend to see you as rude and abrasive.  Game Effect: You cannot spend Edge on any test using Charisma. '
+---
+name: Uneducated
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Maybe book learning just wasn’t your thing, or maybe you were never exposed to vast quantities of information solely for the sake of expanding your knowledge base. Either way, you have a definite lack in your basic education.  Game Effect: You cannot spend Edge on any test using Logic. '
+---
+name: Unsteady Hands
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Nervous tics, excessive caffeine intake, or a general clumsiness might be the cause, but the results are all the same: You can’t draw a straight line to save your life. You also have a real hard time typing, tying your shoes, and keeping a gunsight on the target.  Game Effect: You cannot spend Edge on any test using Agility that directly involves your hands (that is, a Stealth test to pull off sleightof- hand would directly involve the hands, as would an Attack test with any weapon held in the hands, but an Athletics test involving running would not, even though the hands are in motion while running). '
+---
+name: Weak Immune System
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Perpetual sniffles are annoying to both you and your team, but a poorly timed sneeze or a sudden need for a bathroom can mean the end of a good run. You’re sick almost all the time. It may just be a minor cold, or it could be a nasty case of influenza or worse, but you’ve never met an infection you didn’t want to take home and hang out with for a bit.  Game Effect: You cannot spend Edge to resist the effects of an infection. The threshold for fighting off any infection you are exposed to is increased by 1. While suffering the ill effects of an illness, you suffer a –1 dice pool modifier to all tests. '
+---
+name: Close-Minded Summoner I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'With each level of this quality, you give up the ability to summon, bind, and banish one of the ten standard types of spirit (air, beasts, earth, fire, guardian, guidance, kin, plants, task, water). This quality can be taken up to five times, selecting a different type of spirit each time. '
+---
+name: Close-Minded Summoner II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'With each level of this quality, you give up the ability to summon, bind, and banish one of the ten standard types of spirit (air, beasts, earth, fire, guardian, guidance, kin, plants, task, water). This quality can be taken up to five times, selecting a different type of spirit each time. '
+---
+name: Close-Minded Summoner III
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'With each level of this quality, you give up the ability to summon, bind, and banish one of the ten standard types of spirit (air, beasts, earth, fire, guardian, guidance, kin, plants, task, water). This quality can be taken up to five times, selecting a different type of spirit each time. '
+---
+name: Close-Minded Summoner IV
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'With each level of this quality, you give up the ability to summon, bind, and banish one of the ten standard types of spirit (air, beasts, earth, fire, guardian, guidance, kin, plants, task, water). This quality can be taken up to five times, selecting a different type of spirit each time. '
+---
+name: Close-Minded Summoner V
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'With each level of this quality, you give up the ability to summon, bind, and banish one of the ten standard types of spirit (air, beasts, earth, fire, guardian, guidance, kin, plants, task, water). This quality can be taken up to five times, selecting a different type of spirit each time. '
+---
+name: Pusillanimous Summoner
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Be it because of an unpleasant experience in the past, or the peculiarities of their arcane upbringing— whenever summoning a spirit, the magician is stricken with awe. Sensing the discomfort, the spirit gains the upper hand and tends to execute the conjurer’s demands precisely by the word— no more, but, if it feels like it, considerably less. (Along the way, the spirit will display either a very twisty or snotty behavior, depending on the magician’s tradition.) A pusillanimous summoner has to be very precise about their wording, unless they don’t mind being given the runaround by the spirit. This quality can only be taken by characters who qualify for the Conjuring skill. Game Effect: Spirits summoned by the magician try their best to misinterpret the summoner’s orders (at the gamemaster’s discretion). If the magician wants to be sure there are no loopholes in their instructions, they have to sit down before the conjuring and perform a Conjuring + Intuition (8, 5 mins) Extended test to think those instructions through. '
+---
+name: Possession Tradition
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'The conjurer has never learned to summon spirits in a way that allows them to manifest in the physical realm, or, for some reason, consciously abstains from doing so. This quality can only be taken by characters who qualify for the Conjuring skill. Bonus: 10 Karma Game Effect: Spirits summoned in this tradition have their Materialization power replaced with the Possession power (p. 69). '
+---
+name: Representation I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some arcane teachers offer their students auxiliary techniques, called representations, to support their learning. While many students, becoming more and more confident, overcome those techniques little by little, others decide to maintain them, finding them comforting and helpful. This quality is not available for adepts. Game Effect: The magician defines a clearly visible or audible act—gestures, spoken words, chants, and the like—that must be performed whenever they use arcane powers; alternatively, there’s a special garb or outfit (or even the total lack of any textiles) that must be worn. The act or garb can’t be casual or misinterpretable (e.g., as colloquial clothing or a fashion statement) but should raise suspicions, even with mundane people, that something mojo-related is going on. In the quality’s simple form (I), the magician can abstain from using their representation, but they have to accept a –4 dice pool penalty on all Astral, Conjuring, Enchanting, and Sorcery rolls when not wearing the representation. In its more pronounced form (II), if the magician is unable to use their representation (e.g., because they are gagged, hands are tied, or the garb is removed), they are effectively hindered from performing any magic and cannot use the Astral, Conjuring, Enchanting, and Sorcery skills. Another drawback of this quality is that it points out to the magician’s enemies that they are the “dangerous one,” and if the enemies follow the old credo “kill the mage first,” this puts the magician in mortal danger. Along with all those downsides comes an upside; once per day, when the magician uses their representation while using arcane powers, they gain one point of situational Edge that can only be spent for that test. '
+---
+name: Representation II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some arcane teachers offer their students auxiliary techniques, called representations, to support their learning. While many students, becoming more and more confident, overcome those techniques little by little, others decide to maintain them, finding them comforting and helpful. This quality is not available for adepts. Game Effect: The magician defines a clearly visible or audible act—gestures, spoken words, chants, and the like—that must be performed whenever they use arcane powers; alternatively, there’s a special garb or outfit (or even the total lack of any textiles) that must be worn. The act or garb can’t be casual or misinterpretable (e.g., as colloquial clothing or a fashion statement) but should raise suspicions, even with mundane people, that something mojo-related is going on. In the quality’s simple form (I), the magician can abstain from using their representation, but they have to accept a –4 dice pool penalty on all Astral, Conjuring, Enchanting, and Sorcery rolls when not wearing the representation. In its more pronounced form (II), if the magician is unable to use their representation (e.g., because they are gagged, hands are tied, or the garb is removed), they are effectively hindered from performing any magic and cannot use the Astral, Conjuring, Enchanting, and Sorcery skills. Another drawback of this quality is that it points out to the magician’s enemies that they are the “dangerous one,” and if the enemies follow the old credo “kill the mage first,” this puts the magician in mortal danger. Along with all those downsides comes an upside; once per day, when the magician uses their representation while using arcane powers, they gain one point of situational Edge that can only be spent for that test. '
+---
+name: Achilles’ Heel
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Whether or not you know it, there’s a certain kind of damage that you are especially vulnerable to in the Matrix. Game Effect: Choose one: Data Spike actions, Resonance Spike complex forms, Resonance entities, or IC. Whenever you suffer Matrix damage from the specified source, you may not reduce the damage with a soak roll. If you are a technomancer, your registered (and ally) sprites share your vulnerability. You may only choose this quality once. '
+---
+name: Binary Mentality
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Some people are good at some things and not others, and that’s just the way it is—or so you believe. Your mindset limits your capabilities. Game Effect: Choose either Electronics or Cracking. You believe that no matter how much you try, you’ll never quite get the hang of that skill. When using the specified skill for Matrix Actions or complex forms, you may not use Edge Boosts and Edge Actions that cost more than 2 points of Edge. '
+---
+name: Buddy System
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You don’t feel safe enough to concentrate clearly without someone to watch your back. Game Effect: Whenever you are alone, you may only gain a maximum of one Edge per combat round. If you are in astral space, only astrally active allies are considered company for the purpose of this quality, but a summoned spirit is all you need to prevent the penalty. If you are in VR mode, only allies in the Matrix with you make you feel less alone, but having an agent program or sprite nearby, or even a SimShare hitchhiker, is enough to prevent the penalty. '
+---
+name: Bull in a Ceramics Store
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You are the hacker equivalent of a combat monster, reveling in Matrix destruction. Game Effect: You may not gain or spend Edge on Matrix actions and complex forms that do not have the potential of causing Matrix damage. Brute Force hacking is the one exception to this. '
+---
+name: Compulsive Archivist
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You’re the data equivalent of a pack rat. Loath to delete anything, you keep incriminating files on your devices far longer than is wise, and instead of deleting them you back them up on offline data chips and stash them away in hidden caches. You almost never refer back to these files, but the very thought of deleting or destroying them seems incredibly wrong to you. Inevitably these files get found by someone, whether a random hacker digging through your ’link for paydata or a curious individual who finds one of your caches—it’s a matter of when, not if. Game Effect: Whenever the gamemaster makes a Heat roll at the end of a run, your personal Heat modifier is increased by +1 for every full 50 total points of Karma that you have earned (rounded down). Unspent Karma from character creation does not count toward this total. This Heat modifier only applies to you, so it is possible that you might gain personal heat while your fellow runners do not. '
+---
+name: Curiosity Killed the Cat I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'When a file is protected, you become fixated on gaining access to it. Game Effect: If you discover a file that is encrypted or protected by a data bomb, you may not gain or spend Edge on any tests except those made to crack the encryption, defuse the data bomb, and access the file. If you leave the file alone, after each hour passes you may make a Composure test with a threshold of 2 + the level of this quality. If you succeed, you may let it go, in which case you may gain and spend Edge normally. After each failed test, you gain a bonus die on future Composure tests to overcome your curiosity, with no limit to how many bonus dice can be gained in this way other than time and lots of bad dice luck. But why not just see what’s behind that file protection? '
+---
+name: Curiosity Killed the Cat II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'When a file is protected, you become fixated on gaining access to it. Game Effect: If you discover a file that is encrypted or protected by a data bomb, you may not gain or spend Edge on any tests except those made to crack the encryption, defuse the data bomb, and access the file. If you leave the file alone, after each hour passes you may make a Composure test with a threshold of 2 + the level of this quality. If you succeed, you may let it go, in which case you may gain and spend Edge normally. After each failed test, you gain a bonus die on future Composure tests to overcome your curiosity, with no limit to how many bonus dice can be gained in this way other than time and lots of bad dice luck. But why not just see what’s behind that file protection? '
+---
+name: Curiosity Killed the Cat III
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'When a file is protected, you become fixated on gaining access to it. Game Effect: If you discover a file that is encrypted or protected by a data bomb, you may not gain or spend Edge on any tests except those made to crack the encryption, defuse the data bomb, and access the file. If you leave the file alone, after each hour passes you may make a Composure test with a threshold of 2 + the level of this quality. If you succeed, you may let it go, in which case you may gain and spend Edge normally. After each failed test, you gain a bonus die on future Composure tests to overcome your curiosity, with no limit to how many bonus dice can be gained in this way other than time and lots of bad dice luck. But why not just see what’s behind that file protection? '
+---
+name: Data Liberator
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You have a strong, driving personal value that data should be made public, or at least the data that powerful people want to keep secret. Game Effect: You may not gain or spend Edge on any test related to selling valuable data, and you may not participate in a Teamwork test for the same purpose. If you release valuable data with the approval of anyone who participated in the run in which you acquired it (which usually involves compensating them with nuyen or favors), you and everyone on your team who did not request compensation gains one bonus Karma. This Karma award only applies once per run, and only if the value of the data is worth at least 5,000 nuyen. '
+---
+name: Defective Attribute
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'There’s just something about you that makes one of your Matrix attributes less effective. Game Effect: Choose a Matrix attribute: Data Processing or Firewall. No matter what device you use—even if you have a living persona—that Matrix attribute can never be boosted by cyberprograms, complex forms, echoes, or sprite powers. You may not take this quality more than once. '
+---
+name: Like a Boss
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You consider yourself a professional hacker with finesse, and disdain the crude, brute force approaches. Game Effect: You may neither gain nor spend Edge on any test that has the possibility of inflicting Matrix damage. '
+---
+name: Mode Lock
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Whether it’s AR mode, cold sim VR, or hot sim VR, you have a clear preference. Those who prefer cold sim VR have probably seen the effects of biofeedback damage on someone they cared about, or perhaps had their own brain fried once or twice. If AR is your preference, you are most likely an onthe- go sort of hacker who dislikes losing awareness of their physical surroundings. Hot-sim VR is the preference for hackers who go all-in when it comes to the Matrix. Whatever your reasons, you find using any mode other than your preferred one unwieldy and distracting. Game Effect: Choose a preferred mode: AR, cold sim VR, or hot sim VR. Unless you’re using your preferred mode, you may not gain Edge on any Matrix actions, and the cost of any Edge actions and Edge boosts to assist your Matrix actions is doubled. '
+---
+name: Program Dependency
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You’ve become superstitiously attached to the use of a specific cyberprogram, most commonly Baby Monitor. Game Effect: Choose a cyberprogram. Whenever your cyberdeck is not running that cyberprogram, you become fixated on its absence. For each combat round that you wish to take any Matrix actions other than using reconfigure device to load the cyberprogram, you must first take a Minor Action to focus. '
+---
+name: Simsense Dependency
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You slotted one too many BTL chips. Okay, more than one too many. Or maybe your brain got fried real bad by some bad IC. Now you feel out of place when experiencing life through your own senses. When you are not using simsense in some way, you start having problems. Game Effect: When using hot-sim VR, you feel fine. Cold-sim VR is almost as good— though you can still spend Edge, you can’t gain any. This doesn’t prevent your Edge from refreshing at the beginning of a session. AR mode helps you get by when you have to move around in meatspace, but it doesn’t feel good. While in AR mode, you can neither gain nor spend Edge on Matrix actions. Any Edge actions or boosts on non-Matrix actions cost 1 more point of Edge than usual. When you can’t even run AR mode, you’re in a bad way. You start to get the shakes, and everything starts to seem unreal. Until you can get back to using AR or VR mode, you gain the Dazed condition. Awakened characters cannot take this quality. '
+---
+name: Resonance Burn
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Fading always hurts real bad, to the point that you are incredibly careful to avoid it. Game Effect: Whenever you suffer fading damage, it is always Physical damage. '
+---
+name: Sloppy Coder
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'You write code fast, but you cut corners. Fixing bugs is not something you waste your time doing. Game Effect: Whenever you make a programming test for any reason, reduce the interval to half the normal time. Any time the program is used, it causes a glitch regardless of how many 1s are rolled. A critical glitch causes the device running the software to reboot, unless it is being run on a host, in which case the host deletes it instead. '
+---
+name: Wanted by GOD I
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Your persona is on GOD’s most wanted list. You might not be number one, but you are working your way up the leader boards. Game Effect: Your maximum overwatch before convergence occurs is 5 lower per level of this quality. This means that GOD converges on you when your Overwatch Score reaches 35 at level 1, 30 at level 2, 25 at level 3, and 20 at level 4. When you are converged on, the first response is a high threat response team that treats you as an extreme threat. If you take any illegal Matrix Actions during a run, increase your Heat modifier by the level of this quality at the end of the run. This Heat modifier only applies to you, so it’s possible for you to gain personal Heat while your teammates do not. '
+---
+name: Wanted by GOD II
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Your persona is on GOD’s most wanted list. You might not be number one, but you are working your way up the leader boards. Game Effect: Your maximum overwatch before convergence occurs is 5 lower per level of this quality. This means that GOD converges on you when your Overwatch Score reaches 35 at level 1, 30 at level 2, 25 at level 3, and 20 at level 4. When you are converged on, the first response is a high threat response team that treats you as an extreme threat. If you take any illegal Matrix Actions during a run, increase your Heat modifier by the level of this quality at the end of the run. This Heat modifier only applies to you, so it’s possible for you to gain personal Heat while your teammates do not. '
+---
+name: Wanted by GOD III
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Your persona is on GOD’s most wanted list. You might not be number one, but you are working your way up the leader boards. Game Effect: Your maximum overwatch before convergence occurs is 5 lower per level of this quality. This means that GOD converges on you when your Overwatch Score reaches 35 at level 1, 30 at level 2, 25 at level 3, and 20 at level 4. When you are converged on, the first response is a high threat response team that treats you as an extreme threat. If you take any illegal Matrix Actions during a run, increase your Heat modifier by the level of this quality at the end of the run. This Heat modifier only applies to you, so it’s possible for you to gain personal Heat while your teammates do not. '
+---
+name: Wanted by GOD IV
+type: quality
+img: /systems/sr6/assets/brain_red.webp
+effects: []
+system: 
+description: 'Your persona is on GOD’s most wanted list. You might not be number one, but you are working your way up the leader boards. Game Effect: Your maximum overwatch before convergence occurs is 5 lower per level of this quality. This means that GOD converges on you when your Overwatch Score reaches 35 at level 1, 30 at level 2, 25 at level 3, and 20 at level 4. When you are converged on, the first response is a high threat response team that treats you as an extreme threat. If you take any illegal Matrix Actions during a run, increase your Heat modifier by the level of this quality at the end of the run. This Heat modifier only applies to you, so it’s possible for you to gain personal Heat while your teammates do not. '
+---
