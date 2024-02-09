@@ -526,4 +526,193 @@ effects: []
 system: 
 description: 'Whether you are a smuggler with CalHots from CalFree, a coyote from the UCAS, or a made man making a delivery, you can take advantage of the mining tunnels of Carbonado to evade any authorities.  Game Effect: You get a +1 dice pool bonus on Knowledge and Outdoors tests related to knowing where, when, and how to cross the Puyallup borders. You also get the same +1 die when evading anyone attempting to follow you into or out of the mines. '
 ---
+name: Arcane Resilience Training
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Students of magic learn the standard techniques of their tradition to resist the exhaustion that kicks in after using their arcane powers. However, some teachers provide routines that cater to the individual needs of their students and help them to reduce the tiring effects of magic more effectively. Game Effect: Magicians may define Logic, Intuition, or Charisma as their new tradition Attribute, using that attribute in all drain resistance tests. '
+---
+name: Scholastic Mage
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'A considerable share of mages—especially in the hermetic traditions—do not undergo training with a personal teacher but attend university classes instead. Granted, an academic education costs a considerable amount of money, but it certainly pays off in terms of mediated knowledge. Game Effect: During character creation only, mages can buy Knowledge Skills for 2 Karma each. They can also buy Knowledge skills with their starting nuyen (p. 68, SR6) at a cost of 1,000 nuyen per Knowledge skill. '
+---
+name: Shamanic Mask
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Some magicians channel their arcane powers through their mentor spirit. In turn, as part of their action, the totem begins to manifest itself through a visible, temporary transformation (animalistic features, elemental effects, etc.). The transformation is mana-based, so only living beings catch the transformation. The more successes in the magic test, the more pronounced the transformation and the more identifiable the totem is to even the mundane. Game Effect: The mage defines one effect (e.g., a translucent wolf’s face covering their features, their eyes glowing in arcane fire). This effect accompanies the use of any skill involving magic (or for adepts, every activation of an adept power). Investing a Minor Action (in addition to the action required in using the corresponding magical skill), the magician gains one Edge. This Edge is only temporary and can only be used for the test (Adepts: for the first test involving the activated Adept power). There’s a downside, too: the Shamanic Mask inevitably exposes the mage as Awakened. This may draw the enemies’ fire towards them, putting them in mortal danger. '
+---
+name: At Home in the Matrix
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You feel truly at home in the Matrix, as if you were born to be there. Game Effect: Whenever you are using hot sim VR mode, you may gain one more Edge per combat round than normal. Usually characters are limited to gaining only two points of Edge per round. '
+---
+name: Brilliant Heuristics
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You have a special knack for efficiently focusing your processing power. Game Effect: If you spend a Minor Action to prepare and calibrate your available processing power immediately before taking a Matrix Action, add half your Data Processing attribute (round up) as bonus dice on the test. If you do not immediately take a Matrix Action after doing this, the bonus is lost. This quality may only be used by a persona running on a cyberdeck. '
+---
+name: Data Anomaly
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'When you don’t want to be noticed on the Matrix, you know a few extra tricks that help you stay hidden. Game Effect: When you are running silent, gain a point of Edge whenever a Matrix Perception attempt is made in order to spot you or any icons in your network. '
+---
+name: Data Haven Membership I
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You have access to a few data havens and maintain a regular presence on them. Your username is known and respected by many, loathed by some. This comes in handy whenever you need to find information that is otherwise hard to come by. Game Effect: For each level of this quality, you have access to an underground Matrix data haven where info brokers, fixers, and shadowrunners store and share illicit data and trade secrets. When you need to make a Matrix Search to find information about a topic that is kept hidden from the public, gain a point of Edge. More detailed and thorough information is available, per GM discretion, but you aren’t the only one that uses the data havens. If you make use of this quality on a run, add +1 to your team’s Heat modifier. '
+---
+name: Data Haven Membership II
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You have access to a few data havens and maintain a regular presence on them. Your username is known and respected by many, loathed by some. This comes in handy whenever you need to find information that is otherwise hard to come by. Game Effect: For each level of this quality, you have access to an underground Matrix data haven where info brokers, fixers, and shadowrunners store and share illicit data and trade secrets. When you need to make a Matrix Search to find information about a topic that is kept hidden from the public, gain a point of Edge. More detailed and thorough information is available, per GM discretion, but you aren’t the only one that uses the data havens. If you make use of this quality on a run, add +1 to your team’s Heat modifier. '
+---
+name: Data Haven Membership III
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You have access to a few data havens and maintain a regular presence on them. Your username is known and respected by many, loathed by some. This comes in handy whenever you need to find information that is otherwise hard to come by. Game Effect: For each level of this quality, you have access to an underground Matrix data haven where info brokers, fixers, and shadowrunners store and share illicit data and trade secrets. When you need to make a Matrix Search to find information about a topic that is kept hidden from the public, gain a point of Edge. More detailed and thorough information is available, per GM discretion, but you aren’t the only one that uses the data havens. If you make use of this quality on a run, add +1 to your team’s Heat modifier. '
+---
+name: Fade to Black
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'When trouble finds you in the Matrix, you get a thrill out of giving it the slip. Game Effect: If you successfully use the Hide Matrix Action, gain a point of Edge. '
+---
+name: Fractal Blast
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Some hackers depend entirely on their Attack attribute, but you know how to boost your Data Spikes using sheer mathematics. Game Effect: When you spend a Minor Action to focus your processing to boost a Data Spike action, increase the base DV of your Data Spike by half your Data Processing attribute (round down). If you don’t immediately follow the Minor Action with a Data Spike action, this bonus goes away. This quality may only be used by a persona running on a cyberdeck. '
+---
+name: Golden Screwdriver
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Whether using a screwdriver or a soldering iron, you are a hardware wizard. Game Effect: When you make a test to repair Matrix damage, the interval on the Extended test is 10 minutes (instead of 1 hour). '
+---
+name: Hacker Combo
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You’ve practiced a sequence of actions in the Matrix to the point that they feel like one action. Game Effect: Choose two specific Matrix actions. You may take these actions together using a Minor and a Major Action. Each time you use the combo, you may choose which of the two Matrix actions is resolved first. You may take this quality multiple times, allowing you to learn more combos. '
+---
+name: Hold the Door
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You have learned to share illegal Matrix access levels with other personas. Game Effect: Whenever you gain illegal user or admin access, you may share that access with a number of additional personas equal to the net hits scored on the test. You may only grant access to personas that willingly accept it, which requires a Minor Anytime Action from the recipient. If you give illegal admin access to a persona that doesn’t have a Sleaze attribute, their Overwatch Score increases by 2D6 at the end of every combat round. '
+---
+name: ICU
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You get a thrill out of spotting hidden icons on the Matrix. Game Effect: When you successfully spot an icon that is running silent, gain a point of Edge. This only applies when it is relevant to the story—just cruising around town spotting random icons doesn’t gain you any extra Edge from this quality. '
+---
+name: Impenetrable Logic
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Your quick and adaptable sense of logic helps you identify attack patterns and potential  Game Effect: When you use Full Defense, use your Logic attribute in place of Willpower. '
+---
+name: Jack Jockey
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You know how to take advantage of a direct con Game Effect: When you have a direct connection to a target of your Matrix Action or complex form, you gain some key advantages. First, no Edge may be gained or spent on behalf of the defense test against you. Second, the target does not gain the protection of any Firewall that is provided by an external source (such as a PAN)—only its own Firewall applies to its defense test. Third, if the target is powered off, you may use a Control Device action to turn it on. '
+---
+name: Loner
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You work better on your own, at least in the Matrix. It’s nice to have other people on a team to cover the other aspects of a run, but you prefer not to have anyone looking over your s Game Effect: Whenever you are using AR or VR mode and do not have an agent program running, any sprites compiled or registered (including ally sprites and sprites on standby), and no SimShare hitchhikers, you’re filled with a sense of freedom, focus, pride, and mastery. Gain a wild die on all of your tests for Matrix Actions and complex forms, and ignore when that particular wild die rolls a 1—it doesn’t add any hits, and still counts toward glitches, but doesn’t take away three hits as normal.  '
+---
+name: Deck Builder
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Your custom cyberdeck is never finished, because there’s always room for more upgrades! Game Effect: When you spend Karma to build or upgrade your hardware, each point of Karma is worth 5,000 nuyen (instead of 4,000). Any hardware that you build yourself (by spending Karma instead of nuyen for every component) is more modular than usual. You may use the Reconfigure Device Matrix Action to swap your Matrix attributes when using a custom cyberdeck or cyberhack that you built. '
+---
+name: Natural Hacker
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You use your innate connection to the Resonance to get things done in the Matrix. It’s all you need. Game Effect: Whenever you take a Matrix action or a defense test against a Matrix action, complex form, or sprite power, you may choose to use your Resonance attribute in place of any other non-Matrix attribute used on that test. You may not replace Attack, Sleaze, Data Processing, or Firewall with Resonance using this quality. '
+---
+name: Online Fame
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Your persona is widely recognized in the Matrix. Oddly enough, this works in your favor more often than it gets in your way. Game Effect: Whenever you make an Influence or Con test while in the Matrix, gain a number of bonus dice equal to the level of this quality. If you use this quality during a run, add +1 to your Heat modifier at the end of the run. This Heat modifier increase only affects you, so it is possible for you to gain personal Heat while your fellow runners do not. '
+---
+name: Profiler
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You are good at gathering and compiling information about people for future reference. Game Effect: You can build a profile on any person. This requires a Matrix Search test with a threshold of 6 and an interval of 1 hour, followed by a programming test with a threshold of 6 and an interval of 1 minute. This interval cannot be reduced by any means—even by using an oracle data structure. Once complete, the profile is permanent— we can assume that you spend a few minutes here and there keeping your stored profiles up to date. The profile contains all the basic information the GM might provide as the result of successful legwork efforts, but it’s also useful when interacting with the individual. When you have a profile on someone, you gain a point of Edge on any Con, Influence, or Judge Intentions tests made against them. This Edge must be spent on the test or banked into the profile. Each profile can store up to 6 points of Edge. This Edge may only be used by you, and you may only use it on Edge Boosts and Actions made against the target. Edge from the profile can be spent on any kind of test against the profile’s target—not just Con, Influence, and Judge Intentions. Any Edge stored within a profile goes away at the beginning of the next session when Edge refreshes. '
+---
+name: Quick Config
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You’re very good at recalibrating your cyberdeck on the fly. Game Effect: When you take the Reconfigure Matrix Attribute action, you can swap any number of Matrix attributes and programs around with a single Minor Action. If you are in a cybercombat or combat situation, once per round you gain a point of Edge when you use the Reconfigure Matrix Attribute action. '
+---
+name: Reverberant
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Some people seem to have a sense for the Resonance, even if they can’t use it themselves. Game Effect: With a successful Matrix Perception action, you are capable of detecting and analyzing things in the Resonance that normally can only be perceived by entities with a Resonance attribute. '
+---
+name: Satisfaction
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'Curiosity may have killed the cat, but you know what brought it back, don’t you? Game Effect: When you successfully crack encryption or defuse a data bomb on a file, gain a point of Edge. This doesn’t apply if the encryption or data bomb has been placed solely for you to get an Edge using this quality— you only get the point of Edge when it counts, per gamemaster discretion. '
+---
+name: Surgical Strike
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'You have a talent for subtly hacking into hosts. Game Effect: The Overwatch Score increase from having illegal user or admin access to a host occurs once per minute instead of once per combat round. '
+---
+name: Voider of Warranties
+type: quality
+img: /systems/sr6/assets/brain.webp
+effects: []
+system: 
+description: 'If you spend some extra time with an off-theshelf device, you can make some unorthodox improvements. Game Effect: If you have the relevant toolkit, you can take any factory-manufactured device and improve it with an extended Electronics (Hardware) + Logic or Engineering + Logic test with a threshold equal to its Device Rating (or 4, whichever is higher) and an interval of 1 hour. The device receives a number of “upgrade points” equal to your Logic attribute. Any time you take an action using an upgraded device, you may spend an additional Minor Action to engage the upgrades and add one wild die for every upgrade point you spend. Upgrade points go away after they are spent. If any of those wild dice roll a 1, the device stops working after the action is resolved. If all of the upgrade points are spent, the device stops working in the same way. In both cases, getting the device to work again requires another extended Electronics or Engineering test as above, but with an interval of 1 minute. This restores functionality, along with a number of upgrade points equal to your Logic attribute. This cannot be used on devices that generate a persona, such as a commlink, cyberdeck, or RCC. Augmentations, drones, and vehicles are also ineligible for upgrades. Per gamemaster discretion, any other device (including weapons) can be modified. Just to be clear, using this quality on any device voids the manufacturer’s warranty. Note: You should prepare a few lines of handy technobabble to describe how your weird science boosts the equipment you upgrade with this quality. You don’t have to, but it will be much more fun for everyone if you do. '
+---
 
